@@ -1,0 +1,69 @@
+{
+  "DrawScreen": {
+    "tutorial": {
+      "clear": "Lösche all Striche",
+      "double_tap_prediction": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "drawing": "Male ein Zeichen hier",
+      "long_press_prediction": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "multi_search_double_tap": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "multi_search_long_press": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "multi_search_short_press": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "multi_search_swipe_left": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "multi_search": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "predictions": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "short_press_prediction": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "skip": "ÜBERSPRINGEN",
+      "undo": "Macht den letzten Strich rückgängig",
+      "dictionary_settings": "In den Einstellung kann die Methode zum übersetzen gewählt werden"
+    },
+    "title": "Zeichnen"
+  },
+  "SettingsScreen": {
+    "custom_url_hint": "URL von dem Wörterbuch das benutzt werden soll",
+    "dictionary_system_translator": "betriebssysteminternes Übersetzer",
+    "drawing_title": "Zeichnen",
+    "empty_canvas_after_double_tap": "Lösche alle Striche nach doppeltem Tippen",
+    "invert_short_long_press": "Invertiere kurzes und langes drücken",
+    "long_press_opens": "Langes drücken öffnet",
+    "miscellaneous_title": "Verschiedenes",
+    "show_tutorial": "Zeige Tutorial erneut (startet app neu)",
+    "theme": "Thema (@:restarts_app)",
+    "title": "Einstellungen",
+    "use_default_browser_for_online_dictionaries": "Benutze einen webview für web Wörterbücher",
+    "custom_url_format": "Benutzerdefiniertes URL format",
+    "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "language": "Sprache",
+    "advanced_settings": {
+      "drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "title": "Erweiterte Einstellungen"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup": {
+      "close": "Schließen",
+      "dont_ask_again": "Frag nie wieder",
+      "rate": "Bewerten",
+      "text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "app": "App",
+  "web": "Web",
+  "custom_url": "selbstdefinierte URL",
+  "restarts_app": "startet app neu",
+  "dark": "Dunkel",
+  "light": "Hell",
+  "system": "System",
+  "AboutScreen": {
+    "title": "Über die App",
+    "rate_this_app": "Bewerte die App",
+    "about_text": "DaKanji ist für alle die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können:\n\n- alle 漢字 von 漢字検定\n- ひらがな (auch Historische: ゑ, etc.)\n- カタカナ (auch Historische: ヱ, etc.)\n\nerkannt werden. \nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nEine Desktop version gibt es [hier.](GITHUB_DESKTOP_REPO)\nDaKanji wurde mit dart und dem Flutter framework entwickelt und steht unter einer \"source available\"-Lizenz.\nDas GitHub-repository kann [hier](GITHUB_MOBILE_REPO) gefunden werden.\nWenn du mehr über die machine learning Modelle efahren willst [schau hier.](GITHUB_ML_REPO)\n\nSchau dir auch meine [anderen apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES) oder tritt dem [discord server](DISCORD_SERVER) bei.\n\nDie privacy police kann [hier](PRIVACY_POLICE) gefunden werden.",
+    "show_changelog": "Zeig mir alle Änderungen.",
+    "software_informations_button": "Softwareinformationen"
+  },
+  "ChangelogScreen": {
+    "title": "Änderungen"
+  },
+  "WebviewScreen": {
+    "loading": "Suche"
+  }
+}
