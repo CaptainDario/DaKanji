@@ -9,7 +9,7 @@ new Features:
 
 Changes:
 
-- None
+- Updated to Flutter 2.8.2
 
 Fixed:
 
