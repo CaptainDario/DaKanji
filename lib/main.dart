@@ -5,6 +5,7 @@ import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:window_size/window_size.dart';
 
 import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/LightTheme.dart';
@@ -72,6 +73,9 @@ Future<void> init() async {
     await initDeepLinksStream();
     await getInitialDeepLink();
   }
+  if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+    await desktopWindowSetup();
+  }
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -80,7 +84,7 @@ void clearPreferences() async {
   prefs.clear();
 }
 
-
+/// Setup GetIt by initializing and registering all the instances for it
 void setupGetIt() async {
   // services to load from disk
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
@@ -99,6 +103,13 @@ void setupGetIt() async {
   // screen independent
   GetIt.I.registerSingleton(DrawerListener());
   GetIt.I.registerSingleton<Lookup>(Lookup());
+}
+
+///
+void desktopWindowSetup() async {
+  await setWindowMinSize(Size(480, 720));
+  await setWindowTitle(APP_TITLE);
+  await setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
 }
 
 /// The starting widget of the app

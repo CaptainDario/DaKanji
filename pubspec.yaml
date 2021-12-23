@@ -38,6 +38,11 @@ dependencies:
 
   # packages which should only target specific platforms
   android_intent_plus: ^3.0.2      # android
+  window_size:                     # desktop platforms
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 03d957e
 
   # utility 
   flutter_launcher_icons: ^0.9.2  # android, iOS, Linux, MacOS, windows
