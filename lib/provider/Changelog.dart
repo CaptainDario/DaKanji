@@ -66,7 +66,7 @@ class Changelog{
   /// 
   /// First reads the changelog from file and than returns a list with the  
   /// changes in the current version and the whole changelog.
-  void init() async {
+  Future<void> init() async {
 
     _changelog = await rootBundle.loadString("CHANGELOG.md");
     // whole changelog
@@ -75,7 +75,7 @@ class Changelog{
     _wholeChangelog = changelogList.join("\n");
     // newest changes
     final matches = new RegExp(r"(##.*?##)", dotAll: true);
-    _newestChangelog = matches.firstMatch(_changelog).group(0).toString();
+    _newestChangelog = matches.firstMatch(_changelog)!.group(0).toString();
     _newestChangelog = _newestChangelog.substring(0, _newestChangelog.length - 2);
 
     _initialized = true;

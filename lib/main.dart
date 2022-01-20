@@ -67,7 +67,7 @@ Future<void> init() async {
   // NOTE: uncomment to clear the SharedPreferences
   //await clearPreferences();
   
-  await setupGetIt();
+  await initGetIt();
 
   if(Platform.isAndroid || Platform.isIOS){
     await initDeepLinksStream();
@@ -84,8 +84,8 @@ void clearPreferences() async {
   prefs.clear();
 }
 
-/// Setup GetIt by initializing and registering all the instances for it
-void setupGetIt() async {
+/// Initialize GetIt by initializing and registering all the instances for it
+Future<void> initGetIt() async {
   // services to load from disk
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
