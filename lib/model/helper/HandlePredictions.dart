@@ -88,7 +88,8 @@ class HandlePrediction{
                 "android.intent.extra.TEXT" : char
               }
             );
-            if(await intent.canResolveActivity())
+            bool? cra = await intent.canResolveActivity();
+            if(cra != null && cra)
               await intent.launch();
             else{
               showDownloadDialogue(
@@ -115,7 +116,8 @@ class HandlePrediction{
                     "android.intent.extra.TEXT": char,
                   }
               );
-              if(await intent.canResolveActivity())
+              bool? cra = await intent.canResolveActivity();
+              if(cra != null && cra)
                 await intent.launch();
             }
             catch (e){
@@ -140,7 +142,8 @@ class HandlePrediction{
                   "android.intent.extra.TEXT": char,
                 }
             );
-            if(await intent.canResolveActivity())
+            bool? cra = await intent.canResolveActivity();
+            if(cra != null && cra)
               await intent.launch();
             else
               showDownloadDialogue(context,
@@ -160,7 +163,8 @@ class HandlePrediction{
                   "android.intent.extra.PROCESS_TEXT": char,
                 }
             );
-            if(await intent.canResolveActivity())
+            bool? cra = await intent.canResolveActivity();
+            if(cra != null && cra)
               await intent.launch();
             else{
               showDownloadDialogue(context,
@@ -240,7 +244,7 @@ class HandlePrediction{
   ///
   /// @returns The URL which leads to the predicted kanji in the selected dict.
   String openWithSelectedDictionary(String kanji) {
-    String url;
+    String url = "";
 
     // determine which URL should be used for finding the character
     if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[0])
@@ -252,7 +256,7 @@ class HandlePrediction{
     else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[3])
       url = GetIt.I<Settings>().customURL;
 
-    if(url != null){
+    if(url != ""){
       // check that the URL starts with protocol, otherwise launch() fails
       if (!(url.startsWith("http://") || url.startsWith("https://")))
         url = "https://" + url;

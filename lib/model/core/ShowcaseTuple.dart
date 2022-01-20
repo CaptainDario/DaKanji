@@ -22,10 +22,7 @@ class ShowcaseTuple {
   ContentAlign align;
 
 
-  ShowcaseTuple(GlobalKey key, String title, String text, ContentAlign align){
-    this.key = key;
-    this.title = title;
-    this.text = text;
-    this.align = align;
+  ShowcaseTuple(this.key, this.title, this.text, this.align){
+    
   }
 }

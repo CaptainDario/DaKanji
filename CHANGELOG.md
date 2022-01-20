@@ -9,7 +9,8 @@ new Features:
 
 Changes:
 
-- None
+- Updated to Flutter 2.8.1
+- Updated dart to 2.15.1 (null safety)
 
 Fixed:
 

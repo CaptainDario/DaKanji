@@ -7,16 +7,16 @@ import 'Changelog.dart';
 class UserData{
 
   /// How often was the app opened by the user.
-  int _appOpenedTimes;
+  int _appOpenedTimes = 0;
 
   /// Did the user already chose to not the the rate dialogue again
-  bool doNotShowRateAgain;
+  bool doNotShowRateAgain = false;
 
   /// The version of the app which was used last time
-  String _versionUsed;
+  late String _versionUsed;
 
   /// if the rate dialogue was already shown in this app life cycle
-  bool rateDialogueWasShown;
+  bool rateDialogueWasShown = false;
 
 
 
@@ -29,10 +29,6 @@ class UserData{
   }
 
   UserData(){
-    _appOpenedTimes = 0;
-    doNotShowRateAgain = false;
-    rateDialogueWasShown = false;
-
     init();
   }
 

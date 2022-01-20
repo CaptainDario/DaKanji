@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 /// The canvas widget on which the user draws the kanji.
 class DrawingPainter extends CustomPainter {
   
+  /// the size of the canvas
+  late Size _size;
   /// the path which should be drawn on the canvas
   /// 
   /// **Note:** the stored path and sub paths are normalized between 0 .. 1
   /// this has to be done to be resolution and size independent
   /// when this path gets drawn the normalized coordinates are scale to the 
   /// current size
-  Path _path;
+  late Path _path;
   /// if the app is running in dark mode
-  bool _darkMode;
-  /// the size of the canvas
-  Size _size;
+  late bool _darkMode;
   /// if the canvas is currently being recorded
-  bool _recording;
+  late bool _recording;
   /// Amount of the last stroke which should be shown (delete stroke animation)
-  double _deleteProgress;
+  late double _deleteProgress;
 
 
   /// Constructs an DrawingPainter instance.
@@ -63,8 +63,8 @@ class DrawingPainter extends CustomPainter {
 
     final ui.Image img = await getImageFromCanvas();
     
-    ByteData byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
+    ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     return pngBytes;
   }
@@ -77,8 +77,8 @@ class DrawingPainter extends CustomPainter {
 
     final ui.Image img = await getImageFromCanvas();
     
-    ByteData byteData = await img.toByteData(format: ui.ImageByteFormat.rawRgba);
-    Uint8List rgbaBytes = byteData.buffer.asUint8List();
+    ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.rawRgba);
+    Uint8List rgbaBytes = byteData!.buffer.asUint8List();
 
     return rgbaBytes;
   }
