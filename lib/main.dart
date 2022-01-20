@@ -123,7 +123,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
   @override
   dispose() {
-    if (linkSub != null) linkSub.cancel();
+    linkSub?.cancel();
     super.dispose();
   }
   

@@ -2,8 +2,6 @@ import 'dart:typed_data';
 
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +37,7 @@ class DrawScreen extends StatefulWidget {
 
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
-  double _canvasSize;
+  late double _canvasSize;
 
   @override
   void initState() {
@@ -63,7 +61,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     var route = ModalRoute.of(context);
     void handler(status) {
       if (status == AnimationStatus.completed) {
-        route.animation.removeStatusListener(handler);
+        route!.animation!.removeStatusListener(handler);
         
         if(SHOW_SHOWCASE_DRAWING){
           widget.showcase.init(context);
@@ -71,7 +69,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         }
       }
     }
-    route.animation.addStatusListener(handler);
+    route!.animation!.addStatusListener(handler);
 
 
     return DaKanjiDrawer(
@@ -90,10 +88,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget drawingCanvas = Consumer<Strokes>(
               builder: (context, strokes, __){
                 return DrawingCanvas(
-                  width: _canvasSize, 
-                  height: _canvasSize,
-                  key: SHOWCASE_DRAWING[0].key,
-                  strokes: strokes,
+                  _canvasSize, 
+                  _canvasSize,
+                  strokes,
+                  EdgeInsets.all(0),
+                  SHOWCASE_DRAWING[0].key,
                   onFinishedDrawing: (Uint8List image) async {
                     GetIt.I<DrawingInterpreter>().runInference(image);
                   },

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:da_kanji_mobile/provider/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
@@ -21,21 +20,22 @@ class DrawingCanvas extends StatefulWidget {
   /// is invoked once a stroke was drawn (pointerUp)
   /// 
   /// Provides the current image of the canvas as parameter
-  final void Function(Uint8List image) onFinishedDrawing;
+  final void Function(Uint8List image)? onFinishedDrawing;
   /// is invoked when the delete last stroke animation finished
   /// 
   /// Provides the current image of the canvas as parameter
-  final void Function(Uint8List image) onDeletedLastStroke;
-  /// is invoked when the delete all strokes animation finished
-  final void Function() onDeletedAllStrokes;
+  final void Function(Uint8List image)? onDeletedLastStroke;
+  /// is invoked when the 'delete all strokes animation' finished
+  final void Function()? onDeletedAllStrokes;
 
 
-  DrawingCanvas({
-    @required this.width,
-    @required this.height,
-    @required this.strokes,
+  DrawingCanvas(
+    this.width,
+    this.height,
+    this.strokes,
     this.margin,
     Key key,
+    {
     this.onFinishedDrawing,
     this.onDeletedLastStroke,
     this.onDeletedAllStrokes
@@ -50,15 +50,15 @@ class _DrawingCanvasState extends State<DrawingCanvas>
   with TickerProviderStateMixin {
   
   /// the DrawingPainter instance which defines the canvas to drawn on.
-  DrawingPainter _canvas;
+  late DrawingPainter _canvas;
   /// the ID of the pointer which is currently drawing
-   int _pointerID;
+   int? _pointerID;
   /// Keep track of if the pointer moved
   bool pointerMoved = false;
   /// Animation controller of the delete stroke animation
-  AnimationController _canvasController;
+  late AnimationController _canvasController;
   /// should the app run in dark mode.
-  bool darkMode;
+  late bool darkMode;
   /// if the animation to delete the last stroke is currently running
   bool deletingLastStroke = false;
   /// if the animation to delete all strokes is currently running
@@ -93,7 +93,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
               1.0
             );
 
-            widget.onDeletedLastStroke(await _canvas.getPNGListFromCanvas());
+            widget.onDeletedLastStroke!(await _canvas.getPNGListFromCanvas());
           }
         }
 
@@ -104,7 +104,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
           
           // execute the callback once all strokes were deleted
           if(widget.onDeletedAllStrokes != null){
-            widget.onDeletedAllStrokes();
+            widget.onDeletedAllStrokes!();
           }
         }
       }
@@ -172,7 +172,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
             widget.strokes.incrementStrokeCount();
 
             if(widget.onFinishedDrawing != null){
-              widget.onFinishedDrawing(await getPNGImage());
+              widget.onFinishedDrawing!(await getPNGImage());
             }
           }
           // mark this pointer as removed
@@ -187,7 +187,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
             ),
             AnimatedBuilder(
               animation: _canvasController,
-              builder: (BuildContext context, Widget child) {
+              builder: (BuildContext context, Widget? child) {
                 _canvas = DrawingPainter(
                   widget.strokes.path, 
                   darkMode, Size(widget.width, widget.height),

@@ -54,7 +54,7 @@ class Bitmap {
     stream.addListener(listener);
     final imageInfo = await completer.future;
     final ui.Image image = imageInfo.image;
-    final ByteData byteData = await image.toByteData();
+    final ByteData? byteData = await image.toByteData();
     if (byteData == null) {
       throw StateError("Couldn't serialize image into bytes");
     }
@@ -127,7 +127,7 @@ class RGBA32BitmapHeader {
     );
   }
 
-  Uint8List headerIntList;
+  late Uint8List headerIntList;
 
   int get fileLength => contentSize + RGBA32HeaderSize;
 }

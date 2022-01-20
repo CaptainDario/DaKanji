@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/widgets.dart';
 
 
@@ -6,9 +5,9 @@ import 'package:flutter/widgets.dart';
 class Strokes with ChangeNotifier{
 
   /// The path object of all strokes
-  Path _path;
+  Path _path = Path();
   /// How many strokes are there
-  int _strokeCount;
+  int _strokeCount = 0;
   /// should the delete last stroke animation start 
   bool _playDeleteLastStrokeAnimation = false;
   /// should the delete all strokes animation start
@@ -16,7 +15,7 @@ class Strokes with ChangeNotifier{
 
 
 
-  get path {
+  Path get path {
     return _path;
   }
 
@@ -26,7 +25,7 @@ class Strokes with ChangeNotifier{
     notifyListeners();
   }
   
-  get playDeleteLastStrokeAnimation {
+  bool get playDeleteLastStrokeAnimation {
     return _playDeleteLastStrokeAnimation;
   }
 
@@ -41,7 +40,7 @@ class Strokes with ChangeNotifier{
     }
   }
 
-  get playDeleteAllStrokesAnimation {
+  bool get playDeleteAllStrokesAnimation {
     return _playDeleteAllStrokesAnimation;
   }
 
@@ -80,10 +79,7 @@ class Strokes with ChangeNotifier{
     _strokeCount--;
   }
 
-  Strokes() {
-    _path = Path();
-    _strokeCount = 0;
-  }
+  Strokes();
   
   /// Deletes all drawn strokes WITHOUT notifying listeners.
   void removeAllStrokes(){

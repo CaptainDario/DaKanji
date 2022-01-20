@@ -34,7 +34,8 @@ dependencies:
   webviewx: 0.2.1                 # android, iOS, web
   in_app_review: 2.0.2            # android, iOS, MacOS, windows (limited)
   tflite_flutter: 0.9.0           # android, iOS, Linux, MacOS, windows
-  flutter_appavailability: 0.0.21 # android, iOS
+  flutter_appavailability:        # android, iOS
+    path: ./plugins/flutter_appavailability
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms

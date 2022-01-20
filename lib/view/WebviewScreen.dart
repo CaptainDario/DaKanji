@@ -22,29 +22,24 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  bool loadWebview;
+  bool loadWebview = false;
   /// should the loading screen be shown (hides webview)
-  bool showLoading;
+  bool showLoading = false;
   /// the screen's width 
-  double width;
+  late double width;
   /// the AnimationController to rotate the loading / webview
-  AnimationController _controller;
+  late AnimationController _controller;
   /// the animation to rotate the loading / webview
-  Animation _rotationAnimation;
-  /// the webview to show the dictionary search
-  WebViewXController webviewController;
+  late Animation _rotationAnimation;
   /// the controller to animate the DaKanji icon while the webview is loading
-  AnimationController _loadingController;
+  late AnimationController _loadingController;
   /// the animation to rotate the DaKanji icon while the webview is loading
-  Animation<double> _loadingAnimation;
+  late Animation<double> _loadingAnimation;
 
 
   @override
   void initState() { 
     super.initState();
-
-    loadWebview = false;
-    showLoading = false;
     
     _loadingController = AnimationController(
       duration: const Duration(milliseconds: 2000),
@@ -88,13 +83,13 @@ class _WebviewScreenState extends State<WebviewScreen>
     var route = ModalRoute.of(context);
     void handler(status) {
       if (status == AnimationStatus.completed) {
-        route.animation.removeStatusListener(handler);
+        route!.animation!.removeStatusListener(handler);
         setState(() {
           loadWebview = true;
         });
       }
     }
-    route.animation.addStatusListener(handler);
+    route?.animation?.addStatusListener(handler);
     
     return Scaffold(
       appBar: AppBar(title: Text(GetIt.I<Lookup>().chars)),
@@ -166,7 +161,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                           child: () {
                             return DefaultTextStyle(
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.button.color,
+                                color: Theme.of(context).textTheme.button?.color,
                                 decoration: TextDecoration.none,
                                 fontSize: 50,
                                 fontWeight: FontWeight.normal,

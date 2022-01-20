@@ -7,9 +7,9 @@ import 'package:da_kanji_mobile/globals.dart';
 class PlatformDependentVariables {
 
   /// the link to DaKanji in the app store
-  String _appStoreLink;
+  late String _appStoreLink;
   /// the link to the daapplab developer account
-  String _daapplabStorePage;
+  late String _daapplabStorePage;
 
   get appStoreLink{
     return _appStoreLink;

@@ -170,9 +170,9 @@ packages:
   flutter_appavailability:
     dependency: "direct main"
     description:
-      name: flutter_appavailability
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/flutter_appavailability"
+      relative: true
+    source: path
     version: "0.0.21"
   flutter_launcher_icons:
     dependency: "direct main"

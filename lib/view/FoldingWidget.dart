@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -43,10 +42,10 @@ class FoldingWidget extends StatefulWidget {
   final Duration animationDuration;
 
   /// Called when cell fold animations completes
-  final VoidCallback onOpen;
+  final VoidCallback? onOpen;
 
   /// Called when cell unfold animations completes
-  final VoidCallback onClose;
+  final VoidCallback? onClose;
 
 
   @override
@@ -58,13 +57,11 @@ class FoldingWidgetState extends State<FoldingWidget>
   bool _isExpanded = false;
   bool _isUnfolded = true;
   
-  AnimationController _animationController;
-  Animation _animation1;
-  Animation _animation2;
-  Animation _animation3;
-  Animation _animation4;
-
-  Uint8List innerWidgetImage;
+  late AnimationController _animationController;
+  late Animation _animation1;
+  late Animation _animation2;
+  late Animation _animation3;
+  late Animation _animation4;
 
 
   @override
@@ -107,11 +104,11 @@ class FoldingWidgetState extends State<FoldingWidget>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         if (widget.onClose != null)
-          widget.onClose();
+          widget.onClose!();
       }
       else if (status == AnimationStatus.dismissed) {
         if (widget.onOpen != null)
-          widget.onOpen();
+          widget.onOpen!();
         // mark the folding widget as completely unfolded
         setState(() {
           _isUnfolded = true;
