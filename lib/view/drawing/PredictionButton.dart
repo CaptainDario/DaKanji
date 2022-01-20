@@ -25,8 +25,8 @@ class PredictionButton extends StatefulWidget {
 class _PredictionButtonState extends State<PredictionButton>
   with TickerProviderStateMixin{
     
-  AnimationController controller;
-  Animation<double> animation;
+  late AnimationController controller;
+  late Animation<double> animation;
 
   void anim(){
    controller.forward(from: 0.0); 

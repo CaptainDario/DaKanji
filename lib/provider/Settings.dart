@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
@@ -8,65 +7,70 @@ import 'package:universal_io/io.dart';
 
 class Settings with ChangeNotifier {
   /// The placeholder in the URL's which will be replaced by the predicted kanji
-  String kanjiPlaceholder;
+  String kanjiPlaceholder = "%X%";
 
   /// The custom URL a user can define on the settings page.
-  String customURL;
+  String customURL = "";
 
   /// The URL of the jisho website
-  String jishoURL;
+  late String jishoURL;
 
   /// The URL of the weblio website
-  String wadokuURL;
+  late String wadokuURL;
 
   /// The URL of the weblio website
-  String weblioURL;
+  late String weblioURL;
 
   /// A list with all available dictionary options.
-  List<String> dictionaries;
+  late List<String> dictionaries = [
+    "jisho (web)",
+    "wadoku (web)",
+    "weblio (web)",
+    "url (web)"
+  ];
 
   /// The string representation of the dictionary which will be used (long press)
-  String _selectedDictionary;
+  String _selectedDictionary = "";
   
   /// The theme which the application will use.
   /// System will match the settings of the system.
-  String _selectedTheme;
+  String _selectedTheme = "";
 
   /// A list with all available themes.
-  List<String> themes;
+  List<String> themes = ["light", "dark", "system"];
   
   /// A Map from the string of a theme to the ThemeMode of the theme.
-  Map<String, ThemeMode> themesDict;
+  Map<String, ThemeMode> themesDict = {
+      "light": ThemeMode.light,
+      "dark": ThemeMode.dark,
+      "system": ThemeMode.system
+    };
 
   /// Should the behavior of long and short press be inverted
-  bool _invertShortLongPress;
+  bool _invertShortLongPress = false;
 
   /// Should the canvas be cleared when a prediction was copied to kanjibuffer
-  bool _emptyCanvasAfterDoubleTap;
+  bool _emptyCanvasAfterDoubleTap = true;
 
-  /// should the default app browser be used for opening predictions
-  bool _useDefaultBrowser;
+  /// should the default app browser be used for opening predictions or a webview
+  bool _useWebview = true;
 
   /// the currently used locale
-  Locale selectedLocale;
+  Locale? selectedLocale;
 
   /// The available backends for inference
-  List<String> inferenceBackends;
+  List<String> inferenceBackends= [
+      "CPU",
+    ];
 
   /// The inference backend used for the single character CNN
-  String _backendCNNSingleChar;
+  String _backendCNNSingleChar = "";
 
 
 
   Settings() {
-    kanjiPlaceholder = "%X%";
+    kanjiPlaceholder;
     
-    dictionaries = [
-      "jisho (web)",
-      "wadoku (web)",
-      "weblio (web)",
-      "url (web)"
-    ];
     if(Platform.isAndroid)
       dictionaries.addAll([
         "system (app)",
@@ -82,16 +86,6 @@ class Settings with ChangeNotifier {
         "midori (app)",
       ]);
 
-    themes = ["light", "dark", "system"];
-    themesDict = {
-      "light": ThemeMode.light,
-      "dark": ThemeMode.dark,
-      "system": ThemeMode.system
-    };
-
-    inferenceBackends = [
-      "CPU",
-    ];
     if(Platform.isAndroid)
       inferenceBackends.addAll([
         "GPU",
@@ -102,14 +96,6 @@ class Settings with ChangeNotifier {
     //    "Metal",
     //    "CoreML"
     //  ]);
-    _backendCNNSingleChar = "";
-
-    invertShortLongPress = false;
-    emptyCanvasAfterDoubleTap = true;
-    useWebview = true;
-
-    _selectedDictionary = "";
-    selectedTheme = "";
 
     jishoURL = "https://jisho.org/search/" + kanjiPlaceholder;
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
@@ -128,11 +114,11 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  get selectedTheme{
+  String get selectedTheme{
     return _selectedTheme;
   }
 
-  ThemeMode selectedThemeMode() {
+  ThemeMode? selectedThemeMode() {
     return themesDict[_selectedTheme];
   }
   
@@ -160,11 +146,11 @@ class Settings with ChangeNotifier {
   }
   
   bool get useWebview{
-    return _useDefaultBrowser;
+    return _useWebview;
   }
   
   set useWebview(bool empty){
-    _useDefaultBrowser = empty;
+    _useWebview = empty;
     notifyListeners();
   }
 
@@ -206,8 +192,7 @@ class Settings with ChangeNotifier {
     customURL = prefs.getString('customURL') ?? '';
     _selectedTheme = prefs.getString('selectedTheme') ?? themes[2];
     selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
-    var localeStr = prefs.getString('selectedLocale') ?? "en";
-    selectedLocale = localeStr == null ? null : Locale(localeStr);
+    selectedLocale = Locale(prefs.getString('selectedLocale') ?? "en");
   }
 }
 

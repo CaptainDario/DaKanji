@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
@@ -144,7 +143,7 @@ class DrawScreenShowcase extends Showcase {
   /// [keyIndex] can be used to use a different index 
   /// for the `GlobalKey` of the widget to show 
   @protected
-  TargetFocus createShowcaseTargetFocus(int index, {int keyIndex}){
+  TargetFocus createShowcaseTargetFocus(int index, {int? keyIndex}){
     return TargetFocus(
       identify: SHOWCASE_DRAWING[index].title,
       shape: ShapeLightFocus.RRect,

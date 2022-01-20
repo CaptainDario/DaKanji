@@ -4,15 +4,13 @@ import 'package:flutter/foundation.dart';
 class KanjiBuffer with ChangeNotifier{
   
   /// the current string of this class
-  String _value;
+  String _value = "";
 
   /// is the animation for adding a new character running
   bool runAnimation = false;
 
   /// initializes a new [KanjiBuffer] instance
-  KanjiBuffer() {
-    _value = "";
-  }
+  KanjiBuffer();
 
   /// returns the current value
   String get kanjiBuffer{

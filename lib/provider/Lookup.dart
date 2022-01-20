@@ -8,22 +8,17 @@ import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 class Lookup with ChangeNotifier{
   
   /// the character(s) which can be searched in a dictionary
-  String _chars;
+  String _chars = "";
   /// the dictionary URL for looking up [_chars]
-  String _url;
+  String _url = "";
   /// are the characters which will be looked up from the kanjibuffer
-  bool _buffer;
+  bool _buffer = false;
   /// was the lookup started with long press
-  bool _longPress;
+  bool _longPress = false;
 
 
   /// initializes a new [KanjiBuffer] instance
-  Lookup() {
-    _chars = "";
-    _url = "";
-    _buffer = false;
-    _longPress = false;
-  }
+  Lookup();
 
   String get chars{
     return _chars;

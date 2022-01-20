@@ -28,7 +28,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.1"
+    version: "2.8.2"
   awesome_dialog:
     dependency: "direct main"
     description:
@@ -49,7 +49,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -170,9 +170,9 @@ packages:
   flutter_appavailability:
     dependency: "direct main"
     description:
-      name: flutter_appavailability
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/flutter_appavailability"
+      relative: true
+    source: path
     version: "0.0.21"
   flutter_launcher_icons:
     dependency: "direct main"
@@ -293,7 +293,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.10"
+    version: "0.12.11"
   meta:
     dependency: transitive
     description:
@@ -543,7 +543,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2"
+    version: "0.4.3"
   tflite_flutter:
     dependency: "direct main"
     description:
@@ -564,7 +564,7 @@ packages:
       name: tutorial_coach_mark
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:
@@ -655,7 +655,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   webview_flutter:
     dependency: transitive
     description:
@@ -698,6 +698,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  window_size:
+    dependency: "direct main"
+    description:
+      path: "plugins/window_size"
+      ref: "03d957e"
+      resolved-ref: "03d957e8b5c99fc83cd4a781031b154ab3de8753"
+      url: "git://github.com/google/flutter-desktop-embedding.git"
+    source: git
+    version: "0.1.0"
   xdg_directories:
     dependency: transitive
     description:
@@ -720,5 +729,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.14.0 <3.0.0"
-  flutter: ">=2.5.0"
+  dart: "2.15.1"
+  flutter: ">=2.8.1"

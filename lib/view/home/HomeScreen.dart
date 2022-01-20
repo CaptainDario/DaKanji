@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -26,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() { 
@@ -35,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _scrollController = ScrollController();
 
     // after the page was build 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
 
       final appOpenedTimes = GetIt.I<UserData>().appOpenedTimes;
       // show a rating dialogue WITHOUT "do not show again"-option
@@ -83,9 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: _scrollController,
                       data: GetIt.I<Changelog>().newestChangelog,
                       onTapLink:
-                      (String text, String url, String title) async {
-                        if(await canLaunch(url))
-                          launch(url);
+                      (String text, String? url, String title) async {
+                        if(url != null){
+                          if(await canLaunch(url)) launch(url);
+                        }
                       },
                     ),
                   ),

@@ -6,7 +6,7 @@ import 'package:tuple/tuple.dart';
 
 
 
-/// Checks if the app should be laied out in landscape mode or portrait mode.
+/// Checks if the app should be lay out in landscape mode or portrait mode.
 /// By using the `constraints` of the available space the app runs in.
 /// Returns a tuple of which the first element is a bool. It is true when
 /// the app is running in landscape mode and false otherwise.

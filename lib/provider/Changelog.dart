@@ -6,15 +6,15 @@ import 'package:flutter/services.dart';
 class Changelog{
 
   /// the changelog read from CHANGELOG.md
-  String _changelog;
+  late String _changelog;
   /// only the newest section from CHANGELOG.md
-  String _newestChangelog;
+  late String _newestChangelog;
   /// the complete changelog without the first few header lines
-  String _wholeChangelog;
+  late String _wholeChangelog;
   /// if the changelog should be shown when the app starts
-  bool _showChangelog;
+  bool _showChangelog = false;
   /// if this object was initialized
-  bool _initialized;
+  bool _initialized = false;
 
   String get changelog{
     if(!_initialized)
@@ -60,17 +60,13 @@ class Changelog{
   }
 
 
-  Changelog() {
-    _initialized = false;
-    _showChangelog = false;
-
-  }
+  Changelog();
 
   /// Reads `CHANGELOG.md` from file and returns a converted version.
   /// 
   /// First reads the changelog from file and than returns a list with the  
   /// changes in the current version and the whole changelog.
-  void init() async {
+  Future<void> init() async {
 
     _changelog = await rootBundle.loadString("CHANGELOG.md");
     // whole changelog
@@ -79,7 +75,7 @@ class Changelog{
     _wholeChangelog = changelogList.join("\n");
     // newest changes
     final matches = new RegExp(r"(##.*?##)", dotAll: true);
-    _newestChangelog = matches.firstMatch(_changelog).group(0).toString();
+    _newestChangelog = matches.firstMatch(_changelog)!.group(0).toString();
     _newestChangelog = _newestChangelog.substring(0, _newestChangelog.length - 2);
 
     _initialized = true;

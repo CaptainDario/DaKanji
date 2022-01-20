@@ -72,8 +72,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             } ()
                           );
                         }).toList(),
-                        onChanged: (String newValue) {
-                          settings.selectedDictionary = newValue;
+                        onChanged: (String? newValue) {
+                          settings.selectedDictionary = newValue ?? settings.dictionaries[0];
                           settings.save();
                         },
                       ),
@@ -139,8 +139,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   CheckboxListTile(
                     title: Text(LocaleKeys.SettingsScreen_invert_short_long_press.tr()),
                     value: settings.invertShortLongPress, 
-                    onChanged: (bool newValue){
-                      settings.invertShortLongPress = newValue;
+                    onChanged: (bool? newValue){
+                      settings.invertShortLongPress = newValue ?? false;
                       settings.save();
                     }
                   ),
@@ -148,16 +148,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   CheckboxListTile(
                     title: Text(LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr()),
                     value: settings.emptyCanvasAfterDoubleTap, 
-                    onChanged: (bool newValue){
-                      settings.emptyCanvasAfterDoubleTap = newValue;
+                    onChanged: (bool? newValue){
+                      settings.emptyCanvasAfterDoubleTap = newValue ?? false;
                       settings.save();
                     }
                   ),
                   CheckboxListTile(
                     title: Text(LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr()),
                     value: settings.useWebview,
-                    onChanged: (bool newValue){
-                      settings.useWebview = newValue;
+                    onChanged: (bool? newValue){
+                      settings.useWebview = newValue ?? false;
                       settings.save();
                     }
                   ),
@@ -192,8 +192,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           );
                         }
                       ).toList(),
-                      onChanged: (String newValue) {
-                        settings.selectedTheme = newValue;
+                      onChanged: (String? newValue) {
+                        settings.selectedTheme = newValue ?? settings.themes[0];
                         settings.save();
                         Phoenix.rebirth(context);
                       },
@@ -215,9 +215,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           );
                         }
                       ).toList(),
-                      onChanged: (String newValue) {
-                        context.setLocale(Locale(newValue));
-                        settings.selectedLocale = Locale(newValue);
+                      onChanged: (String? newValue) {
+                        context.setLocale(Locale(newValue ?? "en"));
+                        settings.selectedLocale = Locale(newValue ?? "en");
                         settings.save();
                       },
                     ),
@@ -252,9 +252,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 } ()
                               );
                             }).toList(),
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               print(newValue);
-                              settings.backendCNNSingleChar = newValue;
+                              settings.backendCNNSingleChar = newValue ?? settings.inferenceBackends[0];
                               settings.save();
                               print(newValue);
                             },
