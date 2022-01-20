@@ -74,7 +74,7 @@ Future<void> init() async {
     await getInitialDeepLink();
   }
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
-    await desktopWindowSetup();
+    desktopWindowSetup();
   }
 }
 
@@ -106,10 +106,10 @@ Future<void> initGetIt() async {
 }
 
 ///
-void desktopWindowSetup() async {
-  await setWindowMinSize(Size(480, 720));
-  await setWindowTitle(APP_TITLE);
-  await setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
+void desktopWindowSetup() {
+  setWindowMinSize(Size(480, 720));
+  setWindowTitle(APP_TITLE);
+  setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
 }
 
 /// The starting widget of the app
