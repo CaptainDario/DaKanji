@@ -58,6 +58,7 @@ abstract class  LocaleKeys {
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
+  static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';
 
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
@@ -36,8 +35,8 @@ class ChangelogScreen extends StatelessWidget {
                       data: GetIt.I<Changelog>().wholeChangelog,
                       selectable: false,
                       onTapLink: 
-                      (String text, String url, String title) async {
-                        if(await canLaunch(url))
+                      (String text, String? url, String? title) async {
+                        if(await canLaunch(url!))
                           launch(url);
                       },
                     )

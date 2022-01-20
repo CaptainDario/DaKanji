@@ -25,7 +25,6 @@ class KanjiBufferWidget extends StatefulWidget {
 class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     with TickerProviderStateMixin {
 
-  AnimationController _springController;
 
   /// The alignment of the card as it is dragged or being animated.
   ///
@@ -34,24 +33,25 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
   /// this value is set to the value of the [_springAnimation].
   Alignment _dragAlignment = Alignment.center;
   bool deletedWithSwipe = false;
-
-  // animation to make the kanjibuffer "jump back" when released
-  Animation<Alignment> _springAnimation;
+  
+  // controller and animation to make the kanjibuffer "jump back" when released
+  late AnimationController _springController;
+  Animation<Alignment>? _springAnimation;
   
   // animation and controller for the delete-chars-rotation of the kanji buffer
   int _rotationXDuration = 250;
-  AnimationController _rotationXController;
-  Animation<double> _rotationXAnimation;
+  late AnimationController _rotationXController;
+  late Animation<double> _rotationXAnimation;
 
   // animation when character added to kanjibuffer
   int _scaleInNewCharDuration = 250; 
-  AnimationController _scaleInNewCharController;
-  Animation<double> _scaleInNewCharAnimation;
+  late AnimationController _scaleInNewCharController;
+  late Animation<double> _scaleInNewCharAnimation;
 
   /// how many characters do fit in this box
   int charactersFit = 0;
   /// callback when the kanjibuffer changed
-  Function kanjiBufferChanged;
+  Function? kanjiBufferChanged;
 
   
 
@@ -90,7 +90,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     _springController = AnimationController(vsync: this);
     _springController.addListener(() {
       setState(() {
-        _dragAlignment = _springAnimation.value;
+        _dragAlignment = _springAnimation!.value;
       });
     });
 
@@ -269,7 +269,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
             ),
           ),
           // builder for spinning (delete) animation
-          builder: (BuildContext context, Widget child){
+          builder: (BuildContext context, Widget? child){
             return Transform(
               transform: () { 
                 Matrix4 transform = Matrix4.identity();

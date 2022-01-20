@@ -25,7 +25,7 @@ class _TestScreenState extends State<TestScreen> {
       appBar: AppBar(title: Text("TestScreen"),),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.play_arrow),
-        onPressed: () => foldingKey.currentState.toggleFold(),
+        onPressed: () => foldingKey.currentState?.toggleFold(),
       ),
       body: 
         Center(

@@ -9,9 +9,9 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 class DrawingIsolateUtils {
   static const String DEBUG_NAME = "InferenceIsolate";
 
-  Isolate _isolate;
+  late Isolate? _isolate;
   ReceivePort _receivePort = ReceivePort();
-  SendPort _sendPort;
+  late SendPort _sendPort;
 
   SendPort get sendPort => _sendPort;
 
@@ -28,7 +28,7 @@ class DrawingIsolateUtils {
   void stopIsolate() {
     if (_isolate != null) {
       _receivePort.close();
-      _isolate.kill(priority: Isolate.immediate);
+      _isolate!.kill(priority: Isolate.immediate);
       _isolate = null;
     }
   }
@@ -38,15 +38,15 @@ class DrawingIsolateUtils {
     sendPort.send(port.sendPort);
 
     await for (final DrawingIsolateData isolateData in port) {
-      if (isolateData != null) {
-        DrawingInterpreter classifier = DrawingInterpreter();
-        classifier.initIsolate(
-          Interpreter.fromAddress(isolateData.interpreterAddress),
-          isolateData.labels
-        );
-        classifier.runInference(isolateData.image, runInIsolate: false);
-        isolateData.responsePort.send(classifier.predictions);
-      }
+
+      DrawingInterpreter classifier = DrawingInterpreter();
+      classifier.initIsolate(
+        Interpreter.fromAddress(isolateData.interpreterAddress),
+        isolateData.labels
+      );
+      classifier.runInference(isolateData.image, runInIsolate: false);
+      isolateData.responsePort!.send(classifier.predictions);
+      
     }
   }
 

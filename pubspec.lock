@@ -170,9 +170,9 @@ packages:
   flutter_appavailability:
     dependency: "direct main"
     description:
-      name: flutter_appavailability
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/flutter_appavailability"
+      relative: true
+    source: path
     version: "0.0.21"
   flutter_launcher_icons:
     dependency: "direct main"
@@ -564,7 +564,7 @@ packages:
       name: tutorial_coach_mark
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:
@@ -729,5 +729,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.14.0 <3.0.0"
-  flutter: ">=2.5.0"
+  dart: "2.15.1"
+  flutter: ">=2.8.1"

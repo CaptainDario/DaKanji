@@ -64,6 +64,7 @@
     "title": "Changelog"
   },
   "WebviewScreen": {
-    "loading": "Searching"
+    "loading": "Searching",
+    "title": "Webview"
   }
 }

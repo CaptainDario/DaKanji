@@ -64,6 +64,7 @@
     "title": "Änderungen"
   },
   "WebviewScreen": {
-    "loading": "Suche"
+    "loading": "Suche",
+    "title": "Webview"
   }
 }
