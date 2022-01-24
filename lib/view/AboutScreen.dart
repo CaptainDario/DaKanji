@@ -44,6 +44,7 @@ class AboutScreen extends StatelessWidget {
         currentScreen: Screens.about,
         animationAtStart: !this.openedByDrawer,
         child: SingleChildScrollView(
+          primary: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
