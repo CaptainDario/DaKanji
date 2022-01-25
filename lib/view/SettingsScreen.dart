@@ -42,6 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Consumer<Settings>(
             builder: (context, settings, child){
               return ListView(
+                primary: false,
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   // different options for dictionary on long press
