@@ -60,5 +60,6 @@ abstract class  LocaleKeys {
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';
+  static const close = 'close';
 
 }

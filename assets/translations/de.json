@@ -66,5 +66,6 @@
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"
-  }
+  },
+  "close": "Schließen"
 }
