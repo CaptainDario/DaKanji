@@ -51,3 +51,6 @@ blobs/libtensorflowlite_c-win.dll
 
 # ignore LoC counter
 .VSCodeCounter/
+
+# add tf lite desktop binaries
+!blobs/**
