@@ -286,6 +286,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 leading: Icon(Icons.brush_outlined),
                                 title: Text(LocaleKeys.DrawScreen_title.tr()),
                                 selected: widget.currentScreen == Screens.drawing,
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/drawing"){
                                     Navigator.pushNamedAndRemoveUntil(
@@ -306,6 +307,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 selected: widget.currentScreen == Screens.settings,
                                 leading: Icon(Icons.settings_applications),
                                 title: Text(LocaleKeys.SettingsScreen_title.tr()),
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/settings"){
                                     Navigator.pushNamedAndRemoveUntil(
@@ -325,7 +327,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 selected: widget.currentScreen == Screens.about,
                                 leading: Icon(Icons.info_outline),
                                 title: Text(LocaleKeys.AboutScreen_title.tr()),
-                                
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/about"){
                                     Navigator.pushNamedAndRemoveUntil(

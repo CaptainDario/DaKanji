@@ -55,7 +55,7 @@ class AboutScreen extends StatelessWidget {
                 child: MarkdownBody(
                   data: about,
                   styleSheet: MarkdownStyleSheet(
-                    a:TextStyle( color: Theme.of(context).indicatorColor)
+                    a:TextStyle( color: Theme.of(context).highlightColor)
                   ),
                   onTapLink: (text, url, title) {
                     launch(url ?? "");
@@ -72,7 +72,7 @@ class AboutScreen extends StatelessWidget {
                         LocaleKeys.AboutScreen_show_changelog.tr(),
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          color: Theme.of(context).indicatorColor
+                          color: Theme.of(context).highlightColor
                         ),
                       ),
                       onTap: () => Navigator.push(

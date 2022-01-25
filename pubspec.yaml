@@ -29,7 +29,6 @@ dependencies:
   easy_localization: 3.0.0
   flutter_layout_grid: 1.0.3
   tuple: 2.0.0
-  json_theme: 3.1.2+1
 
   # do NOT support all target platforms
   webviewx: 0.2.1                 # android, iOS, web
@@ -103,6 +102,4 @@ flutter:
     - media/banner.png
 
     - assets/translations/
-
-    - assets/themes/
 

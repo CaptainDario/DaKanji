@@ -242,7 +242,8 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                       softWrap: false,
                       style: TextStyle(
                         fontFamily: "NotoSans",
-                        fontSize: 60
+                        fontSize: 60,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                   ),
@@ -259,7 +260,8 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                         } (),
                         style: TextStyle(
                           fontFamily: "NotoSans",
-                          fontSize: 600
+                          fontSize: 600,
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                       ),
                     )
