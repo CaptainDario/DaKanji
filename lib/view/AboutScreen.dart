@@ -54,6 +54,9 @@ class AboutScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: MarkdownBody(
                   data: about,
+                  styleSheet: MarkdownStyleSheet(
+                    a:TextStyle( color: Theme.of(context).indicatorColor)
+                  ),
                   onTapLink: (text, url, title) {
                     launch(url ?? "");
                   },
@@ -68,7 +71,9 @@ class AboutScreen extends StatelessWidget {
                       child: Text(
                         LocaleKeys.AboutScreen_show_changelog.tr(),
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                          color: Theme.of(context).indicatorColor
+                        ),
                       ),
                       onTap: () => Navigator.push(
                         context, 
