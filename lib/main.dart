@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
+import 'package:json_theme/json_theme.dart';
 
 import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/LightTheme.dart';
@@ -101,8 +105,14 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Strokes>(Strokes());
   
   // screen independent
-  GetIt.I.registerSingleton(DrawerListener());
+  GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
   GetIt.I.registerSingleton<Lookup>(Lookup());
+
+  //
+  final themeStr = await rootBundle.loadString('assets/themes/light_theme.json');
+  final themeJson = jsonDecode(themeStr);
+  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+  GetIt.I.registerSingleton<ThemeData>(theme);
 }
 
 ///
@@ -178,7 +188,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       title: APP_TITLE,
 
       // themes
-      theme: lightTheme,
+      theme: GetIt.I<ThemeData>(),
       darkTheme: darkTheme,
       themeMode: GetIt.I<Settings>().selectedThemeMode(),
 
