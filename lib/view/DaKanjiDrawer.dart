@@ -133,7 +133,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         builder: (BuildContext context, Widget? child) {
           return Stack(
             children: [
-              // the screen (child)
+              // the screen (child) and the top app bar
               Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
@@ -141,7 +141,20 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   ..translate(_moveDrawer.value * _screenWidth/2)
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
+                  // the top app bar
                   appBar: AppBar(
+                    leading: 
+                      InkWell(
+                        onTap: () => _drawerController.forward(from: 0.0),
+                        child: Ink(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Container(
+                              child: Icon(Icons.menu),
+                            ),
+                          ),
+                        ),
+                      ),
                     title: Text(
                       (){
                         String title;
@@ -165,24 +178,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         return title;
                       } ()
                     ),
-                    leading: Transform.scale(
-                      scale: 0.75,
-                      child: Image.asset("media/icon.png")
-                    ),
-                    actions: [
-                      InkWell(
-                        onTap: () => _drawerController.forward(from: 0.0),
-                        child: Ink(
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              child: Icon(Icons.menu),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
+                  //the screen (child)
                   body: SafeArea(child: child!)
                 ),
               ),
