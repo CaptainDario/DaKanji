@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'ColorConversion.dart';
+
 
 
 final ThemeData lightTheme = ThemeData(
   
   brightness: Brightness.light,
 
-  primaryColor: Color(0xff195B45),
-  primarySwatch: Colors.red
+  primarySwatch: createMaterialColor(Color.fromARGB(255, 26, 93, 71)),
+
+  highlightColor: Color.fromARGB(255, 194, 32, 44),
 
 );

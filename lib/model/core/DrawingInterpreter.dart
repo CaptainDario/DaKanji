@@ -374,7 +374,9 @@ class DrawingInterpreter with ChangeNotifier{
     Interpreter interpreter;
     final options = InterpreterOptions()..addDelegate(
       XNNPackDelegate(
-        options: XNNPackDelegateOptions()
+        options: XNNPackDelegateOptions(
+          numThreads: Platform.numberOfProcessors >= 4 ? 4 : Platform.numberOfProcessors 
+        )
       )
     );
     interpreter = await Interpreter.fromAsset(

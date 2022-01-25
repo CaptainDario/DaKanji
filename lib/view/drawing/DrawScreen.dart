@@ -119,7 +119,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         key: SHOWCASE_DRAWING[1].key,
                         icon: Icon(Icons.undo),
                         iconSize: 100,
-                        color: Theme.of(context).indicatorColor,
+                        color: Theme.of(context).highlightColor,
                         onPressed: () {
                           strokes.playDeleteLastStrokeAnimation = true;
                         }
@@ -160,7 +160,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         key: SHOWCASE_DRAWING[2].key,
                         icon: Icon(Icons.clear),
                         iconSize: 100,
-                        color: Theme.of(context).indicatorColor,
+                        color: Theme.of(context).highlightColor,
                         onPressed: () {
                           strokes.playDeleteAllStrokesAnimation = true;
                         }
