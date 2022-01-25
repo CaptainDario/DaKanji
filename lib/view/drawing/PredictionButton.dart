@@ -78,6 +78,7 @@ class _PredictionButtonState extends State<PredictionButton>
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(0),
+            primary: Theme.of(context).chipTheme.secondarySelectedColor
           ),
           // handle a short press
           onPressed: () {
