@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -44,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
           showRatePopup(context, false);
         
         // show a rating dialogue WITH "do not show again"-option
-        else if(!GetIt.I<UserData>().doNotShowRateAgain && 
+        else if((!GetIt.I<UserData>().doNotShowRateAgain && 
           !GetIt.I<UserData>().rateDialogueWasShown && 
-          appOpenedTimes > 31 && appOpenedTimes % 10 == 0)
+          appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0))
           showRatePopup(context, true);
       
 
