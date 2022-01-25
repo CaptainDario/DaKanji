@@ -1,7 +1,9 @@
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 
 
@@ -34,7 +36,7 @@ import 'package:url_launcher/url_launcher.dart';
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    child: Text("Close")
+                    child: Text(LocaleKeys.close.tr())
                   ),
                 ]
               )
