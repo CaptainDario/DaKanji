@@ -83,7 +83,8 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 child: Text(LocaleKeys.HomeScreen_RatePopup_rate.tr())
               ),
             ],
-          )
+          ),
+          SizedBox(height: 10,)
         ],
       )
     )
