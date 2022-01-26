@@ -168,10 +168,15 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           case Screens.drawing:
                             title = LocaleKeys.DrawScreen_title.tr();
                             break;
+                          case Screens.home:
+                            throw Exception("HomeScreen should be navigated to via drawer");
                           case Screens.settings:
                             title = LocaleKeys.SettingsScreen_title.tr();
                             break;
-                          case Screens.webviewDrawing:
+                          case Screens.onboarding:
+                            title = "test";
+                            break;
+                          case Screens.webviewDict:
                             title = LocaleKeys.WebviewScreen_title.tr();
                             break;
                         }

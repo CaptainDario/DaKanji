@@ -12,8 +12,11 @@ import 'package:da_kanji_mobile/view/home/WhatsNewDialog.dart';
 
 /// The "home"-screen
 /// 
+/// If this is the first app start or a new feature was added shows the
+/// onBoarding
 /// If a new version was installed shows a popup with the CHANGELOG of this 
-/// version. Otherwise navigates to the "draw"-screen.
+/// version. 
+/// Otherwise navigates to the "draw"-screen.
 class HomeScreen extends StatefulWidget {
 
   @override
@@ -21,6 +24,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  // how often was the app opened
+  final appOpenedTimes = GetIt.I<UserData>().appOpenedTimes;
 
 
   @override
@@ -30,10 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-
-      final appOpenedTimes = GetIt.I<UserData>().appOpenedTimes;
+      
+      if(appOpenedTimes > 1){
+        Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
+      }
       // show a rating dialogue WITHOUT "do not show again"-option
-      if((!GetIt.I<UserData>().doNotShowRateAgain && 
+      else if((!GetIt.I<UserData>().doNotShowRateAgain && 
         !GetIt.I<UserData>().rateDialogueWasShown && 
         appOpenedTimes < 31 && appOpenedTimes % 10 == 0))
           showRatePopup(context, false);
@@ -62,6 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold();
+    return Scaffold();
   }
 }
