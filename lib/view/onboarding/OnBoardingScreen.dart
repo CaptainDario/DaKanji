@@ -20,7 +20,7 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
-  int nrPages = 3;
+  int nrPages = 2;
 
   @override
   void initState() { 
@@ -30,17 +30,24 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        LiquidSwipe(
-          enableLoop: false,
-          pages: [
-            OnBoardingPage(context, 1, nrPages, Colors.amber),
-            OnBoardingPage(context, 2, nrPages, Colors.red),
-            OnBoardingPage(context, 3, nrPages, Colors.green)
-          ] 
-        ),
-      ],
+    return Scaffold(
+      body: LiquidSwipe(
+        enableLoop: false,
+        pages: [
+          OnBoardingPage(
+            context, 1, nrPages,
+            Theme.of(context).highlightColor,
+            "You do not know a Kanji?",
+            "Just draw it!"
+          ),
+          OnBoardingPage(
+            context, 2, nrPages, 
+            Theme.of(context).primaryColor,
+            "Look up characters with", 
+            "web and app dictionaries."),
+          //OnBoardingPage(context, 3, nrPages, Theme.of(context).buttonTheme.colorScheme!.primary)
+        ] 
+      ),
     );
   }
 }
