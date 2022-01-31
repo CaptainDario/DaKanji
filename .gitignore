@@ -54,3 +54,7 @@ blobs/libtensorflowlite_c-win.dll
 
 # add tf lite desktop binaries
 !blobs/**
+
+# ignore animations and artworks
+assets/animations/
+assets/artwork/
