@@ -145,7 +145,7 @@ static const Map<String,dynamic> en = {
     "rate_this_app": "Rate this app",
     "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters:\n\n- all 漢字 from 漢字検定\n- ひらがな (also historical ones: ゑ, etc.)\n- カタカナ (also historical ones: ヱ, etc.)\n\nBut the feature set will be vastly improved in the coming releases.\n\nA desktop version is available [here.](GITHUB_DESKTOP_REPO)\nThe app was developed using dart with the Flutter framework and is source available.\nIf you want to learn more about the development of the app, [visit its GitHub repository.](GITHUB_MOBILE_REPO)\nIf you want to learn more about the machine learning models powering this app, [take a look here.](GITHUB_ML_REPO)\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES) or join the [discord server.](DISCORD_SERVER)\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "show_changelog": "Show me the complete changelog.",
-    "software_informations_button": "software informations"
+    "software_informations_button": "Software informations"
   },
   "ChangelogScreen": {
     "title": "Changelog"
