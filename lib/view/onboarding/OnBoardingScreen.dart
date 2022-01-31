@@ -1,7 +1,9 @@
+import 'package:da_kanji_mobile/view/drawing/MockDrawScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:blobs/blobs.dart';
 
 
 
@@ -20,7 +22,16 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
-  int nrPages = 2;
+  // total number of onboarding pages
+  int totalPages = 2;
+    
+  // the size of the blob to indicate that the page can be turned by swiping
+  double blobSize = 75.0;
+
+  double buttonHeight = 50.0;
+
+  LiquidController liquidController = LiquidController();
+
 
   @override
   void initState() { 
@@ -30,25 +41,54 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
+    List<Color> pageColors = [
+      Theme.of(context).highlightColor,
+      Theme.of(context).primaryColor,
+      Colors.transparent
+    ];
+
     return Scaffold(
-      body: LiquidSwipe(
+      body: LiquidSwipe(            
+        slideIconWidget: Transform.translate(
+          offset: Offset(blobSize*0.5, 0),
+          child: Blob.animatedRandom(
+            styles: BlobStyles(
+              color: pageColors[liquidController.currentPage+1]
+            ),
+            size: blobSize,
+            duration: Duration(milliseconds: 1000),
+            loop: true,
+            child: Icon(Icons.arrow_back_ios),
+          ),
+        ),
+        liquidController: liquidController,
+        fullTransitionValue: 880,
         enableLoop: false,
         pages: [
           OnBoardingPage(
-            context, 1, nrPages,
-            Theme.of(context).highlightColor,
+            context, 1, totalPages,
+            pageColors[0],
             "You do not know a Kanji?",
-            "Just draw it!"
+            "Just draw it!",
+            liquidController
           ),
           OnBoardingPage(
-            context, 2, nrPages, 
-            Theme.of(context).primaryColor,
+            context, 2, totalPages,
+            pageColors[1],
             "Look up characters with", 
-            "web and app dictionaries."),
+            "web and app dictionaries.",
+            liquidController
+          ),
+          MockDrawScreen(false)
+          //Container(color: pageColors[2])
           //OnBoardingPage(context, 3, nrPages, Theme.of(context).buttonTheme.colorScheme!.primary)
-        ] 
+        ],
+        onPageChangeCallback: (int activePageIndex) {
+        },
       ),
     );
   }
+
 }
 

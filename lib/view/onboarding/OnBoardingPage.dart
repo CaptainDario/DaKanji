@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 
 
 
@@ -10,7 +11,9 @@ import 'package:flutter/material.dart';
 // of OnBoarding-Pages. `bgColor` is the background color for this page.
 */
 Widget OnBoardingPage(
-  BuildContext context, int nr, int totalNr, Color bgColor, String headerText, String text) {
+  BuildContext context, int nr, int totalPages, 
+  Color bgColor, String headerText, String text,
+  LiquidController liquidController) {
 
   // the size of the indicators showing on which page the user currently is
   double indicatorSize = 5;
@@ -18,7 +21,7 @@ Widget OnBoardingPage(
   double sWidth  = MediaQuery.of(context).size.width;
   double sHeight = MediaQuery.of(context).size.height;
 
-  double imageSize = sHeight * 0.5;
+  double imageSize = sHeight*0.5 < sWidth*0.95 ? sHeight*0.5 : sWidth*0.95;
   double textSize = sHeight * 0.3;
 
   return Container(
@@ -52,32 +55,32 @@ Widget OnBoardingPage(
           ]
         ),
         Positioned(
-          top: sHeight * 0.925,
-          left: (sWidth / 2) - (imageSize/2),
-          width: imageSize,
+          bottom: 5,
           child: Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
               
               children: () {
                 List<Widget> widgets = [];
 
-                widgets.add(
-                  OutlinedButton(
-                    style: ButtonStyle(
-                      shadowColor:  MaterialStateProperty.all(Colors.white),
-                      foregroundColor: MaterialStateProperty.all(Color.fromARGB(150, 255, 255, 255)),
-                      side: MaterialStateProperty.all(
-                        BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                      ),
+                widgets.add(OutlinedButton(
+                  style: ButtonStyle(
+                    shadowColor:  MaterialStateProperty.all(Colors.white),
+                    foregroundColor: MaterialStateProperty.all(Color.fromARGB(150, 255, 255, 255)),
+                    side: MaterialStateProperty.all(
+                      BorderSide(color: Color.fromARGB(0, 255, 255, 255))
                     ),
-                    onPressed: (){}, 
-                    child: Text("Skip")
-                  )
-                );
-                widgets.add(SizedBox(width: indicatorSize*5,));
+                  ),
+                  onPressed: (){
+                    Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
+                  }, 
+                  child:Text("Skip")
+                ));
 
-                for (int i = 0; i < totalNr; i++) {
+                widgets.add(SizedBox(width: 50));
+
+                for (int i = 0; i < totalPages; i++) {
                   widgets.add(
                     Container(
                       width: indicatorSize,
@@ -88,24 +91,32 @@ Widget OnBoardingPage(
                       ),
                     )
                   );
-                  widgets.add(SizedBox(width: indicatorSize,));
+                  if(i+1 < totalPages) 
+                    widgets.add(SizedBox(width: indicatorSize,));
                 }
                 
-                widgets.add(SizedBox(width: indicatorSize*5,));
-                widgets.add(
-                  OutlinedButton(
-                    style: ButtonStyle(
-                      shadowColor:  MaterialStateProperty.all(Colors.white),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      side: MaterialStateProperty.all(
-                        BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                      ),
+                widgets.add(SizedBox(width: 50));
+              
+                widgets.add(OutlinedButton(
+                  style: ButtonStyle(
+                    shadowColor:  MaterialStateProperty.all(Colors.white),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    side: MaterialStateProperty.all(
+                      BorderSide(color: Color.fromARGB(0, 255, 255, 255))
                     ),
-                    onPressed: (){}, 
-                    child: Text("Next →")
-                  )
-                );
-
+                  ),
+                  onPressed: (){
+                    liquidController.animateToPage(
+                      page: liquidController.currentPage + 1
+                    );
+                    if(liquidController.currentPage == totalPages-1){
+                      Future.delayed(Duration(milliseconds: 1000), () => 
+                        Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
+                      );
+                    }
+                  }, 
+                  child: Text("Next →")
+                ));
                 return widgets;
               } ()
             ),
