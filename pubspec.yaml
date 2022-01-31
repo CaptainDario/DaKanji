@@ -31,6 +31,7 @@ dependencies:
   tuple: 2.0.0
   lottie: 1.2.1
   liquid_swipe: 2.1.1
+  blobs: 2.0.0
 
   # do NOT support all target platforms
   webviewx: 0.2.1                 # android, iOS, web
