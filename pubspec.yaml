@@ -6,14 +6,15 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.4.0+28
 
 environment:
-  sdk: 2.15.1
-  flutter: 2.8.1
+  sdk: 2.16.0
+  flutter: 2.10.0
 
 dependencies:
   flutter:
     sdk: flutter
   
   # all platforms supported
+  platform: ^3.1.0
   shared_preferences: 2.0.6
   url_launcher: 6.0.7
   device_info_plus: 2.0.1
@@ -30,7 +31,8 @@ dependencies:
   flutter_layout_grid: 1.0.3
   tuple: 2.0.0
   lottie: 1.2.1
-  liquid_swipe: 2.1.1
+  liquid_swipe:
+    path: ./plugins/liquid_swipe_flutter
   blobs: 2.0.0
 
   # do NOT support all target platforms
