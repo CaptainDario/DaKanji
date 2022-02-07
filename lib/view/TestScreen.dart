@@ -1,4 +1,5 @@
 import 'package:da_kanji_mobile/view/FoldingWidget.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,39 +24,20 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("TestScreen"),),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.play_arrow),
-        onPressed: () => foldingKey.currentState?.toggleFold(),
-      ),
-      body: 
-        Center(
-          child: FoldingWidget(
-            // outer widget
-            Container(
-              color: Colors.green,
-              child: Icon(Icons.brush_outlined),
-            ),
-            SizedBox(
-              width: 400,
-              height: 400,
-              child: 
-              Container(
-                color: Colors.black,
-                child: Image( image: AssetImage("media/icon.png"),
-                ),
-              ),
-            ),
-            foldingKey, 400, 400,
-            foldingColor: Colors.green,
-            onClose: () {
-              print("close");
-            },
-            onOpen: () {
-              print("open");
-            },
+      body: Row(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width/2,
+            height: MediaQuery.of(context).size.height,
+            child: DrawScreen(false)
           ),
-        ),
-
+          Container(
+            width: MediaQuery.of(context).size.width/2,
+            height: MediaQuery.of(context).size.height,
+            child: DrawScreen(false)
+          )
+        ],
+      ) 
     );
   }
 }

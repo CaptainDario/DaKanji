@@ -109,9 +109,9 @@ Future<void> initGetIt() async {
 
 ///
 void desktopWindowSetup() {
-  setWindowMinSize(Size(480, 720));
-  setWindowTitle(APP_TITLE);
-  setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
+  //setWindowMinSize(Size(480, 720));
+  //setWindowTitle(APP_TITLE);
+  //setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
 }
 
 /// The starting widget of the app
@@ -188,6 +188,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
       //screens
       home: HomeScreen(),
+      //home: TestScreen()
     );
   }
 }
