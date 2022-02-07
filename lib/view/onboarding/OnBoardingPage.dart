@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:core';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -24,6 +26,8 @@ Widget OnBoardingPage(
   double imageSize = sHeight*0.5 < sWidth*0.95 ? sHeight*0.5 : sWidth*0.95;
   double textSize = sHeight * 0.3;
 
+
+
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
@@ -33,11 +37,59 @@ Widget OnBoardingPage(
       children: [
         Column(
           children: [
-            SizedBox(height: sHeight * 0.05),
-            Image.asset(
-              'assets/artwork/onboarding_${nr}.png',
-              width: imageSize,
-              height: imageSize,
+            SizedBox(
+              height: sHeight * 0.05,
+              width: sWidth,
+            ),
+            Provider.value(
+              value: liquidController.provider?.slidePercentHor,
+              child: 
+              Container(
+                width: imageSize,
+                height: imageSize,
+                child: Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    Positioned(
+                      height: imageSize,
+                      left: () {
+                        // assure that the current swipe process is not 0
+                        if(liquidController.provider == null) return 0.0;
+
+                        var ret = -liquidController.provider!.slidePercentHor * 25;
+
+                        if (liquidController.currentPage != nr-1) 
+                          return ret + 25;
+                        else
+                          return ret;
+                      } (),
+                      child: Image.asset(
+                        'assets/artwork/onboarding_${nr}_1.png',
+                      ),
+                    ),
+                    Positioned(
+                      height: imageSize,
+                      width: imageSize,
+                      left: () {
+                        // assure that the current swipe process is not 0
+                        if(liquidController.provider == null) return 0.0;
+
+                        var ret = liquidController.provider!.slidePercentHor * 50;
+
+                        print(ret);
+
+                        if (liquidController.currentPage != nr-1) 
+                          return ret - 50;
+                        else
+                          return ret;
+                      } (),
+                      child: Image.asset(
+                        'assets/artwork/onboarding_${nr}_2.png',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Container(
               height: textSize / 2,
@@ -60,7 +112,6 @@ Widget OnBoardingPage(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-              
               children: () {
                 List<Widget> widgets = [];
 
@@ -73,7 +124,7 @@ Widget OnBoardingPage(
                     ),
                   ),
                   onPressed: (){
-                    Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
+                    //Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
                   }, 
                   child:Text("Skip")
                 ));
