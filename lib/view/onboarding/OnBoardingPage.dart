@@ -135,7 +135,7 @@ Widget OnBoardingPage(
                     ),
                   ),
                   onPressed: (){
-                    //Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
+                    liquidController.animateToPage(page: totalPages);
                   }, 
                   child:Text("Skip")
                 ));
@@ -171,11 +171,6 @@ Widget OnBoardingPage(
                     liquidController.animateToPage(
                       page: liquidController.currentPage + 1
                     );
-                    if(liquidController.currentPage == totalPages-1){
-                      Future.delayed(Duration(milliseconds: 1000), () => 
-                        Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
-                      );
-                    }
                   }, 
                   child: Text("Next →")
                 ));
