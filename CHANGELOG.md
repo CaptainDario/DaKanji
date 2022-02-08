@@ -5,12 +5,12 @@
 
 new Features:
 
-- None
+- Onboarding
 
 Changes:
 
-- Updated to Flutter 2.8.1
-- Updated dart to 2.15.1 (null safety)
+- Updated to Flutter 2.10.0 (stable windows support)
+- Updated dart to 2.16.0 (null safety)
 
 Fixed:
 
