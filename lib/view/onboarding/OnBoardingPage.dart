@@ -59,7 +59,7 @@ Widget OnBoardingPage(
                         var ret = -liquidController.provider!.slidePercentHor * 25;
 
                         if (liquidController.currentPage != nr-1) 
-                          return ret + 25;
+                          return -ret - 25;
                         else
                           return ret;
                       } (),
@@ -74,12 +74,10 @@ Widget OnBoardingPage(
                         // assure that the current swipe process is not 0
                         if(liquidController.provider == null) return 0.0;
 
-                        var ret = liquidController.provider!.slidePercentHor * 50;
-
-                        print(ret);
+                        var ret = -liquidController.provider!.slidePercentHor * 50;
 
                         if (liquidController.currentPage != nr-1) 
-                          return ret - 50;
+                          return -ret - 50;
                         else
                           return ret;
                       } (),
