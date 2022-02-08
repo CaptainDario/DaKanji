@@ -20,6 +20,10 @@ Widget OnBoardingPage(
   // the size of the indicators showing on which page the user currently is
   double indicatorSize = 5;
 
+  // the amount of parallax
+  double parallax_low  = 25.0;
+  double parallax_high = 50.0;
+
   double sWidth  = MediaQuery.of(context).size.width;
   double sHeight = MediaQuery.of(context).size.height;
 
@@ -56,12 +60,19 @@ Widget OnBoardingPage(
                         // assure that the current swipe process is not 0
                         if(liquidController.provider == null) return 0.0;
 
-                        var ret = -liquidController.provider!.slidePercentHor * 25;
+                        var ret = -liquidController.provider!.slidePercentHor * parallax_low;
 
-                        if (liquidController.currentPage != nr-1) 
-                          return -ret - 25;
-                        else
-                          return ret;
+                        if (liquidController.currentPage > nr-1) 
+                          return -ret - parallax_low;
+                        else if (liquidController.currentPage == nr-1){
+                          print(liquidController.provider!.slideDirection);
+                          if(liquidController.provider!.slideDirection == SlideDirection.rightToLeft)
+                            return ret;
+                          if(liquidController.provider!.slideDirection == SlideDirection.leftToRight)
+                            return -ret;
+                        }
+                        else if(liquidController.currentPage < nr-1)
+                          return ret + parallax_low;
                       } (),
                       child: Image.asset(
                         'assets/artwork/onboarding_${nr}_1.png',
@@ -74,12 +85,19 @@ Widget OnBoardingPage(
                         // assure that the current swipe process is not 0
                         if(liquidController.provider == null) return 0.0;
 
-                        var ret = -liquidController.provider!.slidePercentHor * 50;
+                        var ret = -liquidController.provider!.slidePercentHor * parallax_high;
 
-                        if (liquidController.currentPage != nr-1) 
-                          return -ret - 50;
-                        else
-                          return ret;
+                        if (liquidController.currentPage > nr-1) 
+                          return -ret - parallax_high;
+                        else if (liquidController.currentPage == nr-1){
+                          print(liquidController.provider!.slideDirection);
+                          if(liquidController.provider!.slideDirection == SlideDirection.rightToLeft)
+                            return ret;
+                          if(liquidController.provider!.slideDirection == SlideDirection.leftToRight)
+                            return -ret;
+                        }
+                        else if(liquidController.currentPage < nr-1)
+                          return ret + parallax_high;
                       } (),
                       child: Image.asset(
                         'assets/artwork/onboarding_${nr}_2.png',

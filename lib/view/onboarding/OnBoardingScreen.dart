@@ -22,7 +22,7 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen>
   with TickerProviderStateMixin {
 
-  // total number of onboarding pages
+  // total number of onboarding pages (excluding the final drawing screen)
   int totalPages = 2;
     
   // the size of the blob to indicate that the page can be turned by swiping
@@ -103,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               DrawScreen(false),
             ],
             onPageChangeCallback: (int activePageIndex) {
-              // change the current route to 
+              // change the current route to the drawing screen
               if (activePageIndex == totalPages){
                 Future.delayed(Duration(milliseconds: 1000), () => 
                   Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
