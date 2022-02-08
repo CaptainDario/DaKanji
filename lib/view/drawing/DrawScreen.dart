@@ -92,7 +92,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   _canvasSize,
                   strokes,
                   EdgeInsets.all(0),
-                  SHOWCASE_DRAWING[0].key,
+                  SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[0].key : GlobalKey(),
                   onFinishedDrawing: (Uint8List image) async {
                     GetIt.I<DrawingInterpreter>().runInference(image);
                   },
@@ -116,7 +116,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     width:  _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOWCASE_DRAWING[1].key,
+                        key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                         icon: Icon(Icons.undo),
                         iconSize: 100,
                         color: Theme.of(context).highlightColor,
@@ -134,18 +134,19 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               value: GetIt.I<KanjiBuffer>(),
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
-                  return Hero(
+                  return  /*Hero(
                   tag: "webviewHero_b_" + 
                     (kanjiBuffer.kanjiBuffer == "" 
                       ? "Buffer" : kanjiBuffer.kanjiBuffer),
-                    child: Center(
-                      key: SHOWCASE_DRAWING[6].key,
+                    child: */
+                    Center(
+                      key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
                       child: KanjiBufferWidget(
                         _canvasSize,
                         landscape ? 1.0 : 0.7,
                       )
-                    )
-                  );
+                    );
+                  //);
                 }
               ),
             );
@@ -157,7 +158,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     width: _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOWCASE_DRAWING[2].key,
+                        key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                         icon: Icon(Icons.clear),
                         iconSize: 100,
                         color: Theme.of(context).highlightColor,
@@ -172,7 +173,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // prediction buttons
             Widget predictionButtons = Container(
-              key: SHOWCASE_DRAWING[3].key,
+              key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[3].key : GlobalKey(),
               //use canvas height in landscape
               width :  landscape ? (_canvasSize * 0.4) : _canvasSize,
               height: !landscape ? (_canvasSize * 0.4) : _canvasSize, 
@@ -193,7 +194,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         // instantiate short/long press showcase button
                         if(i == 0){
                           widget = Container(
-                            key: SHOWCASE_DRAWING[4].key,
+                            key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[4].key : GlobalKey(),
                             child: widget 
                           );
                         }
