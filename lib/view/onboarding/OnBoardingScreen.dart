@@ -57,6 +57,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   }
 
   @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     
     List<Color> pageColors = [
@@ -94,9 +100,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 "web and app dictionaries.",
                 liquidController
               ),
-              DrawScreen(false)
+              DrawScreen(false),
             ],
             onPageChangeCallback: (int activePageIndex) {
+              // change the current route to 
               if (activePageIndex == totalPages){
                 Future.delayed(Duration(milliseconds: 1000), () => 
                   Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
