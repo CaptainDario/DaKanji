@@ -93,11 +93,24 @@ Widget OnBoardingPage(
               height: textSize / 2,
               width: imageSize,
               child: FittedBox(
-                child: Text(
-                  headerText,
+                child: RichText(
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
+                  text: TextSpan(
+                    
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: headerText + "\n", 
+                        style: TextStyle(
+                          fontSize: 30
+                        )
+                      ),
+                      TextSpan(
+                        text: text,
+                        style: TextStyle(
+                          fontSize: 28
+                        )
+                      ),
+                    ],
                   ),
                 ),
               ),
