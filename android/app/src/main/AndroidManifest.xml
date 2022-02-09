@@ -10,11 +10,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <application
-        android:name="io.flutter.embedding.android.FlutterApplication"
+        android:name="${applicationName}"
         android:label="DaKanji"
         android:icon="@mipmap/launcher_icon">
         <activity
-            android:name=".MainActivity"
+            android:name="io.flutter.embedding.android.FlutterActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
