@@ -100,7 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 "web and app dictionaries.",
                 liquidController
               ),
-              DrawScreen(false),
+              DrawScreen(false, false),
             ],
             onPageChangeCallback: (int activePageIndex) {
               // change the current route to the drawing screen

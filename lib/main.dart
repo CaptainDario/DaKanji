@@ -109,9 +109,9 @@ Future<void> initGetIt() async {
 
 ///
 void desktopWindowSetup() {
-  //setWindowMinSize(Size(480, 720));
-  //setWindowTitle(APP_TITLE);
-  //setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
+  setWindowMinSize(Size(480, 720));
+  setWindowTitle(APP_TITLE);
+  setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
 }
 
 /// The starting widget of the app
@@ -166,7 +166,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/onboarding":
             return switchScreen(OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer));
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":

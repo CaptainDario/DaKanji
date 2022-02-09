@@ -29,12 +29,12 @@ class _TestScreenState extends State<TestScreen> {
           Container(
             width: MediaQuery.of(context).size.width/2,
             height: MediaQuery.of(context).size.height,
-            child: DrawScreen(false)
+            child: DrawScreen(false, false)
           ),
           Container(
             width: MediaQuery.of(context).size.width/2,
             height: MediaQuery.of(context).size.height,
-            child: DrawScreen(false)
+            child: DrawScreen(false, false)
           )
         ],
       ) 

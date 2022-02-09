@@ -28,8 +28,10 @@ class DrawScreen extends StatefulWidget {
   final showcase = DrawScreenShowcase();
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
+  // should the hero widgets for animating to the webview be included
+  final bool includeHeroes;
 
-  DrawScreen(this.openedByDrawer);
+  DrawScreen(this.openedByDrawer, this.includeHeroes);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -134,19 +136,21 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               value: GetIt.I<KanjiBuffer>(),
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
-                  return  /*Hero(
-                  tag: "webviewHero_b_" + 
-                    (kanjiBuffer.kanjiBuffer == "" 
-                      ? "Buffer" : kanjiBuffer.kanjiBuffer),
-                    child: */
-                    Center(
-                      key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
-                      child: KanjiBufferWidget(
-                        _canvasSize,
-                        landscape ? 1.0 : 0.7,
-                      )
+                  Widget widget = Center(
+                    key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
+                    child: KanjiBufferWidget(
+                      _canvasSize,
+                      landscape ? 1.0 : 0.7,
+                    )
+                  );
+                  if (this.widget.includeHeroes)
+                    widget = Hero(
+                      tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
+                        ? "Buffer" 
+                        : kanjiBuffer.kanjiBuffer),
+                      child: widget
                     );
-                  //);
+                  return widget;
                 }
               ),
             );
@@ -198,12 +202,15 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                             child: widget 
                           );
                         }
-                        return Hero(
-                          tag: "webviewHero_" + 
-                            (interpreter.predictions[i] == " " 
-                              ? i.toString() : interpreter.predictions[i]),
-                          child: widget,
-                        );
+                        if(this.widget.includeHeroes)
+                          widget = Hero(
+                            tag: "webviewHero_" + (interpreter.predictions[i] == " " 
+                              ? i.toString() 
+                              : interpreter.predictions[i]),
+                            child: widget,
+                          );
+
+                        return widget;
                       },
                       )
                     );
