@@ -35,8 +35,8 @@ Tuple2<bool, double> DrawScreenRunsInLandscape(BoxConstraints constraints){
     var rowSpacing = 40;
     canvasSize = cBHeight - predictionButtonheight - rowSpacing;
     // assure that the canvas is not wider than the screen
-    if(canvasSize > cBWidth)
-      canvasSize = cBWidth - 10;
+    if(canvasSize > cBWidth - 25)
+      canvasSize = cBWidth - 25;
 
     landscape = false;
   }
@@ -89,7 +89,7 @@ Widget DrawScreenPortraitLayout(
             ],
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 20,),
         predictionButtons
       ]
     ),
@@ -107,22 +107,30 @@ Widget DrawScreenLandscapeLayout(
 
   layout = Center(
     child: LayoutGrid(
-      //rowGap: 5,
-      columnGap: 10,
+      rowGap: 5,
+      //columnGap: 15,
       columnSizes: [
-        FixedTrackSize(canvasSize), 
+        FixedTrackSize(canvasSize),
         FixedTrackSize(canvasSize * 0.2), 
         FixedTrackSize(canvasSize * 0.2)
       ], 
       rowSizes: [FixedTrackSize(canvasSize), FixedTrackSize(canvasSize*0.2)],
       children: [
         drawingCanvas.withGridPlacement(columnStart: 0, rowStart: 0),
-        predictionButtons.withGridPlacement(
-          columnStart: 1, columnSpan: 2, rowStart: 0
-        ),
+        Container(
+          //color: Colors.amber,
+          child: predictionButtons
+        ).withGridPlacement(
+            columnStart: 1, columnSpan: 2, rowStart: 0
+          ),
         multiCharSearch.withGridPlacement(columnStart: 0, rowStart: 1),
-        Align(alignment: Alignment.topCenter, child: undoButton),
-        clearButton
+        Align(
+          alignment: Alignment.topCenter,
+          child: undoButton
+        ).withGridPlacement(columnStart: 1, rowStart: 1),
+        Center(
+          child: clearButton
+        ).withGridPlacement(columnStart: 2, rowStart: 1)
       ],
     ),
   );
