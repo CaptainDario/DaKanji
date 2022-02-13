@@ -4,7 +4,7 @@ import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 
 
 
-/// Class which notifies its listeners always when [_value] changed.
+/// Class which notifies its listeners always when [_chars] changed.
 class Lookup with ChangeNotifier{
   
   /// the character(s) which can be searched in a dictionary
@@ -36,7 +36,10 @@ class Lookup with ChangeNotifier{
     return _longPress;
   }
 
-  /// set the current value to [value] and notify listeners
+  /// Set the current value to [value] and notify listeners
+  /// [buffer] indicates if [value] is from the KanjiBuffer and [longPress]
+  /// indicates if the lookup was started with a long press
+  /// Notifies all listeners afterwards
   void setChar(String value,
     {bool buffer = false, bool longPress = false}){
     _chars = value;
