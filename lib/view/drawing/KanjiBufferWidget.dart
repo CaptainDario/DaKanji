@@ -1,10 +1,9 @@
 import 'dart:math';
 
-import 'package:da_kanji_mobile/provider/Lookup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 import 'package:get_it/get_it.dart';
 
@@ -131,9 +130,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    if(GetIt.I<KanjiBuffer>().runAnimation){
+    if(GetIt.I<DrawScreenState>().kanjiBuffer.runAnimation){
       _scaleInNewCharController.forward(from: 0.0);
-      GetIt.I<KanjiBuffer>().runAnimation = false;
+      GetIt.I<DrawScreenState>().kanjiBuffer.runAnimation = false;
     }
 
     charactersFit = calculateCharactersFit();
@@ -151,12 +150,12 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
           );
           // delete the last char if drag over the threshold
           if(_dragAlignment.x < -0.03 && !deletedWithSwipe &&
-            GetIt.I<KanjiBuffer>().kanjiBuffer.length > 0){
+            GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
 
             // if the delete animation is already running delete the character
             // of the old animation
             if(_scaleInNewCharController.status == AnimationStatus.reverse)
-              GetIt.I<KanjiBuffer>().removeLastChar();
+              GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
 
             // run the animation in reverse and at the end delete the char
             _scaleInNewCharController.reverse();
@@ -165,7 +164,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
               () { 
                 _scaleInNewCharController.stop();
                 _scaleInNewCharController.value = 1.0;
-                GetIt.I<KanjiBuffer>().removeLastChar();
+                GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
               }
              );
             deletedWithSwipe = true;
@@ -180,13 +179,13 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
       // empty on double press
       onDoubleTap: () {
         // start the delete animation if there are characters in the buffer
-        if(GetIt.I<KanjiBuffer>().kanjiBuffer.length > 0){
+        if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
           _rotationXController.forward(from: 0.0);
 
           //delete the characters after the animation
           Future.delayed(Duration(milliseconds: (_rotationXDuration/4).round()), (){
             setState(() {
-               GetIt.I<KanjiBuffer>().clearKanjiBuffer();           
+               GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();           
             });
           });
         }
@@ -202,18 +201,18 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
             child: OutlinedButton(
               // copy to clipboard and show snackbar
               onPressed: (){
-                GetIt.I<Lookup>().setChar(
-                  GetIt.I<KanjiBuffer>().kanjiBuffer, buffer: true
+                GetIt.I<DrawScreenState>().drawingLookup.setChar(
+                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, buffer: true
                 );
-                HandlePrediction().handlePress(context); 
+                handlePress(context); 
               },
               // open with dictionary on long press
               onLongPress: (){
-                GetIt.I<Lookup>().setChar(
-                  GetIt.I<KanjiBuffer>().kanjiBuffer,
+                GetIt.I<DrawScreenState>().drawingLookup.setChar(
+                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer,
                   buffer: true, longPress: true
                 );
-                HandlePrediction().handlePress(context); 
+                handlePress(context); 
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -221,17 +220,17 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                   FittedBox(
                     child: Text(
                       () { 
-                        int length = GetIt.I<KanjiBuffer>().kanjiBuffer.length;
+                        int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
                         
                         // more than one character is in the kanjibuffer
                         if(length > 1){
                           // more character in the buffer than can be shown
-                          if(GetIt.I<KanjiBuffer>().kanjiBuffer.length > charactersFit)
-                            return "…" +  GetIt.I<KanjiBuffer>().kanjiBuffer
+                          if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > charactersFit)
+                            return "…" +  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer
                               .substring(length-charactersFit, length-1);
                           // whole buffer can be shown
                           else{
-                            return GetIt.I<KanjiBuffer>()
+                            return GetIt.I<DrawScreenState>().kanjiBuffer
                               .kanjiBuffer.substring(0, length-1);
                           }
                         }
@@ -252,9 +251,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                     child: FittedBox(
                       child: Text(
                         () {
-                          int length = GetIt.I<KanjiBuffer>().kanjiBuffer.length;
+                          int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
                           if(length > 0)
-                            return GetIt.I<KanjiBuffer>().kanjiBuffer[length - 1];
+                            return GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[length - 1];
                           else
                             return " ";
                         } (),

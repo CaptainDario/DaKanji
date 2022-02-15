@@ -9,8 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/drawing//PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
@@ -78,13 +80,18 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       currentScreen: Screens.drawing,
       animationAtStart: !widget.openedByDrawer,
       child: ChangeNotifierProvider.value(
-        value: GetIt.I<Strokes>(),
+        value: GetIt.I<DrawScreenState>().strokes,
         child: LayoutBuilder(
           builder: (context, constraints){
 
-            var t = DrawScreenRunsInLandscape(constraints);
-            bool landscape = t.item1;
-            _canvasSize = t.item2;
+            var t = GetDrawScreenLayout(constraints);
+            GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
+            bool runningInLandscape = 
+              t.item1 == DrawScreenLayout.Landscape || 
+              t.item1 == DrawScreenLayout.LandscapeWithWebview;
+              _canvasSize = t.item2;
+            GetIt.I<DrawScreenState>().canvasSize = _canvasSize;
+            
             
             // the canvas to draw on
             Widget drawingCanvas = Consumer<Strokes>(
@@ -133,7 +140,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // multi character search input
             Widget multiCharSearch = ChangeNotifierProvider.value(
-              value: GetIt.I<KanjiBuffer>(),
+              value: GetIt.I<DrawScreenState>().kanjiBuffer,
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
                   Widget widget = Center(

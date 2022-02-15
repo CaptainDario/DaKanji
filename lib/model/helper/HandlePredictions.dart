@@ -6,8 +6,9 @@ import 'package:flutter_appavailability/flutter_appavailability.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/provider/Lookup.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/DownloadAppDialogue.dart';
 import 'package:da_kanji_mobile/view/WebviewScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,21 +25,21 @@ class HandlePrediction{
 
   void handlePress(BuildContext context){
 
-    // presses should be inverted
-    if(GetIt.I<Settings>().invertShortLongPress){
-      if(!GetIt.I<Lookup>().longPress)
-        openDictionary(context, GetIt.I<Lookup>().chars);
-      else
-        copy(context, GetIt.I<Lookup>().chars);
-    }
-    // presses should NOT be inverted
-    if(!GetIt.I<Settings>().invertShortLongPress){
-      if(!GetIt.I<Lookup>().longPress)
-        copy(context, GetIt.I<Lookup>().chars);
-      else
-        openDictionary(context, GetIt.I<Lookup>().chars);
-    }
+  // presses should be inverted
+  if(GetIt.I<Settings>().invertShortLongPress){
+    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress)
+      openDictionary(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
+    else
+      copy(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
   }
+  // presses should NOT be inverted
+  if(!GetIt.I<Settings>().invertShortLongPress){
+    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress)
+      copy(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
+    else
+      openDictionary(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
+  }
+}
 
 
   /// Copies [char] to the system clipboard and show a snackbar using [context].
@@ -65,18 +66,19 @@ class HandlePrediction{
     if (char != " " && char != "") {
       // url dict
       var webDicts = GetIt.I<Settings>().dictionaries.sublist(0, 4);
-      if(webDicts.contains(GetIt.I<Settings>().selectedDictionary)){ 
-        // use the default browser
-        if(!GetIt.I<Settings>().useWebview){
-          launch(openWithSelectedDictionary(char), forceSafariVC: false);
-        }
-        else
+      }
+      else{ 
+        if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Portrait ||
+          GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Landscape)
           Navigator.push(
             context, 
             MaterialPageRoute(
               builder: (BuildContext context) => WebviewScreen()
             )
           );
+        else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+          print("webview is side by side");
+      }
       }
       // handle dictionary opening on ANDROID
       if(Platform.isAndroid){

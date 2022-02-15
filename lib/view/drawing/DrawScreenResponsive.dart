@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:tuple/tuple.dart';
 
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+
 
 
 /// Checks if the app should be lay out in landscape mode or portrait mode.
@@ -11,9 +13,9 @@ import 'package:tuple/tuple.dart';
 /// Returns a tuple of which the first element is a bool. It is true when
 /// the app is running in landscape mode and false otherwise.
 /// The second element is the size of the drawing canvas
-Tuple2<bool, double> DrawScreenRunsInLandscape(BoxConstraints constraints){
+Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints){
 
-  bool landscape;
+  DrawScreenLayout layout;
 
   // init size of canvas
   //landscape

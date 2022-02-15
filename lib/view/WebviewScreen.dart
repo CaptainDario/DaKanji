@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:webviewx/webviewx.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/Lookup.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 
 
 
@@ -92,7 +92,7 @@ class _WebviewScreenState extends State<WebviewScreen>
     route?.animation?.addStatusListener(handler);
     
     return Scaffold(
-      appBar: AppBar(title: Text(GetIt.I<Lookup>().chars)),
+      appBar: AppBar(title: Text(GetIt.I<DrawScreenState>().drawingLookup.chars)),
       body: 
       
       WillPopScope(
@@ -123,10 +123,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                     alignment: Alignment.centerLeft,
                     child: () {
                         if(loadWebview){
-                          return WebViewX(
-                            initialContent:  GetIt.I<Lookup>().url,
-                            height: MediaQuery.of(context).size.height,
-                            width: width,
+                            initialUrl: GetIt.I<DrawScreenState>().drawingLookup.url,
                             onPageFinished: (s) {
                               _controller.forward(from: 0.0);
                             }

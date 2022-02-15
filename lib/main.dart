@@ -12,10 +12,12 @@ import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
 import 'package:da_kanji_mobile/model/services/DeepLinks.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/Lookup.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/provider/Changelog.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
@@ -99,12 +101,12 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
 
   // draw screen services 
-  GetIt.I.registerSingleton<KanjiBuffer>(KanjiBuffer());
-  GetIt.I.registerSingleton<Strokes>(Strokes());
+  GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
+    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
+  );
   
   // screen independent
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
-  GetIt.I.registerSingleton<Lookup>(Lookup());
 }
 
 ///
