@@ -91,7 +91,7 @@ static const Map<String,dynamic> en = {
       "text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
       "dont_ask_again": "Do not ask again",
       "rate": "Rate",
-      "close": "close"
+      "close": "Close"
     }
   },
   "DrawScreen": {
