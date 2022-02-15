@@ -12,7 +12,8 @@
     <application
         android:name="${applicationName}"
         android:label="DaKanji"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:exported="true"
