@@ -5,7 +5,7 @@ import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 
 
 /// Class which notifies its listeners always when [_chars] changed.
-class Lookup with ChangeNotifier{
+class DrawingLookup with ChangeNotifier{
   
   /// the character(s) which can be searched in a dictionary
   String _chars = "";
@@ -18,7 +18,7 @@ class Lookup with ChangeNotifier{
 
 
   /// initializes a new [KanjiBuffer] instance
-  Lookup();
+  DrawingLookup();
 
   String get chars{
     return _chars;
@@ -45,7 +45,7 @@ class Lookup with ChangeNotifier{
     _chars = value;
     _buffer = buffer;
     _longPress = longPress;
-    _url = HandlePrediction().openWithSelectedDictionary(_chars);
+    _url = openWithSelectedDictionary(_chars);
     notifyListeners();
   }
 
