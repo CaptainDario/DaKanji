@@ -1,10 +1,9 @@
 import 'dart:typed_data';
-
-import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsive.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
@@ -14,10 +13,13 @@ import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/view/drawing//PredictionButton.dart';
+import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsive.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
+
 
 
 /// The "draw"-screen.
@@ -42,10 +44,22 @@ class DrawScreen extends StatefulWidget {
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
   late double _canvasSize;
+  /// The controller of the webview which is used to show a dict in landscape
+  WebViewController? landscapeWebViewController;
+  /// in which layout the DrawScreen is being built
+  DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
+
 
   @override
   void initState() {
     super.initState();
+
+    GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+        landscapeWebViewController?.loadUrl(
+          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+        );
+    });
 
     if(!GetIt.I<DrawingInterpreter>().wasInitialized){
       // initialize the drawing interpreter
@@ -56,6 +70,12 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
+    GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+        landscapeWebViewController?.loadUrl(
+          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+        );
+    });
   }
 
   @override
@@ -97,8 +117,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget drawingCanvas = Consumer<Strokes>(
               builder: (context, strokes, __){
                 return DrawingCanvas(
-                  _canvasSize, 
-                  _canvasSize,
+                  _canvasSize, _canvasSize,
                   strokes,
                   EdgeInsets.all(0),
                   SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[0].key : GlobalKey(),
@@ -147,7 +166,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
                     child: KanjiBufferWidget(
                       _canvasSize,
-                      landscape ? 1.0 : 0.7,
+                      runningInLandscape ? 1.0 : 0.7,
                     )
                   );
                   if (this.widget.includeHeroes)
@@ -185,9 +204,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             // prediction buttons
             Widget predictionButtons = Container(
               key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[3].key : GlobalKey(),
-              //use canvas height in landscape
-              width :  landscape ? (_canvasSize * 0.4) : _canvasSize,
-              height: !landscape ? (_canvasSize * 0.4) : _canvasSize, 
+              //use canvas height in runningInLandscape
+              width :  runningInLandscape ? (_canvasSize * 0.4) : _canvasSize,
+              height: !runningInLandscape ? (_canvasSize * 0.4) : _canvasSize, 
               child: ChangeNotifierProvider.value(
                 value: GetIt.I<DrawingInterpreter>(),
                 child: Consumer<DrawingInterpreter>(
@@ -195,7 +214,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     return GridView.count(
                       //padding: EdgeInsets.all(2),
                       physics: new NeverScrollableScrollPhysics(),
-                      scrollDirection: landscape ? Axis.horizontal : Axis.vertical,
+                      scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
                       crossAxisCount: 5,
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
@@ -226,8 +245,16 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               )
             ); 
 
+            WebView? wV;
+            if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
+              wV = WebView(
+                initialUrl: openWithSelectedDictionary(""),
+                onWebViewCreated: (controller) => landscapeWebViewController = controller,
+              );
+            }
+
             return DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-              multiCharSearch, undoButton, clearButton, _canvasSize, landscape
+              multiCharSearch, undoButton, clearButton, _canvasSize, runningInLandscape, wV
             );
           }
         ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:tuple/tuple.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
@@ -29,7 +31,13 @@ Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints)
   if(cBWidth > cBHeight*0.8 + cBHeight*0.8*0.4+10){
     var columnSpacing = 10;
     canvasSize = cBHeight * 0.8 - columnSpacing;
-    landscape = true;
+    
+    // check if the screen is wide enough to fit the canvas and a webview (only if )
+    if(cBWidth > canvasSize * 1.4 + canvasSize * 2.0 &&
+      GetIt.I<Settings>().useWebview)
+      layout = DrawScreenLayout.LandscapeWithWebview;
+    else
+      layout = DrawScreenLayout.Landscape;
   }
   // portrait
   else{
@@ -40,23 +48,24 @@ Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints)
     if(canvasSize > cBWidth - 25)
       canvasSize = cBWidth - 25;
 
-    landscape = false;
+    layout = DrawScreenLayout.Portrait;
   }
 
-  return Tuple2<bool, double>(landscape, canvasSize);
+  return Tuple2<DrawScreenLayout, double>(layout, canvasSize);
 }
 
 /// Builds the DrawScreen in landscape or portrait mode according to the current 
 /// device / window it is running on and returns it.
 Widget DrawScreenResponsiveLayout(
   Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
-  Widget undoButton, Widget clearButton, double canvasSize, bool landscape){
+  Widget undoButton, Widget clearButton, double canvasSize, bool landscape,
+  WebView? webView){
 
   Widget layout;
 
   if(landscape)
     layout = DrawScreenLandscapeLayout(drawingCanvas, predictionButtons, multiCharSearch, 
-      undoButton, clearButton, canvasSize
+      undoButton, clearButton, canvasSize, webView
     );
   else
     layout = DrawScreenPortraitLayout(drawingCanvas, predictionButtons, multiCharSearch,
@@ -103,38 +112,52 @@ Widget DrawScreenPortraitLayout(
 /// Builds the DrawScreen in landscape mode and returns it.
 Widget DrawScreenLandscapeLayout(
   Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
-  Widget undoButton, Widget clearButton, double canvasSize){
+  Widget undoButton, Widget clearButton, double canvasSize, WebView? webView){
 
   Widget layout;
 
-  layout = Center(
-    child: LayoutGrid(
-      rowGap: 5,
-      //columnGap: 15,
-      columnSizes: [
-        FixedTrackSize(canvasSize),
-        FixedTrackSize(canvasSize * 0.2), 
-        FixedTrackSize(canvasSize * 0.2)
-      ], 
-      rowSizes: [FixedTrackSize(canvasSize), FixedTrackSize(canvasSize*0.2)],
-      children: [
-        drawingCanvas.withGridPlacement(columnStart: 0, rowStart: 0),
-        Container(
-          //color: Colors.amber,
-          child: predictionButtons
-        ).withGridPlacement(
-            columnStart: 1, columnSpan: 2, rowStart: 0
-          ),
-        multiCharSearch.withGridPlacement(columnStart: 0, rowStart: 1),
-        Align(
-          alignment: Alignment.topCenter,
-          child: undoButton
-        ).withGridPlacement(columnStart: 1, rowStart: 1),
-        Center(
-          child: clearButton
-        ).withGridPlacement(columnStart: 2, rowStart: 1)
-      ],
-    ),
+  layout = LayoutGrid(
+    rowGap: 5,
+    //columnGap: 15,
+    columnSizes: [
+      FixedTrackSize(canvasSize),
+      FixedTrackSize(canvasSize * 0.2), 
+      FixedTrackSize(canvasSize * 0.2)
+    ], 
+    rowSizes: [FixedTrackSize(canvasSize), FixedTrackSize(canvasSize*0.2)],
+    children: [
+      drawingCanvas.withGridPlacement(columnStart: 0, rowStart: 0),
+      Container(
+        //color: Colors.amber,
+        child: predictionButtons
+      ).withGridPlacement(
+          columnStart: 1, columnSpan: 2, rowStart: 0
+        ),
+      multiCharSearch.withGridPlacement(columnStart: 0, rowStart: 1),
+      Align(
+        alignment: Alignment.topCenter,
+        child: undoButton
+      ).withGridPlacement(columnStart: 1, rowStart: 1),
+      Center(
+        child: clearButton
+      ).withGridPlacement(columnStart: 2, rowStart: 1)
+    ],
   );
+  
+  // if there is enough space for a webview add it to the layout
+  if(webView != null){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: Center(child: layout)
+        ),
+        Expanded(
+          child: webView,
+        )
+      ],
+    );
+  }
+  
   return layout;
 }

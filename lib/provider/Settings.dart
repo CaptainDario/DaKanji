@@ -97,7 +97,7 @@ class Settings with ChangeNotifier {
     //    "CoreML"
     //  ]);
 
-    jishoURL = "https://jisho.org/search/" + kanjiPlaceholder;
+    jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
     weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
 
