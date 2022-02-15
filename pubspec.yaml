@@ -14,8 +14,8 @@ dependencies:
     sdk: flutter
   
   # all platforms supported
-  platform: ^3.1.0
-  shared_preferences: 2.0.6
+  platform: 3.1.0
+  shared_preferences: 2.0.13
   url_launcher: 6.0.7
   device_info_plus: 2.0.1
   tutorial_coach_mark: 1.0.0
@@ -36,7 +36,7 @@ dependencies:
   blobs: 2.0.0
 
   # do NOT support all target platforms
-  webviewx: 0.2.1                 # android, iOS, web
+  webview_flutter: 3.0.0          # android, iOS
   in_app_review: 2.0.2            # android, iOS, MacOS, windows (limited)
   tflite_flutter: 0.9.0           # android, iOS, Linux, MacOS, windows
   flutter_appavailability:        # android, iOS
