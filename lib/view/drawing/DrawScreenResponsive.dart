@@ -117,10 +117,11 @@ Widget DrawScreenLandscapeLayout(
   Widget layout;
 
   layout = LayoutGrid(
-    rowGap: 5,
+    //rowGap: 5,
     //columnGap: 15,
     columnSizes: [
       FixedTrackSize(canvasSize),
+      FixedTrackSize(10),
       FixedTrackSize(canvasSize * 0.2), 
       FixedTrackSize(canvasSize * 0.2)
     ], 
@@ -128,19 +129,18 @@ Widget DrawScreenLandscapeLayout(
     children: [
       drawingCanvas.withGridPlacement(columnStart: 0, rowStart: 0),
       Container(
-        //color: Colors.amber,
         child: predictionButtons
       ).withGridPlacement(
-          columnStart: 1, columnSpan: 2, rowStart: 0
+          columnStart: 2, columnSpan: 2, rowStart: 0
         ),
       multiCharSearch.withGridPlacement(columnStart: 0, rowStart: 1),
       Align(
         alignment: Alignment.topCenter,
         child: undoButton
-      ).withGridPlacement(columnStart: 1, rowStart: 1),
+      ).withGridPlacement(columnStart: 2, rowStart: 1),
       Center(
         child: clearButton
-      ).withGridPlacement(columnStart: 2, rowStart: 1)
+      ).withGridPlacement(columnStart: 3, rowStart: 1)
     ],
   );
   
