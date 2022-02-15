@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:universal_io/io.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -154,14 +155,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       settings.save();
                     }
                   ),
-                  CheckboxListTile(
-                    title: Text(LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr()),
-                    value: settings.useWebview,
-                    onChanged: (bool? newValue){
-                      settings.useWebview = newValue ?? false;
-                      settings.save();
-                    }
-                  ),
+                  if(Platform.isAndroid || Platform.isIOS)
+                    CheckboxListTile(
+                      title: Text(LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr()),
+                      value: settings.useWebview,
+                      onChanged: (bool? newValue){
+                        settings.useWebview = newValue ?? false;
+                        settings.save();
+                      }
+                    ),
 
                   Divider(),
                   // miscellaneous header
