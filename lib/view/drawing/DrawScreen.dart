@@ -253,8 +253,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               );
             }
 
-            return DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-              multiCharSearch, undoButton, clearButton, _canvasSize, runningInLandscape, wV
+            return Center(
+              child: DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
+                multiCharSearch, undoButton, clearButton,
+                _canvasSize, runningInLandscape, wV
+              ),
             );
           }
         ),
