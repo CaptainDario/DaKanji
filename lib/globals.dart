@@ -19,6 +19,9 @@ int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
 // all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
 List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0"];
+// all versions which implemented new pages for the OnBoarding
+// ignore: non_constant_identifier_names
+List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 
 
 // showcase view keys
@@ -27,6 +30,9 @@ List<ShowcaseTuple> SHOWCASE_DRAWING = [];
 // should the showcase of the draw screen be shown
 // ignore: non_constant_identifier_names
 bool SHOW_SHOWCASE_DRAWING = false;
+// should the showcase of the draw screen be shown
+// ignore: non_constant_identifier_names
+bool SHOW_ONBOARDING = false;
 
 //about page
 const GITHUB_DESKTOP_REPO = "https://github.com/CaptainDario/DaKanji-Desktop";

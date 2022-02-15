@@ -57,6 +57,15 @@ class UserData{
       if(DRAWING_SCREEN_NEW_FEATURES.contains(VERSION)){
         SHOW_SHOWCASE_DRAWING = true;
       }
+
+      // this version has new onboarding pages
+      if(ONBOARDING_NEW_PAGES.contains(VERSION)){
+        SHOW_ONBOARDING = true;
+      }
+    }
+
+    if(appOpenedTimes == 1){
+      SHOW_ONBOARDING = true;
     }
 
     save();

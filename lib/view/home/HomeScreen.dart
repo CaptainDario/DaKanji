@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       
-      if(appOpenedTimes > 1){
+      if(SHOW_ONBOARDING){
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
       // show a rating dialogue WITHOUT "do not show again"-option
