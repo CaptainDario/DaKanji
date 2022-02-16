@@ -61,5 +61,10 @@ abstract class  LocaleKeys {
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';
   static const close = 'close';
+  static const OnBoarding_Onboarding_1_title = 'OnBoarding.Onboarding_1_title';
+  static const OnBoarding_Onboarding_1_text = 'OnBoarding.Onboarding_1_text';
+  static const OnBoarding_Onboarding_2_text = 'OnBoarding.Onboarding_2_text';
+  static const OnBoarding_Onboarding_2_title = 'OnBoarding.Onboarding_2_title';
+  static const OnBoarding = 'OnBoarding';
 
 }

@@ -83,7 +83,13 @@ class CodegenLoader extends AssetLoader{
     "loading": "Suche",
     "title": "Webview"
   },
-  "close": "Schließen"
+  "close": "Schließen",
+  "OnBoarding": {
+    "Onboarding_1_title": "Du kennst ein Kanji nicht?",
+    "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+    "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+    "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
+  }
 };
 static const Map<String,dynamic> en = {
   "HomeScreen": {
@@ -154,7 +160,13 @@ static const Map<String,dynamic> en = {
     "loading": "Searching",
     "title": "Webview"
   },
-  "close": "Close"
+  "close": "Close",
+  "OnBoarding": {
+    "Onboarding_1_title": "You do not know a Kanji?",
+    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_title": "Lookup characters and words"
+  }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};
 }

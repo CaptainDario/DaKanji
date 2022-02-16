@@ -67,5 +67,11 @@
     "loading": "Suche",
     "title": "Webview"
   },
-  "close": "Schließen"
+  "close": "Schließen",
+  "OnBoarding": {
+    "Onboarding_1_title": "Du kennst ein Kanji nicht?",
+    "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+    "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+    "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
+  }
 }

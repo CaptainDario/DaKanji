@@ -67,5 +67,11 @@
     "loading": "Searching",
     "title": "Webview"
   },
-  "close": "Close"
+  "close": "Close",
+  "OnBoarding": {
+    "Onboarding_1_title": "You do not know a Kanji?",
+    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_title": "Lookup characters and words"
+  }
 }
