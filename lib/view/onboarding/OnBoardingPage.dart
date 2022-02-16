@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:core';
+
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +60,7 @@ Widget OnBoardingPage(
                   children: [
                     Positioned(
                       height: imageSize,
+                      width: imageSize,
                       left: () {
                         // assure that the current swipe process is not 0
                         if(liquidController.provider == null) return 0.0;
@@ -65,7 +70,6 @@ Widget OnBoardingPage(
                         if (liquidController.currentPage > nr-1) 
                           return -ret - parallax_low;
                         else if (liquidController.currentPage == nr-1){
-                          print(liquidController.provider!.slideDirection);
                           if(liquidController.provider!.slideDirection == SlideDirection.rightToLeft)
                             return ret;
                           if(liquidController.provider!.slideDirection == SlideDirection.leftToRight)
@@ -76,6 +80,7 @@ Widget OnBoardingPage(
                       } (),
                       child: Image.asset(
                         'assets/artwork/onboarding_${nr}_1.png',
+                        isAntiAlias: true,
                       ),
                     ),
                     Positioned(
@@ -90,7 +95,6 @@ Widget OnBoardingPage(
                         if (liquidController.currentPage > nr-1) 
                           return -ret - parallax_high;
                         else if (liquidController.currentPage == nr-1){
-                          print(liquidController.provider!.slideDirection);
                           if(liquidController.provider!.slideDirection == SlideDirection.rightToLeft)
                             return ret;
                           if(liquidController.provider!.slideDirection == SlideDirection.leftToRight)
@@ -99,8 +103,9 @@ Widget OnBoardingPage(
                         else if(liquidController.currentPage < nr-1)
                           return ret + parallax_high;
                       } (),
-                      child: Image.asset(
-                        'assets/artwork/onboarding_${nr}_2.png',
+                      child: SvgPicture.asset(
+                        'assets/artwork/onboarding_${nr}_2.svg',
+                        clipBehavior: Clip.antiAlias,
                       ),
                     ),
                   ],
@@ -108,30 +113,26 @@ Widget OnBoardingPage(
               ),
             ),
             Container(
-              height: textSize / 2,
+              height: textSize,
               width: imageSize,
-              child: FittedBox(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: headerText + "\n", 
-                        style: TextStyle(
-                          fontSize: 30
-                        )
-                      ),
-                      TextSpan(
-                        text: text,
-                        style: TextStyle(
-                          fontSize: 28
-                        )
-                      ),
-                    ],
+              child: Column(
+                children: [
+                  SizedBox(height: 5,),
+                  FittedBox(
+                    child: Text(
+                      headerText,
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 25,
+                    ),
                   ),
-                ),
-              ),
+                  SizedBox(height: 10,),
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 1.25,
+                  )
+                ],
+              )
             ),
           ]
         ),

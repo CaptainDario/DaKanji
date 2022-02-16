@@ -1,7 +1,10 @@
-import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
-import 'package:da_kanji_mobile/view/onboarding/OnBoardingPage.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
+import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
+import 'package:da_kanji_mobile/view/onboarding/OnBoardingPage.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 
@@ -89,15 +92,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               OnBoardingPage(
                 context, 1, totalPages,
                 pageColors[0],
-                "You do not know a Kanji?",
-                "Just draw it!",
+                LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
                 liquidController
               ),
               OnBoardingPage(
                 context, 2, totalPages,
                 pageColors[1],
-                "Look up characters with", 
-                "web and app dictionaries.",
+                LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
                 liquidController
               ),
               DrawScreen(false, false),

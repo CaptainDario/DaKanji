@@ -33,7 +33,8 @@ dependencies:
   lottie: 1.2.1
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
-  blobs: 2.0.0
+  flutter_svg: ^1.0.3
+
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
