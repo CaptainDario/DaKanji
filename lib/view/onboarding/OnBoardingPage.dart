@@ -105,7 +105,7 @@ Widget OnBoardingPage(
                       } (),
                       child: SvgPicture.asset(
                         'assets/artwork/onboarding_${nr}_2.svg',
-                        clipBehavior: Clip.antiAlias,
+                        //clipBehavior: Clip.antiAlias,
                       ),
                     ),
                   ],
@@ -123,6 +123,9 @@ Widget OnBoardingPage(
                       headerText,
                       textAlign: TextAlign.center,
                       textScaleFactor: 25,
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -130,6 +133,9 @@ Widget OnBoardingPage(
                     text,
                     textAlign: TextAlign.center,
                     textScaleFactor: 1.25,
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
                   )
                 ],
               )
