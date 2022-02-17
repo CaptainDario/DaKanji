@@ -11,7 +11,7 @@ const String APP_LINK = r"dakanji://dakanji/";
 
 // the version number of this app
 // ignore: non_constant_identifier_names
-String VERSION = "1.4.0+28";
+String VERSION = "2.0.0+29";
 // the number of times the app has been opened until the user gets asked to
 // if the rate dialogue should never be shown again
 // ignore: non_constant_identifier_names
