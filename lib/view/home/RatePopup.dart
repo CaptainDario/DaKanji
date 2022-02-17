@@ -21,9 +21,10 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
 
   AwesomeDialog(
     context: context,
-    animType: AnimType.SCALE,
-    dialogType: DialogType.QUESTION,
     headerAnimationLoop: false,
+    customHeader: Image.asset(
+      "media/icon.png"
+    ),
     body: Center(
       child: Column(
         //crossAxisAlignment: CrossAxisAlignment.center,
