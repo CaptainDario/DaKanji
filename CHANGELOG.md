@@ -1,20 +1,25 @@
 
 # Da Kanji - changelog
 
-# v 2.0.0 - 隈なく
+## v 2.0.0 - 隈なく
 
 new Features:
 
+- Desktop support Windows, MacOS, Linux
 - Onboarding
+- New UI design
+- Use a web dictionary side by side with drawing screen (mobile only)
+- automatically use the best inference backend
 
 Changes:
 
-- Updated to Flutter 2.10.0 (stable windows support)
+- Updated Flutter to 2.10.0 (stable windows support)
 - Updated dart to 2.16.0 (null safety)
 
 Fixed:
 
-- None
+- Tutorial highlights
+- number of characters in the multi-char search
 
 -------------------------------------------------------------------------
 
