@@ -60,20 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
       
 
       // if a newer version was installed open the what's new pop up 
-      else if(GetIt.I<Changelog>().showChangelog || true){
-
-        GetIt.I<Changelog>().showChangelog = false;
+      else if(GetIt.I<Changelog>().showChangelog){
 
         // show the confetti animations when the widget was build 
         WidgetsBinding.instance?.addPostFrameCallback((_) {
           confettiAnimation_1.state.play();
           Future.delayed(Duration(milliseconds: 750), () =>
             confettiAnimation_2.state.play());
+          GetIt.I<Changelog>().showChangelog = false;
         });
-
-        Container(
-          color: Colors.amber
-        );
       }
       // otherwise open the default screen
       else{
@@ -84,31 +79,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: 
-        Container(
-          color: Colors.black.withAlpha(155),
-          child: Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 4/5,
-              width:  MediaQuery.of(context).size.width * 4/5,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(50),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(15, 15), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: WhatsNewDialogue(context,
-                confettiAnimation_1, confettiAnimation_2),
-            ),
-          ),
-        ),
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Visibility(
+          maintainSize: true, 
+          maintainAnimation: true,
+          maintainState: true,
+          visible: true,//GetIt.I<Changelog>().showChangelog, 
+          child: WhatsNewDialogue(context, confettiAnimation_1, confettiAnimation_2)
+        )
+      )
     );
   }
 }
