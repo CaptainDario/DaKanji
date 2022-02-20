@@ -12,4 +12,13 @@ final ThemeData darkTheme = ThemeData(
 
   highlightColor: Color.fromARGB(255, 194, 32, 44),
 
+  buttonTheme: ButtonThemeData(
+    buttonColor: Color.fromARGB(255, 0, 197, 207),
+    
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: Color.fromARGB(255, 83, 83, 83),
+    )
+  ),
 );

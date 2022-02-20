@@ -39,12 +39,6 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
             children: [
               // close button
               ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: 
-                    MaterialStateProperty.all(
-                      Color.fromARGB(100, 150, 150, 150)
-                    )
-                ),
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
                     context, "/home", (Route<dynamic> route) => false);
@@ -56,10 +50,6 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
               if(hasDoNotShowOption)
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: 
-                      MaterialStateProperty.all(
-                        Color.fromARGB(100, 150, 150, 150)
-                      )
                   ),
                   onPressed: () {
                     GetIt.I<UserData>().doNotShowRateAgain = true;
@@ -72,12 +62,6 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
               SizedBox(width: 5,),
               // rate button
               ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: 
-                    MaterialStateProperty.all(
-                      Color.fromARGB(100, 150, 150, 150)
-                    )
-                ),
                 onPressed: () async {
                   openReview(); 
                 },
