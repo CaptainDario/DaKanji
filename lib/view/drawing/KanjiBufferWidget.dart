@@ -195,7 +195,6 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
         child: AnimatedBuilder(
             animation:  _rotationXAnimation,
             child: Container(
-            // make the multi character bar the same size as 3 prediction-buttons
             width: widget.canvasSize * widget.canvasSizePercentageToUse,
             height: widget.canvasSize * 0.1,
             child: OutlinedButton(
@@ -241,27 +240,25 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                       softWrap: false,
                       style: TextStyle(
                         fontFamily: "NotoSans",
-                        fontSize: 60,
+                        fontSize: 20,
                         color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     ),
                   ),
                   ScaleTransition(
                     scale: _scaleInNewCharAnimation,
-                    child: FittedBox(
-                      child: Text(
-                        () {
-                          int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
-                          if(length > 0)
-                            return GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[length - 1];
-                          else
-                            return " ";
-                        } (),
-                        style: TextStyle(
-                          fontFamily: "NotoSans",
-                          fontSize: 600,
-                          color: Theme.of(context).textTheme.bodyText1!.color,
-                        ),
+                    child: Text(
+                      () {
+                        int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
+                        if(length > 0)
+                          return GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[length - 1];
+                        else
+                          return " ";
+                      } (),
+                      style: TextStyle(
+                        fontFamily: "NotoSans",
+                        fontSize: 20,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                     )
                   )
@@ -289,16 +286,16 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
 
   /// Calculates and returns how many characters fit in this KanjiBufferWidget
   int calculateCharactersFit(){
-    int _charactersFit = -1; // -1 too assure there is enough space for the '...'
-    String chars = "";
+    int _charactersFit = -4; 
+    String chars = "…";
     double w = 0;
-    while(widget.canvasSize * 0.8 > w){
+    while(widget.canvasSize * widget.canvasSizePercentageToUse > w){
       w = (TextPainter(
         text: TextSpan(
           text: chars,
           style: TextStyle(
             fontFamily: "NotoSans",
-            fontSize: 60
+            fontSize: 20
           ),
         ),
         maxLines: 1,
