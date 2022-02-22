@@ -181,7 +181,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         child: Stack(
           children: [
             Image(image: 
-              AssetImage("assets/kanji_drawing_aid.png")
+              AssetImage("assets/images/ui/kanji_drawing_aid.png")
             ),
             AnimatedBuilder(
               animation: _canvasController,

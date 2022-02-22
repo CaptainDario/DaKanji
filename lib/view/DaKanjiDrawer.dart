@@ -279,7 +279,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 children:[
                                   Image(
                                     height: 84,
-                                    image: AssetImage("media/banner.png"),
+                                    image: AssetImage("assets/images/icons/banner.png"),
                                   ),
                                 ]
                               ),
