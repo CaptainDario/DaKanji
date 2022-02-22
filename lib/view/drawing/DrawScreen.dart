@@ -140,11 +140,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget undoButton = Consumer<Strokes>(
               builder: (context, strokes, __) {
                 return Center(
+                  key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                   child: Container(
                     width:  _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                         icon: Icon(Icons.undo),
                         iconSize: 100,
                         color: Theme.of(context).highlightColor,
@@ -184,11 +184,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget clearButton = Consumer<Strokes>(
               builder: (contxt, strokes, _) {
                 return Center(
+                  key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                   child: Container(
                     width: _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                         icon: Icon(Icons.clear),
                         iconSize: 100,
                         color: Theme.of(context).highlightColor,
