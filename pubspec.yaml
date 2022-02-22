@@ -1,5 +1,5 @@
 name: da_kanji_mobile
-description: A cross platform app for mobile, desktop and web to help learn and use the Japanese language.
+description: A cross platform app for mobile and desktop to help learn and use the Japanese language.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -99,10 +99,10 @@ flutter:
     - assets/images/icons/icon.png
     - assets/images/icons/banner.png
     - assets/images/ui/kanji_drawing_aid.png
-    - assets/images/onboarding/onboarding_blackboard_1_1.svg
-    - assets/images/onboarding/onboarding_blackboard_1_2.svg
-    - assets/images/onboarding/onboarding_confused_2_1.svg
-    - assets/images/onboarding/onboarding_confused_2_2.svg
+    - assets/images/onboarding/onboarding_1_1.png
+    - assets/images/onboarding/onboarding_1_2.png
+    - assets/images/onboarding/onboarding_2_1.png
+    - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
     - assets/tflite_models/
 

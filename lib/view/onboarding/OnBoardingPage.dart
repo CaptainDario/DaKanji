@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'dart:core';
 
@@ -79,7 +77,7 @@ Widget OnBoardingPage(
                           return ret + parallax_low;
                       } (),
                       child: Image.asset(
-                        'assets/artwork/onboarding_${nr}_1.png',
+                        'assets/images/onboarding/onboarding_${nr}_1.png',
                         isAntiAlias: true,
                       ),
                     ),
@@ -103,8 +101,8 @@ Widget OnBoardingPage(
                         else if(liquidController.currentPage < nr-1)
                           return ret + parallax_high;
                       } (),
-                      child: SvgPicture.asset(
-                        'assets/artwork/onboarding_${nr}_2.svg',
+                      child: Image.asset(
+                        'assets/images/onboarding/onboarding_${nr}_2.png',
                         //clipBehavior: Clip.antiAlias,
                       ),
                     ),
