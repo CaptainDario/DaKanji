@@ -42,7 +42,7 @@ key.properties
 python
 android/app/key.jks
 
-# ignore tflite models to keep the repo size low
+# ignore tflite models to keep the repo size low (they can be downloaded from the respective ML repo)
 **.tflite
 
 # libraries
@@ -53,7 +53,3 @@ android/app/key.jks
 
 # add tf lite desktop binaries
 !blobs/**
-
-# ignore animations and artworks (they should be cloned from the respective repos)
-assets/animations/
-assets/artwork/
