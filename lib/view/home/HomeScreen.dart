@@ -33,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     ControllableLottieAnimation("assets/animations/confetti.json");
   ControllableLottieAnimation confettiAnimation_2 = 
     ControllableLottieAnimation("assets/animations/confetti.json");
+    ControllableLottieAnimation confettiAnimation_3 = 
+    ControllableLottieAnimation("assets/animations/confetti.json");
 
 
   @override
@@ -60,13 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
       
 
       // if a newer version was installed open the what's new pop up 
-      else if(GetIt.I<Changelog>().showChangelog){
+      else if(GetIt.I<Changelog>().showChangelog || true){
 
         // show the confetti animations when the widget was build 
         WidgetsBinding.instance?.addPostFrameCallback((_) {
           confettiAnimation_1.state.play();
           Future.delayed(Duration(milliseconds: 750), () =>
             confettiAnimation_2.state.play());
+          Future.delayed(Duration(milliseconds: 1250), () =>
+            confettiAnimation_3.state.play());
           GetIt.I<Changelog>().showChangelog = false;
         });
       }
@@ -88,7 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
           maintainAnimation: true,
           maintainState: true,
           visible: true,//GetIt.I<Changelog>().showChangelog, 
-          child: WhatsNewDialogue(context, confettiAnimation_1, confettiAnimation_2)
+          child: WhatsNewDialogue(context,
+          confettiAnimation_1, confettiAnimation_2, confettiAnimation_3)
         )
       )
     );

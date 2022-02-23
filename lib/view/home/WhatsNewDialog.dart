@@ -13,9 +13,13 @@ import 'package:da_kanji_mobile/provider/Changelog.dart';
 
 Widget WhatsNewDialogue(BuildContext context, 
   ControllableLottieAnimation confettiAnimation_1,
-  ControllableLottieAnimation confettiAnimation_2,) {
+  ControllableLottieAnimation confettiAnimation_2,
+  ControllableLottieAnimation confettiAnimation_3,) {
 
   ScrollController _scrollController = ScrollController();
+
+  double innerDialogueHeight = (MediaQuery.of(context).size.height * 4/5) - 10;
+  double innerDialogueWidth = (MediaQuery.of(context).size.width * 4/5) - 10;
 
   return Center(
     child: Container(
@@ -36,23 +40,26 @@ Widget WhatsNewDialogue(BuildContext context,
       child: Container(
         padding: EdgeInsets.all(5),
         child: Stack(
-          alignment: AlignmentDirectional.center,
+          alignment: Alignment.center,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //header
-                Center(
-                  child: Text(
-                    "What's new",
-                    textScaleFactor: 2,
-                  )
+                Container(
+                  height: innerDialogueHeight * 0.1,
+                  width:  innerDialogueWidth,
+                  child: Center(
+                    child: Text(
+                      "What's new",
+                      textScaleFactor: 2,
+                    ),
+                  ),
                 ),
                 // content
                 Container(
-                  //color: Colors.green,
-                  width: MediaQuery.of(context).size.width * 4/5,
-                  height: MediaQuery.of(context).size.height * 4/5 * 0.85,
+                  height: innerDialogueHeight * 0.8,
+                  width: innerDialogueWidth,
                   child: Scrollbar(
                     isAlwaysShown: true,
                     controller: _scrollController,
@@ -70,48 +77,67 @@ Widget WhatsNewDialogue(BuildContext context,
                   ),
                 ),
                 // buttons
-                Wrap(
-                  alignment: WrapAlignment.spaceEvenly,
-                  runAlignment: WrapAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
+                Container(
+                  height: innerDialogueHeight * 0.1,
+                  width: innerDialogueWidth,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    runAlignment: WrapAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                        ),
+                        onPressed: () => Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => ChangelogScreen()),
+                        ),
+                        child: Text("Complete log")
                       ),
-                      onPressed: () => Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => ChangelogScreen()),
+                      SizedBox(width: 5,),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                        ),
+                        onPressed: () async {
+                          GetIt.I<Settings>().save();
+                          Navigator.pushNamedAndRemoveUntil(
+                            context, "/home", (Route<dynamic> route) => false);
+                        },
+                        child: Text("close")
                       ),
-                      child: Text("Complete log")
-                    ),
-                    SizedBox(width: 5,),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                      ),
-                      onPressed: () async {
-                        GetIt.I<Settings>().save();
-                        Navigator.pushNamedAndRemoveUntil(
-                          context, "/home", (Route<dynamic> route) => false);
-                      },
-                      child: Text("close")
-                    ),
-                  ],
+                    ],
+                  ),
                 )
               ]
             ),
+            
             Positioned(
-              top: 0,
-              left: 0,
-              height: MediaQuery.of(context).size.height * 4/5,
-              child: IgnorePointer(
-                child: confettiAnimation_1
+              top: -innerDialogueWidth,
+              right: -innerDialogueWidth,
+              height: innerDialogueWidth*2,
+              width: innerDialogueWidth*2,
+              child: Container(
+                //color: Colors.black,
+                child: IgnorePointer(
+                  child: confettiAnimation_1
+                ),
               ),
             ),
             Positioned(
-              bottom: 0,
-              right: 0,
-              height: MediaQuery.of(context).size.height * 4/5,
+              bottom: -innerDialogueWidth/2,
+              left: -innerDialogueWidth,
+              height: innerDialogueWidth*2,
+              width: innerDialogueWidth*2,
               child: IgnorePointer(
                 child: confettiAnimation_2
+              ),
+            ),
+            Positioned(
+              bottom: -innerDialogueWidth/2,
+              right: -innerDialogueWidth,
+              height: innerDialogueWidth*2,
+              width: innerDialogueWidth*2,
+              child: IgnorePointer(
+                child: confettiAnimation_3
               ),
             ),
           ],

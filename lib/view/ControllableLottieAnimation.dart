@@ -50,7 +50,8 @@ class _ControllableLottieAnimationState extends State<ControllableLottieAnimatio
   Widget build(BuildContext context) {
     return Lottie.asset(
       widget.lottieAnimPath,
-      controller: lottieAnimationController
+      //repeat: true
+      controller: lottieAnimationController,
     );
   }
 
