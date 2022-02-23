@@ -39,7 +39,9 @@ Widget WhatsNewDialogue(BuildContext context,
           alignment: AlignmentDirectional.center,
           children: [
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                //header
                 Center(
                   child: Text(
                     "What's new",
@@ -48,6 +50,9 @@ Widget WhatsNewDialogue(BuildContext context,
                 ),
                 // content
                 Container(
+                  //color: Colors.green,
+                  width: MediaQuery.of(context).size.width * 4/5,
+                  height: MediaQuery.of(context).size.height * 4/5 * 0.85,
                   child: Scrollbar(
                     isAlwaysShown: true,
                     controller: _scrollController,
@@ -63,8 +68,6 @@ Widget WhatsNewDialogue(BuildContext context,
                       },
                     ),
                   ),
-                  width: MediaQuery.of(context).size.width * 4/5,
-                  height: MediaQuery.of(context).size.height * 4/5 - 75,
                 ),
                 // buttons
                 Wrap(
@@ -98,6 +101,7 @@ Widget WhatsNewDialogue(BuildContext context,
             Positioned(
               top: 0,
               left: 0,
+              height: MediaQuery.of(context).size.height * 4/5,
               child: IgnorePointer(
                 child: confettiAnimation_1
               ),
@@ -105,6 +109,7 @@ Widget WhatsNewDialogue(BuildContext context,
             Positioned(
               bottom: 0,
               right: 0,
+              height: MediaQuery.of(context).size.height * 4/5,
               child: IgnorePointer(
                 child: confettiAnimation_2
               ),
