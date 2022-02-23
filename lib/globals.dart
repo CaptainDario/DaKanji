@@ -52,6 +52,12 @@ const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
+const WINDOWS_STORE = "";
+
+const SNAP_STORE = "";
+
+const MAC_STORE = "";
+
 const TAKOBOTO_ID = "jp.takoboto";
 const AKEBI_ID = "com.craxic.akebifree";
 const AEDICT_ID = "sk.baka.aedict3";
