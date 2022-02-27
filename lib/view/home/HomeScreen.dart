@@ -45,7 +45,21 @@ class _HomeScreenState extends State<HomeScreen> {
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       
-      if(SHOW_ONBOARDING){
+      // if a newer version was installed open the what's new pop up 
+      if(GetIt.I<Changelog>().showChangelog){
+
+        // show the confetti animations when the widget was build 
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
+          confettiAnimation_1.state.play();
+          Future.delayed(Duration(milliseconds: 750), () =>
+            confettiAnimation_2.state.play());
+          Future.delayed(Duration(milliseconds: 1250), () =>
+            confettiAnimation_3.state.play());
+          GetIt.I<Changelog>().showChangelog = false;
+        });
+      }
+      // 
+      else if(SHOW_ONBOARDING){
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
       // show a rating dialogue WITHOUT "do not show again"-option
@@ -59,21 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
           !GetIt.I<UserData>().rateDialogueWasShown && 
           appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0))
           showRatePopup(context, true);
-      
-
-      // if a newer version was installed open the what's new pop up 
-      else if(GetIt.I<Changelog>().showChangelog || true){
-
-        // show the confetti animations when the widget was build 
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
-          confettiAnimation_1.state.play();
-          Future.delayed(Duration(milliseconds: 750), () =>
-            confettiAnimation_2.state.play());
-          Future.delayed(Duration(milliseconds: 1250), () =>
-            confettiAnimation_3.state.play());
-          GetIt.I<Changelog>().showChangelog = false;
-        });
-      }
       // otherwise open the default screen
       else{
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
