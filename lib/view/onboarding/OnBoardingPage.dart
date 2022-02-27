@@ -103,7 +103,7 @@ Widget OnBoardingPage(
                       } (),
                       child: Image.asset(
                         'assets/images/onboarding/onboarding_${nr}_2.png',
-                        //clipBehavior: Clip.antiAlias,
+                        isAntiAlias: true,
                       ),
                     ),
                   ],
