@@ -43,7 +43,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                   Navigator.pushNamedAndRemoveUntil(
                     context, "/home", (Route<dynamic> route) => false);
                 },
-                child: Text(LocaleKeys.HomeScreen_RatePopup_close.tr())
+                child: Text(LocaleKeys.General_close.tr())
               ),
               SizedBox(width: 5,),
               // do not ask again button
@@ -65,7 +65,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 onPressed: () async {
                   openReview(); 
                 },
-                child: Text(LocaleKeys.HomeScreen_RatePopup_rate.tr())
+                child: Text(LocaleKeys.AboutScreen_rate_this_app.tr())
               ),
             ],
           ),

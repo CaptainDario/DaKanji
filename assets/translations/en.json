@@ -1,77 +1,71 @@
 {
-  "HomeScreen": {
-    "RatePopup": {
-      "text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
-      "dont_ask_again": "Do not ask again",
-      "rate": "Rate",
-      "close": "Close"
-    }
-  },
-  "DrawScreen": {
-    "title": "Drawing",
-    "tutorial": {
-      "clear": "Erases all strokes",
-      "drawing": "Draw a character here",
-      "undo": "Press to undo the last stroke",
-      "predictions": "The predicted characters will be shown here",
-      "short_press_prediction": "A short press copies the prediction",
-      "long_press_prediction": "A long press opens the prediction in a dictionary",
-      "multi_search": "Here you can search multiple characters at once",
-      "double_tap_prediction": "A Double Tap adds the character to the search box",
-      "multi_search_short_press": "A short press copies the characters to the clipboard",
-      "skip": "SKIP",
-      "multi_search_long_press": "A long press opens the characters in a dictionary",
-      "multi_search_double_tap": "A double tap empties the field",
-      "multi_search_swipe_left": "Swiping left on this field deletes the last character",
-      "dictionary_settings": "In the settings the translation service can be chosen"
-    }
-  },
-  "SettingsScreen": {
-    "long_press_opens": "Long press opens",
-    "drawing_title": "Drawing",
-    "custom_url_hint": "URL of your dictionary",
-    "custom_url_format": "Custom URL format",
-    "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
-    "invert_short_long_press": "Invert long/short press",
-    "empty_canvas_after_double_tap": "Empty canvas after double tap",
-    "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries",
-    "miscellaneous_title": "Miscellaneous",
-    "theme": "theme (@:restarts_app)",
-    "show_tutorial": "Reshow tutorial (restarts app)",
-    "title": "Settings",
-    "dictionary_system_translator": "OS integrated translator",
-    "language": "Language",
-    "advanced_settings": {
-      "drawing_inference_backend": "Inference backend (the app needs to be restarted)",
-      "title": "Advanced settings"
-    }
-  },
-  "app": "app",
-  "web": "web",
-  "custom_url": "custom URL",
-  "restarts_app": "restarts app",
-  "dark": "dark",
-  "light": "light",
-  "system": "system",
   "AboutScreen": {
-    "title": "About",
+    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "rate_this_app": "Rate this app",
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "show_changelog": "Show me the complete changelog.",
-    "software_informations_button": "Software informations"
+    "software_informations_button": "Software informations",
+    "title": "About"
   },
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "DrawScreen": {
+    "title": "Drawing",
+    "tutorial_clear": "Erases all strokes",
+    "tutorial_dictionary_settings": "In the settings the translation service can be chosen",
+    "tutorial_double_tap_prediction": "A Double Tap adds the character to the search box",
+    "tutorial_drawing": "Draw a character here",
+    "tutorial_long_press_prediction": "A long press opens the prediction in a dictionary",
+    "tutorial_multi_search": "Here you can search multiple characters at once",
+    "tutorial_multi_search_double_tap": "A double tap empties the field",
+    "tutorial_multi_search_long_press": "A long press opens the characters in a dictionary",
+    "tutorial_multi_search_short_press": "A short press copies the characters to the clipboard",
+    "tutorial_multi_search_swipe_left": "Swiping left on this field deletes the last character",
+    "tutorial_predictions": "The predicted characters will be shown here",
+    "tutorial_short_press_prediction": "A short press copies the prediction",
+    "tutorial_skip": "SKIP",
+    "tutorial_undo": "Press to undo the last stroke"
+  },
+  "General": {
+    "app": "app",
+    "close": "Close",
+    "custom_url": "custom URL",
+    "dark": "dark",
+    "language": "language",
+    "light": "light",
+    "restarts_app": "restarts app",
+    "system": "system",
+    "web": "web"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "Do not ask again",
+    "RatePopup_text": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_1_title": "You do not know a Kanji?",
+    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_title": "Lookup characters and words"
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "Inference backend (the app needs to be restarted)",
+    "advanced_settings_title": "Advanced settings",
+    "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_format": "Custom URL format",
+    "custom_url_hint": "URL of your dictionary",
+    "dictionary_system_translator": "OS integrated translator",
+    "drawing_title": "Drawing",
+    "empty_canvas_after_double_tap": "Empty canvas after double tap",
+    "invert_short_long_press": "Invert long/short press",
+    "long_press_opens": "Long press opens",
+    "miscellaneous_title": "Miscellaneous",
+    "show_tutorial": "Reshow tutorial (restarts app)",
+    "theme": "theme (@:restarts_app)",
+    "title": "Settings",
+    "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
+  },
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"
-  },
-  "close": "Close",
-  "OnBoarding": {
-    "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
-    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
-    "Onboarding_2_title": "Lookup characters and words"
   }
 }

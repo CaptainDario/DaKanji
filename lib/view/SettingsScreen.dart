@@ -66,9 +66,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: () {
-                              String text = value.replaceAll("url", LocaleKeys.custom_url.tr());
-                              text = text.replaceAll("app", LocaleKeys.app.tr());
-                              text = text.replaceAll("web", LocaleKeys.web.tr());
+                              String text = value.replaceAll("url", LocaleKeys.General_custom_url.tr());
+                              text = text.replaceAll("app", LocaleKeys.General_app.tr());
+                              text = text.replaceAll("web", LocaleKeys.General_web.tr());
                               
                               return Text(text);
                             } ()
@@ -186,9 +186,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: () {
-                            String text = value.replaceAll("light", LocaleKeys.light.tr());
-                            text = text.replaceAll("dark", LocaleKeys.dark.tr());
-                            text = text.replaceAll("system", LocaleKeys.system.tr());
+                            String text = value.replaceAll("light", LocaleKeys.General_light.tr());
+                            text = text.replaceAll("dark", LocaleKeys.General_dark.tr());
+                            text = text.replaceAll("system", LocaleKeys.General_system.tr());
                             
                             return Text(text);
                           } ()
@@ -205,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Setting for which language to use
                   ListTile(
-                    title: Text(LocaleKeys.SettingsScreen_language.tr()),
+                    title: Text(LocaleKeys.General_language.tr()),
                     trailing: DropdownButton<String>(
                       value: settings.selectedLocale.toString(),
                       items: context.supportedLocales

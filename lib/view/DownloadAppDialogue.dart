@@ -36,7 +36,7 @@ import 'package:easy_localization/easy_localization.dart';
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    child: Text(LocaleKeys.close.tr())
+                    child: Text(LocaleKeys.General_close.tr())
                   ),
                 ]
               )

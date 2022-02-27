@@ -14,27 +14,290 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> de = {
-  "DrawScreen": {
-    "tutorial": {
-      "clear": "Lösche all Striche",
-      "double_tap_prediction": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
-      "drawing": "Male ein Zeichen hier",
-      "long_press_prediction": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
-      "multi_search_double_tap": "Doppelt auf das Feld zutippen löscht den Inhalt",
-      "multi_search_long_press": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
-      "multi_search_short_press": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
-      "multi_search_swipe_left": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
-      "multi_search": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
-      "predictions": "Die vorhergesagten Zeichen werden hier angezeigt",
-      "short_press_prediction": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
-      "skip": "ÜBERSPRINGEN",
-      "undo": "Macht den letzten Strich rückgängig",
-      "dictionary_settings": "In den Einstellung kann die Methode zum übersetzen gewählt werden"
+  static const Map<String,dynamic> cn = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
     },
-    "title": "Zeichnen"
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
   },
   "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> de = {
+  "AboutScreen": {
+    "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+    "rate_this_app": "Bewerte die App",
+    "show_changelog": "Zeig mir alle Änderungen.",
+    "software_informations_button": "Softwareinformationen",
+    "title": "Über die App"
+  },
+  "ChangelogScreen": {
+    "title": "Änderungen"
+  },
+  "DrawScreen": {
+    "title": "Zeichnen",
+    "tutorial_clear": "Lösche all Striche",
+    "tutorial_dictionary_settings": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+    "tutorial_double_tap_prediction": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+    "tutorial_drawing": "Male ein Zeichen hier",
+    "tutorial_long_press_prediction": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+    "tutorial_multi_search": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+    "tutorial_multi_search_double_tap": "Doppelt auf das Feld zutippen löscht den Inhalt",
+    "tutorial_multi_search_long_press": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+    "tutorial_multi_search_short_press": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+    "tutorial_multi_search_swipe_left": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+    "tutorial_predictions": "Die vorhergesagten Zeichen werden hier angezeigt",
+    "tutorial_short_press_prediction": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+    "tutorial_skip": "ÜBERSPRINGEN",
+    "tutorial_undo": "Macht den letzten Strich rückgängig"
+  },
+  "General": {
+    "app": "App",
+    "close": "Schließen",
+    "custom_url": "selbstdefinierte URL",
+    "dark": "Dunkel",
+    "language": "Sprache",
+    "light": "Hell",
+    "restarts_app": "startet app neu",
+    "system": "System",
+    "web": "Web"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "Frag nie wieder",
+    "RatePopup_text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+    "Onboarding_1_title": "Du kennst ein Kanji nicht?",
+    "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+    "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
+    "advanced_settings_title": "Erweiterte Einstellungen",
+    "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_format": "Benutzerdefiniertes URL format",
     "custom_url_hint": "URL von dem Wörterbuch das benutzt werden soll",
     "dictionary_system_translator": "betriebssysteminternes Übersetzer",
     "drawing_title": "Zeichnen",
@@ -45,128 +308,1463 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "Zeige Tutorial erneut (startet app neu)",
     "theme": "Thema (@:restarts_app)",
     "title": "Einstellungen",
-    "use_default_browser_for_online_dictionaries": "Benutze einen webview für web Wörterbücher",
-    "custom_url_format": "Benutzerdefiniertes URL format",
-    "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
-    "language": "Sprache",
-    "advanced_settings": {
-      "drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
-      "title": "Erweiterte Einstellungen"
-    }
-  },
-  "HomeScreen": {
-    "RatePopup": {
-      "close": "Schließen",
-      "dont_ask_again": "Frag nie wieder",
-      "rate": "Bewerten",
-      "text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
-    }
-  },
-  "app": "App",
-  "web": "Web",
-  "custom_url": "selbstdefinierte URL",
-  "restarts_app": "startet app neu",
-  "dark": "Dunkel",
-  "light": "Hell",
-  "system": "System",
-  "AboutScreen": {
-    "title": "Über die App",
-    "rate_this_app": "Bewerte die App",
-    "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
-    "show_changelog": "Zeig mir alle Änderungen.",
-    "software_informations_button": "Softwareinformationen"
-  },
-  "ChangelogScreen": {
-    "title": "Änderungen"
+    "use_default_browser_for_online_dictionaries": "Benutze einen webview für web Wörterbücher"
   },
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"
-  },
-  "close": "Schließen",
-  "OnBoarding": {
-    "Onboarding_1_title": "Du kennst ein Kanji nicht?",
-    "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
-    "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
-    "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
   }
 };
 static const Map<String,dynamic> en = {
-  "HomeScreen": {
-    "RatePopup": {
-      "text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
-      "dont_ask_again": "Do not ask again",
-      "rate": "Rate",
-      "close": "Close"
-    }
-  },
-  "DrawScreen": {
-    "title": "Drawing",
-    "tutorial": {
-      "clear": "Erases all strokes",
-      "drawing": "Draw a character here",
-      "undo": "Press to undo the last stroke",
-      "predictions": "The predicted characters will be shown here",
-      "short_press_prediction": "A short press copies the prediction",
-      "long_press_prediction": "A long press opens the prediction in a dictionary",
-      "multi_search": "Here you can search multiple characters at once",
-      "double_tap_prediction": "A Double Tap adds the character to the search box",
-      "multi_search_short_press": "A short press copies the characters to the clipboard",
-      "skip": "SKIP",
-      "multi_search_long_press": "A long press opens the characters in a dictionary",
-      "multi_search_double_tap": "A double tap empties the field",
-      "multi_search_swipe_left": "Swiping left on this field deletes the last character",
-      "dictionary_settings": "In the settings the translation service can be chosen"
-    }
-  },
-  "SettingsScreen": {
-    "long_press_opens": "Long press opens",
-    "drawing_title": "Drawing",
-    "custom_url_hint": "URL of your dictionary",
-    "custom_url_format": "Custom URL format",
-    "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
-    "invert_short_long_press": "Invert long/short press",
-    "empty_canvas_after_double_tap": "Empty canvas after double tap",
-    "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries",
-    "miscellaneous_title": "Miscellaneous",
-    "theme": "theme (@:restarts_app)",
-    "show_tutorial": "Reshow tutorial (restarts app)",
-    "title": "Settings",
-    "dictionary_system_translator": "OS integrated translator",
-    "language": "Language",
-    "advanced_settings": {
-      "drawing_inference_backend": "Inference backend (the app needs to be restarted)",
-      "title": "Advanced settings"
-    }
-  },
-  "app": "app",
-  "web": "web",
-  "custom_url": "custom URL",
-  "restarts_app": "restarts app",
-  "dark": "dark",
-  "light": "light",
-  "system": "system",
   "AboutScreen": {
-    "title": "About",
-    "rate_this_app": "Rate this app",
     "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+    "rate_this_app": "Rate this app",
     "show_changelog": "Show me the complete changelog.",
-    "software_informations_button": "Software informations"
+    "software_informations_button": "Software informations",
+    "title": "About"
   },
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "DrawScreen": {
+    "title": "Drawing",
+    "tutorial_clear": "Erases all strokes",
+    "tutorial_dictionary_settings": "In the settings the translation service can be chosen",
+    "tutorial_double_tap_prediction": "A Double Tap adds the character to the search box",
+    "tutorial_drawing": "Draw a character here",
+    "tutorial_long_press_prediction": "A long press opens the prediction in a dictionary",
+    "tutorial_multi_search": "Here you can search multiple characters at once",
+    "tutorial_multi_search_double_tap": "A double tap empties the field",
+    "tutorial_multi_search_long_press": "A long press opens the characters in a dictionary",
+    "tutorial_multi_search_short_press": "A short press copies the characters to the clipboard",
+    "tutorial_multi_search_swipe_left": "Swiping left on this field deletes the last character",
+    "tutorial_predictions": "The predicted characters will be shown here",
+    "tutorial_short_press_prediction": "A short press copies the prediction",
+    "tutorial_skip": "SKIP",
+    "tutorial_undo": "Press to undo the last stroke"
+  },
+  "General": {
+    "app": "app",
+    "close": "Close",
+    "custom_url": "custom URL",
+    "dark": "dark",
+    "language": "language",
+    "light": "light",
+    "restarts_app": "restarts app",
+    "system": "system",
+    "web": "web"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "Do not ask again",
+    "RatePopup_text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_1_title": "You do not know a Kanji?",
+    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_title": "Lookup characters and words"
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "Inference backend (the app needs to be restarted)",
+    "advanced_settings_title": "Advanced settings",
+    "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_format": "Custom URL format",
+    "custom_url_hint": "URL of your dictionary",
+    "dictionary_system_translator": "OS integrated translator",
+    "drawing_title": "Drawing",
+    "empty_canvas_after_double_tap": "Empty canvas after double tap",
+    "invert_short_long_press": "Invert long/short press",
+    "long_press_opens": "Long press opens",
+    "miscellaneous_title": "Miscellaneous",
+    "show_tutorial": "Reshow tutorial (restarts app)",
+    "theme": "theme (@:restarts_app)",
+    "title": "Settings",
+    "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
+  },
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"
-  },
-  "close": "Close",
-  "OnBoarding": {
-    "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
-    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
-    "Onboarding_2_title": "Lookup characters and words"
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};
+static const Map<String,dynamic> es = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
+    },
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> fr = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
+    },
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> it = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
+    },
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> jp = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
+    },
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> localizations = {
+  "AboutScreen": {
+    "about_text": {
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden."
+    },
+    "rate_this_app": {
+      "en": "Rate this app",
+      "de": "Bewerte die App"
+    },
+    "show_changelog": {
+      "en": "Show me the complete changelog.",
+      "de": "Zeig mir alle Änderungen."
+    },
+    "software_informations_button": {
+      "en": "Software informations",
+      "de": "Softwareinformationen"
+    },
+    "title": {
+      "en": "About",
+      "de": "Über die App"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "en": "Changelog",
+      "de": "Änderungen"
+    }
+  },
+  "DrawScreen": {
+    "tutorial_clear": {
+      "en": "Erases all strokes",
+      "de": "Lösche all Striche"
+    },
+    "tutorial_double_tap_prediction": {
+      "en": "A Double Tap adds the character to the search box",
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen"
+    },
+    "tutorial_drawing": {
+      "en": "Draw a character here",
+      "de": "Male ein Zeichen hier"
+    },
+    "tutorial_long_press_prediction": {
+      "en": "A long press opens the prediction in a dictionary",
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch"
+    },
+    "tutorial_multi_search_double_tap": {
+      "en": "A double tap empties the field",
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt"
+    },
+    "tutorial_multi_search_long_press": {
+      "en": "A long press opens the characters in a dictionary",
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch"
+    },
+    "tutorial_multi_search_short_press": {
+      "en": "A short press copies the characters to the clipboard",
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "en": "Swiping left on this field deletes the last character",
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen"
+    },
+    "tutorial_multi_search": {
+      "en": "Here you can search multiple characters at once",
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden"
+    },
+    "tutorial_predictions": {
+      "en": "The predicted characters will be shown here",
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt"
+    },
+    "tutorial_short_press_prediction": {
+      "en": "A short press copies the prediction",
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen"
+    },
+    "tutorial_skip": {
+      "en": "SKIP",
+      "de": "ÜBERSPRINGEN"
+    },
+    "tutorial_undo": {
+      "en": "Press to undo the last stroke",
+      "de": "Macht den letzten Strich rückgängig"
+    },
+    "tutorial_dictionary_settings": {
+      "en": "In the settings the translation service can be chosen",
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden"
+    },
+    "title": {
+      "en": "Drawing",
+      "de": "Zeichnen"
+    }
+  },
+  "General": {
+    "app": {
+      "en": "app",
+      "de": "App"
+    },
+    "close": {
+      "en": "Close",
+      "de": "Schließen"
+    },
+    "custom_url": {
+      "en": "custom URL",
+      "de": "selbstdefinierte URL"
+    },
+    "dark": {
+      "en": "dark",
+      "de": "Dunkel"
+    },
+    "light": {
+      "en": "light",
+      "de": "Hell"
+    },
+    "restarts_app": {
+      "en": "restarts app",
+      "de": "startet app neu"
+    },
+    "system": {
+      "en": "system",
+      "de": "System"
+    },
+    "web": {
+      "en": "web",
+      "de": "Web"
+    },
+    "language": {
+      "en": "language",
+      "de": "Sprache"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "en": "Do not ask again",
+      "de": "Frag nie wieder"
+    },
+    "RatePopup_text": {
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_title": {
+      "en": "You do not know a Kanji?",
+      "de": "Du kennst ein Kanji nicht?"
+    },
+    "Onboarding_1_text": {
+      "en": "Just draw it and DaKanji will show the character you need.",
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen"
+    },
+    "Onboarding_2_title": {
+      "en": "Lookup characters and words",
+      "de": "Schlage Zeichen und Wörter nach"
+    },
+    "Onboarding_2_text": {
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen"
+    }
+  },
+  "SettingsScreen": {
+    "custom_url_hint": {
+      "en": "URL of your dictionary",
+      "de": "URL von dem Wörterbuch das benutzt werden soll"
+    },
+    "dictionary_system_translator": {
+      "en": "OS integrated translator",
+      "de": "betriebssysteminternes Übersetzer"
+    },
+    "drawing_title": {
+      "en": "Drawing",
+      "de": "Zeichnen"
+    },
+    "empty_canvas_after_double_tap": {
+      "en": "Empty canvas after double tap",
+      "de": "Lösche alle Striche nach doppeltem Tippen"
+    },
+    "invert_short_long_press": {
+      "en": "Invert long/short press",
+      "de": "Invertiere kurzes und langes drücken"
+    },
+    "long_press_opens": {
+      "en": "Long press opens",
+      "de": "Langes drücken öffnet"
+    },
+    "miscellaneous_title": {
+      "en": "Miscellaneous",
+      "de": "Verschiedenes"
+    },
+    "show_tutorial": {
+      "en": "Reshow tutorial (restarts app)",
+      "de": "Zeige Tutorial erneut (startet app neu)"
+    },
+    "theme": {
+      "en": "theme (@:restarts_app)",
+      "de": "Thema (@:restarts_app)"
+    },
+    "title": {
+      "en": "Settings",
+      "de": "Einstellungen"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "en": "Use a webview for web dictionaries",
+      "de": "Benutze einen webview für web Wörterbücher"
+    },
+    "custom_url_format": {
+      "en": "Custom URL format",
+      "de": "Benutzerdefiniertes URL format"
+    },
+    "custom_url_explanation": {
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "advanced_settings_drawing_inference_backend": {
+      "en": "Inference backend (the app needs to be restarted)",
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)"
+    },
+    "advanced_settings_title": {
+      "en": "Advanced settings",
+      "de": "Erweiterte Einstellungen"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "en": "Searching",
+      "de": "Suche"
+    },
+    "title": {
+      "en": "Webview",
+      "de": "Webview"
+    }
+  }
+};
+static const Map<String,dynamic> ru = {
+  "AboutScreen": {
+    "about_text": {
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
+    },
+    "rate_this_app": {
+      "de": "Bewerte die App",
+      "en": "Rate this app"
+    },
+    "show_changelog": {
+      "de": "Zeig mir alle Änderungen.",
+      "en": "Show me the complete changelog."
+    },
+    "software_informations_button": {
+      "de": "Softwareinformationen",
+      "en": "Software informations"
+    },
+    "title": {
+      "de": "Über die App",
+      "en": "About"
+    }
+  },
+  "ChangelogScreen": {
+    "title": {
+      "de": "Änderungen",
+      "en": "Changelog"
+    }
+  },
+  "DrawScreen": {
+    "title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "tutorial_clear": {
+      "de": "Lösche all Striche",
+      "en": "Erases all strokes"
+    },
+    "tutorial_dictionary_settings": {
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "en": "In the settings the translation service can be chosen"
+    },
+    "tutorial_double_tap_prediction": {
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "en": "A Double Tap adds the character to the search box"
+    },
+    "tutorial_drawing": {
+      "de": "Male ein Zeichen hier",
+      "en": "Draw a character here"
+    },
+    "tutorial_long_press_prediction": {
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the prediction in a dictionary"
+    },
+    "tutorial_multi_search": {
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "en": "Here you can search multiple characters at once"
+    },
+    "tutorial_multi_search_double_tap": {
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "en": "A double tap empties the field"
+    },
+    "tutorial_multi_search_long_press": {
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "en": "A long press opens the characters in a dictionary"
+    },
+    "tutorial_multi_search_short_press": {
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "en": "A short press copies the characters to the clipboard"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "en": "Swiping left on this field deletes the last character"
+    },
+    "tutorial_predictions": {
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "en": "The predicted characters will be shown here"
+    },
+    "tutorial_short_press_prediction": {
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "en": "A short press copies the prediction"
+    },
+    "tutorial_skip": {
+      "de": "ÜBERSPRINGEN",
+      "en": "SKIP"
+    },
+    "tutorial_undo": {
+      "de": "Macht den letzten Strich rückgängig",
+      "en": "Press to undo the last stroke"
+    }
+  },
+  "General": {
+    "app": {
+      "de": "App",
+      "en": "app"
+    },
+    "close": {
+      "de": "Schließen",
+      "en": "Close"
+    },
+    "custom_url": {
+      "de": "selbstdefinierte URL",
+      "en": "custom URL"
+    },
+    "dark": {
+      "de": "Dunkel",
+      "en": "dark"
+    },
+    "language": {
+      "de": "Sprache",
+      "en": "language"
+    },
+    "light": {
+      "de": "Hell",
+      "en": "light"
+    },
+    "restarts_app": {
+      "de": "startet app neu",
+      "en": "restarts app"
+    },
+    "system": {
+      "de": "System",
+      "en": "system"
+    },
+    "web": {
+      "de": "Web",
+      "en": "web"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "de": "Frag nie wieder",
+      "en": "Do not ask again"
+    },
+    "RatePopup_text": {
+      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": {
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "en": "Just draw it and DaKanji will show the character you need."
+    },
+    "Onboarding_1_title": {
+      "de": "Du kennst ein Kanji nicht?",
+      "en": "You do not know a Kanji?"
+    },
+    "Onboarding_2_text": {
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
+    },
+    "Onboarding_2_title": {
+      "de": "Schlage Zeichen und Wörter nach",
+      "en": "Lookup characters and words"
+    }
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": {
+      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (the app needs to be restarted)"
+    },
+    "advanced_settings_title": {
+      "de": "Erweiterte Einstellungen",
+      "en": "Advanced settings"
+    },
+    "custom_url_explanation": {
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "custom_url_format": {
+      "de": "Benutzerdefiniertes URL format",
+      "en": "Custom URL format"
+    },
+    "custom_url_hint": {
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "en": "URL of your dictionary"
+    },
+    "dictionary_system_translator": {
+      "de": "betriebssysteminternes Übersetzer",
+      "en": "OS integrated translator"
+    },
+    "drawing_title": {
+      "de": "Zeichnen",
+      "en": "Drawing"
+    },
+    "empty_canvas_after_double_tap": {
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "en": "Empty canvas after double tap"
+    },
+    "invert_short_long_press": {
+      "de": "Invertiere kurzes und langes drücken",
+      "en": "Invert long/short press"
+    },
+    "long_press_opens": {
+      "de": "Langes drücken öffnet",
+      "en": "Long press opens"
+    },
+    "miscellaneous_title": {
+      "de": "Verschiedenes",
+      "en": "Miscellaneous"
+    },
+    "show_tutorial": {
+      "de": "Zeige Tutorial erneut (startet app neu)",
+      "en": "Reshow tutorial (restarts app)"
+    },
+    "theme": {
+      "de": "Thema (@:restarts_app)",
+      "en": "theme (@:restarts_app)"
+    },
+    "title": {
+      "de": "Einstellungen",
+      "en": "Settings"
+    },
+    "use_default_browser_for_online_dictionaries": {
+      "de": "Benutze einen webview für web Wörterbücher",
+      "en": "Use a webview for web dictionaries"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "de": "Suche",
+      "en": "Searching"
+    },
+    "title": {
+      "de": "Webview",
+      "en": "Webview"
+    }
+  }
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"cn": cn, "de": de, "en": en, "es": es, "fr": fr, "it": it, "jp": jp, "localizations": localizations, "ru": ru};
 }
