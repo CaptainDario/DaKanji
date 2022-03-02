@@ -92,7 +92,7 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           openReview();
                         }, 
-                        child: Text(LocaleKeys.AboutScreen_rate_this_app.tr())
+                        child: Text(LocaleKeys.General_rate_this_app.tr())
                       ),
                     ),
                   ],
