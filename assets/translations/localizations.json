@@ -4,10 +4,7 @@
       "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
       "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden."
     },
-    "rate_this_app": {
-      "en": "Rate this app",
-      "de": "Bewerte die App"
-    },
+    "": {},
     "show_changelog": {
       "en": "Show me the complete changelog.",
       "de": "Zeig mir alle Änderungen."
@@ -125,16 +122,20 @@
     "language": {
       "en": "language",
       "de": "Sprache"
+    },
+    "rate_this_app": {
+      "en": "Rate",
+      "de": "Bewerte"
     }
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": {
-      "en": "Do not ask again",
-      "de": "Frag nie wieder"
+      "en": "Not again!",
+      "de": "Nie wieder!"
     },
     "RatePopup_text": {
-      "en": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
-      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
+      "en": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!"
     }
   },
   "OnBoarding": {

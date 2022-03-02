@@ -1,230 +1,71 @@
 {
   "AboutScreen": {
-    "about_text": {
-      "de": "DaKanji ist f\u00fcr alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment k\u00f6nnen alle \u6f22\u5b57 von \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (auch Historische: \u3091, etc.) und \u30ab\u30bf\u30ab\u30ca (auch Historische: \u30f1, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verf\u00fcgbar f\u00fcr, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschl\u00e4ge, bitte \u00f6ffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
-      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)"
-    },
-    "rate_this_app": {
-      "de": "Bewerte die App",
-      "en": "Rate this app"
-    },
-    "show_changelog": {
-      "de": "Zeig mir alle \u00c4nderungen.",
-      "en": "Show me the complete changelog."
-    },
-    "software_informations_button": {
-      "de": "Softwareinformationen",
-      "en": "Software informations"
-    },
-    "title": {
-      "de": "\u00dcber die App",
-      "en": "About"
-    }
+    "about_text": "",
+    "show_changelog": "",
+    "software_informations_button": "",
+    "title": ""
   },
   "ChangelogScreen": {
-    "title": {
-      "de": "\u00c4nderungen",
-      "en": "Changelog"
-    }
+    "title": ""
   },
   "DrawScreen": {
-    "title": {
-      "de": "Zeichnen",
-      "en": "Drawing"
-    },
-    "tutorial_clear": {
-      "de": "L\u00f6sche all Striche",
-      "en": "Erases all strokes"
-    },
-    "tutorial_dictionary_settings": {
-      "de": "In den Einstellung kann die Methode zum \u00fcbersetzen gew\u00e4hlt werden",
-      "en": "In the settings the translation service can be chosen"
-    },
-    "tutorial_double_tap_prediction": {
-      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzuf\u00fcgen",
-      "en": "A Double Tap adds the character to the search box"
-    },
-    "tutorial_drawing": {
-      "de": "Male ein Zeichen hier",
-      "en": "Draw a character here"
-    },
-    "tutorial_long_press_prediction": {
-      "de": "Lange auf eine Vorhersage dr\u00fccken \u00f6ffnet sie in einem W\u00f6rterbuch",
-      "en": "A long press opens the prediction in a dictionary"
-    },
-    "tutorial_multi_search": {
-      "de": "Mit dieser Suchbox k\u00f6nnen mehrere Zeichen auf einmal gesucht werden",
-      "en": "Here you can search multiple characters at once"
-    },
-    "tutorial_multi_search_double_tap": {
-      "de": "Doppelt auf das Feld zutippen l\u00f6scht den Inhalt",
-      "en": "A double tap empties the field"
-    },
-    "tutorial_multi_search_long_press": {
-      "de": "Lange auf die Suchbox zu klicken \u00f6ffnet sie in einem W\u00f6rterbuch",
-      "en": "A long press opens the characters in a dictionary"
-    },
-    "tutorial_multi_search_short_press": {
-      "de": "Kurz auf die Suchbox zu dr\u00fccken kopiert die Zeichen in den Zwischenspeicher",
-      "en": "A short press copies the characters to the clipboard"
-    },
-    "tutorial_multi_search_swipe_left": {
-      "de": "Links auf der Suchbox zu swipen l\u00f6scht das letzte Zeichen",
-      "en": "Swiping left on this field deletes the last character"
-    },
-    "tutorial_predictions": {
-      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
-      "en": "The predicted characters will be shown here"
-    },
-    "tutorial_short_press_prediction": {
-      "de": "Einmal kurz dr\u00fccken kopiert das vorhergesagte Zeichen",
-      "en": "A short press copies the prediction"
-    },
-    "tutorial_skip": {
-      "de": "\u00dcBERSPRINGEN",
-      "en": "SKIP"
-    },
-    "tutorial_undo": {
-      "de": "Macht den letzten Strich r\u00fcckg\u00e4ngig",
-      "en": "Press to undo the last stroke"
-    }
+    "title": "",
+    "tutorial_clear": "",
+    "tutorial_dictionary_settings": "",
+    "tutorial_double_tap_prediction": "",
+    "tutorial_drawing": "",
+    "tutorial_long_press_prediction": "",
+    "tutorial_multi_search": "",
+    "tutorial_multi_search_double_tap": "",
+    "tutorial_multi_search_long_press": "",
+    "tutorial_multi_search_short_press": "",
+    "tutorial_multi_search_swipe_left": "",
+    "tutorial_predictions": "",
+    "tutorial_short_press_prediction": "",
+    "tutorial_skip": "",
+    "tutorial_undo": ""
   },
   "General": {
-    "app": {
-      "de": "App",
-      "en": "app"
-    },
-    "close": {
-      "de": "Schlie\u00dfen",
-      "en": "Close"
-    },
-    "custom_url": {
-      "de": "selbstdefinierte URL",
-      "en": "custom URL"
-    },
-    "dark": {
-      "de": "Dunkel",
-      "en": "dark"
-    },
-    "language": {
-      "de": "Sprache",
-      "en": "language"
-    },
-    "light": {
-      "de": "Hell",
-      "en": "light"
-    },
-    "restarts_app": {
-      "de": "startet app neu",
-      "en": "restarts app"
-    },
-    "system": {
-      "de": "System",
-      "en": "system"
-    },
-    "web": {
-      "de": "Web",
-      "en": "web"
-    }
+    "app": "",
+    "close": "",
+    "custom_url": "",
+    "dark": "",
+    "language": "",
+    "light": "",
+    "rate_this_app": "",
+    "restarts_app": "",
+    "system": "",
+    "web": ""
   },
   "HomeScreen": {
-    "RatePopup_dont_ask_again": {
-      "de": "Frag nie wieder",
-      "en": "Do not ask again"
-    },
-    "RatePopup_text": {
-      "de": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
-      "en": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!"
-    }
+    "RatePopup_dont_ask_again": "",
+    "RatePopup_text": ""
   },
   "OnBoarding": {
-    "Onboarding_1_text": {
-      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
-      "en": "Just draw it and DaKanji will show the character you need."
-    },
-    "Onboarding_1_title": {
-      "de": "Du kennst ein Kanji nicht?",
-      "en": "You do not know a Kanji?"
-    },
-    "Onboarding_2_text": {
-      "de": "Mit DaKanji kannst du schnell W\u00f6rter in Web- und App-W\u00f6rterb\u00fcchern nachschlagen",
-      "en": "With DaKanji you can quickly lookup words using web and app dictionaries."
-    },
-    "Onboarding_2_title": {
-      "de": "Schlage Zeichen und W\u00f6rter nach",
-      "en": "Lookup characters and words"
-    }
+    "Onboarding_1_text": "",
+    "Onboarding_1_title": "",
+    "Onboarding_2_text": "",
+    "Onboarding_2_title": ""
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": {
-      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
-      "en": "Inference backend (the app needs to be restarted)"
-    },
-    "advanced_settings_title": {
-      "de": "Erweiterte Einstellungen",
-      "en": "Advanced settings"
-    },
-    "custom_url_explanation": {
-      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '\u53e3' und man wil es auf 'jisho.org' nachschlagen. Daf\u00fcr muss als erste die URL der website, welche f\u00fcr das Suchen benutzt wird, herausgefunden werden. F\u00fcr 'jisho.org' ist das: 'https://jisho.org/search/\u53e3'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das f\u00fchrt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'."
-    },
-    "custom_url_format": {
-      "de": "Benutzerdefiniertes URL format",
-      "en": "Custom URL format"
-    },
-    "custom_url_hint": {
-      "de": "URL von dem W\u00f6rterbuch das benutzt werden soll",
-      "en": "URL of your dictionary"
-    },
-    "dictionary_system_translator": {
-      "de": "betriebssysteminternes \u00dcbersetzer",
-      "en": "OS integrated translator"
-    },
-    "drawing_title": {
-      "de": "Zeichnen",
-      "en": "Drawing"
-    },
-    "empty_canvas_after_double_tap": {
-      "de": "L\u00f6sche alle Striche nach doppeltem Tippen",
-      "en": "Empty canvas after double tap"
-    },
-    "invert_short_long_press": {
-      "de": "Invertiere kurzes und langes dr\u00fccken",
-      "en": "Invert long/short press"
-    },
-    "long_press_opens": {
-      "de": "Langes dr\u00fccken \u00f6ffnet",
-      "en": "Long press opens"
-    },
-    "miscellaneous_title": {
-      "de": "Verschiedenes",
-      "en": "Miscellaneous"
-    },
-    "show_tutorial": {
-      "de": "Zeige Tutorial erneut (startet app neu)",
-      "en": "Reshow tutorial (restarts app)"
-    },
-    "theme": {
-      "de": "Thema (@:restarts_app)",
-      "en": "theme (@:restarts_app)"
-    },
-    "title": {
-      "de": "Einstellungen",
-      "en": "Settings"
-    },
-    "use_default_browser_for_online_dictionaries": {
-      "de": "Benutze einen webview f\u00fcr web W\u00f6rterb\u00fccher",
-      "en": "Use a webview for web dictionaries"
-    }
+    "advanced_settings_drawing_inference_backend": "",
+    "advanced_settings_title": "",
+    "custom_url_explanation": "",
+    "custom_url_format": "",
+    "custom_url_hint": "",
+    "dictionary_system_translator": "",
+    "drawing_title": "",
+    "empty_canvas_after_double_tap": "",
+    "invert_short_long_press": "",
+    "long_press_opens": "",
+    "miscellaneous_title": "",
+    "show_tutorial": "",
+    "theme": "",
+    "title": "",
+    "use_default_browser_for_online_dictionaries": ""
   },
   "WebviewScreen": {
-    "loading": {
-      "de": "Suche",
-      "en": "Searching"
-    },
-    "title": {
-      "de": "Webview",
-      "en": "Webview"
-    }
+    "loading": "",
+    "title": ""
   }
 }

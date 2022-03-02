@@ -1,7 +1,7 @@
 {
   "AboutScreen": {
+    "": "",
     "about_text": "DaKanji ist f\u00fcr alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment k\u00f6nnen alle \u6f22\u5b57 von \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (auch Historische: \u3091, etc.) und \u30ab\u30bf\u30ab\u30ca (auch Historische: \u30f1, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verf\u00fcgbar f\u00fcr, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](), [Linux]() und [Windows]()\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschl\u00e4ge, bitte \u00f6ffne einen [GitHub-issue](GITHUB_ISSUES), tritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
-    "rate_this_app": "Bewerte die App",
     "show_changelog": "Zeig mir alle \u00c4nderungen.",
     "software_informations_button": "Softwareinformationen",
     "title": "\u00dcber die App"
@@ -33,13 +33,14 @@
     "dark": "Dunkel",
     "language": "Sprache",
     "light": "Hell",
+    "rate_this_app": "Bewerte",
     "restarts_app": "startet app neu",
     "system": "System",
     "web": "Web"
   },
   "HomeScreen": {
-    "RatePopup_dont_ask_again": "Frag nie wieder",
-    "RatePopup_text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
+    "RatePopup_dont_ask_again": "Nie wieder!",
+    "RatePopup_text": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!"
   },
   "OnBoarding": {
     "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",

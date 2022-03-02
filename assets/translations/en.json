@@ -1,7 +1,7 @@
 {
   "AboutScreen": {
+    "": "",
     "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
-    "rate_this_app": "Rate this app",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -33,13 +33,14 @@
     "dark": "dark",
     "language": "language",
     "light": "light",
+    "rate_this_app": "Rate",
     "restarts_app": "restarts app",
     "system": "system",
     "web": "web"
   },
   "HomeScreen": {
-    "RatePopup_dont_ask_again": "Do not ask again",
-    "RatePopup_text": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!"
+    "RatePopup_dont_ask_again": "Not again!",
+    "RatePopup_text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
   },
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
