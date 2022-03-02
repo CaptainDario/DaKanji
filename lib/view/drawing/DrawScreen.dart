@@ -106,12 +106,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
             var t = GetDrawScreenLayout(constraints);
             GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
-            bool runningInLandscape = 
-              t.item1 == DrawScreenLayout.Landscape || 
-              t.item1 == DrawScreenLayout.LandscapeWithWebview;
-              _canvasSize = t.item2;
-            GetIt.I<DrawScreenState>().canvasSize = _canvasSize;
-            
+            bool runningInLandscape = (t.item1 == DrawScreenLayout.Landscape
+                            || t.item1 == DrawScreenLayout.LandscapeWithWebview);
+            GetIt.I<DrawScreenState>().canvasSize = t.item2;
+            _canvasSize = t.item2;
             
             // the canvas to draw on
             Widget drawingCanvas = Consumer<Strokes>(
@@ -166,7 +164,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
                     child: KanjiBufferWidget(
                       _canvasSize,
-                      runningInLandscape ? 1.0 : 0.7,
+                     runningInLandscape ? 1.0 : 0.65,
                     )
                   );
                   if (this.widget.includeHeroes)
@@ -212,7 +210,6 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                 child: Consumer<DrawingInterpreter>(
                   builder: (context, interpreter, child){
                     return GridView.count(
-                      //padding: EdgeInsets.all(2),
                       physics: new NeverScrollableScrollPhysics(),
                       scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
                       crossAxisCount: 5,
@@ -246,18 +243,18 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             ); 
 
             WebView? wV;
-            if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
+            if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview || 
+              GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview) {
+
               wV = WebView(
                 initialUrl: openWithSelectedDictionary(""),
                 onWebViewCreated: (controller) => landscapeWebViewController = controller,
               );
             }
 
-            return Center(
-              child: DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-                multiCharSearch, undoButton, clearButton,
-                _canvasSize, runningInLandscape, wV
-              ),
+            return DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
+              multiCharSearch, undoButton, clearButton,
+              _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
             );
           }
         ),

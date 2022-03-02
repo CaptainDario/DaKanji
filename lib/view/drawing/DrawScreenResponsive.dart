@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -6,49 +7,60 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
-/// Checks if the app should be lay out in landscape mode or portrait mode.
+/// Checks if the app should be lay out in landscape or portrait mode.
 /// By using the `constraints` of the available space the app runs in.
 /// Returns a tuple of which the first element is a bool. It is true when
 /// the app is running in landscape mode and false otherwise.
 /// The second element is the size of the drawing canvas
 Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints){
 
-  DrawScreenLayout layout;
+  DrawScreenLayout layout = DrawScreenLayout.Portrait;
 
   // init size of canvas
   //landscape
   double cBHeight = constraints.biggest.height;
   double cBWidth = constraints.biggest.width;
 
-  double canvasSize;
+  double canvasSize = 0;
 
-  // set the app in landscape mode if there is space to
-  // place the prediction buttons in two rows to the right of the canvas
-  if(cBWidth > cBHeight*0.8 + cBHeight*0.8*0.4+10){
-    var columnSpacing = 10;
-    canvasSize = cBHeight * 0.8 - columnSpacing;
-    
-    // check if the screen is wide enough to fit the canvas and a webview (only if )
-    if(cBWidth > canvasSize * 1.4 + canvasSize * 2.0 &&
-      GetIt.I<Settings>().useWebview)
+GetIt.I<Settings>().useWebview = true;
+
+  // webview is enabled
+  if(GetIt.I<Settings>().useWebview){
+    // LANDSCAPE + WEBVIEW
+    if(cBWidth / 2 > cBHeight){
       layout = DrawScreenLayout.LandscapeWithWebview;
-    else
-      layout = DrawScreenLayout.Landscape;
+      canvasSize = cBHeight * 0.7;
+    }
+    // PORTRAIT + WEBVIEW
+    else if(cBWidth > cBHeight){
+      layout = DrawScreenLayout.PortraitWithWebview;
+      canvasSize = cBHeight * 0.55 > cBWidth/2 - 10 ?
+        cBWidth/2 - 10 : cBHeight * 0.55;
+    }
+    //portrait
+    else if(cBWidth < cBHeight){
+      layout = DrawScreenLayout.Portrait;
+      canvasSize = cBHeight * 0.55 > cBWidth - 10 ?
+        cBWidth - 10 : cBHeight * 0.55;
+    }
   }
-  // portrait
-  else{
-    var predictionButtonheight = cBHeight * 0.35;
-    var rowSpacing = 40;
-    canvasSize = cBHeight - predictionButtonheight - rowSpacing;
-    // assure that the canvas is not wider than the screen
-    if(canvasSize > cBWidth - 25)
-      canvasSize = cBWidth - 25;
-
-    layout = DrawScreenLayout.Portrait;
+  // webview is disabled
+  else {
+    // portrait
+    if(cBWidth < cBHeight){
+      layout = DrawScreenLayout.Portrait;
+      canvasSize = cBHeight * 0.55 > cBWidth - 10 ?
+        cBWidth - 10 : cBHeight * 0.55;
+    }
+    //landscape
+    else{
+      layout = DrawScreenLayout.Landscape;
+      canvasSize = cBHeight * 0.7;
+    }
   }
 
   return Tuple2<DrawScreenLayout, double>(layout, canvasSize);
@@ -58,21 +70,32 @@ Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints)
 /// device / window it is running on and returns it.
 Widget DrawScreenResponsiveLayout(
   Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
-  Widget undoButton, Widget clearButton, double canvasSize, bool landscape,
+  Widget undoButton, Widget clearButton, double canvasSize, DrawScreenLayout layout,
   WebView? webView){
 
-  Widget layout;
+  Widget drawScreen;
 
-  if(landscape)
-    layout = DrawScreenLandscapeLayout(drawingCanvas, predictionButtons, multiCharSearch, 
-      undoButton, clearButton, canvasSize, webView
-    );
-  else
-    layout = DrawScreenPortraitLayout(drawingCanvas, predictionButtons, multiCharSearch,
+
+  if (layout == DrawScreenLayout.Portrait)
+    drawScreen = DrawScreenPortraitLayout(drawingCanvas, predictionButtons, multiCharSearch,
       undoButton, clearButton, canvasSize
     );
+  else if (layout == DrawScreenLayout.Landscape)
+    drawScreen = DrawScreenLandscapeLayout(drawingCanvas, predictionButtons, multiCharSearch, 
+      undoButton, clearButton, canvasSize
+    );
+  // landscape with webview
+  else if (layout == DrawScreenLayout.PortraitWithWebview)
+    drawScreen = DrawScreenPortraitWithWebview(drawingCanvas, predictionButtons, multiCharSearch, 
+      undoButton, clearButton, canvasSize, webView);
+  // else if (layout == DrawScreenLayout.LandscapeWithWebview)
+  else
+    drawScreen = DrawScreenLandscapeWithWebview(drawingCanvas, predictionButtons, multiCharSearch, 
+      undoButton, clearButton, canvasSize, webView);
 
-  return layout;
+  return Center(
+    child: drawScreen
+  );
 }
 
 /// Builds the DrawScreen in portrait mode and returns it.
@@ -112,13 +135,11 @@ Widget DrawScreenPortraitLayout(
 /// Builds the DrawScreen in landscape mode and returns it.
 Widget DrawScreenLandscapeLayout(
   Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
-  Widget undoButton, Widget clearButton, double canvasSize, WebView? webView){
+  Widget undoButton, Widget clearButton, double canvasSize){
 
   Widget layout;
 
   layout = LayoutGrid(
-    //rowGap: 5,
-    //columnGap: 15,
     columnSizes: [
       FixedTrackSize(canvasSize),
       FixedTrackSize(10),
@@ -144,20 +165,76 @@ Widget DrawScreenLandscapeLayout(
     ],
   );
   
+  return layout;
+}
+
+Widget DrawScreenPortraitWithWebview(
+  Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
+  Widget undoButton, Widget clearButton, double canvasSize, WebView? webView){
+
+  Widget drawScreen = DrawScreenPortraitLayout(
+    drawingCanvas, predictionButtons, multiCharSearch, 
+    undoButton, clearButton, canvasSize
+  );
+
   // if there is enough space for a webview add it to the layout
   if(webView != null){
-    return Row(
+    drawScreen = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(width: 5,),
+        Expanded(
+          child: Center(child: 
+            drawScreen
+          )
+        ),
+        SizedBox(width: 5,),
+        Expanded(
+          child: Container(
+            color: Colors.green,
+            width: 100,
+            height: 200,
+          ),//webView,
+        ),
+        SizedBox(width: 5,),
+      ],
+    );
+  }
+
+  return drawScreen;
+
+}
+
+Widget DrawScreenLandscapeWithWebview(
+  Widget drawingCanvas, Widget predictionButtons, Widget multiCharSearch,
+  Widget undoButton, Widget clearButton, double canvasSize, WebView? webView){
+
+    Widget drawScreen = DrawScreenLandscapeLayout(
+      drawingCanvas, predictionButtons, multiCharSearch, 
+      undoButton, clearButton, canvasSize
+    );
+
+  // if there is enough space for a webview add it to the layout
+  if(webView != null){
+    drawScreen = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: Center(child: layout)
+          child: Center(child: 
+            drawScreen
+          )
         ),
         Expanded(
-          child: webView,
+          child: Container(
+            color: Colors.green,
+            width: 100
+          ),//webView,
         )
       ],
     );
   }
   
-  return layout;
+  return drawScreen;
+
 }
+
