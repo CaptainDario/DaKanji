@@ -10,12 +10,10 @@ const String APP_TITLE = "DaKanji";
 const String APP_LINK = r"dakanji://dakanji/";
 
 // the version number of this app
-// ignore: non_constant_identifier_names
-String VERSION = "2.0.0+29";
+const String VERSION = "2.0.0+29";
 // the number of times the app has been opened until the user gets asked to
 // if the rate dialogue should never be shown again
-// ignore: non_constant_identifier_names
-int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
+const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
 // all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
 List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0"];
@@ -27,12 +25,16 @@ List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 // showcase view keys
 // ignore: non_constant_identifier_names
 List<ShowcaseTuple> SHOWCASE_DRAWING = [];
+
 // should the showcase of the draw screen be shown
 // ignore: non_constant_identifier_names
 bool SHOW_SHOWCASE_DRAWING = false;
-// should the showcase of the draw screen be shown
+// should the onboarding be shown
 // ignore: non_constant_identifier_names
 bool SHOW_ONBOARDING = false;
+// should the rate popup be shown
+// ignore: non_constant_identifier_names
+bool SHOW_RATE_POPUP = false;
 
 //about page
 const GITHUB_DESKTOP_REPO = "https://github.com/CaptainDario/DaKanji-Desktop";
