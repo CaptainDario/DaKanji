@@ -1,0 +1,72 @@
+{
+  "AboutScreen": {
+    "": "",
+    "about_text": "",
+    "show_changelog": "",
+    "software_informations_button": "",
+    "title": ""
+  },
+  "ChangelogScreen": {
+    "title": ""
+  },
+  "DrawScreen": {
+    "title": "",
+    "tutorial_clear": "",
+    "tutorial_dictionary_settings": "",
+    "tutorial_double_tap_prediction": "",
+    "tutorial_drawing": "",
+    "tutorial_long_press_prediction": "",
+    "tutorial_multi_search": "",
+    "tutorial_multi_search_double_tap": "",
+    "tutorial_multi_search_long_press": "",
+    "tutorial_multi_search_short_press": "",
+    "tutorial_multi_search_swipe_left": "",
+    "tutorial_predictions": "",
+    "tutorial_short_press_prediction": "",
+    "tutorial_skip": "",
+    "tutorial_undo": ""
+  },
+  "General": {
+    "app": "",
+    "close": "",
+    "custom_url": "",
+    "dark": "",
+    "language": "",
+    "light": "",
+    "rate_this_app": "",
+    "restarts_app": "",
+    "system": "",
+    "web": ""
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "",
+    "RatePopup_text": ""
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "",
+    "Onboarding_1_title": "",
+    "Onboarding_2_text": "",
+    "Onboarding_2_title": ""
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "",
+    "advanced_settings_title": "",
+    "custom_url_explanation": "",
+    "custom_url_format": "",
+    "custom_url_hint": "",
+    "dictionary_system_translator": "",
+    "drawing_title": "",
+    "empty_canvas_after_double_tap": "",
+    "invert_short_long_press": "",
+    "long_press_opens": "",
+    "miscellaneous_title": "",
+    "show_tutorial": "",
+    "theme": "",
+    "title": "",
+    "use_default_browser_for_online_dictionaries": ""
+  },
+  "WebviewScreen": {
+    "loading": "",
+    "title": ""
+  }
+}

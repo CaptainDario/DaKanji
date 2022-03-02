@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
 
 
@@ -181,9 +181,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         child: Stack(
           children: [
             Image(image: 
-              AssetImage(darkMode
-                ? "assets/kanji_drawing_aid_w.png"
-                : "assets/kanji_drawing_aid_b.png")
+              AssetImage("assets/images/ui/kanji_drawing_aid.png")
             ),
             AnimatedBuilder(
               animation: _canvasController,

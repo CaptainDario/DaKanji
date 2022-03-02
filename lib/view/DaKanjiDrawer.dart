@@ -133,7 +133,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         builder: (BuildContext context, Widget? child) {
           return Stack(
             children: [
-              // the screen (child)
+              // the screen (child) and the top app bar
               Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
@@ -141,7 +141,20 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   ..translate(_moveDrawer.value * _screenWidth/2)
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
+                  // the top app bar
                   appBar: AppBar(
+                    leading: 
+                      InkWell(
+                        onTap: () => _drawerController.forward(from: 0.0),
+                        child: Ink(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Container(
+                              child: Icon(Icons.menu),
+                            ),
+                          ),
+                        ),
+                      ),
                     title: Text(
                       (){
                         String title;
@@ -155,34 +168,22 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           case Screens.drawing:
                             title = LocaleKeys.DrawScreen_title.tr();
                             break;
+                          case Screens.home:
+                            throw Exception("HomeScreen should not be navigated to via drawer");
                           case Screens.settings:
                             title = LocaleKeys.SettingsScreen_title.tr();
                             break;
-                          case Screens.webviewDrawing:
+                          case Screens.onboarding:
+                            throw Exception("OnBoardingScreen should not be navigated to via drawer");
+                          case Screens.webviewDict:
                             title = LocaleKeys.WebviewScreen_title.tr();
                             break;
                         }
                         return title;
                       } ()
                     ),
-                    leading: Transform.scale(
-                      scale: 0.75,
-                      child: Image.asset("media/icon.png")
-                    ),
-                    actions: [
-                      InkWell(
-                        onTap: () => _drawerController.forward(from: 0.0),
-                        child: Ink(
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              child: Icon(Icons.menu),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
+                  //the screen (child)
                   body: SafeArea(child: child!)
                 ),
               ),
@@ -278,7 +279,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 children:[
                                   Image(
                                     height: 84,
-                                    image: AssetImage("media/banner.png"),
+                                    image: AssetImage("assets/images/icons/banner.png"),
                                   ),
                                 ]
                               ),
@@ -289,6 +290,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 leading: Icon(Icons.brush_outlined),
                                 title: Text(LocaleKeys.DrawScreen_title.tr()),
                                 selected: widget.currentScreen == Screens.drawing,
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/drawing"){
                                     Navigator.pushNamedAndRemoveUntil(
@@ -309,6 +311,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 selected: widget.currentScreen == Screens.settings,
                                 leading: Icon(Icons.settings_applications),
                                 title: Text(LocaleKeys.SettingsScreen_title.tr()),
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/settings"){
                                     Navigator.pushNamedAndRemoveUntil(
@@ -328,7 +331,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 selected: widget.currentScreen == Screens.about,
                                 leading: Icon(Icons.info_outline),
                                 title: Text(LocaleKeys.AboutScreen_title.tr()),
-                                
+                                selectedColor: Theme.of(context).highlightColor,
                                 onTap: () {
                                   if(ModalRoute.of(context)!.settings.name != "/about"){
                                     Navigator.pushNamedAndRemoveUntil(

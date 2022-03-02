@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/model/core/InferenceBackends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +61,7 @@ class Settings with ChangeNotifier {
 
   /// The available backends for inference
   List<String> inferenceBackends= [
-      "CPU",
+      InferenceBackends.CPU.toString(),
     ];
 
   /// The inference backend used for the single character CNN
@@ -88,16 +89,20 @@ class Settings with ChangeNotifier {
 
     if(Platform.isAndroid)
       inferenceBackends.addAll([
-        "GPU",
-        "NNAPI",
+        InferenceBackends.GPU.toString(),
+        InferenceBackends.NNAPI.toString(),
       ]);
     //else if(Platform.isIOS)
     //  inferenceBackends.addAll([
-    //    "Metal",
-    //    "CoreML"
+    //    InferenceBackends.GPU.toString(),
+    //    InferenceBackends.CoreML.toString(),
+    //  ]);
+    //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+    //  inferenceBackends.addAll([
+    //    InferenceBackends.XXNPACK.toString()
     //  ]);
 
-    jishoURL = "https://jisho.org/search/" + kanjiPlaceholder;
+    jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
     weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
 

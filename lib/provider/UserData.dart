@@ -36,6 +36,9 @@ class UserData{
   /// 
   /// Loads the user data from disk and increments the app opened count.
   /// If the app was loaded for x % 10 == 0 times show a rating dialogue.
+  /// If a new version was installed show the changelog
+  /// If the changelog was updated or this is the first time opening the app,
+  /// show the onboarding screen
   void init () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -57,7 +60,27 @@ class UserData{
       if(DRAWING_SCREEN_NEW_FEATURES.contains(VERSION)){
         SHOW_SHOWCASE_DRAWING = true;
       }
+
+      // this version has new onboarding pages
+      if(ONBOARDING_NEW_PAGES.contains(VERSION)){
+        SHOW_ONBOARDING = true;
+      }
     }
+
+    // should a rate popup be shown
+    if (!GetIt.I<UserData>().doNotShowRateAgain && 
+      !GetIt.I<UserData>().rateDialogueWasShown && 
+      appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0)
+      SHOW_RATE_POPUP = true;
+
+    if(appOpenedTimes == 1){
+      SHOW_ONBOARDING = true;
+    }
+
+    // debugging onboarding, changelog, rate popup
+    //SHOW_ONBOARDING = true;
+    //GetIt.I<Changelog>().showChangelog = true;
+    //SHOW_RATE_POPUP = true;
 
     save();
   }

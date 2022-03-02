@@ -10,19 +10,31 @@ const String APP_TITLE = "DaKanji";
 const String APP_LINK = r"dakanji://dakanji/";
 
 // the version number of this app
-// ignore: non_constant_identifier_names
-String VERSION = "1.4.0+28";
+const String VERSION = "2.0.0+29";
+// the number of times the app has been opened until the user gets asked to
+// if the rate dialogue should never be shown again
+const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
 // all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
 List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0"];
+// all versions which implemented new pages for the OnBoarding
+// ignore: non_constant_identifier_names
+List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 
 
 // showcase view keys
 // ignore: non_constant_identifier_names
 List<ShowcaseTuple> SHOWCASE_DRAWING = [];
+
 // should the showcase of the draw screen be shown
 // ignore: non_constant_identifier_names
 bool SHOW_SHOWCASE_DRAWING = false;
+// should the onboarding be shown
+// ignore: non_constant_identifier_names
+bool SHOW_ONBOARDING = false;
+// should the rate popup be shown
+// ignore: non_constant_identifier_names
+bool SHOW_RATE_POPUP = false;
 
 //about page
 const GITHUB_DESKTOP_REPO = "https://github.com/CaptainDario/DaKanji-Desktop";
@@ -41,6 +53,12 @@ const APPSTORE_BASE_URL = "itms-apps://itunes.apple.com/app/";
 const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
+
+const WINDOWS_STORE = "";
+
+const SNAP_STORE = "";
+
+const MAC_STORE = "";
 
 const TAKOBOTO_ID = "jp.takoboto";
 const AKEBI_ID = "com.craxic.akebifree";

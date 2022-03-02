@@ -7,15 +7,17 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 
-import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/LightTheme.dart';
+import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
 import 'package:da_kanji_mobile/model/services/DeepLinks.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/Lookup.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/provider/Changelog.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
@@ -26,8 +28,10 @@ import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
 import 'package:da_kanji_mobile/view/AboutScreen.dart';
+import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+
 
 
 Future<void> main() async {
@@ -97,12 +101,12 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
 
   // draw screen services 
-  GetIt.I.registerSingleton<KanjiBuffer>(KanjiBuffer());
-  GetIt.I.registerSingleton<Strokes>(Strokes());
+  GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
+    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
+  );
   
   // screen independent
-  GetIt.I.registerSingleton(DrawerListener());
-  GetIt.I.registerSingleton<Lookup>(Lookup());
+  GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 }
 
 ///
@@ -161,8 +165,10 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         switch(settings.name){
           case "/home":
             return switchScreen(HomeScreen());
+          case "/onboarding":
+            return switchScreen(OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer));
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
@@ -184,6 +190,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
       //screens
       home: HomeScreen(),
+      //home: TestScreen()
     );
   }
 }
