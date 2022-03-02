@@ -20,17 +20,18 @@ if __name__ == "__main__":
         f_content = f.read()
         for code in languages:
             jason_dict = json.loads(f_content)
+            localization = {}
 
             for category, category_children in jason_dict.items():
+                if(category not in localization):
+                    localization[category] = {}
                 for category_entry, localizations in category_children.items():
-                    if(category_entry == ""):
-                        del jason_dict[category][category_entry]
-                    if(code in localizations):
-                        jason_dict[category][category_entry] = localizations[code]
-                    #else:
-                    #    del jason_dict[category][category_entry] 
+                    if(code in localizations and category_entry != ""):
+                        localization[category][category_entry] = localizations[code]
+                    else:
+                        localization[category][category_entry] = ""
             
-            js = json.dumps(jason_dict, indent=2, sort_keys=True)
+            js = json.dumps(localization, indent=2, sort_keys=True)
             with open(f"assets/translations/{code}.json", "w+", encoding="utf8") as f:
                 f.write(js)
 
