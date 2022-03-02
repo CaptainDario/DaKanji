@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:provider/provider.dart';
 
