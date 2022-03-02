@@ -36,6 +36,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
           ),
           SizedBox(height: 50,),
           Wrap(
+            alignment: WrapAlignment.spaceAround,    
             children: [
               // close button
               ElevatedButton(
@@ -44,6 +45,14 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                     context, "/home", (Route<dynamic> route) => false);
                 },
                 child: Text(LocaleKeys.General_close.tr())
+              ),
+              SizedBox(width: 5,),
+              // rate button
+              ElevatedButton(
+                onPressed: () async {
+                  openReview(); 
+                },
+                child: Text(LocaleKeys.General_rate_this_app.tr())
               ),
               SizedBox(width: 5,),
               // do not ask again button
@@ -59,14 +68,6 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                   },
                   child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())
                 ),
-              SizedBox(width: 5,),
-              // rate button
-              ElevatedButton(
-                onPressed: () async {
-                  openReview(); 
-                },
-                child: Text(LocaleKeys.AboutScreen_rate_this_app.tr())
-              ),
             ],
           ),
           SizedBox(height: 10,)
