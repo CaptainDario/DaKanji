@@ -26,8 +26,6 @@ Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints)
 
   double canvasSize = 0;
 
-GetIt.I<Settings>().useWebview = true;
-
   // webview is enabled
   if(GetIt.I<Settings>().useWebview){
     // LANDSCAPE + WEBVIEW
@@ -190,11 +188,7 @@ Widget DrawScreenPortraitWithWebview(
         ),
         SizedBox(width: 5,),
         Expanded(
-          child: Container(
-            color: Colors.green,
-            width: 100,
-            height: 200,
-          ),//webView,
+          child: webView,
         ),
         SizedBox(width: 5,),
       ],
@@ -225,10 +219,7 @@ Widget DrawScreenLandscapeWithWebview(
           )
         ),
         Expanded(
-          child: Container(
-            color: Colors.green,
-            width: 100
-          ),//webView,
+          child: webView,
         )
       ],
     );
