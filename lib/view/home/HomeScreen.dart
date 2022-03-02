@@ -41,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() { 
     super.initState();
 
-
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       
@@ -63,16 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
       // show a rating dialogue WITHOUT "do not show again"-option
-      else if((!GetIt.I<UserData>().doNotShowRateAgain && 
-        !GetIt.I<UserData>().rateDialogueWasShown && 
-        appOpenedTimes < 31 && appOpenedTimes % 10 == 0))
-          showRatePopup(context, false);
-        
-        // show a rating dialogue WITH "do not show again"-option
-        else if((!GetIt.I<UserData>().doNotShowRateAgain && 
-          !GetIt.I<UserData>().rateDialogueWasShown && 
-          appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0))
-          showRatePopup(context, true);
+      else if(SHOW_RATE_POPUP && appOpenedTimes < 31)
+        showRatePopup(context, false);
+      // show a rating dialogue WITH "do not show again"-option
+      else if(SHOW_RATE_POPUP && appOpenedTimes > 31)
+        showRatePopup(context, true);
       // otherwise open the default screen
       else{
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
@@ -90,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           maintainSize: true, 
           maintainAnimation: true,
           maintainState: true,
-          visible: true,//GetIt.I<Changelog>().showChangelog, 
+          visible: GetIt.I<Changelog>().showChangelog, 
           child: WhatsNewDialogue(context,
           confettiAnimation_1, confettiAnimation_2, confettiAnimation_3)
         )
