@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsive.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 
