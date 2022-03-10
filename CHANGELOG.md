@@ -9,7 +9,6 @@ new Features:
 - Onboarding
 - New UI design
 - Use a web dictionary side by side with drawing screen (mobile only)
-- automatically use the best inference backend
 
 Changes:
 
