@@ -193,11 +193,11 @@ class Settings with ChangeNotifier {
     emptyCanvasAfterDoubleTap = prefs.getBool('emptyCanvasAfterDoubleTap') ?? false;
     useWebview = prefs.getBool('useWebview') ?? false;
     
-    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? 'CPU';
+    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
     customURL = prefs.getString('customURL') ?? '';
     _selectedTheme = prefs.getString('selectedTheme') ?? themes[2];
     selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
-    selectedLocale = Locale(prefs.getString('selectedLocale') ?? "en");
+    selectedLocale = Locale(prefs.getString('selectedLocale') ?? "null");
   }
 }
 

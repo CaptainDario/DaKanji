@@ -33,7 +33,8 @@ dependencies:
   lottie: 1.2.1
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
-  flutter_svg: ^1.0.3
+  flutter_svg: 1.0.3
+  responsive_framework: 0.1.7
 
 
   # do NOT support all target platforms

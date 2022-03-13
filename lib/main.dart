@@ -90,6 +90,7 @@ void clearPreferences() async {
 
 /// Initialize GetIt by initializing and registering all the instances for it
 Future<void> initGetIt() async {
+
   // services to load from disk
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
@@ -139,13 +140,13 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       supportedLocales: context.supportedLocales,
       locale: () {
         // if there was no language set use the one from the OS
-        if(GetIt.I<Settings>().selectedLocale == null){
+        if(GetIt.I<Settings>().selectedLocale?.languageCode == "null"){
           GetIt.I<Settings>().selectedLocale = context.locale;
           GetIt.I<Settings>().save();
         }
         return GetIt.I<Settings>().selectedLocale;
       } (),
-
+      
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
           PageRouteBuilder(
