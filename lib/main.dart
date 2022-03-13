@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:universal_io/io.dart';
@@ -148,13 +149,23 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       } (),
       
       onGenerateRoute: (settings) {
-        PageRouteBuilder switchScreen (Widget screen) =>
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => screen,
-            settings: settings,
-            transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c)
-          );
+PageRouteBuilder switchScreen (Widget screen) =>
+  PageRouteBuilder(
+    pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
+      screen,
+      defaultScale: true,
+      breakpoints: [
+        const ResponsiveBreakpoint.resize(450, name: MOBILE),
+        const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+        const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+        const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+        const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+      ],
+    ),
+    settings: settings,
+    transitionsBuilder: (_, a, __, c) =>
+      FadeTransition(opacity: a, child: c)
+  );
 
         // check type and extract arguments
         SettingsArguments args;
