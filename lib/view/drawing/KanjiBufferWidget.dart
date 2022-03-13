@@ -12,8 +12,12 @@ import 'package:get_it/get_it.dart';
 /// A draggable `OutlinedButton` that moves back to `Alignment.center` when it's
 /// released.
 class KanjiBufferWidget extends StatefulWidget {
+
+  /// the size of the drawing canvas
   final double canvasSize;
+  /// the percentage of the canvas size which should be the width of this widget
   final double canvasSizePercentageToUse;
+
 
   KanjiBufferWidget(this.canvasSize, this.canvasSizePercentageToUse);
 
