@@ -3,6 +3,7 @@ library my_prj.globals;
 import 'model/core/ShowcaseTuple.dart';
 
 
+
 // the title of the app
 const String APP_TITLE = "DaKanji";
 
@@ -35,6 +36,12 @@ bool SHOW_ONBOARDING = false;
 // should the rate popup be shown
 // ignore: non_constant_identifier_names
 bool SHOW_RATE_POPUP = false;
+
+// is the app running to test the drawscreen
+bool IS_TESTING_DRAWSCREEN = false;
+// is the app running to test the onboarding
+bool IS_TESTING_ONBOARDING = false;
+
 
 //about page
 const GITHUB_DESKTOP_REPO = "https://github.com/CaptainDario/DaKanji-Desktop";

@@ -43,9 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      
+
+      // if the DrawScreen is being tested switch there immediately
+      if(IS_TESTING_DRAWSCREEN)
+        Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
+
       // if a newer version was installed open the what's new pop up 
-      if(GetIt.I<Changelog>().showChangelog){
+      else if(GetIt.I<Changelog>().showChangelog){
 
         // show the confetti animations when the widget was build 
         WidgetsBinding.instance?.addPostFrameCallback((_) {

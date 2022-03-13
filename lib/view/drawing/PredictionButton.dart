@@ -14,7 +14,8 @@ class PredictionButton extends StatefulWidget {
 
   
   final String char;
-  PredictionButton (this.char);
+
+  PredictionButton(this.char, {Key? key}) : super(key: key);
   
   @override
   _PredictionButtonState createState() => _PredictionButtonState();

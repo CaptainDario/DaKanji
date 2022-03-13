@@ -55,7 +55,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     super.initState();
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview ||
+        GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview)
         landscapeWebViewController?.loadUrl(
           openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
         );
@@ -217,7 +218,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                       crossAxisSpacing: 5,
                       
                       children: List.generate(10, (i) {
-                        Widget widget = PredictionButton(interpreter.predictions[i]);
+                        Widget widget = PredictionButton(
+                          interpreter.predictions[i],
+                        );
                         // instantiate short/long press showcase button
                         if(i == 0){
                           widget = Container(
