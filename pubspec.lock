@@ -194,7 +194,7 @@ packages:
       path: "plugins/flutter_appavailability"
       relative: true
     source: path
-    version: "0.0.21"
+    version: "0.0.22"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -667,9 +667,9 @@ packages:
   tflite_flutter:
     dependency: "direct main"
     description:
-      name: tflite_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/tflite_flutter_plugin"
+      relative: true
+    source: path
     version: "0.9.0"
   tuple:
     dependency: "direct main"

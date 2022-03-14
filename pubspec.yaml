@@ -40,7 +40,8 @@ dependencies:
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
   in_app_review: 2.0.2            # android, iOS, MacOS, windows (limited)
-  tflite_flutter: 0.9.0           # android, iOS, Linux, MacOS, windows
+  tflite_flutter:                 # android, iOS, Linux, MacOS, windows
+    path: ./plugins/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
   uni_links: 0.5.1                # android, iOS, web
@@ -65,6 +66,8 @@ msix_config:
   identity_name: company.DaAppLab.DaKanji
   logo_path: ./assets/images/icons/icon.png
   capabilities: internetClient
+  add-execution-alias: dakanji	
+  languages: en-us, de-ge
   
 
   # The following adds the Cupertino Icons font to your application.
