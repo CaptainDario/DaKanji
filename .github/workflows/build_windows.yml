@@ -35,5 +35,21 @@ jobs:
       #- name: Run tests
       #  run: flutter test --coverage 
 
-      - name: build
+      - name: build exe
         run: flutter build windows
+
+      - name: copy TF Lite binaries and create zip of build
+        run: |
+          md build\windows\runner\Release\blobs
+          copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
+          7z.exe -tzip a DaKanji-Application\DaKanji_v2.0.0.zip  DaKanji-Application\build\windows\runner\Release
+          dir
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-without-markdown
+          path: release
+
+      - name: build MSIX
+        run: flutter pub run msix:create --store
