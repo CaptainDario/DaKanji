@@ -26,7 +26,7 @@ jobs:
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           
-      - run: ls -a -l
+      - run: dir
 
 
 
