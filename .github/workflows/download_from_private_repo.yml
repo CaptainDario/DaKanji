@@ -21,7 +21,7 @@ jobs:
       - name: Download release asset
         uses: robinraju/release-downloader@v1.3
         with:
-          repo: CaptainDario/DaKanji-Application
+          repository: CaptainDario/DaKanji-Application
           latest: true
           fileName: "*"
           token: ${{ secrets.MY_TOKEN }}
