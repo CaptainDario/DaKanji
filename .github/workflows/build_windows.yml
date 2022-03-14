@@ -29,6 +29,15 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
+      - name: Download release asset
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: CaptainDario/DaKanji-ML
+          latest: true
+          fileName: "*"
+          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+          out-file-path: "assets\tflite_models"
+        
       #- name: Analyze
       #  run: flutter analyze
 
