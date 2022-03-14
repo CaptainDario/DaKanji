@@ -53,3 +53,6 @@ android/app/key.jks
 
 # add tf lite desktop binaries
 !blobs/**
+
+# ignore custom tf lite flutter repo
+plugins/tflite_flutter_plugin/
