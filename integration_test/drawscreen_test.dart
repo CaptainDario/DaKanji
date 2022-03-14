@@ -64,7 +64,7 @@ void main() {
     await tester.pump(Duration(seconds: 1));
     // #endregion
     
-    // 4 - add two strokes (becomes 目) and check predictions
+    // #region 4 - add two strokes (becomes 目) and check predictions
     await movePointer(tester, canvasCenter, meStroke1, canvasSize.height/2);
     await movePointer(tester, canvasCenter, meStroke2, canvasSize.height/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
@@ -74,15 +74,17 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, mePredictions);
     await tester.pump(Duration(seconds: 1));
+    // #endregion
 
-    // 5 - double tap prediction -> Kanjibuffer = 目
+    // #region 5 - double tap prediction -> Kanjibuffer = 目
     await tester.tap(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pump(kDoubleTapMinTime);
     await tester.tap(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pumpAndSettle();
+    // #endregion
     
     
-    // 6 - remove one stroke (becomes 日)
+    // #region 6 - remove one stroke (becomes 日)
     await tester.tap(find.byIcon(Icons.undo));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
@@ -91,11 +93,13 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, nichiPredictions);
     await tester.pump(Duration(seconds: 1));
+    // #endregion
 
-    // TODO 7 - double tap prediction -> Kanjibuffer = 目日
+    // TODO #region 7 - double tap prediction -> Kanjibuffer = 目日
 
+    // #endregion
 
-    // 8 - remove one stroke (becomes 口)
+    // #region 8 - remove one stroke (becomes 口)
     await tester.tap(find.byIcon(Icons.undo));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
@@ -104,11 +108,13 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, kuchiPredictions);
     await tester.pump(Duration(seconds: 1));
+    // #endregion
     
-    // TODO 9 - double tap prediction -> Kanjibuffer = 目日口
+    // TODO #region 9 - double tap prediction -> Kanjibuffer = 目日口
 
+    // #endregion
     
-    // 10 - clear all -> empty predictions
+    // #region 10 - clear all -> empty predictions
     tester.tap(find.byIcon(Icons.clear));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
@@ -117,8 +123,9 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
     await tester.pump(Duration(seconds: 1));
+    // #endregion
     
-    // 11 - undo -> nothing (empty predictions)
+    // #region 11 - undo -> nothing (empty predictions)
     tester.tap(find.byIcon(Icons.undo));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
@@ -127,8 +134,9 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
     await tester.pump(Duration(seconds: 1));
+    // #endregion
 
-    // 12 - clear all -> nothing (empty predictions)
+    // #region 12 - clear all -> nothing (empty predictions)
     tester.tap(find.byIcon(Icons.clear));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
@@ -137,6 +145,7 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
     await tester.pump(Duration(seconds: 1));
+    // #endregion
   });
 }
 
