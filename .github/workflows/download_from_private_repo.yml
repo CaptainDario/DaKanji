@@ -24,7 +24,7 @@ jobs:
           repository: CaptainDario/DaKanji-Application
           latest: true
           fileName: "*"
-          token: ${{ secrets.MY_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - run: ls -a -l
 
