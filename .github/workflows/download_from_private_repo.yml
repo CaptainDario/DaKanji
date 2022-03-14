@@ -19,4 +19,4 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: download TF Lite files from DaKanji-ML
-        run: curl --output assets/tflite_models/CNN_single_char.tflite https://github.com/CaptainDario/DaKanji-ML/releases/latest/CNN_single_char.tflite
+        run: curl --output CNN_single_char.tflite https://github.com/CaptainDario/DaKanji-ML/releases/latest/CNN_single_char.tflite
