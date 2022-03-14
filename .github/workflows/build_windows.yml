@@ -42,7 +42,7 @@ jobs:
         run: |
           md build\windows\runner\Release\blobs
           copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
-          7z.exe -tzip a DaKanji-Application\DaKanji_v2.0.0.zip  DaKanji-Application\build\windows\runner\Release
+          7z.exe -tzip a DaKanji_v2.0.0.zip build\windows\runner\Release
           dir
 
       - name: Archive production artifacts
