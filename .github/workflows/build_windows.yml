@@ -48,8 +48,14 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: dist-without-markdown
+          name: DaKanji_win.zip
           path: DaKanji_win.zip
 
       - name: build MSIX
-        run: flutter pub run msix:create --store
+        run: flutter pub run msix:create --build-windows=false --store
+     
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_win.msix
+          path: build\windows\runner\Release\da_kanji_mobile.msix
