@@ -24,7 +24,7 @@ jobs:
           repository: CaptainDario/DaKanji-ML
           latest: true
           fileName: "*"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           
       - run: ls -a -l
 
