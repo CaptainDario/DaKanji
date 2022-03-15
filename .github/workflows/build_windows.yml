@@ -51,13 +51,15 @@ jobs:
         run: |
           md build\windows\runner\Release\blobs
           copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
-          7z.exe -tzip a DaKanji_win.zip build\windows\runner\Release
-          dir
+          
+          
+        # 7z.exe -tzip a DaKanji_win.zip build\windows\runner\Release
+        # dir
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.zip
+          name: build\windows\runner\Release
           path: DaKanji_win.zip
 
       - name: build MSIX
