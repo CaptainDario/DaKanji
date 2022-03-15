@@ -66,7 +66,7 @@ msix_config:
   identity_name: company.DaAppLab.DaKanji
   logo_path: ./assets/images/icons/icon.png
   capabilities: internetClient
-  add-execution-alias: dakanji	
+  add-execution-alias: true	
   languages: en-us, de-ge
   
 
