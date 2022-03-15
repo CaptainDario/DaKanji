@@ -42,8 +42,12 @@ key.properties
 python
 android/app/key.jks
 
-# ignore tflite models to keep the repo size low (they can be downloaded from the respective ML repo)
-**.tflite
+# ignore tflite folder except for the copy models here note
+assets/tflite_models/*
+!assets/tflite_models/COPY_ML_RELEASE_HERE
+
+# ignore tflite models
+*.tflite
 
 # libraries
 *.so
