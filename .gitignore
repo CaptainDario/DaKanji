@@ -55,7 +55,7 @@ assets/tflite_models/*
 # ignore LoC counter
 .VSCodeCounter/
 
-# add tf lite desktop binaries
+# force add tf lite desktop binaries
 !blobs/**
 
 # ignore custom tf lite flutter repo
