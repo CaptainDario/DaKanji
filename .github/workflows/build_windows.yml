@@ -36,7 +36,7 @@ jobs:
           latest: true
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets\tflite_models"
+          out-file-path: "assets/tflite_models"
         
       #- name: Analyze
       #  run: flutter analyze
