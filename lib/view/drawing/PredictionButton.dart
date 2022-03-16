@@ -68,6 +68,8 @@ class _PredictionButtonState extends State<PredictionButton>
         behavior: HitTestBehavior.translucent,
 
         onDoubleTap: () {
+          if(widget.char == " ") return;
+
           controller.forward(from: 0.0);
           if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap)
             GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true; 
