@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
       // 
-      else if(SHOW_ONBOARDING){
+      else if(GetIt.I<UserData>().showOnboarding){
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
       // show a rating dialogue WITHOUT "do not show again"-option

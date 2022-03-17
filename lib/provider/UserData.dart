@@ -54,8 +54,8 @@ class UserData{
     _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;
     doNotShowRateAgain = prefs.getBool('doNotShowRateAgain') ?? false;
     _versionUsed = prefs.getString('versionUsed') ?? VERSION;
-    showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? true;
-    showOnboarding = prefs.getBool('showOnboarding') ?? true;
+    showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? false;
+    showOnboarding = prefs.getBool('showOnboarding') ?? false;
 
     print("The app was opened for the ${_appOpenedTimes.toString()} time");
 
@@ -74,8 +74,14 @@ class UserData{
 
       // this version has new onboarding pages
       if(ONBOARDING_NEW_PAGES.contains(VERSION)){
-        SHOW_ONBOARDING = true;
+        showOnboarding = true;
       }
+    }
+
+    // this is the first start of the app
+    if (appOpenedTimes == 1){
+      showShowcaseDrawing = true;
+      showOnboarding = true;
     }
 
     // should a rate popup be shown
@@ -85,7 +91,7 @@ class UserData{
       SHOW_RATE_POPUP = true;
 
     // debugging onboarding, changelog, rate popup
-    //SHOW_ONBOARDING = true;
+    //showOnboarding = true;
     //GetIt.I<Changelog>().showChangelog = true;
     //SHOW_RATE_POPUP = true;
 
@@ -99,6 +105,8 @@ class UserData{
     prefs.setInt('appOpenedTimes', _appOpenedTimes);
     prefs.setBool('doNotShowRateAgain', doNotShowRateAgain);
     prefs.setString('versionUsed', versionUsed);
+    prefs.setBool('showShowcaseDrawing', showShowcaseDrawing);
+    prefs.setBool('showOnboarding', showOnboarding);
   }
 
 }

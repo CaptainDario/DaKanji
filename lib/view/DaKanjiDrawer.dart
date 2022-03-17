@@ -308,7 +308,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the settings screen
                             Material(
                               child: ListTile(
-                                key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[12].key : null,
                                 selected: widget.currentScreen == Screens.settings,
                                 leading: Icon(Icons.settings_applications),
                                 title: Text(LocaleKeys.SettingsScreen_title.tr()),

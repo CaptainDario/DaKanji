@@ -29,14 +29,16 @@ import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 /// Those can than be copied / opened in dictionaries by buttons.
 class DrawScreen extends StatefulWidget {
 
-  // init the tutorial of the draw screen
+  /// init the tutorial of the draw screen
   final showcase = DrawScreenShowcase();
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
-  // should the hero widgets for animating to the webview be included
+  /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
+  /// should the widgets have keys for the tutorial
+  final bool includeTutorialKeys;
 
-  DrawScreen(this.openedByDrawer, this.includeHeroes);
+  DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorialKeys);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -49,6 +51,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   WebViewController? landscapeWebViewController;
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
+  /// should the welcome screen which introduces the tutorial be shown
+  bool showWelcomeToTheDrawingscreen = true;
 
 
   @override
@@ -83,21 +87,6 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    
-    // add a listener to when the Navigator animation finished
-    var route = ModalRoute.of(context);
-    void handler(status) {
-      print("should show tutorial");
-      if (status == AnimationStatus.completed) {
-        route!.animation!.removeStatusListener(handler);
-        
-        if(GetIt.I<UserData>().showShowcaseDrawing){
-          widget.showcase.init(context);
-          widget.showcase.show();
-        }
-      }
-    }
-    route!.animation!.addStatusListener(handler);
 
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
@@ -121,7 +110,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   _canvasSize, _canvasSize,
                   strokes,
                   EdgeInsets.all(0),
-                  GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[0].key : GlobalKey(),
+                  GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                    ? SHOWCASE_DRAWING[0].key : GlobalKey(),
                   onFinishedDrawing: (Uint8List image) async {
                     GetIt.I<DrawingInterpreter>().runInference(image);
                   },
@@ -141,7 +131,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget undoButton = Consumer<Strokes>(
               builder: (context, strokes, __) {
                 return Center(
-                  key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[1].key : GlobalKey(),
+                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys 
+                    ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                   child: Container(
                     width:  _canvasSize * 0.1,
                     child: FittedBox(
@@ -163,21 +154,22 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               value: GetIt.I<DrawScreenState>().kanjiBuffer,
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
-                  Widget widget = Center(
-                    key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[6].key : GlobalKey(),
+                  Widget tpm_widget = Center(
+                    key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                      ? SHOWCASE_DRAWING[6].key : GlobalKey(),
                     child: KanjiBufferWidget(
                       _canvasSize,
                      runningInLandscape ? 1.0 : 0.65,
                     )
                   );
                   if (this.widget.includeHeroes)
-                    widget = Hero(
+                    tpm_widget = Hero(
                       tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
                         ? "Buffer" 
                         : kanjiBuffer.kanjiBuffer),
-                      child: widget
+                      child: tpm_widget
                     );
-                  return widget;
+                  return tpm_widget;
                 }
               ),
             );
@@ -185,7 +177,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget clearButton = Consumer<Strokes>(
               builder: (contxt, strokes, _) {
                 return Center(
-                  key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[2].key : GlobalKey(),
+                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                    ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                   child: Container(
                     width: _canvasSize * 0.1,
                     child: FittedBox(
@@ -204,7 +197,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // prediction buttons
             Widget predictionButtons = Container(
-              key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[3].key : GlobalKey(),
+              key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                ? SHOWCASE_DRAWING[3].key : GlobalKey(),
               //use canvas height in runningInLandscape
               width :  runningInLandscape ? (_canvasSize * 0.4) : _canvasSize,
               height: !runningInLandscape ? (_canvasSize * 0.4) : _canvasSize, 
@@ -220,25 +214,26 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                       crossAxisSpacing: 5,
                       
                       children: List.generate(10, (i) {
-                        Widget widget = PredictionButton(
+                        Widget tmp_widget = PredictionButton(
                           interpreter.predictions[i],
                         );
                         // instantiate short/long press showcase button
                         if(i == 0){
-                          widget = Container(
-                            key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[4].key : GlobalKey(),
-                            child: widget 
+                          tmp_widget = Container(
+                            key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                              ? SHOWCASE_DRAWING[4].key : GlobalKey(),
+                            child: tmp_widget 
                           );
                         }
                         if(this.widget.includeHeroes)
-                          widget = Hero(
+                          tmp_widget = Hero(
                             tag: "webviewHero_" + (interpreter.predictions[i] == " " 
                               ? i.toString() 
                               : interpreter.predictions[i]),
-                            child: widget,
+                            child: tmp_widget,
                           );
 
-                        return widget;
+                        return tmp_widget;
                       },
                       )
                     );
@@ -257,9 +252,61 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               );
             }
 
-            return DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-              multiCharSearch, undoButton, clearButton,
-              _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
+            return Stack(
+              children: [
+                DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
+                  multiCharSearch, undoButton, clearButton,
+                  _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
+                ),
+                if(showWelcomeToTheDrawingscreen && 
+                  GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys)
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showWelcomeToTheDrawingscreen = false;
+                        Future.delayed(Duration(milliseconds: 500));
+                        widget.showcase.init(context);
+                        widget.showcase.show();
+                      });
+                    },
+                    child: Container(
+                      width: constraints.maxWidth, 
+                      height: constraints.maxHeight, 
+                      color: Color.fromARGB(199, 32, 32, 32),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Welcome to the Drawing screen!\n",
+                              textScaleFactor: 2,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "We will show you a quick tutorial to get you started.\n",
+                              textScaleFactor: 1.5,
+                              textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              width: constraints.maxWidth,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                child: Text(
+                                  "Tap to continue",
+                                  textScaleFactor: 1.0,
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    color: Colors.grey
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             );
           }
         ),

@@ -1,10 +1,12 @@
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingPage.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 
@@ -103,13 +105,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
                 liquidController
               ),
-              DrawScreen(false, false),
+              DrawScreen(false, false, false),
             ],
             onPageChangeCallback: (int activePageIndex) {
               // change the current route to the drawing screen
               if (activePageIndex == totalPages){
-                Future.delayed(Duration(milliseconds: 1000), () => 
-                  Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
+                GetIt.I<UserData>().showOnboarding = false;
+                GetIt.I<UserData>().save();
+                Future.delayed(Duration(milliseconds: 1000), () =>
+                    Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
                 );
               }
             },
