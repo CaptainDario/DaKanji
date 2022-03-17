@@ -84,7 +84,7 @@ Future<void> init() async {
 }
 
 /// Convenience function to clear the SharedPreferences
-void clearPreferences() async {
+Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 }
