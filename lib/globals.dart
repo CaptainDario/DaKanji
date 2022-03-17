@@ -44,10 +44,8 @@ bool IS_TESTING_ONBOARDING = false;
 
 
 //about page
-const GITHUB_DESKTOP_REPO = "https://github.com/CaptainDario/DaKanji-Desktop";
-const GITHUB_MOBILE_REPO = "https://github.com/CaptainDario/DaKanji-Mobile";
-const GITHUB_CNN_SINGLE_CHAR_REPO = "https://github.com/CaptainDario/DaKanji-Single-Kanji-Recognition";
-const GITHUB_ISSUES = "https://github.com/CaptainDario/DaKanji-Mobile/issues/new";
+const GITHUB_ISSUES = "https://github.com/CaptainDario/DaKanji/issues/new";
+const GITHUB_RELEASES_PAGE = "https://github.com/CaptainDario/DaKanji/releases";
 
 const DISCORD_INVITE = "https://discord.com/invite/gdqaux3r4P";
 
@@ -61,9 +59,9 @@ const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
-const WINDOWS_STORE = "";
+const MICROSOFT_STORE_PAGE = "";
 
-const SNAP_STORE = "";
+const FLATHUB_PAGE = "";
 
 const MAC_STORE = "";
 

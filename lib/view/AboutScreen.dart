@@ -24,9 +24,6 @@ class AboutScreen extends StatelessWidget {
   final bool openedByDrawer;
 
   final String about = LocaleKeys.AboutScreen_about_text.tr()
-    .replaceAll("GITHUB_DESKTOP_REPO", GITHUB_DESKTOP_REPO)
-    .replaceAll("GITHUB_MOBILE_REPO", GITHUB_MOBILE_REPO)
-    .replaceAll("GITHUB_ML_REPO", GITHUB_CNN_SINGLE_CHAR_REPO)
     .replaceAll("GITHUB_ISSUES", GITHUB_ISSUES)
     .replaceAll("PRIVACY_POLICE", PRIVACY_POLICE)
     .replaceAll("RATE_ON_MOBILE_STORE", 
