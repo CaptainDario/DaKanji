@@ -12,6 +12,7 @@ import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
@@ -62,10 +63,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         );
     });
 
+    // initialize the drawing interpreter if it has not been already
     if(!GetIt.I<DrawingInterpreter>().wasInitialized){
-      // initialize the drawing interpreter
       GetIt.I<DrawingInterpreter>().init();
     }
+
   }
 
   @override
@@ -85,17 +87,17 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     // add a listener to when the Navigator animation finished
     var route = ModalRoute.of(context);
     void handler(status) {
+      print("should show tutorial");
       if (status == AnimationStatus.completed) {
         route!.animation!.removeStatusListener(handler);
         
-        if(SHOW_SHOWCASE_DRAWING){
+        if(GetIt.I<UserData>().showShowcaseDrawing){
           widget.showcase.init(context);
           widget.showcase.show();
         }
       }
     }
     route!.animation!.addStatusListener(handler);
-
 
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
@@ -119,7 +121,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   _canvasSize, _canvasSize,
                   strokes,
                   EdgeInsets.all(0),
-                  SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[0].key : GlobalKey(),
+                  GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[0].key : GlobalKey(),
                   onFinishedDrawing: (Uint8List image) async {
                     GetIt.I<DrawingInterpreter>().runInference(image);
                   },
@@ -139,7 +141,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget undoButton = Consumer<Strokes>(
               builder: (context, strokes, __) {
                 return Center(
-                  key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[1].key : GlobalKey(),
+                  key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                   child: Container(
                     width:  _canvasSize * 0.1,
                     child: FittedBox(
@@ -162,7 +164,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
                   Widget widget = Center(
-                    key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[6].key : GlobalKey(),
+                    key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[6].key : GlobalKey(),
                     child: KanjiBufferWidget(
                       _canvasSize,
                      runningInLandscape ? 1.0 : 0.65,
@@ -183,7 +185,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget clearButton = Consumer<Strokes>(
               builder: (contxt, strokes, _) {
                 return Center(
-                  key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[2].key : GlobalKey(),
+                  key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                   child: Container(
                     width: _canvasSize * 0.1,
                     child: FittedBox(
@@ -202,7 +204,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // prediction buttons
             Widget predictionButtons = Container(
-              key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[3].key : GlobalKey(),
+              key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[3].key : GlobalKey(),
               //use canvas height in runningInLandscape
               width :  runningInLandscape ? (_canvasSize * 0.4) : _canvasSize,
               height: !runningInLandscape ? (_canvasSize * 0.4) : _canvasSize, 
@@ -224,7 +226,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         // instantiate short/long press showcase button
                         if(i == 0){
                           widget = Container(
-                            key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[4].key : GlobalKey(),
+                            key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[4].key : GlobalKey(),
                             child: widget 
                           );
                         }

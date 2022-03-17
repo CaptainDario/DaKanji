@@ -8,6 +8,7 @@ import 'package:da_kanji_mobile/model/core/Showcase.dart';
 import 'package:da_kanji_mobile/model/core/ShowcaseTuple.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -183,7 +184,7 @@ class DrawScreenShowcase extends Showcase {
         GetIt.I<DrawerListener>().playReverse = true; 
 
         // don't show the tutorial again
-        SHOW_SHOWCASE_DRAWING = false;
+        GetIt.I<UserData>().showShowcaseDrawing = false;
         GetIt.I<Settings>().save();
       },
       onClickTarget: (target) {
@@ -193,7 +194,7 @@ class DrawScreenShowcase extends Showcase {
       },
       onSkip: () {
         // don't show the tutorial again
-        SHOW_SHOWCASE_DRAWING = false;
+        GetIt.I<UserData>().showShowcaseDrawing = false;
         GetIt.I<Settings>().save();
       },
       onClickOverlay: (target) {},

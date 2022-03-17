@@ -9,8 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -232,7 +232,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: IconButton(
                       icon: Icon(Icons.replay_outlined),
                       onPressed: () { 
-                        SHOW_SHOWCASE_DRAWING = true;
+                        GetIt.I<UserData>().showShowcaseDrawing = true;
                         settings.save();
                         Phoenix.rebirth(context);
                       }

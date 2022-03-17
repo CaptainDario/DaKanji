@@ -7,16 +7,25 @@ import 'Changelog.dart';
 class UserData{
 
   /// How often was the app opened by the user.
-  int _appOpenedTimes = 0;
+  late int _appOpenedTimes;
 
   /// Did the user already chose to not the the rate dialogue again
-  bool doNotShowRateAgain = false;
+  late bool doNotShowRateAgain;
 
   /// The version of the app which was used last time
   late String _versionUsed;
 
   /// if the rate dialogue was already shown in this app life cycle
   bool rateDialogueWasShown = false;
+
+  /// should the showcase of the draw screen be shown
+  late bool showShowcaseDrawing;
+
+  /// should the onboarding be shown
+  late bool showOnboarding;
+
+  /// should the rate popup be shown
+  late bool showRatePopup = false;
 
 
 
@@ -42,13 +51,15 @@ class UserData{
   void init () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? _appOpenedTimes) + 1;
+    _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;
     doNotShowRateAgain = prefs.getBool('doNotShowRateAgain') ?? false;
     _versionUsed = prefs.getString('versionUsed') ?? VERSION;
+    showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? true;
+    showOnboarding = prefs.getBool('showOnboarding') ?? true;
 
     print("The app was opened for the ${_appOpenedTimes.toString()} time");
 
-    // a different version than last time is being used
+    // a different version than last time is being used (test with version = 0.0.0)
     //VERSION = "0.0.0";
     print("used: $versionUsed now: $VERSION");
     if(versionUsed != VERSION && appOpenedTimes > 1){
@@ -58,7 +69,7 @@ class UserData{
 
       // this version has new features for drawing screen => show tutorial
       if(DRAWING_SCREEN_NEW_FEATURES.contains(VERSION)){
-        SHOW_SHOWCASE_DRAWING = true;
+        showShowcaseDrawing = true;
       }
 
       // this version has new onboarding pages
@@ -72,10 +83,6 @@ class UserData{
       !GetIt.I<UserData>().rateDialogueWasShown && 
       appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0)
       SHOW_RATE_POPUP = true;
-
-    if(appOpenedTimes == 1){
-      SHOW_ONBOARDING = true;
-    }
 
     // debugging onboarding, changelog, rate popup
     //SHOW_ONBOARDING = true;

@@ -27,9 +27,6 @@ List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 // ignore: non_constant_identifier_names
 List<ShowcaseTuple> SHOWCASE_DRAWING = [];
 
-// should the showcase of the draw screen be shown
-// ignore: non_constant_identifier_names
-bool SHOW_SHOWCASE_DRAWING = false;
 // should the onboarding be shown
 // ignore: non_constant_identifier_names
 bool SHOW_ONBOARDING = false;

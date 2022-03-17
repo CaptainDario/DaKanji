@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -307,7 +308,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the settings screen
                             Material(
                               child: ListTile(
-                                key: SHOW_SHOWCASE_DRAWING ? SHOWCASE_DRAWING[12].key : null,
+                                key: GetIt.I<UserData>().showShowcaseDrawing ? SHOWCASE_DRAWING[12].key : null,
                                 selected: widget.currentScreen == Screens.settings,
                                 leading: Icon(Icons.settings_applications),
                                 title: Text(LocaleKeys.SettingsScreen_title.tr()),
