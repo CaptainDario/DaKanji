@@ -366,12 +366,12 @@ packages:
     source: hosted
     version: "1.7.0"
   msix:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: msix
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.2"
+    version: "3.4.0"
   nested:
     dependency: transitive
     description:
@@ -684,7 +684,7 @@ packages:
       name: tutorial_coach_mark
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.2.1"
   typed_data:
     dependency: transitive
     description:
