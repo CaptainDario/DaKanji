@@ -20,7 +20,7 @@ dependencies:
   device_info_plus: 2.0.1
   tutorial_coach_mark: 1.2.1
   flutter_phoenix: 1.0.0
-  package_info_plus: 1.0.3
+  
   image: 3.1.0
   flutter_markdown: 0.6.2
   get_it: 7.1.3
