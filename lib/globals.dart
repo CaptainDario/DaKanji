@@ -14,13 +14,15 @@ const String APP_LINK = r"dakanji://dakanji/";
 String VERSION = "";
 // the number of times the app has been opened until the user gets asked to
 // if the rate dialogue should never be shown again
-const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
+const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 51;
 // all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
 List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0"];
 // all versions which implemented new pages for the OnBoarding
 // ignore: non_constant_identifier_names
 List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
+// all languages which are supported in DaKanji
+const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 
 
 // showcase view keys

@@ -46,11 +46,10 @@ Future<void> main() async {
   runApp(
     Phoenix(
       child: EasyLocalization(
-        supportedLocales: [
-          Locale('en'),
-          Locale('de'),
-          Locale('pl'),
-        ],
+        supportedLocales: List.generate(
+          SUPPORTED_LANGUAGES.length,
+          (index) => Locale(SUPPORTED_LANGUAGES[index])
+        ),
         path: 'assets/translations',
         fallbackLocale: Locale('en'),
         useFallbackTranslations: true,
