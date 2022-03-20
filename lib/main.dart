@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaml/yaml.dart';
 
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
@@ -47,7 +48,8 @@ Future<void> main() async {
       child: EasyLocalization(
         supportedLocales: [
           Locale('en'),
-          Locale('de')
+          Locale('de'),
+          Locale('pl'),
         ],
         path: 'assets/translations',
         fallbackLocale: Locale('en'),
@@ -71,7 +73,13 @@ Future<void> init() async {
   
   // NOTE: uncomment to clear the SharedPreferences
   //await clearPreferences();
-  
+
+  // read the applications version from pubspec.yaml
+  File f = new File("pubspec.yaml");
+  Map yaml = loadYaml(await f.readAsString());
+  print(yaml['version']);
+  VERSION = yaml['version'];
+
   await initGetIt();
 
   if(Platform.isAndroid || Platform.isIOS){

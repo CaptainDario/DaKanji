@@ -11,7 +11,7 @@ const String APP_TITLE = "DaKanji";
 const String APP_LINK = r"dakanji://dakanji/";
 
 // the version number of this app
-const String VERSION = "2.0.0+29";
+String VERSION = "";
 // the number of times the app has been opened until the user gets asked to
 // if the rate dialogue should never be shown again
 const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 31;
