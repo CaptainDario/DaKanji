@@ -1,6 +1,5 @@
 {
   "AboutScreen": {
-    "": "",
     "about_text": "",
     "show_changelog": "",
     "software_informations_button": "",
@@ -11,6 +10,9 @@
   },
   "DrawScreen": {
     "title": "",
+    "tutorial_begin_continue": "",
+    "tutorial_begin_text": "",
+    "tutorial_begin_title": "",
     "tutorial_clear": "",
     "tutorial_dictionary_settings": "",
     "tutorial_double_tap_prediction": "",

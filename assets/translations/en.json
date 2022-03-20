@@ -1,7 +1,6 @@
 {
   "AboutScreen": {
-    "": "",
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](IOS), [Android](), [MacOS](), [Linux]() and [Windows]()\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server.](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE), [Windows](MICROSOFT_STORE).\nYou can also find all releases on (GitHub.)[GITHUB_RELEASES_PAGE].\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -11,6 +10,9 @@
   },
   "DrawScreen": {
     "title": "Drawing",
+    "tutorial_begin_continue": "Tap to continue...",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the drawing recognition!",
     "tutorial_clear": "Erases all strokes",
     "tutorial_dictionary_settings": "In the settings the translation service can be chosen",
     "tutorial_double_tap_prediction": "A Double Tap adds the character to the search box",

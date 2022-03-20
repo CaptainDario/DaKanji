@@ -1,7 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
 abstract class  LocaleKeys {
-  static const AboutScreen_ = 'AboutScreen.';
   static const AboutScreen_about_text = 'AboutScreen.about_text';
   static const AboutScreen_show_changelog = 'AboutScreen.show_changelog';
   static const AboutScreen_software_informations_button = 'AboutScreen.software_informations_button';
@@ -10,6 +9,9 @@ abstract class  LocaleKeys {
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
   static const DrawScreen_title = 'DrawScreen.title';
+  static const DrawScreen_tutorial_begin_continue = 'DrawScreen.tutorial_begin_continue';
+  static const DrawScreen_tutorial_begin_text = 'DrawScreen.tutorial_begin_text';
+  static const DrawScreen_tutorial_begin_title = 'DrawScreen.tutorial_begin_title';
   static const DrawScreen_tutorial_clear = 'DrawScreen.tutorial_clear';
   static const DrawScreen_tutorial_dictionary_settings = 'DrawScreen.tutorial_dictionary_settings';
   static const DrawScreen_tutorial_double_tap_prediction = 'DrawScreen.tutorial_double_tap_prediction';
