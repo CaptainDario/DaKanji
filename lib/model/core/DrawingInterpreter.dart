@@ -28,10 +28,10 @@ class DrawingInterpreter with ChangeNotifier{
   bool wasInitialized = false;
 
   /// The path to the interpreter asset
-  String _interpreterAssetPath = "CNN_single_char.tflite";
+  String _interpreterAssetPath = "tflite_models/CNN_single_char.tflite";
   
   /// The path to the interpreter asset
-  String _labelAssetPath = "assets/CNN_single_char_labels.txt";
+  String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
 
   /// The list of all labels the model can recognize.
   late List<String> _labels;
@@ -374,7 +374,9 @@ class DrawingInterpreter with ChangeNotifier{
     Interpreter interpreter;
     final options = InterpreterOptions()..addDelegate(
       XNNPackDelegate(
-        options: XNNPackDelegateOptions()
+        options: XNNPackDelegateOptions(
+          numThreads: Platform.numberOfProcessors >= 4 ? 4 : Platform.numberOfProcessors 
+        )
       )
     );
     interpreter = await Interpreter.fromAsset(

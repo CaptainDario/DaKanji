@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:universal_io/io.dart';
@@ -7,15 +8,17 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 
-import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/LightTheme.dart';
+import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
 import 'package:da_kanji_mobile/model/services/DeepLinks.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/Lookup.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/provider/Changelog.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
@@ -26,8 +29,10 @@ import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
 import 'package:da_kanji_mobile/view/AboutScreen.dart';
+import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+
 
 
 Future<void> main() async {
@@ -74,18 +79,19 @@ Future<void> init() async {
     await getInitialDeepLink();
   }
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
-    await desktopWindowSetup();
+    desktopWindowSetup();
   }
 }
 
 /// Convenience function to clear the SharedPreferences
-void clearPreferences() async {
+Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 }
 
 /// Initialize GetIt by initializing and registering all the instances for it
 Future<void> initGetIt() async {
+
   // services to load from disk
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
@@ -97,19 +103,19 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
 
   // draw screen services 
-  GetIt.I.registerSingleton<KanjiBuffer>(KanjiBuffer());
-  GetIt.I.registerSingleton<Strokes>(Strokes());
+  GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
+    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
+  );
   
   // screen independent
-  GetIt.I.registerSingleton(DrawerListener());
-  GetIt.I.registerSingleton<Lookup>(Lookup());
+  GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 }
 
 ///
-void desktopWindowSetup() async {
-  await setWindowMinSize(Size(480, 720));
-  await setWindowTitle(APP_TITLE);
-  await setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
+void desktopWindowSetup() {
+  setWindowMinSize(Size(480, 720));
+  setWindowTitle(APP_TITLE);
+  setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
 }
 
 /// The starting widget of the app
@@ -135,21 +141,31 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       supportedLocales: context.supportedLocales,
       locale: () {
         // if there was no language set use the one from the OS
-        if(GetIt.I<Settings>().selectedLocale == null){
+        if(GetIt.I<Settings>().selectedLocale?.languageCode == "null"){
           GetIt.I<Settings>().selectedLocale = context.locale;
           GetIt.I<Settings>().save();
         }
         return GetIt.I<Settings>().selectedLocale;
       } (),
-
+      
       onGenerateRoute: (settings) {
-        PageRouteBuilder switchScreen (Widget screen) =>
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => screen,
-            settings: settings,
-            transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c)
-          );
+PageRouteBuilder switchScreen (Widget screen) =>
+  PageRouteBuilder(
+    pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
+      screen,
+      defaultScale: true,
+      breakpoints: [
+        const ResponsiveBreakpoint.resize(450, name: MOBILE),
+        const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+        const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+        const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+        const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+      ],
+    ),
+    settings: settings,
+    transitionsBuilder: (_, a, __, c) =>
+      FadeTransition(opacity: a, child: c)
+  );
 
         // check type and extract arguments
         SettingsArguments args;
@@ -161,8 +177,10 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         switch(settings.name){
           case "/home":
             return switchScreen(HomeScreen());
+          case "/onboarding":
+            return switchScreen(OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer));
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
@@ -184,6 +202,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
       //screens
       home: HomeScreen(),
+      //home: TestScreen()
     );
   }
 }

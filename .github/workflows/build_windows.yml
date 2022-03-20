@@ -1,0 +1,72 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test and Build on Windows
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install and set Flutter version
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.0'
+          channel: 'stable'
+          
+      - name: Restore packages
+        run: flutter pub get
+        
+      - name: Download release asset
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: CaptainDario/DaKanji-ML
+          latest: true
+          fileName: "*"
+          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+          out-file-path: "assets/tflite_models"
+        
+      #- name: Analyze
+      #  run: flutter analyze
+
+      #- name: Run tests
+      #  run: flutter test --coverage 
+
+      - name: build exe
+        run: flutter build windows
+
+      - name: copy TF Lite binaries and create zip of build
+        run: |
+          md build\windows\runner\Release\blobs
+          copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
+          
+          
+        # 7z.exe -tzip a DaKanji_win.zip build\windows\runner\Release
+        # dir
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_win.zip
+          path: build/windows/runner/Release/
+
+      - name: build MSIX
+        run: flutter pub run msix:create --build-windows=false --store
+     
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_win.msix
+          path: build\windows\runner\Release\da_kanji_mobile.msix

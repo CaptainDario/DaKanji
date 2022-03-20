@@ -6,8 +6,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/core/Showcase.dart';
 import 'package:da_kanji_mobile/model/core/ShowcaseTuple.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -132,8 +132,7 @@ class DrawScreenShowcase extends Showcase {
     // double tap
     targets.add(createShowcaseTargetFocus(11, keyIndex: 6));
     // show settings
-    targets.add(createShowcaseTargetFocus(12)
-    );
+    targets.add(createShowcaseTargetFocus(12, keyIndex: 6));
 
     return targets;
   }
@@ -183,18 +182,15 @@ class DrawScreenShowcase extends Showcase {
         GetIt.I<DrawerListener>().playReverse = true; 
 
         // don't show the tutorial again
-        SHOW_SHOWCASE_DRAWING = false;
-        GetIt.I<Settings>().save();
+        GetIt.I<UserData>().showShowcaseDrawing = false;
+        GetIt.I<UserData>().save();
       },
       onClickTarget: (target) {
-        // open drawer after clicking on the second last showcase
-        if(target.identify == SHOWCASE_DRAWING[11].title)
-          GetIt.I<DrawerListener>().playForward = true; 
       },
       onSkip: () {
         // don't show the tutorial again
-        SHOW_SHOWCASE_DRAWING = false;
-        GetIt.I<Settings>().save();
+        GetIt.I<UserData>().showShowcaseDrawing = false;
+        GetIt.I<UserData>().save();
       },
       onClickOverlay: (target) {},
     );

@@ -7,16 +7,25 @@ import 'Changelog.dart';
 class UserData{
 
   /// How often was the app opened by the user.
-  int _appOpenedTimes = 0;
+  late int _appOpenedTimes;
 
   /// Did the user already chose to not the the rate dialogue again
-  bool doNotShowRateAgain = false;
+  late bool doNotShowRateAgain;
 
   /// The version of the app which was used last time
   late String _versionUsed;
 
   /// if the rate dialogue was already shown in this app life cycle
   bool rateDialogueWasShown = false;
+
+  /// should the showcase of the draw screen be shown
+  late bool showShowcaseDrawing;
+
+  /// should the onboarding be shown
+  late bool showOnboarding;
+
+  /// should the rate popup be shown
+  late bool showRatePopup = false;
 
 
 
@@ -36,16 +45,21 @@ class UserData{
   /// 
   /// Loads the user data from disk and increments the app opened count.
   /// If the app was loaded for x % 10 == 0 times show a rating dialogue.
+  /// If a new version was installed show the changelog
+  /// If the changelog was updated or this is the first time opening the app,
+  /// show the onboarding screen
   void init () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? _appOpenedTimes) + 1;
+    _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;
     doNotShowRateAgain = prefs.getBool('doNotShowRateAgain') ?? false;
     _versionUsed = prefs.getString('versionUsed') ?? VERSION;
+    showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? false;
+    showOnboarding = prefs.getBool('showOnboarding') ?? false;
 
     print("The app was opened for the ${_appOpenedTimes.toString()} time");
 
-    // a different version than last time is being used
+    // a different version than last time is being used (test with version = 0.0.0)
     //VERSION = "0.0.0";
     print("used: $versionUsed now: $VERSION");
     if(versionUsed != VERSION && appOpenedTimes > 1){
@@ -55,9 +69,31 @@ class UserData{
 
       // this version has new features for drawing screen => show tutorial
       if(DRAWING_SCREEN_NEW_FEATURES.contains(VERSION)){
-        SHOW_SHOWCASE_DRAWING = true;
+        showShowcaseDrawing = true;
+      }
+
+      // this version has new onboarding pages
+      if(ONBOARDING_NEW_PAGES.contains(VERSION)){
+        showOnboarding = true;
       }
     }
+
+    // this is the first start of the app
+    if (appOpenedTimes == 1){
+      showShowcaseDrawing = true;
+      showOnboarding = true;
+    }
+
+    // should a rate popup be shown
+    if (!GetIt.I<UserData>().doNotShowRateAgain && 
+      !GetIt.I<UserData>().rateDialogueWasShown && 
+      appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE && appOpenedTimes % 10 == 0)
+      SHOW_RATE_POPUP = true;
+
+    // debugging onboarding, changelog, rate popup
+    //showOnboarding = true;
+    //GetIt.I<Changelog>().showChangelog = true;
+    //SHOW_RATE_POPUP = true;
 
     save();
   }
@@ -69,6 +105,8 @@ class UserData{
     prefs.setInt('appOpenedTimes', _appOpenedTimes);
     prefs.setBool('doNotShowRateAgain', doNotShowRateAgain);
     prefs.setString('versionUsed', versionUsed);
+    prefs.setBool('showShowcaseDrawing', showShowcaseDrawing);
+    prefs.setBool('showOnboarding', showOnboarding);
   }
 
 }

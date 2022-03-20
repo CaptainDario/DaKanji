@@ -42,12 +42,21 @@ key.properties
 python
 android/app/key.jks
 
-# ignore tflite models to keep the repo size low
-**.tflite
+# ignore tflite folder except for the copy models here note
+assets/tflite_models/*
+!assets/tflite_models/COPY_ML_RELEASE_HERE
+
+# ignore tflite models
+*.tflite
 
 # libraries
 *.so
-blobs/libtensorflowlite_c-win.dll
 
-# counters
-.VSCodeCounter/*
+# ignore LoC counter
+.VSCodeCounter/
+
+# force add tf lite desktop binaries
+!blobs/**
+
+# ignore custom tf lite flutter repo
+# plugins/tflite_flutter_plugin/

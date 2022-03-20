@@ -24,9 +24,6 @@ class AboutScreen extends StatelessWidget {
   final bool openedByDrawer;
 
   final String about = LocaleKeys.AboutScreen_about_text.tr()
-    .replaceAll("GITHUB_DESKTOP_REPO", GITHUB_DESKTOP_REPO)
-    .replaceAll("GITHUB_MOBILE_REPO", GITHUB_MOBILE_REPO)
-    .replaceAll("GITHUB_ML_REPO", GITHUB_CNN_SINGLE_CHAR_REPO)
     .replaceAll("GITHUB_ISSUES", GITHUB_ISSUES)
     .replaceAll("PRIVACY_POLICE", PRIVACY_POLICE)
     .replaceAll("RATE_ON_MOBILE_STORE", 
@@ -44,15 +41,19 @@ class AboutScreen extends StatelessWidget {
         currentScreen: Screens.about,
         animationAtStart: !this.openedByDrawer,
         child: SingleChildScrollView(
+          primary: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image(image: AssetImage("media/banner.png"), width: 200,),
+              Image(image: AssetImage("assets/images/icons/banner.png"), width: 200,),
               // show the about.md
               Container(
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: MarkdownBody(
                   data: about,
+                  styleSheet: MarkdownStyleSheet(
+                    a:TextStyle( color: Theme.of(context).highlightColor)
+                  ),
                   onTapLink: (text, url, title) {
                     launch(url ?? "");
                   },
@@ -67,7 +68,9 @@ class AboutScreen extends StatelessWidget {
                       child: Text(
                         LocaleKeys.AboutScreen_show_changelog.tr(),
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                          color: Theme.of(context).highlightColor
+                        ),
                       ),
                       onTap: () => Navigator.push(
                         context, 
@@ -86,7 +89,7 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           openReview();
                         }, 
-                        child: Text(LocaleKeys.AboutScreen_rate_this_app.tr())
+                        child: Text(LocaleKeys.General_rate_this_app.tr())
                       ),
                     ),
                   ],
@@ -104,7 +107,7 @@ class AboutScreen extends StatelessWidget {
                             applicationName: APP_TITLE,
                             applicationVersion: VERSION,
                             applicationIcon: Image(
-                              image: AssetImage("media/icon.png",),
+                              image: AssetImage("assets/images/icons/icon.png",),
                               width: 50,
                             ) 
                           );
