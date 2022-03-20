@@ -9,6 +9,7 @@
 import os
 import subprocess
 import json
+import re
 
 
 
@@ -16,7 +17,11 @@ if __name__ == "__main__":
 
     # create separate json files for every langauge
     with open("assets/translations/localizations.json", "r", encoding="utf8") as f:
-        languages = ["en", "de", "ru", "jp", "cn", "it", "fr", "es"]
+        with open("lib/globals.dart", "r", encoding="utf8") as f_globals:
+            languages = f_globals.read()
+            languages_filtered = re.search("SUPPORTED_LANGUAGES = (.*);", languages).groups()[0]
+            print("found following supported languages:", languages_filtered)
+            languages = eval(languages_filtered)
         f_content = f.read()
         for code in languages:
             jason_dict = json.loads(f_content)
