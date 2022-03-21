@@ -18,9 +18,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Get latest changes
+        run: |
+          python get_latest_changes.py | latest_changes.txt
+          export LATEST_CHANGES=$(cat latest_changes.txt)
+
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: 'Ignore this, this is just a test.'
+          args: 'Ignore this, this is just a test. \n\n\n {{ LATEST_CHANGES }}'
