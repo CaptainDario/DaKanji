@@ -5,7 +5,7 @@
 
 new Features:
 
-- Desktop support (Windows, MacOS, Linux)
+- Windows support
 - Onboarding
 - New UI design
 - Use a web dictionary side by side with drawing screen (mobile only)
