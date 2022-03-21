@@ -1,7 +1,7 @@
 #############################################################
 #                                                           #
 # Script to read the changes of the latest release from the #
-# CHANGELOG.md and print them to latest_changes.txt out.    #
+# CHANGELOG.md and output them to latest_changes.txt.       #
 #                                                           #
 #############################################################
 
