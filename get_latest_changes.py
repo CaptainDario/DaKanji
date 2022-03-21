@@ -16,5 +16,5 @@ if __name__ == "__main__":
 
     newest_changes = re.search("(##.*?)----------------", changelog, re.DOTALL).groups()[0]
     
-    with open("newest_changes.txt", mode="w+", encoding="utf8") as f:
+    with open("latest_changes.txt", mode="w+", encoding="utf8") as f:
         f.write(newest_changes)
