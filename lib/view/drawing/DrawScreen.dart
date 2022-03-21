@@ -1,9 +1,11 @@
 import 'dart:typed_data';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
@@ -278,12 +280,12 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Welcome to the Drawing screen!\n",
+                              LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
                               textScaleFactor: 2,
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              "We will show you a quick tutorial to get you started.\n",
+                              LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
                               textScaleFactor: 1.5,
                               textAlign: TextAlign.center,
                             ),
@@ -292,7 +294,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                                 child: Text(
-                                  "Tap to continue",
+                                  LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
                                   textScaleFactor: 1.0,
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
