@@ -34,4 +34,14 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "Ignore this, this is just a test. \n\n\n {{ LATEST_CHANGES }}"
+          args: |
+            Hello DaKanji-testers,
+            a new release of DaKanji is coming soon and you can already try it out.
+            The most important changes are:
+            
+            {{ LATEST_CHANGES }}
+
+            As always you can get the release from:
+            
+            
+            Thank you so much for taking the time to test DaKanji. You rock <3
