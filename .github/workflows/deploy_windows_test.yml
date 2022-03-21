@@ -29,12 +29,12 @@ jobs:
         run: |
           python get_latest_changes.py
           
-          echo "LATEST_CHANGES=$(cat latest_changes.txt)" >> $GITHUB_ENV
-          printenv LATEST_CHANGES
+      # echo "LATEST_CHANGES=$(cat latest_changes.txt)" >> $GITHUB_ENV
+      # printenv LATEST_CHANGES
 
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: 'Ignore this, this is just a test. \n\n\n {{ LATEST_CHANGES }}'
+          args: 'Ignore this, this is just a test. \n\n\n {{ $(cat latest_changes.txt) }}'
