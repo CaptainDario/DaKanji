@@ -23,7 +23,7 @@ jobs:
 
       - name: Get latest changes
         run: |
-          python get_latest_changes.py | latest_changes.txt
+          python get_latest_changes.py
           export LATEST_CHANGES=$(cat latest_changes.txt)
 
       - name: Discord notification

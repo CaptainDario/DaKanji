@@ -1,7 +1,7 @@
 #############################################################
 #                                                           #
 # Script to read the changes of the latest release from the #
-# CHANGELOG.md and print them to std out.                   #
+# CHANGELOG.md and print them to latest_changes.txt out.    #
 #                                                           #
 #############################################################
 
@@ -15,4 +15,6 @@ if __name__ == "__main__":
         changelog = f.read()
 
     newest_changes = re.search("(##.*?)----------------", changelog, re.DOTALL).groups()[0]
-    print(newest_changes)
+    
+    with open("newest_changes.txt", mode="w+", encoding="utf8") as f:
+        f.write(newest_changes)
