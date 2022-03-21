@@ -1,7 +1,7 @@
 
 
 
-name: Windows - deploy beta version 
+name: Windows - deploy beta version
 
 # Controls when the workflow will run
 on:
@@ -28,7 +28,8 @@ jobs:
       - name: Get latest changes
         run: |
           python get_latest_changes.py
-          export LATEST_CHANGES=$(cat latest_changes.txt)
+      # export LATEST_CHANGES=$(cat latest_changes.txt)
+          echo "LATEST_CHANGES=$(cat latest_changes.txt)" >> $GITHUB_ENV
           printenv LATEST_CHANGES
 
       - name: Discord notification
