@@ -18,7 +18,7 @@ jobs:
 
     # env variable to store the latest changes
     env:
-      Greeting: Hello
+      LATEST_CHANGES: None
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
