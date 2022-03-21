@@ -29,8 +29,8 @@ jobs:
         run: |
           python get_latest_changes.py
           
-      # echo "LATEST_CHANGES=$(cat latest_changes.txt)" >> $GITHUB_ENV
-      # printenv LATEST_CHANGES
+          echo "LATEST_CHANGES=$(cat latest_changes.txt)" >> $GITHUB_ENV
+          printenv LATEST_CHANGES
 
       - name: Discord notification
         env:
