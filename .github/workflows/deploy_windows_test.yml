@@ -1,7 +1,7 @@
 
 
 
-name: Deploy windows test version 
+name: Windows - deploy beta version 
 
 # Controls when the workflow will run
 on:
