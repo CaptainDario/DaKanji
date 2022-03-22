@@ -30,6 +30,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: TESTING
+        run: |
+          sudo bash install.sh -d
+
       - name: Setup Java to compile Android project
         uses: actions/setup-java@v1
         with:
