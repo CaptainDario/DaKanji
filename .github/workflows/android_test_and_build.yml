@@ -16,7 +16,6 @@ env:
   FLUTTER_VERSION: "2.10.0"
   FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
-  JKS_PATH: "./../../keys/DaKanjiRecognizer.jks"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -67,12 +66,12 @@ jobs:
           echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
           echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
           echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
-          echo storeFile=\${{env.JKS_PATH}} >> ${{env.PROPERTIES_PATH}}
+          echo storeFile=../../keys/DaKanjiRecognizer.jks >> ${{env.PROPERTIES_PATH}}
 
       - name: Decoding base64 key into a file
         run: |
           touch ${{env.JKS_PATH}}
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ${{env.JKS_PATH}}
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/DaKanjiRecognizer.jks
 
       - name: build apks for different architectures
         run: flutter build apk --split-per-abi
