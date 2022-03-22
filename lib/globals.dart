@@ -29,13 +29,6 @@ const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 // ignore: non_constant_identifier_names
 List<ShowcaseTuple> SHOWCASE_DRAWING = [];
 
-// should the onboarding be shown
-// ignore: non_constant_identifier_names
-bool SHOW_ONBOARDING = false;
-// should the rate popup be shown
-// ignore: non_constant_identifier_names
-bool SHOW_RATE_POPUP = false;
-
 // is the app running to test the drawscreen
 bool IS_TESTING_DRAWSCREEN = false;
 // is the app running to test the onboarding

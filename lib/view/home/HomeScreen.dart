@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       // if a newer version was installed open the what's new pop up 
-      else if(GetIt.I<Changelog>().showChangelog){
+      else if(GetIt.I<UserData>().showChangelog){
 
         // show the confetti animations when the widget was build 
         WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             confettiAnimation_2.state.play());
           Future.delayed(Duration(milliseconds: 1250), () =>
             confettiAnimation_3.state.play());
-          GetIt.I<Changelog>().showChangelog = false;
+          GetIt.I<UserData>().showChangelog = false;
         });
       }
       // 
@@ -68,10 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
       // show a rating dialogue WITHOUT "do not show again"-option
-      else if(SHOW_RATE_POPUP && appOpenedTimes < 31)
+      else if(GetIt.I<UserData>().showRatePopup && appOpenedTimes < 31)
         showRatePopup(context, false);
       // show a rating dialogue WITH "do not show again"-option
-      else if(SHOW_RATE_POPUP && appOpenedTimes > 31)
+      else if(GetIt.I<UserData>().showRatePopup && appOpenedTimes > 31)
         showRatePopup(context, true);
       // otherwise open the default screen
       else{
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           maintainSize: true, 
           maintainAnimation: true,
           maintainState: true,
-          visible: GetIt.I<Changelog>().showChangelog, 
+          visible: GetIt.I<UserData>().showChangelog, 
           child: WhatsNewDialogue(context,
           confettiAnimation_1, confettiAnimation_2, confettiAnimation_3)
         )

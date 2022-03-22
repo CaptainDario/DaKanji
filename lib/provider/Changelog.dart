@@ -11,8 +11,6 @@ class Changelog{
   late String _newestChangelog;
   /// the complete changelog without the first few header lines
   late String _wholeChangelog;
-  /// if the changelog should be shown when the app starts
-  bool _showChangelog = false;
   /// if this object was initialized
   bool _initialized = false;
 
@@ -44,19 +42,6 @@ class Changelog{
       ));
 
     return _wholeChangelog;
-  }
-
-  bool get showChangelog{
-    if(!_initialized)
-      throw(Exception(
-        "You are trying to use the object before initializing it.\n"
-        "Try calling init() first."
-      ));
-    return _showChangelog;
-  }
-
-  set showChangelog(bool showChangelog){
-    _showChangelog = showChangelog;
   }
 
 
