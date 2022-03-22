@@ -18,7 +18,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
 
       #- name: Install and set Flutter version
       #  uses: subosito/flutter-action@v2
@@ -34,17 +34,17 @@ jobs:
           python .github/workflows/get_version.py
           echo ("DAKANJI_VERSION=" + $(cat dakanji_version.txt)) >> $env:GITHUB_ENV
 
-          echo "$env:DAKANJI_VERSION"
+          echo "${{env:DAKANJI_VERSION}}"
         
       # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
+      #- name: Download release asset
+      #  uses: robinraju/release-downloader@v1.3
+      #  with:
+      #    repository: CaptainDario/DaKanji-ML
+      #    latest: true
+      #    fileName: "*"
+      #    token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+      #    out-file-path: "assets/tflite_models"
         
       #- name: Analyze
       #  run: flutter analyze
@@ -52,25 +52,25 @@ jobs:
       #- name: Run integration tests
       #  run: flutter test .\integration_test\ -d windows
 
-      - name: build exe
-        run: flutter build windows
+      #- name: build exe
+      #  run: flutter build windows
 
-      - name: copy TF Lite binaries to build folder
-        run: |
-          md build\windows\runner\Release\blobs
-          copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
+      #- name: copy TF Lite binaries to build folder
+      #  run: |
+      #    md build\windows\runner\Release\blobs
+      #    copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
 
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_win_${env:DAKANJI_VERSION}.zip
-          path: build/windows/runner/Release/
+      #- name: Archive production artifacts
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: DaKanji_win_${env:DAKANJI_VERSION}.zip
+      #    path: build/windows/runner/Release/
 
-      - name: build MSIX
-        run: flutter pub run msix:create --build-windows=false --store
+      #- name: build MSIX
+      #  run: flutter pub run msix:create --build-windows=false --store
      
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_win_${ github.DAKANJI_VERSION }.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
+      #- name: Archive production artifacts
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: DaKanji_win_${ github.DAKANJI_VERSION }.msix
+      #    path: build\windows\runner\Release\da_kanji_mobile.msix
