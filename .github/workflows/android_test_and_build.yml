@@ -30,10 +30,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: TESTING
-        run: |
-          sudo bash install.sh -d
-
       - name: Setup Java to compile Android project
         uses: actions/setup-java@v1
         with:
@@ -48,7 +44,7 @@ jobs:
       - name: Restore packages
         run: |
           flutter pub get
-          sudo install.sh -d
+          sudo bash install.sh -d
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
