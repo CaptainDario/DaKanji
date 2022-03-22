@@ -70,7 +70,6 @@ jobs:
 
       - name: Decoding base64 key into a file
         run: |
-          touch ${{env.JKS_PATH}}
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/DaKanjiRecognizer.jks
 
       - name: build apks for different architectures
