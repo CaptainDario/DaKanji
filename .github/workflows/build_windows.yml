@@ -34,7 +34,7 @@ jobs:
           python .github/workflows/get_version.py
 
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
+          cat dakanji_version.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
           echo "${{ env.DAKANJI_VERSION }}"
