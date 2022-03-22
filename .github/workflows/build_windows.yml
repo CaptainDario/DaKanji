@@ -34,7 +34,7 @@ jobs:
           python .github/workflows/get_version.py
 
           echo "DAKANJI_VERSION=$(cat dakanji_version.txt)" >> $GITHUB_ENV
-          echo ${{ DAKANJI_VERSION }}
+          echo ${{ github.DAKANJI_VERSION }}
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
@@ -72,5 +72,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win_${ env.DAKANJI_VERSION }.msix
+          name: DaKanji_win_${ github.DAKANJI_VERSION }.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
