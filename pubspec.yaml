@@ -61,7 +61,7 @@ msix_config:
   display_name: DaKanji
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
-  identity_name: company.DaAppLab.DaKanji
+  identity_name: 61015DaAppLab.DaKanji
   logo_path: ./assets/images/icons/icon.png
   capabilities: internetClient
   add-execution-alias: DaKanji
