@@ -36,12 +36,14 @@ jobs:
         with:
           args: |
             Hello DaKanji-testers,
-            a new release of DaKanji is coming soon and you can already try it out.
+            a new release of DaKanji is coming soon and you can try the beta version now.
             The most important changes are:
             
             {{ LATEST_CHANGES }}
 
-            As always you can get the release from:
+            As always you can get the release from (usually it takes around 2h until it is available):
+            (If you are not yet registered as a tester, please send me a direct message with the email you use for your Microsoft Store account)
             
             
+
             Thank you so much for taking the time to test DaKanji. You rock <3
