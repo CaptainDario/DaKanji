@@ -60,3 +60,6 @@ assets/tflite_models/*
 
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
+
+# ignore all keys in keys folder
+keys/DaKanjiRecognizer.jks
