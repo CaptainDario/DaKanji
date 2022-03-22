@@ -41,14 +41,11 @@ jobs:
             
             {{ LATEST_CHANGES }}
 
-            Please pay special attention to:
-
-            {{ WHAT_TO_TEST }}
-
             As always you can get the release from (usually it takes around 2h until it is available):
             
             https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab
 
             If you are not yet registered as a tester or have a different problem, please send me message.
+            
             Thank you so much for taking the time to test DaKanji. 
             You rock <3
