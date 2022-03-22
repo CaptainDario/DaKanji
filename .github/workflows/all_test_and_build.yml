@@ -1,0 +1,5 @@
+name: All - Test and build
+
+jobs:
+  windows-test-and-build:
+    uses: ./.github/workflows/windows_build.yml
