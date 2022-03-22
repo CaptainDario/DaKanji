@@ -32,7 +32,7 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
-       download all TF lite files from the DaKanji-ML repo
+      # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
         uses: robinraju/release-downloader@v1.3
         with:
