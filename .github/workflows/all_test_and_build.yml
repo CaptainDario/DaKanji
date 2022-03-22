@@ -8,4 +8,4 @@ on:
 
 jobs:
   windows-test-and-build:
-    uses: ./.github/workflows/windows_build.yml
+    uses: ./.github/workflows/windows_test_and_build.yml
