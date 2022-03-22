@@ -11,12 +11,19 @@ on:
   # allows that other workflows can run this one
   workflow_call:
 
+env:
+  JAVA_VERSION: "11.x"
+  FLUTTER_VERSION: "2.10.0"
+  FLUTTER_CHANNEL: "stable"
+  PROPERTIES_PATH: "./android/key.properties"
+  JKS_PATH: "../../keys/DaKanjiRecognizer.jks"
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -26,13 +33,13 @@ jobs:
       - name: Setup Java to compile Android project
         uses: actions/setup-java@v1
         with:
-          java-version: '12.x'
+          java-version: ${{env.JAVA_VERSION}}
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.10.0'
-          channel: 'stable'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+          channel: ${{env.FLUTTER_CHANNEL}}
           
       - name: Restore packages
         run: |
@@ -55,20 +62,24 @@ jobs:
       #- name: Run integration tests
       #  run: flutter test .\integration_test\ -d windows
 
-      - name: build apk
-        run: flutter build apk
+      # Creating the key.properties file
+      - run: |
+          echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
+          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
+          echo storeFile=\${{env.JKS_PATH}} >> ${{env.PROPERTIES_PATH}}
+
+      # Decoding base64 key into a file
+      - run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ${{env.JKS_PATH}}
+
+      - name: build apks for different architectures
+        run: flutter build apk --split-per-abi
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_android.zip
-          path: build/windows/runner/Release/
+          path: build/app/outputs/flutter-apk/
 
       - name: build app bundle
         run: flutter build appbundle
-     
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_win_${ github.DAKANJI_VERSION }.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
