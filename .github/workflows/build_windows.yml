@@ -28,7 +28,14 @@ jobs:
           
       - name: Restore packages
         run: flutter pub get
+
+      - name: Set CURRENT_VERSION env to the current version of DaKanji
+        run: |
+          python .github/workflows/get_version.py
+
+          echo "CURRENT_VERSION=$(cat version.txt)" >> $GITHUB_ENV
         
+      # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
         uses: robinraju/release-downloader@v1.3
         with:
@@ -41,13 +48,13 @@ jobs:
       #- name: Analyze
       #  run: flutter analyze
 
-      - name: Run integration tests
-        run: flutter test .\integration_test\ -d windows
+      #- name: Run integration tests
+      #  run: flutter test .\integration_test\ -d windows
 
       - name: build exe
         run: flutter build windows
 
-      - name: copy TF Lite binaries and create zip of build
+      - name: copy TF Lite binaries to build folder
         run: |
           md build\windows\runner\Release\blobs
           copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
@@ -64,5 +71,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.msix
+          name: DaKanji_win_{{ CURRENT_VERSION }}.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
