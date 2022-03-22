@@ -32,12 +32,9 @@ jobs:
       - name: Set DAKANJI_VERSION env to the current version of DaKanji
         run: |
           python .github/workflows/get_version.py
+          echo ("DAKANJI_VERSION=" + $(cat dakanji_version.txt) >> $env:GITHUB_ENV
 
-          echo 'DAKANJI_VERSION<<EOF' >> $GITHUB_ENV
-          cat dakanji_version.txt >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
-          echo "$GITHUB_ENV"
+          echo "$env:DAKANJI_VERSION"
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
@@ -66,7 +63,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win_${env.DAKANJI_VERSION}.zip
+          name: DaKanji_win_${env:DAKANJI_VERSION}.zip
           path: build/windows/runner/Release/
 
       - name: build MSIX
