@@ -44,7 +44,7 @@ jobs:
       - name: Restore packages
         run: |
           flutter pub get
-          sudo ./install.sh -d
+          sudo install.sh -d
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
