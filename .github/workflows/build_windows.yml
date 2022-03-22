@@ -34,7 +34,7 @@ jobs:
           python .github/workflows/get_version.py
           echo ("DAKANJI_VERSION=" + $(cat dakanji_version.txt)) >> $env:GITHUB_ENV
 
-          echo "${{env:DAKANJI_VERSION}}"
+          echo "TEST TEST $env:DAKANJI_VERSION"
         
       # download all TF lite files from the DaKanji-ML repo
       #- name: Download release asset
