@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
@@ -74,8 +75,7 @@ Future<void> init() async {
   //await clearPreferences();
 
   // read the applications version from pubspec.yaml
-  File f = new File("pubspec.yaml");
-  Map yaml = loadYaml(await f.readAsString());
+  Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   print(yaml['version']);
   VERSION = yaml['version'];
 
@@ -94,6 +94,8 @@ Future<void> init() async {
 Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
+
+  print("CLEARED PREFERENCES AT APP START.");
 }
 
 /// Initialize GetIt by initializing and registering all the instances for it
