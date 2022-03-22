@@ -19,5 +19,5 @@ if __name__ == "__main__":
 
         version = re.search("version: (.*)", f.read()).groups()[0]
         
-        with open("current_version.txt", mode="w+", encoding="utf8") as f:
+        with open("dakanji_version.txt", mode="w+", encoding="utf8") as f:
             f.write(version)
