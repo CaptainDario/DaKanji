@@ -20,21 +20,21 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install and set Flutter version
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '2.10.0'
-          channel: 'stable'
+      #- name: Install and set Flutter version
+      #  uses: subosito/flutter-action@v2
+      #  with:
+      #    flutter-version: '2.10.0'
+      #    channel: 'stable'
           
-      - name: Restore packages
-        run: flutter pub get
+      #- name: Restore packages
+      #  run: flutter pub get
 
       - name: Set DAKANJI_VERSION env to the current version of DaKanji
         run: |
           python .github/workflows/get_version.py
 
           echo "DAKANJI_VERSION=$(cat dakanji_version.txt)" >> $GITHUB_ENV
-          echo ${{ github.DAKANJI_VERSION }}
+          echo "${{ github.DAKANJI_VERSION }}"
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
