@@ -37,8 +37,7 @@ jobs:
           cat dakanji_version.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
-          echo "${{ env.DAKANJI_VERSION }}"
-          echo "${{ github.DAKANJI_VERSION }}"
+          echo "$ GITHUB_ENV"
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
