@@ -102,6 +102,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_android_bundle.zip
-          path: build/app/outputs/bundle/release/app-release.apk
+          path: build/app/outputs/bundle/release/app-release.aab
 
 
