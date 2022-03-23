@@ -67,6 +67,7 @@ jobs:
           echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
           echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
           echo storeFile=../../keys/DaKanjiRecognizer.jks >> ${{env.PROPERTIES_PATH}}
+          cat ./android/key.properties
 
       - name: Decoding base64 key into a file
         run: |
