@@ -11,7 +11,15 @@ on:
   # allows that other workflows can run this one
   workflow_call:
     secrets:
-      PAT:
+      DA_KANJI_ML_RELEASES_TOKEN: 
+        required: true
+      KEY_PROPERTIES_KEY_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_STORE_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_KEY_ALIAS: 
+        required: true
+      KEYSTORE_BASE64: 
         required: true
 
 env:
