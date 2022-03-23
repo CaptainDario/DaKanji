@@ -30,7 +30,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      run: echo "test"
+      - name: testing
+        run: |
+          run: echo "test"
 
 
   deploy:
