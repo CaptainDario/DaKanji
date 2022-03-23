@@ -9,6 +9,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # allows that other workflows can run this one
+  workflow_call:
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -41,9 +44,13 @@ jobs:
             
             {{ LATEST_CHANGES }}
 
-            As always you can get the release from (usually it takes around 2h until it is available):
+            As always you can get the release from (usually it takes some time till it is available):
             
             https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab
+
+            or
+
+            https://www.github.com/CaptainDario/DaKanji-Mobile/releases
 
             If you are not yet registered as a tester or have a different problem, please send me message.
             
