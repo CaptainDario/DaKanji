@@ -1,5 +1,5 @@
-import 'package:da_kanji_mobile/provider/Drawing/DrawScreenState.dart';
-import 'package:da_kanji_mobile/provider/Drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
