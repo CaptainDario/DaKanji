@@ -94,6 +94,10 @@ class DrawingInterpreter with ChangeNotifier{
         _interpreter = await _initInterpreterIOS();
       else if(Platform.isWindows)
         _interpreter = await _initInterpreterWindows();
+      else if(Platform.isLinux)
+        _interpreter = await _initInterpreterLinux();
+      else if(Platform.isMacOS)
+        _interpreter = await _initInterpreterMac();
       else
         throw PlatformException(code: "Platform not supported.");
       GetIt.I<Settings>().save();
@@ -315,10 +319,26 @@ class DrawingInterpreter with ChangeNotifier{
 
   }
 
-  /// Initializes the TFLite interpreter on iOS.
+  /// Initializes the TFLite interpreter on Windows.
   ///
   /// Uses the uses CPU mode.
   Future<Interpreter> _initInterpreterWindows() async {
+
+    return await _cpuInterpreter();
+  }
+
+  /// Initializes the TFLite interpreter on Linux.
+  ///
+  /// Uses the uses CPU mode.
+  Future<Interpreter> _initInterpreterLinux() async {
+
+    return await _cpuInterpreter();
+  }
+
+  /// Initializes the TFLite interpreter on Mac.
+  ///
+  /// Uses the uses CPU mode.
+  Future<Interpreter> _initInterpreterMac() async {
 
     return await _cpuInterpreter();
   }
