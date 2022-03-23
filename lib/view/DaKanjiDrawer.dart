@@ -9,8 +9,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
-import 'package:da_kanji_mobile/provider/UserData.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 

@@ -57,7 +57,7 @@ class AppAvailability {
   /// each app has a form like [checkAvailability()].
   static Future<List<Map<String, String>>> getInstalledApps() async {
     List<dynamic>? apps = await _channel.invokeMethod("getInstalledApps");
-    if (apps != null && apps is List) {
+    if (apps != null) {
       List<Map<String, String>> list = [];
       for (var app in apps) {
         if (app is Map) {
