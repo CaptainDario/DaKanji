@@ -17,6 +17,7 @@ jobs:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
   windows-deploy:
+    needs: windows-test-and-build
     uses: ./.github/workflows/windows_deploy.yml
     secrets:
       DISCORD_WINDOWS_TEST_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
