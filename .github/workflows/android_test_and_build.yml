@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_android_arm64-v7a.zip
-          path: build/app/outputs/apk/release/app-arm64-v7a-release.apk
+          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
 
       - name: Archive apk x86_64
         uses: actions/upload-artifact@v3
@@ -101,7 +101,7 @@ jobs:
       - name: Archive appbundle
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android.zip
-          path: build/app/outputs/bundle/release/app-x86_64-release.apk
+          name: DaKanji_android_bundle.zip
+          path: build/app/outputs/bundle/release/app-release.apk
 
 
