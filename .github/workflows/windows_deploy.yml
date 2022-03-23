@@ -1,7 +1,7 @@
 
 
 
-name: Windows - deploy beta version
+name: Windows - Deploy to GitHub
 
 # Controls when the workflow will run
 on:
