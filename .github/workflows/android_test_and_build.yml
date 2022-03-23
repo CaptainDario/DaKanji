@@ -63,14 +63,14 @@ jobs:
 
       - name: Creating the key.properties file
         run: |
-          echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
-          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
+          echo keyPassword=\${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
+          echo storePassword=\${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo keyAlias=\${{ secrets.KEY_PROPERTIES_KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
           echo storeFile=../../keys/DaKanjiRecognizer.jks >> ${{env.PROPERTIES_PATH}}
 
       - name: Decoding base64 key into a file
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/DaKanjiRecognizer.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keys/DaKanjiRecognizer.jks
 
       - name: build apks for different architectures
         run: flutter build apk --split-per-abi

@@ -26,7 +26,7 @@ import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/provider/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/view/home/HomeScreen.dart';
-import 'package:da_kanji_mobile/view/Settingsscreen.dart';
+import 'package:da_kanji_mobile/view/SettingsScreen.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
