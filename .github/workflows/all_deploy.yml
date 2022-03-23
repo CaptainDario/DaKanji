@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: testing
         run: |
-          run: echo "test"
+          echo "test"
 
 
   deploy:
