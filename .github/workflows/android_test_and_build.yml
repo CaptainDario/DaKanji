@@ -70,7 +70,7 @@ jobs:
 
       - name: Decoding base64 key into a file
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/DaKanjiRecognizer.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keys/DaKanjiRecognizer.jks
 
       - name: build apks for different architectures
         run: flutter build apk --split-per-abi
