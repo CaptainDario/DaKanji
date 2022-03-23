@@ -9,3 +9,9 @@ on:
 jobs:
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
+    secrets:
+      PAT: ${{ secrets.PAT }}
+  android-test-and-build:
+    uses: ./.github/workflows/android_test_and_build.yml
+    secrets:
+      PAT: ${{ secrets.PAT }}

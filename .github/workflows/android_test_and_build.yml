@@ -10,6 +10,9 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
+    secrets:
+      PAT:
+        required: true
 
 env:
   JAVA_VERSION: "11.x"
