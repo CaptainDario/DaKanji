@@ -1,3 +1,4 @@
+
 Hello DaKanji-testers,
 a new release of DaKanji is coming soon and you can try the beta version now.
 The most important changes are:
@@ -13,4 +14,4 @@ https://www.github.com/CaptainDario/DaKanji-Mobile/releases
 If you are not yet registered as a tester or have a different problem, please send me message.
 
 Thank you so much for taking the time to test DaKanji. 
-You rock <3EOFF
+You rock <3
