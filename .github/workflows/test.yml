@@ -89,9 +89,10 @@ jobs:
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
-          cat .github/workflows/deploy_message.txt >> deploy_message.txt
+          python .github/workflows/get_deploy_message.py
           echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
       - name: Discord notification
         env:
