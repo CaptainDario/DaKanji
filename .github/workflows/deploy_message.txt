@@ -1,3 +1,4 @@
+
 Hello DaKanji-testers,
 a new release of DaKanji is coming soon and you can try the beta version now.
 The most important changes are:

@@ -91,7 +91,7 @@ jobs:
           echo 'EOF' >> $GITHUB_ENV
       
           cat .github/workflows/deploy_message.txt >> deploy_message.txt
-          cat deploy_message.txt
+          ls
           echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
