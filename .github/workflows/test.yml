@@ -65,7 +65,7 @@ jobs:
           prerelease: true
           overwrite: true
           body: |
-            IMPORTANT: this is a beta release, expect bugs 
+            IMPORTANT: this is a pre-release, expect bugs 
 
             Changelog:
             {{ LATEST_CHANGES }}

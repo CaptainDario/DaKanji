@@ -3,11 +3,11 @@ Hello DaKanji-testers,
 a new release of DaKanji is coming soon and you can try the beta version now.
 The most important changes are:
 
-{{ LATEST_CHANGES }}
+${{ LATEST_CHANGES }}
 
 As always you can get the release from (usually it takes some time till it is available):
 
-{{ STORE_URL }}
+${{ STORE_URL }}
 
 or
 
