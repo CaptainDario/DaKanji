@@ -13,9 +13,67 @@ env:
 
 jobs:
 
-  testing:
-
+  create-mock-build:
   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test.txt
+          path: .github/workflows/deploy_message.txt
+
+  upload-releases-to-github:
+    # upload to github releases after everything is build
+    needs: [create-mock-build]
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Get latest changes and set LATEST_CHANGES
+        run: |
+          python .github/workflows/get_latest_changes.py
+          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
+          cat latest_changes.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: test.txt
+          path: artifacts/
+          
+      - name: Display structure of downloaded files
+        run: ls
+          
+      - name: Upload to github releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/*
+          file_glob: true
+          tag: beta
+          prerelease: true
+          overwrite: true
+          body: |
+            IMPORTANT: this is a beta release, expect bugs 
+
+            Changelog:
+            {{ LATEST_CHANGES }}
+
+  deploy:
+    # send discord notifications after everything is uploaded to github releases
+    needs: upload-releases-to-github
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -32,98 +90,13 @@ jobs:
           echo 'EOF' >> $GITHUB_ENV
       
           cat .github/workflows/deploy_message.txt >> deploy_message.txt
-          ls
           echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
 
-  # create-mock-build:
-  
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v2
-
-  #     - name: Archive production artifacts
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: test.txt
-  #         path: .github/workflows/deploy_message.txt
-
-  # upload-releases-to-github:
-  #   # upload to github releases after everything is build
-  #   needs: [create-mock-build]
-
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v2
-
-  #     - name: Get latest changes and set LATEST_CHANGES
-  #       run: |
-  #         python .github/workflows/get_latest_changes.py
-  #         echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-  #         cat latest_changes.txt >> $GITHUB_ENV
-  #         echo 'EOF' >> $GITHUB_ENV
-
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: test.txt
-  #         path: artifacts/
-          
-  #     - name: Display structure of downloaded files
-  #       run: ls
-          
-  #     - name: Upload to github releases
-  #       uses: svenstaro/upload-release-action@v2
-  #       with:
-  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
-  #         file: artifacts/*
-  #         file_glob: true
-  #         tag: beta
-  #         prerelease: true
-  #         overwrite: true
-  #         body: |
-  #           IMPORTANT: this is a beta release, expect bugs 
-
-  #           Changelog:
-  #           {{ LATEST_CHANGES }}
-
-
-
-  # deploy:
-  #   # send discord notifications after everything is uploaded to github releases
-  #   needs: upload-releases-to-github
-
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v2
-
-  #     - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
-  #       run: |
-  #         python .github/workflows/get_latest_changes.py
-  #         echo 'LATEST_CHANGES<<EOF<<DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
-  #         cat latest_changes.txt >> $GITHUB_ENV
-  #         echo 'EOF' >> $GITHUB_ENV
-      
-  #         cat .github/workflows/deploy_message.txt >> deploy_message.txt
-  #         ls
-          
-  #         cat deploy_message.txt >> $GITHUB_ENV
-  #         echo 'EOF' >> $GITHUB_ENV
-
-  #     - name: Discord notification
-  #       env:
-  #         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
-  #       uses: Ilshidur/action-discord@0.3.2
-  #       with:
-  #         args: |
-  #           {{ DEPLOY_MESSAGE }}
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: |
+            {{ DEPLOY_MESSAGE }}
