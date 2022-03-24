@@ -59,7 +59,7 @@ jobs:
           body: |
             IMPORTANT: this is a beta release, expect bugs 
 
-            {{ LATEST_CHANGES }}
+            ${{ LATEST_CHANGES }}
 
 
 
