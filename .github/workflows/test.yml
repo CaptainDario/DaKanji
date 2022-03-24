@@ -86,13 +86,13 @@ jobs:
       - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
         run: |
           python .github/workflows/get_latest_changes.py
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
+          echo 'LATEST_CHANGES<<EOF<<DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
           cat .github/workflows/deploy_message.txt >> deploy_message.txt
           ls
-          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+          
           cat deploy_message.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
