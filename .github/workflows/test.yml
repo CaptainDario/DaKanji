@@ -9,6 +9,10 @@ on:
 
 jobs:
   create-mock-build:
+  
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
     steps:
       - name: create mock data
         run: touch test.txt
