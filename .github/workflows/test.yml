@@ -42,7 +42,7 @@ jobs:
 
       - name: Get latest changes and set LATEST_CHANGES
         run: |
-          python .github/workflows/get_latest_changes.py
+          python .github/workflows/latest_changes.py
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV

@@ -49,7 +49,7 @@ jobs:
 
       - name: Get latest changes and set LATEST_CHANGES
         run: |
-          python .github/workflows/get_latest_changes.py
+          python .github/workflows/latest_changes.py
 
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
@@ -57,7 +57,7 @@ jobs:
 
       - name: Get deploy message and set DEPLOY_MESSAGE
         run: |
-          python .github/workflows/get_latest_changes.py
+          python .github/workflows/latest_changes.py
 
           echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
