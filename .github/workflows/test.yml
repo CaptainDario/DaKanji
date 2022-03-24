@@ -54,6 +54,14 @@ jobs:
           
       - name: Display structure of downloaded files
         run: ls
+
+      - name: delete previous beta releases
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true 
+          tag_name: beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Upload to github releases
         uses: svenstaro/upload-release-action@v2
