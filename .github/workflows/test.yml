@@ -35,14 +35,14 @@ jobs:
           
       - name: Upload to github releases
         uses: svenstaro/upload-release-action@v2
-         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: test.txt
-          tag: ${{ github.ref }}
-          prerelease: true
-          overwrite: true
-          body: |
-            DaKanji v2.0 - beta
+        with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: test.txt
+        tag: ${{ github.ref }}
+        prerelease: true
+        overwrite: true
+        body: |
+          DaKanji v2.0 - beta
 
 
 
