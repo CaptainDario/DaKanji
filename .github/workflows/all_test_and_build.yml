@@ -9,6 +9,7 @@ on:
 jobs:
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
+<<<<<<< HEAD
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
       KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
@@ -23,3 +24,5 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+=======
+>>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112

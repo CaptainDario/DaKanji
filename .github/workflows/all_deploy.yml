@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 name: All - Deploy
+=======
+   
+name: All - deploy
+>>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
 
 # Controls when the workflow will run
 on:
@@ -11,6 +16,20 @@ jobs:
     uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+<<<<<<< HEAD
+=======
+      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
+  windows-deploy:
+    needs: windows-test-and-build
+    uses: ./.github/workflows/windows_deploy.yml
+    secrets:
+      DISCORD_WINDOWS_TEST_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
+
+>>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
     
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
@@ -20,6 +39,7 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+<<<<<<< HEAD
       
 
   upload-releases-to-github:
@@ -70,3 +90,5 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: {{ DEPLOY_MESSAGE }}
+=======
+>>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
