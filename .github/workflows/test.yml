@@ -12,6 +12,31 @@ env:
 
 
 jobs:
+
+  testing:
+
+  
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
+        run: |
+          python .github/workflows/get_latest_changes.py
+          echo 'LATEST_CHANGES<<EOF<<DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+          cat latest_changes.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      
+          cat .github/workflows/deploy_message.txt >> deploy_message.txt
+          ls
+          echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
+          cat deploy_message.txt >> $GITHUB_ENV
+          echo 'EOFF' >> $GITHUB_ENV
+
   create-mock-build:
   
     # The type of runner that the job will run on
