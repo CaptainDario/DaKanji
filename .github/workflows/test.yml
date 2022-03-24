@@ -33,8 +33,11 @@ jobs:
       
           cat .github/workflows/deploy_message.txt >> deploy_message.txt
           ls
+          echo '$GITHUB_ENV'
           echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
+          echo '$GITHUB_ENV'
           cat deploy_message.txt >> $GITHUB_ENV
+          echo '$GITHUB_ENV'
           echo 'EOFF' >> $GITHUB_ENV
 
   create-mock-build:
