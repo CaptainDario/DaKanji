@@ -89,7 +89,7 @@ jobs:
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
-          python .github/workflows/get_deploy_message.py
+          python .github/workflows/deploy_message.py
           echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
