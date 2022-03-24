@@ -90,8 +90,10 @@ jobs:
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
+          cat .github/workflows/deploy_message.txt >> deploy_message.txt
+          cat deploy_message.txt
           echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
+          cat deploy_message.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
       - name: Discord notification
@@ -100,4 +102,4 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: |
-            {{ ABC }}
+            {{ DEPLOY_MESSAGE }}
