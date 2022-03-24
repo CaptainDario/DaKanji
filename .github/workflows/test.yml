@@ -14,13 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: create mock data
-        run: touch test.txt
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: test.txt
-          path: test.txt
+          path: .github/workflows/deploy_message.txt
 
   upload-releases-to-github:
     # upload to github releases after everything is build
