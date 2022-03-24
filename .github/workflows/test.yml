@@ -90,7 +90,7 @@ jobs:
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
-          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+          echo 'ABC<<EOF' >> $GITHUB_ENV
           cat .github/workflows/test.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
@@ -100,4 +100,4 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: |
-            {{ DEPLOY_MESSAGE }}
+            {{ ABC }}
