@@ -34,7 +34,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Get latest changes
+      - name: Get latest changes and set LATEST_CHANGES
         run: |
           python .github/workflows/get_latest_changes.py
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
@@ -59,6 +59,7 @@ jobs:
           body: |
             IMPORTANT: this is a beta release, expect bugs 
 
+            Changelog:
             ${{ LATEST_CHANGES }}
 
 
@@ -75,29 +76,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Get latest changes
+      - name: Get latest changes and set LATEST_CHANGES
         run: |
           python .github/workflows/get_latest_changes.py
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
+      
+      - name: Get deploy message and set DEPLOY_MESSAGE
+        run: |
+          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
+          cat deploy_message.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: |
-            Hello DaKanji-testers,
-            a new release of DaKanji is coming soon and you can try the beta version now.
-            The most important changes are:
-            
-            {{ LATEST_CHANGES }}
-            As always you can get the release from (usually it takes some time till it is available):
-            
-            https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab
-            or
-            https://www.github.com/CaptainDario/DaKanji-Mobile/releases
-            If you are not yet registered as a tester or have a different problem, please send me message.
-            
-            Thank you so much for taking the time to test DaKanji. 
-            You rock <3
+            {{  }}
