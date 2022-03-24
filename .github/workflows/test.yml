@@ -7,11 +7,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:  
+  STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
+
+
 jobs:
   create-mock-build:
   
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
