@@ -45,7 +45,9 @@ jobs:
           path: artifacts/
           
       - name: Display structure of downloaded files
-        run: ls artifacts/
+        run: |
+          ls artifacts/
+          echo $PWD
 
       - name: delete previous beta releases
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
@@ -59,7 +61,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./artifacts/DaKanji_*
+          file: ./artifacts/DaKanji_android_arm64-v7a.zip
           file_glob: true
           tag: beta
           prerelease: true
