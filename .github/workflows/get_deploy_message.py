@@ -14,6 +14,7 @@ def create_deploy_message_txt():
     with open(".github/workflows/deploy_message.txt", mode="r", encoding="utf8") as f:
         deploy_message = f.read()
 
+    print(os.environ)
     deploy_message = deploy_message.replace("LATEST_CHANGES", os.environ["LATEST_CHANGES"])
     deploy_message = deploy_message.replace("STORE_URL", os.environ["STORE_URL"])
 
