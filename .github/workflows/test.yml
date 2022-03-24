@@ -44,15 +44,16 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: test.txt
+          path: artifacts/
           
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls
           
       - name: Upload to github releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: test.txt.zip
+          file: deploy_message.txt
           tag: beta
           prerelease: true
           overwrite: true
