@@ -41,11 +41,13 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: test.txt
-          tag: ${{ github.ref }}
+          tag: beta
           prerelease: true
           overwrite: true
           body: |
-            DaKanji v2.0 - beta
+            IMPORTANT: this is a beta release, expect bugs 
+
+            {{ LATEST_CHANGES }}
 
 
 
