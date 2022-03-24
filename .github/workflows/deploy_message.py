@@ -16,7 +16,6 @@ def create_deploy_message_txt():
         deploy_message = f.read()
 
     deploy_message = deploy_message.replace("LATEST_CHANGES", get_latest_changes())
-    #deploy_message = deploy_message.replace("STORE_URL", str(os.environ.get("STORE_URL")))
 
     with open("deploy_message.txt", mode="w+", encoding="utf8") as f:
         f.write(deploy_message)   
