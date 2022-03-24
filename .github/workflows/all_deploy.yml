@@ -59,13 +59,13 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/DaKanji_*
+          file: ./artifacts/DaKanji_*
           file_glob: true
           tag: beta
           prerelease: true
           overwrite: true
           body: |
-            IMPORTANT: this is a pre-release, expect bugs 
+            IMPORTANT: this is a pre-release, you should expect some bugs 
 
             Changelog:
             ${{ env.LATEST_CHANGES }}
