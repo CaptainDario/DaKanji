@@ -10,7 +10,6 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-<<<<<<< HEAD
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: 
         required: true
@@ -22,18 +21,12 @@ on:
         required: true
       KEYSTORE_BASE64: 
         required: true
-=======
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
 
 env:
   JAVA_VERSION: "11.x"
   FLUTTER_VERSION: "2.10.0"
   FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
-<<<<<<< HEAD
-=======
-  JKS_PATH: "../../keys/DaKanjiRecognizer.jks"
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -61,11 +54,7 @@ jobs:
       - name: Restore packages
         run: |
           flutter pub get
-<<<<<<< HEAD
           sudo bash install.sh -d
-=======
-          ./install.bat -d
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
@@ -83,7 +72,6 @@ jobs:
       #- name: Run integration tests
       #  run: flutter test .\integration_test\ -d windows
 
-<<<<<<< HEAD
       - name: Creating the key.properties file
         run: |
           echo keyPassword=\${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
@@ -128,25 +116,3 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
 
 
-=======
-      # Creating the key.properties file
-      - run: |
-          echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
-          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
-          echo storeFile=\${{env.JKS_PATH}} >> ${{env.PROPERTIES_PATH}}
-      # Decoding base64 key into a file
-      - run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ${{env.JKS_PATH}}
-
-      - name: build apks for different architectures
-        run: flutter build apk --split-per-abi
-
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_android.zip
-          path: build/app/outputs/flutter-apk/
-
-      - name: build app bundle
-        run: flutter build appbundle
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112

@@ -65,11 +65,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-<<<<<<< HEAD
           name: DaKanji_win.zip
-=======
-          name: DaKanji_win_${env:DAKANJI_VERSION}.zip
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
           path: build/windows/runner/Release/
 
       - name: build MSIX
@@ -78,9 +74,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-<<<<<<< HEAD
           name: DaKanji_win.msix
-=======
-          name: DaKanji_win_${ github.DAKANJI_VERSION }.msix
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
           path: build\windows\runner\Release\da_kanji_mobile.msix
