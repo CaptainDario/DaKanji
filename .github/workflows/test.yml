@@ -68,7 +68,7 @@ jobs:
             IMPORTANT: this is a pre-release, expect bugs 
 
             Changelog:
-            {{ LATEST_CHANGES }}
+            ${{ env.LATEST_CHANGES }}
 
   deploy:
     # send discord notifications after everything is uploaded to github releases
