@@ -1,4 +1,4 @@
-name: All - Test and build
+name: All - Deploy
 
 # Controls when the workflow will run
 on:
