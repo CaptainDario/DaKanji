@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 name: All - Deploy
-=======
-   
-name: All - deploy
->>>>>>> 14e3d30ed9f9768a832bd5be1a55ae16c8027112
 
 # Controls when the workflow will run
 on:
