@@ -69,4 +69,4 @@ jobs:
           STORE_URL: https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: {{ DEPLOY_MESSAGE }}
+          args: "{{ DEPLOY_MESSAGE }}"
