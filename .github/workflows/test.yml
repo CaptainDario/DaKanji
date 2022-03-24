@@ -93,7 +93,7 @@ jobs:
       - name: Get deploy message and set DEPLOY_MESSAGE
         run: |
           echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
-          cat .github/workflows/deploy_message.txt >> $GITHUB_ENV
+          cat .github/workflows/test.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
       - name: Discord notification
