@@ -83,15 +83,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Get latest changes and set LATEST_CHANGES
+      - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
         run: |
           python .github/workflows/get_latest_changes.py
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       
-      - name: Get deploy message and set DEPLOY_MESSAGE
-        run: |
           echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
           cat .github/workflows/test.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
