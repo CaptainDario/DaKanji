@@ -49,11 +49,10 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: test.txt
           path: artifacts/
           
       - name: Display structure of downloaded files
-        run: ls
+        run: ls artifacts/
 
       - name: delete previous beta releases
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
