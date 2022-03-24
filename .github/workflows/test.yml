@@ -87,8 +87,8 @@ jobs:
       
       - name: Get deploy message and set DEPLOY_MESSAGE
         run: |
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat deploy_message.txt >> $GITHUB_ENV
+          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+          cat .github/workflows/deploy_message.txt >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
       - name: Discord notification
@@ -97,4 +97,4 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: |
-            {{  }}
+            {{ DEPLOY_MESSAGE }}
