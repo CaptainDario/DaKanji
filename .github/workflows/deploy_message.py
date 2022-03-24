@@ -8,15 +8,15 @@
 
 
 import os
+from latest_changes import get_latest_changes
 
 
 def create_deploy_message_txt():
     with open(".github/workflows/deploy_message.txt", mode="r", encoding="utf8") as f:
         deploy_message = f.read()
 
-    print(os.environ)
-    deploy_message = deploy_message.replace("LATEST_CHANGES", os.environ["LATEST_CHANGES"])
-    deploy_message = deploy_message.replace("STORE_URL", os.environ["STORE_URL"])
+    deploy_message = deploy_message.replace("LATEST_CHANGES", get_latest_changes())
+    deploy_message = deploy_message.replace("STORE_URL", str(os.environ.get("STORE_URL")))
 
     with open("deploy_message.txt", mode="w+", encoding="utf8") as f:
         f.write(deploy_message)   
