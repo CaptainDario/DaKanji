@@ -7,7 +7,7 @@ LATEST_CHANGES
 
 As always you can get the release from (usually it takes some time till it is available):
 
-${{ env.STORE_URL }}
+${{ STORE_URL }}
 
 or
 
