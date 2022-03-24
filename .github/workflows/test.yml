@@ -60,7 +60,7 @@ jobs:
             IMPORTANT: this is a beta release, expect bugs 
 
             Changelog:
-            ${{ LATEST_CHANGES }}
+            {{ LATEST_CHANGES }}
 
 
 
