@@ -92,7 +92,6 @@ jobs:
           python .github/workflows/deploy_message.py
           echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
           cat deploy_message.txt >> $GITHUB_ENV
-          echo 'EOFF' >> $GITHUB_ENV
 
       - name: Windows Testing - Discord notification
         env:
