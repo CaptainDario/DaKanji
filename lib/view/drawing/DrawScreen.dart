@@ -261,7 +261,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
                 ),
                 if(showWelcomeToTheDrawingscreen && 
-                  GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys)
+                  GetIt.I<UserData>().showShowcaseDrawing && 
+                  widget.includeTutorialKeys)
                   GestureDetector(
                     onTap: () {
                       setState(() {
