@@ -61,7 +61,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./artifacts/DaKanji_android_arm64-v7a.zip
+          file:  "${GITHUB_WORKSPACE}/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
