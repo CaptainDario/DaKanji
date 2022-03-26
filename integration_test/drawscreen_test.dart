@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,10 @@ import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'drawscreen_test_values.dart';
 
 
@@ -22,9 +22,14 @@ void main() {
     IS_TESTING_DRAWSCREEN = true;
 
     // create app instance and wait until it finished initializing
-    app.main();
-    print(GetIt.I<DrawScreenState>());
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await app.main();
+    GetIt.I<UserData>().showChangelog       = false;
+    GetIt.I<UserData>().showOnboarding      = false;
+    GetIt.I<UserData>().showRatePopup       = false;
+    GetIt.I<UserData>().showShowcaseDrawing = false;
+    GetIt.I<UserData>().save();
+
+    await tester.pumpAndSettle(Duration(seconds: 1));
 
     // check that the app does not show any predictions on start up
     List<String> preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
@@ -34,7 +39,7 @@ void main() {
     Size canvasSize = tester.getSize(find.byType(DrawingCanvas));
 
     // #region 1 - draw 囗 on the canvas
-    await movePointer(tester, canvasCenter, kuchiStrokes, canvasSize.height/2);
+    await movePointer(tester, canvasCenter, kuchiStrokes, canvasSize.height/4);
     await tester.pumpAndSettle(Duration(seconds: 2));
     // check that the shown predictions are as expected
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
