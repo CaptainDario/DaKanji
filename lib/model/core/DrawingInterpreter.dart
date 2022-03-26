@@ -19,39 +19,41 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 class DrawingInterpreter with ChangeNotifier{
 
   /// the tf lite interpreter to recognize kanjis
-  Interpreter _interpreter;
+  Interpreter ?_interpreter;
 
-  DrawingIsolateUtils _isolateUtils;
+  // the utils for the interpreter's isolate
+  DrawingIsolateUtils ?_isolateUtils;
 
   /// If the interpreter was initialized successfully
-  bool wasInitialized;
+  bool wasInitialized = false;
 
   /// The path to the interpreter asset
-  String _interpreterAssetPath;
+  String _interpreterAssetPath = "tflite_models/CNN_single_char.tflite";
   
   /// The path to the interpreter asset
-  String _labelAssetPath;
+  String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
 
   /// The list of all labels the model can recognize.
-  List<String> _labels;
+  late List<String> _labels;
 
   /// input to the CNN
-  List<List<List<List<double>>>> _input;
+  List<List<List<List<double>>>> _input = [[[[]]]];
 
   /// output of the CNN
-  List<List<double>> _output;
+  List<List<double>> _output = [[]];
 
   /// height of the input image (image used for inference)
-  int height;
+  int height = 64;
 
   /// width of the input image (image used for inference)
-  int width;
+  int width = 64;
 
+  /// The [_noPredictions] most likely predictions will be shown to the user
+  int _noPredictions = 10;
+  
   /// the prediction the CNN made
-  List<String> _predictions;
+  List<String> _predictions = List.generate(10, (index) => " ");
 
-  /// The [_noPredictions] most likely predictions will used
-  int _noPredictions;
 
 
 
@@ -72,22 +74,9 @@ class DrawingInterpreter with ChangeNotifier{
   }
 
   get interpreteraddress{
-    return _interpreter.address;
+    return _interpreter?.address;
   }
 
-  DrawingInterpreter() {
-    _interpreterAssetPath = "CNN_single_char.tflite";
-    _labelAssetPath = "assets/CNN_single_char_labels.txt";
-
-    height = 64;
-    width = 64;
-
-    _noPredictions = 10;
-
-    _setPredictions(List.generate(_noPredictions, (index) => " "));
-    
-    wasInitialized = false;
-  }
 
   /// Initialize the interpreter in the main isolate (invoking it can lead to 
   /// UI jank)
@@ -96,37 +85,41 @@ class DrawingInterpreter with ChangeNotifier{
   void init() async {
 
     if(wasInitialized){
-      print("Drawing interpreter already initialized."
-      "Skipping init and returning existing interpreter.");
-      return;
+      print("Drawing interpreter already initialized. Skipping init.");
     }
-    if (Platform.isAndroid)
-      _interpreter = await _initInterpreterAndroid();
-    else if (Platform.isIOS) 
-      _interpreter = await _initInterpreterIOS();
-    else if(Platform.isWindows)
-      _interpreter = await _initInterpreterWindows();
-    else
-      throw PlatformException(code: "Platform not supported.");
-    GetIt.I<Settings>().save();
+    else{
+      if (Platform.isAndroid)
+        _interpreter = await _initInterpreterAndroid();
+      else if (Platform.isIOS) 
+        _interpreter = await _initInterpreterIOS();
+      else if(Platform.isWindows)
+        _interpreter = await _initInterpreterWindows();
+      else if(Platform.isLinux)
+        _interpreter = await _initInterpreterLinux();
+      else if(Platform.isMacOS)
+        _interpreter = await _initInterpreterMac();
+      else
+        throw PlatformException(code: "Platform not supported.");
+      GetIt.I<Settings>().save();
 
-    print(GetIt.I<Settings>().backendCNNSingleChar);
+      print(GetIt.I<Settings>().backendCNNSingleChar);
 
-    var l = await rootBundle.loadString(_labelAssetPath);
-    _labels = l.split("");
-    
-    // allocate memory for inference in / output
-    _input = List<List<double>>.generate(
-      height, (i) => List.generate(width, (j) => 0.0)).
-    reshape<double>([1, height, width, 1]);
-    this._output =
-      List<List<double>>.generate(1, (i) => 
-      List<double>.generate(_labels.length, (j) => 0.0));
+      var l = await rootBundle.loadString(_labelAssetPath);
+      _labels = l.split("");
+      
+      // allocate memory for inference in / output
+      _input = List<List<double>>.generate(
+        height, (i) => List.generate(width, (j) => 0.0)).
+      reshape<double>([1, height, width, 1]).cast();
+      this._output =
+        List<List<double>>.generate(1, (i) => 
+        List<double>.generate(_labels.length, (j) => 0.0));
 
-    _isolateUtils = DrawingIsolateUtils();
-    _isolateUtils.start();
+      _isolateUtils = DrawingIsolateUtils();
+      _isolateUtils?.start();
 
-    wasInitialized = true;
+      wasInitialized = true;
+    }
   }
 
   /// Initialize the isolate in which the inference should be run.
@@ -138,7 +131,7 @@ class DrawingInterpreter with ChangeNotifier{
     // allocate memory for inference in / output
     _input = List<List<double>>.generate(
       height, (i) => List.generate(width, (j) => 0.0)).
-      reshape<double>([1, height, width, 1]);
+      reshape<double>([1, height, width, 1]).cast();
     this._output =
       List<List<double>>.generate(1, (i) => 
       List<double>.generate(_labels.length, (j) => 0.0));
@@ -151,9 +144,14 @@ class DrawingInterpreter with ChangeNotifier{
   /// Should be invoked when a different screen is opened which uses a 
   /// different interpreter.
   void free() {
-    _interpreter.close();
-    _output = null;
-    _input = null;
+    if(_interpreter == null){
+      print("No interpreter was initialized");
+      return;
+    }
+
+    _interpreter!.close();
+    _output = [[]];
+    _input = [[[[]]]];
     _interpreter = null;
     clearPredictions();
     wasInitialized = false;
@@ -178,22 +176,22 @@ class DrawingInterpreter with ChangeNotifier{
       );
 
     if(runInIsolate){
-      _predictions = await _isolateUtils.runInference(
+      _predictions = await _isolateUtils?.runInference(
         inputImage,
-        _interpreter.address,
+        _interpreter?.address ?? 0,
         labels
       );
     }
     else{
 
       // take image from canvas and resize it
-      image.Image base = image.decodeImage(inputImage);
+      image.Image base = image.decodeImage(inputImage)!;
       image.Image resizedImage = image.copyResize(base,
         height: height, width: width, interpolation: image.Interpolation.cubic);
         //resizedImage = image.gaussianBlur(resizedImage, 2);
       Uint8List resizedBytes = 
         resizedImage.getBytes(format: image.Format.luminance);
-      //var imgStr = resizedBytes.toString();
+      //var imageStr = resizedBytes.toString();
 
       // convert image for inference into shape [1, height, width, 1]
       // also apply thresholding and normalization [0, 1]
@@ -209,7 +207,7 @@ class DrawingInterpreter with ChangeNotifier{
       }
 
       // run inference
-      _interpreter.run(_input, _output);
+      _interpreter!.run(_input, _output);
 
       // get the 10 most likely predictions
       for (int c = 0; c < _noPredictions; c++) {
@@ -244,9 +242,9 @@ class DrawingInterpreter with ChangeNotifier{
     String selectedBackend = GetIt.I<Settings>().backendCNNSingleChar;
     if(!GetIt.I<Settings>().inferenceBackends.contains(selectedBackend)){
       try{
-        if(androidInfo.isPhysicalDevice){
+        if(androidInfo.isPhysicalDevice!){
           // use NNAPI on android if android API >= 27
-          if (androidInfo.version.sdkInt >= 27) {
+          if (androidInfo.version.sdkInt! >= 27) {
             interpreter = await _nnapiInterpreter();
           }
           // otherwise fallback to GPU delegate
@@ -273,6 +271,10 @@ class DrawingInterpreter with ChangeNotifier{
     }
     else if(selectedBackend == Settings().inferenceBackends[2]){
       interpreter = await _nnapiInterpreter();
+    }
+    // if all fails return a CPU based interpreter
+    else{
+      interpreter = await _cpuInterpreter();
     }
 
     return interpreter;
@@ -308,15 +310,35 @@ class DrawingInterpreter with ChangeNotifier{
     else if(selectedBackend == Settings().inferenceBackends[3]){
       interpreter = await _metalInterpreterIOS();
     }
+    // if all fails return a CPU based interpreter
+    else{
+      interpreter = await _cpuInterpreter();
+    }
     
     return interpreter;
 
   }
 
-  /// Initializes the TFLite interpreter on iOS.
+  /// Initializes the TFLite interpreter on Windows.
   ///
   /// Uses the uses CPU mode.
   Future<Interpreter> _initInterpreterWindows() async {
+
+    return await _cpuInterpreter();
+  }
+
+  /// Initializes the TFLite interpreter on Linux.
+  ///
+  /// Uses the uses CPU mode.
+  Future<Interpreter> _initInterpreterLinux() async {
+
+    return await _cpuInterpreter();
+  }
+
+  /// Initializes the TFLite interpreter on Mac.
+  ///
+  /// Uses the uses CPU mode.
+  Future<Interpreter> _initInterpreterMac() async {
 
     return await _cpuInterpreter();
   }
@@ -372,7 +394,9 @@ class DrawingInterpreter with ChangeNotifier{
     Interpreter interpreter;
     final options = InterpreterOptions()..addDelegate(
       XNNPackDelegate(
-        options: XNNPackDelegateOptions()
+        options: XNNPackDelegateOptions(
+          numThreads: Platform.numberOfProcessors >= 4 ? 4 : Platform.numberOfProcessors 
+        )
       )
     );
     interpreter = await Interpreter.fromAsset(

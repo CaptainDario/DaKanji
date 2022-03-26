@@ -9,13 +9,13 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:universal_io/io.dart';
 
 
-StreamSubscription linkSub;
+StreamSubscription? linkSub;
 
 Future<Null> initDeepLinksStream() async {
   // ... check initialUri
 
   // Attach a listener to the stream
-  linkSub = linkStream.listen((String link) {
+  linkSub = linkStream.listen((String? link) {
 
     print("Stream: "+ (link ?? "none"));
     handleLink(link);
@@ -30,7 +30,7 @@ Future<Null> initDeepLinksStream() async {
 Future<Null> getInitialDeepLink() async {
   
   try {
-    String initialLink = await getInitialLink();
+    String? initialLink = await getInitialLink();
     print("Initial Link: " + (initialLink ?? "none"));
     handleLink(initialLink);
   }
@@ -39,7 +39,7 @@ Future<Null> getInitialDeepLink() async {
   }
 }
 
-void handleLink(String link){
+void handleLink(String? link){
 
   if(link == null) return;
 

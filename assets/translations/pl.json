@@ -1,0 +1,74 @@
+{
+  "AboutScreen": {
+    "about_text": "DaKanji stworzone jest, aby pomaga\u0107 osobom ucz\u0105cym si\u0119 j\u0119zyka japo\u0144skiego oraz jego u\u017cytkownikom. \nAktualnie jest ono w stanie rozpozna\u0107 pismo odr\u0119czne takie jak \u6f22\u5b57 z \u6f22\u5b57\u691c\u5b9a oraz \u3072\u3089\u304c\u306a (r\u00f3wnie\u017c t\u0105 historyczn\u0105: \u3091, itp.) i \u30ab\u30bf\u30ab\u30ca. \nFunkcjonalno\u015b\u0107 aplikacji zostanie poprawiona w najbli\u017cszych wydaniach. DaKanji dost\u0119pne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE) i [Windows](MICROSOFT_STORE).\n\nSprawd\u017a inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJe\u017celi napotkasz problemy korzystaj\u0105c ztej aplikacji, albo posiadasz sugestie na to jak j\u0105 poprawi\u0107, wy\u015blij je [tutaj](GITHUB_ISSUES), do\u0142\u0105cz na [serwer discord](DISCORD_SERVER) albo wy\u015blij e-mail do daapplab@gmail.com. \nPolityka prywatno\u015bci dost\u0119pna jest [tutaj](PRIVACY_POLICE)",
+    "show_changelog": "Poka\u017c pe\u0142n\u0105 histori\u0119 zmian",
+    "software_informations_button": "Informacje o oprogramowaniu",
+    "title": "O aplikacji"
+  },
+  "ChangelogScreen": {
+    "title": "Historia zmian"
+  },
+  "DrawScreen": {
+    "title": "Obraz",
+    "tutorial_begin_continue": "",
+    "tutorial_begin_text": "",
+    "tutorial_begin_title": "",
+    "tutorial_clear": "Wyczy\u015b\u0107 wszystkie linie",
+    "tutorial_dictionary_settings": "W ustawieniach mo\u017cliwe jest wybranie us\u0142ugi t\u0142umaczenia",
+    "tutorial_double_tap_prediction": "Podw\u00f3jne klikni\u0119cie dodaje znak do pola wyszukiwania",
+    "tutorial_drawing": "Tutaj namaluj znak",
+    "tutorial_long_press_prediction": "Przytrzymanie otwiera predykcj\u0119 w s\u0142owniku",
+    "tutorial_multi_search": "Tutaj mo\u017cesz wyszukiwa\u0107 wiele znak\u00f3w na raz",
+    "tutorial_multi_search_double_tap": "Podw\u00f3jne klikni\u0119cie wymazuje znak",
+    "tutorial_multi_search_long_press": "Przytrzymanie otwiera zawarto\u015b\u0107 w s\u0142owniku",
+    "tutorial_multi_search_short_press": "Klikni\u0119cie kopiuje znak",
+    "tutorial_multi_search_swipe_left": "Przesuni\u0119cie w lewo usuwa ostatni znak",
+    "tutorial_predictions": "Przewidywane znaki dost\u0119pne b\u0119d\u0105 tutaj",
+    "tutorial_short_press_prediction": "Klikni\u0119cie kopiuje znak",
+    "tutorial_skip": "POMI\u0143",
+    "tutorial_undo": "Kliknij aby cofn\u0105\u0107 ostatnie poci\u0105gni\u0119cie"
+  },
+  "General": {
+    "app": "aplikacja",
+    "close": "Zamknij",
+    "custom_url": "niestandardowy URL",
+    "dark": "ciemny",
+    "language": "j\u0119zyk",
+    "light": "jasny",
+    "rate_this_app": "Oce\u0144",
+    "restarts_app": "restart aplikacji",
+    "system": "system",
+    "web": "web"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "Nie powtarzaj!",
+    "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Po prostu go narysuj i DaKanji poka\u017ce Ci znak kt\u00f3rego potrzebujesz",
+    "Onboarding_1_title": "Nie znasz Kanji?",
+    "Onboarding_2_text": "Z DaKanji mo\u017cesz szybko podgl\u0105dn\u0105\u0107 s\u0142\u00f3wka u\u017cywaj\u0105c internetu oraz s\u0142ownik\u00f3w",
+    "Onboarding_2_title": "Podejrzyj znaki i wyrazy"
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "System wnioskowania (aplikacja musi zosta\u0107 zrestartowana)",
+    "advanced_settings_title": "Ustawienia zaawansowane",
+    "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywany do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Teraz musimy podmieni\u0107 jedynie znak na symbol zast\u0119pczy. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_format": "Niestandardowy format URL",
+    "custom_url_hint": "URL twojego s\u0142ownika",
+    "dictionary_system_translator": "T\u0142umacz systemowy",
+    "drawing_title": "Obraz",
+    "empty_canvas_after_double_tap": "Puste p\u0142\u00f3tno po podw\u00f3jnym klikni\u0119ciu",
+    "invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
+    "long_press_opens": "D\u0142ugie klikni\u0119cie otwiera",
+    "miscellaneous_title": "Inne",
+    "show_tutorial": "Powt\u00f3rz tutorial (restartuje aplikacje)",
+    "theme": "Motyw(@:restarts_app)",
+    "title": "Ustawienia",
+    "use_default_browser_for_online_dictionaries": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych"
+  },
+  "WebviewScreen": {
+    "loading": "\u0141adowanie",
+    "title": "Webview"
+  }
+}

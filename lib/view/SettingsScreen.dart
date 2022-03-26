@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:universal_io/io.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -42,6 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Consumer<Settings>(
             builder: (context, settings, child){
               return ListView(
+                primary: false,
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   // different options for dictionary on long press
@@ -64,16 +66,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: () {
-                              String text = value.replaceAll("url", LocaleKeys.custom_url.tr());
-                              text = text.replaceAll("app", LocaleKeys.app.tr());
-                              text = text.replaceAll("web", LocaleKeys.web.tr());
+                              String text = value.replaceAll("url", LocaleKeys.General_custom_url.tr());
+                              text = text.replaceAll("app", LocaleKeys.General_app.tr());
+                              text = text.replaceAll("web", LocaleKeys.General_web.tr());
                               
                               return Text(text);
                             } ()
                           );
                         }).toList(),
-                        onChanged: (String newValue) {
-                          settings.selectedDictionary = newValue;
+                        onChanged: (String? newValue) {
+                          settings.selectedDictionary = newValue ?? settings.dictionaries[0];
                           settings.save();
                         },
                       ),
@@ -139,8 +141,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   CheckboxListTile(
                     title: Text(LocaleKeys.SettingsScreen_invert_short_long_press.tr()),
                     value: settings.invertShortLongPress, 
-                    onChanged: (bool newValue){
-                      settings.invertShortLongPress = newValue;
+                    onChanged: (bool? newValue){
+                      settings.invertShortLongPress = newValue ?? false;
                       settings.save();
                     }
                   ),
@@ -148,19 +150,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   CheckboxListTile(
                     title: Text(LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr()),
                     value: settings.emptyCanvasAfterDoubleTap, 
-                    onChanged: (bool newValue){
-                      settings.emptyCanvasAfterDoubleTap = newValue;
+                    onChanged: (bool? newValue){
+                      settings.emptyCanvasAfterDoubleTap = newValue ?? false;
                       settings.save();
                     }
                   ),
-                  CheckboxListTile(
-                    title: Text(LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr()),
-                    value: settings.useWebview,
-                    onChanged: (bool newValue){
-                      settings.useWebview = newValue;
-                      settings.save();
-                    }
-                  ),
+                  if(Platform.isAndroid || Platform.isIOS)
+                    CheckboxListTile(
+                      title: Text(LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr()),
+                      value: settings.useWebview,
+                      onChanged: (bool? newValue){
+                        settings.useWebview = newValue ?? false;
+                        settings.save();
+                      }
+                    ),
 
                   Divider(),
                   // miscellaneous header
@@ -183,17 +186,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: () {
-                            String text = value.replaceAll("light", LocaleKeys.light.tr());
-                            text = text.replaceAll("dark", LocaleKeys.dark.tr());
-                            text = text.replaceAll("system", LocaleKeys.system.tr());
+                            String text = value.replaceAll("light", LocaleKeys.General_light.tr());
+                            text = text.replaceAll("dark", LocaleKeys.General_dark.tr());
+                            text = text.replaceAll("system", LocaleKeys.General_system.tr());
                             
                             return Text(text);
                           } ()
                           );
                         }
                       ).toList(),
-                      onChanged: (String newValue) {
-                        settings.selectedTheme = newValue;
+                      onChanged: (String? newValue) {
+                        settings.selectedTheme = newValue ?? settings.themes[0];
                         settings.save();
                         Phoenix.rebirth(context);
                       },
@@ -202,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Setting for which language to use
                   ListTile(
-                    title: Text(LocaleKeys.SettingsScreen_language.tr()),
+                    title: Text(LocaleKeys.General_language.tr()),
                     trailing: DropdownButton<String>(
                       value: settings.selectedLocale.toString(),
                       items: context.supportedLocales
@@ -215,9 +218,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           );
                         }
                       ).toList(),
-                      onChanged: (String newValue) {
-                        context.setLocale(Locale(newValue));
-                        settings.selectedLocale = Locale(newValue);
+                      onChanged: (String? newValue) {
+                        context.setLocale(Locale(newValue ?? "en"));
+                        settings.selectedLocale = Locale(newValue ?? "en");
                         settings.save();
                       },
                     ),
@@ -229,7 +232,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: IconButton(
                       icon: Icon(Icons.replay_outlined),
                       onPressed: () { 
-                        SHOW_SHOWCASE_DRAWING = true;
+                        GetIt.I<UserData>().showShowcaseDrawing = true;
                         settings.save();
                         Phoenix.rebirth(context);
                       }
@@ -252,9 +255,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 } ()
                               );
                             }).toList(),
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               print(newValue);
-                              settings.backendCNNSingleChar = newValue;
+                              settings.backendCNNSingleChar = newValue ?? settings.inferenceBackends[0];
                               settings.save();
                               print(newValue);
                             },

@@ -1,23 +1,28 @@
 import 'dart:typed_data';
-
-import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsive.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/view/drawing//PredictionButton.dart';
+import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
+
 
 
 /// The "draw"-screen.
@@ -26,12 +31,16 @@ import 'package:da_kanji_mobile/globals.dart';
 /// Those can than be copied / opened in dictionaries by buttons.
 class DrawScreen extends StatefulWidget {
 
-  // init the tutorial of the draw screen
+  /// init the tutorial of the draw screen
   final showcase = DrawScreenShowcase();
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
+  /// should the hero widgets for animating to the webview be included
+  final bool includeHeroes;
+  /// should the widgets have keys for the tutorial
+  final bool includeTutorialKeys;
 
-  DrawScreen(this.openedByDrawer);
+  DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorialKeys);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -39,61 +48,72 @@ class DrawScreen extends StatefulWidget {
 
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
-  double _canvasSize;
+  late double _canvasSize;
+  /// The controller of the webview which is used to show a dict in landscape
+  WebViewController? landscapeWebViewController;
+  /// in which layout the DrawScreen is being built
+  DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
+  /// should the welcome screen which introduces the tutorial be shown
+  bool showWelcomeToTheDrawingscreen = true;
+
 
   @override
   void initState() {
     super.initState();
 
+    GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview ||
+        GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview)
+        landscapeWebViewController?.loadUrl(
+          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+        );
+    });
+
+    // initialize the drawing interpreter if it has not been already
     if(!GetIt.I<DrawingInterpreter>().wasInitialized){
-      // initialize the drawing interpreter
       GetIt.I<DrawingInterpreter>().init();
     }
+
   }
 
   @override
   void dispose() {
     super.dispose();
+    GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+        landscapeWebViewController?.loadUrl(
+          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+        );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    
-    // add a listener to when the Navigator animation finished
-    var route = ModalRoute.of(context);
-    void handler(status) {
-      if (status == AnimationStatus.completed) {
-        route.animation.removeStatusListener(handler);
-        
-        if(SHOW_SHOWCASE_DRAWING){
-          widget.showcase.init(context);
-          widget.showcase.show();
-        }
-      }
-    }
-    route.animation.addStatusListener(handler);
-
 
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
       animationAtStart: !widget.openedByDrawer,
       child: ChangeNotifierProvider.value(
-        value: GetIt.I<Strokes>(),
+        value: GetIt.I<DrawScreenState>().strokes,
         child: LayoutBuilder(
           builder: (context, constraints){
 
-            var t = DrawScreenRunsInLandscape(constraints);
-            bool landscape = t.item1;
+            var t = GetDrawScreenLayout(constraints);
+            GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
+            bool runningInLandscape = (t.item1 == DrawScreenLayout.Landscape
+                            || t.item1 == DrawScreenLayout.LandscapeWithWebview);
+            GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;
             
             // the canvas to draw on
             Widget drawingCanvas = Consumer<Strokes>(
               builder: (context, strokes, __){
                 return DrawingCanvas(
-                  width: _canvasSize, 
-                  height: _canvasSize,
-                  key: SHOWCASE_DRAWING[0].key,
-                  strokes: strokes,
+                  _canvasSize, _canvasSize,
+                  strokes,
+                  EdgeInsets.all(0),
+                  GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                    ? SHOWCASE_DRAWING[0].key : GlobalKey(),
                   onFinishedDrawing: (Uint8List image) async {
                     GetIt.I<DrawingInterpreter>().runInference(image);
                   },
@@ -113,13 +133,15 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget undoButton = Consumer<Strokes>(
               builder: (context, strokes, __) {
                 return Center(
+                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys 
+                    ? SHOWCASE_DRAWING[1].key : GlobalKey(),
                   child: Container(
                     width:  _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOWCASE_DRAWING[1].key,
                         icon: Icon(Icons.undo),
                         iconSize: 100,
+                        color: Theme.of(context).highlightColor,
                         onPressed: () {
                           strokes.playDeleteLastStrokeAnimation = true;
                         }
@@ -131,21 +153,25 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // multi character search input
             Widget multiCharSearch = ChangeNotifierProvider.value(
-              value: GetIt.I<KanjiBuffer>(),
+              value: GetIt.I<DrawScreenState>().kanjiBuffer,
               child: Consumer<KanjiBuffer>(
                 builder: (context, kanjiBuffer, child){
-                  return Hero(
-                  tag: "webviewHero_b_" + 
-                    (kanjiBuffer.kanjiBuffer == "" 
-                      ? "Buffer" : kanjiBuffer.kanjiBuffer),
-                    child: Center(
-                      key: SHOWCASE_DRAWING[6].key,
-                      child: KanjiBufferWidget(
-                        _canvasSize,
-                        landscape ? 1.0 : 0.7,
-                      )
+                  Widget tpm_widget = Center(
+                    key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                      ? SHOWCASE_DRAWING[6].key : GlobalKey(),
+                    child: KanjiBufferWidget(
+                      _canvasSize,
+                     runningInLandscape ? 1.0 : 0.65,
                     )
                   );
+                  if (this.widget.includeHeroes)
+                    tpm_widget = Hero(
+                      tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
+                        ? "Buffer" 
+                        : kanjiBuffer.kanjiBuffer),
+                      child: tpm_widget
+                    );
+                  return tpm_widget;
                 }
               ),
             );
@@ -153,13 +179,15 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             Widget clearButton = Consumer<Strokes>(
               builder: (contxt, strokes, _) {
                 return Center(
+                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                    ? SHOWCASE_DRAWING[2].key : GlobalKey(),
                   child: Container(
                     width: _canvasSize * 0.1,
                     child: FittedBox(
                       child: IconButton(
-                        key: SHOWCASE_DRAWING[2].key,
                         icon: Icon(Icons.clear),
                         iconSize: 100,
+                        color: Theme.of(context).highlightColor,
                         onPressed: () {
                           strokes.playDeleteAllStrokesAnimation = true;
                         }
@@ -171,37 +199,43 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             );
             // prediction buttons
             Widget predictionButtons = Container(
-              key: SHOWCASE_DRAWING[3].key,
-              //use canvas height in landscape
-              width :  landscape ? (_canvasSize * 0.4) : _canvasSize,
-              height: !landscape ? (_canvasSize * 0.4) : _canvasSize, 
+              key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                ? SHOWCASE_DRAWING[3].key : GlobalKey(),
+              //use canvas height in runningInLandscape
+              width :  runningInLandscape ? (_canvasSize * 0.4) : _canvasSize,
+              height: !runningInLandscape ? (_canvasSize * 0.4) : _canvasSize, 
               child: ChangeNotifierProvider.value(
                 value: GetIt.I<DrawingInterpreter>(),
                 child: Consumer<DrawingInterpreter>(
                   builder: (context, interpreter, child){
                     return GridView.count(
-                      //padding: EdgeInsets.all(2),
                       physics: new NeverScrollableScrollPhysics(),
-                      scrollDirection: landscape ? Axis.horizontal : Axis.vertical,
+                      scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
                       crossAxisCount: 5,
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
                       
                       children: List.generate(10, (i) {
-                        Widget widget = PredictionButton(interpreter.predictions[i]);
+                        Widget tmp_widget = PredictionButton(
+                          interpreter.predictions[i],
+                        );
                         // instantiate short/long press showcase button
                         if(i == 0){
-                          widget = Container(
-                            key: SHOWCASE_DRAWING[4].key,
-                            child: widget 
+                          tmp_widget = Container(
+                            key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
+                              ? SHOWCASE_DRAWING[4].key : GlobalKey(),
+                            child: tmp_widget 
                           );
                         }
-                        return Hero(
-                          tag: "webviewHero_" + 
-                            (interpreter.predictions[i] == " " 
-                              ? i.toString() : interpreter.predictions[i]),
-                          child: widget,
-                        );
+                        if(this.widget.includeHeroes)
+                          tmp_widget = Hero(
+                            tag: "webviewHero_" + (interpreter.predictions[i] == " " 
+                              ? i.toString() 
+                              : interpreter.predictions[i]),
+                            child: tmp_widget,
+                          );
+
+                        return tmp_widget;
                       },
                       )
                     );
@@ -210,8 +244,72 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               )
             ); 
 
-            return DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-              multiCharSearch, undoButton, clearButton, _canvasSize, landscape
+            WebView? wV;
+            if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview || 
+              GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview) {
+
+              wV = WebView(
+                initialUrl: openWithSelectedDictionary(""),
+                onWebViewCreated: (controller) => landscapeWebViewController = controller,
+              );
+            }
+
+            return Stack(
+              children: [
+                DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
+                  multiCharSearch, undoButton, clearButton,
+                  _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
+                ),
+                if(showWelcomeToTheDrawingscreen && 
+                  GetIt.I<UserData>().showShowcaseDrawing && 
+                  widget.includeTutorialKeys)
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showWelcomeToTheDrawingscreen = false;
+                        Future.delayed(Duration(milliseconds: 500));
+                        widget.showcase.init(context);
+                        widget.showcase.show();
+                      });
+                    },
+                    child: Container(
+                      width: constraints.maxWidth, 
+                      height: constraints.maxHeight, 
+                      color: Color.fromARGB(199, 32, 32, 32),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
+                              textScaleFactor: 2,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
+                              textScaleFactor: 1.5,
+                              textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              width: constraints.maxWidth,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                child: Text(
+                                  LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
+                                  textScaleFactor: 1.0,
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    color: Colors.grey
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             );
           }
         ),

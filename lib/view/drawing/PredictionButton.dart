@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
-import 'package:da_kanji_mobile/provider/Lookup.dart';
-import 'package:da_kanji_mobile/provider/KanjiBuffer.dart';
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/Strokes.dart';
 
 
 /// A button which shows the given [char].
@@ -16,7 +14,8 @@ class PredictionButton extends StatefulWidget {
 
   
   final String char;
-  PredictionButton (this.char);
+
+  PredictionButton(this.char, {Key? key}) : super(key: key);
   
   @override
   _PredictionButtonState createState() => _PredictionButtonState();
@@ -25,8 +24,8 @@ class PredictionButton extends StatefulWidget {
 class _PredictionButtonState extends State<PredictionButton>
   with TickerProviderStateMixin{
     
-  AnimationController controller;
-  Animation<double> animation;
+  late AnimationController controller;
+  late Animation<double> animation;
 
   void anim(){
    controller.forward(from: 0.0); 
@@ -69,10 +68,12 @@ class _PredictionButtonState extends State<PredictionButton>
         behavior: HitTestBehavior.translucent,
 
         onDoubleTap: () {
+          if(widget.char == " ") return;
+
           controller.forward(from: 0.0);
           if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap)
-            GetIt.I<Strokes>().playDeleteAllStrokesAnimation = true; 
-          GetIt.I<KanjiBuffer>().addToKanjiBuffer(widget.char);
+            GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true; 
+          GetIt.I<DrawScreenState>().kanjiBuffer.addToKanjiBuffer(widget.char);
         },
 
         child: ElevatedButton(
@@ -81,13 +82,13 @@ class _PredictionButtonState extends State<PredictionButton>
           ),
           // handle a short press
           onPressed: () {
-            GetIt.I<Lookup>().setChar(widget.char);
-            HandlePrediction().handlePress(context);
+            GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
+            handlePress(context);
           },
           // handle a long press 
           onLongPress: () async {
-            GetIt.I<Lookup>().setChar(widget.char, longPress: true);
-            HandlePrediction().handlePress(context);
+            GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
+            handlePress(context);
           },
           child: FittedBox(
             child: Text(
