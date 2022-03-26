@@ -625,9 +625,9 @@ packages:
   tutorial_coach_mark:
     dependency: "direct main"
     description:
-      name: tutorial_coach_mark
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/tutorial_coach_mark"
+      relative: true
+    source: path
     version: "1.2.1"
   typed_data:
     dependency: transitive
