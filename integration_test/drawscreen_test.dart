@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -32,22 +33,24 @@ void main() {
     await tester.pumpAndSettle(Duration(seconds: 1));
 
     // check that the app does not show any predictions on start up
-    List<String> preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
+    List<String> preds = (tester.widgetList(find.byType(PredictionButton)))
+      .map((e) => (e as PredictionButton).char).toList();
 
     // get position of the drawing canvas
     Offset canvasCenter = tester.getCenter(find.byType(DrawingCanvas));
-    Size canvasSize = tester.getSize(find.byType(DrawingCanvas));
+    double canvasSize = GetIt.I<DrawScreenState>().canvasSize / 2;
 
     // #region 1 - draw 囗 on the canvas
-    await movePointer(tester, canvasCenter, kuchiStrokes, canvasSize.height/4);
+    await movePointer(tester, canvasCenter, kuchiStrokes, canvasSize/2);
     await tester.pumpAndSettle(Duration(seconds: 2));
     // check that the shown predictions are as expected
-    preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
+    preds = (tester.widgetList(find.byType(PredictionButton)))
+      .map((e) => (e as PredictionButton).char).toList();
     expect(preds, kuchiPredictions);
     // #endregion
 
     // #region 2 - add one stroke (becomes 日) and check predictions
-    await movePointer(tester, canvasCenter, nichiStroke, canvasSize.height/2);
+    await movePointer(tester, canvasCenter, nichiStroke, canvasSize/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
       print("waiting");
@@ -69,8 +72,8 @@ void main() {
     // #endregion
     
     // #region 4 - add two strokes (becomes 目) and check predictions
-    await movePointer(tester, canvasCenter, meStroke1, canvasSize.height/2);
-    await movePointer(tester, canvasCenter, meStroke2, canvasSize.height/2);
+    await movePointer(tester, canvasCenter, meStroke1, canvasSize/2);
+    await movePointer(tester, canvasCenter, meStroke2, canvasSize/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
       await tester.pumpAndSettle(Duration(milliseconds: 100));
       print("waiting");
@@ -86,7 +89,6 @@ void main() {
     await tester.tap(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pumpAndSettle();
     // #endregion
-    
     
     // #region 6 - remove one stroke (becomes 日)
     await tester.tap(find.byIcon(Icons.undo));
