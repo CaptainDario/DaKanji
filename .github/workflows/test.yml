@@ -18,12 +18,11 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Archive production artifacts
+      - name: Create mock production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: test.txt
@@ -37,74 +36,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Get latest changes and set LATEST_CHANGES
-        run: |
-          python .github/workflows/latest_changes.py
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v3
         with:
           path: artifacts/
-          
-      - name: Display structure of downloaded files
-        run: ls artifacts/
 
-      - name: delete previous beta releases
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true 
-          tag_name: beta
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
       - name: Upload to github releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/*
+          file:  "${GITHUB_WORKSPACE}/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
           overwrite: true
           body: |
-            IMPORTANT: this is a pre-release, expect bugs 
+            IMPORTANT: this is a pre-release, you should expect some bugs 
 
             Changelog:
             ${{ env.LATEST_CHANGES }}
-
-  deploy:
-    # send discord notifications after everything is uploaded to github releases
-    needs: upload-releases-to-github
-
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
-        run: |
-          python .github/workflows/latest_changes.py
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-      
-          python .github/workflows/deploy_message.py
-          echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
-          cat deploy_message.txt >> $GITHUB_ENV
-          echo 'EOFF' >> $GITHUB_ENV
-
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: |
-            ${{ env.DEPLOY_MESSAGE }}
