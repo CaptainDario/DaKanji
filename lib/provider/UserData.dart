@@ -41,7 +41,6 @@ class UserData{
   }
 
   UserData(){
-    init();
   }
 
   /// initializes the user data.
@@ -51,7 +50,7 @@ class UserData{
   /// If a new version was installed show the changelog
   /// If the changelog was updated or this is the first time opening the app,
   /// show the onboarding screen
-  void init () async {
+  Future<void> init () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;

@@ -106,6 +106,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Changelog>(Changelog());
   await GetIt.I<Changelog>().init();
   GetIt.I.registerSingleton<UserData>(UserData());
+  await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
 
   // inference services
@@ -120,7 +121,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 }
 
-///
+/// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
   setWindowMinSize(Size(480, 720));
   setWindowTitle(APP_TITLE);
