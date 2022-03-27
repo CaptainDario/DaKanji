@@ -72,8 +72,7 @@ jobs:
             ${{ env.LATEST_CHANGES }}
 
       - name: Upload files to github release
-        run: |
-          echo "$(ls artifacts/ -p | grep -v / | tr '\n' ' ')"
-          gh release upload beta 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload beta ./artifacts/*
