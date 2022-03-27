@@ -45,11 +45,11 @@ jobs:
       - name: list current dir
         run: ls -a
 
-      - name: Upload to github releases
+      - name: Create github release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file:  "${{ env.GITHUB_WORKSPACE }}/artifacts/*"
+          file:  "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
