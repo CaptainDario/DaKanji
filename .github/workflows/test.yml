@@ -51,23 +51,8 @@ jobs:
 
           python .github/workflows/latest_changes.py
 
-      #- name: Create github release
-      #  uses: svenstaro/upload-release-action@v2
-      #  with:
-      #    repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #    file_glob: true
-      #    tag: beta
-      #    file: latest_changes.txt
-      #    prerelease: true
-      #    overwrite: true
-      #    body: |
-      #      IMPORTANT: this is a pre-release, you should expect some bugs 
-
-      #      Changelog:
-      #      ${{ env.LATEST_CHANGES }}
-
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create beta ./artifacts/* -F latest_changes.txt -p
+          gh release create beta ./artifacts/** -F latest_changes.txt -p -t "$(head -n 1 latest_changes.txt)"
