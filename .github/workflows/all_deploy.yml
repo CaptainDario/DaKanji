@@ -36,9 +36,6 @@ jobs:
       - name: Get latest changes and set LATEST_CHANGES
         run: |
           python .github/workflows/latest_changes.py
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v3
         with:
@@ -65,7 +62,7 @@ jobs:
           cd artifacts
           gh release create \
             beta \
-            $(ls -p | grep -v / | tr '\n' ' ') \
+            "$(ls -p | grep -v / | tr '\n' ' ')" \
             -F ../latest_changes.txt \
             -p \
             -t "$(head -n 1 ../latest_changes.txt)" \
