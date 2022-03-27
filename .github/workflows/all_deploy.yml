@@ -56,14 +56,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: create zip from exe artifact folder
+        run: |
+          cd artifacts
+          mv DaKanji_win.zip DaKanji_win
+          
+          zip -r DaKanji_win_exe.zip DaKanji_win
+          rm -R DaKanji_win
+          
+          ls -R
+          
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd artifacts
-          
-          zip -r DaKanji_win DaKanji_win.zip
-          
+
           gh release create \
             beta \
             artifacts/DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
@@ -71,7 +79,7 @@ jobs:
             artifacts/DaKanji_android_bundle.zip/app-release.aab \
             artifacts/DaKanji_android_x86_64.zip/app-x86_64-release.apk \
             artifacts/DaKanji_win.msix/da_kanji_mobile.msix \
-            artifacts/DaKanji_win.zip \
+            artifacts/DaKanji_win_exe.zip \
             -F ../latest_changes.txt \
             -p \
             -t "$(head -n 1 ../latest_changes.txt)" \
