@@ -44,8 +44,6 @@ jobs:
         run: |
           ls -a
           ls artifacts/
-          echo "${{ env.GITHUB_WORKSPACE }}/artifacts/*"
-          echo "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
           echo "$GITHUB_WORKSPACE/artifacts/*"
 
       - name: Create github release
@@ -54,7 +52,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
           tag: beta
-          file: "${{ env.GITHUB_WORKSPACE }}/artifacts/*"
+          file: "$GITHUB_WORKSPACE/artifacts/*"
           prerelease: true
           overwrite: true
           body: |
