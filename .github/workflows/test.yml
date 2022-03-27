@@ -58,10 +58,12 @@ jobs:
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # artifacts/*.apk artifacts/*.aab artifacts/*.msix artifacts/*.zip 
         run: |
           gh release create \
             beta \
-            artifacts/*.apk artifacts/*.aab artifacts/*.msix artifacts/*.zip artifacts/*.txt \
+          
+            artifacts/*.txt \
             -F latest_changes.txt \
             -p \
             -t "$(head -n 1 latest_changes.txt)" \
