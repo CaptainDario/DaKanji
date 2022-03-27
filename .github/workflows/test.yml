@@ -9,7 +9,6 @@ on:
 
 env:  
   STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
-  RETENTION: 2
 
 jobs:
 
@@ -27,7 +26,6 @@ jobs:
         with:
           name: test.txt
           path: .github/workflows/deploy_message.txt
-          retention-days: "${{ env.RETENTION }}"
 
   upload-releases-to-github:
     # upload to github releases after everything is build
@@ -43,13 +41,15 @@ jobs:
           path: artifacts/
 
       - name: list current dir
-        run: ls -a
+        run: |
+          ls -a
+          ls artifacts/
 
       - name: Create github release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file:  "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
+          file:  "$GITHUB_WORKSPACE/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
