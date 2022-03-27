@@ -69,3 +69,5 @@ jobs:
       - name: Upload files to github release
         run: |
           gh release upload beta ./artifacts/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
