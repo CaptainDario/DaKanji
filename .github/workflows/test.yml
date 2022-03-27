@@ -68,6 +68,6 @@ jobs:
 
       - name: Upload files to github release
         run: |
-          gh release upload beta $(ls tflite_build/ -p | grep -v / | tr '\n' ' ')
+          gh release upload beta $(ls artifacts/ -p | grep -v / | tr '\n' ' ')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
