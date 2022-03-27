@@ -57,20 +57,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Upload to github releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file:  "${GITHUB_WORKSPACE}/artifacts/*"
-          file_glob: true
-          tag: beta
-          prerelease: true
-          overwrite: true
-          body: |
-            IMPORTANT: this is a pre-release, you should expect some bugs 
-
-            Changelog:
-            ${{ env.LATEST_CHANGES }}
+      - name: Upload files to github release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd artifacts
+          gh release create \
+            beta \
+            $(ls -p | grep -v / | tr '\n' ' ') \
+            -F ../latest_changes.txt \
+            -p \
+            -t "$(head -n 1 latest_changes.txt)" \
 
   send-discord-notifications:
     # send discord notifications after everything is uploaded to github releases
