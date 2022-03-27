@@ -9,7 +9,7 @@ on:
 
 env:  
   STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
-
+  RETENTION: 5
 
 jobs:
 
@@ -41,11 +41,14 @@ jobs:
         with:
           path: artifacts/
 
+      - uses: list current dir
+        run: ls -a
+
       - name: Upload to github releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file:  "${GITHUB_WORKSPACE}/artifacts/*"
+          file:  "${env.GITHUB_WORKSPACE}/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
