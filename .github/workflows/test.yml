@@ -44,7 +44,7 @@ jobs:
         run: |
           ls -a
           ls artifacts/
-          echo "$GITHUB_WORKSPACE/artifacts/*"
+          echo "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
 
       - name: Create github release
         uses: svenstaro/upload-release-action@v2
@@ -52,7 +52,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
           tag: beta
-          file: "${{ GITHUB_WORKSPACE }}/artifacts/*"
+          file: "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
           prerelease: true
           overwrite: true
           body: |
