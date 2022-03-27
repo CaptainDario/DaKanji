@@ -50,9 +50,18 @@ jobs:
           echo "$GITHUB_WORKSPACE/artifacts/*"
 
           python .github/workflows/latest_changes.py
+          touch artifacts/test_2.txt
+          echo "testest" > artifacts/test_2.txt
+          touch artifacts/test_3.txt
+          echo "testest" > artifacts/test_3.txt
 
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create beta ./artifacts/** -F latest_changes.txt -p -t "$(head -n 1 latest_changes.txt)"
+          gh release create \
+            beta \
+            artifacts/* \
+            -F latest_changes.txt \
+            -p \
+            -t "$(head -n 1 latest_changes.txt)" \
