@@ -50,7 +50,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file:  "$GITHUB_WORKSPACE/artifacts/*"
           file_glob: true
           tag: beta
           prerelease: true
@@ -60,3 +59,7 @@ jobs:
 
             Changelog:
             ${{ env.LATEST_CHANGES }}
+
+      - name: Upload files to github release
+        run: |
+          gh release upload beta ./artifacts/
