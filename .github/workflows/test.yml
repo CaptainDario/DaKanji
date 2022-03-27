@@ -45,7 +45,12 @@ jobs:
 
       - name: list current dir
         run: |
-          ls -a
+          touch artifacts/test_2.txt
+          echo "asdasd" > artifacts/test_2.txt
+
+          touch artifacts/test_3.txt
+          echo "asdasd" > artifacts/test_3.txt
+
           ls artifacts/
           echo "$GITHUB_WORKSPACE/artifacts/*"
 
@@ -68,6 +73,7 @@ jobs:
 
       - name: Upload files to github release
         run: |
-          gh release upload beta $(ls artifacts/ -p | grep -v / | tr '\n' ' ')
+          echo "$(ls artifacts/ -p | grep -v / | tr '\n' ' ')"
+          gh release upload beta 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
