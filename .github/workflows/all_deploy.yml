@@ -46,6 +46,7 @@ jobs:
           
       - name: Display structure of downloaded files
         run: |
+          ls
           ls artifacts/
           echo $PWD
 
@@ -67,7 +68,7 @@ jobs:
             $(ls -p | grep -v / | tr '\n' ' ') \
             -F ../latest_changes.txt \
             -p \
-            -t "$(head -n 1 latest_changes.txt)" \
+            -t "$(head -n 1 ../latest_changes.txt)" \
 
   send-discord-notifications:
     # send discord notifications after everything is uploaded to github releases
