@@ -46,13 +46,15 @@ jobs:
           ls artifacts/
           echo "$GITHUB_WORKSPACE/artifacts/*"
 
+          python .github/workflows/latest_changes.py
+
       - name: Create github release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
           tag: beta
-          file: "$GITHUB_WORKSPACE/artifacts/**"
+          file: latest_changes.txt
           prerelease: true
           overwrite: true
           body: |
