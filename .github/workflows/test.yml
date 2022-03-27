@@ -44,7 +44,7 @@ jobs:
         run: |
           ls -a
           ls artifacts/
-          echo "${{ github.GITHUB_WORKSPACE }}/artifacts/*"
+          echo "${{ env.GITHUB_WORKSPACE }}/artifacts/*"
 
       - name: Create github release
         uses: svenstaro/upload-release-action@v2
