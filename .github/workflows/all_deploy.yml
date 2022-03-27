@@ -44,7 +44,8 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           ls
-          ls artifacts/
+          echo "\n"
+          ls -R artifacts/
           echo $PWD
 
       - name: delete previous beta releases
@@ -55,14 +56,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: create zip from exe artifact folder
+        run: |
+          cd artifacts
+          mv DaKanji_win.zip DaKanji_win
+          
+          zip -r DaKanji_win_exe.zip DaKanji_win
+          rm -R DaKanji_win
+          
+          ls -R
+          
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd artifacts
+
           gh release create \
             beta \
-            "$(ls -p | grep -v / | tr '\n' ' ')" \
+            DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
+            DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
+            DaKanji_android_bundle.zip/app-release.aab \
+            DaKanji_android_x86_64.zip/app-x86_64-release.apk \
+            DaKanji_win.msix/da_kanji_mobile.msix \
+            DaKanji_win_exe.zip \
             -F ../latest_changes.txt \
             -p \
             -t "$(head -n 1 ../latest_changes.txt)" \
