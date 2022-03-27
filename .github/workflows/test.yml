@@ -62,8 +62,7 @@ jobs:
         run: |
           gh release create \
             beta \
-          
-            artifacts/*.txt \
+            $(ls -p | grep -v / | tr '\n' ',') \
             -F latest_changes.txt \
             -p \
             -t "$(head -n 1 latest_changes.txt)" \
