@@ -45,34 +45,29 @@ jobs:
 
       - name: list current dir
         run: |
-          touch artifacts/test_2.txt
-          echo "asdasd" > artifacts/test_2.txt
-
-          touch artifacts/test_3.txt
-          echo "asdasd" > artifacts/test_3.txt
 
           ls artifacts/
           echo "$GITHUB_WORKSPACE/artifacts/*"
 
           python .github/workflows/latest_changes.py
 
-      - name: Create github release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file_glob: true
-          tag: beta
-          file: latest_changes.txt
-          prerelease: true
-          overwrite: true
-          body: |
-            IMPORTANT: this is a pre-release, you should expect some bugs 
+      #- name: Create github release
+      #  uses: svenstaro/upload-release-action@v2
+      #  with:
+      #    repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #    file_glob: true
+      #    tag: beta
+      #    file: latest_changes.txt
+      #    prerelease: true
+      #    overwrite: true
+      #    body: |
+      #      IMPORTANT: this is a pre-release, you should expect some bugs 
 
-            Changelog:
-            ${{ env.LATEST_CHANGES }}
+      #      Changelog:
+      #      ${{ env.LATEST_CHANGES }}
 
       - name: Upload files to github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload beta ./artifacts/*
+          gh release create beta ./artifacts/* -F latest_changes.txt -p
