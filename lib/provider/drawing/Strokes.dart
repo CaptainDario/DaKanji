@@ -12,6 +12,10 @@ class Strokes with ChangeNotifier{
   bool _playDeleteLastStrokeAnimation = false;
   /// should the delete all strokes animation start
   bool _playDeleteAllStrokesAnimation = false;
+  /// if the animation to delete the last stroke is currently running
+  bool deletingLastStroke = false;
+  /// if the animation to delete all strokes is currently running
+  bool deletingAllStrokes = false;
 
 
 

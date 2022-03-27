@@ -275,7 +275,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                     child: Container(
                       width: constraints.maxWidth, 
                       height: constraints.maxHeight, 
-                      color: Color.fromARGB(199, 32, 32, 32),
+                      color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                        Color.fromARGB(199, 32, 32, 32) : 
+                          Color.fromARGB(220, 0, 0, 0),
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -284,11 +286,17 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                               LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
                               textScaleFactor: 2,
                               textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
                             ),
                             Text(
                               LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
                               textScaleFactor: 1.5,
                               textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
                             ),
                             Container(
                               width: constraints.maxWidth,
