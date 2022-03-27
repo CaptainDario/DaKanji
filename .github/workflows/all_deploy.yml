@@ -61,9 +61,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd artifacts
+          
+          zip -r DaKanji_win DaKanji_win.zip
+          
           gh release create \
             beta \
-            DaKanji_android_arm64-v7a.zip \
+            artifacts/DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
+            artifacts/DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
+            artifacts/DaKanji_android_bundle.zip/app-release.aab \
+            artifacts/DaKanji_android_x86_64.zip/app-x86_64-release.apk \
+            artifacts/DaKanji_win.msix/da_kanji_mobile.msix \
+            artifacts/DaKanji_win.zip \
             -F ../latest_changes.txt \
             -p \
             -t "$(head -n 1 ../latest_changes.txt)" \
