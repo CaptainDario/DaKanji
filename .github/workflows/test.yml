@@ -52,6 +52,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
           tag: beta
+          file: ""
           prerelease: true
           overwrite: true
           body: |
