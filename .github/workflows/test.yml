@@ -27,7 +27,7 @@ jobs:
         with:
           name: test.txt
           path: .github/workflows/deploy_message.txt
-          retention-days: $RETENTION
+          retention-days: "${{ env.RETENTION }}"
 
   upload-releases-to-github:
     # upload to github releases after everything is build
