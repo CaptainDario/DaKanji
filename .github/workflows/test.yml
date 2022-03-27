@@ -65,4 +65,4 @@ jobs:
             $(ls -p | grep -v / | tr '\n' ' ') \
             -F ../latest_changes.txt \
             -p \
-            -t "$(head -n 1 latest_changes.txt)" \
+            -t "$(head -n 1 ../latest_changes.txt)" \
