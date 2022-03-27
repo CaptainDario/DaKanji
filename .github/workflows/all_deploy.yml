@@ -44,7 +44,8 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           ls
-          ls artifacts/
+          echo "\n"
+          ls -R artifacts/
           echo $PWD
 
       - name: delete previous beta releases
