@@ -41,7 +41,7 @@ jobs:
         with:
           path: artifacts/
 
-      - uses: list current dir
+      - name: list current dir
         run: ls -a
 
       - name: Upload to github releases
