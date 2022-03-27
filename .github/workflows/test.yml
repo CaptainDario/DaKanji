@@ -64,6 +64,6 @@ jobs:
           gh release create \
             beta \
             $(ls -p | grep -v / | tr '\n' ' ') \
-            -F latest_changes.txt \
+            -F ../latest_changes.txt \
             -p \
             -t "$(head -n 1 latest_changes.txt)" \
