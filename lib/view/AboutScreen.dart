@@ -30,7 +30,13 @@ class AboutScreen extends StatelessWidget {
       GetIt.I<PlatformDependentVariables>().appStoreLink)
     .replaceAll("DAAPPLAB_STORE_PAGE", 
       GetIt.I<PlatformDependentVariables>().daapplabStorePage)
-    .replaceAll("DISCORD_SERVER", DISCORD_INVITE);
+    .replaceAll("DISCORD_SERVER", DISCORD_INVITE)
+    .replaceAll("PLAYSTORE_PAGE", PLAYSTORE_PAGE)
+    .replaceAll("APPSTORE_PAGE", APPSTORE_PAGE)
+    .replaceAll("MACSTORE_PAGE", MACSTORE_PAGE)
+    .replaceAll("SNAPSTORE_PAGE", SNAPSTORE_PAGE)
+    .replaceAll("MICROSOFT_STORE_PAGE", MICROSOFT_STORE_PAGE)
+    .replaceAll("GITHUB_RELEASES_PAGE", GITHUB_RELEASES_PAGE);
 
   AboutScreen(this.openedByDrawer);
   
@@ -55,7 +61,7 @@ class AboutScreen extends StatelessWidget {
                     a:TextStyle( color: Theme.of(context).highlightColor)
                   ),
                   onTapLink: (text, url, title) {
-                    launch(url ?? "");
+                    launch(Uri.encodeFull(url ?? ""));
                   },
                 ),
               ),
