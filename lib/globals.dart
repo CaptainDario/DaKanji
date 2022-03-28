@@ -36,8 +36,9 @@ bool IS_TESTING_ONBOARDING = false;
 
 
 //about page
-const GITHUB_ISSUES = "https://github.com/CaptainDario/DaKanji/issues/new";
-const GITHUB_RELEASES_PAGE = "https://github.com/CaptainDario/DaKanji/releases";
+const GITHUB_REPO_URL = "https://github.com/CaptainDario/DaKanji";
+const GITHUB_ISSUES = GITHUB_REPO_URL + "/issues/new";
+const GITHUB_RELEASES_PAGE = GITHUB_REPO_URL + "/releases";
 
 const DISCORD_INVITE = "https://discord.com/invite/gdqaux3r4P";
 
@@ -51,11 +52,11 @@ const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
-const MICROSOFT_STORE_PAGE = "";
+const MICROSOFT_STORE_PAGE = "https://www.microsoft.com/p/dakanji/9n08051t2xtv?SilentAuth=1&wa=wsignin1.0&rtc=2&activetab=pivot:overviewtab";
 
-const FLATHUB_PAGE = "";
+const SNAPSTORE_PAGE = "NONE";
 
-const MAC_STORE = "";
+const MACSTORE_PAGE = "NONE";
 
 const TAKOBOTO_ID = "jp.takoboto";
 const AKEBI_ID = "com.craxic.akebifree";
