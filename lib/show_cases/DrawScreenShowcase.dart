@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
 
 
 /// The showcase of the features of the draw screen.

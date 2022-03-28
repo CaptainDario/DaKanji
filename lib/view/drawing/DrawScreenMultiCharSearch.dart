@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
 import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -7,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 
 

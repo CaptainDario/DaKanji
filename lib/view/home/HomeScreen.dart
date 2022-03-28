@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/UserData.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/home/RatePopup.dart';
 import 'package:da_kanji_mobile/view/home/WhatsNewDialog.dart';
 
