@@ -1,7 +1,5 @@
 library my_prj.globals;
 
-import 'model/core/ShowcaseTuple.dart';
-
 
 
 // the title of the app
@@ -24,10 +22,6 @@ List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 // all languages which are supported in DaKanji
 const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 
-
-// showcase view keys
-// ignore: non_constant_identifier_names
-List<ShowcaseTuple> SHOWCASE_DRAWING = [];
 
 // is the app running to test the drawscreen
 bool IS_TESTING_DRAWSCREEN = false;

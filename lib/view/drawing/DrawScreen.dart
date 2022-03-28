@@ -31,8 +31,6 @@ import 'package:da_kanji_mobile/model/HandlePredictions.dart';
 /// Those can than be copied / opened in dictionaries by buttons.
 class DrawScreen extends StatefulWidget {
 
-  /// init the tutorial of the draw screen
-  final showcase = DrawScreenShowcase();
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// should the hero widgets for animating to the webview be included
