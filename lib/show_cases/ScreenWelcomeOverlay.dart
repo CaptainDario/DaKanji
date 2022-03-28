@@ -24,10 +24,8 @@ class ScreenWelcomeOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity, 
-      height: double.infinity, //constraints.maxHeight
-      color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-        Color.fromARGB(199, 32, 32, 32) : 
-          Color.fromARGB(220, 0, 0, 0),
+      height: double.infinity,
+      color: Colors.transparent,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

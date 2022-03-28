@@ -1,6 +1,6 @@
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
+import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,7 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
       child: Consumer<KanjiBuffer>(
         builder: (context, kanjiBuffer, child){
           var showCaseIdxs = [7, 9, 10, 11, 12];
-          Widget tpm_widget = DaKanjiShowCaseElement(
+          Widget tpm_widget = DrawScreenShowCaseElement(
             List.generate(showCaseIdxs.length, (index) => drawScreenShowcaseIDs[showCaseIdxs[index]]),
             List.generate(showCaseIdxs.length, (index) =>
               Text(drawScreenShowcaseTexts[showCaseIdxs[index]])
@@ -45,7 +45,13 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
                 canvasSize,
                 runningInLandscape ? 1.0 : 0.65,
               )
-            )
+            ),
+            onComplete: [null, null, null, null,
+              () {
+                GetIt.I<UserData>().showShowcaseDrawing = false;
+                return Future(() => true);
+              }
+            ],
           );
           if (includeHeroes)
             tpm_widget = Hero(

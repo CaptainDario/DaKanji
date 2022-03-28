@@ -163,7 +163,10 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         PageRouteBuilder switchScreen (Widget screen) =>
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
-              FeatureDiscovery(child: screen),
+              FeatureDiscovery(
+                recordStepsInSharedPreferences: false,
+                child: screen
+              ),
 
               defaultScale: true,
               breakpoints: [

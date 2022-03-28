@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
+import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
       builder: (context, strokes, __){
-        return DaKanjiShowCaseElement(
+        return DrawScreenShowCaseElement(
           [drawScreenShowcaseIDs[0]],
           [Text(drawScreenShowcaseTexts[0])],
           [ContentLocation.trivial],

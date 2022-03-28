@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
+import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class DrawScreenClearButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
       builder: (contxt, strokes, _) {
-        return DaKanjiShowCaseElement(
+        return DrawScreenShowCaseElement(
           [drawScreenShowcaseIDs[2]],
           [Text(drawScreenShowcaseTexts[2])],
           [ContentLocation.trivial],

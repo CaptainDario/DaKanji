@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/UserData.dart';
+
 
 
 /// The showcase of the features of the draw screen.
@@ -19,7 +19,6 @@ List<String> drawScreenShowcaseIDs = [
   "draw_screen_010_long_press_multi_search",
   "draw_screen_011_multi_search_double_tap",
   "draw_screen_012_multi_search_swipe_left",
-  
 ];
 
 List<String> drawScreenShowcaseTexts = [
@@ -36,7 +35,7 @@ List<String> drawScreenShowcaseTexts = [
   LocaleKeys.DrawScreen_tutorial_multi_search_long_press.tr(),
   LocaleKeys.DrawScreen_tutorial_multi_search_double_tap.tr(),
   LocaleKeys.DrawScreen_tutorial_multi_search_swipe_left.tr(),
-  
 ];
+
 
   

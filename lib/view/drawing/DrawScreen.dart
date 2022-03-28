@@ -3,7 +3,7 @@ import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
-import 'package:da_kanji_mobile/view/ScreenWelcomeOverlay.dart';
+import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -99,7 +99,6 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;
 
-
             return Stack(
               children: [
                 DrawScreenResponsiveLayout(
@@ -119,24 +118,32 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   } ()
                   
                 ),
+                if(GetIt.I<UserData>().showShowcaseDrawing)
+                  Container(
+                    width: double.infinity, 
+                    height: double.infinity, //constraints.maxHeight
+                    color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                      Color.fromARGB(199, 32, 32, 32) : 
+                      Color.fromARGB(220, 0, 0, 0),
+                  ),
                 if(showWelcomeToTheDrawingscreen && GetIt.I<UserData>().showShowcaseDrawing)
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        showWelcomeToTheDrawingscreen = false;
-                        Future.delayed(Duration(milliseconds: 500));
-                        FeatureDiscovery.discoverFeatures(
-                          context,
-                          List.generate(drawScreenShowcaseIDs.length, (i) => drawScreenShowcaseIDs[i])
-                        ); 
-                      });
-                    },
-                  child: ScreenWelcomeOverlay(
-                    LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
-                    LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
-                    LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
-                  )
-                )
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showWelcomeToTheDrawingscreen = false;
+                          Future.delayed(Duration(milliseconds: 500));
+                          FeatureDiscovery.discoverFeatures(
+                            context,
+                            List.generate(drawScreenShowcaseIDs.length, (i) => drawScreenShowcaseIDs[i])
+                          ); 
+                        });
+                      },
+                    child: ScreenWelcomeOverlay(
+                      LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
+                      LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
+                      LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
+                    )
+                  ),
               ]
             );
           }
