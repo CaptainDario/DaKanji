@@ -1,4 +1,5 @@
 import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -22,14 +23,11 @@ class DrawScreenClearButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
       builder: (contxt, strokes, _) {
-        return DescribedFeatureOverlay(
-          tapTarget: Icon(Icons.add),
-          featureId: "draw_screen_01",
-          backgroundColor: Color.fromARGB(0, 0, 0, 0),
-          backgroundOpacity: 0,
-          targetColor: Color.fromARGB(148, 255, 255, 255),
-          title: Text("hello"),
-          child: Center(
+        return DaKanjiShowCaseElement(
+          [drawScreenShowcaseIDs[2]],
+          [Text(drawScreenShowcaseTexts[2])],
+          [ContentLocation.trivial],
+          Center(
             child: Container(
               width: canvasSize * 0.1,
               child: FittedBox(

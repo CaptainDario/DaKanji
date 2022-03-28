@@ -50,7 +50,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
-  bool showWelcomeToTheDrawingscreen = true;
+  bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showShowcaseDrawing;
 
 
   @override
@@ -58,8 +58,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     super.initState();
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview ||
-        GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview)
+      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout))
         landscapeWebViewController?.loadUrl(
           openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
         );
@@ -128,13 +127,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         Future.delayed(Duration(milliseconds: 500));
                         FeatureDiscovery.discoverFeatures(
                           context,
-                          const <String>{ // Feature ids for every feature that you want to showcase in order.
-                            'draw_screen_01',
-                          },
+                          List.generate(drawScreenShowcaseIDs.length, (i) => drawScreenShowcaseIDs[i])
                         ); 
                       });
                     },
-                  child: DrawScreenWelcomeOverlay(
+                  child: ScreenWelcomeOverlay(
                     LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
                     LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
                     LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),

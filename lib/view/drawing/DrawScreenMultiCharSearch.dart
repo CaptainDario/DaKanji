@@ -1,3 +1,6 @@
+import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
+import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -29,10 +32,18 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
       value: GetIt.I<DrawScreenState>().kanjiBuffer,
       child: Consumer<KanjiBuffer>(
         builder: (context, kanjiBuffer, child){
-          Widget tpm_widget = Center(
-            child: KanjiBufferWidget(
-              canvasSize,
-              runningInLandscape ? 1.0 : 0.65,
+          var showCaseIdxs = [7, 9, 10, 11, 12];
+          Widget tpm_widget = DaKanjiShowCaseElement(
+            List.generate(showCaseIdxs.length, (index) => drawScreenShowcaseIDs[showCaseIdxs[index]]),
+            List.generate(showCaseIdxs.length, (index) =>
+              Text(drawScreenShowcaseTexts[showCaseIdxs[index]])
+            ),
+            List.generate(showCaseIdxs.length, (index) => ContentLocation.above),
+            Center(
+              child: KanjiBufferWidget(
+                canvasSize,
+                runningInLandscape ? 1.0 : 0.65,
+              )
             )
           );
           if (includeHeroes)
