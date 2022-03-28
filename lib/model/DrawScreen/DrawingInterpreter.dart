@@ -8,7 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:da_kanji_mobile/model/core/DrawingIsolateUtils.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawingIsolateUtils.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 
 

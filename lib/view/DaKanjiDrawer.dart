@@ -6,8 +6,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/model/core/Screens.dart';
-import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
+import 'package:da_kanji_mobile/model/Screens.dart';
+import 'package:da_kanji_mobile/model/SettingsArguments.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 

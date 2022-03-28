@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'DrawingIsolateData.dart';
-import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// Manages separate Isolate instance for inference

@@ -11,11 +11,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import "package:feature_discovery/feature_discovery.dart";
 
-import 'package:da_kanji_mobile/model/core/LightTheme.dart';
-import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
-import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
-import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
-import 'package:da_kanji_mobile/model/services/DeepLinks.dart';
+import 'package:da_kanji_mobile/model/LightTheme.dart';
+import 'package:da_kanji_mobile/model/DarkTheme.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
+import 'package:da_kanji_mobile/model/SettingsArguments.dart';
+import 'package:da_kanji_mobile/model/DeepLinks.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';

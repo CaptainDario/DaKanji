@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
-import 'package:da_kanji_mobile/locales_keys.dart';
 
 
+class ScreenWelcomeOverlay extends StatelessWidget {
 
-class DrawScreenWelcomeOverlay extends StatelessWidget {
-
-  const DrawScreenWelcomeOverlay(
+  const ScreenWelcomeOverlay(
     this.titleText,
     this.text,
     this.smallText,

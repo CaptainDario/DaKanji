@@ -1,8 +1,9 @@
+import 'package:da_kanji_mobile/view/DaKanjiShowCaseElement.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 
+import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 
 

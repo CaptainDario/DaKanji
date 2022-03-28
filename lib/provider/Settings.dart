@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/model/core/InferenceBackends.dart';
+import 'package:da_kanji_mobile/model/InferenceBackends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';

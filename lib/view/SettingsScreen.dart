@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/model/core/Screens.dart';
+import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
