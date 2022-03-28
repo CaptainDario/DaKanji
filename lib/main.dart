@@ -159,23 +159,24 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       } (),
       
       onGenerateRoute: (settings) {
-PageRouteBuilder switchScreen (Widget screen) =>
-  PageRouteBuilder(
-    pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
-      screen,
-      defaultScale: true,
-      breakpoints: [
-        const ResponsiveBreakpoint.resize(450, name: MOBILE),
-        const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-        const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-        const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-        const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-      ],
-    ),
-    settings: settings,
-    transitionsBuilder: (_, a, __, c) =>
-      FadeTransition(opacity: a, child: c)
-  );
+        PageRouteBuilder switchScreen (Widget screen) =>
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
+              FeatureDiscovery(child: screen),
+
+              defaultScale: true,
+              breakpoints: [
+                const ResponsiveBreakpoint.resize(450, name: MOBILE),
+                const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+                const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+                const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+              ],
+            ),
+            settings: settings,
+            transitionsBuilder: (_, a, __, c) =>
+              FadeTransition(opacity: a, child: c)
+          );
 
         // check type and extract arguments
         SettingsArguments args;
@@ -190,7 +191,7 @@ PageRouteBuilder switchScreen (Widget screen) =>
           case "/onboarding":
             return switchScreen(OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":

@@ -105,7 +105,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
                 liquidController
               ),
-              DrawScreen(false, false, false),
+              DrawScreen(false, false),
             ],
             onPageChangeCallback: (int activePageIndex) {
               // change the current route to the drawing screen
