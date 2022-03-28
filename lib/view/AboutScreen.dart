@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/reviews.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
-import 'package:da_kanji_mobile/provider/PlatformDependentVariables.dart';
+import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
 

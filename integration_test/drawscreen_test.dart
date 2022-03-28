@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/provider/UserData.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/globals.dart';

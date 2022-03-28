@@ -10,8 +10,8 @@ import 'package:universal_io/io.dart' show Platform;
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/DownloadAppDialogue.dart';
 import 'package:da_kanji_mobile/view/WebviewScreen.dart';
 
