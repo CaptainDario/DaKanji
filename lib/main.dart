@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
+import "package:feature_discovery/feature_discovery.dart";
 
 import 'package:da_kanji_mobile/model/core/LightTheme.dart';
 import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
