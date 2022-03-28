@@ -8,7 +8,19 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 class DrawScreenWelcomeOverlay extends StatelessWidget {
 
-  const DrawScreenWelcomeOverlay({Key? key}) : super(key: key);
+  const DrawScreenWelcomeOverlay(
+    this.titleText,
+    this.text,
+    this.smallText,
+    {Key? key}
+  ) : super(key: key);
+
+  /// The title text
+  final String titleText;
+  ///
+  final String text;
+  /// 
+  final String smallText;
 
 
 
@@ -24,28 +36,31 @@ class DrawScreenWelcomeOverlay extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // TITLE
             Text(
-              LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
+              titleText,
               textScaleFactor: 2,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white
               ),
             ),
+            // TEXT
             Text(
-              LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
+              text,
               textScaleFactor: 1.5,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white
               ),
             ),
+            // SMALL TEXT
             Container(
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                 child: Text(
-                  LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
+                  smallText,
                   textScaleFactor: 1.0,
                   textAlign: TextAlign.end,
                   style: TextStyle(

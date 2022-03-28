@@ -1,29 +1,25 @@
-import 'dart:typed_data';
-
 import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenWelcomeOverlay.dart';
+import 'package:da_kanji_mobile/view/ScreenWelcomeOverlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:feature_discovery/feature_discovery.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 
@@ -140,7 +136,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         ); 
                       });
                     },
-                  child: DrawScreenWelcomeOverlay()
+                  child: DrawScreenWelcomeOverlay(
+                    LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
+                    LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
+                    LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
+                  )
                 )
               ]
             );
