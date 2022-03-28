@@ -1,6 +1,6 @@
-import 'Strokes.dart';
-import 'KanjiBuffer.dart';
-import 'DrawingLookup.dart';
+import '../../provider/drawing/Strokes.dart';
+import '../../provider/drawing/KanjiBuffer.dart';
+import '../../provider/drawing/DrawingLookup.dart';
 import 'DrawScreenLayout.dart';
 
 
