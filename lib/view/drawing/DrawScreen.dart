@@ -1,11 +1,17 @@
 import 'dart:typed_data';
-import 'package:da_kanji_mobile/locales_keys.dart';
+
+import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenWelcomeOverlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 
 import 'package:da_kanji_mobile/model/core/Screens.dart';
 import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
@@ -16,11 +22,9 @@ import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/provider/UserData.dart';
 import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
 
 
@@ -37,10 +41,8 @@ class DrawScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
-  /// should the widgets have keys for the tutorial
-  final bool includeTutorialKeys;
 
-  DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorialKeys);
+  DrawScreen(this.openedByDrawer, this.includeHeroes);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -98,226 +100,49 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         child: LayoutBuilder(
           builder: (context, constraints){
 
+            // set layout and canvas size
             var t = GetDrawScreenLayout(constraints);
             GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
-            bool runningInLandscape = (t.item1 == DrawScreenLayout.Landscape
-                            || t.item1 == DrawScreenLayout.LandscapeWithWebview);
             GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;
-            
-            // the canvas to draw on
-            Widget drawingCanvas = Consumer<Strokes>(
-              builder: (context, strokes, __){
-                return DrawingCanvas(
-                  _canvasSize, _canvasSize,
-                  strokes,
-                  EdgeInsets.all(0),
-                  GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
-                    ? SHOWCASE_DRAWING[0].key : GlobalKey(),
-                  onFinishedDrawing: (Uint8List image) async {
-                    GetIt.I<DrawingInterpreter>().runInference(image);
-                  },
-                  onDeletedLastStroke: (Uint8List image) {
-                    if(strokes.strokeCount > 0)
-                      GetIt.I<DrawingInterpreter>().runInference(image);
-                    else
-                      GetIt.I<DrawingInterpreter>().clearPredictions();
-                  },
-                  onDeletedAllStrokes: () {
-                    GetIt.I<DrawingInterpreter>().clearPredictions();
-                  },
-                );
-              },
-            );
-            // undo
-            Widget undoButton = Consumer<Strokes>(
-              builder: (context, strokes, __) {
-                return Center(
-                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys 
-                    ? SHOWCASE_DRAWING[1].key : GlobalKey(),
-                  child: Container(
-                    width:  _canvasSize * 0.1,
-                    child: FittedBox(
-                      child: IconButton(
-                        icon: Icon(Icons.undo),
-                        iconSize: 100,
-                        color: Theme.of(context).highlightColor,
-                        onPressed: () {
-                          strokes.playDeleteLastStrokeAnimation = true;
-                        }
-                      ),
-                    ),
-                  ),
-                );
-              }
-            );
-            // multi character search input
-            Widget multiCharSearch = ChangeNotifierProvider.value(
-              value: GetIt.I<DrawScreenState>().kanjiBuffer,
-              child: Consumer<KanjiBuffer>(
-                builder: (context, kanjiBuffer, child){
-                  Widget tpm_widget = Center(
-                    key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
-                      ? SHOWCASE_DRAWING[6].key : GlobalKey(),
-                    child: KanjiBufferWidget(
-                      _canvasSize,
-                     runningInLandscape ? 1.0 : 0.65,
-                    )
-                  );
-                  if (this.widget.includeHeroes)
-                    tpm_widget = Hero(
-                      tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
-                        ? "Buffer" 
-                        : kanjiBuffer.kanjiBuffer),
-                      child: tpm_widget
-                    );
-                  return tpm_widget;
-                }
-              ),
-            );
-            // clear
-            Widget clearButton = Consumer<Strokes>(
-              builder: (contxt, strokes, _) {
-                return Center(
-                  key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
-                    ? SHOWCASE_DRAWING[2].key : GlobalKey(),
-                  child: Container(
-                    width: _canvasSize * 0.1,
-                    child: FittedBox(
-                      child: IconButton(
-                        icon: Icon(Icons.clear),
-                        iconSize: 100,
-                        color: Theme.of(context).highlightColor,
-                        onPressed: () {
-                          strokes.playDeleteAllStrokesAnimation = true;
-                        }
-                      ),
-                    ),
-                  ),
-                );
-              }
-            );
-            // prediction buttons
-            Widget predictionButtons = Container(
-              key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
-                ? SHOWCASE_DRAWING[3].key : GlobalKey(),
-              //use canvas height in runningInLandscape
-              width :  runningInLandscape ? (_canvasSize * 0.4) : _canvasSize,
-              height: !runningInLandscape ? (_canvasSize * 0.4) : _canvasSize, 
-              child: ChangeNotifierProvider.value(
-                value: GetIt.I<DrawingInterpreter>(),
-                child: Consumer<DrawingInterpreter>(
-                  builder: (context, interpreter, child){
-                    return GridView.count(
-                      physics: new NeverScrollableScrollPhysics(),
-                      scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
-                      crossAxisCount: 5,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5,
-                      
-                      children: List.generate(10, (i) {
-                        Widget tmp_widget = PredictionButton(
-                          interpreter.predictions[i],
-                        );
-                        // instantiate short/long press showcase button
-                        if(i == 0){
-                          tmp_widget = Container(
-                            key: GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorialKeys
-                              ? SHOWCASE_DRAWING[4].key : GlobalKey(),
-                            child: tmp_widget 
-                          );
-                        }
-                        if(this.widget.includeHeroes)
-                          tmp_widget = Hero(
-                            tag: "webviewHero_" + (interpreter.predictions[i] == " " 
-                              ? i.toString() 
-                              : interpreter.predictions[i]),
-                            child: tmp_widget,
-                          );
 
-                        return tmp_widget;
-                      },
-                      )
-                    );
-                  }
-                ),
-              )
-            ); 
-
-            WebView? wV;
-            if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview || 
-              GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.PortraitWithWebview) {
-
-              wV = WebView(
-                initialUrl: openWithSelectedDictionary(""),
-                onWebViewCreated: (controller) => landscapeWebViewController = controller,
-              );
-            }
 
             return Stack(
               children: [
-                DrawScreenResponsiveLayout(drawingCanvas, predictionButtons, 
-                  multiCharSearch, undoButton, clearButton,
-                  _canvasSize, GetIt.I<DrawScreenState>().drawScreenLayout, wV
+                DrawScreenResponsiveLayout(
+                  DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>()),
+                  DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes), 
+                  DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes),
+                  DrawScreenUndoButton(_canvasSize),
+                  DrawScreenClearButton(_canvasSize),
+                  _canvasSize,
+                  GetIt.I<DrawScreenState>().drawScreenLayout,
+                  () {
+                    return drawScreenIncludesWebview(t.item1) ?
+                      WebView(
+                        initialUrl: openWithSelectedDictionary(""),
+                        onWebViewCreated: (controller) => landscapeWebViewController = controller
+                      ) : null;
+                  } ()
+                  
                 ),
-                if(showWelcomeToTheDrawingscreen && 
-                  GetIt.I<UserData>().showShowcaseDrawing && 
-                  widget.includeTutorialKeys)
+                if(showWelcomeToTheDrawingscreen && GetIt.I<UserData>().showShowcaseDrawing)
                   GestureDetector(
                     onTap: () {
                       setState(() {
                         showWelcomeToTheDrawingscreen = false;
                         Future.delayed(Duration(milliseconds: 500));
-                        widget.showcase.init(context);
-                        widget.showcase.show();
+                        FeatureDiscovery.discoverFeatures(
+                          context,
+                          const <String>{ // Feature ids for every feature that you want to showcase in order.
+                            'draw_screen_01',
+                          },
+                        ); 
                       });
                     },
-                    child: Container(
-                      width: constraints.maxWidth, 
-                      height: constraints.maxHeight, 
-                      color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                        Color.fromARGB(199, 32, 32, 32) : 
-                          Color.fromARGB(220, 0, 0, 0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
-                              textScaleFactor: 2,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
-                            ),
-                            Text(
-                              LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
-                              textScaleFactor: 1.5,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
-                            ),
-                            Container(
-                              width: constraints.maxWidth,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                                child: Text(
-                                  LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
-                                  textScaleFactor: 1.0,
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color: Colors.grey
-                                  ),
-                                ),
-                              ),
-                            )
-                          ]
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
+                  child: DrawScreenWelcomeOverlay()
+                )
+              ]
             );
           }
         ),
