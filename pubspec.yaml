@@ -6,6 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0+29
 
 environment:
+  sdk: ">=2.16.0"
   flutter: 2.10.3
 
 dependencies:
@@ -40,7 +41,7 @@ dependencies:
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
-  in_app_review: 2.0.2            # android, iOS, MacOS, windows (limited)
+  in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
   tflite_flutter:                 # android, iOS, Linux, MacOS, windows
     path: ./plugins/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS
