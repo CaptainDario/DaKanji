@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
@@ -51,8 +54,6 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
   late AnimationController _scaleInNewCharController;
   late Animation<double> _scaleInNewCharAnimation;
 
-  /// how many characters do fit in this box
-  int charactersFit = 0;
   /// callback when the kanjibuffer changed
   Function? kanjiBufferChanged;
 
@@ -133,13 +134,15 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
 
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
+
+
     if(GetIt.I<DrawScreenState>().kanjiBuffer.runAnimation){
       _scaleInNewCharController.forward(from: 0.0);
       GetIt.I<DrawScreenState>().kanjiBuffer.runAnimation = false;
     }
 
-    charactersFit = calculateCharactersFit();
 
     return GestureDetector(
       onPanDown: (details) {
@@ -201,9 +204,10 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
             child: Container(
             width: widget.canvasSize * widget.canvasSizePercentageToUse,
             height: widget.canvasSize * 0.1,
-            child: OutlinedButton(
+            //color: Colors.pink,
+            child: GestureDetector(
               // copy to clipboard and show snackbar
-              onPressed: (){
+              onTap: (){
                 GetIt.I<DrawScreenState>().drawingLookup.setChar(
                   GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, buffer: true
                 );
@@ -217,56 +221,51 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                 );
                 handlePress(context); 
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    child: Text(
-                      () { 
-                        int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
-                        
-                        // more than one character is in the kanjibuffer
-                        if(length > 1){
-                          // more character in the buffer than can be shown
-                          if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > charactersFit)
-                            return "…" +  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer
-                              .substring(length-charactersFit, length-1);
-                          // whole buffer can be shown
-                          else{
-                            return GetIt.I<DrawScreenState>().kanjiBuffer
-                              .kanjiBuffer.substring(0, length-1);
-                          }
-                        }
-                        else
-                          return " ";
-                      } (),
-                      
-                      softWrap: false,
-                      style: TextStyle(
-                        fontFamily: "NotoSans",
-                        fontSize: 20,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
-                      ),
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromARGB(255, 91, 91, 91),
                   ),
-                  ScaleTransition(
-                    scale: _scaleInNewCharAnimation,
-                    child: Text(
-                      () {
-                        int length = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
-                        if(length > 0)
-                          return GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[length - 1];
-                        else
-                          return " ";
-                      } (),
-                      style: TextStyle(
-                        fontFamily: "NotoSans",
-                        fontSize: 20,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                  borderRadius: BorderRadius.all(Radius.circular(5))
+                ),
+                child: AnimatedBuilder(
+                  animation: _scaleInNewCharAnimation,
+                  builder: (context, child) {
+
+                    int noChars = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
+
+                    return Center(
+                      child: AutoSizeText.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: noChars > 0 ?
+                                GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.substring(
+                                  0, noChars-1
+                                ) : null
+                            ),
+                            TextSpan(
+                              text: noChars > 0 ?
+                                GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[noChars-1] :
+                                null,
+                              style: TextStyle(
+                                fontSize: _scaleInNewCharAnimation.value * 14
+                              )
+                            ),
+                          ],
+                        ),
+                        softWrap: false,
+                        minFontSize: 10,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                          fontFamily: "NotoSans",
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
                       ),
-                    )
-                  )
-                ]
+                    );
+                  }
+                ),
               )
             ),
           ),
@@ -286,30 +285,5 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
         )
       ),
     );
-  }
-
-  /// Calculates and returns how many characters fit in this KanjiBufferWidget
-  int calculateCharactersFit(){
-    int _charactersFit = -4; 
-    String chars = "…";
-    double w = 0;
-    while(widget.canvasSize * widget.canvasSizePercentageToUse > w){
-      w = (TextPainter(
-        text: TextSpan(
-          text: chars,
-          style: TextStyle(
-            fontFamily: "NotoSans",
-            fontSize: 20
-          ),
-        ),
-        maxLines: 1,
-        textDirection: TextDirection.ltr)..layout()
-      ).size.width;
-
-      chars += "口";
-      _charactersFit += 1;
-    }
-
-    return _charactersFit;
   }
 }
