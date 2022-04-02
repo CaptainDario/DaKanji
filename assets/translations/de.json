@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji ist f\u00fcr alle, die Japanisch lernen oder benutzen.\nDaKanji ist verf\u00fcgbar f\u00fcr, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) und [Windows](MICROSOFT_STORE_PAGE)\nDu findest alle releases auch auf [GitHub.](GITHUB_RELEASES_PAGE)\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschl\u00e4ge, bitte \u00f6ffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+    "about_text": "DaKanji ist f\u00fcr alle, die Japanisch lernen oder benutzen.\nDaKanji ist verf\u00fcgbar f\u00fcr, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) und [Windows](MICROSOFT_STORE_PAGE)\nDu findest alle releases auch auf [GitHub.](GITHUB_RELEASES_PAGE)\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschl\u00e4ge, bitte \u00f6ffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
     "show_changelog": "Zeig mir alle \u00c4nderungen.",
     "software_informations_button": "Softwareinformationen",
     "title": "\u00dcber die App"
