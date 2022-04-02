@@ -40,8 +40,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
               physics: new NeverScrollableScrollPhysics(),
               scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
               crossAxisCount: 5,
-              mainAxisSpacing: (width*0.1).clamp(0, 5),
-              crossAxisSpacing: (width*0.1).clamp(0, 5),
+              mainAxisSpacing: (width*0.01).clamp(0, 5),
+              crossAxisSpacing: (width*0.01).clamp(0, 5),
               
               children: List.generate(10, (i) {
                 Widget tmp_widget = PredictionButton(

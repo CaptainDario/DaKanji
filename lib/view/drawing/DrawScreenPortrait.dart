@@ -31,9 +31,9 @@ class DrawScreenPortrait extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          SizedBox(height: height*0.2,),
+          SizedBox(height: height*0.02,),
           drawingCanvas,
-          SizedBox(height: height*0.2,),
+          SizedBox(height: height*0.04,),
           Container(
             width: canvasSize,
             child: Row(
@@ -45,7 +45,7 @@ class DrawScreenPortrait extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: height*0.2,),
+          SizedBox(height: height*0.02,),
           predictionButtons
         ]
       ),
