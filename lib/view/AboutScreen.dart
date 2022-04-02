@@ -6,8 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
-import 'package:da_kanji_mobile/model/reviews.dart';
-import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
+import 'package:da_kanji_mobile/helper/reviews.dart';
+import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -61,30 +61,37 @@ class AboutScreen extends StatelessWidget {
                     a:TextStyle( color: Theme.of(context).highlightColor)
                   ),
                   onTapLink: (text, url, title) {
-                    launch(Uri.encodeFull(url ?? ""));
+                    
+                    if(url == "daapplab@gmail.com"){
+                      String mail = Uri(
+                        scheme: 'mailto',  
+                        path: url, 
+                        query: 'subject=DaKanji${VERSION}: &body=I am using DaKanji v.${VERSION} on ${Theme.of(context).platform.name}',
+                      ).toString();
+                      launch(mail);
+                    }
+                    else
+                      launch(Uri.encodeFull(url ?? ""));
+                    
                   },
                 ),
               ),
               // text with link to open the "complete changelog"-screen
-              Row(
-                children:[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16, 2, 16, 0),
-                    child: GestureDetector(
-                      child: Text(
-                        LocaleKeys.AboutScreen_show_changelog.tr(),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Theme.of(context).highlightColor
-                        ),
-                      ),
-                      onTap: () => Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => ChangelogScreen()),
-                      )
-                    )
+              Container(
+                padding: EdgeInsets.fromLTRB(16, 2, 16, 0),
+                child: GestureDetector(
+                  child: Text(
+                    LocaleKeys.AboutScreen_show_changelog.tr(),
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor
+                    ),
+                  ),
+                  onTap: () => Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => ChangelogScreen()),
                   )
-                ]
+                )
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
