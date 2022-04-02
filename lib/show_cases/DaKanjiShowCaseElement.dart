@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:feature_discovery/feature_discovery.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 
 

@@ -46,7 +46,6 @@ class DrawerAppBar extends StatelessWidget {
         SizedBox(width: height*0.2,),
         Container(
           height: height*0.5,
-          color: Colors.amber,
           child: Center(
             child: AutoSizeText(
               (){

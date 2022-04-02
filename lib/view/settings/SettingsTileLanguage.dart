@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:provider/provider.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 
 
