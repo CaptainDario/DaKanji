@@ -53,8 +53,6 @@ class InterpreterOptions {
 
 // Unimplemented:
 // TfLiteInterpreterOptionsSetErrorReporter
-// TODO: TfLiteInterpreterOptionsSetErrorReporter
-// TODO: setAllowFp16PrecisionForFp32(bool allow)
 
 // setAllowBufferHandleOutput(bool allow)
 }
