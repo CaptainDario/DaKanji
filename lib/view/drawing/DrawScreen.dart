@@ -15,7 +15,7 @@ import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
-import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawer.dart';
+import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
