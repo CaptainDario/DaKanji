@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -250,7 +248,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                                 GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[noChars-1] :
                                 null,
                               style: TextStyle(
-                                fontSize: _scaleInNewCharAnimation.value * 14
+                                fontSize: _scaleInNewCharAnimation.value * 100
                               )
                             ),
                           ],
@@ -262,6 +260,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                         style: TextStyle(
                           fontFamily: "NotoSans",
                           color: Theme.of(context).textTheme.bodyText1!.color,
+                          fontSize: 100,
                         ),
                       ),
                     );
