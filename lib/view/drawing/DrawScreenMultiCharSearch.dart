@@ -32,7 +32,7 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
       child: Consumer<KanjiBuffer>(
         builder: (context, kanjiBuffer, child){
           Widget tpm_widget = MultiFocus(
-            focusNodes: [drawScreenTutorialFocusNodes[6]] + 
+            focusNodes: [drawScreenTutorialFocusNodes[8]] + 
               drawScreenTutorialFocusNodes.sublist(10, 14),
             child: Center(
               child: KanjiBufferWidget(

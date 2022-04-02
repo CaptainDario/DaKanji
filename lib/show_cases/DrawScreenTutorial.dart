@@ -6,7 +6,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
-List<String> drawScreenTutorialTitles = [
+final List<String> drawScreenTutorialTitles = [
   LocaleKeys.DrawScreen_tutorial_begin_title.tr(),
   "",
   "",
@@ -23,7 +23,7 @@ List<String> drawScreenTutorialTitles = [
   "",
 ];
 
-List<String> drawScreenTutorialBodies = [
+final List<String> drawScreenTutorialBodies = [
   LocaleKeys.DrawScreen_tutorial_begin_text.tr(),
   LocaleKeys.DrawScreen_tutorial_drawing.tr(),
   LocaleKeys.DrawScreen_tutorial_undo.tr(),
