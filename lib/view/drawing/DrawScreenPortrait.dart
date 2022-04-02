@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sizer/sizer.dart';
+
 
 
 /// The DrawScreen in portrait mode 
@@ -28,8 +30,9 @@ class DrawScreenPortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        SizedBox(height: 2.h,),
         drawingCanvas,
-        SizedBox(height: 30,),
+        SizedBox(height: 2.h,),
         Container(
           width: canvasSize,
           child: Row(
@@ -41,7 +44,7 @@ class DrawScreenPortrait extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 4.h,),
         predictionButtons
       ]
     ),

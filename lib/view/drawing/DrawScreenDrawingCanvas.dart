@@ -26,26 +26,29 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
       builder: (context, strokes, __){
-        return DrawScreenShowCaseElement(
-          [drawScreenShowcaseIDs[0]],
-          [Text(drawScreenShowcaseTexts[0])],
-          [ContentLocation.trivial],
-          DrawingCanvas(
-            canvasSize, canvasSize,
-            strokes,
-            EdgeInsets.all(0),
-            onFinishedDrawing: (Uint8List image) async {
-              drawingInterpreter.runInference(image);
-            },
-            onDeletedLastStroke: (Uint8List image) {
-              if(strokes.strokeCount > 0)
+        return Focus(
+          focusNode: drawScreenFocusNodes[0],
+          child: DrawScreenShowCaseElement(
+            [drawScreenShowcaseIDs[0]],
+            [Text(drawScreenShowcaseTexts[0])],
+            [ContentLocation.trivial],
+            DrawingCanvas(
+              canvasSize, canvasSize,
+              strokes,
+              EdgeInsets.all(0),
+              onFinishedDrawing: (Uint8List image) async {
                 drawingInterpreter.runInference(image);
-              else
+              },
+              onDeletedLastStroke: (Uint8List image) {
+                if(strokes.strokeCount > 0)
+                  drawingInterpreter.runInference(image);
+                else
+                  drawingInterpreter.clearPredictions();
+              },
+              onDeletedAllStrokes: () {
                 drawingInterpreter.clearPredictions();
-            },
-            onDeletedAllStrokes: () {
-              drawingInterpreter.clearPredictions();
-            },
+              },
+            ),
           ),
         );
       },

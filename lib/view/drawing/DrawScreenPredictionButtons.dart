@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
@@ -37,8 +38,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
               physics: new NeverScrollableScrollPhysics(),
               scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
               crossAxisCount: 5,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
+              mainAxisSpacing: 1.w < 5 ? 1.w : 5,
+              crossAxisSpacing: 1.w < 5 ? 1.w : 5,
               
               children: List.generate(10, (i) {
                 Widget tmp_widget = PredictionButton(

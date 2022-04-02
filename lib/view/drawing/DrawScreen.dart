@@ -1,12 +1,7 @@
-import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
-import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -16,11 +11,17 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
+import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
-import 'package:da_kanji_mobile/view/DaKanjiDrawer.dart';
+import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawer.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
+import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
 import 'package:da_kanji_mobile/model/HandlePredictions.dart';
 
 
@@ -68,7 +69,12 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     if(!GetIt.I<DrawingInterpreter>().wasInitialized){
       GetIt.I<DrawingInterpreter>().init();
     }
-
+    WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
+      final OnboardingState? onboarding = Onboarding.of(context);
+      if (onboarding != null) {
+        onboarding.show();
+      }
+    });
   }
 
   @override
@@ -119,13 +125,18 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   
                 ),
                 if(GetIt.I<UserData>().showShowcaseDrawing)
-                  Container(
+
+                Visibility(
+                  visible: GetIt.I<UserData>().showShowcaseDrawing,
+                  child: Container(
                     width: double.infinity, 
-                    height: double.infinity, //constraints.maxHeight
+                    height: double.infinity,
                     color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
                       Color.fromARGB(199, 32, 32, 32) : 
                       Color.fromARGB(220, 0, 0, 0),
-                  ),
+                  )
+                ),
+              
                 if(showWelcomeToTheDrawingscreen && GetIt.I<UserData>().showShowcaseDrawing)
                     GestureDetector(
                       onTap: () {

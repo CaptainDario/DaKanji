@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sizer/sizer.dart';
+
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 
@@ -27,7 +29,7 @@ class DrawScreenLandscape extends StatelessWidget {
     Widget layout = LayoutGrid(
       columnSizes: [
         FixedTrackSize(canvasSize),
-        FixedTrackSize(10),
+        FixedTrackSize(2.w <= 10 ? 2.w : 10),
         FixedTrackSize(canvasSize * 0.2), 
         FixedTrackSize(canvasSize * 0.2)
       ], 
