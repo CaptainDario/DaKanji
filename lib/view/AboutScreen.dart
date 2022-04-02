@@ -33,7 +33,7 @@ class AboutScreen extends StatelessWidget {
     .replaceAll("DISCORD_SERVER", DISCORD_INVITE)
     .replaceAll("PLAYSTORE_PAGE", PLAYSTORE_PAGE)
     .replaceAll("APPSTORE_PAGE", APPSTORE_PAGE)
-    .replaceAll("MACSTORE_PAGE", MACSTORE_PAGE)
+    .replaceAll("MACSTORE_PAGE", APPSTORE_PAGE)
     .replaceAll("SNAPSTORE_PAGE", SNAPSTORE_PAGE)
     .replaceAll("MICROSOFT_STORE_PAGE", MICROSOFT_STORE_PAGE)
     .replaceAll("GITHUB_RELEASES_PAGE", GITHUB_RELEASES_PAGE);

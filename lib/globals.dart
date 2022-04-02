@@ -50,9 +50,9 @@ const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoc
 const MICROSOFT_STORE_ID = "9n08051t2xtv";
 const MICROSOFT_STORE_PAGE = "https://www.microsoft.com/p/dakanji/9n08051t2xtv?SilentAuth=1&wa=wsignin1.0&rtc=2&activetab=pivot:overviewtab";
 
-const SNAPSTORE_PAGE = "NONE";
+const SNAPSTORE_PAGE = "https://snapcraft.io/dakanji";
 
-const MACSTORE_PAGE = "NONE";
+//const MACSTORE_PAGE = "NONE";
 
 const TAKOBOTO_ID = "jp.takoboto";
 const AKEBI_ID = "com.craxic.akebifree";
