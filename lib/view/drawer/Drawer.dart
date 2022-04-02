@@ -281,15 +281,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           padding: EdgeInsets.zero,
                           children: <Widget>[
                             // DaKanji Logo at the top
-                            SafeArea(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children:[
-                                  Image(
-                                    height: 84,
-                                    image: AssetImage("assets/images/icons/banner.png"),
-                                  ),
-                                ]
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Image(
+                                height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
+                                image: AssetImage("assets/images/icons/banner.png"),
                               ),
                             ),
                             // Drawer entry to go to the Kanji drawing screen

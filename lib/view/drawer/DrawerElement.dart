@@ -45,8 +45,7 @@ class DrawerElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    double tileHeight = MediaQuery.of(context).size.height * 0.1 < 30 ?
-      MediaQuery.of(context).size.height * 0.1 : 40;
+    double tileHeight = (MediaQuery.of(context).size.height * 0.1).clamp(0, 40);
 
     return Material(
       child: InkWell(
@@ -63,7 +62,7 @@ class DrawerElement extends StatelessWidget {
           }
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(0, tileHeight*0.05, 0, tileHeight*0.05),
+          padding: EdgeInsets.fromLTRB(0, tileHeight*0.1, 0, tileHeight*0.1),
           width: drawerWidth,
           height: tileHeight,
           child: Row(
