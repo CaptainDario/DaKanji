@@ -1,11 +1,8 @@
-import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
-import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 
@@ -49,15 +46,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                 );
                 // add short/long press showcase to the first button
                 if(i == 0){
-                  var showCaseIdxs = [3, 4, 5, 6, 8];
-                  tmp_widget = DrawScreenShowCaseElement(
-                    List.generate(showCaseIdxs.length, (index) => drawScreenShowcaseIDs[showCaseIdxs[index]]),
-                    List.generate(showCaseIdxs.length, (index) =>
-                      Text(drawScreenShowcaseTexts[showCaseIdxs[index]])
-                    ),
-                    List.generate(showCaseIdxs.length, (index) => ContentLocation.above),
-                    tmp_widget
-                  );
+                  // TODO: add showcase here
                 }
                 if(includeHeroes)
                   tmp_widget = Hero(

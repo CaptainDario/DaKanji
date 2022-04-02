@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:feature_discovery/feature_discovery.dart';
-
 
 
 
@@ -9,7 +7,6 @@ class DaKanjiShowCaseElement extends StatelessWidget {
   const DaKanjiShowCaseElement(
     this.featureId,
     this.description,
-    this.contentLocation,
     this.widgetToExplain,
     {
       this.onComplete,
@@ -24,9 +21,6 @@ class DaKanjiShowCaseElement extends StatelessWidget {
   /// the description of the showcased element
   /// /// If the list contains more than one element multiple show cases will be shown
   final List<Widget> description;
-  /// If the list contains more than one element multiple show cases will be shown
-  /// The location of the description
-  final List<ContentLocation> contentLocation;
   /// the function to run when the user clicked 
   final List<Future<bool> Function()?>? onComplete;
   /// When the SKIP button is pressed
@@ -39,8 +33,6 @@ class DaKanjiShowCaseElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    assert(featureId.length == description.length &&
-      featureId.length == contentLocation.length);
 
     Widget explainedWidget = widgetToExplain;
 

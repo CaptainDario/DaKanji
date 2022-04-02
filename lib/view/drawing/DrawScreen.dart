@@ -4,13 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
-import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
 import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
@@ -143,10 +141,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                         setState(() {
                           showWelcomeToTheDrawingscreen = false;
                           Future.delayed(Duration(milliseconds: 500));
-                          FeatureDiscovery.discoverFeatures(
-                            context,
-                            List.generate(drawScreenShowcaseIDs.length, (i) => drawScreenShowcaseIDs[i])
-                          ); 
+                          
                         });
                       },
                     child: ScreenWelcomeOverlay(
