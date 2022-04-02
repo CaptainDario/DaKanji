@@ -34,8 +34,6 @@ dependencies:
   flutter_svg: 1.0.3
 
   onboarding_overlay : 3.0.0
-  feature_discovery: 0.14.1
-  sizer: 2.0.15
   auto_size_text: 3.0.0
 
 
