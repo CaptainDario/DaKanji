@@ -41,44 +41,44 @@ class SettingsTileCustomURL extends StatelessWidget {
                 )
               ),
               IconButton(
-                  icon: Icon(Icons.info_outline),
-                  onPressed: () {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.NO_HEADER,
-                      headerAnimationLoop: false,
-                      body: Column(
-                        children: [
-                          AutoSizeText(
-                            LocaleKeys.SettingsScreen_custom_url_format.tr(),
-                            //textScaleFactor: 2,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold
-                            ),
+                icon: Icon(Icons.info_outline),
+                onPressed: () {
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.NO_HEADER,
+                    headerAnimationLoop: false,
+                    body: Column(
+                      children: [
+                        AutoSizeText(
+                          LocaleKeys.SettingsScreen_custom_url_format.tr(),
+                          //textScaleFactor: 2,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
                           ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              children: [
-                                AutoSizeText(
-                                  LocaleKeys.SettingsScreen_custom_url_explanation.tr(
-                                    namedArgs: {'kanjiPlaceholder' : 
-                                      settings.kanjiPlaceholder}
-                                  )
-                                ),
-                              ]
-                            )
-                          ),
-                        ],
-                      ),
-                    )..show();
-                  }
-                )
-              ]
-            ),
-              onTap: () {}
-            );
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              AutoSizeText(
+                                LocaleKeys.SettingsScreen_custom_url_explanation.tr(
+                                  namedArgs: {'kanjiPlaceholder' : 
+                                    settings.kanjiPlaceholder}
+                                )
+                              ),
+                            ]
+                          )
+                        ),
+                      ],
+                    ),
+                  )..show();
+                }
+              )
+            ]
+          ),
+          onTap: () {}
+        );
       }
     );
   }

@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawer.dart';
-import 'package:da_kanji_mobile/view/settings/SettingsTileHeader.dart';
+// import 'package:da_kanji_mobile/view/settings/SettingsTileHeader.dart';
 import 'package:da_kanji_mobile/view/settings/SettingsTileInvertPress.dart';
 import 'package:da_kanji_mobile/view/settings/SettingsTileWebview.dart';
 import 'package:da_kanji_mobile/view/settings/SettingsTileAdvancedSettings.dart';
@@ -48,37 +48,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
         // ListView of all available settings
         child: ChangeNotifierProvider.value(
           value: GetIt.I<Settings>(),
-          child: Consumer<Settings>(
-            builder: (context, settings, child){
-              return ListView(
-                primary: false,
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  // Drawing header
-                  SettingsTileHeader(LocaleKeys.SettingsScreen_drawing_title.tr()),
-                  SettingsTileDictionaryOptions(),
-                  SettingsTileCustomURL(),
-                  
-                  // invert if short press or long press opens dict / copies to clip
-                  SettingsTileInvertPress(),
-                  // should a double tap on a prediction button empty the canvas
-                  SettingsTileDoubleTap(),
-                  if(Platform.isAndroid || Platform.isIOS)
-                    SettingsTileWebview(),
+          child: ListView(
+            primary: false,
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              // Drawing header
+              Consumer<Settings>(
+                builder: (context, settings, child) {
+                  return ListTile(
+                    title: Text(
+                      LocaleKeys.SettingsScreen_drawing_title.tr(),
+                      
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18
+                      ),
+                    ),
+                  );
+                }
+              ),
+              SettingsTileDictionaryOptions(),
+              SettingsTileCustomURL(),
+              
+              // invert if short press or long press opens dict / copies to clip
+              SettingsTileInvertPress(),
+              // should a double tap on a prediction button empty the canvas
+              SettingsTileDoubleTap(),
+              if(Platform.isAndroid || Platform.isIOS)
+                SettingsTileWebview(),
 
-                  Divider(),
-                  // miscellaneous header
-                  SettingsTileHeader(LocaleKeys.SettingsScreen_miscellaneous_title.tr()),
-                  SettingsTileTheme(),
-                  SettingsTileLanguage(),
-                  SettingsTileReshowTutorial(),
+              Divider(),
+              // miscellaneous header
+              Consumer<Settings>(
+                builder: (context, settings, child) {
+                  return ListTile(
+                    title: Text(
+                      LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18
+                      ),
+                    ),
+                  );
+                }
+              ),
+              SettingsTileTheme(),
+              SettingsTileLanguage(),
+              SettingsTileReshowTutorial(),
 
-                  SettingsTileAdvancedSettings(),
-                ],
-              );
-            },
+              SettingsTileAdvancedSettings(),
+            ],
           ),
-        )
+        ),
       )
     );
   }

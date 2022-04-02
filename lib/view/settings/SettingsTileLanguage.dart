@@ -8,9 +8,14 @@ import 'package:provider/provider.dart';
 
 
 
-class SettingsTileLanguage extends StatelessWidget {
-  const SettingsTileLanguage({Key? key}) : super(key: key);
+class SettingsTileLanguage extends StatefulWidget {
+  SettingsTileLanguage({Key? key}) : super(key: key);
 
+  @override
+  State<SettingsTileLanguage> createState() => _SettingsTileLanguageState();
+}
+
+class _SettingsTileLanguageState extends State<SettingsTileLanguage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Settings>(
@@ -33,6 +38,7 @@ class SettingsTileLanguage extends StatelessWidget {
               context.setLocale(Locale(newValue ?? "en"));
               settings.selectedLocale = Locale(newValue ?? "en");
               settings.save();
+              Navigator.pushNamedAndRemoveUntil(context, "/settings", (route) => false);
             },
           ),
           onTap: () {}

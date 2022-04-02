@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 
 
 class SettingsTileDictionaryOptions extends StatelessWidget {
-  const SettingsTileDictionaryOptions({
-    Key? key,
-  }) : super(key: key);
+  const SettingsTileDictionaryOptions({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {

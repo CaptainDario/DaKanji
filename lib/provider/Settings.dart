@@ -57,7 +57,7 @@ class Settings with ChangeNotifier {
   bool _useWebview = true;
 
   /// the currently used locale
-  Locale? selectedLocale;
+  Locale? _selectedLocale = Locale("en");
 
   /// The available backends for inference
   List<String> inferenceBackends= [
@@ -167,6 +167,16 @@ class Settings with ChangeNotifier {
     _backendCNNSingleChar = newBackend;
     notifyListeners();
   }
+
+  Locale? get selectedLocale{
+    return _selectedLocale;
+  }
+
+  set selectedLocale(Locale? newLocale){
+    _selectedLocale = newLocale;
+    notifyListeners();
+  }
+
 
   /// Saves all settings to the SharedPreferences.
   void save() async {
