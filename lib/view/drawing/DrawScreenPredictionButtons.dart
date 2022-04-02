@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
 import 'package:da_kanji_mobile/show_cases/DrawScreenShowCaseElement.dart';
@@ -27,6 +26,9 @@ class DrawScreenPredictionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+
     return Container(              //use canvas height in runningInLandscape
       width :  runningInLandscape ? (canvasSize * 0.4) : canvasSize,
       height: !runningInLandscape ? (canvasSize * 0.4) : canvasSize, 
@@ -38,8 +40,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
               physics: new NeverScrollableScrollPhysics(),
               scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
               crossAxisCount: 5,
-              mainAxisSpacing: 1.w < 5 ? 1.w : 5,
-              crossAxisSpacing: 1.w < 5 ? 1.w : 5,
+              mainAxisSpacing: (width*0.1).clamp(0, 5),
+              crossAxisSpacing: (width*0.1).clamp(0, 5),
               
               children: List.generate(10, (i) {
                 Widget tmp_widget = PredictionButton(

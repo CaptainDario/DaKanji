@@ -9,7 +9,6 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:da_kanji_mobile/show_cases/Showcase.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
@@ -148,72 +147,68 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
   @override
   Widget build(BuildContext context) {
 
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return MaterialApp(
-          //debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: () {
-            return GetIt.I<Settings>().selectedLocale;
-          } (),
-          
-          onGenerateRoute: (settings) {
-            PageRouteBuilder switchScreen (Widget screen) =>
-              PageRouteBuilder(
-                pageBuilder: (_, __, ___) => Onboarding(
-                  steps: steps,
-                  globalOnboarding: true,
-                  autoSizeTexts: true,
-                  onChanged: (int index){
-                    print("Tutorial step: ${index}");
-                  },
-                  child: screen,
-                ),
-                settings: settings,
-                transitionsBuilder: (_, a, __, c) =>
-                  FadeTransition(opacity: a, child: c)
-              );
-  
-            // check type and extract arguments
-            SettingsArguments args;
-            if((settings.arguments is SettingsArguments))
-              args = settings.arguments as SettingsArguments;
-            else
-              args = SettingsArguments(false);
-  
-            switch(settings.name){
-              case "/home":
-                return switchScreen(HomeScreen());
-              case "/onboarding":
-                return switchScreen(OnBoardingScreen());
-              case "/drawing":
-                return switchScreen(DrawScreen(args.navigatedByDrawer, true));
-              case "/settings":
-                return switchScreen(SettingsScreen(args.navigatedByDrawer));
-              case "/about":
-                return switchScreen(AboutScreen(args.navigatedByDrawer));
-              case "/changelog":
-                return switchScreen(ChangelogScreen());
-              case "/testScreen":
-                return switchScreen(TestScreen());
-            }
-            throw UnsupportedError("Unknown route: ${settings.name}");
-          },
-  
-          title: APP_TITLE,
-  
-          // themes
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: GetIt.I<Settings>().selectedThemeMode(),
-  
-          //screens
-          home: HomeScreen(),
-          //home: TestScreen()
+    return MaterialApp(
+      //debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: () {
+        return GetIt.I<Settings>().selectedLocale;
+      } (),
+      
+      onGenerateRoute: (settings) {
+        PageRouteBuilder switchScreen (Widget screen) =>
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => Onboarding(
+              steps: steps,
+              globalOnboarding: true,
+              autoSizeTexts: true,
+              onChanged: (int index){
+                print("Tutorial step: ${index}");
+              },
+              child: screen,
+            ),
+            settings: settings,
+            transitionsBuilder: (_, a, __, c) =>
+              FadeTransition(opacity: a, child: c)
+          );
 
-        );
-      }
+        // check type and extract arguments
+        SettingsArguments args;
+        if((settings.arguments is SettingsArguments))
+          args = settings.arguments as SettingsArguments;
+        else
+          args = SettingsArguments(false);
+
+        switch(settings.name){
+          case "/home":
+            return switchScreen(HomeScreen());
+          case "/onboarding":
+            return switchScreen(OnBoardingScreen());
+          case "/drawing":
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
+          case "/settings":
+            return switchScreen(SettingsScreen(args.navigatedByDrawer));
+          case "/about":
+            return switchScreen(AboutScreen(args.navigatedByDrawer));
+          case "/changelog":
+            return switchScreen(ChangelogScreen());
+          case "/testScreen":
+            return switchScreen(TestScreen());
+        }
+        throw UnsupportedError("Unknown route: ${settings.name}");
+      },
+
+      title: APP_TITLE,
+
+      // themes
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: GetIt.I<Settings>().selectedThemeMode(),
+
+      //screens
+      home: HomeScreen(),
+      //home: TestScreen()
+
     );
   }
 }
