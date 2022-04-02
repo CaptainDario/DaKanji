@@ -70,5 +70,7 @@ const PRIVACY_POLICE = "https://sites.google.com/view/dakanjirecognizerprivacypo
 
 /// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
-
+/// AutoSizeGroup for the drawer -> all list entries have same font size
 AutoSizeGroup drawerAutoSizeGroup = AutoSizeGroup();
+/// Define a global minimu font size
+double GlobalMinFontSize = 8;

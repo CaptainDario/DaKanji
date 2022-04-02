@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -255,7 +256,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                           ],
                         ),
                         softWrap: false,
-                        minFontSize: 10,
+                        minFontSize: GlobalMinFontSize,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(

@@ -73,7 +73,7 @@ class DrawerElement extends StatelessWidget {
                 child: Icon(
                   leading,
                   color: selected ? Theme.of(context).highlightColor : null,
-                  size: drawerWidth*0.15 < 20 ? drawerWidth*0.15 : 20,
+                  size: (drawerWidth*0.15).clamp(0, 20),
                 ),
               ),
               SizedBox(width: drawerWidth*0.05,),
@@ -82,7 +82,7 @@ class DrawerElement extends StatelessWidget {
                 child: AutoSizeText(
                   title,
                   group: drawerAutoSizeGroup,
-                  minFontSize: 6,
+                  minFontSize: GlobalMinFontSize,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -96,26 +96,5 @@ class DrawerElement extends StatelessWidget {
         ),
       ),
     );
-    /*
-    return Material(
-      child: ListTile(
-        contentPadding: EdgeInsets.fromLTRB(16, 2, 8, 2),
-        horizontalTitleGap: 4,
-        dense: true,
-        leading: Icon(
-          leading,
-          size: this.drawerWidth*0.15 < 20 ? this.drawerWidth*0.15 : 20,
-        ),
-        title: AutoSizeText(
-          this.title,
-          minFontSize: 12,
-        ),
-        selected: selected,
-        selectedColor: Theme.of(context).highlightColor,
-        onTap: () {
-
-        },
-      ),
-    );*/
   }
 }
