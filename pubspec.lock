@@ -169,13 +169,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  feature_discovery:
-    dependency: "direct main"
-    description:
-      name: feature_discovery
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.14.1"
   ffi:
     dependency: transitive
     description:
