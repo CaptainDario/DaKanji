@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
-
-/// The showcase of the features of the draw screen.
-List<String> drawScreenShowcaseIDs = [
-  "draw_screen_000_drawing",
-  "draw_screen_001_undo",
-  "draw_screen_002_clear",
-  "draw_screen_003_predictions",
-  "draw_screen_004_short_press_prediction",
-  "draw_screen_005_long_press_prediction",
-  "draw_screen_006_dictionary_settings",
-  "draw_screen_007_multi_search",
-  "draw_screen_008_double_tap_prediction",
-  "draw_screen_009_short_press_multi_search",
-  "draw_screen_010_long_press_multi_search",
-  "draw_screen_011_multi_search_double_tap",
-  "draw_screen_012_multi_search_swipe_left",
+List<String> drawScreenTutorialTitles = [
+  LocaleKeys.DrawScreen_tutorial_begin_title.tr(),
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
 ];
 
-List<String> drawScreenShowcaseTexts = [
+List<String> drawScreenTutorialBodies = [
+  LocaleKeys.DrawScreen_tutorial_begin_text.tr(),
   LocaleKeys.DrawScreen_tutorial_drawing.tr(),
   LocaleKeys.DrawScreen_tutorial_undo.tr(),
   LocaleKeys.DrawScreen_tutorial_clear.tr(),
@@ -39,5 +40,18 @@ List<String> drawScreenShowcaseTexts = [
   LocaleKeys.DrawScreen_tutorial_multi_search_swipe_left.tr(),
 ];
 
-final List<FocusNode> drawScreenFocusNodes = 
-  List.generate(drawScreenShowcaseTexts.length, (index) => FocusNode());
+final List<int> drawScreenTutorialIndexes = List.generate(
+  drawScreenTutorialFocusNodes.length, (index) => index);
+
+final List<FocusNode> drawScreenTutorialFocusNodes = 
+  List.generate(drawScreenTutorialTitles.length, (index) => FocusNode());
+
+final List<OnboardingStep> drawScreenTutorialSteps = 
+  List.generate(drawScreenTutorialTitles.length, (index) => 
+    OnboardingStep(
+      focusNode: drawScreenTutorialFocusNodes[index], 
+      titleText: drawScreenTutorialTitles[index],
+      bodyText: drawScreenTutorialBodies[index]
+    )
+  );
+

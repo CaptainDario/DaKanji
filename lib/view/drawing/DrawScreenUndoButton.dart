@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -18,17 +19,20 @@ class DrawScreenUndoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
       builder: (context, strokes, __) {
-        return Center(
-          child: Container(
-            width:  canvasSize * 0.1,
-            child: FittedBox(
-              child: IconButton(
-                icon: Icon(Icons.undo),
-                iconSize: 100,
-                color: Theme.of(context).highlightColor,
-                onPressed: () {
-                  strokes.playDeleteLastStrokeAnimation = true;
-                }
+        return Focus(
+          focusNode: drawScreenTutorialFocusNodes[2],
+          child: Center(
+            child: Container(
+              width:  canvasSize * 0.1,
+              child: FittedBox(
+                child: IconButton(
+                  icon: Icon(Icons.undo),
+                  iconSize: 100,
+                  color: Theme.of(context).highlightColor,
+                  onPressed: () {
+                    strokes.playDeleteLastStrokeAnimation = true;
+                  }
+                ),
               ),
             ),
           ),

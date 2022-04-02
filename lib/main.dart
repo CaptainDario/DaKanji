@@ -10,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/show_cases/Showcase.dart';
+import 'package:da_kanji_mobile/show_cases/tutorial.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
@@ -159,7 +159,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         PageRouteBuilder switchScreen (Widget screen) =>
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => Onboarding(
-              steps: steps,
+              steps: tutorialSteps,
               globalOnboarding: true,
               autoSizeTexts: true,
               onChanged: (int index){

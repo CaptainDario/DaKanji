@@ -144,7 +144,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   // the top app bar
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
-                    toolbarHeight: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
+                    toolbarHeight: (MediaQuery.of(context).size.height*0.1),
                     leadingWidth: 0,
                     titleSpacing: 0,
                     title: DrawerAppBar(

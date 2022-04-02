@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:da_kanji_mobile/show_cases/DrawScreenShowcase.dart';
+import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
     return Consumer<Strokes>(
       builder: (context, strokes, __){
         return Focus(
-          focusNode: drawScreenFocusNodes[0],
+          focusNode: drawScreenTutorialFocusNodes[1],
           child: DrawingCanvas(
             canvasSize, canvasSize,
             strokes,

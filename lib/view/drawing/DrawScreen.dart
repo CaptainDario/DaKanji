@@ -4,16 +4,14 @@ import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
-import 'package:da_kanji_mobile/show_cases/ScreenWelcomeOverlay.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
+import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
@@ -67,10 +65,13 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     if(!GetIt.I<DrawingInterpreter>().wasInitialized){
       GetIt.I<DrawingInterpreter>().init();
     }
+
     WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null) {
-        onboarding.show();
+        onboarding.showWithSteps(
+          drawScreenTutorialIndexes[0], 
+          drawScreenTutorialIndexes);
       }
     });
   }
@@ -135,21 +136,6 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   )
                 ),
               
-                if(showWelcomeToTheDrawingscreen && GetIt.I<UserData>().showShowcaseDrawing)
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showWelcomeToTheDrawingscreen = false;
-                          Future.delayed(Duration(milliseconds: 500));
-                          
-                        });
-                      },
-                    child: ScreenWelcomeOverlay(
-                      LocaleKeys.DrawScreen_tutorial_begin_title.tr() + '\n',
-                      LocaleKeys.DrawScreen_tutorial_begin_text.tr() + '\n',
-                      LocaleKeys.DrawScreen_tutorial_begin_continue.tr(),
-                    )
-                  ),
               ]
             );
           }
