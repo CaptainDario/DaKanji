@@ -62,8 +62,8 @@
     "invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
     "long_press_opens": "D\u0142ugie klikni\u0119cie otwiera",
     "miscellaneous_title": "Inne",
-    "show_tutorial": "Powt\u00f3rz tutorial (restartuje aplikacje)",
-    "theme": "Motyw(@:restarts_app)",
+    "show_tutorial": "Powt\u00f3rz tutorial (@:General.restarts_app)",
+    "theme": "Motyw(@:General.restarts_app)",
     "title": "Ustawienia",
     "use_default_browser_for_online_dictionaries": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych"
   },

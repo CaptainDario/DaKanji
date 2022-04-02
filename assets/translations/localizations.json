@@ -240,14 +240,14 @@
       "pl": "Inne"
     },
     "show_tutorial": {
-      "en": "Reshow tutorial (restarts app)",
-      "de": "Zeige Tutorial erneut (startet app neu)",
-      "pl": "Powtórz tutorial (restartuje aplikacje)"
+      "en": "Reshow tutorials (@:General.restarts_app)",
+      "de": "Zeige Tutorials erneut (@:General.restarts_app)",
+      "pl": "Powtórz tutorial (@:General.restarts_app)"
     },
     "theme": {
-      "en": "theme (@:restarts_app)",
-      "de": "Thema (@:restarts_app)",
-      "pl": "Motyw(@:restarts_app)"
+      "en": "theme (@:General.restarts_app)",
+      "de": "Thema (@:General.restarts_app)",
+      "pl": "Motyw(@:General.restarts_app)"
     },
     "title": {
       "en": "Settings",
@@ -270,8 +270,8 @@
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywany do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Teraz musimy podmienić jedynie znak na symbol zastępczy. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
     "advanced_settings_drawing_inference_backend": {
-      "en": "Inference backend (the app needs to be restarted)",
-      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (manual restart required)",
+      "de": "Inferenz Backend (manueller neugestartet notwendig)",
       "pl": "System wnioskowania (aplikacja musi zostać zrestartowana)"
     },
     "advanced_settings_title": {

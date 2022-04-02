@@ -51,7 +51,7 @@
     "Onboarding_2_title": "Schlage Zeichen und W\u00f6rter nach"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
+    "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '\u53e3' und man wil es auf 'jisho.org' nachschlagen. Daf\u00fcr muss als erste die URL der website, welche f\u00fcr das Suchen benutzt wird, herausgefunden werden. F\u00fcr 'jisho.org' ist das: 'https://jisho.org/search/\u53e3'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das f\u00fchrt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Benutzerdefiniertes URL format",
@@ -62,8 +62,8 @@
     "invert_short_long_press": "Invertiere kurzes und langes dr\u00fccken",
     "long_press_opens": "Langes dr\u00fccken \u00f6ffnet",
     "miscellaneous_title": "Verschiedenes",
-    "show_tutorial": "Zeige Tutorial erneut (startet app neu)",
-    "theme": "Thema (@:restarts_app)",
+    "show_tutorial": "Zeige Tutorials erneut (@:General.restarts_app)",
+    "theme": "Thema (@:General.restarts_app)",
     "title": "Einstellungen",
     "use_default_browser_for_online_dictionaries": "Benutze einen webview f\u00fcr web W\u00f6rterb\u00fccher"
   },

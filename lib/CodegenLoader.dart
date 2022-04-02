@@ -112,7 +112,7 @@ static const Map<String,dynamic> de = {
     "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
+    "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Benutzerdefiniertes URL format",
@@ -123,8 +123,8 @@ static const Map<String,dynamic> de = {
     "invert_short_long_press": "Invertiere kurzes und langes drücken",
     "long_press_opens": "Langes drücken öffnet",
     "miscellaneous_title": "Verschiedenes",
-    "show_tutorial": "Zeige Tutorial erneut (startet app neu)",
-    "theme": "Thema (@:restarts_app)",
+    "show_tutorial": "Zeige Tutorials erneut (@:General.restarts_app)",
+    "theme": "Thema (@:General.restarts_app)",
     "title": "Einstellungen",
     "use_default_browser_for_online_dictionaries": "Benutze einen webview für web Wörterbücher"
   },
@@ -186,7 +186,7 @@ static const Map<String,dynamic> en = {
     "Onboarding_2_title": "Lookup characters and words"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inference backend (the app needs to be restarted)",
+    "advanced_settings_drawing_inference_backend": "Inference backend (manual restart required)",
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
@@ -197,8 +197,8 @@ static const Map<String,dynamic> en = {
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
     "miscellaneous_title": "Miscellaneous",
-    "show_tutorial": "Reshow tutorial (restarts app)",
-    "theme": "theme (@:restarts_app)",
+    "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
+    "theme": "theme (@:General.restarts_app)",
     "title": "Settings",
     "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
   },
@@ -629,14 +629,14 @@ static const Map<String,dynamic> localizations = {
       "pl": "Inne"
     },
     "show_tutorial": {
-      "en": "Reshow tutorial (restarts app)",
-      "de": "Zeige Tutorial erneut (startet app neu)",
-      "pl": "Powtórz tutorial (restartuje aplikacje)"
+      "en": "Reshow tutorials (@:General.restarts_app)",
+      "de": "Zeige Tutorials erneut (@:General.restarts_app)",
+      "pl": "Powtórz tutorial (@:General.restarts_app)"
     },
     "theme": {
-      "en": "theme (@:restarts_app)",
-      "de": "Thema (@:restarts_app)",
-      "pl": "Motyw(@:restarts_app)"
+      "en": "theme (@:General.restarts_app)",
+      "de": "Thema (@:General.restarts_app)",
+      "pl": "Motyw(@:General.restarts_app)"
     },
     "title": {
       "en": "Settings",
@@ -659,8 +659,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywany do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Teraz musimy podmienić jedynie znak na symbol zastępczy. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
     "advanced_settings_drawing_inference_backend": {
-      "en": "Inference backend (the app needs to be restarted)",
-      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (manual restart required)",
+      "de": "Inferenz Backend (manueller neugestartet notwendig)",
       "pl": "System wnioskowania (aplikacja musi zostać zrestartowana)"
     },
     "advanced_settings_title": {
@@ -744,8 +744,8 @@ static const Map<String,dynamic> pl = {
     "invert_short_long_press": "Odwróć długie/krótkie kliknięcie",
     "long_press_opens": "Długie kliknięcie otwiera",
     "miscellaneous_title": "Inne",
-    "show_tutorial": "Powtórz tutorial (restartuje aplikacje)",
-    "theme": "Motyw(@:restarts_app)",
+    "show_tutorial": "Powtórz tutorial (@:General.restarts_app)",
+    "theme": "Motyw(@:General.restarts_app)",
     "title": "Ustawienia",
     "use_default_browser_for_online_dictionaries": "Użyj webview dla słowników internetowych"
   },
