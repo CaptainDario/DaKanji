@@ -47,6 +47,7 @@ const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
+const MICROSOFT_STORE_ID = "9n08051t2xtv";
 const MICROSOFT_STORE_PAGE = "https://www.microsoft.com/p/dakanji/9n08051t2xtv?SilentAuth=1&wa=wsignin1.0&rtc=2&activetab=pivot:overviewtab";
 
 const SNAPSTORE_PAGE = "NONE";
@@ -67,4 +68,7 @@ const GOOGLE_TRANSLATE_ID = "com.google.android.apps.translate";
 const PRIVACY_POLICE = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
 
 
+/// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
+
+AutoSizeGroup drawerAutoSizeGroup = AutoSizeGroup();

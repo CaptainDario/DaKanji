@@ -1,3 +1,4 @@
+import 'package:universal_io/io.dart';
 import 'package:in_app_review/in_app_review.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -8,11 +9,13 @@ import 'package:da_kanji_mobile/globals.dart';
 /// opens the app in the platforms app store
 void openReview() async {
   final InAppReview inAppReview = InAppReview.instance;
-  if(await inAppReview.isAvailable())
+
+  if((Platform.isAndroid || Platform.isIOS || Platform.isMacOS) &&
+    await inAppReview.isAvailable())
     inAppReview.requestReview();
   else
     inAppReview.openStoreListing(
       appStoreId: APPSTORE_ID, 
-      //microsoftStoreId: '...'
+      microsoftStoreId: '9n08051t2xtv'
     );
 }
