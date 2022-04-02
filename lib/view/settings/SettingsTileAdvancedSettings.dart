@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 import 'package:provider/provider.dart';
 
 
@@ -16,10 +17,14 @@ class SettingsTileAdvancedSettings extends StatelessWidget {
     return Consumer<Settings>(
       builder: (context, settings, child) {
         return ExpansionTile(
-          title: Text(LocaleKeys.SettingsScreen_advanced_settings_title.tr()),
+          title: SettingsAutoSizeText(
+            text: LocaleKeys.SettingsScreen_advanced_settings_title.tr()
+          ),
           children: [
             ListTile(
-              title: Text(LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr()),
+              title: SettingsAutoSizeText(
+                text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr()
+              ),
               trailing: DropdownButton<String>(
                   value: settings.backendCNNSingleChar,
                   items: settings.inferenceBackends 
@@ -27,7 +32,7 @@ class SettingsTileAdvancedSettings extends StatelessWidget {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: () { 
-                        return Text(value); 
+                        return SettingsAutoSizeText(text: value); 
                       } ()
                     );
                   }).toList(),

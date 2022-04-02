@@ -5,6 +5,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:provider/provider.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 
 
 
@@ -16,7 +17,9 @@ class SettingsTileInvertPress extends StatelessWidget {
     return Consumer<Settings>(
       builder: (context, settings, child) {
         return CheckboxListTile(
-          title: Text(LocaleKeys.SettingsScreen_invert_short_long_press.tr()),
+          title: SettingsAutoSizeText(
+            text: LocaleKeys.SettingsScreen_invert_short_long_press.tr()
+          ),
           value: settings.invertShortLongPress, 
           onChanged: (bool? newValue){
             settings.invertShortLongPress = newValue ?? false;

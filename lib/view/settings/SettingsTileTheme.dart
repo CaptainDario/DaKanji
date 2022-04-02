@@ -6,6 +6,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 
 
 
@@ -17,7 +18,7 @@ class SettingsTileTheme extends StatelessWidget {
     return Consumer<Settings>(
       builder: (context, settings, child) {
         return ListTile(
-          title: Text(LocaleKeys.SettingsScreen_theme.tr()),
+          title: SettingsAutoSizeText(text: LocaleKeys.SettingsScreen_theme.tr()),
           trailing: DropdownButton<String>(
             value: settings.selectedTheme,
             items: settings.themes
@@ -29,7 +30,7 @@ class SettingsTileTheme extends StatelessWidget {
                   text = text.replaceAll("dark", LocaleKeys.General_dark.tr());
                   text = text.replaceAll("system", LocaleKeys.General_system.tr());
                   
-                  return Text(text);
+                  return SettingsAutoSizeText(text: text);
                 } ()
                 );
               }

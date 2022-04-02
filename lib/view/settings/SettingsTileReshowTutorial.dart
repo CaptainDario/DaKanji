@@ -8,6 +8,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 
 
 
@@ -19,9 +20,12 @@ class SettingsTileReshowTutorial extends StatelessWidget {
     return Consumer<Settings>(
       builder: (context, settings, child) {
         return ListTile(
-          title: Text(LocaleKeys.SettingsScreen_show_tutorial.tr()),
+          title: SettingsAutoSizeText(text: LocaleKeys.SettingsScreen_show_tutorial.tr()),
           trailing: IconButton(
-            icon: Icon(Icons.replay_outlined),
+            icon: Icon(
+              Icons.replay_outlined,
+              size: 15,
+            ),
             onPressed: () { 
               GetIt.I<UserData>().showShowcaseDrawing = true;
               settings.save();

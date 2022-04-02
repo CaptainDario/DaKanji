@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 
 
 
@@ -24,9 +24,6 @@ class SettingsTileCustomURL extends StatelessWidget {
               Container(
                 child: Expanded(
                   child: TextField(
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                    ),
                     enabled:
                       settings.selectedDictionary == settings.dictionaries[3],
                     decoration: InputDecoration(
@@ -49,7 +46,7 @@ class SettingsTileCustomURL extends StatelessWidget {
                     headerAnimationLoop: false,
                     body: Column(
                       children: [
-                        AutoSizeText(
+                        Text(
                           LocaleKeys.SettingsScreen_custom_url_format.tr(),
                           //textScaleFactor: 2,
                           maxLines: 1,
@@ -61,7 +58,7 @@ class SettingsTileCustomURL extends StatelessWidget {
                           padding: EdgeInsets.all(10),
                           child: Column(
                             children: [
-                              AutoSizeText(
+                              Text(
                                 LocaleKeys.SettingsScreen_custom_url_explanation.tr(
                                   namedArgs: {'kanjiPlaceholder' : 
                                     settings.kanjiPlaceholder}
