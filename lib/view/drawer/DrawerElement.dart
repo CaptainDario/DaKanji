@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/SettingsArguments.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 
@@ -65,6 +63,7 @@ class DrawerElement extends StatelessWidget {
           }
         },
         child: Container(
+          padding: EdgeInsets.fromLTRB(0, tileHeight*0.05, 0, tileHeight*0.05),
           width: drawerWidth,
           height: tileHeight,
           child: Row(
@@ -75,7 +74,7 @@ class DrawerElement extends StatelessWidget {
                 child: Icon(
                   leading,
                   color: selected ? Theme.of(context).highlightColor : null,
-                  size: drawerWidth*0.2 < 25 ? drawerWidth*0.2 : 25,
+                  size: drawerWidth*0.15 < 20 ? drawerWidth*0.15 : 20,
                 ),
               ),
               SizedBox(width: drawerWidth*0.05,),
