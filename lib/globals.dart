@@ -1,5 +1,6 @@
 library my_prj.globals;
 
+import 'package:auto_size_text/auto_size_text.dart';
 
 
 // the title of the app
@@ -64,3 +65,6 @@ const MIDORI_ID = "id385231773";
 const GOOGLE_TRANSLATE_ID = "com.google.android.apps.translate";
 
 const PRIVACY_POLICE = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
+
+
+AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();

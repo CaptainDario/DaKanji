@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -37,5 +39,5 @@ List<String> drawScreenShowcaseTexts = [
   LocaleKeys.DrawScreen_tutorial_multi_search_swipe_left.tr(),
 ];
 
-
-  
+final List<FocusNode> drawScreenFocusNodes = 
+  List.generate(drawScreenShowcaseTexts.length, (index) => FocusNode());

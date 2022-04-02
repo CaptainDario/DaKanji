@@ -22,7 +22,7 @@ import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
-import 'package:da_kanji_mobile/model/HandlePredictions.dart';
+import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
 
 
 

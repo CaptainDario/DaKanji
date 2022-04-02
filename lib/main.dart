@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
@@ -9,25 +8,27 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
-import "package:feature_discovery/feature_discovery.dart";
+import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:sizer/sizer.dart';
 
+import 'package:da_kanji_mobile/show_cases/Showcase.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/model/SettingsArguments.dart';
-import 'package:da_kanji_mobile/model/DeepLinks.dart';
+import 'package:da_kanji_mobile/helper/DeepLinks.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/model/Changelog.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/model/Changelog.dart';
-import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
+import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/view/home/HomeScreen.dart';
-import 'package:da_kanji_mobile/view/SettingsScreen.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsScreen.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
@@ -146,78 +147,73 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: () {
-        // if there was no language set use the one from the OS
-        if(GetIt.I<Settings>().selectedLocale?.languageCode == "null"){
-          GetIt.I<Settings>().selectedLocale = context.locale;
-          GetIt.I<Settings>().save();
-        }
-        return GetIt.I<Settings>().selectedLocale;
-      } (),
-      
-      onGenerateRoute: (settings) {
-        PageRouteBuilder switchScreen (Widget screen) =>
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
-              FeatureDiscovery(
-                recordStepsInSharedPreferences: false,
-                child: screen
-              ),
 
-              defaultScale: true,
-              breakpoints: [
-                const ResponsiveBreakpoint.resize(450, name: MOBILE),
-                const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-                const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-                const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-                const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-              ],
-            ),
-            settings: settings,
-            transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c)
-          );
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          //debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: () {
+            return GetIt.I<Settings>().selectedLocale;
+          } (),
+          
+          onGenerateRoute: (settings) {
+            PageRouteBuilder switchScreen (Widget screen) =>
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => Onboarding(
+                  steps: steps,
+                  globalOnboarding: true,
+                  autoSizeTexts: true,
+                  onChanged: (int index){
+                    print("Tutorial step: ${index}");
+                  },
+                  child: screen,
+                ),
+                settings: settings,
+                transitionsBuilder: (_, a, __, c) =>
+                  FadeTransition(opacity: a, child: c)
+              );
+  
+            // check type and extract arguments
+            SettingsArguments args;
+            if((settings.arguments is SettingsArguments))
+              args = settings.arguments as SettingsArguments;
+            else
+              args = SettingsArguments(false);
+  
+            switch(settings.name){
+              case "/home":
+                return switchScreen(HomeScreen());
+              case "/onboarding":
+                return switchScreen(OnBoardingScreen());
+              case "/drawing":
+                return switchScreen(DrawScreen(args.navigatedByDrawer, true));
+              case "/settings":
+                return switchScreen(SettingsScreen(args.navigatedByDrawer));
+              case "/about":
+                return switchScreen(AboutScreen(args.navigatedByDrawer));
+              case "/changelog":
+                return switchScreen(ChangelogScreen());
+              case "/testScreen":
+                return switchScreen(TestScreen());
+            }
+            throw UnsupportedError("Unknown route: ${settings.name}");
+          },
+  
+          title: APP_TITLE,
+  
+          // themes
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: GetIt.I<Settings>().selectedThemeMode(),
+  
+          //screens
+          home: HomeScreen(),
+          //home: TestScreen()
 
-        // check type and extract arguments
-        SettingsArguments args;
-        if((settings.arguments is SettingsArguments))
-          args = settings.arguments as SettingsArguments;
-        else
-          args = SettingsArguments(false);
-
-        switch(settings.name){
-          case "/home":
-            return switchScreen(HomeScreen());
-          case "/onboarding":
-            return switchScreen(OnBoardingScreen());
-          case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
-          case "/settings":
-            return switchScreen(SettingsScreen(args.navigatedByDrawer));
-          case "/about":
-            return switchScreen(AboutScreen(args.navigatedByDrawer));
-          case "/changelog":
-            return switchScreen(ChangelogScreen());
-          case "/testScreen":
-            return switchScreen(TestScreen());
-        }
-        throw UnsupportedError("Unknown route: ${settings.name}");
-      },
-
-      title: APP_TITLE,
-
-      // themes
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: GetIt.I<Settings>().selectedThemeMode(),
-
-      //screens
-      home: HomeScreen(),
-      //home: TestScreen()
+        );
+      }
     );
   }
 }

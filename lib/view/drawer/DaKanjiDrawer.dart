@@ -5,9 +5,12 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sizer/sizer.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/SettingsArguments.dart';
+import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawerElement.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -99,7 +102,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     _screenHeight = MediaQuery.of(context).size.height;
     _screenWidth = MediaQuery.of(context).size.width;
 
-    // drawer should not use 75% of screen if screen is very wide
+    // drawer should not use 50% of screen if screen is very wide
     if(_screenWidth < 500)
       _drawerWidth = _screenWidth * 0.5;
     else
@@ -142,6 +145,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                 child: Scaffold(
                   // the top app bar
                   appBar: AppBar(
+                    toolbarHeight: 10.h < 50 ? 10.h : 50,
                     leading: 
                       InkWell(
                         onTap: () => _drawerController.forward(from: 0.0),
@@ -149,37 +153,43 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: Container(
-                              child: Icon(Icons.menu),
+                              child: Icon(
+                                Icons.menu,
+                                size: 5.h < 30 ? 5.h : 30,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    title: Text(
-                      (){
-                        String title;
-                        switch (widget.currentScreen){
-                          case Screens.about:
-                            title = LocaleKeys.AboutScreen_title.tr();
-                            break;
-                          case Screens.changelog:
-                            title = LocaleKeys.ChangelogScreen_title.tr();
-                            break;
-                          case Screens.drawing:
-                            title = LocaleKeys.DrawScreen_title.tr();
-                            break;
-                          case Screens.home:
-                            throw Exception("HomeScreen should not be navigated to via drawer");
-                          case Screens.settings:
-                            title = LocaleKeys.SettingsScreen_title.tr();
-                            break;
-                          case Screens.onboarding:
-                            throw Exception("OnBoardingScreen should not be navigated to via drawer");
-                          case Screens.webviewDict:
-                            title = LocaleKeys.WebviewScreen_title.tr();
-                            break;
-                        }
-                        return title;
-                      } ()
+                    title: Container(
+                      height: 5.h < 30 ? 5.h : 30,
+                      child: AutoSizeText(
+                        (){
+                          String title;
+                          switch (widget.currentScreen){
+                            case Screens.about:
+                              title = LocaleKeys.AboutScreen_title.tr();
+                              break;
+                            case Screens.changelog:
+                              title = LocaleKeys.ChangelogScreen_title.tr();
+                              break;
+                            case Screens.drawing:
+                              title = LocaleKeys.DrawScreen_title.tr();
+                              break;
+                            case Screens.home:
+                              throw Exception("HomeScreen should not be navigated to via drawer");
+                            case Screens.settings:
+                              title = LocaleKeys.SettingsScreen_title.tr();
+                              break;
+                            case Screens.onboarding:
+                              throw Exception("OnBoardingScreen should not be navigated to via drawer");
+                            case Screens.webviewDict:
+                              title = LocaleKeys.WebviewScreen_title.tr();
+                              break;
+                          }
+                          return title;
+                        } (),
+                      ),
                     ),
                   ),
                   //the screen (child)
@@ -284,65 +294,32 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               ),
                             ),
                             // Drawer entry to go to the Kanji drawing screen
-                            Material(
-                              child: ListTile(
-                                leading: Icon(Icons.brush_outlined),
-                                title: Text(LocaleKeys.DrawScreen_title.tr()),
-                                selected: widget.currentScreen == Screens.drawing,
-                                selectedColor: Theme.of(context).highlightColor,
-                                onTap: () {
-                                  if(ModalRoute.of(context)!.settings.name != "/drawing"){
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context, "/drawing",
-                                      (Route<dynamic> route) => false,
-                                      arguments: SettingsArguments(true));
-                                  }
-                                  else{
-                                    _drawerController.reverse();
-                                  }
-                                },
-                              ),
+                            DaKanjiDrawerElement(
+                              leading: Icons.brush,
+                              title: LocaleKeys.DrawScreen_title.tr(),
+                              route: "/drawing",
+                              selected: widget.currentScreen == Screens.drawing,
+                              drawerWidth: this._drawerWidth,
+                              drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the settings screen
-                            Material(
-                              child: ListTile(
-                                selected: widget.currentScreen == Screens.settings,
-                                leading: Icon(Icons.settings_applications),
-                                title: Text(LocaleKeys.SettingsScreen_title.tr()),
-                                selectedColor: Theme.of(context).highlightColor,
-                                onTap: () {
-                                  if(ModalRoute.of(context)!.settings.name != "/settings"){
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context, "/settings",
-                                      (Route<dynamic> route) => false,
-                                      arguments: SettingsArguments(true));
-                                  }
-                                  else{
-                                    _drawerController.reverse();
-                                  }
-                                },
-                              ),
+                            DaKanjiDrawerElement(
+                              leading: Icons.settings_applications,
+                              title: LocaleKeys.SettingsScreen_title.tr(),
+                              route: "/settings",
+                              selected: widget.currentScreen == Screens.settings,
+                              drawerWidth: this._drawerWidth,
+                              drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the about screen
-                            Material(
-                              child: ListTile(
-                                selected: widget.currentScreen == Screens.about,
-                                leading: Icon(Icons.info_outline),
-                                title: Text(LocaleKeys.AboutScreen_title.tr()),
-                                selectedColor: Theme.of(context).highlightColor,
-                                onTap: () {
-                                  if(ModalRoute.of(context)!.settings.name != "/about"){
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context, "/about",
-                                      (Route<dynamic> route) => false,
-                                      arguments: SettingsArguments(true));
-                                  }
-                                  else{
-                                    _drawerController.reverse();
-                                  }
-                                },
-                              ),
-                            ),
+                            DaKanjiDrawerElement(
+                              leading: Icons.info_outline,
+                              title: LocaleKeys.AboutScreen_title.tr(),
+                              route: "/about",
+                              selected: widget.currentScreen == Screens.about,
+                              drawerWidth: this._drawerWidth,
+                              drawerController: _drawerController,
+                            ),                               
                           ],
                         ),
                       )

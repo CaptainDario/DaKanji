@@ -6,7 +6,6 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0+29
 
 environment:
-  sdk: ">= 2.16.0"
   flutter: 2.10.3
 
 dependencies:
@@ -18,9 +17,6 @@ dependencies:
   shared_preferences: 2.0.13
   url_launcher: 6.0.7
   device_info_plus: 2.0.1
-  tutorial_coach_mark:
-    path: ./plugins/tutorial_coach_mark
-  feature_discovery: ^0.14.1
   flutter_phoenix: 1.0.0
   image: 3.1.0
   flutter_markdown: 0.6.2
@@ -35,7 +31,11 @@ dependencies:
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
   flutter_svg: 1.0.3
-  responsive_framework: 0.1.7
+
+  onboarding_overlay : 3.0.0
+  feature_discovery: 0.14.1
+  sizer: 2.0.15
+  auto_size_text: 3.0.0
 
 
   # do NOT support all target platforms

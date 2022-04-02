@@ -46,42 +46,8 @@ class DaKanjiShowCaseElement extends StatelessWidget {
 
     Widget explainedWidget = widgetToExplain;
 
-    for (int i = 0; i < featureId.length; i++){
-      explainedWidget = DescribedFeatureOverlay(
-        backgroundColor: Color.fromARGB(0, 44, 44, 44),
-        backgroundOpacity: 0.5,
-        targetColor: Color.fromARGB(59, 255, 255, 255),
+    for (int i = 0; i < featureId.length; i++){}
 
-        featureId: featureId[i],
-        tapTarget: Icon(Icons.touch_app),
-        description: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 2,
-              child: description[i]
-            ),
-            GestureDetector(
-              onTap: onSkipPressed,
-              child: Text(
-                "\n\n${LocaleKeys.DrawScreen_tutorial_skip.tr()}\n",
-                textScaleFactor: 0.75,
-                style: TextStyle(color: Colors.grey),
-              ),
-            )
-          ],
-        ),
-
-        contentLocation: contentLocation[i],
-
-        onBackgroundTap: () => Future(() => false),
-        onDismiss: () => Future(() => false),
-        onComplete: onComplete?[i],
-
-        child: explainedWidget
-      );
-    }
-
-    return explainedWidget;
+    return widgetToExplain;
   }
 }

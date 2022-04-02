@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/model/HandlePredictions.dart';
+import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 

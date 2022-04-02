@@ -41,7 +41,7 @@ class DrawScreenShowCaseElement extends StatelessWidget {
       description,
       contentLocation,
       widgetToExplain,
-      onComplete: [],
+      onComplete: onComplete,
       onSkipPressed: () {
         GetIt.I<UserData>().showShowcaseDrawing = false;
         GetIt.I<UserData>().save();

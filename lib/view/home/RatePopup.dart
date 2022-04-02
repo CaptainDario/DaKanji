@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/reviews.dart';
+import 'package:da_kanji_mobile/helper/reviews.dart';
 
 
 /// Shows a rate popup which lets the user rate the app on the platform specific

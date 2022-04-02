@@ -20,7 +20,9 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("$APP_TITLE - ${LocaleKeys.ChangelogScreen_title.tr()}")),
+      appBar: AppBar(
+        title: Text("$APP_TITLE - ${LocaleKeys.ChangelogScreen_title.tr()}"),
+      ),
       body: WillPopScope(
         onWillPop: () async {
           return true;
