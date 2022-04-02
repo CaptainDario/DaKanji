@@ -5,11 +5,10 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:sizer/sizer.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/view/drawer/DrawerElement.dart';
+import 'package:da_kanji_mobile/view/drawer/DrawerAppBar.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -144,51 +143,14 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                 child: Scaffold(
                   // the top app bar
                   appBar: AppBar(
-                    toolbarHeight: 10.h < 50 ? 10.h : 50,
-                    leading: 
-                      InkWell(
-                        onTap: () => _drawerController.forward(from: 0.0),
-                        child: Ink(
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              child: Icon(
-                                Icons.menu,
-                                size: 5.h < 30 ? 5.h : 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    title: Container(
-                      height: 5.h < 30 ? 5.h : 30,
-                      child: AutoSizeText(
-                        (){
-                          String title;
-                          switch (widget.currentScreen){
-                            case Screens.about:
-                              title = LocaleKeys.AboutScreen_title.tr();
-                              break;
-                            case Screens.changelog:
-                              title = LocaleKeys.ChangelogScreen_title.tr();
-                              break;
-                            case Screens.drawing:
-                              title = LocaleKeys.DrawScreen_title.tr();
-                              break;
-                            case Screens.home:
-                              throw Exception("HomeScreen should not be navigated to via drawer");
-                            case Screens.settings:
-                              title = LocaleKeys.SettingsScreen_title.tr();
-                              break;
-                            case Screens.onboarding:
-                              throw Exception("OnBoardingScreen should not be navigated to via drawer");
-                            case Screens.webviewDict:
-                              title = LocaleKeys.WebviewScreen_title.tr();
-                              break;
-                          }
-                          return title;
-                        } (),
-                      ),
+                    automaticallyImplyLeading: false,
+                    toolbarHeight: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
+                    leadingWidth: 0,
+                    titleSpacing: 0,
+                    title: DrawerAppBar(
+                      drawerController: _drawerController, 
+                      currentScreen: widget.currentScreen,
+                      height: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
                     ),
                   ),
                   //the screen (child)
@@ -283,9 +245,12 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // DaKanji Logo at the top
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Image(
-                                height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                image: AssetImage("assets/images/icons/banner.png"),
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(_drawerWidth*0.05, _drawerWidth*0.05, 0, 0),
+                                child: Image(
+                                  height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
+                                  image: AssetImage("assets/images/icons/banner.png"),
+                                ),
                               ),
                             ),
                             // Drawer entry to go to the Kanji drawing screen
@@ -328,3 +293,4 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     );
   }
 }
+

@@ -62,7 +62,6 @@ class DrawerElement extends StatelessWidget {
           }
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(0, tileHeight*0.1, 0, tileHeight*0.1),
           width: drawerWidth,
           height: tileHeight,
           child: Row(
@@ -73,12 +72,13 @@ class DrawerElement extends StatelessWidget {
                 child: Icon(
                   leading,
                   color: selected ? Theme.of(context).highlightColor : null,
-                  size: (drawerWidth*0.15).clamp(0, 20),
+                  size: tileHeight*0.5,
                 ),
               ),
               SizedBox(width: drawerWidth*0.05,),
               Container(
                 width: drawerWidth*0.6,
+                height: tileHeight*0.5,
                 child: AutoSizeText(
                   title,
                   group: drawerAutoSizeGroup,
