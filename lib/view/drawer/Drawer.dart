@@ -9,8 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
-import 'package:da_kanji_mobile/model/SettingsArguments.dart';
-import 'package:da_kanji_mobile/view/drawer/DaKanjiDrawerElement.dart';
+import 'package:da_kanji_mobile/view/drawer/DrawerElement.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -294,7 +293,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               ),
                             ),
                             // Drawer entry to go to the Kanji drawing screen
-                            DaKanjiDrawerElement(
+                            DrawerElement(
                               leading: Icons.brush,
                               title: LocaleKeys.DrawScreen_title.tr(),
                               route: "/drawing",
@@ -303,7 +302,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the settings screen
-                            DaKanjiDrawerElement(
+                            DrawerElement(
                               leading: Icons.settings_applications,
                               title: LocaleKeys.SettingsScreen_title.tr(),
                               route: "/settings",
@@ -312,7 +311,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the about screen
-                            DaKanjiDrawerElement(
+                            DrawerElement(
                               leading: Icons.info_outline,
                               title: LocaleKeys.AboutScreen_title.tr(),
                               route: "/about",
