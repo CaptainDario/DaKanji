@@ -24,6 +24,8 @@ class DrawerAppBar extends StatelessWidget {
   /// the height of the appbar
   final height;
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -33,14 +35,18 @@ class DrawerAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(width: height*0.2,),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => _drawerController.forward(from: 0.0),
-            child: Icon(
-              Icons.menu,
-              size: height*0.5,
-            )
+        Container(
+          height: height * 0.99,
+          width: height * 0.99,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => _drawerController.forward(from: 0.0),
+              child: Icon(
+                Icons.menu,
+                size: height*0.5,
+              )
+            ),
           ),
         ),
         SizedBox(width: height*0.2,),
