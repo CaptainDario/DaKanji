@@ -63,9 +63,13 @@ const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoc
 const MICROSOFT_STORE_ID = "9n08051t2xtv";
 /// the url to the MicrosoftStore page of Dakanji 
 const MICROSOFT_STORE_PAGE = "https://www.microsoft.com/p/dakanji/9n08051t2xtv?SilentAuth=1&wa=wsignin1.0&rtc=2&activetab=pivot:overviewtab";
+/// uri to open DaAppLab's page in the Microsoft store 
+const MICROSOFT_STORE_DAAPPLAB_PAGE = "ms-windows-store://publisher/?name=DaAppLab";
 
 /// the url to the SnapStore page of Dakanji 
 const SNAPSTORE_PAGE = "https://snapcraft.io/dakanji";
+/// DaAppLab page in the snap store
+const SNAPSTORE_DAAPPLAB_PAGE = "";
 
 /// id of the takoboto package on android
 const TAKOBOTO_ID = "jp.takoboto";

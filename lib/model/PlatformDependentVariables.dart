@@ -30,6 +30,18 @@ class PlatformDependentVariables {
       _appStoreLink = APPSTORE_PAGE;
       _daapplabStorePage = DAAPPLAB_APPSTORE_PAGE;
     }
+    else if(Platform.isWindows){
+      _appStoreLink = MICROSOFT_STORE_PAGE;
+      _daapplabStorePage = MICROSOFT_STORE_DAAPPLAB_PAGE;
+    }    
+    else if(Platform.isLinux){
+      _appStoreLink = SNAPSTORE_PAGE;
+      _daapplabStorePage = SNAPSTORE_DAAPPLAB_PAGE;
+    }
+    else if(Platform.isMacOS){
+      _appStoreLink = APPSTORE_PAGE;
+      _daapplabStorePage = DAAPPLAB_APPSTORE_PAGE;
+    }
     else{
       _appStoreLink = "None";
       _daapplabStorePage = "None";
