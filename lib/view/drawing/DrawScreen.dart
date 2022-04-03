@@ -104,39 +104,22 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;
 
-            return Stack(
-              children: [
-                DrawScreenResponsiveLayout(
-                  DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>()),
-                  DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes), 
-                  DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes),
-                  DrawScreenUndoButton(_canvasSize),
-                  DrawScreenClearButton(_canvasSize),
-                  _canvasSize,
-                  GetIt.I<DrawScreenState>().drawScreenLayout,
-                  () {
-                    return drawScreenIncludesWebview(t.item1) ?
-                      WebView(
-                        initialUrl: openWithSelectedDictionary(""),
-                        onWebViewCreated: (controller) => landscapeWebViewController = controller
-                      ) : null;
-                  } ()
-                  
-                ),
-                if(GetIt.I<UserData>().showShowcaseDrawing)
-
-                Visibility(
-                  visible: GetIt.I<UserData>().showShowcaseDrawing,
-                  child: Container(
-                    width: double.infinity, 
-                    height: double.infinity,
-                    color: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                      Color.fromARGB(199, 32, 32, 32) : 
-                      Color.fromARGB(220, 0, 0, 0),
-                  )
-                ),
+            return DrawScreenResponsiveLayout(
+              DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>()),
+              DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes), 
+              DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes),
+              DrawScreenUndoButton(_canvasSize),
+              DrawScreenClearButton(_canvasSize),
+              _canvasSize,
+              GetIt.I<DrawScreenState>().drawScreenLayout,
+              () {
+                return drawScreenIncludesWebview(t.item1) ?
+                  WebView(
+                    initialUrl: openWithSelectedDictionary(""),
+                    onWebViewCreated: (controller) => landscapeWebViewController = controller
+                  ) : null;
+              } ()
               
-              ]
             );
           }
         ),
