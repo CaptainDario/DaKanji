@@ -32,8 +32,9 @@ class _SettingsAutoSizeTextState extends State<SettingsAutoSizeText> {
       widget.text,
       minFontSize: GlobalMinFontSize,
       overflow: TextOverflow.ellipsis,
-      group: settingsAutoSizeGroup,
+      //group: settingsAutoSizeGroup,
       maxLines: widget.maxLines,
+
     );
   }
 }

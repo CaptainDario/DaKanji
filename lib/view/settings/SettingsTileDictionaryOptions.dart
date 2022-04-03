@@ -25,31 +25,31 @@ class SettingsTileDictionaryOptions extends StatelessWidget {
             maxLines: 2,
           ),
           trailing: DropdownButton<String>(
-              value: settings.selectedDictionary,
-              items: settings.dictionaries 
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: () {
-                    String text = value.replaceAll("url", LocaleKeys.General_custom_url.tr());
-                    text = text.replaceAll("app", LocaleKeys.General_app.tr());
-                    text = text.replaceAll("web", LocaleKeys.General_web.tr());
-                    
-                    return Container(
-                      width: MediaQuery.of(context).size.width*0.35,
-                      child: SettingsAutoSizeText(
-                        text: text, 
-                        maxLines: 1,
-                      ),
-                    );
-                  } ()
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                settings.selectedDictionary = newValue ?? settings.dictionaries[0];
-                settings.save();
-              },
-            ),
+            value: settings.selectedDictionary,
+            items: settings.dictionaries.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: () {
+                  
+                  String text = value.replaceAll("url", LocaleKeys.General_custom_url.tr());
+                  text = text.replaceAll("app", LocaleKeys.General_app.tr());
+                  text = text.replaceAll("web", LocaleKeys.General_web.tr());
+                  
+                  return Container(
+                    width: MediaQuery.of(context).size.width*0.35,
+                    child: SettingsAutoSizeText(
+                      text: text, 
+                      maxLines: 1,
+                    ),
+                  );
+                } ()
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              settings.selectedDictionary = newValue ?? settings.dictionaries[0];
+              settings.save();
+            },
+          ),
           onTap: (){},
         );
       }

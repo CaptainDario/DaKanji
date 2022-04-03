@@ -23,12 +23,7 @@ class Settings with ChangeNotifier {
   late String weblioURL;
 
   /// A list with all available dictionary options.
-  late List<String> dictionaries = [
-    "jisho (web)",
-    "wadoku (web)",
-    "weblio (web)",
-    "url (web)"
-  ];
+  late List<String> dictionaries;
 
   /// The string representation of the dictionary which will be used (long press)
   String _selectedDictionary = "";
@@ -56,12 +51,9 @@ class Settings with ChangeNotifier {
   /// should the default app browser be used for opening predictions or a webview
   bool _useWebview = true;
 
-  /// the currently used locale
-  Locale? _selectedLocale = Locale("en");
-
   /// The available backends for inference
   List<String> inferenceBackends= [
-      InferenceBackends.CPU.toString(),
+      InferenceBackends.CPU.name.toString(),
     ];
 
   /// The inference backend used for the single character CNN
@@ -71,10 +63,17 @@ class Settings with ChangeNotifier {
 
   Settings() {
     kanjiPlaceholder;
+
+    dictionaries = [
+      "jisho (web)",
+      "wadoku (web)",
+      "weblio (web)",
+      "url"
+    ];
     
     if(Platform.isAndroid)
       dictionaries.addAll([
-        "system (app)",
+        "system (app",
         "aedict (app)",
         "akebi (app)",
         "takoboto (app)", 
@@ -168,15 +167,6 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  Locale? get selectedLocale{
-    return _selectedLocale;
-  }
-
-  set selectedLocale(Locale? newLocale){
-    _selectedLocale = newLocale;
-    notifyListeners();
-  }
-
 
   /// Saves all settings to the SharedPreferences.
   void save() async {
@@ -192,7 +182,6 @@ class Settings with ChangeNotifier {
     prefs.setString('customURL', customURL);
     prefs.setString('selectedTheme', _selectedTheme);
     prefs.setString('selectedDictionary', selectedDictionary);
-    prefs.setString('selectedLocale', selectedLocale.toString());
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -207,7 +196,6 @@ class Settings with ChangeNotifier {
     customURL = prefs.getString('customURL') ?? '';
     _selectedTheme = prefs.getString('selectedTheme') ?? themes[2];
     selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
-    selectedLocale = Locale(prefs.getString('selectedLocale') ?? "null");
   }
 }
 

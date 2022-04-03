@@ -9,6 +9,7 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
+
 class SettingsTileCustomURL extends StatelessWidget {
   const SettingsTileCustomURL({Key? key}) : super(key: key);
 

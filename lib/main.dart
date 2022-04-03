@@ -44,19 +44,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
+
   await init();
+  
   runApp(
     Phoenix(
       child: EasyLocalization(
-        supportedLocales: List.generate(
-          SUPPORTED_LANGUAGES.length,
-          (index) => Locale(SUPPORTED_LANGUAGES[index])
-        ),
+        supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
         path: 'assets/translations',
         fallbackLocale: Locale('en'),
         useFallbackTranslations: true,
         useOnlyLangCode: true,
         assetLoader: CodegenLoader(),
+        
+        saveLocale: true,
         child: DaKanjiApp()
       ),
     ),
@@ -73,7 +74,7 @@ Future<void> main() async {
 Future<void> init() async {
   
   // NOTE: uncomment to clear the SharedPreferences
-  //await clearPreferences();
+  await clearPreferences();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
@@ -143,6 +144,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
     linkSub?.cancel();
     super.dispose();
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -151,9 +157,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       //debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: () {
-        return GetIt.I<Settings>().selectedLocale;
-      } (),
+      locale: context.locale,
       
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
