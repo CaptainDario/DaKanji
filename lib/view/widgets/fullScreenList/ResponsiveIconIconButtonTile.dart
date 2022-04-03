@@ -62,7 +62,7 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
               ),
               Center(
                 child: Container(
-                  height: tileHeight*0.6,
+                  height: tileHeight*0.75,
                   child: FittedBox(
                     child: IconButton(
                       onPressed: () {

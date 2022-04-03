@@ -14,8 +14,6 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveHeaderTile
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
-import 'package:da_kanji_mobile/view/settings/SettingsTileCustomURL.dart';
-import 'package:da_kanji_mobile/view/settings/SettingsTileDictionaryOptions.dart';
 import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
@@ -81,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: settings.customURL,
                         enabled: settings.selectedDictionary == settings.dictionaries[3],
                         hintText: LocaleKeys.SettingsScreen_custom_url_hint.tr(),
-                        icon: Icons.api_outlined,
+                        icon: Icons.info_outline,
                         onChanged: (value) {
                           settings.customURL = value;
                           settings.save();
@@ -171,15 +169,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
               
                       Container(height: MediaQuery.of(context).size.height*0.1,),
-                      ///////////////////////////////////////////
-                      
-                      SettingsTileCustomURL(),
-                      
-                      
-                      
-              
-                      
-                      //SettingsTileLanguage(),
                     ],
                   ),
                 ),

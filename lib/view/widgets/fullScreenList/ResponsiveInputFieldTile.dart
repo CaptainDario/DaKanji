@@ -74,9 +74,10 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
                   )
                 ),
               ),
+              SizedBox(width: width*0.05,),
               Center(
                 child: Container(
-                  height: tileHeight*0.6,
+                  height: tileHeight*0.75,
                   child: FittedBox(
                     child: IconButton(
                       onPressed: () {
