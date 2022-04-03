@@ -1,4 +1,4 @@
-name: 'nightly artifacts cleanup'
+name: 'Delete all artifacts'
 on:
   workflow_dispatch:
 
@@ -6,7 +6,7 @@ jobs:
   delete-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: kolpav/purge-artifacts-action@f7d2508
+      - uses: kolpav/purge-artifacts-action@f7d250863e189b08fbab5e8c59aabbbf900c6b36
         with:
           token: $
           expire-in: 7days # Set this to 0 to delete all artifacts
