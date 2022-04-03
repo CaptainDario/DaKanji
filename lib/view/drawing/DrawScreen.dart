@@ -32,8 +32,10 @@ class DrawScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
+  ///
+  final bool includeTutorial;
 
-  DrawScreen(this.openedByDrawer, this.includeHeroes);
+  DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -68,7 +70,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null) {
+      if (onboarding != null && 
+        GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
         onboarding.showWithSteps(
           drawScreenTutorialIndexes[0], 
           drawScreenTutorialIndexes);

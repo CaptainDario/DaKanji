@@ -189,7 +189,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/onboarding":
             return switchScreen(OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true));
+            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
