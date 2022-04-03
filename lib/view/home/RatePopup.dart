@@ -16,8 +16,7 @@ import 'package:da_kanji_mobile/helper/reviews.dart';
 /// enables the option for the user to not show the rate popup again.
 void showRatePopup(BuildContext context, bool hasDoNotShowOption){
 
-  
-  GetIt.I<UserData>().rateDialogueWasShown = true;
+
 
   AwesomeDialog(
     context: context,

@@ -9,14 +9,11 @@ class UserData{
   /// How often was the app opened by the user.
   late int _appOpenedTimes;
 
-  /// Did the user already chose to not the the rate dialogue again
+  /// Did the user already chose to not see the rate dialogue again
   late bool doNotShowRateAgain;
 
   /// The version of the app which was used last time
   late String _versionUsed;
-
-  /// if the rate dialogue was already shown in this app life cycle
-  bool rateDialogueWasShown = false;
 
   /// should the showcase of the draw screen be shown
   late bool showShowcaseDrawing;
@@ -65,20 +62,21 @@ class UserData{
     print("The app was opened for the ${_appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-    //VERSION = "0.0.0";
+    //VERSION = "0.0.0+0";
     print("used: $versionUsed now: $VERSION");
     if(versionUsed != VERSION && appOpenedTimes > 1){
       // show the changelog
       showChangelog = true;
       _versionUsed = VERSION;
 
+      String v = VERSION.replaceRange(VERSION.indexOf("+"), VERSION.length, "");
       // this version has new features for drawing screen => show tutorial
-      if(DRAWING_SCREEN_NEW_FEATURES.contains(VERSION)){
+      if(DRAWING_SCREEN_NEW_FEATURES.contains(v)){
         showShowcaseDrawing = true;
       }
 
       // this version has new onboarding pages
-      if(ONBOARDING_NEW_PAGES.contains(VERSION)){
+      if(ONBOARDING_NEW_PAGES.contains(v)){
         showOnboarding = true;
       }
     }
@@ -90,13 +88,13 @@ class UserData{
     }
 
     // should a rate popup be shown
-    if (doNotShowRateAgain && rateDialogueWasShown && 
-      appOpenedTimes > MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE 
-      && appOpenedTimes % 10 == 0)
+    if (!doNotShowRateAgain && appOpenedTimes % 10 == 0){
+      print("show rate dialogue");
       showRatePopup = true;
+    }
 
     // debugging onboarding, changelog, rate popup
-    showOnboarding = false;
+    //showOnboarding = false;
     //showChangelog = true;
     //showRatePopup = true;
 

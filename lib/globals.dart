@@ -16,7 +16,7 @@ String VERSION = "";
 const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 51;
 /// all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
-List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0"];
+List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
 // ignore: non_constant_identifier_names
 List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];

@@ -246,9 +246,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Container(
-                                padding: EdgeInsets.fromLTRB(_drawerWidth*0.05, _drawerWidth*0.05, 0, 0),
+                                padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
                                 child: Image(
-                                  height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
+                                  width: _drawerWidth * 0.6,
+                                  //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
                                   image: AssetImage("assets/images/icons/banner.png"),
                                 ),
                               ),

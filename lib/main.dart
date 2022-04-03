@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,7 +75,7 @@ Future<void> main() async {
 Future<void> init() async {
   
   // NOTE: uncomment to clear the SharedPreferences
-  await clearPreferences();
+  //await clearPreferences();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
@@ -164,10 +165,15 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => Onboarding(
               steps: tutorialSteps,
-              globalOnboarding: true,
-              autoSizeTexts: true,
+              //globalOnboarding: true,
+              //autoSizeTexts: true,
               onChanged: (int index){
                 print("Tutorial step: ${index}");
+                if(index == drawScreenTutorialIndexes.last){
+                  print("DrawScreen tutorial done, saving...");
+                  GetIt.I<UserData>().showShowcaseDrawing = false;
+                  GetIt.I<UserData>().save();
+                }
               },
               child: screen,
             ),

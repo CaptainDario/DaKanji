@@ -58,7 +58,13 @@ class AboutScreen extends StatelessWidget {
                 child: MarkdownBody(
                   data: about,
                   styleSheet: MarkdownStyleSheet(
-                    a:TextStyle( color: Theme.of(context).highlightColor)
+                    a: TextStyle( 
+                      color: Theme.of(context).highlightColor,
+                      fontSize: 20,
+                    ),
+                    p: TextStyle( 
+                      fontSize: 20,
+                    )
                   ),
                   onTapLink: (text, url, title) {
                     
