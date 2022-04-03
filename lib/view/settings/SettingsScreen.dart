@@ -39,10 +39,25 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
 
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     
-    double screenWidth = MediaQuery.of(context).size.width;
+
 
     return Scaffold(
       body: DaKanjiDrawer(
@@ -54,6 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Consumer<Settings>(
             builder: (context, settings, child) {
               return SingleChildScrollView(
+                controller: scrollController,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -169,7 +185,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ],
                       ),
               
-                      Container(height: MediaQuery.of(context).size.height*0.1,),
                     ],
                   ),
                 ),
