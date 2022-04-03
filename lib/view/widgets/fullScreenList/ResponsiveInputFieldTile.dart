@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
-
-import 'package:da_kanji_mobile/globals.dart';
-
 
 
 class ResponsiveInputFieldTile extends StatefulWidget {
@@ -19,7 +15,7 @@ class ResponsiveInputFieldTile extends StatefulWidget {
     }
   ) : super(key: key);
 
-  /// Is the Inputfield enabled
+  /// Is the Input field enabled
   final bool enabled;
   /// the icon for the button to press
   final IconData icon;
