@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: kolpav/purge-artifacts-action@f7d250863e189b08fbab5e8c59aabbbf900c6b36
         with:
-          token: $
+          token: $GITHUB_TOKEN
           expire-in: 7days # Set this to 0 to delete all artifacts
