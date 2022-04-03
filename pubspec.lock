@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   awesome_dialog:
     dependency: "direct main"
     description:
@@ -282,14 +289,14 @@ packages:
       name: in_app_review
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.4"
   in_app_review_platform_interface:
     dependency: transitive
     description:
       name: in_app_review_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -365,6 +372,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  onboarding_overlay:
+    dependency: "direct main"
+    description:
+      name: onboarding_overlay
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   package_config:
     dependency: transitive
     description:
@@ -470,13 +484,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  responsive_framework:
-    dependency: "direct main"
-    description:
-      name: responsive_framework
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.7"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -622,13 +629,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  tutorial_coach_mark:
-    dependency: "direct main"
-    description:
-      path: "plugins/tutorial_coach_mark"
-      relative: true
-    source: path
-    version: "1.2.1"
   typed_data:
     dependency: transitive
     description:

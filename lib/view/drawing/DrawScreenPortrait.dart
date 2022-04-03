@@ -23,30 +23,34 @@ class DrawScreenPortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  Widget layout = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        drawingCanvas,
-        SizedBox(height: 30,),
-        Container(
-          width: canvasSize,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              undoButton,
-              multiCharSearch,
-              clearButton
-            ],
-          ),
-        ),
-        SizedBox(height: 20,),
-        predictionButtons
-      ]
-    ),
-  );
 
-  return layout;
+    double height = MediaQuery.of(context).size.height;
+
+    Widget layout = Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(height: height*0.02,),
+          drawingCanvas,
+          SizedBox(height: height*0.04,),
+          Container(
+            width: canvasSize,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                undoButton,
+                multiCharSearch,
+                clearButton
+              ],
+            ),
+          ),
+          SizedBox(height: height*0.02,),
+          predictionButtons
+        ]
+      ),
+    );
+
+    return layout;
   }
 }

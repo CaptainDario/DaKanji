@@ -7,7 +7,7 @@ import 'package:da_kanji_mobile/view/ControllableLottieAnimation.dart';
 
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/Changelog.dart';
+import 'package:da_kanji_mobile/model/Changelog.dart';
 
 
 

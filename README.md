@@ -40,7 +40,7 @@ But this is only the beginning, in the coming months the feature list will keep 
 ## Usage
 
 All major parts of the app include a tutorial.
-But if you want to learn more or prefer a text guid,
+But if you want to learn more or prefer a text guide,
   take a look at the [manual](./manual/manual.md) or open the manual screen in the app.
 
 ## Contributing

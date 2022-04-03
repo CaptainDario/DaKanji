@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPortrait.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenLandscape.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPortraitWithWebview.dart';

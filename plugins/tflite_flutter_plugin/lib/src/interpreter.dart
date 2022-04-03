@@ -310,7 +310,5 @@ class Interpreter {
 
   bool get isDeleted => _deleted;
 
-  //TODO: (JAVA) void modifyGraphWithDelegate(Delegate delegate)
-  //TODO: (JAVA) void resetVariableTensors()
 
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 

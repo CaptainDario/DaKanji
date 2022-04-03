@@ -1,7 +1,6 @@
 library my_prj.globals;
 
-import 'model/core/ShowcaseTuple.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 
 // the title of the app
@@ -25,10 +24,6 @@ List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
 const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 
 
-// showcase view keys
-// ignore: non_constant_identifier_names
-List<ShowcaseTuple> SHOWCASE_DRAWING = [];
-
 // is the app running to test the drawscreen
 bool IS_TESTING_DRAWSCREEN = false;
 // is the app running to test the onboarding
@@ -36,8 +31,9 @@ bool IS_TESTING_ONBOARDING = false;
 
 
 //about page
-const GITHUB_ISSUES = "https://github.com/CaptainDario/DaKanji/issues/new";
-const GITHUB_RELEASES_PAGE = "https://github.com/CaptainDario/DaKanji/releases";
+const GITHUB_REPO_URL = "https://github.com/CaptainDario/DaKanji";
+const GITHUB_ISSUES = GITHUB_REPO_URL + "/issues/new";
+const GITHUB_RELEASES_PAGE = GITHUB_REPO_URL + "/releases";
 
 const DISCORD_INVITE = "https://discord.com/invite/gdqaux3r4P";
 
@@ -51,11 +47,12 @@ const APPSTORE_ID = "1593741764";
 const APPSTORE_PAGE = "https://apps.apple.com/de/app/DaKanji/id" + APPSTORE_ID;
 const DAAPPLAB_APPSTORE_PAGE = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
-const MICROSOFT_STORE_PAGE = "";
+const MICROSOFT_STORE_ID = "9n08051t2xtv";
+const MICROSOFT_STORE_PAGE = "https://www.microsoft.com/p/dakanji/9n08051t2xtv?SilentAuth=1&wa=wsignin1.0&rtc=2&activetab=pivot:overviewtab";
 
-const FLATHUB_PAGE = "";
+const SNAPSTORE_PAGE = "https://snapcraft.io/dakanji";
 
-const MAC_STORE = "";
+//const MACSTORE_PAGE = "NONE";
 
 const TAKOBOTO_ID = "jp.takoboto";
 const AKEBI_ID = "com.craxic.akebifree";
@@ -69,3 +66,11 @@ const MIDORI_ID = "id385231773";
 const GOOGLE_TRANSLATE_ID = "com.google.android.apps.translate";
 
 const PRIVACY_POLICE = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
+
+
+/// AutoSizeGroup for the settings screen -> all list entries have same font size
+AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
+/// AutoSizeGroup for the drawer -> all list entries have same font size
+AutoSizeGroup drawerAutoSizeGroup = AutoSizeGroup();
+/// Global minimum font size for autosizing texts
+double GlobalMinFontSize = 8;

@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 
@@ -37,12 +37,11 @@ class DrawingCanvas extends StatefulWidget {
     this.height,
     this.strokes,
     this.margin,
-    Key key,
     {
     this.onFinishedDrawing,
     this.onDeletedLastStroke,
     this.onDeletedAllStrokes
-  }) : super(key: key);
+  });
 
   @override
   _DrawingCanvasState createState() => _DrawingCanvasState();
