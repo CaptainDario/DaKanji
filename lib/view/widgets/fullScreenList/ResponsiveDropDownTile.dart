@@ -1,7 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/view/settings/SettingsAutoSizeText.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -11,6 +13,7 @@ class ResponsiveDropDownTile extends StatefulWidget {
       required this.text,
       required this.value,
       required this.items,
+      this.translateItemTexts : false,
       this.onTap,
       this.autoSizeGroup,
       Key? key
@@ -21,8 +24,10 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final String text;
   /// the selected value
   final String value;
-  /// all items in the drop down list
+  /// the text which should be shown in the dropdown
   final List<String> items;
+  /// should the items be translate using easzlocalization
+  final bool translateItemTexts;
   /// callback which will be executed by every button press
   final Function (String? value)? onTap;
   /// The autoSizeGroup for this Tile
@@ -35,8 +40,6 @@ class ResponsiveDropDownTile extends StatefulWidget {
 }
 
 class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,7 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                     child: Container(
                       width: MediaQuery.of(context).size.width*0.35,
                       child: AutoSizeText(
-                        text, 
+                        widget.translateItemTexts ? text.tr() : text, 
                         maxLines: 2,
                         minFontSize: GlobalMinFontSize,
                         overflow: TextOverflow.ellipsis,

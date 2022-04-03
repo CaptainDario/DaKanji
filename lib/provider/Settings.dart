@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
+
 
 
 class Settings with ChangeNotifier {
@@ -32,8 +34,14 @@ class Settings with ChangeNotifier {
   /// System will match the settings of the system.
   String _selectedTheme = "";
 
-  /// A list with all available themes.
-  List<String> themes = ["light", "dark", "system"];
+  ///
+  List<String> themesLocaleKeys = [
+    LocaleKeys.General_light,
+    LocaleKeys.General_dark,
+    LocaleKeys.General_system
+  ];
+  /// with all available themes.
+  //List<String> themes = ["light", "dark", "system"];
   
   /// A Map from the string of a theme to the ThemeMode of the theme.
   Map<String, ThemeMode> themesDict = {
@@ -194,7 +202,7 @@ class Settings with ChangeNotifier {
     
     backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
     customURL = prefs.getString('customURL') ?? '';
-    _selectedTheme = prefs.getString('selectedTheme') ?? themes[2];
+    _selectedTheme = prefs.getString('selectedTheme') ?? themesLocaleKeys[2];
     selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
   }
 }

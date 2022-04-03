@@ -121,10 +121,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // theme
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_theme.tr(), 
-                        value: settings.selectedTheme, 
-                        items: settings.themes,
+                        value: settings.selectedTheme,
+                        items: settings.themesLocaleKeys,
+                        translateItemTexts: true,
                         onTap: (value) {
-                          settings.selectedTheme = value ?? settings.themes[0];
+                          settings.selectedTheme = value ?? settings.themesLocaleKeys[0];
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -132,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // language
                       ResponsiveDropDownTile(
                         text: LocaleKeys.General_language.tr(), 
-                        value: context.locale.toString(), 
+                        value: context.locale.toString(),
                         items: context.supportedLocales.map((e) => e.toString()).toList(),
                         onTap: (newValue) {
                           if(newValue != null)
@@ -163,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.backendCNNSingleChar, 
-                            items: settings.inferenceBackends
+                            items: settings.inferenceBackends,
                           )
                         ],
                       ),
