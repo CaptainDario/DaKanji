@@ -59,8 +59,8 @@ Here is a list of a few things which would help this project:
 
 I want to thank all the people involved in this project,
 
-* development:
-  * Dictionary:
+* development
+  * Dictionary
     * Thank you so much michalpatryk, you are a great help
 * Design
   * icon / banner
@@ -71,12 +71,17 @@ I want to thank all the people involved in this project,
 * Modified Packages: [bitmap](https://github.com/renancaraujo/bitmap), [snappable](https://github.com/MarcinusX/snappable)
 * A big shout out to all testers!
   * Android
-    * pa9eup, tsumugii_12
+    * pa9eup, tsumugii_12, Francesco S.
   * iOS
     * Nurellina
   * Windows:
     * michalpatryk, pa9eup
   * Linux:
-    * Your name could be written here
+    * Francesco S.
   * MacOS
     * Your name could be written here
+* Translations:
+  * Polish
+    * michalpatryk
+  * Spanish
+    * Francesco S.
