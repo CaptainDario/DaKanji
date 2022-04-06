@@ -7,13 +7,13 @@ new Features:
 
 - Windows support
 - Onboarding
-- New UI design
+- New UI design (responsive!)
 - Use a web dictionary side by side with drawing screen (mobile only)
 
 Changes:
 
-- Updated Flutter to 2.10.0 (stable windows support)
-- Updated dart to 2.16.0 (null safety)
+- Updated Flutter to 2.10.x (stable windows support)
+- Updated dart to 2.16.x (null safety)
 
 Fixed:
 

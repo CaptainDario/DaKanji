@@ -61,7 +61,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> de = {
   "AboutScreen": {
-    "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE) und [Windows](MICROSOFT_STORE)\nDu findest alle releases auch auf (GitHub.)[GITHUB_RELEASES_PAGE]\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+    "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) und [Windows](MICROSOFT_STORE_PAGE)\nDu findest alle releases auch auf [GitHub.](GITHUB_RELEASES_PAGE)\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
     "show_changelog": "Zeig mir alle Änderungen.",
     "software_informations_button": "Softwareinformationen",
     "title": "Über die App"
@@ -112,7 +112,7 @@ static const Map<String,dynamic> de = {
     "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inferenz Backend (die App muss neugestartet gestartet)",
+    "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Benutzerdefiniertes URL format",
@@ -123,8 +123,8 @@ static const Map<String,dynamic> de = {
     "invert_short_long_press": "Invertiere kurzes und langes drücken",
     "long_press_opens": "Langes drücken öffnet",
     "miscellaneous_title": "Verschiedenes",
-    "show_tutorial": "Zeige Tutorial erneut (startet app neu)",
-    "theme": "Thema (@:restarts_app)",
+    "show_tutorial": "Zeige Tutorials erneut (@:General.restarts_app)",
+    "theme": "Thema (@:General.restarts_app)",
     "title": "Einstellungen",
     "use_default_browser_for_online_dictionaries": "Benutze einen webview für web Wörterbücher"
   },
@@ -135,7 +135,7 @@ static const Map<String,dynamic> de = {
 };
 static const Map<String,dynamic> en = {
   "AboutScreen": {
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE), [Windows](MICROSOFT_STORE).\nYou can also find all releases on (GitHub.)[GITHUB_RELEASES_PAGE].\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE), [Windows](MICROSOFT_STORE_PAGE).\nYou can also find all releases on [GitHub.](GITHUB_RELEASES_PAGE).\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -186,7 +186,7 @@ static const Map<String,dynamic> en = {
     "Onboarding_2_title": "Lookup characters and words"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inference backend (the app needs to be restarted)",
+    "advanced_settings_drawing_inference_backend": "Inference backend (manual restart required)",
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
@@ -197,8 +197,8 @@ static const Map<String,dynamic> en = {
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
     "miscellaneous_title": "Miscellaneous",
-    "show_tutorial": "Reshow tutorial (restarts app)",
-    "theme": "theme (@:restarts_app)",
+    "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
+    "theme": "theme (@:General.restarts_app)",
     "title": "Settings",
     "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
   },
@@ -390,9 +390,9 @@ static const Map<String,dynamic> jp = {
 static const Map<String,dynamic> localizations = {
   "AboutScreen": {
     "about_text": {
-      "en": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all 漢字 from 漢字検定, ひらがな (also historical ones: ゑ, etc.) and カタカナ (also historical ones: ヱ, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE), [Windows](MICROSOFT_STORE).\nYou can also find all releases on (GitHub.)[GITHUB_RELEASES_PAGE].\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
-      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nMit DaKanji kann man handgeschriebene Zeichen nachschlagen. Im Moment können alle 漢字 von 漢字検定, ひらがな (auch Historische: ゑ, etc.) und カタカナ (auch Historische: ヱ, etc.) erkannt werden.\nIn der Zukunft wird der Funktionsumfang aber stark erweitert werden.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE) und [Windows](MICROSOFT_STORE)\nDu findest alle releases auch auf (GitHub.)[GITHUB_RELEASES_PAGE]\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine E-Mail an daapplab@gmail.com.\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
-      "pl": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nAktualnie jest ono w stanie rozpoznać pismo odręczne takie jak 漢字 z 漢字検定 oraz ひらがな (również tą historyczną: ゑ, itp.) i カタカナ. \nFunkcjonalność aplikacji zostanie poprawiona w najbliższych wydaniach. DaKanji dostępne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE) i [Windows](MICROSOFT_STORE).\n\nSprawdź inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJeżeli napotkasz problemy korzystając ztej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj](GITHUB_ISSUES), dołącz na [serwer discord](DISCORD_SERVER) albo wyślij e-mail do daapplab@gmail.com. \nPolityka prywatności dostępna jest [tutaj](PRIVACY_POLICE)"
+      "en": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE), [Windows](MICROSOFT_STORE_PAGE).\nYou can also find all releases on [GitHub.](GITHUB_RELEASES_PAGE).\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nDaKanji ist verfügbar für, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) und [Windows](MICROSOFT_STORE_PAGE)\nDu findest alle releases auch auf [GitHub.](GITHUB_RELEASES_PAGE)\n\nSchau dir auch meine [anderen Apps](DAAPPLAB_STORE_PAGE) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue](GITHUB_ISSUES),\ntritt dem [Discordserver](DISCORD_SERVER) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier](PRIVACY_POLICE) gefunden werden.",
+      "pl": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nAktualnie jest ono w stanie rozpoznać pismo odręczne takie jak 漢字 z 漢字検定 oraz ひらがな (również tą historyczną: ゑ, itp.) i カタカナ. \nFunkcjonalność aplikacji zostanie poprawiona w najbliższych wydaniach. DaKanji dostępne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) i [Windows](MICROSOFT_STORE_PAGE).\n\nSprawdź inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJeżeli napotkasz problemy korzystając ztej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj](GITHUB_ISSUES), dołącz na [serwer discord](DISCORD_SERVER) albo wyślij e-mail do daapplab@gmail.com. \nPolityka prywatności dostępna jest [tutaj](PRIVACY_POLICE)"
     },
     "show_changelog": {
       "en": "Show me the complete changelog.",
@@ -629,14 +629,14 @@ static const Map<String,dynamic> localizations = {
       "pl": "Inne"
     },
     "show_tutorial": {
-      "en": "Reshow tutorial (restarts app)",
-      "de": "Zeige Tutorial erneut (startet app neu)",
-      "pl": "Powtórz tutorial (restartuje aplikacje)"
+      "en": "Reshow tutorials (@:General.restarts_app)",
+      "de": "Zeige Tutorials erneut (@:General.restarts_app)",
+      "pl": "Powtórz tutorial (@:General.restarts_app)"
     },
     "theme": {
-      "en": "theme (@:restarts_app)",
-      "de": "Thema (@:restarts_app)",
-      "pl": "Motyw(@:restarts_app)"
+      "en": "theme (@:General.restarts_app)",
+      "de": "Thema (@:General.restarts_app)",
+      "pl": "Motyw(@:General.restarts_app)"
     },
     "title": {
       "en": "Settings",
@@ -659,8 +659,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywany do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Teraz musimy podmienić jedynie znak na symbol zastępczy. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
     "advanced_settings_drawing_inference_backend": {
-      "en": "Inference backend (the app needs to be restarted)",
-      "de": "Inferenz Backend (die App muss neugestartet gestartet)",
+      "en": "Inference backend (manual restart required)",
+      "de": "Inferenz Backend (manueller neugestartet notwendig)",
       "pl": "System wnioskowania (aplikacja musi zostać zrestartowana)"
     },
     "advanced_settings_title": {
@@ -684,7 +684,7 @@ static const Map<String,dynamic> localizations = {
 };
 static const Map<String,dynamic> pl = {
   "AboutScreen": {
-    "about_text": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nAktualnie jest ono w stanie rozpoznać pismo odręczne takie jak 漢字 z 漢字検定 oraz ひらがな (również tą historyczną: ゑ, itp.) i カタカナ. \nFunkcjonalność aplikacji zostanie poprawiona w najbliższych wydaniach. DaKanji dostępne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE) i [Windows](MICROSOFT_STORE).\n\nSprawdź inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJeżeli napotkasz problemy korzystając ztej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj](GITHUB_ISSUES), dołącz na [serwer discord](DISCORD_SERVER) albo wyślij e-mail do daapplab@gmail.com. \nPolityka prywatności dostępna jest [tutaj](PRIVACY_POLICE)",
+    "about_text": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nAktualnie jest ono w stanie rozpoznać pismo odręczne takie jak 漢字 z 漢字検定 oraz ひらがな (również tą historyczną: ゑ, itp.) i カタカナ. \nFunkcjonalność aplikacji zostanie poprawiona w najbliższych wydaniach. DaKanji dostępne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) i [Windows](MICROSOFT_STORE_PAGE).\n\nSprawdź inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJeżeli napotkasz problemy korzystając ztej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj](GITHUB_ISSUES), dołącz na [serwer discord](DISCORD_SERVER) albo wyślij e-mail do daapplab@gmail.com. \nPolityka prywatności dostępna jest [tutaj](PRIVACY_POLICE)",
     "show_changelog": "Pokaż pełną historię zmian",
     "software_informations_button": "Informacje o oprogramowaniu",
     "title": "O aplikacji"
@@ -744,8 +744,8 @@ static const Map<String,dynamic> pl = {
     "invert_short_long_press": "Odwróć długie/krótkie kliknięcie",
     "long_press_opens": "Długie kliknięcie otwiera",
     "miscellaneous_title": "Inne",
-    "show_tutorial": "Powtórz tutorial (restartuje aplikacje)",
-    "theme": "Motyw(@:restarts_app)",
+    "show_tutorial": "Powtórz tutorial (@:General.restarts_app)",
+    "theme": "Motyw(@:General.restarts_app)",
     "title": "Ustawienia",
     "use_default_browser_for_online_dictionaries": "Użyj webview dla słowników internetowych"
   },

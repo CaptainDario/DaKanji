@@ -1,6 +1,6 @@
+import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
@@ -9,24 +9,26 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/model/core/LightTheme.dart';
-import 'package:da_kanji_mobile/model/core/DarkTheme.dart';
-import 'package:da_kanji_mobile/model/core/DrawingInterpreter.dart';
-import 'package:da_kanji_mobile/model/core/SettingsArguments.dart';
-import 'package:da_kanji_mobile/model/services/DeepLinks.dart';
+import 'package:da_kanji_mobile/show_cases/tutorial.dart';
+import 'package:da_kanji_mobile/model/LightTheme.dart';
+import 'package:da_kanji_mobile/model/DarkTheme.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
+import 'package:da_kanji_mobile/model/SettingsArguments.dart';
+import 'package:da_kanji_mobile/helper/DeepLinks.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/model/Changelog.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenState.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/provider/Changelog.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
+import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/provider/DrawerListener.dart';
-import 'package:da_kanji_mobile/provider/UserData.dart';
-import 'package:da_kanji_mobile/provider/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/view/home/HomeScreen.dart';
-import 'package:da_kanji_mobile/view/SettingsScreen.dart';
+import 'package:da_kanji_mobile/view/settings/SettingsScreen.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
@@ -43,19 +45,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
+
   await init();
+  
   runApp(
     Phoenix(
       child: EasyLocalization(
-        supportedLocales: List.generate(
-          SUPPORTED_LANGUAGES.length,
-          (index) => Locale(SUPPORTED_LANGUAGES[index])
-        ),
+        supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
         path: 'assets/translations',
         fallbackLocale: Locale('en'),
         useFallbackTranslations: true,
         useOnlyLangCode: true,
         assetLoader: CodegenLoader(),
+        
+        saveLocale: true,
         child: DaKanjiApp()
       ),
     ),
@@ -106,6 +109,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Changelog>(Changelog());
   await GetIt.I<Changelog>().init();
   GetIt.I.registerSingleton<UserData>(UserData());
+  await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
 
   // inference services
@@ -120,7 +124,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 }
 
-///
+/// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
   setWindowMinSize(Size(480, 720));
   setWindowTitle(APP_TITLE);
@@ -141,40 +145,42 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
     linkSub?.cancel();
     super.dispose();
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: () {
-        // if there was no language set use the one from the OS
-        if(GetIt.I<Settings>().selectedLocale?.languageCode == "null"){
-          GetIt.I<Settings>().selectedLocale = context.locale;
-          GetIt.I<Settings>().save();
-        }
-        return GetIt.I<Settings>().selectedLocale;
-      } (),
+      locale: context.locale,
       
       onGenerateRoute: (settings) {
-PageRouteBuilder switchScreen (Widget screen) =>
-  PageRouteBuilder(
-    pageBuilder: (_, __, ___) => ResponsiveWrapper.builder(
-      screen,
-      defaultScale: true,
-      breakpoints: [
-        const ResponsiveBreakpoint.resize(450, name: MOBILE),
-        const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-        const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-        const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-        const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-      ],
-    ),
-    settings: settings,
-    transitionsBuilder: (_, a, __, c) =>
-      FadeTransition(opacity: a, child: c)
-  );
+        PageRouteBuilder switchScreen (Widget screen) =>
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => Onboarding(
+              steps: tutorialSteps,
+              //globalOnboarding: true,
+              //autoSizeTexts: true,
+              onChanged: (int index){
+                print("Tutorial step: ${index}");
+                if(index == drawScreenTutorialIndexes.last){
+                  print("DrawScreen tutorial done, saving...");
+                  GetIt.I<UserData>().showShowcaseDrawing = false;
+                  GetIt.I<UserData>().save();
+                }
+              },
+              child: screen,
+            ),
+            settings: settings,
+            transitionsBuilder: (_, a, __, c) =>
+              FadeTransition(opacity: a, child: c)
+          );
 
         // check type and extract arguments
         SettingsArguments args;
@@ -212,6 +218,7 @@ PageRouteBuilder switchScreen (Widget screen) =>
       //screens
       home: HomeScreen(),
       //home: TestScreen()
+
     );
   }
 }

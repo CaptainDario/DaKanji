@@ -2,8 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import 'package:get_it/get_it.dart';
+
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 
@@ -34,12 +37,11 @@ class DrawingCanvas extends StatefulWidget {
     this.height,
     this.strokes,
     this.margin,
-    Key key,
     {
     this.onFinishedDrawing,
     this.onDeletedLastStroke,
     this.onDeletedAllStrokes
-  }) : super(key: key);
+  });
 
   @override
   _DrawingCanvasState createState() => _DrawingCanvasState();
@@ -52,17 +54,13 @@ class _DrawingCanvasState extends State<DrawingCanvas>
   /// the DrawingPainter instance which defines the canvas to drawn on.
   late DrawingPainter _canvas;
   /// the ID of the pointer which is currently drawing
-   int? _pointerID;
+  int? _pointerID;
   /// Keep track of if the pointer moved
   bool pointerMoved = false;
   /// Animation controller of the delete stroke animation
   late AnimationController _canvasController;
   /// should the app run in dark mode.
   late bool darkMode;
-  /// if the animation to delete the last stroke is currently running
-  bool deletingLastStroke = false;
-  /// if the animation to delete all strokes is currently running
-  bool deletingAllStrokes = false;
     
 
 
@@ -79,9 +77,10 @@ class _DrawingCanvasState extends State<DrawingCanvas>
     _canvasController.addStatusListener((status) async {
       // when the animation finished 
       if(status == AnimationStatus.dismissed){
-        if(deletingLastStroke){
+        if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke){
+          print("deleted last stroke");
           widget.strokes.removeLastStroke();
-          deletingLastStroke = false;
+          GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
           _canvasController.value = 1.0;
 
           // execute the callback once the stroke was deleted
@@ -97,9 +96,9 @@ class _DrawingCanvasState extends State<DrawingCanvas>
           }
         }
 
-        if(deletingAllStrokes){
+        if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes){
           widget.strokes.removeAllStrokes();
-          deletingAllStrokes = false;
+          GetIt.I<DrawScreenState>().strokes.deletingAllStrokes = false;
           _canvasController.value = 1.0;
           
           // execute the callback once all strokes were deleted
@@ -110,6 +109,12 @@ class _DrawingCanvasState extends State<DrawingCanvas>
       }
     });
 
+  }
+
+  @override
+  void dispose() {
+    _canvasController.dispose();
+    super.dispose();
   }
 
   @override
@@ -127,8 +132,8 @@ class _DrawingCanvasState extends State<DrawingCanvas>
       currentDeleteLastprogress = _canvasController.value;
       _canvasController.reverse(from: 1.0);
 
-      deletingAllStrokes = true;
-      deletingLastStroke = false;
+      GetIt.I<DrawScreenState>().strokes.deletingAllStrokes = true;
+      GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
     }
     return Container(
       height: widget.height,
@@ -138,15 +143,15 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         // started drawing
         onPointerDown: (details) async {
           // finish deleting stroke(s) when user starts drawing
-          if(deletingLastStroke){
+          if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke){
             widget.strokes.removeLastStroke();
             _canvasController.value = 1.0;
-            deletingLastStroke = false;
+            GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
           }
-          if(deletingAllStrokes){
+          if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes){
             widget.strokes.removeAllStrokes();
             _canvasController.value = 1.0;
-            deletingAllStrokes = false;
+            GetIt.I<DrawScreenState>().strokes.deletingAllStrokes = false;
           }
 
           // allow only one pointer at a time
@@ -189,7 +194,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
                 _canvas = DrawingPainter(
                   widget.strokes.path, 
                   darkMode, Size(widget.width, widget.height),
-                  deletingLastStroke ? 
+                  GetIt.I<DrawScreenState>().strokes.deletingLastStroke ? 
                     _canvasController.value : currentDeleteLastprogress
                 );
                 Widget canvas = CustomPaint(
@@ -197,7 +202,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
                     painter: _canvas,
                 );
 
-                if(deletingAllStrokes)
+                if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes)
                   return Opacity(
                     opacity: _canvasController.value,
                     child: canvas
@@ -224,25 +229,27 @@ class _DrawingCanvasState extends State<DrawingCanvas>
 
   /// Handle all cases how the DeleteLastAnimation could be triggered
   void handleDeleteLastAnimation() async {
-    if(widget.strokes.playDeleteLastStrokeAnimation && !deletingAllStrokes){
+
+    if(widget.strokes.playDeleteLastStrokeAnimation && !GetIt.I<DrawScreenState>().strokes.deletingAllStrokes){
       widget.strokes.playDeleteLastStrokeAnimation = false;
       
       // start deleting the last stroke if the animation is not already running
-      if(!deletingLastStroke){
+      if(!GetIt.I<DrawScreenState>().strokes.deletingLastStroke){
         _canvasController.reverse(from: 1.0); 
-        deletingLastStroke = true;
+        GetIt.I<DrawScreenState>().strokes.deletingLastStroke = true;
       }
       // if the animation is already running delete a stroke
-      else if(deletingLastStroke && widget.strokes.strokeCount > 0){
+      else if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke && widget.strokes.strokeCount > 0){
         widget.strokes.removeLastStroke();
         _canvasController.reverse(from: 1.0);
         
         // and stop the animation if it was the last stroke
         if(widget.strokes.strokeCount == 0){
-          deletingLastStroke = false;
+          GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
           _canvasController.value = 1.0;
         }
       }
+      
     }
   }
 

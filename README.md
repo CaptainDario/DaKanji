@@ -19,13 +19,16 @@
 <table/>
 
 
-
 ## What is this
 
 DaKanji helps students of the Japanese language and people who use it.
-Currently, it can recognize 6500+ characters (Kanji, Hiragana, Katakana, Romaji, Arabic Numbers) which the user draws by hand.
-But the feature set will be vastly improved in the coming releases. <br/>
-For more details about the features take a look at the [usage section](#usage).
+
+The current feature set:
+
+* Recognize hand drawn single characters (Kana, 6500+ Kanji)
+* Available for Android, MacOS, Linux, iOS, Windows
+
+But this is only the beginning, in the coming months the feature list will keep growing.
 </br>
 
 ## What the users say
@@ -34,34 +37,31 @@ For more details about the features take a look at the [usage section](#usage).
 * "Well thank you for this software! It seems to try and guess in a more "guess-y" way than jisho and even Google which is usually pretty good at guessing, and it just saved me today!" - princess_daphie
 * "Amazing. I can write kanji messier than a professor and it still picks it up. Very reliable." - Seth Kitchens
 
-## Getting started
-
-The easiest way is to download the app for android from the PlayStore.
-You can also download the latest release from the [releases page](https://github.com/CaptainDario/DaKanji-Mobile/releases).
 ## Usage
 
-In this section the features of the app are explained in more detail.
-
-### Handwritten kanji recognition
-
-The user can draw a character in the UI and the app will predict which character was drawn.
-This prediction can then be opened in a dictionary of choice. A dictionary can be chosen in the settings.
-Those dictionaries include translation apps, app dictionaries, and web dictionaries.</br>
-Currently, 6500+ characters are supported. 
-All supported characters can be found [here](https://github.com/CaptainDario/DaKanji-Mobile/blob/main/assets/labels_CNN_kanji_only.txt).</br>
+All major parts of the app include a tutorial.
+But if you want to learn more or prefer a text guide,
+  take a look at the [manual](./manual/manual.md) or open the manual screen in the app.
 
 ## Contributing
 
 <a href="https://discord.gg/gdqaux3r4P"><img src="https://discordapp.com/api/guilds/852915748300783636/widget.png?style=banner2" width="25%"></a>
 
-All contributions are welcome! <br/>
+All contributions are welcome!
 Here is a list of a few things which would help this project:
+
 * For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel. All testing is much appreciated!
 * If you have ideas how to improve this app [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
 * You found a bug? Please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues) too.
+* Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be
 
 ## Credits
 
+I want to thank all the people involved in this project,
+
+* development
+  * Dictionary
+    * Thank you so much michalpatryk, you are a great help
 * Design
   * icon / banner
     * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
@@ -71,7 +71,17 @@ Here is a list of a few things which would help this project:
 * Modified Packages: [bitmap](https://github.com/renancaraujo/bitmap), [snappable](https://github.com/MarcinusX/snappable)
 * A big shout out to all testers!
   * Android
-    * pa9eup, tsumugii_12
+    * pa9eup, tsumugii_12, Francesco S.
   * iOS
     * Nurellina
-
+  * Windows:
+    * michalpatryk, pa9eup
+  * Linux:
+    * Francesco S.
+  * MacOS
+    * Your name could be written here
+* Translations:
+  * Polish
+    * michalpatryk
+  * Spanish
+    * Francesco S.

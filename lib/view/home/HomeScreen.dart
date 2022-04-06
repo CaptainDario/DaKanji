@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/UserData.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/home/RatePopup.dart';
 import 'package:da_kanji_mobile/view/home/WhatsNewDialog.dart';
 
@@ -66,12 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
       else if(GetIt.I<UserData>().showOnboarding){
         Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
       }
-      // show a rating dialogue WITHOUT "do not show again"-option
-      else if(GetIt.I<UserData>().showRatePopup && appOpenedTimes < 31)
-        showRatePopup(context, false);
-      // show a rating dialogue WITH "do not show again"-option
-      else if(GetIt.I<UserData>().showRatePopup && appOpenedTimes > 31)
-        showRatePopup(context, true);
+      
+      else if(GetIt.I<UserData>().showRatePopup){
+        // show a rating dialogue WITHOUT "do not show again"-option
+        if(appOpenedTimes < MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE)
+          showRatePopup(context, false);
+        // show a rating dialogue WITH "do not show again"-option
+        else
+          showRatePopup(context, true);
+
+        GetIt.I<UserData>().showRatePopup = false;
+        GetIt.I<UserData>().save();
+      }
+        
       // otherwise open the default screen
       else{
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);

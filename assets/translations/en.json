@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nRight now it can recognize handwritten characters, all \u6f22\u5b57 from \u6f22\u5b57\u691c\u5b9a, \u3072\u3089\u304c\u306a (also historical ones: \u3091, etc.) and \u30ab\u30bf\u30ab\u30ca (also historical ones: \u30f1, etc.)\nBut the feature set will be vastly improved in the coming releases.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux](FLATHUB_PAGE), [Windows](MICROSOFT_STORE).\nYou can also find all releases on (GitHub.)[GITHUB_RELEASES_PAGE].\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an e-mail to daapplab@gmail.com.\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE), [Windows](MICROSOFT_STORE_PAGE).\nYou can also find all releases on [GitHub.](GITHUB_RELEASES_PAGE).\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -51,7 +51,7 @@
     "Onboarding_2_title": "Lookup characters and words"
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inference backend (the app needs to be restarted)",
+    "advanced_settings_drawing_inference_backend": "Inference backend (manual restart required)",
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
@@ -62,8 +62,8 @@
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
     "miscellaneous_title": "Miscellaneous",
-    "show_tutorial": "Reshow tutorial (restarts app)",
-    "theme": "theme (@:restarts_app)",
+    "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
+    "theme": "theme (@:General.restarts_app)",
     "title": "Settings",
     "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
   },

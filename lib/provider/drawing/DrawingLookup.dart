@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:da_kanji_mobile/model/helper/HandlePredictions.dart';
+import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
 
 
 

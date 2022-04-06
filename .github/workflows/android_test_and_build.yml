@@ -10,13 +10,23 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
+    secrets:
+      DA_KANJI_ML_RELEASES_TOKEN: 
+        required: true
+      KEY_PROPERTIES_KEY_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_STORE_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_KEY_ALIAS: 
+        required: true
+      KEYSTORE_BASE64: 
+        required: true
 
 env:
   JAVA_VERSION: "11.x"
-  FLUTTER_VERSION: "2.10.0"
+  FLUTTER_VERSION: "2.10.3"
   FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
-  JKS_PATH: "../../keys/DaKanjiRecognizer.jks"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -44,7 +54,7 @@ jobs:
       - name: Restore packages
         run: |
           flutter pub get
-          ./install.bat -d
+          sudo bash install.sh -d
         
       # download all TF lite files from the DaKanji-ML repo
       - name: Download release asset
@@ -62,23 +72,47 @@ jobs:
       #- name: Run integration tests
       #  run: flutter test .\integration_test\ -d windows
 
-      # Creating the key.properties file
-      - run: |
-          echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
-          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
-          echo storeFile=\${{env.JKS_PATH}} >> ${{env.PROPERTIES_PATH}}
-      # Decoding base64 key into a file
-      - run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ${{env.JKS_PATH}}
+      - name: Creating the key.properties file
+        run: |
+          echo keyPassword=\${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
+          echo storePassword=\${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo keyAlias=\${{ secrets.KEY_PROPERTIES_KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
+          echo storeFile=../../keys/DaKanjiRecognizer.jks >> ${{env.PROPERTIES_PATH}}
+
+      - name: Decoding base64 key into a file
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keys/DaKanjiRecognizer.jks
 
       - name: build apks for different architectures
-        run: flutter build apk --split-per-abi
+        run: |
+          flutter build apk --split-per-abi
+          ls build/app/outputs/apk/release/
 
-      - name: Archive production artifacts
+      - name: Archive arm64-v8a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android.zip
-          path: build/app/outputs/flutter-apk/
+          name: DaKanji_android_arm64-v8a.zip
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+
+      - name: Archive apk arm64-v7a
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_android_arm64-v7a.zip
+          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+
+      - name: Archive apk x86_64
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_android_x86_64.zip
+          path: build/app/outputs/apk/release/app-x86_64-release.apk
 
       - name: build app bundle
         run: flutter build appbundle
+
+      - name: Archive appbundle
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_android_bundle.zip
+          path: build/app/outputs/bundle/release/app-release.aab
+
+

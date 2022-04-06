@@ -24,10 +24,11 @@ class DrawScreenLandscape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Widget layout = LayoutGrid(
       columnSizes: [
         FixedTrackSize(canvasSize),
-        FixedTrackSize(10),
+        FixedTrackSize((MediaQuery.of(context).size.width*0.02).clamp(0, 10)),
         FixedTrackSize(canvasSize * 0.2), 
         FixedTrackSize(canvasSize * 0.2)
       ], 
