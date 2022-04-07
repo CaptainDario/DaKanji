@@ -1,8 +1,8 @@
   [Desktop Entry]
-  Name=dakanji
-  Comment=A cross platform app to learn the Japanese language.
+  Name=DaKanji
+  Comment=dakanji
   Exec=dakanji
-  Icon=assets/images/icons/icon.png # replace name to your app name
+  Icon=${SNAP}/meta/gui/icon.png # replace name to your app name
   Terminal=false
   Type=Application
   Categories=Education; #adjust accordingly your snap category
