@@ -66,3 +66,4 @@ keys/DaKanjiRecognizer.jks
 
 # ignore built snaps
 *.snap
+snap/snapcraft.yaml
