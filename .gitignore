@@ -63,3 +63,6 @@ assets/tflite_models/*
 
 # ignore all keys in keys folder
 keys/DaKanjiRecognizer.jks
+
+# ignore built snaps
+*.snap
