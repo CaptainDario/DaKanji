@@ -80,11 +80,6 @@ jobs:
         with:
           use_lxd: true
 
-      - name: Install lxd and init
-        run: |
-          sudo snap install lxd
-          sudo lxd init
-
       - name: Build DaKanji snap
         run: sg lxd -c 'snapcraft --use-lxd'
      
