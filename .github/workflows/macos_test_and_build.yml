@@ -60,14 +60,14 @@ jobs:
           flutter config --enable-macos-desktop
           flutter build macos --release
 
-      #- name: copy TF Lite binaries to build folder
-      #  run: |
-      #    mkdir build/linux/x64/release/bundle/blobs
-      #    cp blobs/libtensorflowlite_c-linux.so build/linux/x64/release/bundle/blobs
+      - name: copy TF Lite binaries to build folder
+        run: |
+          mkdir build/linux/x64/release/bundle/blobs
+          cp blobs/libtensorflowlite_c-macos.dylib build/macos/Build/Products/Release/blobs
 
-      #- name: Archive production artifacts
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_linux.zip
-      #    path: build/linux/x64/release/bundle
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_macos.zip
+          path: build/macos/Build/Products/Release/
 
