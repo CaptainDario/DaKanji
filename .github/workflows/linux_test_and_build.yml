@@ -87,4 +87,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_win.snap
-          path: *.snap
+          path: "*.snap"
