@@ -56,8 +56,8 @@ jobs:
       #  run: flutter test .\integration_test\ -d windows
 
       - name: build linux executable
-        run:
-          flutter config --enable-linux-desktop |
+        run: |
+          flutter config --enable-linux-desktop
           flutter build linux --release
 
       - name: copy TF Lite binaries to build folder
