@@ -56,7 +56,7 @@ jobs:
       #  run: flutter test .\integration_test\ -d windows
 
       - name: build exe
-        run: flutter build windows
+        run: flutter build windows --release
 
       - name: copy TF Lite binaries to build folder
         run: |

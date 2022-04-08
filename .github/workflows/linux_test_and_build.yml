@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Windows - Test and Build
+name: Ubuntu - Test and Build
 
 # Controls when the workflow will run
 on:
@@ -56,7 +56,9 @@ jobs:
       #  run: flutter test .\integration_test\ -d windows
 
       - name: build linux executable
-        run: flutter build linux --release
+        run:
+          flutter config --enable-linux-desktop |
+          flutter build linux --release
 
       - name: copy TF Lite binaries to build folder
         run: |
