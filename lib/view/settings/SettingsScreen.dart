@@ -142,6 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         translateItemTexts: true,
                         onTap: (value) {
                           settings.selectedTheme = value ?? settings.themesLocaleKeys[0];
+                          print(settings.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
                         },
