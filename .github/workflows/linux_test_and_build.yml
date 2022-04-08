@@ -67,7 +67,7 @@ jobs:
       - name: copy TF Lite binaries to build folder
         run: |
           mkdir build/linux/x64/release/bundle/blobs
-          copy blobs/libtensorflowlite_c-linux.so build/linux/x64/release/bundle/blobs
+          cp blobs/libtensorflowlite_c-linux.so build/linux/x64/release/bundle/blobs
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
