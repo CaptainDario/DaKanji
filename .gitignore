@@ -64,6 +64,6 @@ assets/tflite_models/*
 # ignore all keys in keys folder
 keys/DaKanjiRecognizer.jks
 
-# ignore built snaps
+# ignore built snaps and the none template snapcraft.yaml
 *.snap
 snap/snapcraft.yaml
