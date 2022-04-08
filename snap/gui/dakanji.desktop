@@ -1,8 +1,9 @@
-  [Desktop Entry]
-  Name=dakanji
-  Comment=A cross platform app to learn the Japanese language.
-  Exec=dakanji
-  Icon=assets/images/icons/icon.png # replace name to your app name
-  Terminal=false
-  Type=Application
-  Categories=Education; #adjust accordingly your snap category
+[Desktop Entry]
+version=1.5
+Name=DaKanji
+Comment=dakanji
+Exec=dakanji
+Icon=${SNAP}/bin/data/flutter_assets/assets/images/icons/icon.png
+Terminal=false
+Type=Application
+Categories=Education;Languages;
