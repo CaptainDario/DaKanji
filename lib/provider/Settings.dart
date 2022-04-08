@@ -40,8 +40,6 @@ class Settings with ChangeNotifier {
     LocaleKeys.General_dark,
     LocaleKeys.General_system
   ];
-  /// with all available themes.
-  //List<String> themes = ["light", "dark", "system"];
   
   /// A Map from the string of a theme to the ThemeMode of the theme.
   Map<String, ThemeMode> themesDict = {
