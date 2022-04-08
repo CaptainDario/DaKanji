@@ -86,5 +86,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.snap
-          path: *.snap
+          name: DaKanji_linux.snap
+          path: "*.snap"
