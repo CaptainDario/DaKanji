@@ -1,7 +1,7 @@
 name: dakanji
 version: ${VERSION}
-summary: Super Cool App
-description: Super Cool App that does everything!
+summary: DaKanji helps you learn and use Japanese.
+description: DaKanji helps you learn and use Japanese.
 
 confinement: strict
 base: core18
