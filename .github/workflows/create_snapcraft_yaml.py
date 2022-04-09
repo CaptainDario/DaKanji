@@ -12,7 +12,7 @@ from get_version import get_version
 
 
 def create_snapcraft_yaml():
-    with open("snap/template_snapcraft.yaml", mode="r", encoding="utf8") as f:
+    with open("snap/local/template_snapcraft.yaml", mode="r", encoding="utf8") as f:
         snapcraft = f.read()
 
     version = get_version()
