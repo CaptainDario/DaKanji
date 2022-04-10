@@ -243,14 +243,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           padding: EdgeInsets.zero,
                           children: <Widget>[
                             // DaKanji Logo at the top
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
-                                child: Image(
-                                  width: _drawerWidth * 0.6,
-                                  //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                  image: AssetImage("assets/images/icons/banner.png"),
+                            SafeArea(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
+                                  child: Image(
+                                    width: _drawerWidth * 0.6,
+                                    //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
+                                    image: AssetImage("assets/images/icons/banner.png"),
+                                  ),
                                 ),
                               ),
                             ),
