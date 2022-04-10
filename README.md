@@ -1,5 +1,3 @@
-# DaKanji
-
 <img src="./assets/images/icons/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
