@@ -1,3 +1,9 @@
+##########################################################
+#                                                        #
+# Builds release version of DaKanji                      #
+#                                                        #
+##########################################################
+
 import os
 import subprocess
 from sys import platform
