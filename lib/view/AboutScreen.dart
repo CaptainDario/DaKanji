@@ -60,10 +60,10 @@ class AboutScreen extends StatelessWidget {
                   styleSheet: MarkdownStyleSheet(
                     a: TextStyle( 
                       color: Theme.of(context).highlightColor,
-                      fontSize: 20,
+                      //fontSize: 20,
                     ),
                     p: TextStyle( 
-                      fontSize: 20,
+                      //fontSize: 20,
                     )
                   ),
                   onTapLink: (text, url, title) {

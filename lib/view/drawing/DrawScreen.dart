@@ -72,9 +72,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
-        onboarding.showWithSteps(
-          drawScreenTutorialIndexes[0], 
-          drawScreenTutorialIndexes);
+        onboarding.showWithSteps(drawScreenTutorialIndexes[0], drawScreenTutorialIndexes);
       }
     });
   }
