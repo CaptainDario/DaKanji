@@ -11,7 +11,7 @@ import shutil
 
 
 linux_blob_dir = "build/"
-macos_blob_dir = "build/macos/Build/Products/Release/da_kanji_mobile.app/Contents/MacOS"
+macos_blob_dir = "build/macos/Build/Products/Release/da_kanji_mobile.app/Contents/Resources/blobs/"
 windows_blob_dir = "build/windows/runner/Release/blobs/"
 
 linux_tf = "libtensorflowlite_c-linux.so"
@@ -34,8 +34,8 @@ if __name__ == "__main__":
         if(not os.path.isdir(macos_blob_dir)):
             os.mkdir(macos_blob_dir)
 
-        if(not os.path.isfile(macos_blob_dir + win_tf)):
-            shutil.copyfile("blobs/" + win_tf, macos_blob_dir + win_tf)
+        if(not os.path.isfile(macos_blob_dir + macos_tf)):
+            shutil.copyfile("blobs/" + macos_tf, macos_blob_dir + macos_tf)
 
     # Windows
     elif platform == "win32":
