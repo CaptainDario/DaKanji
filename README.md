@@ -14,6 +14,11 @@
       <img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' height="50"/>
     </a>
   <tr/>
+  <tr>
+    <a href="https://snapcraft.io/dakanji">
+      <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" height="50"/>
+    </a>
+  <tr/>
 <table/>
 
 
