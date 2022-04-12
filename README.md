@@ -10,6 +10,11 @@
     </a>
   <tr/>
   <tr>
+    <a href="https://apps.apple.com/us/app/dakanji/id1593741764?ign-itscg=30200&ign-itsct=apps_box_link">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&amp;releaseDate=1636329600&h=fddbb9c21f6d7f05a15cefdfa128586a" alt="Download on the App Store" height="50"/>
+    </a>
+  <tr/>
+  <tr>
     <a href='//www.microsoft.com/store/apps/9n08051t2xtv?cid=storebadge&ocid=badge'>
       <img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' height="50"/>
     </a>
