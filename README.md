@@ -58,7 +58,7 @@ But if you want to learn more or prefer a text guide,
 All contributions are welcome!
 Here is a list of a few things which would help this project:
 
-* For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel. All testing is much appreciated!
+* For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
 * If you have ideas how to improve this app [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
 * You found a bug? Please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues) too.
 * Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be
