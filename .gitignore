@@ -42,12 +42,8 @@ key.properties
 python
 android/app/key.jks
 
-# ignore tflite folder except for the copy models here note
-assets/tflite_models/*
-!assets/tflite_models/COPY_ML_RELEASE_HERE
-
-# ignore tflite models
-*.tflite
+# ignore none mock tflite models
+CNN_single_char.tflite
 
 # libraries
 *.so
