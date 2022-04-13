@@ -32,7 +32,7 @@ bool IS_TESTING_APP_STARTUP = false;
 
 //about page
 /// link to the github repo
-const GITHUB_REPO_URL = "https://github.com/CaptainDario/DaKanji-mobile";
+const GITHUB_REPO_URL = "https://github.com/CaptainDario/DaKanji";
 /// link to the github repos issues
 const GITHUB_ISSUES = GITHUB_REPO_URL + "/issues/new";
 /// link to the github repos release page
