@@ -9,11 +9,9 @@ class Tutorials{
   /// the draw screen tutorial
   late DrawScreenTutorial drawScreenTutorial;
 
-  Tutorials(){
-    this.reload();
-  }
+  Tutorials(){}
 
-  /// Reloads the 
+  /// Reloads the all tutorials
   void reload(){
     this.drawScreenTutorial = DrawScreenTutorial();
   }
