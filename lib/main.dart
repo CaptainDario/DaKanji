@@ -155,9 +155,6 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
   @override
   Widget build(BuildContext context) {
 
-    // reload the tutorials
-    GetIt.I<Tutorials>().reload();
-
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
@@ -167,20 +164,25 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
           PageRouteBuilder(
-            pageBuilder: (_, __, ___) => Onboarding(
-              steps: GetIt.I<Tutorials>().getSteps(),
-              //globalOnboarding: true,
-              autoSizeTexts: true,
-              onChanged: (int index){
-                print("Tutorial step: ${index}");
-                if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
-                  print("DrawScreen tutorial done, saving...");
-                  GetIt.I<UserData>().showShowcaseDrawing = false;
-                  GetIt.I<UserData>().save();
-                }
-              },
-              child: screen,
-            ),
+            pageBuilder: (_, __, ___) {
+                // reload the tutorials
+                GetIt.I<Tutorials>().reload();
+
+                return Onboarding(
+                steps: GetIt.I<Tutorials>().getSteps(),
+                //globalOnboarding: true,
+                autoSizeTexts: true,
+                onChanged: (int index){
+                  print("Tutorial step: ${index}");
+                  if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
+                    print("DrawScreen tutorial done, saving...");
+                    GetIt.I<UserData>().showShowcaseDrawing = false;
+                    GetIt.I<UserData>().save();
+                  }
+                },
+                child: screen,
+              );
+            },
             settings: settings,
             transitionsBuilder: (_, a, __, c) =>
               FadeTransition(opacity: a, child: c)
