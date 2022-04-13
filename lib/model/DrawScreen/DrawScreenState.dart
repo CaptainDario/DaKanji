@@ -18,8 +18,6 @@ class DrawScreenState {
   DrawScreenLayout drawScreenLayout;
   /// the current size of the drawing canvas
   double canvasSize = 0.0;
-  /// is the tutorial currently being shown
-  bool isShowingTutorial = false;
 
   DrawScreenState(
     this.strokes,

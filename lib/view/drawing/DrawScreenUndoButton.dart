@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 
@@ -28,8 +27,6 @@ class DrawScreenUndoButton extends StatelessWidget {
         return Focus(
           focusNode: includeTutorial ? 
             GetIt.I<Tutorials>().drawScreenTutorial.undoButtonSteps : null,
-          
-          
           child: Center(
             child: Container(
               width:  canvasSize * 0.1,
