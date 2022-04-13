@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
@@ -24,9 +25,11 @@ void main() {
 
     IS_TESTING_DRAWSCREEN = true;
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
     // create app instance and wait until it finished initializing
     await app.main();
-    await app.clearPreferences();
     GetIt.I<Settings>().load();
     GetIt.I<Settings>().save();
     GetIt.I<UserData>().showChangelog       = false;
@@ -34,8 +37,6 @@ void main() {
     GetIt.I<UserData>().showRatePopup       = false;
     GetIt.I<UserData>().showShowcaseDrawing = false;
     GetIt.I<UserData>().save();
-
-    print("empty after double tap: ${GetIt.I<Settings>().emptyCanvasAfterDoubleTap}");
 
     await tester.pumpAndSettle(Duration(seconds: 1));
 
