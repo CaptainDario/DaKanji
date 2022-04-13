@@ -106,6 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // invert long/short press
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_invert_short_long_press.tr(),
+                        value: GetIt.I<Settings>().invertShortLongPress,
                         onTileTapped: (bool? newValue){
                           settings.invertShortLongPress = newValue ?? false;
                           settings.save();
@@ -114,6 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // double tap empties canvas
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr(),
+                        value: GetIt.I<Settings>().emptyCanvasAfterDoubleTap,
                         onTileTapped: (bool? newValue){
                           settings.emptyCanvasAfterDoubleTap = newValue ?? false;
                           settings.save();
@@ -122,6 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if(Platform.isAndroid || Platform.isIOS)
                         ResponsiveCheckBoxTile(
                           text: LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr(),
+                          value: GetIt.I<Settings>().useWebview,
                           onTileTapped: (value) {
                             settings.useWebview = value;
                             settings.save();
@@ -129,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
 
                       Divider(),
-                      // Misc header
+                      // Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
                         autoSizeGroup: settingsAutoSizeGroup
