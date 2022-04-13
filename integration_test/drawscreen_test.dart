@@ -206,7 +206,30 @@ void main() {
     print("Passed step: 14");
     // #endregion
   });
+
+  testWidgets("DrawScreen test", (WidgetTester tester) async {
+
+    IS_TESTING_DRAWSCREEN = true;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    // create app instance and wait until it finished initializing
+    await app.main();
+    GetIt.I<Settings>().load();
+    GetIt.I<Settings>().save();
+    GetIt.I<UserData>().showChangelog       = false;
+    GetIt.I<UserData>().showOnboarding      = false;
+    GetIt.I<UserData>().showRatePopup       = false;
+    GetIt.I<UserData>().showShowcaseDrawing = false;
+    GetIt.I<UserData>().save();
+
+    await tester.pumpAndSettle(Duration(seconds: 1));
+
+    
+  });
 }
+
 
 
 
