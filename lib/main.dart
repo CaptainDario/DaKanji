@@ -166,7 +166,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             pageBuilder: (_, __, ___) => Onboarding(
               steps: tutorialSteps,
               //globalOnboarding: true,
-              //autoSizeTexts: true,
+              autoSizeTexts: true,
               onChanged: (int index){
                 print("Tutorial step: ${index}");
                 if(index == drawScreenTutorialIndexes.last){
