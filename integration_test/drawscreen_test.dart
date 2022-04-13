@@ -1,6 +1,3 @@
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +6,12 @@ import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
+import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/model/UserData.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'drawscreen_test_values.dart';
 
@@ -184,30 +184,54 @@ void main() {
     await tester.pump(Duration(seconds: 1));
     print("Passed step: 12");
     // #endregion
+
+    // #region 13 - swipe left on word bar -> wordbar == "目日"
+    double kBWidth = tester.getSize(find.byType(KanjiBufferWidget)).width;
+    await tester.drag(
+      find.byType(KanjiBufferWidget),
+      Offset(-kBWidth/2, 0)
+    );
+    await tester.pump(Duration(seconds: 1));
+    expect(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, "目日");
+    print("Passed step: 13");
+    // #endregion
+
+    // #region 14 - double tap kanji buffer -> wordbar == ""
+    await tester.tap(find.byWidget((tester.widgetList(find.byType(KanjiBufferWidget))).first));
+    await tester.pump(kDoubleTapMinTime);
+    await tester.tap(find.byWidget((tester.widgetList(find.byType(KanjiBufferWidget))).first));
+    await tester.pumpAndSettle();
+    expect(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, "");
+    print("Passed step: 14");
+    // #endregion
   });
 }
 
 
 
 /// Creates a pointer and moves it to the given `points` in relation to 
-/// `referencePoint` as center point. 
+/// `referencePoint` as center point. Waits for a duration of `wait` after 
+/// each pointer down and movement.
 /// Moves the pointer up after each point. 
 Future<void> movePointer(
   WidgetTester tester,
   Offset referencePoint,
   List<Offset> points,
   double scale,
-  {Duration wait = const Duration(milliseconds: 500)}) async {
+  {
+    Duration wait = const Duration(milliseconds: 500),
+  }) async {
     
     // create a pointer to draw a character on the canvas
     final gesture = await tester.createGesture();
-    await gesture.addPointer(location: Offset.zero);
+    await gesture.addPointer(location: referencePoint);
     addTearDown(gesture.removePointer);
     await tester.pumpAndSettle();
     
     // draw lines between all the given points
     for (int i = 0; i < points.length-1; i++){ 
       await gesture.down(referencePoint + points[i] * scale);
+      await tester.pumpAndSettle(wait);
       await gesture.moveTo(referencePoint + points[i+1] * scale);
       await gesture.up();
       await tester.pump(wait);
