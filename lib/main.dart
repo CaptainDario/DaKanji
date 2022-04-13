@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/show_cases/tutorial.dart';
+import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
@@ -49,17 +48,16 @@ Future<void> main() async {
   await init();
   
   runApp(
-    Phoenix(
-      child: EasyLocalization(
-        supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
-        path: 'assets/translations',
-        fallbackLocale: Locale('en'),
-        useFallbackTranslations: true,
-        useOnlyLangCode: true,
-        assetLoader: CodegenLoader(),
-        
-        saveLocale: true,
-        child: DaKanjiApp()
+    EasyLocalization(
+      supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
+      path: 'assets/translations',
+      fallbackLocale: Locale('en'),
+      useFallbackTranslations: true,
+      useOnlyLangCode: true,
+      assetLoader: CodegenLoader(),
+      saveLocale: true,
+      child: Phoenix(
+        child: DaKanjiApp(),
       ),
     ),
   );
@@ -119,6 +117,9 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
     Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
   );
+
+  // tutorial services
+  GetIt.I.registerSingleton<Tutorials>(Tutorials());
   
   // screen independent
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
@@ -154,6 +155,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
   @override
   Widget build(BuildContext context) {
 
+    // reload the tutorials
+    GetIt.I<Tutorials>().reload();
+
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
@@ -164,12 +168,12 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         PageRouteBuilder switchScreen (Widget screen) =>
           PageRouteBuilder(
             pageBuilder: (_, __, ___) => Onboarding(
-              steps: tutorialSteps,
+              steps: GetIt.I<Tutorials>().getSteps(),
               //globalOnboarding: true,
               autoSizeTexts: true,
               onChanged: (int index){
                 print("Tutorial step: ${index}");
-                if(index == drawScreenTutorialIndexes.last){
+                if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
                   print("DrawScreen tutorial done, saving...");
                   GetIt.I<UserData>().showShowcaseDrawing = false;
                   GetIt.I<UserData>().save();

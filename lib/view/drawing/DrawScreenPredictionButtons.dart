@@ -1,9 +1,9 @@
-import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
 import 'package:da_kanji_mobile/show_cases/MultiFocus.dart';
@@ -36,7 +36,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
         child: Consumer<DrawingInterpreter>(
           builder: (context, interpreter, child){
             return Focus(
-              focusNode: drawScreenTutorialFocusNodes[4],
+              focusNode: GetIt.I<Tutorials>().drawScreenTutorial.predictionButtonGridSteps,
               child: GridView.count(
                 physics: new NeverScrollableScrollPhysics(),
                 scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
@@ -51,8 +51,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                   // add short/long press showcase to the first button
                   if(i == 0)
                     tmp_widget = MultiFocus(
-                      focusNodes: drawScreenTutorialFocusNodes.sublist(5, 8) + 
-                        [drawScreenTutorialFocusNodes[9]],
+                      focusNodes: GetIt.I<Tutorials>().drawScreenTutorial.predictionbuttonSteps,
                       child: tmp_widget,
                     );
                   

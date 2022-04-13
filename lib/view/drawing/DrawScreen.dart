@@ -11,7 +11,7 @@ import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
-import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
+import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenResponsiveLayout.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenClearButton.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenDrawingCanvas.dart';
@@ -72,7 +72,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
-        onboarding.showWithSteps(drawScreenTutorialIndexes[0], drawScreenTutorialIndexes);
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes[0],
+          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes
+        );
       }
     });
   }

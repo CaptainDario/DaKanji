@@ -1,9 +1,10 @@
 import 'dart:typed_data';
-import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
@@ -25,7 +26,7 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
     return Consumer<Strokes>(
       builder: (context, strokes, __){
         return Focus(
-          focusNode: drawScreenTutorialFocusNodes[1],
+          focusNode: GetIt.I<Tutorials>().drawScreenTutorial.canvasSteps,
           child: DrawingCanvas(
             canvasSize, canvasSize,
             strokes,

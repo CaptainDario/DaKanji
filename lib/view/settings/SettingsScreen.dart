@@ -153,8 +153,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: context.locale.toString(),
                         items: context.supportedLocales.map((e) => e.toString()).toList(),
                         onTap: (newValue) {
-                          if(newValue != null)
+                          if(newValue != null){
                             context.setLocale(Locale(newValue));
+                            
+                          }
                         },
                       ),
                       // reshow tutorial
