@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
@@ -15,12 +16,18 @@ class DrawScreenPredictionButtons extends StatelessWidget {
     this.runningInLandscape,
     this.canvasSize,
     this.includeHeroes,
+    this.includeTutorial,
     {Key? key}
     ) : super(key: key);
 
+  /// is the app running in landscape
   final bool runningInLandscape;
+  /// the size of the DrawingCanvas
   final double canvasSize;
+  /// should the hero widget to animate switching to the webview be included
   final bool includeHeroes;
+  /// should the tutorial Focus be included
+  final bool includeTutorial;
 
 
   @override
@@ -36,7 +43,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
         child: Consumer<DrawingInterpreter>(
           builder: (context, interpreter, child){
             return Focus(
-              focusNode: GetIt.I<Tutorials>().drawScreenTutorial.predictionButtonGridSteps,
+              focusNode: includeTutorial ?
+                GetIt.I<Tutorials>().drawScreenTutorial.predictionButtonGridSteps : null,
               child: GridView.count(
                 physics: new NeverScrollableScrollPhysics(),
                 scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
@@ -51,7 +59,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                   // add short/long press showcase to the first button
                   if(i == 0)
                     tmp_widget = MultiFocus(
-                      focusNodes: GetIt.I<Tutorials>().drawScreenTutorial.predictionbuttonSteps,
+                      focusNodes: includeTutorial ? 
+                        GetIt.I<Tutorials>().drawScreenTutorial.predictionbuttonSteps : null,
                       child: tmp_widget,
                     );
                   

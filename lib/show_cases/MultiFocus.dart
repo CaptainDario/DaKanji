@@ -13,7 +13,7 @@ class MultiFocus extends StatelessWidget {
     }) : super(key: key);
 
   /// all focusNodes which should be wrapped around the child
-  final List<FocusNode> focusNodes;
+  final List<FocusNode>? focusNodes;
   /// the child around which the focus nodes should be wrapped
   final Widget child;
 
@@ -24,11 +24,15 @@ class MultiFocus extends StatelessWidget {
 
     Widget wrapped = child;
 
-    for (int i = 0; i < focusNodes.length; i++){
-      wrapped = Focus(
-        focusNode: focusNodes[i],
-        child: wrapped,
-      );
+    if(focusNodes == null)
+      return child;
+    else{
+      for (int i = 0; i < focusNodes!.length; i++){
+        wrapped = Focus(
+          focusNode: focusNodes![i],
+          child: wrapped,
+        );
+      }
     }
 
     return wrapped;

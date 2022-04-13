@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 
@@ -11,10 +12,14 @@ import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 class DrawScreenClearButton extends StatelessWidget {
   const DrawScreenClearButton(
     this.canvasSize,
+    this.includeTutorial,
     {Key? key}
   ) : super(key: key);
 
+  /// the size of the DrawingCanvas
   final double canvasSize;
+  /// should the tutorial Focus be included
+  final bool includeTutorial;
 
 
 
@@ -23,7 +28,8 @@ class DrawScreenClearButton extends StatelessWidget {
     return Consumer<Strokes>(
       builder: (contxt, strokes, _) {
         return Focus(
-          focusNode: GetIt.I<Tutorials>().drawScreenTutorial.clearButtonSteps,
+          focusNode: includeTutorial ?
+            GetIt.I<Tutorials>().drawScreenTutorial.clearButtonSteps : null,
           child: Center(
             child: Container(
               width: canvasSize * 0.1,

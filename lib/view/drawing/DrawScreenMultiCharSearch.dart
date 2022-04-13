@@ -16,12 +16,18 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
     this.canvasSize,
     this.runningInLandscape,
     this.includeHeroes,
+    this.includeTutorial,
     {Key? key}
     ) : super(key: key);
 
-  final double canvasSize;
+  /// is the app running in landscape
   final bool runningInLandscape;
+  /// the size of the DrawingCanvas
+  final double canvasSize;
+  /// should the hero widget to animate switching to the webview be included
   final bool includeHeroes;
+  /// should the tutorial Focus be included
+  final bool includeTutorial;
 
 
 
@@ -32,7 +38,8 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
       child: Consumer<KanjiBuffer>(
         builder: (context, kanjiBuffer, child){
           Widget tpm_widget = MultiFocus(
-            focusNodes: GetIt.I<Tutorials>().drawScreenTutorial.multiCharSearchSteps,
+            focusNodes: includeTutorial ?
+              GetIt.I<Tutorials>().drawScreenTutorial.multiCharSearchSteps : null,
             child: Center(
               child: KanjiBufferWidget(
                 canvasSize,

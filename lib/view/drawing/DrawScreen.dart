@@ -32,7 +32,7 @@ class DrawScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
-  ///
+  /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
   DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
@@ -72,6 +72,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
+        
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes[0],
           GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes
@@ -109,11 +110,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             _canvasSize = t.item2;
 
             return DrawScreenResponsiveLayout(
-              DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>()),
-              DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes), 
-              DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes),
-              DrawScreenUndoButton(_canvasSize),
-              DrawScreenClearButton(_canvasSize),
+              DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>(), widget.includeTutorial),
+              DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes, widget.includeTutorial), 
+              DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes, widget.includeTutorial),
+              DrawScreenUndoButton(_canvasSize, widget.includeTutorial),
+              DrawScreenClearButton(_canvasSize, widget.includeTutorial),
               _canvasSize,
               GetIt.I<DrawScreenState>().drawScreenLayout,
               () {

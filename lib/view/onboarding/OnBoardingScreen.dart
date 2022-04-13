@@ -51,7 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
     // DO NOT loop the onboarding dragging animation when the startup process
     // is being tested
-    if(!IS_TESTING_DRAWSCREEN) _controller.repeat(reverse: true);
+    if(!IS_TESTING_APP_STARTUP) _controller.repeat(reverse: true);
     
     scaleAnimation = new Tween(
       begin: 0.5,
@@ -117,8 +117,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               if (activePageIndex == totalPages){
                 GetIt.I<UserData>().showOnboarding = false;
                 GetIt.I<UserData>().save();
-                Future.delayed(Duration(milliseconds: 1000), () =>
-                    Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
+                Future.delayed(Duration(milliseconds: 500), () =>
+                  Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
                 );
               }
             },

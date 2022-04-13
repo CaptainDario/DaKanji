@@ -43,13 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
     // after the page was build 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
 
+      // if the app is being tested for different startup situations
+      if(IS_TESTING_APP_STARTUP)
+        print("RUNNING IN 'APP STARTUP TESTING'-mode");
+
       // if the DrawScreen is being tested switch there immediately
       if(IS_TESTING_DRAWSCREEN){
         print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
       }
-      if(IS_TESTING_APP_STARTUP)
-        print("RUNNING IN 'APP STARTUP TESTING'-mode");
 
       // if a newer version was installed open the what's new pop up 
       else if(GetIt.I<UserData>().showChangelog){

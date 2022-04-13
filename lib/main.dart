@@ -73,7 +73,7 @@ Future<void> main() async {
 Future<void> init() async {
   
   // NOTE: uncomment to clear the SharedPreferences
-  //await clearPreferences();
+  await clearPreferences();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
