@@ -48,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
         print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
       }
+      if(IS_TESTING_APP_STARTUP)
+        print("RUNNING IN 'APP STARTUP TESTING'-mode");
 
       // if a newer version was installed open the what's new pop up 
       else if(GetIt.I<UserData>().showChangelog){

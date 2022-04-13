@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -40,13 +41,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 1),
     vsync: this,
-  )..repeat(reverse: true);
+  );
   late final Animation scaleAnimation;
 
 
   @override
   void initState() { 
     super.initState();
+
+    // DO NOT loop the onboarding dragging animation when the startup process
+    // is being tested
+    if(!IS_TESTING_DRAWSCREEN) _controller.repeat(reverse: true);
     
     scaleAnimation = new Tween(
       begin: 0.5,
