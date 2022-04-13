@@ -1,5 +1,3 @@
-# DaKanji
-
 <img src="./assets/images/icons/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
@@ -12,8 +10,18 @@
     </a>
   <tr/>
   <tr>
+    <a href="https://apps.apple.com/us/app/dakanji/id1593741764?ign-itscg=30200&ign-itsct=apps_box_link">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&amp;releaseDate=1636329600&h=fddbb9c21f6d7f05a15cefdfa128586a" alt="Download on the App Store" height="50"/>
+    </a>
+  <tr/>
+  <tr>
     <a href='//www.microsoft.com/store/apps/9n08051t2xtv?cid=storebadge&ocid=badge'>
       <img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' height="50"/>
+    </a>
+  <tr/>
+  <tr>
+    <a href="https://snapcraft.io/dakanji">
+      <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" height="50"/>
     </a>
   <tr/>
 <table/>
@@ -50,7 +58,7 @@ But if you want to learn more or prefer a text guide,
 All contributions are welcome!
 Here is a list of a few things which would help this project:
 
-* For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel. All testing is much appreciated!
+* For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
 * If you have ideas how to improve this app [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
 * You found a bug? Please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues) too.
 * Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be

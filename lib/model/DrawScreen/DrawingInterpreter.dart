@@ -27,10 +27,16 @@ class DrawingInterpreter with ChangeNotifier{
   /// If the interpreter was initialized successfully
   bool wasInitialized = false;
 
-  /// The path to the interpreter asset
-  String _interpreterAssetPath = "tflite_models/CNN_single_char.tflite";
+  /// The path to the tf lite asset
+  String _TFLiteAssetPath = "tflite_models/CNN_single_char.tflite";
+
+  /// The path to the mock tf lite asset (small size can be included in repo)
+  String _mockTFLiteAssetPath = "tflite_models/mock_CNN_single_char.tflite";
+
+  /// the actually used tf lite asset path
+  String _usedTFLiteAssetPath = "";
   
-  /// The path to the interpreter asset
+  /// The path to the labels asset
   String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
 
   /// The list of all labels the model can recognize.
@@ -78,9 +84,6 @@ class DrawingInterpreter with ChangeNotifier{
   }
 
 
-  /// Initialize the interpreter in the main isolate (invoking it can lead to 
-  /// UI jank)
-  /// 
   /// Caution: This method needs to be called before using the interpreter.
   void init() async {
 
@@ -88,6 +91,16 @@ class DrawingInterpreter with ChangeNotifier{
       print("Drawing interpreter already initialized. Skipping init.");
     }
     else{
+      //  check if the actual model is available or only the mock model
+      try {   
+        await Interpreter.fromAsset(_TFLiteAssetPath);
+        _usedTFLiteAssetPath = _TFLiteAssetPath;
+      } catch (e) {
+        print("You are using the mock model!");
+        _usedTFLiteAssetPath = _mockTFLiteAssetPath;
+      }
+      
+
       if (Platform.isAndroid)
         _interpreter = await _initInterpreterAndroid();
       else if (Platform.isIOS) 
@@ -347,7 +360,7 @@ class DrawingInterpreter with ChangeNotifier{
   Future<Interpreter> _nnapiInterpreter() async {
     final options = InterpreterOptions()..useNnApiForAndroid = true;
     Interpreter i = await Interpreter.fromAsset(
-      _interpreterAssetPath, 
+      _usedTFLiteAssetPath, 
       options: options
     );
     GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[2];
@@ -359,7 +372,7 @@ class DrawingInterpreter with ChangeNotifier{
     final gpuDelegateV2 = GpuDelegateV2();
     final options = InterpreterOptions()..addDelegate(gpuDelegateV2);
     Interpreter i = await Interpreter.fromAsset(
-      _interpreterAssetPath,
+      _usedTFLiteAssetPath,
       options: options
     );
     GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[1];
@@ -372,7 +385,7 @@ class DrawingInterpreter with ChangeNotifier{
     final gpuDelegate = GpuDelegate();
     var interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegate);
     Interpreter i = await Interpreter.fromAsset(
-      _interpreterAssetPath,
+      _usedTFLiteAssetPath,
       options: interpreterOptions
     );
     GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[1];
@@ -384,7 +397,7 @@ class DrawingInterpreter with ChangeNotifier{
     final options = InterpreterOptions()
       ..threads = Platform.numberOfProcessors - 1;
     Interpreter i = await Interpreter.fromAsset(
-      _interpreterAssetPath, options: options);
+      _usedTFLiteAssetPath, options: options);
     GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[0];
     return i;
   }
@@ -400,7 +413,7 @@ class DrawingInterpreter with ChangeNotifier{
       )
     );
     interpreter = await Interpreter.fromAsset(
-      _interpreterAssetPath,
+      _usedTFLiteAssetPath,
       options: options
     );
 
