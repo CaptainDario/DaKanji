@@ -97,14 +97,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             ),
             pages: [
               OnBoardingPage(
-                context, 1, totalPages,
+                1, totalPages,
                 pageColors[0],
                 LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
                 LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
                 liquidController
               ),
               OnBoardingPage(
-                context, 2, totalPages,
+                2, totalPages,
                 pageColors[1],
                 LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
                 LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
