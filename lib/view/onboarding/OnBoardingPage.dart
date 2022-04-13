@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:provider/provider.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -119,7 +122,7 @@ Widget OnBoardingPage(
                     child: Text(
                       headerText,
                       textAlign: TextAlign.center,
-                      textScaleFactor: 25,
+                      textScaleFactor: 1.25,
                       style: TextStyle(
                         color: Colors.white
                       ),
@@ -129,7 +132,7 @@ Widget OnBoardingPage(
                   Text(
                     text,
                     textAlign: TextAlign.center,
-                    textScaleFactor: 1.25,
+                    textScaleFactor: 0.75,
                     style: TextStyle(
                       color: Colors.white
                     ),
@@ -159,7 +162,7 @@ Widget OnBoardingPage(
                   onPressed: (){
                     liquidController.animateToPage(page: totalPages);
                   }, 
-                  child:Text("Skip")
+                  child:Text(LocaleKeys.General_skip.tr())
                 ));
 
                 widgets.add(SizedBox(width: 50));
@@ -194,7 +197,7 @@ Widget OnBoardingPage(
                       page: liquidController.currentPage + 1
                     );
                   }, 
-                  child: Text("Next →")
+                  child: Text("${LocaleKeys.General_next.tr()} →")
                 ));
                 return widgets;
               } ()
