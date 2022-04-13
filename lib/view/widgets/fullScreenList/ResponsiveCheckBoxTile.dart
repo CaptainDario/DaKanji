@@ -1,7 +1,9 @@
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -9,13 +11,16 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
   ResponsiveCheckBoxTile(
     {
       required this.text,
+      required this.value,
       this.onTileTapped,
       Key? key
     }
   ) : super(key: key);
 
-  // leading text
+  /// leading text
   final String text;
+  ///
+  bool value;
   /// callback which will be executed by in every tap
   final Function (bool value)? onTileTapped;
 
@@ -62,7 +67,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                 ),
               ),
               Checkbox(
-                value: checked,
+                value: widget.value,
                 onChanged: (value){
                   setState(() {
                     if(value != null)
