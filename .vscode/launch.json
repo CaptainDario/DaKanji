@@ -11,11 +11,12 @@
 			"flutterMode": "debug"
 		},
 		{
-			"name": "Python: Current File",
+			"name":"Python: Current File",
 			"type":"python",
 			"request":"launch",
 			"program":"${file}",
-			"console":"integratedTerminal"
+			"console":"integratedTerminal",
+			"justMyCode":true
 		},
 	]
 

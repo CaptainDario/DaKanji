@@ -35,8 +35,10 @@
     "dark": "ciemny",
     "language": "j\u0119zyk",
     "light": "jasny",
+    "next": null,
     "rate_this_app": "Oce\u0144",
     "restarts_app": "restart aplikacji",
+    "skip": null,
     "system": "system",
     "web": "web"
   },
@@ -49,6 +51,18 @@
     "Onboarding_1_title": "Nie znasz Kanji?",
     "Onboarding_2_text": "Z DaKanji mo\u017cesz szybko podgl\u0105dn\u0105\u0107 s\u0142\u00f3wka u\u017cywaj\u0105c internetu oraz s\u0142ownik\u00f3w",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy"
+  },
+  "Overview": {
+    "": "",
+    "cn": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "jp": "",
+    "pl": "",
+    "ru": ""
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "System wnioskowania (aplikacja musi zosta\u0107 zrestartowana)",
@@ -66,6 +80,22 @@
     "theme": "Motyw(@:General.restarts_app)",
     "title": "Ustawienia",
     "use_default_browser_for_online_dictionaries": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych"
+  },
+  "Stores": {
+    "long_description": null,
+    "mockup_10": "",
+    "mockup_1_1": "",
+    "mockup_1_2": "",
+    "mockup_2": "",
+    "mockup_3": "",
+    "mockup_4": "",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "",
+    "shortest_description": null
   },
   "WebviewScreen": {
     "loading": "\u0141adowanie",

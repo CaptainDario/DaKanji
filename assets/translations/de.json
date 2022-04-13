@@ -35,8 +35,10 @@
     "dark": "Dunkel",
     "language": "Sprache",
     "light": "Hell",
+    "next": "Weiter",
     "rate_this_app": "Bewerte",
     "restarts_app": "startet app neu",
+    "skip": "\u00dcberspingen",
     "system": "System",
     "web": "Web"
   },
@@ -49,6 +51,18 @@
     "Onboarding_1_title": "Du kennst ein Kanji nicht?",
     "Onboarding_2_text": "Mit DaKanji kannst du schnell W\u00f6rter in Web- und App-W\u00f6rterb\u00fcchern nachschlagen",
     "Onboarding_2_title": "Schlage Zeichen und W\u00f6rter nach"
+  },
+  "Overview": {
+    "": "",
+    "cn": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "jp": "",
+    "pl": "",
+    "ru": ""
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
@@ -66,6 +80,22 @@
     "theme": "Thema (@:General.restarts_app)",
     "title": "Einstellungen",
     "use_default_browser_for_online_dictionaries": "Benutze einen webview f\u00fcr web W\u00f6rterb\u00fccher"
+  },
+  "Stores": {
+    "long_description": "",
+    "mockup_10": "",
+    "mockup_1_1": "",
+    "mockup_1_2": "",
+    "mockup_2": "",
+    "mockup_3": "",
+    "mockup_4": "",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "",
+    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren"
   },
   "WebviewScreen": {
     "loading": "Suche",

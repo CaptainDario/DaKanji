@@ -11,9 +11,13 @@ import subprocess
 import json
 import re
 
-
-
-if __name__ == "__main__":
+def main():
+    # delete old localization files
+    for f in os.listdir("assets/translations/"):
+        if(f != "localizations.json"):
+            os.remove(f"assets/translations/{f}")
+    os.remove("lib/CodegenLoader.dart")
+    os.remove("lib/locales_keys.dart")
 
     # create separate json files for every langauge
     with open("assets/translations/localizations.json", "r", encoding="utf8") as f:
@@ -50,17 +54,21 @@ if __name__ == "__main__":
     # remove empty translations
     path = os.path.join(os.getcwd(), "lib", "CodegenLoader.dart")
 
-    f = []
+    f, f_without_empties = [], []
     with open(path, encoding="utf8", mode="r") as file:
         f = file.readlines()
         
         # remove all lines which have empty translations
         for cnt, line in enumerate(f):
-            if (': ""' in line):
-                del f[cnt]
-    
+            if (not '": ""' in line and not ": null" in line):
+                f_without_empties.append(line)
+
     # save the files back to disk
     with open(path, encoding="utf8", mode="w+") as file:
-        file.write("".join(f))
+        file.write("".join(f_without_empties))
+
+if __name__ == "__main__":
+
+    main()
 
 
