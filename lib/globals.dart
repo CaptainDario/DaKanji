@@ -26,7 +26,7 @@ const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 
 /// is the app running to test the drawscreen
 bool IS_TESTING_DRAWSCREEN = false;
-/// is the app running to test the onboarding
+/// is the app running to test the app startup situations
 bool IS_TESTING_APP_STARTUP = false;
 
 
