@@ -28,6 +28,8 @@ const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 bool IS_TESTING_DRAWSCREEN = false;
 /// is the app running to test the app startup situations
 bool IS_TESTING_APP_STARTUP = false;
+/// is the app running to test the misc. settings
+bool IS_TESTING_SETTINGS = false;
 
 
 //about page
