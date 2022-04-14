@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji stworzone jest, aby pomaga\u0107 osobom ucz\u0105cym si\u0119 j\u0119zyka japo\u0144skiego oraz jego u\u017cytkownikom. \nAktualnie jest ono w stanie rozpozna\u0107 pismo odr\u0119czne takie jak \u6f22\u5b57 z \u6f22\u5b57\u691c\u5b9a oraz \u3072\u3089\u304c\u306a (r\u00f3wnie\u017c t\u0105 historyczn\u0105: \u3091, itp.) i \u30ab\u30bf\u30ab\u30ca. \nFunkcjonalno\u015b\u0107 aplikacji zostanie poprawiona w najbli\u017cszych wydaniach. DaKanji dost\u0119pne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) i [Windows](MICROSOFT_STORE_PAGE).\n\nSprawd\u017a inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJe\u017celi napotkasz problemy korzystaj\u0105c ztej aplikacji, albo posiadasz sugestie na to jak j\u0105 poprawi\u0107, wy\u015blij je [tutaj](GITHUB_ISSUES), do\u0142\u0105cz na [serwer discord](DISCORD_SERVER) albo wy\u015blij e-mail do daapplab@gmail.com. \nPolityka prywatno\u015bci dost\u0119pna jest [tutaj](PRIVACY_POLICE)",
+    "about_text": "DaKanji stworzone jest, aby pomaga\u0107 osobom ucz\u0105cym si\u0119 j\u0119zyka japo\u0144skiego oraz jego u\u017cytkownikom. \nDaKanji dost\u0119pne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) i [Windows](MICROSOFT_STORE_PAGE). \nWszystkie wersje mo\u017cesz zobaczy\u0107 na [GitHub.](GITHUB_RELEASES_PAGE).\n\nSprawd\u017a r\u00f3wnie\u017c inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJe\u017celi napotkasz problemy korzystaj\u0105c z tej aplikacji, albo posiadasz sugestie na to jak j\u0105 poprawi\u0107, wy\u015blij je [tutaj](GITHUB_ISSUES), do\u0142\u0105cz na [serwer discord](DISCORD_SERVER) albo wy\u015blij [e-mail](daapplab@gmail.com). \nPolityka prywatno\u015bci dost\u0119pna jest [tutaj](PRIVACY_POLICE)",
     "show_changelog": "Poka\u017c pe\u0142n\u0105 histori\u0119 zmian",
     "software_informations_button": "Informacje o oprogramowaniu",
     "title": "O aplikacji"
@@ -10,9 +10,9 @@
   },
   "DrawScreen": {
     "title": "Obraz",
-    "tutorial_begin_continue": "",
-    "tutorial_begin_text": "",
-    "tutorial_begin_title": "",
+    "tutorial_begin_continue": "Kliknij aby kontynuowa\u0107...",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witaj do rozpoznawania pisma!",
     "tutorial_clear": "Wyczy\u015b\u0107 wszystkie linie",
     "tutorial_dictionary_settings": "W ustawieniach mo\u017cliwe jest wybranie us\u0142ugi t\u0142umaczenia",
     "tutorial_double_tap_prediction": "Podw\u00f3jne klikni\u0119cie dodaje znak do pola wyszukiwania",
@@ -35,10 +35,10 @@
     "dark": "ciemny",
     "language": "j\u0119zyk",
     "light": "jasny",
-    "next": null,
+    "next": "nast\u0119pny",
     "rate_this_app": "Oce\u0144",
     "restarts_app": "restart aplikacji",
-    "skip": null,
+    "skip": "pomi\u0144",
     "system": "system",
     "web": "web"
   },
@@ -67,7 +67,7 @@
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "System wnioskowania (aplikacja musi zosta\u0107 zrestartowana)",
     "advanced_settings_title": "Ustawienia zaawansowane",
-    "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywany do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Teraz musimy podmieni\u0107 jedynie znak na symbol zast\u0119pczy. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Nast\u0119pnie symbol zast\u0119pczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Niestandardowy format URL",
     "custom_url_hint": "URL twojego s\u0142ownika",
     "dictionary_system_translator": "T\u0142umacz systemowy",
@@ -82,20 +82,20 @@
     "use_default_browser_for_online_dictionaries": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych"
   },
   "Stores": {
-    "long_description": null,
+    "long_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\n\nCzy pr\u00f3bowa\u0142e\u015b kiedy\u015b przeczyta\u0107 tekst po japo\u0144sku ale nie wiedzia\u0142e\u015b jak przeczyta\u0107 niekt\u00f3re Kanji? DaKanji jest tutaj \u017ceby Ci z tym pom\u00f3c. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz zna\u0107 kolejno\u015bci pisania! Maluj znaki i buduj s\u0142owa kt\u00f3re mo\u017cesz p\u00f3\u017aniej t\u0142umaczy\u0107, a to wszystko kompletnie offline.\n\nFunkcjonalno\u015bci:\n* Rozpoznawanie 6500+ Kanji i ca\u0142ej Kany offline\n* U\u017cywaj s\u0142ownik\u00f3w internetowych oraz aplikacji aby t\u0142umaczy\u0107 znaki i s\u0142owa",
     "mockup_10": "",
-    "mockup_1_1": "",
-    "mockup_1_2": "",
-    "mockup_2": "",
-    "mockup_3": "",
+    "mockup_1_1": "Nie znasz Kanji? Po prostu je namaluj!",
+    "mockup_1_2": "Kolejno\u015b\u0107 malowania znak\u00f3w nie ma znaczenia.",
+    "mockup_2": "Wyszukuj s\u0142owa",
+    "mockup_3": "T\u0142umacz za pomoc\u0105 s\u0142ownika",
     "mockup_4": "",
     "mockup_5": "",
     "mockup_6": "",
     "mockup_7": "",
     "mockup_8": "",
     "mockup_9": "",
-    "short_description": "",
-    "shortest_description": null
+    "short_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\nZa pomoc\u0105 malowania mo\u017cesz odnajdowa\u0107 i t\u0142umaczy\u0107 znaki.",
+    "shortest_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!"
   },
   "WebviewScreen": {
     "loading": "\u0141adowanie",
