@@ -50,6 +50,16 @@ void main() {
     print("Passed step: 2");
     // #endregion
 
+    // #region 3 - check that the DrawScreen tutorial is shown
+    while(tester.widgetList(find.byType(DrawingCanvas)).toList().length == 0){
+      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      print('waiting for tutorial to show up');
+    }
+    
+    expect(find.byType(DrawingCanvas), findsOneWidget);
+    print("Passed step: 2");
+    // #endregion
+
   });
 
 
