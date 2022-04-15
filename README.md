@@ -28,14 +28,15 @@
 
 ## What is this
 
-DaKanji helps students of the Japanese language and people who use it.
+"You are learning Japanese? Then you need to give DaKanji a try!
 
-The current feature set:
+Did you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.
 
-* Recognize hand drawn single characters (Kana, 6500+ Kanji)
-* Available for Android, MacOS, Linux, iOS, Windows
+Feature overview:
 
-But this is only the beginning, in the coming months the feature list will keep growing.
+* Recognize 6500+ Kanji and all Kana offline
+* Use web and app dictionaries to translate characters or words"
+
 </br>
 
 ## What the users say
