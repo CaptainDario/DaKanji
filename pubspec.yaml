@@ -3,7 +3,7 @@ description: A cross platform app for mobile and desktop to help learn and use t
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+29
+version: 2.0.1+30
 
 environment:
   sdk: ">=2.16.0"
@@ -21,7 +21,7 @@ dependencies:
   flutter_phoenix: 1.0.0
   image: 3.1.3
   flutter_markdown: 0.6.2
-  get_it: 7.1.3
+  get_it: 7.2.0
   provider: 6.0.0
   universal_io: 2.0.4
   awesome_dialog: 2.1.0
@@ -65,8 +65,8 @@ msix_config:
   identity_name: 61015DaAppLab.DaKanji
   logo_path: ./assets/images/icons/icon.png
   capabilities: internetClient
-  add-execution-alias: DaKanji
-  languages: en-us, de-ge, pl-pl
+  execution-alias: DaKanji
+  languages: en-us, de-de, pl-pl
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,7 +78,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  msix: 3.4.0
+  msix: 3.5.1
   
 flutter_icons:
   android: "launcher_icon"
