@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           maintainAnimation: true,
           maintainState: true,
           visible: GetIt.I<UserData>().showChangelog, 
-          child: WhatsNewDialogue(context,
+          child: WhatsNewDialogue(
           confettiAnimation_1, confettiAnimation_2, confettiAnimation_3)
         )
       )
