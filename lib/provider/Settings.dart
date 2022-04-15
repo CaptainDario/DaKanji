@@ -25,7 +25,10 @@ class Settings with ChangeNotifier {
   late String weblioURL;
 
   /// A list with all available dictionary options.
-  late List<String> dictionaries;
+  List<String> dictionaries = [];
+
+  /// A list with all web dictionaries
+  late List<String> web_dictionaries;
 
   /// The string representation of the dictionary which will be used (long press)
   String _selectedDictionary = "";
@@ -70,12 +73,14 @@ class Settings with ChangeNotifier {
   Settings() {
     kanjiPlaceholder;
 
-    dictionaries = [
+    web_dictionaries = [
       "jisho (web)",
       "wadoku (web)",
       "weblio (web)",
       "url"
     ];
+
+    dictionaries.addAll(web_dictionaries);
     
     if(Platform.isAndroid)
       dictionaries.addAll([

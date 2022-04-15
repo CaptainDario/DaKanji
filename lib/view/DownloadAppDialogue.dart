@@ -8,18 +8,21 @@ import 'package:easy_localization/easy_localization.dart';
 
 
 /// Show a dialogue using [context] with a [title], some [text] and a button
-/// to open the [url].
+/// to open the [url] and one to close the dialog.
 void showDownloadDialogue(
   BuildContext context, String title, String text, String url){
 
   AwesomeDialog(
     context: context,
-    animType: AnimType.SCALE,
-    dialogType: DialogType.WARNING,
+    dialogType: DialogType.NO_HEADER,
     headerAnimationLoop: false,
     body: Column(
       children: [
-        Text(title, textScaleFactor: 2,),
+        Text(
+          title, 
+          textScaleFactor: 2,
+          textAlign: TextAlign.center,
+        ),
         Center( 
           child: Container(
             padding: EdgeInsets.all(10),

@@ -8,6 +8,7 @@ abstract class  LocaleKeys {
   static const AboutScreen = 'AboutScreen';
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
+  static const DrawScreen_not_installed = 'DrawScreen.not_installed';
   static const DrawScreen_title = 'DrawScreen.title';
   static const DrawScreen_tutorial_begin_continue = 'DrawScreen.tutorial_begin_continue';
   static const DrawScreen_tutorial_begin_text = 'DrawScreen.tutorial_begin_text';
@@ -29,8 +30,10 @@ abstract class  LocaleKeys {
   static const DrawScreen = 'DrawScreen';
   static const General_app = 'General.app';
   static const General_close = 'General.close';
+  static const General_complete_log = 'General.complete_log';
   static const General_custom_url = 'General.custom_url';
   static const General_dark = 'General.dark';
+  static const General_download = 'General.download';
   static const General_language = 'General.language';
   static const General_light = 'General.light';
   static const General_next = 'General.next';
@@ -39,6 +42,7 @@ abstract class  LocaleKeys {
   static const General_skip = 'General.skip';
   static const General_system = 'General.system';
   static const General_web = 'General.web';
+  static const General_whats_new = 'General.whats_new';
   static const General = 'General';
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';

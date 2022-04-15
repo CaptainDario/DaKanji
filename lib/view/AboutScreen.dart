@@ -23,21 +23,19 @@ class AboutScreen extends StatelessWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
 
-  final String about = LocaleKeys.AboutScreen_about_text.tr()
-    .replaceAll("GITHUB_ISSUES", GITHUB_ISSUES)
-    .replaceAll("PRIVACY_POLICE", PRIVACY_POLICE)
-    .replaceAll("RATE_ON_MOBILE_STORE", 
-      GetIt.I<PlatformDependentVariables>().appStoreLink)
-    .replaceAll("DAAPPLAB_STORE_PAGE", 
-      GetIt.I<PlatformDependentVariables>().daapplabStorePage)
-    .replaceAll("DISCORD_SERVER", DISCORD_INVITE)
-    .replaceAll("PLAYSTORE_PAGE", PLAYSTORE_PAGE)
-    .replaceAll("APPSTORE_PAGE", APPSTORE_PAGE)
-    .replaceAll("MACSTORE_PAGE", APPSTORE_PAGE)
-    .replaceAll("SNAPSTORE_PAGE", SNAPSTORE_PAGE)
-    .replaceAll("MICROSOFT_STORE_PAGE", MICROSOFT_STORE_PAGE)
-    .replaceAll("GITHUB_RELEASES_PAGE", GITHUB_RELEASES_PAGE);
-
+  final String about = LocaleKeys.AboutScreen_about_text.tr(namedArgs : {
+    "GITHUB_ISSUES" : GITHUB_ISSUES,
+    "PRIVACY_POLICE" : PRIVACY_POLICE,
+    "RATE_ON_MOBILE_STORE" : GetIt.I<PlatformDependentVariables>().appStoreLink,
+    "DAAPPLAB_STORE_PAGE" : GetIt.I<PlatformDependentVariables>().daapplabStorePage,
+    "DISCORD_SERVER" : DISCORD_INVITE,
+    "PLAYSTORE_PAGE" : PLAYSTORE_PAGE,
+    "APPSTORE_PAGE" : APPSTORE_PAGE,
+    "MACSTORE_PAGE" : APPSTORE_PAGE,
+    "SNAPSTORE_PAGE" : SNAPSTORE_PAGE,
+    "MICROSOFT_STORE_PAGE" : MICROSOFT_STORE_PAGE,
+    "GITHUB_RELEASES_PAGE" : GITHUB_RELEASES_PAGE,
+  });
   AboutScreen(this.openedByDrawer);
   
   @override
