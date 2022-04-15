@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS](APPSTORE_PAGE), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE), [Windows](MICROSOFT_STORE_PAGE).\nYou can also find all releases on [GitHub.](GITHUB_RELEASES_PAGE).\n\nAlso check out [my other apps.](DAAPPLAB_STORE_PAGE)\nIf you have problems using this app or suggestions how to improve it please report them [here](GITHUB_ISSUES), join the [discord server](DISCORD_SERVER) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here](PRIVACY_POLICE)",
+    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -9,6 +9,7 @@
     "title": "Changelog"
   },
   "DrawScreen": {
+    "not_installed": "{DICTIONARY} not installed",
     "title": "Drawing",
     "tutorial_begin_continue": "Tap to continue...",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -31,8 +32,10 @@
   "General": {
     "app": "app",
     "close": "Close",
+    "complete_log": "complete log",
     "custom_url": "custom URL",
     "dark": "dark",
+    "download": "download",
     "language": "language",
     "light": "light",
     "next": "next",
@@ -40,7 +43,8 @@
     "restarts_app": "restarts app",
     "skip": "skip",
     "system": "system",
-    "web": "web"
+    "web": "web",
+    "whats_new": "what's new"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Not again!",

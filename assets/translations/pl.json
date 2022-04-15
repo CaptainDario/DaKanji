@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji stworzone jest, aby pomaga\u0107 osobom ucz\u0105cym si\u0119 j\u0119zyka japo\u0144skiego oraz jego u\u017cytkownikom. \nDaKanji dost\u0119pne jest dla [iOS](IOS), [Android](PLAYSTORE_PAGE), [MacOS](MACSTORE_PAGE), [Linux (Snap)](SNAPSTORE_PAGE) i [Windows](MICROSOFT_STORE_PAGE). \nWszystkie wersje mo\u017cesz zobaczy\u0107 na [GitHub.](GITHUB_RELEASES_PAGE).\n\nSprawd\u017a r\u00f3wnie\u017c inne [moje aplikacje](DAAPPLAB_STORE_PAGE). \nJe\u017celi napotkasz problemy korzystaj\u0105c z tej aplikacji, albo posiadasz sugestie na to jak j\u0105 poprawi\u0107, wy\u015blij je [tutaj](GITHUB_ISSUES), do\u0142\u0105cz na [serwer discord](DISCORD_SERVER) albo wy\u015blij [e-mail](daapplab@gmail.com). \nPolityka prywatno\u015bci dost\u0119pna jest [tutaj](PRIVACY_POLICE)",
+    "about_text": "DaKanji stworzone jest, aby pomaga\u0107 osobom ucz\u0105cym si\u0119 j\u0119zyka japo\u0144skiego oraz jego u\u017cytkownikom. \nDaKanji dost\u0119pne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje mo\u017cesz zobaczy\u0107 na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawd\u017a r\u00f3wnie\u017c inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJe\u017celi napotkasz problemy korzystaj\u0105c z tej aplikacji, albo posiadasz sugestie na to jak j\u0105 poprawi\u0107, wy\u015blij je [tutaj]({GITHUB_ISSUES}), do\u0142\u0105cz na [serwer discord]({DISCORD_SERVER}) albo wy\u015blij [e-mail](daapplab@gmail.com). \nPolityka prywatno\u015bci dost\u0119pna jest [tutaj]({PRIVACY_POLICE})",
     "show_changelog": "Poka\u017c pe\u0142n\u0105 histori\u0119 zmian",
     "software_informations_button": "Informacje o oprogramowaniu",
     "title": "O aplikacji"
@@ -9,6 +9,7 @@
     "title": "Historia zmian"
   },
   "DrawScreen": {
+    "not_installed": null,
     "title": "Obraz",
     "tutorial_begin_continue": "Kliknij aby kontynuowa\u0107...",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
@@ -31,8 +32,10 @@
   "General": {
     "app": "aplikacja",
     "close": "Zamknij",
+    "complete_log": null,
     "custom_url": "niestandardowy URL",
     "dark": "ciemny",
+    "download": null,
     "language": "j\u0119zyk",
     "light": "jasny",
     "next": "nast\u0119pny",
@@ -40,7 +43,8 @@
     "restarts_app": "restart aplikacji",
     "skip": "pomi\u0144",
     "system": "system",
-    "web": "web"
+    "web": "web",
+    "whats_new": null
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie powtarzaj!",
