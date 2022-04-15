@@ -59,37 +59,13 @@ All contributions are welcome!
 Here is a list of a few things which would help this project:
 
 * For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
-* If you have ideas how to improve this app [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
-* You found a bug? Please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues) too.
-* Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be
+* If you have ideas how to improve this app or you found a bug please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
+* Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be or take a look at [issues labeled as 'good first issue'](https://github.com/CaptainDario/DaKanji/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
 ## Credits
 
-I want to thank all the people involved in this project,
+I want to thank all the people involved in this project, without you the project would not be where it right now!
 
-* development
-  * Dictionary
-    * Thank you so much michalpatryk, you are a great help
-* Design
-  * icon / banner
-    * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
-    * Thanks [Adrian Jordanov](https://www.1001fonts.com/theater-font.html) for the font.
-  * UI
-    * Shout out to Nurellina! Without your help the app would not look and feel half as good as it does now
-* Modified Packages: [bitmap](https://github.com/renancaraujo/bitmap), [snappable](https://github.com/MarcinusX/snappable)
-* A big shout out to all testers!
-  * Android
-    * pa9eup, tsumugii_12, Francesco S.
-  * iOS
-    * Nurellina
-  * Windows:
-    * michalpatryk, pa9eup
-  * Linux:
-    * Francesco S.
-  * MacOS
-    * Your name could be written here
-* Translations:
-  * Polish
-    * michalpatryk
-  * Spanish
-    * Francesco S.
+But a special thanks to michalpatryk and Nurellina.
+
+Please take the time and read the full [credits.](CREDITS.md)
