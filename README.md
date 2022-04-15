@@ -26,7 +26,6 @@
   <tr/>
 <table/>
 
-
 ## What is this
 
 DaKanji helps students of the Japanese language and people who use it.

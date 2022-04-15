@@ -1,6 +1,6 @@
 # Credits
 
-A huge thanks to everybody invloved in this project be it testing, bug reporting or something else!
+A huge thanks to everybody involved in this project be it testing, bug reporting or something else!
 
 * development
   * Dictionary
