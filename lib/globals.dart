@@ -16,10 +16,10 @@ String VERSION = "";
 const int MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE = 51;
 /// all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
-List<String> DRAWING_SCREEN_NEW_FEATURES = ["1.0.0", "1.1.0", "2.1.0"];
+List<String> DRAWING_SCREEN_NEW_FEATURES = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
 // ignore: non_constant_identifier_names
-List<String> ONBOARDING_NEW_PAGES = ["2.0.0"];
+List<String> ONBOARDING_NEW_PAGES = ["0.0.0", "2.0.0"];
 /// all languages which are supported in DaKanji
 const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
 
@@ -30,6 +30,12 @@ bool IS_TESTING_DRAWSCREEN = false;
 bool IS_TESTING_APP_STARTUP = false;
 /// is the app running to test the misc. settings
 bool IS_TESTING_SETTINGS = false;
+/// is the app running to test if the onboarding shows again if there are new
+/// pages added to it
+bool IS_TESTING_APP_STARTUP_ONBOARDING_NEW_FEATURES = false;
+/// is the app running to test if the DrawScreen tutorial shows again if there are new
+/// points added to it
+bool IS_TESTING_APP_STARTUP_DRAWSCREEN_NEW_FEATURES = false;
 
 
 //about page

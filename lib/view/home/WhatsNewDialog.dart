@@ -20,9 +20,9 @@ class WhatsNewDialogue extends StatelessWidget {
     {Key? key}
   ) : super(key: key);
 
-  ControllableLottieAnimation confettiAnimation_1;
-  ControllableLottieAnimation confettiAnimation_2;
-  ControllableLottieAnimation confettiAnimation_3;
+  final ControllableLottieAnimation confettiAnimation_1;
+  final ControllableLottieAnimation confettiAnimation_2;
+  final ControllableLottieAnimation confettiAnimation_3;
 
   @override
   Widget build(BuildContext context) {

@@ -29,11 +29,15 @@ class UserData{
 
 
 
-  get appOpenedTimes{
+  int get appOpenedTimes{
     return _appOpenedTimes;
   }
 
-  get versionUsed{
+  //set versionUsed(String version) {
+  //  _versionUsed = version;
+  //}
+
+  String get versionUsed{
     return _versionUsed;
   }
 
@@ -58,13 +62,24 @@ class UserData{
     showRatePopup = prefs.getBool('showRatePopup') ?? false;
     showChangelog = prefs.getBool('showChangelog') ?? false;
 
+    // TESTING
+    if(IS_TESTING_APP_STARTUP_ONBOARDING_NEW_FEATURES){
+      _versionUsed = "1.0.0+15";
+      VERSION = ONBOARDING_NEW_PAGES[0] + "+1";
+      _appOpenedTimes = 5;
+    }
+    if(IS_TESTING_APP_STARTUP_DRAWSCREEN_NEW_FEATURES){
+      _versionUsed = "1.0.0+15";
+      VERSION = DRAWING_SCREEN_NEW_FEATURES[0] + "+1";
+      _appOpenedTimes = 5;
+    }
 
     print("The app was opened for the ${_appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-    //VERSION = "0.0.0+0";
     print("used: $versionUsed now: $VERSION");
     if(versionUsed != VERSION && appOpenedTimes > 1){
+      print("New version installed");
       // show the changelog
       showChangelog = true;
       _versionUsed = VERSION;

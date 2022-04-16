@@ -11,10 +11,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
-import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
-import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
