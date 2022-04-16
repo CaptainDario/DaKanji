@@ -61,5 +61,7 @@ void main() {
     expect(find.byType(DrawingCanvas), findsOneWidget);
     print("Passed step: 2");
     // #endregion
+
+    //GetIt.I.reset();
   });
 }
