@@ -64,8 +64,8 @@ Here is a list of a few things which would help this project:
 
 ## Credits
 
-I want to thank all the people involved in this project, without you the project would not be where it right now!
+I want to thank all the people involved in this project, without you the project would not be where it's right now!
 
-But a special thanks to michalpatryk and Nurellina.
+But a special thanks goes to michalpatryk and Nurellina.
 
 Please take the time and read the full [credits.](CREDITS.md)
