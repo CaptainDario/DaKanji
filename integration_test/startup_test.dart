@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
@@ -71,6 +73,5 @@ void main() {
     print("Passed step: 2");
     // #endregion
 
-    GetIt.I.reset();
   });
 }
