@@ -13,7 +13,7 @@ jobs:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
 
   linux-test-and-build:
-    uses: ./.github/workflows/linux.yml
+    uses: ./.github/workflows/linux_test_and_build.yml
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
 
