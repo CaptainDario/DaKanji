@@ -64,6 +64,6 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_macos.zip
-          path: build/macos/Build/Products/Release/
+          name: DaKanji_macos
+          path: build/macos/Build/Products/Release/da_kanji_mobile.app
 
