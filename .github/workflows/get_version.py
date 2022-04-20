@@ -9,7 +9,7 @@
 
 import re
 
-def get_version() -> str:
+def get_version():
     """ Read the version from pubspec.yaml and return it
     """
     
