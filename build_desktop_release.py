@@ -24,18 +24,11 @@ if __name__ == "__main__":
 
     # Linux
     if platform == "linux" or platform == "linux2":
-        pass
-
+        print("Linux not available")
 
     # MacOS
     elif platform == "darwin":
         subprocess.run("flutter build macos --release", shell=True)
-
-        if(not os.path.isdir(macos_blob_dir)):
-            os.mkdir(macos_blob_dir)
-
-        if(not os.path.isfile(macos_blob_dir + macos_tf)):
-            shutil.copyfile("blobs/" + macos_tf, macos_blob_dir + macos_tf)
 
     # Windows
     elif platform == "win32":
