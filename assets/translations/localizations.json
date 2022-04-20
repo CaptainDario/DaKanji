@@ -20,12 +20,13 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
     },
     "short_description": {
       "en": "You are learning Japanese? Then you need to give DaKanji a try!\nFind characters and translate them just by drawing.",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
     },
     "long_description": {
@@ -36,7 +37,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
     },
     "mockup_1_1": {
@@ -47,7 +48,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
       "pl": "Nie znasz Kanji? Po prostu je namaluj!"
     },
     "mockup_1_2": {
@@ -58,7 +59,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "Ni siquiera importa el orden de los trazos.",
       "pl": "Kolejność malowania znaków nie ma znaczenia."
     },
     "mockup_2": {
@@ -69,7 +70,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "Busca palabras",
       "pl": "Wyszukuj słowa"
     },
     "mockup_3": {
@@ -80,7 +81,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "Traduce con diccionarios",
       "pl": "Tłumacz za pomocą słownika"
     },
     "mockup_4": {},
@@ -148,6 +149,30 @@
       "fr": null,
       "es": "Lista de cambios",
       "pl": "Historia zmian"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "en": "Not again!",
+      "de": "Nie wieder!",
+      "ru": "deepl()",
+      "jp": null,
+      "cn": null,
+      "it": null,
+      "fr": null,
+      "es": "No de nuevo!",
+      "pl": "Nie powtarzaj!"
+    },
+    "RatePopup_text": {
+      "en": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
+      "ru": "asd",
+      "jp": null,
+      "cn": null,
+      "it": null,
+      "fr": null,
+      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
+      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
     }
   },
   "DrawScreen": {
@@ -357,32 +382,8 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
-      "pl": null
-    }
-  },
-  "HomeScreen": {
-    "RatePopup_dont_ask_again": {
-      "en": "Not again!",
-      "de": "Nie wieder!",
-      "ru": "deepl()",
-      "jp": null,
-      "cn": null,
-      "it": null,
-      "fr": null,
-      "es": "No de nuevo!",
-      "pl": "Nie powtarzaj!"
-    },
-    "RatePopup_text": {
-      "en": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
-      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
-      "ru": "asd",
-      "jp": null,
-      "cn": null,
-      "it": null,
-      "fr": null,
-      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
-      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
+      "es": "{DICTIONARY} no instalado",
+      "pl": "{DICTIONARY} nie zainstalowany"
     }
   },
   "General": {
@@ -504,6 +505,7 @@
       "cn": null,
       "it": null,
       "fr": null,
+      "es": "siguiente",
       "pl": "następny"
     },
     "skip": {
@@ -514,7 +516,7 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
+      "es": "omitir",
       "pl": "pomiń"
     },
     "whats_new": {
@@ -525,8 +527,8 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
-      "pl": null
+      "es": "qué hay de nuevo",
+      "pl": "co nowego"
     },
     "complete_log": {
       "en": "complete log",
@@ -536,8 +538,8 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
-      "pl": null
+      "es": "registro completo",
+      "pl": "pełny rejestr"
     },
     "download": {
       "en": "download",
@@ -547,8 +549,8 @@
       "cn": null,
       "it": null,
       "fr": null,
-      "es": null,
-      "pl": null
+      "es": "descargar",
+      "pl": "pobierz"
     }
   },
   "OnBoarding": {

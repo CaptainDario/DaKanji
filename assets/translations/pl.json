@@ -9,7 +9,7 @@
     "title": "Historia zmian"
   },
   "DrawScreen": {
-    "not_installed": null,
+    "not_installed": "{DICTIONARY} nie zainstalowany",
     "title": "Obraz",
     "tutorial_begin_continue": "Kliknij aby kontynuowa\u0107...",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
@@ -32,10 +32,10 @@
   "General": {
     "app": "aplikacja",
     "close": "Zamknij",
-    "complete_log": null,
+    "complete_log": "pe\u0142ny rejestr",
     "custom_url": "niestandardowy URL",
     "dark": "ciemny",
-    "download": null,
+    "download": "pobierz",
     "language": "j\u0119zyk",
     "light": "jasny",
     "next": "nast\u0119pny",
@@ -44,7 +44,7 @@
     "skip": "pomi\u0144",
     "system": "system",
     "web": "web",
-    "whats_new": null
+    "whats_new": "co nowego"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie powtarzaj!",

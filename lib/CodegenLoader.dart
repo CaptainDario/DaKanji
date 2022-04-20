@@ -213,36 +213,43 @@ static const Map<String,dynamic> localizations = {
     "shortest_description": {
       "en": "You are learning Japanese? Then you need to give DaKanji a try!",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
     },
     "short_description": {
       "en": "You are learning Japanese? Then you need to give DaKanji a try!\nFind characters and translate them just by drawing.",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
     },
     "long_description": {
       "en": "You are learning Japanese? Then you need to give DaKanji a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
       "de": "Du lernst Japanisch? Dann musst du DaKanji ausprobieren.\r\n\r\nHast du schon mal versucht, einen japanischen Text zu lesen, aber kanntest ein Kanji nicht?\r\nDaKanji kann dir dabei helfen. Zeichne ein Kanji und die App wandelt es in einen digitales Zeichen um. Nicht einmal die Strichfolge ist wichtig! Male Zeichen und kombiniere sie zu Wörtern, die du dann übersetzen kannst und all das komplett offline.\r\n\r\nFunktionen:\r\n* Erkennt mehr als 6500 Kanji und alle Kana komplett offline\r\n* Benutze web und App Wörterbücher, um Zeichen und Wörter nachzuschlagen",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
     },
     "mockup_1_1": {
       "en": "Don't know a Kanji? Just draw it!",
       "de": "Du kennst das Kanji nicht? Mal' es einfach!",
+      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
       "pl": "Nie znasz Kanji? Po prostu je namaluj!"
     },
     "mockup_1_2": {
       "en": "Even the stroke order doesn't matter.",
       "de": "Selbst die Strichfolge ist unwichtig.",
+      "es": "Ni siquiera importa el orden de los trazos.",
       "pl": "Kolejność malowania znaków nie ma znaczenia."
     },
     "mockup_2": {
       "en": "Search words",
       "de": "Suche Wörter",
+      "es": "Busca palabras",
       "pl": "Wyszukuj słowa"
     },
     "mockup_3": {
       "en": "Translate with dictionaries",
       "de": "Übersetze mit Wörterbüchern",
+      "es": "Traduce con diccionarios",
       "pl": "Tłumacz za pomocą słownika"
     },
     "mockup_4": {},
@@ -285,6 +292,22 @@ static const Map<String,dynamic> localizations = {
       "de": "Änderungen",
       "es": "Lista de cambios",
       "pl": "Historia zmian"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "en": "Not again!",
+      "de": "Nie wieder!",
+      "ru": "deepl()",
+      "es": "No de nuevo!",
+      "pl": "Nie powtarzaj!"
+    },
+    "RatePopup_text": {
+      "en": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
+      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
+      "ru": "asd",
+      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
+      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
     }
   },
   "DrawScreen": {
@@ -399,22 +422,8 @@ static const Map<String,dynamic> localizations = {
     "not_installed": {
       "en": "{DICTIONARY} not installed",
       "de": "{DICTIONARY} nicht installiert",
-    }
-  },
-  "HomeScreen": {
-    "RatePopup_dont_ask_again": {
-      "en": "Not again!",
-      "de": "Nie wieder!",
-      "ru": "deepl()",
-      "es": "No de nuevo!",
-      "pl": "Nie powtarzaj!"
-    },
-    "RatePopup_text": {
-      "en": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!",
-      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
-      "ru": "asd",
-      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
-      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
+      "es": "{DICTIONARY} no instalado",
+      "pl": "{DICTIONARY} nie zainstalowany"
     }
   },
   "General": {
@@ -481,24 +490,32 @@ static const Map<String,dynamic> localizations = {
     "next": {
       "en": "next",
       "de": "Weiter",
+      "es": "siguiente",
       "pl": "następny"
     },
     "skip": {
       "en": "skip",
       "de": "Überspingen",
+      "es": "omitir",
       "pl": "pomiń"
     },
     "whats_new": {
       "en": "what's new",
       "de": "Was gibt's neues",
+      "es": "qué hay de nuevo",
+      "pl": "co nowego"
     },
     "complete_log": {
       "en": "complete log",
       "de": "vollständiges Log",
+      "es": "registro completo",
+      "pl": "pełny rejestr"
     },
     "download": {
       "en": "download",
       "de": "herunterladen",
+      "es": "descargar",
+      "pl": "pobierz"
     }
   },
   "OnBoarding": {
@@ -645,6 +662,7 @@ static const Map<String,dynamic> pl = {
     "title": "Historia zmian"
   },
   "DrawScreen": {
+    "not_installed": "{DICTIONARY} nie zainstalowany",
     "title": "Obraz",
     "tutorial_begin_continue": "Kliknij aby kontynuować...",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
@@ -667,8 +685,10 @@ static const Map<String,dynamic> pl = {
   "General": {
     "app": "aplikacja",
     "close": "Zamknij",
+    "complete_log": "pełny rejestr",
     "custom_url": "niestandardowy URL",
     "dark": "ciemny",
+    "download": "pobierz",
     "language": "język",
     "light": "jasny",
     "next": "następny",
@@ -677,6 +697,7 @@ static const Map<String,dynamic> pl = {
     "skip": "pomiń",
     "system": "system",
     "web": "web",
+    "whats_new": "co nowego"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie powtarzaj!",
