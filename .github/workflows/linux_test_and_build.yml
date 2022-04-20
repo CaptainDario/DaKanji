@@ -83,6 +83,8 @@ jobs:
       - name: Build DaKanji snap
         run: |
           python3 .github/workflows/create_snapcraft_yaml.py
+          flutter clean
+          flutter pub get
           sg lxd -c 'snapcraft --use-lxd'
      
       - name: Archive production artifacts
