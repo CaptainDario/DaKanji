@@ -62,7 +62,7 @@ jobs:
 
       - name: copy TF Lite binaries to build folder
         run: |
-          mkdir build/linux/x64/release/bundle/blobs
+          mkdir build/macos/Build/Products/Release/blobs
           cp blobs/libtensorflowlite_c-macos.dylib build/macos/Build/Products/Release/blobs
 
       - name: Archive production artifacts
