@@ -59,11 +59,7 @@ jobs:
         run: |
           flutter config --enable-macos-desktop
           flutter build macos --release
-
-      - name: copy TF Lite binaries to build folder
-        run: |
-          mkdir build/macos/Build/Products/Release/blobs
-          cp blobs/libtensorflowlite_c-macos.dylib build/macos/Build/Products/Release/blobs
+          python3 build_desktop_release.py
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
