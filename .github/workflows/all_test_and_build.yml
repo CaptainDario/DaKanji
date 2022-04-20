@@ -11,6 +11,17 @@ jobs:
     uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+
+  linux-test-and-build:
+    uses: ./.github/workflows/linux.yml
+    secrets:
+      DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+
+  macos-test-and-build:
+    uses: ./.github/workflows/macos_test_and_build.yml
+    secrets:
+      DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
     secrets:
@@ -19,3 +30,6 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
+  #ios-test-and-build:
+  #  uses: 
