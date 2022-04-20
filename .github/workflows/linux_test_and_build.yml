@@ -82,7 +82,7 @@ jobs:
 
       - name: Build DaKanji snap
         run: |
-          python .github/workflows/create_snapcraft_yaml.py
+          python3 .github/workflows/create_snapcraft_yaml.py
           sg lxd -c 'snapcraft --use-lxd'
      
       - name: Archive production artifacts
