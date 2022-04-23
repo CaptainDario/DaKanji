@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=2.0
+Type=Application
+
+Name=Flutter App
+Comment=An example app that counts
+Categories=Utility;Amusement;
+
+Icon=com.daapplab.dakanji
+Exec=dakanji
+Terminal=false
+StartupWMClass=dakanji

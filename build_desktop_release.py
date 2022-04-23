@@ -24,7 +24,11 @@ if __name__ == "__main__":
 
     # Linux
     if platform == "linux" or platform == "linux2":
-        pass
+        subprocess.run("flutter build linux --release", shell=True)
+
+        # flatpak
+        # flatpak run org.flatpak.Builder --force-clean ./build/flatpak  com.daapplab.dakanji.json
+        # 
 
 
     # MacOS
