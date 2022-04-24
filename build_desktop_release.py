@@ -24,18 +24,16 @@ if __name__ == "__main__":
 
     # Linux
     if platform == "linux" or platform == "linux2":
-        pass
+        subprocess.run("flutter build linux --release", shell=True)
+
+        # flatpak
+        # flatpak run org.flatpak.Builder --force-clean ./build/flatpak  com.daapplab.dakanji.json
+        # 
 
 
     # MacOS
     elif platform == "darwin":
         subprocess.run("flutter build macos --release", shell=True)
-
-        if(not os.path.isdir(macos_blob_dir)):
-            os.mkdir(macos_blob_dir)
-
-        if(not os.path.isfile(macos_blob_dir + macos_tf)):
-            shutil.copyfile("blobs/" + macos_tf, macos_blob_dir + macos_tf)
 
     # Windows
     elif platform == "win32":

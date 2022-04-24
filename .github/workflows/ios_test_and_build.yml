@@ -55,15 +55,3 @@ jobs:
       #- name: Run integration tests
       #  run: flutter test .\integration_test\ -d linux
 
-      - name: build macos executable
-        run: |
-          flutter config --enable-macos-desktop
-          flutter build macos --release
-          python3 build_desktop_release.py
-
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_macos
-          path: build/macos/Build/Products/Release/da_kanji_mobile.app
-
