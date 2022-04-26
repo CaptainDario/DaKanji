@@ -102,14 +102,21 @@ void main() {
 
     // #region 4 - reshow tutorials
     await tester.scrollUntilVisible(
-      find.byIcon(Icons.replay_outlined).last, 
-      1,
-      scrollable: 
+      find.byIcon(Icons.replay_outlined), 
+      10,
+      scrollable: find.descendant(
+        of: find.byType(SingleChildScrollView), 
+        matching: find.byType(Scrollable)
+      ).last
     );
-    //await tester.tap(find.byIcon(Icons.replay_outlined).last);
+    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.tap(find.byIcon(Icons.replay_outlined).last);
     await tester.pumpAndSettle(Duration(seconds: 1));
     await tester.pumpAndSettle(Duration(seconds: 1));
     
+    expect(find.text("Witaj do rozpoznawania pisma!"), findsOneWidget);
+
     print("Passed step: 4");
     await tester.pumpAndSettle(Duration(seconds: 1));
     // #endregion
