@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -38,7 +39,7 @@ void main() {
 
     // #endregion
 
-    /*
+    
     // #region 1 - change setting: theme = dark
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle(Duration(seconds: 1));
@@ -78,7 +79,7 @@ void main() {
     print("Passed step: 2");
     await tester.pumpAndSettle(Duration(seconds: 1));
     // #endregion
-    */
+    
     // #region 3 - change setting: language = pl
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle(Duration(seconds: 1));
@@ -86,7 +87,7 @@ void main() {
     await tester.tap(find.text(LocaleKeys.SettingsScreen_title.tr()));
     await tester.pumpAndSettle(Duration(seconds: 1));
     await tester.pumpAndSettle(Duration(seconds: 1));
-    Offset pos = tester.getCenter(find.text('pl').last);
+    pos = tester.getCenter(find.text('pl').last);
     await tester.tapAt(pos);
     await tester.pumpAndSettle(Duration(seconds: 1));
     await tester.pumpAndSettle(Duration(seconds: 1));
@@ -115,7 +116,17 @@ void main() {
     await tester.pumpAndSettle(Duration(seconds: 1));
     await tester.pumpAndSettle(Duration(seconds: 1));
     
-    expect(find.text("Witaj do rozpoznawania pisma!"), findsOneWidget);
+    int cnt = 0;
+    while(tester.widgetList(find.byType(DrawingCanvas)).toList().length == 0 &&
+      cnt < 100){
+      cnt++;
+      await tester.pumpAndSettle(Duration(milliseconds: 250));
+      print('waiting for welcome to show');
+    }
+
+    expect(find.byType(DrawingCanvas), findsOneWidget);
+    expect(find.text("Obraz"), findsOneWidget);
+    expect(GetIt.I<UserData>().showShowcaseDrawing, true);
 
     print("Passed step: 4");
     await tester.pumpAndSettle(Duration(seconds: 1));
