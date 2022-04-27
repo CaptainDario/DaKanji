@@ -51,6 +51,9 @@ jobs:
         
       #- name: Analyze
       #  run: flutter analyze
+      
+      - name: Run integration tests
+        run: python .\integration_test\run_tests.py
 
       - name: build exe
         run: flutter build windows --release
@@ -59,10 +62,6 @@ jobs:
         run: |
           md build\windows\runner\Release\blobs
           copy blobs\libtensorflowlite_c-win.dll build\windows\runner\Release\blobs
-
-
-      - name: Run integration tests
-        run: python .\integration_test\run_tests.py
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
