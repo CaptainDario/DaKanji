@@ -48,18 +48,18 @@ jobs:
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           out-file-path: "assets/tflite_models"
-        
-      #- name: Analyze
-      #  run: flutter analyze
+
+      - name: enable macos
+        run: |
+          flutter config --enable-macos-desktop
 
       - name: Run integration tests
         run: python3 ./integration_test/run_tests.py
 
       - name: build macos executable
         run: |
-          flutter config --enable-macos-desktop
-          flutter build macos --release
           python3 build_desktop_release.py
+
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
