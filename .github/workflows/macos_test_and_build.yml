@@ -53,7 +53,7 @@ jobs:
       #  run: flutter analyze
 
       - name: Run integration tests
-        run: python3 .\integration_test\run_tests.py
+        run: python3 ./integration_test/run_tests.py
 
       - name: build macos executable
         run: |

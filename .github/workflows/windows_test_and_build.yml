@@ -53,7 +53,7 @@ jobs:
       #  run: flutter analyze
       
       - name: Run integration tests
-        run: python .\integration_test\run_tests.py
+        run: python ./integration_test/run_tests.py
 
       - name: build exe
         run: flutter build windows --release
