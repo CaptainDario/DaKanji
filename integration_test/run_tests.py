@@ -1,11 +1,30 @@
 import subprocess
 import os
 import sys
+from sys import platform
+import shutil
 
+
+
+tf_lite_win = ""
 
 
 if __name__ == "__main__":
 
+    # copy the tf lite binaries
+    if platform == "linux" or platform == "linux2":
+        pass
+
+    # MacOS
+    elif platform == "darwin":
+        pass
+
+    # Windows
+    elif platform == "win32":
+        os.makedirs(os.path.dirname("build/windows/runner/Debug/blobs/"), exist_ok=True)
+        shutil.copy("blobs/libtensorflowlite_c-win.dll", "build/windows/runner/Debug/blobs/")
+
+    # run all tests
     for file in os.listdir("integration_test"):
         if(file.endswith("_test.dart")):
             ret_val = subprocess.run(f"flutter test ./integration_test/{file}", shell=True)
