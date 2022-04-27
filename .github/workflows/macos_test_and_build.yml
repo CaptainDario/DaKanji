@@ -52,8 +52,8 @@ jobs:
       #- name: Analyze
       #  run: flutter analyze
 
-      #- name: Run integration tests
-      #  run: flutter test .\integration_test\ -d linux
+      - name: Run integration tests
+        run: python3 .\integration_test\run_tests.py
 
       - name: build macos executable
         run: |
