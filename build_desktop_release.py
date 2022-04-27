@@ -6,6 +6,7 @@
 
 import os
 import subprocess
+import sys
 from sys import platform
 import shutil
 
@@ -25,11 +26,8 @@ if __name__ == "__main__":
     # Linux
     if platform == "linux" or platform == "linux2":
         subprocess.run("flutter build linux --release", shell=True)
-
-        # flatpak
-        # flatpak run org.flatpak.Builder --force-clean ./build/flatpak  com.daapplab.dakanji.json
-        # 
-
+        os.makedirs(os.path.dirname("build/linux/x64/debug/blobs/"), exist_ok=True)
+        shutil.copy("blobs/libtensorflowlite_c-linux.so", "build/linux/x64/debug/blobs/")
 
     # MacOS
     elif platform == "darwin":
@@ -38,9 +36,5 @@ if __name__ == "__main__":
     # Windows
     elif platform == "win32":
         subprocess.run("flutter build windows --release", shell=True)
-
-        if(not os.path.isdir(windows_blob_dir)):
-            os.mkdir(windows_blob_dir)
-
-        if(not os.path.isfile(windows_blob_dir + win_tf)):
-            shutil.copyfile("blobs/" + win_tf, windows_blob_dir + win_tf)
+        os.makedirs(os.path.dirname("build/windows/runner/Debug/blobs/"), exist_ok=True)
+        shutil.copy("blobs/libtensorflowlite_c-win.dll", "build/windows/runner/Debug/blobs/")
