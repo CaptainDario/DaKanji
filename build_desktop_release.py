@@ -26,8 +26,8 @@ if __name__ == "__main__":
     # Linux
     if platform == "linux" or platform == "linux2":
         subprocess.run("flutter build linux --release", shell=True)
-        os.makedirs(os.path.dirname("build/linux/x64/debug/blobs/"), exist_ok=True)
-        shutil.copy("blobs/libtensorflowlite_c-linux.so", "build/linux/x64/debug/blobs/")
+        os.makedirs(os.path.dirname("build/linux/x64/release/bundle/blobs/"), exist_ok=True)
+        shutil.copy("blobs/libtensorflowlite_c-linux.so", "build/linux/x64/release/bundle/blobs/")
 
     # MacOS
     elif platform == "darwin":
@@ -36,5 +36,5 @@ if __name__ == "__main__":
     # Windows
     elif platform == "win32":
         subprocess.run("flutter build windows --release", shell=True)
-        os.makedirs(os.path.dirname("build/windows/runner/Debug/blobs/"), exist_ok=True)
-        shutil.copy("blobs/libtensorflowlite_c-win.dll", "build/windows/runner/Debug/blobs/")
+        os.makedirs(os.path.dirname("build/windows/runner/release/blobs/"), exist_ok=True)
+        shutil.copy("blobs/libtensorflowlite_c-win.dll", "build/windows/runner/release/blobs/")
