@@ -1,7 +1,4 @@
-
-
-
-name: Windows - deploy beta version
+name: All - Test and build
 
 # Controls when the workflow will run
 on:
@@ -9,10 +6,31 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  create-mock-build:
+    steps:
+      
+      
+
+  upload-releases-to-github:
+    # upload to github releases after everything is build
+    needs: [create-mock-build]
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artefacts
+        run: |
+          echo "test"
+          
+      - name: Upload 
+
+
+  deploy:
+    # send discord notifications after everything is uploaded to github releases
+    needs: upload-releases-to-github
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -23,7 +41,7 @@ jobs:
 
       - name: Get latest changes
         run: |
-          python get_latest_changes.py
+          python .github/workflows/get_latest_changes.py
 
           echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
           cat latest_changes.txt >> $GITHUB_ENV
@@ -31,7 +49,7 @@ jobs:
 
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: |
@@ -41,9 +59,13 @@ jobs:
             
             {{ LATEST_CHANGES }}
 
-            As always you can get the release from (usually it takes around 2h until it is available):
+            As always you can get the release from (usually it takes some time till it is available):
             
             https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab
+
+            or
+
+            https://www.github.com/CaptainDario/DaKanji-Mobile/releases
 
             If you are not yet registered as a tester or have a different problem, please send me message.
             
