@@ -35,8 +35,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# PlayStore
+# ignore keys
 key.properties
+keys/**
 
 # python
 python
