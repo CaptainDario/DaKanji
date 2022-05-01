@@ -48,12 +48,6 @@ jobs:
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           out-file-path: "assets/tflite_models"
-        
-      #- name: Analyze
-      #  run: flutter analyze
-
-      #- name: Run integration tests
-      #  run: flutter test .\integration_test\ -d linux
 
       - name: build macos executable
         run: |
