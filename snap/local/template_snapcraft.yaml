@@ -1,0 +1,38 @@
+name: dakanji
+version: ${VERSION}
+summary: DaKanji helps you learn and use Japanese.
+description: DaKanji helps you learn and use Japanese.
+
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  dbus-dakanji:
+    interface: dbus
+    bus: session
+    name: org.daapplab.dakanji
+    
+apps:
+  dakanji:
+    command: da_kanji_mobile
+    extensions: [flutter-master]
+    plugs:
+    - network
+    slots:
+      - dbus-dakanji
+
+parts:
+
+  copy-tf-lite:
+    plugin: dump
+    source: ./blobs
+    stage:
+    - bin/blobs/libtensorflowlite_c-linux.so
+    organize:
+      libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
+
+  dakanji:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart

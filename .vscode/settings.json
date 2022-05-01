@@ -12,5 +12,6 @@
         "dart": {
             "parser": "code"
         }
-    }
+    },
+    "cmake.configureOnOpen": false
 }

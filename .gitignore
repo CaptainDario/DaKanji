@@ -43,9 +43,24 @@ keys/**
 python
 android/app/key.jks
 
-# ignore tflite models to keep the repo size low
-**.tflite
+# ignore none mock tflite models
+CNN_single_char.tflite
 
 # libraries
 *.so
-blobs/libtensorflowlite_c-win.dll
+
+# ignore LoC counter
+.VSCodeCounter/
+
+# force add tf lite desktop binaries
+!blobs/**
+
+# ignore custom tf lite flutter repo
+# plugins/tflite_flutter_plugin/
+
+# ignore all keys in keys folder
+keys/DaKanjiRecognizer.jks
+
+# ignore built snaps and the none template snapcraft.yaml
+*.snap
+snap/snapcraft.yaml

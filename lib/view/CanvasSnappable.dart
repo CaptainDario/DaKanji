@@ -2,13 +2,9 @@ library snappable;
 
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'dart:ui';
-import 'package:da_kanji_mobile/model/core/Bitmap.dart';
+import 'package:da_kanji_mobile/model/Bitmap.dart';
 
-import 'package:flutter/painting.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class CanvasSnappable extends StatefulWidget {
   /// Widget to be snapped
@@ -31,15 +27,15 @@ class CanvasSnappable extends StatefulWidget {
   final int numberOfBuckets;
 
   /// Function that gets called when snap ends
-  final VoidCallback onSnapped;
+  final VoidCallback? onSnapped;
 
   /// The color of the particles from the snap
   final Color snapColor;
 
   const CanvasSnappable({
-    Key key,
-    @required this.child,
-    @required this.snapColor,
+    required Key key,
+    required this.child,
+    required this.snapColor,
     this.offset = const Offset(16, -16),
     this.duration = const Duration(milliseconds: 500),
     this.randomDislocationOffset = const Offset(8, 8),
@@ -60,20 +56,20 @@ class CanvasSnappableState extends State<CanvasSnappable>
   bool get isGone => _animationController.isCompleted;
 
   /// Main snap effect controller
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   /// Key to get image of a [widget.child]
   GlobalKey _globalKey = GlobalKey();
 
   /// Layers of image
-  List<Uint8List> _layers;
+  List<Uint8List>? _layers;
 
   /// Values from -1 to 1 to dislocate the layers a bit
-  List<double> _randoms;
+  List<double> _randoms = [];
 
   /// Size of child widget
-  int width;
-  int height;
+  int width = 0;
+  int height = 0;
 
   @override
   void initState() {
@@ -86,7 +82,8 @@ class CanvasSnappableState extends State<CanvasSnappable>
 
     if (widget.onSnapped != null) {
       _animationController.addStatusListener((status) {
-        if (status == AnimationStatus.completed) widget.onSnapped();
+        if (status == AnimationStatus.completed)
+          if(widget.onSnapped != null) widget.onSnapped!();
       });
     }
   }
@@ -101,11 +98,11 @@ class CanvasSnappableState extends State<CanvasSnappable>
   Widget build(BuildContext context) {
       return Stack(
         children: <Widget>[
-          if (_layers != null) ..._layers.map(_imageToWidget),
+          if (_layers != null) ..._layers!.map(_imageToWidget),
           AnimatedBuilder(
             animation: _animationController,
             builder: (context, child) {
-              return _animationController.isDismissed ? child : Container();
+              return _animationController.isDismissed ? child! : Container();
             },
             child: RepaintBoundary(
               key: _globalKey,
@@ -146,7 +143,7 @@ class CanvasSnappableState extends State<CanvasSnappable>
         int imageIndex = _pickABucket(weights, sumOfWeights);
         //set the pixel from chosen bucket
         for (int i = 0; i < 4; i++){
-          _layers[imageIndex][(y * width + x) * 4 + i] =
+          _layers![imageIndex][(y * width + x) * 4 + i] =
             canvas[(y * width + x) * 4 + 1];
       }
       }
@@ -177,11 +174,15 @@ class CanvasSnappableState extends State<CanvasSnappable>
 
   /// Turn the given [layer] image to a Widget.
   Widget _imageToWidget(Uint8List layer) {
+
+    if(_layers == null)
+      throw "this._layers is null";
+
     //get layer's index in the list
-    int index = _layers.indexOf(layer);
+    int index = _layers!.indexOf(layer);
 
     //based on index, calculate when this layer should start and end
-    double animationStart = (index / _layers.length) * _lastLayerAnimationStart;
+    double animationStart = (index / _layers!.length) * _lastLayerAnimationStart;
     double animationEnd = animationStart + _singleLayerAnimationLength;
 
     //create interval animation using only part of whole animation

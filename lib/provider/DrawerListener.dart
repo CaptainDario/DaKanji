@@ -5,13 +5,10 @@ import 'package:flutter/cupertino.dart';
 class DrawerListener with ChangeNotifier{
 
 
-  bool _playForward;
-  bool _playReverse;
+  bool _playForward = false;
+  bool _playReverse = false;
 
-  DrawerListener(){
-    _playForward = false;
-    _playReverse = false;
-  }
+  DrawerListener();
 
   set playForward(bool forwardFrom){
     _playForward = forwardFrom;

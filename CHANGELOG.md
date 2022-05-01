@@ -1,23 +1,28 @@
 
 # Da Kanji - changelog
 
-# v 2.0.0 - 隈なく
+## v 2.0.1 - 隈なく (24.04.2022)
 
 new Features:
 
-- None
+- Windows, MacOS, Linux support
+- Onboarding
+- New UI design (responsive!)
+- Use a web dictionary side by side with drawing screen (mobile only)
 
 Changes:
 
-- None
+- Updated Flutter to 2.10.x (stable windows support)
+- Updated dart to 2.16.x (null safety)
 
 Fixed:
 
-- None
+- Tutorial highlights
+- number of characters in the multi-char search
 
 -------------------------------------------------------------------------
 
-## v 1.4.0 - 現地化
+## v 1.4.0 - 現地化 (09.11.2021)
 
 new Features:
 
@@ -45,7 +50,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.3.0 - 漢字検定
+## v 1.3.0 - 漢字検定 (25.06.2021)
 
 new Features:
 
@@ -67,19 +72,19 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.2.2 - アニメ
+## v 1.2.2 - アニメ (21.05.2021)
 
 Fixed:
 
 - double tap to clear canvas
 
-## v 1.2.1 - アニメ
+## v 1.2.1 - アニメ (20.05.2021)
 
 Fixed:
 
 - deleting strokes sometimes disabled drawing
 
-## v 1.2.0 - アニメ
+## v 1.2.0 - アニメ (18.05.2021)
 
 new Features:
 
@@ -104,7 +109,7 @@ Changes:
 
 -------------------------------------------------------------------------
 
-## v 1.1.0 - 熟語
+## v 1.1.0 - 熟語 (06.04.2021)
 
 New Features:
 
@@ -133,32 +138,32 @@ Fixes:
 
 -------------------------------------------------------------------------
 
-## v 1.0.4
+## v 1.0.4 (17.03.2021)
 
 Fixed:
 
 - a localized link to the play store
 
-## v 1.0.3
+## v 1.0.3 (16.03.2021)
 
 Fixed:
 
 - opening web dictionaries not working on most devices
 
-## v 1.0.2
+## v 1.0.2 (13.03.2021)
 
 Fixed:
 
 - minor fixes to make app release ready
 
-## v 1.0.1
+## v 1.0.1 (11.03.2021)
 
 changes:
 
 - use improved AI from DaKanjiRecognizer v1.1
 - better image processing before feeding images to CNN
 
-## v 1.0.0 - 初め
+## v 1.0.0 - 初め (23.02.2021)
 
 features:
 
