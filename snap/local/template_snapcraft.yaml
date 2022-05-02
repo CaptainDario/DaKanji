@@ -15,7 +15,7 @@ slots:
     
 apps:
   dakanji:
-    command: da_kanji_mobile
+    command: DaKanji
     extensions: [flutter-master]
     plugs:
     - network
