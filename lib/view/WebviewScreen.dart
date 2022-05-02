@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import 'package:webviewx/webviewx.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/Lookup.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 
@@ -22,29 +22,24 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  bool loadWebview;
+  bool loadWebview = false;
   /// should the loading screen be shown (hides webview)
-  bool showLoading;
+  bool showLoading = false;
   /// the screen's width 
-  double width;
+  late double width;
   /// the AnimationController to rotate the loading / webview
-  AnimationController _controller;
+  late AnimationController _controller;
   /// the animation to rotate the loading / webview
-  Animation _rotationAnimation;
-  /// the webview to show the dictionary search
-  WebViewXController webviewController;
+  late Animation _rotationAnimation;
   /// the controller to animate the DaKanji icon while the webview is loading
-  AnimationController _loadingController;
+  late AnimationController _loadingController;
   /// the animation to rotate the DaKanji icon while the webview is loading
-  Animation<double> _loadingAnimation;
+  late Animation<double> _loadingAnimation;
 
 
   @override
   void initState() { 
     super.initState();
-
-    loadWebview = false;
-    showLoading = false;
     
     _loadingController = AnimationController(
       duration: const Duration(milliseconds: 2000),
@@ -88,16 +83,16 @@ class _WebviewScreenState extends State<WebviewScreen>
     var route = ModalRoute.of(context);
     void handler(status) {
       if (status == AnimationStatus.completed) {
-        route.animation.removeStatusListener(handler);
+        route!.animation!.removeStatusListener(handler);
         setState(() {
           loadWebview = true;
         });
       }
     }
-    route.animation.addStatusListener(handler);
+    route?.animation?.addStatusListener(handler);
     
     return Scaffold(
-      appBar: AppBar(title: Text(GetIt.I<Lookup>().chars)),
+      appBar: AppBar(title: Text(GetIt.I<DrawScreenState>().drawingLookup.chars)),
       body: 
       
       WillPopScope(
@@ -128,10 +123,8 @@ class _WebviewScreenState extends State<WebviewScreen>
                     alignment: Alignment.centerLeft,
                     child: () {
                         if(loadWebview){
-                          return WebViewX(
-                            initialContent:  GetIt.I<Lookup>().url,
-                            height: MediaQuery.of(context).size.height,
-                            width: width,
+                          return WebView(
+                            initialUrl: GetIt.I<DrawScreenState>().drawingLookup.url,
                             onPageFinished: (s) {
                               _controller.forward(from: 0.0);
                             }
@@ -158,15 +151,15 @@ class _WebviewScreenState extends State<WebviewScreen>
                     alignment: Alignment.centerRight,
                     child: Hero(
                       tag: "webviewHero_" 
-                        + (GetIt.I<Lookup>().buffer ? "b_" : "")
-                        + GetIt.I<Lookup>().chars,
+                        + (GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : "")
+                        + GetIt.I<DrawScreenState>().drawingLookup.chars,
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Center(
                           child: () {
                             return DefaultTextStyle(
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.button.color,
+                                color: Theme.of(context).textTheme.button?.color,
                                 decoration: TextDecoration.none,
                                 fontSize: 50,
                                 fontWeight: FontWeight.normal,
@@ -174,7 +167,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                               child: RotationTransition(
                                 turns: _loadingAnimation,
                                 child: Image(
-                                  image: AssetImage('media/icon.png'),
+                                  image: AssetImage('assets/images/icons/icon.png'),
                                   width: 150,
                                 ),
                               ),

@@ -1,0 +1,17 @@
+
+Hello DaKanji-testers,
+a new release of DaKanji is coming soon and you can try the beta version now.
+The most important changes are:
+
+LATEST_CHANGES
+
+As always you can get the release at those places (usually it takes some time till it is available):
+
+{{ STORE_URL }}
+
+https://www.github.com/CaptainDario/DaKanji-Mobile/releases
+
+If you are not yet registered as a tester or have a different problem, please send me message.
+
+Thank you so much for taking the time to test DaKanji. 
+You rock <3

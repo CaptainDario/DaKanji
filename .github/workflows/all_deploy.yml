@@ -1,5 +1,4 @@
-   
-name: All - deploy
+name: All - Deploy
 
 # Controls when the workflow will run
 on:
@@ -12,17 +11,6 @@ jobs:
     uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
       DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
-      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
-      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-
-  windows-deploy:
-    needs: windows-test-and-build
-    uses: ./.github/workflows/windows_deploy.yml
-    secrets:
-      DISCORD_WINDOWS_TEST_WEBHOOK: ${{ secrets.DISCORD_WINDOWS_TEST_WEBHOOK }}
-
     
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
@@ -32,3 +20,108 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      
+
+  upload-releases-to-github:
+    # upload to github releases after everything is build
+    needs: [windows-test-and-build, android-test-and-build]
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Get latest changes and set LATEST_CHANGES
+        run: |
+          python .github/workflows/latest_changes.py
+
+      - uses: actions/download-artifact@v3
+        with:
+          path: artifacts/
+          
+      - name: Display structure of downloaded files
+        run: |
+          ls
+          echo "\n"
+          ls -R artifacts/
+          echo $PWD
+
+      - name: delete previous beta releases
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true 
+          tag_name: beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: create zip from exe artifact folder
+        run: |
+          cd artifacts
+          mv DaKanji_win.zip DaKanji_win
+          
+          zip -r DaKanji_win_exe.zip DaKanji_win
+          rm -R DaKanji_win
+          
+          ls -R
+          
+      - name: Upload files to github release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd artifacts
+
+          gh release create \
+            beta \
+            DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
+            DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
+            DaKanji_android_bundle.zip/app-release.aab \
+            DaKanji_android_x86_64.zip/app-x86_64-release.apk \
+            DaKanji_win.msix/da_kanji_mobile.msix \
+            DaKanji_win_exe.zip \
+            -F ../latest_changes.txt \
+            -p \
+            -t "$(head -n 1 ../latest_changes.txt)" \
+
+  send-discord-notifications:
+    # send discord notifications after everything is uploaded to github releases
+    needs: upload-releases-to-github
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
+        run: |
+          python .github/workflows/latest_changes.py
+          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
+          cat latest_changes.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      
+          python .github/workflows/deploy_message.py
+          echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
+          cat deploy_message.txt >> $GITHUB_ENV
+          echo 'EOFF' >> $GITHUB_ENV
+
+      - name: Windows Testing - Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
+          STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: |
+            ${{ env.DEPLOY_MESSAGE }}
+
+      - name: Android Testing - Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
+          STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: |
+            ${{ env.DEPLOY_MESSAGE }}

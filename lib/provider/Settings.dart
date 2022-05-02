@@ -1,75 +1,90 @@
+import 'package:da_kanji_mobile/model/InferenceBackends.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
+
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
 class Settings with ChangeNotifier {
   /// The placeholder in the URL's which will be replaced by the predicted kanji
-  String kanjiPlaceholder;
+  String kanjiPlaceholder = "%X%";
 
   /// The custom URL a user can define on the settings page.
-  String customURL;
+  String customURL = "";
 
   /// The URL of the jisho website
-  String jishoURL;
+  late String jishoURL;
 
   /// The URL of the weblio website
-  String wadokuURL;
+  late String wadokuURL;
 
   /// The URL of the weblio website
-  String weblioURL;
+  late String weblioURL;
 
   /// A list with all available dictionary options.
-  List<String> dictionaries;
+  List<String> dictionaries = [];
+
+  /// A list with all web dictionaries
+  late List<String> web_dictionaries;
 
   /// The string representation of the dictionary which will be used (long press)
-  String _selectedDictionary;
+  String _selectedDictionary = "";
   
   /// The theme which the application will use.
   /// System will match the settings of the system.
-  String _selectedTheme;
+  String _selectedTheme = "";
 
-  /// A list with all available themes.
-  List<String> themes;
+  ///
+  List<String> themesLocaleKeys = [
+    LocaleKeys.General_light,
+    LocaleKeys.General_dark,
+    LocaleKeys.General_system
+  ];
   
   /// A Map from the string of a theme to the ThemeMode of the theme.
-  Map<String, ThemeMode> themesDict;
+  Map<String, ThemeMode> themesDict = {
+      LocaleKeys.General_light : ThemeMode.light,
+      LocaleKeys.General_dark : ThemeMode.dark,
+     LocaleKeys.General_system : ThemeMode.system
+    };
 
   /// Should the behavior of long and short press be inverted
-  bool _invertShortLongPress;
+  bool _invertShortLongPress = false;
 
   /// Should the canvas be cleared when a prediction was copied to kanjibuffer
-  bool _emptyCanvasAfterDoubleTap;
+  bool _emptyCanvasAfterDoubleTap = true;
 
-  /// should the default app browser be used for opening predictions
-  bool _useDefaultBrowser;
-
-  /// the currently used locale
-  Locale selectedLocale;
+  /// should the default app browser be used for opening predictions or a webview
+  bool _useWebview = true;
 
   /// The available backends for inference
-  List<String> inferenceBackends;
+  List<String> inferenceBackends= [
+      InferenceBackends.CPU.name.toString(),
+    ];
 
   /// The inference backend used for the single character CNN
-  String _backendCNNSingleChar;
+  String _backendCNNSingleChar = "";
 
 
 
   Settings() {
-    kanjiPlaceholder = "%X%";
-    
-    dictionaries = [
+    kanjiPlaceholder;
+
+    web_dictionaries = [
       "jisho (web)",
       "wadoku (web)",
       "weblio (web)",
-      "url (web)"
+      "url"
     ];
+
+    dictionaries.addAll(web_dictionaries);
+    
     if(Platform.isAndroid)
       dictionaries.addAll([
-        "system (app)",
+        "system (app",
         "aedict (app)",
         "akebi (app)",
         "takoboto (app)", 
@@ -82,36 +97,22 @@ class Settings with ChangeNotifier {
         "midori (app)",
       ]);
 
-    themes = ["light", "dark", "system"];
-    themesDict = {
-      "light": ThemeMode.light,
-      "dark": ThemeMode.dark,
-      "system": ThemeMode.system
-    };
-
-    inferenceBackends = [
-      "CPU",
-    ];
     if(Platform.isAndroid)
       inferenceBackends.addAll([
-        "GPU",
-        "NNAPI",
+        InferenceBackends.GPU.toString(),
+        InferenceBackends.NNAPI.toString(),
       ]);
     //else if(Platform.isIOS)
     //  inferenceBackends.addAll([
-    //    "Metal",
-    //    "CoreML"
+    //    InferenceBackends.GPU.toString(),
+    //    InferenceBackends.CoreML.toString(),
     //  ]);
-    _backendCNNSingleChar = "";
+    //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+    //  inferenceBackends.addAll([
+    //    InferenceBackends.XXNPACK.toString()
+    //  ]);
 
-    invertShortLongPress = false;
-    emptyCanvasAfterDoubleTap = true;
-    useWebview = true;
-
-    _selectedDictionary = "";
-    selectedTheme = "";
-
-    jishoURL = "https://jisho.org/search/" + kanjiPlaceholder;
+    jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
     weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
 
@@ -128,11 +129,11 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  get selectedTheme{
+  String get selectedTheme{
     return _selectedTheme;
   }
 
-  ThemeMode selectedThemeMode() {
+  ThemeMode? selectedThemeMode() {
     return themesDict[_selectedTheme];
   }
   
@@ -160,11 +161,11 @@ class Settings with ChangeNotifier {
   }
   
   bool get useWebview{
-    return _useDefaultBrowser;
+    return _useWebview;
   }
   
   set useWebview(bool empty){
-    _useDefaultBrowser = empty;
+    _useWebview = empty;
     notifyListeners();
   }
 
@@ -176,6 +177,7 @@ class Settings with ChangeNotifier {
     _backendCNNSingleChar = newBackend;
     notifyListeners();
   }
+
 
   /// Saves all settings to the SharedPreferences.
   void save() async {
@@ -191,7 +193,6 @@ class Settings with ChangeNotifier {
     prefs.setString('customURL', customURL);
     prefs.setString('selectedTheme', _selectedTheme);
     prefs.setString('selectedDictionary', selectedDictionary);
-    prefs.setString('selectedLocale', selectedLocale.toString());
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -202,12 +203,10 @@ class Settings with ChangeNotifier {
     emptyCanvasAfterDoubleTap = prefs.getBool('emptyCanvasAfterDoubleTap') ?? false;
     useWebview = prefs.getBool('useWebview') ?? false;
     
-    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? 'CPU';
+    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
     customURL = prefs.getString('customURL') ?? '';
-    _selectedTheme = prefs.getString('selectedTheme') ?? themes[2];
+    _selectedTheme = prefs.getString('selectedTheme') ?? themesLocaleKeys[2];
     selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
-    var localeStr = prefs.getString('selectedLocale') ?? "en";
-    selectedLocale = localeStr == null ? null : Locale(localeStr);
   }
 }
 
