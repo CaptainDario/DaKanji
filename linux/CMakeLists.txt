@@ -116,6 +116,6 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
 endif()
 
 install(
-  FILES /home/dario/dev/DaKanji-Application/blobs/libtensorflowlite_c-linux.so 
+  FILES ${PROJECT_BUILD_DIR}/../blobs/libtensorflowlite_c-linux.so 
   DESTINATION ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
 )
