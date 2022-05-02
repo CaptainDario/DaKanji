@@ -11,6 +11,11 @@ tf_lite_win = ""
 
 if __name__ == "__main__":
 
+    if(len(sys.argv) > 1):
+        arg = sys.argv[1]
+    else:
+        arg = ""
+
     # the device to run the tests on
     device = ""
 
@@ -24,7 +29,7 @@ if __name__ == "__main__":
     # MacOS
     elif platform == "darwin":
 
-        if(sys.argv[1] == "ios"):
+        if(arg == "ios"):
             device = "ios"
         else:
             device = "macos"
@@ -36,7 +41,7 @@ if __name__ == "__main__":
 
         device = "windows"
     
-    if(sys.argv[1] == "android"):
+    if(arg == "android"):
         device = "emulator"
 
 
