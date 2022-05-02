@@ -24,7 +24,6 @@ if __name__ == "__main__":
     # MacOS
     elif platform == "darwin":
 
-
         if(sys.argv[1] == "ios"):
             device = "ios"
         else:
