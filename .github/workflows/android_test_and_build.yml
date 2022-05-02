@@ -70,6 +70,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
+          disk-size: 8G
           script: |
             python3 ./integration_test/run_tests.py android
 
