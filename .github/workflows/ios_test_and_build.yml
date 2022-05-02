@@ -30,6 +30,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - uses: futureware-tech/simulator-action@v1
+        with:
+          model: 'iPhone 8'
+
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
