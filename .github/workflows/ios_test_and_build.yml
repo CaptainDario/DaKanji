@@ -48,10 +48,7 @@ jobs:
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           out-file-path: "assets/tflite_models"
-        
-      #- name: Analyze
-      #  run: flutter analyze
 
       - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+        run: python3 ./integration_test/run_tests.py ios
 
