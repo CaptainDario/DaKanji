@@ -45,12 +45,6 @@ Feature overview:
 * "Well thank you for this software! It seems to try and guess in a more "guess-y" way than jisho and even Google which is usually pretty good at guessing, and it just saved me today!" - princess_daphie
 * "Amazing. I can write kanji messier than a professor and it still picks it up. Very reliable." - Seth Kitchens
 
-## Usage
-
-All major parts of the app include a tutorial.
-But if you want to learn more or prefer a text guide,
-  take a look at the [manual](./manual/manual.md) or open the manual screen in the app.
-
 ## Contributing
 
 <a href="https://discord.gg/gdqaux3r4P"><img src="https://discordapp.com/api/guilds/852915748300783636/widget.png?style=banner2" width="25%"></a>
