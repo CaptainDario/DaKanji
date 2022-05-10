@@ -50,20 +50,17 @@ jobs:
           out-file-path: "assets/tflite_models"
 
       - name: enable macos
-        run: |
-          flutter config --enable-macos-desktop
+        run: flutter config --enable-macos-desktop
 
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+      #- name: Run integration tests
+      #  run: python3 ./integration_test/run_tests.py
 
       - name: build macos executable
-        run: |
-          python3 build_desktop_release.py
-
+        run: flutter build macos --release
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_macos
-          path: build/macos/Build/Products/Release/da_kanji_mobile.app
+          name: DaKanji_macos.zip
+          path: build/macos/Build/Products/Release/
 

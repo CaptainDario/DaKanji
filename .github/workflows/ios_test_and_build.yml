@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: MacOS - Test and Build
+name: iOS - Test and Build
 
 # Controls when the workflow will run
 on:
@@ -30,6 +30,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - uses: futureware-tech/simulator-action@v1
+        with:
+          model: 'iPhone 8'
+
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
@@ -48,10 +52,7 @@ jobs:
           fileName: "*"
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           out-file-path: "assets/tflite_models"
-        
-      #- name: Analyze
-      #  run: flutter analyze
 
       - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+        run: python3 ./integration_test/run_tests.py ios
 

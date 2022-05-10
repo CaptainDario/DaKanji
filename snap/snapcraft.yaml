@@ -1,5 +1,5 @@
 name: dakanji
-version: ${VERSION}
+version: 2.0.0
 summary: DaKanji helps you learn and use Japanese.
 description: DaKanji helps you learn and use Japanese.
 
@@ -15,7 +15,7 @@ slots:
     
 apps:
   dakanji:
-    command: DaKanji
+    command: da_kanji_mobile
     extensions: [flutter-master]
     plugs:
     - network
