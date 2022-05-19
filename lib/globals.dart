@@ -21,7 +21,7 @@ List<String> DRAWING_SCREEN_NEW_FEATURES = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 // ignore: non_constant_identifier_names
 List<String> ONBOARDING_NEW_PAGES = ["0.0.0", "2.0.0"];
 /// all languages which are supported in DaKanji
-const SUPPORTED_LANGUAGES = ["en", "de", "pl"];
+const SUPPORTED_LANGUAGES = ["en", "de", "es", "pl"];
 
 
 /// is the app running to test the drawscreen
