@@ -9,6 +9,7 @@ import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/helper/reviews.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
+import 'package:da_kanji_mobile/view/CreditsScreen.dart';
 import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -130,6 +131,24 @@ class AboutScreen extends StatelessWidget {
                           );
                         }, 
                         child: Text(LocaleKeys.AboutScreen_software_informations_button.tr())
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => CreditsScreen()),
+                          );
+                        }, 
+                        child: Text("Credits"),//LocaleKeys.AboutScreen_credits.tr())
                       ),
                     ),
                   ],
