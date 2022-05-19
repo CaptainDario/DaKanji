@@ -136,6 +136,17 @@
       "fr": null,
       "es": "Acerca de",
       "pl": "O aplikacji"
+    },
+    "credits": {
+      "en": "Credits",
+      "de": "Credits",
+      "ru": null,
+      "jp": null,
+      "cn": null,
+      "it": null,
+      "fr": null,
+      "es": null,
+      "pl": null
     }
   },
   "ChangelogScreen": {
