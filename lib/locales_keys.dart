@@ -2,6 +2,7 @@
 
 abstract class  LocaleKeys {
   static const AboutScreen_about_text = 'AboutScreen.about_text';
+  static const AboutScreen_credits = 'AboutScreen.credits';
   static const AboutScreen_show_changelog = 'AboutScreen.show_changelog';
   static const AboutScreen_software_informations_button = 'AboutScreen.software_informations_button';
   static const AboutScreen_title = 'AboutScreen.title';

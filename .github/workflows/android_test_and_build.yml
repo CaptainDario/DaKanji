@@ -33,7 +33,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -66,11 +66,13 @@ jobs:
           token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
           out-file-path: "assets/tflite_models"
         
-      #- name: Analyze
-      #  run: flutter analyze
-
-      #- name: Run integration tests
-      #  run: flutter test .\integration_test\ -d windows
+      - name: Run integration tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          disk-size: 8G
+          script: |
+            python3 ./integration_test/run_tests.py android
 
       - name: Creating the key.properties file
         run: |

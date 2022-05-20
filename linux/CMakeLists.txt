@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "da_kanji_mobile")
+set(BINARY_NAME "DaKanji")
 set(APPLICATION_ID "com.DaAppLab.da_kanji_mobile")
 
 cmake_policy(SET CMP0063 NEW)
@@ -114,3 +114,8 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
   install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
     COMPONENT Runtime)
 endif()
+
+install(
+  FILES ${PROJECT_BUILD_DIR}/../blobs/libtensorflowlite_c-linux.so 
+  DESTINATION ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
+)

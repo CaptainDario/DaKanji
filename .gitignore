@@ -35,8 +35,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# PlayStore
+# ignore keys
 key.properties
+keys/**
 
 # python
 python
@@ -63,3 +64,7 @@ keys/DaKanjiRecognizer.jks
 # ignore built snaps and the none template snapcraft.yaml
 *.snap
 snap/snapcraft.yaml
+
+# ignore ephemerals
+macos/Flutter/ephemeral/**
+linux/flutter/ephemeral/**

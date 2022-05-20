@@ -17,6 +17,7 @@ class CodegenLoader extends AssetLoader{
   static const Map<String,dynamic> de = {
   "AboutScreen": {
     "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nDaKanji ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
+    "credits": "Credits",
     "show_changelog": "Zeig mir alle Änderungen.",
     "software_informations_button": "Softwareinformationen",
     "title": "Über die App"
@@ -108,6 +109,7 @@ class CodegenLoader extends AssetLoader{
 static const Map<String,dynamic> en = {
   "AboutScreen": {
     "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
+    "credits": "Credits",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
     "title": "About"
@@ -193,6 +195,97 @@ static const Map<String,dynamic> en = {
   },
   "WebviewScreen": {
     "loading": "Searching",
+    "title": "Webview"
+  }
+};
+static const Map<String,dynamic> es = {
+  "AboutScreen": {
+    "about_text": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
+    "show_changelog": "Muéstrame la lista de cambios completa.",
+    "software_informations_button": "Información del software",
+    "title": "Acerca de"
+  },
+  "ChangelogScreen": {
+    "title": "Lista de cambios"
+  },
+  "DrawScreen": {
+    "not_installed": "{DICTIONARY} no instalado",
+    "title": "Dibujo",
+    "tutorial_begin_continue": "Toca para continuar...",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido al reconocimiento por dibujo!",
+    "tutorial_clear": "Borrar todos los trazos",
+    "tutorial_dictionary_settings": "En los ajustes puedes seleccionar el servicio de traducción",
+    "tutorial_double_tap_prediction": "Tocar dos veces para añadir el caracter a la barra de busqueda",
+    "tutorial_drawing": "Dibuja un caracter aquí",
+    "tutorial_long_press_prediction": "Una pulsación larga abre la predicción en un diccionario",
+    "tutorial_multi_search": "Aquí puedes buscar buscar mutiples caracteres a la vez",
+    "tutorial_multi_search_double_tap": "Una pulsación doble vacía el campo",
+    "tutorial_multi_search_long_press": "Una pulsación larga abre los caracteres en un diccionario",
+    "tutorial_multi_search_short_press": "Una pulsación breve copia los caracteres al porta papeles",
+    "tutorial_multi_search_swipe_left": "Deslizar a la izquierda para borrar el último caracter",
+    "tutorial_predictions": "Las predicciones se mostrarán aquí",
+    "tutorial_short_press_prediction": "Una pulsación breve copia la predicción",
+    "tutorial_skip": "OMITIR",
+    "tutorial_undo": "Presiona para deshacer el último trazo"
+  },
+  "General": {
+    "app": "aplicación",
+    "close": "Cerrar",
+    "complete_log": "registro completo",
+    "custom_url": "URL personalizada",
+    "dark": "oscuro",
+    "download": "descargar",
+    "language": "idioma",
+    "light": "claro",
+    "next": "siguiente",
+    "rate_this_app": "Calificar",
+    "restarts_app": "reinicia la app",
+    "skip": "omitir",
+    "system": "sistema",
+    "web": "web",
+    "whats_new": "qué hay de nuevo"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "No de nuevo!",
+    "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Solo dibújalo y DaKanji te mostrará el caracter que necesitas.",
+    "Onboarding_1_title": "No sabes un Kanji?",
+    "Onboarding_2_text": "Con DaKanji puedes buscar rápidamente palabras usando la web y diccionarios.",
+    "Onboarding_2_title": "Busca caracteres y palabras"
+  },
+  "Overview": {
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "Backend de inferencia (reinicio manual requerido)",
+    "advanced_settings_title": "Ajustes avanzados",
+    "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
+    "custom_url_format": "Formato de la URL personalizada",
+    "custom_url_hint": "URL de tu diccionario",
+    "dictionary_system_translator": "Traductor integrado de tu SO",
+    "drawing_title": "Dibujar",
+    "empty_canvas_after_double_tap": "Vaciar lienzo después de una pulsación doble",
+    "invert_short_long_press": "Invertir pulsación larga/breve",
+    "long_press_opens": "Pulsación larga abre",
+    "miscellaneous_title": "Misceláneo",
+    "show_tutorial": "Volver a mostrar el tutorial (@:General.restarts_app)",
+    "theme": "tema (@:General.restarts_app)",
+    "title": "Ajustes",
+    "use_default_browser_for_online_dictionaries": "Usar una webview para los diccionarios en la web"
+  },
+  "Stores": {
+    "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
+    "mockup_1_1": "¿No sabes un Kanji? ¡Solo dibújalo!",
+    "mockup_1_2": "Ni siquiera importa el orden de los trazos.",
+    "mockup_2": "Busca palabras",
+    "mockup_3": "Traduce con diccionarios",
+    "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
+    "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
+  },
+  "WebviewScreen": {
+    "loading": "Buscando",
     "title": "Webview"
   }
 };
@@ -284,6 +377,10 @@ static const Map<String,dynamic> localizations = {
       "de": "Über die App",
       "es": "Acerca de",
       "pl": "O aplikacji"
+    },
+    "credits": {
+      "en": "Credits",
+      "de": "Credits",
     }
   },
   "ChangelogScreen": {
@@ -742,5 +839,5 @@ static const Map<String,dynamic> pl = {
     "title": "Webview"
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en, "localizations": localizations, "pl": pl};
+static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en, "es": es, "localizations": localizations, "pl": pl};
 }
