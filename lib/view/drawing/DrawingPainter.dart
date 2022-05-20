@@ -138,4 +138,18 @@ class DrawingPainter extends CustomPainter {
   bool shouldRepaint(DrawingPainter oldDelegate){
     return true;
   }
+
+  /// Returns a transformation matrix based on the given parameters
+  Float64List transformationMatrix({
+    scaleX = 1.0, scaleY = 1.0, scaleZ = 1.0,
+    transX = 0.0, transY = 0.0, transZ = 0.0,
+    }){
+
+    return Float64List.fromList([
+      scaleX,      0,      0, 0,
+      0,      scaleY,      0, 0,
+      0,           0, scaleZ, 0,
+      transX, transY, transZ, 1,
+    ]);
+  }
 }
