@@ -212,9 +212,6 @@ class DrawingInterpreter with ChangeNotifier{
         for (int y = 0; y < width; y++) {
           double val = resizedBytes[(x * width) + y].toDouble();
           
-          // apply thresholding and normalize image
-          val = val > 50 ? 1.0 : 0;
-          
           _input[0][x][y][0] = val;
         }
       }
