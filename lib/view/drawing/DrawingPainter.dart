@@ -83,7 +83,7 @@ class DrawingPainter extends CustomPainter {
     return rgbaBytes;
   }
 
-  /// Paints the given [_path] on the given [canvas].
+  /// Paints [this._path] on the given [canvas].
   void drawPath(Canvas canvas) {
     // Setup canvas and paint
     canvas.clipRect(Rect.fromLTWH(0, 0, _size.width, _size.height));
@@ -99,34 +99,59 @@ class DrawingPainter extends CustomPainter {
       paint.color = Colors.black;
 
     // create the scale transformation matrix (paths are normalized [0..1])
-    Float64List scale = Float64List.fromList([
-      _size.width,           0, 0, 0,
-      0,           _size.width, 0, 0,
-      0,                     0, 1, 0,
-      0,                     0, 0, 1,
-    ]);
+    var b = this._path.getBounds().isEmpty ?
+      ui.Rect.fromLTRB(0, 0, 1, 1) :
+      this._path.getBounds();
 
-    // animate deleting the last stroke only if the animation is running
-    if(_deleteProgress < 1){
-      ui.PathMetrics metrics = _path.computeMetrics();
-      int metricsAmount = _path.computeMetrics().length;
-      int metricsCount = 0;
-      for (ui.PathMetric metric in metrics){
-        double percentage;
-
-        // draw all paths except the last one at full length
-        if(metricsAmount > metricsCount+1)
-          percentage = metric.length;
-        else
-          percentage = metric.length * _deleteProgress;
-        Path extractPath = metric.extractPath(0.0, percentage);
-        canvas.drawPath(extractPath.transform(scale), paint);
-        metricsCount += 1;
-      }
+    // if image for inference is being recorded
+    if(this._recording){
+      // move to origin
+      Float64List translation_1 = transformationMatrix(
+        transX: -b.left, transY: -b.top
+      );
+      // scale to fill image
+      Float64List scale_1 = transformationMatrix(
+        scaleX: 1/b.width, scaleY: 1/b.height, 
+      );
+      // move back
+      Float64List scale_2 = transformationMatrix(
+        scaleX: _size.width*0.80, scaleY: _size.height*0.80, 
+        transX: _size.width*0.1, transY: _size.height*0.1
+      );
+      canvas.drawPath(
+        _path.transform(translation_1).transform(scale_1).transform(scale_2), 
+      paint);
     }
-    // otherwise just draw the whole path (improved drawing performance)
-    else
-      canvas.drawPath(_path.transform(scale), paint);
+    else{
+      
+    Float64List scale = transformationMatrix(
+      scaleX: _size.width, scaleY: _size.height
+    );
+
+      // animate deleting the last stroke only if the animation is running
+      if(_deleteProgress < 1){
+        ui.PathMetrics metrics = _path.computeMetrics();
+        int metricsAmount = _path.computeMetrics().length;
+        int metricsCount = 0;
+        for (ui.PathMetric metric in metrics){
+          double percentage;
+
+          // draw all paths except the last one at full length
+          if(metricsAmount > metricsCount+1)
+            percentage = metric.length;
+          else
+            percentage = metric.length * _deleteProgress;
+          Path extractPath = metric.extractPath(0.0, percentage);
+          canvas.drawPath(extractPath.transform(scale), paint);
+          metricsCount += 1;
+        }
+      }
+      // otherwise just draw the whole path (improved drawing performance)
+      else
+        canvas.drawPath(
+          _path.transform(scale), 
+        paint);
+    }
   }
 
   @override
