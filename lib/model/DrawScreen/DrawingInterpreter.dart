@@ -49,10 +49,10 @@ class DrawingInterpreter with ChangeNotifier{
   List<List<double>> _output = [[]];
 
   /// height of the input image (image used for inference)
-  int height = 64;
+  int height = 128;
 
   /// width of the input image (image used for inference)
-  int width = 64;
+  int width = 128;
 
   /// The [_noPredictions] most likely predictions will be shown to the user
   int _noPredictions = 10;
