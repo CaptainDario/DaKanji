@@ -216,6 +216,9 @@ class DrawingInterpreter with ChangeNotifier{
         }
       }
 
+      // convert image array to str to show for debugging
+      //var imageStr = _input.toString();
+
       // run inference
       _interpreter!.run(_input, _output);
 
