@@ -204,7 +204,6 @@ class DrawingInterpreter with ChangeNotifier{
       resizedImage = image.gaussianBlur(resizedImage, 2);
       Uint8List resizedBytes = 
         resizedImage.getBytes(format: image.Format.luminance);
-      //var imageStr = resizedBytes.toString();
 
       // convert image for inference into shape [1, height, width, 1]
       // also apply thresholding and normalization [0, 1]
