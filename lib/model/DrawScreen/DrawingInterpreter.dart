@@ -201,7 +201,7 @@ class DrawingInterpreter with ChangeNotifier{
       image.Image base = image.decodeImage(inputImage)!;
       image.Image resizedImage = image.copyResize(base,
         height: height, width: width, interpolation: image.Interpolation.cubic);
-        //resizedImage = image.gaussianBlur(resizedImage, 2);
+      resizedImage = image.gaussianBlur(resizedImage, 2);
       Uint8List resizedBytes = 
         resizedImage.getBytes(format: image.Format.luminance);
       //var imageStr = resizedBytes.toString();
