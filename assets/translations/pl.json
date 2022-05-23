@@ -71,6 +71,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "System wnioskowania (aplikacja musi zosta\u0107 zrestartowana)",
+    "advanced_settings_snap": "",
     "advanced_settings_title": "Ustawienia zaawansowane",
     "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Nast\u0119pnie symbol zast\u0119pczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Niestandardowy format URL",

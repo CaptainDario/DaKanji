@@ -1,12 +1,15 @@
 import 'dart:typed_data';
 
+import 'package:da_kanji_mobile/view/drawing/CanvasSnappable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -185,31 +188,44 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         },
         child: Stack(
           children: [
-            Image(image: 
-              AssetImage("assets/images/ui/kanji_drawing_aid.png")
+            Image( 
+              image: AssetImage("assets/images/ui/kanji_drawing_aid.png")
             ),
-            AnimatedBuilder(
-              animation: _canvasController,
-              builder: (BuildContext context, Widget? child) {
-                _canvas = DrawingPainter(
-                  widget.strokes.path, 
-                  darkMode, Size(widget.width, widget.height),
-                  GetIt.I<DrawScreenState>().strokes.deletingLastStroke ? 
-                    _canvasController.value : currentDeleteLastprogress
-                );
-                Widget canvas = CustomPaint(
-                    size: Size(widget.width, widget.height),
-                    painter: _canvas,
-                );
-
-                if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes)
-                  return Opacity(
-                    opacity: _canvasController.value,
-                    child: canvas
+            CanvasSnappable(
+              key: GetIt.I<DrawScreenState>().snappableKey,
+              snapColor: GetIt.I<Settings>().selectedTheme == LocaleKeys.General_light
+                ? Colors.black
+                : Colors.white,
+              offset: Offset(20, -20),
+              randomDislocationOffset: Offset(5, 5),
+              numberOfBuckets: 16,
+              onSnapped: () {
+                GetIt.I<DrawScreenState>().strokes.removeAllStrokes();
+                GetIt.I<DrawScreenState>().snappableKey.currentState?.reset();
+              },
+              child: AnimatedBuilder(
+                animation: _canvasController,
+                builder: (BuildContext context, Widget? child) {
+                  _canvas = DrawingPainter(
+                    widget.strokes.path, 
+                    darkMode, Size(widget.width, widget.height),
+                    GetIt.I<DrawScreenState>().strokes.deletingLastStroke ? 
+                      _canvasController.value : currentDeleteLastprogress
                   );
-                else 
-                  return canvas;
-              }
+                  Widget canvas = CustomPaint(
+                      size: Size(widget.width, widget.height),
+                      painter: _canvas,
+                  );
+            
+                  if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes)
+                    return Opacity(
+                      opacity: _canvasController.value,
+                      child: canvas
+                    );
+                  else 
+                    return canvas;
+                }
+              ),
             ),
           ],
         )

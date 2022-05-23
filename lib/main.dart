@@ -109,7 +109,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<UserData>(UserData());
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
-
+  
   // inference services
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
 

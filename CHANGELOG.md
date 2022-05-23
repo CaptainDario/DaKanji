@@ -1,6 +1,22 @@
 
 # Da Kanji - changelog
 
+## v 2.1.0 - ()
+
+new Features:
+
+- improved character recognition
+- new delegates supported
+- credits page
+
+Changes:
+
+- updated to Flutter 3 (stable Linux, Mac)
+
+Fixed:
+
+- 
+
 ## v 2.0.1 - 隈なく (24.04.2022)
 
 new Features:

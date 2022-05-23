@@ -68,11 +68,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       GetIt.I<DrawingInterpreter>().init();
     }
 
-    WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
-        
+
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes[0],
           GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes
@@ -110,9 +110,23 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
             _canvasSize = t.item2;
 
             return DrawScreenResponsiveLayout(
-              DrawScreenDrawingCanvas(_canvasSize, GetIt.I<DrawingInterpreter>(), widget.includeTutorial),
-              DrawScreenPredictionButtons(drawScreenIsLandscape(t.item1), _canvasSize, this.widget.includeHeroes, widget.includeTutorial), 
-              DrawScreenMultiCharSearch(_canvasSize, drawScreenIsLandscape(t.item1), widget.includeHeroes, widget.includeTutorial),
+              DrawScreenDrawingCanvas(
+                _canvasSize,
+                GetIt.I<DrawingInterpreter>(),
+                widget.includeTutorial
+              ),
+              DrawScreenPredictionButtons(
+                drawScreenIsLandscape(t.item1),
+                _canvasSize,
+                this.widget.includeHeroes,
+                widget.includeTutorial
+              ), 
+              DrawScreenMultiCharSearch(
+                _canvasSize,
+                drawScreenIsLandscape(t.item1),
+                widget.includeHeroes,
+                widget.includeTutorial
+              ),
               DrawScreenUndoButton(_canvasSize, widget.includeTutorial),
               DrawScreenClearButton(_canvasSize, widget.includeTutorial),
               _canvasSize,

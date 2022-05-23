@@ -775,6 +775,10 @@
       "fr": null,
       "es": "Ajustes avanzados",
       "pl": "Ustawienia zaawansowane"
+    },
+    "advanced_settings_snap": {
+      "en": "I am inevitable...",
+      "de": "Ich bin unvermeidbar..."
     }
   },
   "WebviewScreen": {

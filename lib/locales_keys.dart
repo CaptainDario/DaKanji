@@ -65,6 +65,7 @@ abstract class  LocaleKeys {
   static const Overview_ru = 'Overview.ru';
   static const Overview = 'Overview';
   static const SettingsScreen_advanced_settings_drawing_inference_backend = 'SettingsScreen.advanced_settings_drawing_inference_backend';
+  static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_custom_url_format = 'SettingsScreen.custom_url_format';

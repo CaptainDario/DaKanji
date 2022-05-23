@@ -116,7 +116,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         route?.animation?.removeStatusListener(handler);
         
         if(!widget.animationAtStart){
-          SchedulerBinding.instance?.addPostFrameCallback((_) async {
+          SchedulerBinding.instance.addPostFrameCallback((_) async {
             _drawerController.reverse();
           });
         }

@@ -158,7 +158,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: (newValue) {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
-                            
                           }
                         },
                       ),
@@ -183,6 +182,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         children: [
+                          // thanos dissolve effect for drawing screen
+                          ResponsiveCheckBoxTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_snap.tr(),
+                            value: settings.useThanosSnap,
+                            onTileTapped: (newValue) {
+                              settings.useThanosSnap = newValue;
+                              settings.save();
+                            },
+                          ),
+                          // inference backend
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.backendCNNSingleChar, 
