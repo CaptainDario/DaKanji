@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     // after the page was build 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
       // if the app is being tested for different startup situations
       if(IS_TESTING_APP_STARTUP)
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       else if(GetIt.I<UserData>().showChangelog){
 
         // show the confetti animations when the widget was build 
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           confettiAnimation_1.state.play();
           Future.delayed(Duration(milliseconds: 750), () =>
             confettiAnimation_2.state.play());
