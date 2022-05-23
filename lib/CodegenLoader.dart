@@ -77,6 +77,7 @@ class CodegenLoader extends AssetLoader{
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
+    "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Benutzerdefiniertes URL format",
@@ -169,6 +170,7 @@ static const Map<String,dynamic> en = {
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Inference backend (manual restart required)",
+    "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
@@ -731,6 +733,10 @@ static const Map<String,dynamic> localizations = {
       "de": "Erweiterte Einstellungen",
       "es": "Ajustes avanzados",
       "pl": "Ustawienia zaawansowane"
+    },
+    "advanced_settings_snap": {
+      "en": "I am inevitable...",
+      "de": "Ich bin unvermeidbar..."
     }
   },
   "WebviewScreen": {
