@@ -76,7 +76,7 @@ class CodegenLoader extends AssetLoader{
   "Overview": {
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inferenz Backend (manueller neugestartet notwendig)",
+    "advanced_settings_drawing_inference_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
@@ -87,6 +87,7 @@ class CodegenLoader extends AssetLoader{
     "empty_canvas_after_double_tap": "Lösche alle Striche nach doppeltem Tippen",
     "invert_short_long_press": "Invertiere kurzes und langes drücken",
     "long_press_opens": "Langes drücken öffnet",
+    "misc_settings_window_size": "Speicher die momentanige Fenster größe",
     "miscellaneous_title": "Verschiedenes",
     "show_tutorial": "Zeige Tutorials erneut (@:General.restarts_app)",
     "theme": "Thema (@:General.restarts_app)",
@@ -169,7 +170,7 @@ static const Map<String,dynamic> en = {
   "Overview": {
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "Inference backend (manual restart required)",
+    "advanced_settings_drawing_inference_backend": "Inference backend (requires restart)",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
@@ -180,6 +181,7 @@ static const Map<String,dynamic> en = {
     "empty_canvas_after_double_tap": "Empty canvas after double tap",
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
+    "misc_settings_window_size": "Save current window size",
     "miscellaneous_title": "Miscellaneous",
     "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
     "theme": "theme (@:General.restarts_app)",
@@ -723,8 +725,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
     "advanced_settings_drawing_inference_backend": {
-      "en": "Inference backend (manual restart required)",
-      "de": "Inferenz Backend (manueller neugestartet notwendig)",
+      "en": "Inference backend (requires restart)",
+      "de": "Inferenz Backend (Neustart notwendig)",
       "es": "Backend de inferencia (reinicio manual requerido)",
       "pl": "System wnioskowania (aplikacja musi zostać zrestartowana)"
     },
@@ -737,6 +739,10 @@ static const Map<String,dynamic> localizations = {
     "advanced_settings_snap": {
       "en": "I am inevitable...",
       "de": "Ich bin unvermeidbar..."
+    },
+    "misc_settings_window_size": {
+      "en": "Save current window size",
+      "de": "Speicher die momentanige Fenster größe"
     }
   },
   "WebviewScreen": {
