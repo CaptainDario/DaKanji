@@ -60,6 +60,7 @@ class Settings with ChangeNotifier {
   /// should the default app browser be used for opening predictions or a webview
   bool _useWebview = true;
 
+  // ADVANCED SETTINGS
   /// The available backends for inference
   List<String> inferenceBackends= [
       InferenceBackends.CPU.name.toString(),
@@ -67,6 +68,9 @@ class Settings with ChangeNotifier {
 
   /// The inference backend used for the single character CNN
   String _backendCNNSingleChar = "";
+
+  /// use a thanos like snap effect to dissolve the drawing from the screen
+  bool _useThanosSnap = false;
 
 
 
@@ -129,14 +133,6 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  String get selectedTheme{
-    return _selectedTheme;
-  }
-
-  ThemeMode? selectedThemeMode() {
-    return themesDict[_selectedTheme];
-  }
-  
   set selectedTheme(String newTheme){
     _selectedTheme = newTheme;
     notifyListeners();
@@ -169,12 +165,31 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
+  // MISC SETTINGS
+  String get selectedTheme{
+    return _selectedTheme;
+  }
+
+  ThemeMode? selectedThemeMode() {
+    return themesDict[_selectedTheme];
+  }
+  
+  // ADVANCED SETTINGS
   String get backendCNNSingleChar{
     return _backendCNNSingleChar;
   }
 
   set backendCNNSingleChar(String newBackend){
     _backendCNNSingleChar = newBackend;
+    notifyListeners();
+  }
+
+  bool get useThanosSnap{
+    return _useThanosSnap;
+  }
+
+  set useThanosSnap(bool newValue){
+    _useThanosSnap = newValue;
     notifyListeners();
   }
 
@@ -185,28 +200,39 @@ class Settings with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
 
     // set value in shared preferences
+
+    // drawing screen
+    prefs.setString('selectedDictionary', selectedDictionary);
+    prefs.setString('customURL', customURL);
     prefs.setBool('invertShortLongPress', invertShortLongPress);
     prefs.setBool('emptyCanvasAfterDoubleTap', emptyCanvasAfterDoubleTap);
     prefs.setBool('useWebview', useWebview);
 
-    prefs.setString("backendCNNSingleChar", backendCNNSingleChar);
-    prefs.setString('customURL', customURL);
+    // misc
     prefs.setString('selectedTheme', _selectedTheme);
-    prefs.setString('selectedDictionary', selectedDictionary);
+    
+    // advanced settings
+    prefs.setString('backendCNNSingleChar', backendCNNSingleChar);
+    prefs.setBool('useThanosSnap', useThanosSnap);
   }
 
   /// Load all saved settings from SharedPreferences.
   void load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
+    // drawing screen
+    selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
+    customURL = prefs.getString('customURL') ?? '';
     invertShortLongPress = prefs.getBool('invertShortLongPress') ?? false;
     emptyCanvasAfterDoubleTap = prefs.getBool('emptyCanvasAfterDoubleTap') ?? false;
     useWebview = prefs.getBool('useWebview') ?? false;
     
-    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
-    customURL = prefs.getString('customURL') ?? '';
+    // misc
     _selectedTheme = prefs.getString('selectedTheme') ?? themesLocaleKeys[2];
-    selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
+
+    // advanced settings
+    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
+    useThanosSnap = prefs.getBool('useThanosSnap') ?? false;
   }
 }
 

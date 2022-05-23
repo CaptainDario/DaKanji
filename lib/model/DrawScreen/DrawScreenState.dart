@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+
 import '../../provider/drawing/Strokes.dart';
 import '../../provider/drawing/KanjiBuffer.dart';
 import '../../provider/drawing/DrawingLookup.dart';
 import 'DrawScreenLayout.dart';
+import 'package:da_kanji_mobile/view/CanvasSnappable.dart';
 
 
 
@@ -18,10 +21,13 @@ class DrawScreenState {
   DrawScreenLayout drawScreenLayout;
   /// the current size of the drawing canvas
   double canvasSize = 0.0;
+  /// the key to access the snappable animation
+  final snappableKey = GlobalKey<CanvasSnappableState>();
 
   DrawScreenState(
     this.strokes,
     this.kanjiBuffer,
     this.drawingLookup,
-    this.drawScreenLayout);
+    this.drawScreenLayout
+  );
 }

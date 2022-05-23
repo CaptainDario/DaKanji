@@ -117,17 +117,18 @@ class CanvasSnappableState extends State<CanvasSnappable>
   Future<void> snap(Uint8List canvas, int width, int height) async {
 
     this.width = width;
-    this.height = height; 
+    this.height = height;
+    
     _layers = List.generate(
       widget.numberOfBuckets, (index) {
         return Uint8List(width * height * 4);
       }
     );
 
-    //for every line of pixels
+    // for every line of pixels
     for (int y = 0; y < height; y++) {
-      //generate weight list of probabilities determining
-      //to which bucket should given pixels go
+      // generate weight list of probabilities determining
+      // to which bucket should given pixels go
       List<int> weights = List.generate(
         widget.numberOfBuckets,
         (bucket) => _gauss(
@@ -209,13 +210,12 @@ class CanvasSnappableState extends State<CanvasSnappable>
       animation: _animationController,
       child: Image.memory(
         Bitmap.fromHeadless(this.width, this.height, layer).buildHeaded(),
-        color: widget.snapColor 
       ),
       builder: (context, child) {
         return Transform.translate(
           offset: offsetAnimation.value,
           child: Opacity(
-            opacity: math.cos(animation.value * math.pi / 2),
+            opacity: 1 - animation.value,
             child: child,
           ),
         );
