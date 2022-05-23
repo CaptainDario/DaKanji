@@ -109,6 +109,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<UserData>(UserData());
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
+  await GetIt.I<Settings>().load();
   
   // inference services
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
@@ -129,7 +130,14 @@ Future<void> initGetIt() async {
 void desktopWindowSetup() {
   setWindowMinSize(Size(480, 720));
   setWindowTitle(APP_TITLE);
-  setWindowFrame(Rect.fromLTRB(0, 0, 480, 720));
+  setWindowFrame(
+    Rect.fromLTWH(
+      0,
+      0, 
+      GetIt.I<Settings>().windowWidth.toDouble(), 
+      GetIt.I<Settings>().windowHeight.toDouble()
+    )
+  );
 }
 
 /// The starting widget of the app
