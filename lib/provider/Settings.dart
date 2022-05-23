@@ -37,7 +37,7 @@ class Settings with ChangeNotifier {
   /// System will match the settings of the system.
   String _selectedTheme = "";
 
-  ///
+  /// the available options of themes
   List<String> themesLocaleKeys = [
     LocaleKeys.General_light,
     LocaleKeys.General_dark,
@@ -59,6 +59,12 @@ class Settings with ChangeNotifier {
 
   /// should the default app browser be used for opening predictions or a webview
   bool _useWebview = true;
+
+  // MISC SETTINGS
+  /// width of the current window
+  int windowWidth = 0;
+  /// height of the current window
+  int windowHeight = 0;
 
   // ADVANCED SETTINGS
   /// The available backends for inference
@@ -195,7 +201,7 @@ class Settings with ChangeNotifier {
 
 
   /// Saves all settings to the SharedPreferences.
-  void save() async {
+  Future<void> save() async {
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
 
@@ -210,6 +216,8 @@ class Settings with ChangeNotifier {
 
     // misc
     prefs.setString('selectedTheme', _selectedTheme);
+    prefs.setInt("windowWidth", windowWidth);
+    prefs.setInt("windowHeight", windowHeight);
     
     // advanced settings
     prefs.setString('backendCNNSingleChar', backendCNNSingleChar);
@@ -217,7 +225,7 @@ class Settings with ChangeNotifier {
   }
 
   /// Load all saved settings from SharedPreferences.
-  void load() async {
+  Future<void> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
     // drawing screen
@@ -229,6 +237,8 @@ class Settings with ChangeNotifier {
     
     // misc
     _selectedTheme = prefs.getString('selectedTheme') ?? themesLocaleKeys[2];
+    windowWidth = prefs.getInt("windowWidth") ?? 480;
+    windowHeight = prefs.getInt("windowHeight") ?? 720;
 
     // advanced settings
     backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
