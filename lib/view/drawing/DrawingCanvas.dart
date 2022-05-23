@@ -1,13 +1,15 @@
 import 'dart:typed_data';
 
-import 'package:da_kanji_mobile/view/CanvasSnappable.dart';
+import 'package:da_kanji_mobile/view/drawing/CanvasSnappable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -191,7 +193,9 @@ class _DrawingCanvasState extends State<DrawingCanvas>
             ),
             CanvasSnappable(
               key: GetIt.I<DrawScreenState>().snappableKey,
-              snapColor: Colors.white,
+              snapColor: GetIt.I<Settings>().selectedTheme == LocaleKeys.General_light
+                ? Colors.black
+                : Colors.white,
               offset: Offset(20, -20),
               randomDislocationOffset: Offset(5, 5),
               numberOfBuckets: 16,

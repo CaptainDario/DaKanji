@@ -48,7 +48,7 @@ class Settings with ChangeNotifier {
   Map<String, ThemeMode> themesDict = {
       LocaleKeys.General_light : ThemeMode.light,
       LocaleKeys.General_dark : ThemeMode.dark,
-     LocaleKeys.General_system : ThemeMode.system
+      LocaleKeys.General_system : ThemeMode.system
     };
 
   /// Should the behavior of long and short press be inverted
