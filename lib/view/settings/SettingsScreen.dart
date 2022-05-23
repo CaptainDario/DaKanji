@@ -171,6 +171,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Phoenix.rebirth(context);
                         },
                       ),
+                      // windows size
+                      if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+                        ResponsiveIconButtonTile(
+                          text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
+                          icon: Icons.screenshot_monitor,
+                          onButtonPressed: () {
+                            
+                          },
+                        ),
+
                       // advanced settings
                       ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
