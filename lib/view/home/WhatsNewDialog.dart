@@ -74,7 +74,7 @@ class WhatsNewDialogue extends StatelessWidget {
                     height: innerDialogueHeight * 0.8,
                     width: innerDialogueWidth,
                     child: Scrollbar(
-                      isAlwaysShown: true,
+                      thumbVisibility: true,
                       controller: _scrollController,
                       child: Markdown(
                         selectable: false,
