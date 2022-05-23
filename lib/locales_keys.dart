@@ -75,6 +75,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_empty_canvas_after_double_tap = 'SettingsScreen.empty_canvas_after_double_tap';
   static const SettingsScreen_invert_short_long_press = 'SettingsScreen.invert_short_long_press';
   static const SettingsScreen_long_press_opens = 'SettingsScreen.long_press_opens';
+  static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
   static const SettingsScreen_miscellaneous_title = 'SettingsScreen.miscellaneous_title';
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
   static const SettingsScreen_theme = 'SettingsScreen.theme';

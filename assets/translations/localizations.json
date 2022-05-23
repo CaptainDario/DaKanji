@@ -755,8 +755,8 @@
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
     "advanced_settings_drawing_inference_backend": {
-      "en": "Inference backend (manual restart required)",
-      "de": "Inferenz Backend (manueller neugestartet notwendig)",
+      "en": "Inference backend (requires restart)",
+      "de": "Inferenz Backend (Neustart notwendig)",
       "ru": null,
       "jp": null,
       "cn": null,
@@ -779,6 +779,10 @@
     "advanced_settings_snap": {
       "en": "I am inevitable...",
       "de": "Ich bin unvermeidbar..."
+    },
+    "misc_settings_window_size": {
+      "en": "Save current window size",
+      "de": "Speicher die momentanige Fenster größe"
     }
   },
   "WebviewScreen": {

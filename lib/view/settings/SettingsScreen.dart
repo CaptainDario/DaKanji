@@ -1,12 +1,13 @@
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'dart:io';
 
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:window_size/window_size.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
@@ -18,6 +19,7 @@ import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconIconButtonTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -171,6 +173,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Phoenix.rebirth(context);
                         },
                       ),
+                      // windows size
+                      if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+                        ResponsiveIconButtonTile(
+                          text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
+                          icon: Icons.screenshot_monitor,
+                          onButtonPressed: () async {
+                            var info = await getWindowInfo();
+
+                            var h = info.frame.height.toInt();
+                            var w = info.frame.width.toInt();
+
+                            settings.windowHeight = h;
+                            settings.windowWidth = w;
+
+                            print("${w} ${h}");
+
+                            settings.save();
+                          },
+                        ),
+
                       // advanced settings
                       ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
