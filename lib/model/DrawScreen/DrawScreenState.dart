@@ -4,7 +4,7 @@ import '../../provider/drawing/Strokes.dart';
 import '../../provider/drawing/KanjiBuffer.dart';
 import '../../provider/drawing/DrawingLookup.dart';
 import 'DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/view/CanvasSnappable.dart';
+import 'package:da_kanji_mobile/view/drawing/CanvasSnappable.dart';
 
 
 

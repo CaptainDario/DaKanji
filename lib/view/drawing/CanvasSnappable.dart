@@ -210,6 +210,7 @@ class CanvasSnappableState extends State<CanvasSnappable>
       animation: _animationController,
       child: Image.memory(
         Bitmap.fromHeadless(this.width, this.height, layer).buildHeaded(),
+        color: this.widget.snapColor,
       ),
       builder: (context, child) {
         return Transform.translate(
