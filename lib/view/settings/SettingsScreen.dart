@@ -184,7 +184,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           // thanos dissolve effect for drawing screen
                           ResponsiveCheckBoxTile(
-                            text: "I am inevitable",
+                            text: LocaleKeys.SettingsScreen_advanced_settings_snap.tr(),
                             value: settings.useThanosSnap,
                             onTileTapped: (newValue) {
                               settings.useThanosSnap = newValue;
