@@ -54,15 +54,15 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_2_title = 'OnBoarding.Onboarding_2_title';
   static const OnBoarding = 'OnBoarding';
   static const Overview_ = 'Overview.';
-  static const Overview_cn = 'Overview.cn';
   static const Overview_de = 'Overview.de';
   static const Overview_en = 'Overview.en';
   static const Overview_es = 'Overview.es';
   static const Overview_fr = 'Overview.fr';
   static const Overview_it = 'Overview.it';
-  static const Overview_jp = 'Overview.jp';
+  static const Overview_ja = 'Overview.ja';
   static const Overview_pl = 'Overview.pl';
   static const Overview_ru = 'Overview.ru';
+  static const Overview_zh = 'Overview.zh';
   static const Overview = 'Overview';
   static const SettingsScreen_advanced_settings_drawing_inference_backend = 'SettingsScreen.advanced_settings_drawing_inference_backend';
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';

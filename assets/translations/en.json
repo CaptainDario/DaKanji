@@ -49,7 +49,7 @@
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Not again!",
-    "RatePopup_text": "Do you like DaKanji?\nIf that is the case a rating would be awesome and it would help this project alot!"
+    "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!"
   },
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
@@ -59,15 +59,15 @@
   },
   "Overview": {
     "": "",
-    "cn": "",
     "de": "",
     "en": "",
     "es": "",
     "fr": "",
     "it": "",
-    "jp": "",
+    "ja": "",
     "pl": "",
-    "ru": ""
+    "ru": "",
+    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Inference backend (requires restart)",
