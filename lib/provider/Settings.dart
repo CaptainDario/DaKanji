@@ -73,7 +73,7 @@ class Settings with ChangeNotifier {
     ];
 
   /// The inference backend used for the single character CNN
-  String _backendCNNSingleChar = "";
+  String _inferenceBackend = "";
 
   /// use a thanos like snap effect to dissolve the drawing from the screen
   bool _useThanosSnap = false;
@@ -181,12 +181,12 @@ class Settings with ChangeNotifier {
   }
   
   // ADVANCED SETTINGS
-  String get backendCNNSingleChar{
-    return _backendCNNSingleChar;
+  String get inferenceBackend{
+    return _inferenceBackend;
   }
 
-  set backendCNNSingleChar(String newBackend){
-    _backendCNNSingleChar = newBackend;
+  set inferenceBackend(String newBackend){
+    _inferenceBackend = newBackend;
     notifyListeners();
   }
 
@@ -220,7 +220,7 @@ class Settings with ChangeNotifier {
     prefs.setInt("windowHeight", windowHeight);
     
     // advanced settings
-    prefs.setString('backendCNNSingleChar', backendCNNSingleChar);
+    prefs.setString('inferenceBackend', inferenceBackend);
     prefs.setBool('useThanosSnap', useThanosSnap);
   }
 
@@ -241,7 +241,7 @@ class Settings with ChangeNotifier {
     windowHeight = prefs.getInt("windowHeight") ?? 720;
 
     // advanced settings
-    backendCNNSingleChar = prefs.getString("backendCNNSingleChar") ?? '';
+    inferenceBackend = prefs.getString("inferenceBackend") ?? '';
     useThanosSnap = prefs.getBool('useThanosSnap') ?? false;
   }
 }

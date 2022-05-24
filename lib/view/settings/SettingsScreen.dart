@@ -211,7 +211,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           // inference backend
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
-                            value: settings.backendCNNSingleChar, 
+                            value: settings.inferenceBackend, 
                             items: settings.inferenceBackends,
                           )
                         ],

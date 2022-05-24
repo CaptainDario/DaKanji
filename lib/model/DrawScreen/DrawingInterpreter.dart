@@ -115,7 +115,7 @@ class DrawingInterpreter with ChangeNotifier{
         throw PlatformException(code: "Platform not supported.");
       GetIt.I<Settings>().save();
 
-      print(GetIt.I<Settings>().backendCNNSingleChar);
+      print(GetIt.I<Settings>().inferenceBackend);
 
       var l = await rootBundle.loadString(_labelAssetPath);
       _labels = l.split("");
@@ -251,7 +251,7 @@ class DrawingInterpreter with ChangeNotifier{
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
     // if no inference backend was set -> automatically set one
-    String selectedBackend = GetIt.I<Settings>().backendCNNSingleChar;
+    String selectedBackend = GetIt.I<Settings>().inferenceBackend;
     if(!GetIt.I<Settings>().inferenceBackends.contains(selectedBackend)){
       try{
         if(androidInfo.isPhysicalDevice!){
@@ -305,7 +305,7 @@ class DrawingInterpreter with ChangeNotifier{
     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
     // if no inference backend was set -> automatically set one
-    String selectedBackend = GetIt.I<Settings>().backendCNNSingleChar;
+    String selectedBackend = GetIt.I<Settings>().inferenceBackend;
     if(!GetIt.I<Settings>().inferenceBackends.contains(selectedBackend)){
       if (iosInfo.isPhysicalDevice && false) {
         interpreter = await _metalInterpreterIOS();
@@ -362,7 +362,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath, 
       options: options
     );
-    GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[2];
+    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[2];
     return i; 
   }
 
@@ -374,7 +374,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: options
     );
-    GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[1];
     return i;
   }
 
@@ -387,7 +387,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[1];
     return i;
   }
 
@@ -397,7 +397,7 @@ class DrawingInterpreter with ChangeNotifier{
       ..threads = Platform.numberOfProcessors - 1;
     Interpreter i = await Interpreter.fromAsset(
       _usedTFLiteAssetPath, options: options);
-    GetIt.I<Settings>().backendCNNSingleChar = Settings().inferenceBackends[0];
+    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[0];
     return i;
   }
 
