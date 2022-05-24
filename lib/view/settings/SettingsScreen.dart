@@ -213,6 +213,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.inferenceBackend, 
                             items: settings.inferenceBackends,
+                            onTap: (newValue) {
+                              if(newValue != null){
+                                settings.inferenceBackend = newValue;
+                                settings.save();
+                              }
+                            },
                           )
                         ],
                       ),
