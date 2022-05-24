@@ -181,13 +181,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onButtonPressed: () async {
                             var info = await getWindowInfo();
 
-                            var h = info.frame.height.toInt();
-                            var w = info.frame.width.toInt();
-
-                            settings.windowHeight = h;
-                            settings.windowWidth = w;
-
-                            print("${w} ${h}");
+                            settings.windowHeight = info.frame.height.toInt();
+                            settings.windowWidth = info.frame.width.toInt();
 
                             settings.save();
                           },
@@ -216,8 +211,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           // inference backend
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
-                            value: settings.backendCNNSingleChar, 
+                            value: settings.inferenceBackend, 
                             items: settings.inferenceBackends,
+                            onTap: (newValue) {
+                              if(newValue != null){
+                                settings.inferenceBackend = newValue;
+                                settings.save();
+                              }
+                            },
                           )
                         ],
                       ),

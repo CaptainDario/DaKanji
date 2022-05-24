@@ -2,8 +2,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 
 
@@ -30,7 +30,7 @@ void showDownloadDialogue(
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    launch(url);
+                    launchUrlString(url);
                   },
                   child: Text(text)
                 ),

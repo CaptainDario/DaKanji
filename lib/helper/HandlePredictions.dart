@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_appavailability/flutter_appavailability.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:easy_localization/easy_localization.dart';
@@ -21,9 +21,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Convenience classes to handle long and short presses for the 
 /// predictions of the drawing screens.
-
-
-
 void handlePress(BuildContext context){
 
   // presses should be inverted
@@ -69,7 +66,7 @@ void openDictionary(BuildContext context, String char) async {
     if(GetIt.I<Settings>().web_dictionaries.contains(GetIt.I<Settings>().selectedDictionary)){ 
       // use the default browser
       if(!GetIt.I<Settings>().useWebview){
-        launch(openWithSelectedDictionary(char), forceSafariVC: false);
+        launchUrlString(openWithSelectedDictionary(char));
       }
       else{ 
         if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Portrait ||
@@ -197,8 +194,8 @@ void openDictionary(BuildContext context, String char) async {
       if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[4]){
         print("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
-        if(await canLaunch(url)) 
-          launch(url, forceSafariVC: false);
+        if(await canLaunchUrlString(url)) 
+          launchUrlString(url);
         else {
           print("cannot launch " + url);
           showDownloadDialogue(context,
@@ -214,8 +211,8 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[5]){
         print("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
-        if(await canLaunch(url))
-          launch(url, forceSafariVC: false);
+        if(await canLaunchUrlString(url))
+          launchUrlString(url);
         else {
           print("cannot launch " + url);
           showDownloadDialogue(context,
@@ -231,8 +228,8 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[6]){
         print("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
-        if(await canLaunch(url)) 
-          launch(url, forceSafariVC: false);
+        if(await canLaunchUrlString(url)) 
+          launchUrlString(url);
         else {
           print("cannot launch " + url);
           showDownloadDialogue(context, 
@@ -247,8 +244,10 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[7]){
         print("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
-        if(await canLaunch(url)) 
-          launch(url, forceSafariVC: false);
+        if(await canLaunchUrlString(url)) 
+          launchUrlString(
+            url,
+          );
         else {
           print("cannot launch" + url);
           showDownloadDialogue(context, 

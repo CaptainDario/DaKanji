@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
@@ -73,10 +73,10 @@ class AboutScreen extends StatelessWidget {
                         path: url, 
                         query: 'subject=DaKanji${VERSION}: &body=I am using DaKanji v.${VERSION} on ${Theme.of(context).platform.name}',
                       ).toString();
-                      launch(mail);
+                      launchUrlString(mail);
                     }
                     else
-                      launch(Uri.encodeFull(url ?? ""));
+                      launchUrlString(Uri.encodeFull(url ?? ""));
                     
                   },
                 ),
