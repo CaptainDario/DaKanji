@@ -181,13 +181,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onButtonPressed: () async {
                             var info = await getWindowInfo();
 
-                            var h = info.frame.height.toInt();
-                            var w = info.frame.width.toInt();
-
-                            settings.windowHeight = h;
-                            settings.windowWidth = w;
-
-                            print("${w} ${h}");
+                            settings.windowHeight = info.frame.height.toInt();
+                            settings.windowWidth = info.frame.width.toInt();
 
                             settings.save();
                           },
