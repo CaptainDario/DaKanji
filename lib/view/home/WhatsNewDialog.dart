@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/view/ControllableLottieAnimation.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/model/Changelog.dart';
+
 
 
 class WhatsNewDialogue extends StatelessWidget {
@@ -83,7 +84,8 @@ class WhatsNewDialogue extends StatelessWidget {
                         onTapLink:
                         (String text, String? url, String title) async {
                           if(url != null){
-                            if(await canLaunch(url)) launch(url);
+                            if(await canLaunchUrlString(url)) 
+                              launchUrlString(url);
                           }
                         },
                       ),
