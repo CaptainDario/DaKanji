@@ -232,7 +232,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.9+1"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -316,6 +316,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  keymap:
+    dependency: "direct main"
+    description:
+      name: keymap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.90"
   liquid_swipe:
     dependency: "direct main"
     description:
