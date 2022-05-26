@@ -6,8 +6,9 @@
 new Features:
 
 - improved character recognition
-- new delegates supported
 - credits page
+- (desktop) set a startup window size
+- new languages supported: ru, ja, zh, it, fr
 
 Changes:
 
@@ -15,7 +16,7 @@ Changes:
 
 Fixed:
 
-- 
+- Selecting an inference backend
 
 ## v 2.0.1 - 隈なく (24.04.2022)
 

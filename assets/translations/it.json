@@ -1,0 +1,111 @@
+{
+  "AboutScreen": {
+    "about_text": "DaKanji aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\nDaKanji \u00e8 disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy pu\u00f2 essere trovata [qui]({PRIVACY_POLICE})",
+    "credits": "Crediti",
+    "show_changelog": "Mostrami il changelog completo.",
+    "software_informations_button": "Informazioni sul software",
+    "title": "Circa"
+  },
+  "ChangelogScreen": {
+    "title": "Changelog"
+  },
+  "DrawScreen": {
+    "not_installed": "{DICTIONARIO} non installato",
+    "title": "Disegno",
+    "tutorial_begin_continue": "Toccare per continuare...",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti al riconoscimento del disegno!",
+    "tutorial_clear": "Cancella tutti i tratti",
+    "tutorial_dictionary_settings": "Nelle impostazioni \u00e8 possibile scegliere il servizio di traduzione",
+    "tutorial_double_tap_prediction": "Un doppio tocco aggiunge il carattere alla casella di ricerca.",
+    "tutorial_drawing": "Disegnare un personaggio qui",
+    "tutorial_long_press_prediction": "Una pressione prolungata apre la previsione in un dizionario.",
+    "tutorial_multi_search": "Qui \u00e8 possibile cercare pi\u00f9 caratteri contemporaneamente",
+    "tutorial_multi_search_double_tap": "Un doppio tocco svuota il campo",
+    "tutorial_multi_search_long_press": "Una pressione prolungata apre i caratteri di un dizionario",
+    "tutorial_multi_search_short_press": "Premendo brevemente si copiano i caratteri negli appunti.",
+    "tutorial_multi_search_swipe_left": "Passando il dito a sinistra su questo campo si cancella l'ultimo carattere.",
+    "tutorial_predictions": "I caratteri previsti saranno mostrati qui",
+    "tutorial_short_press_prediction": "Una breve pressione copia la previsione",
+    "tutorial_skip": "SALTA",
+    "tutorial_undo": "Premere per annullare l'ultima pennellata"
+  },
+  "General": {
+    "app": "app",
+    "close": "Chiudere",
+    "complete_log": "registro completo",
+    "custom_url": "URL personalizzato",
+    "dark": "scuro",
+    "download": "scaricare",
+    "language": "lingua",
+    "light": "luce",
+    "next": "prossimo",
+    "rate_this_app": "Tasso",
+    "restarts_app": "riavvia l'applicazione",
+    "skip": "saltare",
+    "system": "sistema",
+    "web": "web",
+    "whats_new": "cosa c'\u00e8 di nuovo"
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": "Non di nuovo!",
+    "RatePopup_text": "Ti piace \"DaKanji\"?\nSe \u00e8 cos\u00ec, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!"
+  },
+  "OnBoarding": {
+    "Onboarding_1_text": "Basta disegnarlo e DaKanji mostrer\u00e0 il carattere desiderato.",
+    "Onboarding_1_title": "Non conosci un kanji?",
+    "Onboarding_2_text": "Con DaKanji \u00e8 possibile cercare rapidamente le parole utilizzando dizionari web e app.",
+    "Onboarding_2_title": "Ricerca di caratteri e parole"
+  },
+  "Overview": {
+    "": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "ja": "",
+    "pl": "",
+    "ru": "",
+    "zh": ""
+  },
+  "SettingsScreen": {
+    "advanced_settings_drawing_inference_backend": "Backend di inferenza (richiede il riavvio)",
+    "advanced_settings_snap": "Sono inevitabile...",
+    "advanced_settings_title": "Impostazioni avanzate",
+    "custom_url_explanation": "L'applicazione sostituir\u00e0 un segnaposto nell'URL con il carattere previsto. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto \u00e8: \"\u53e3\" e si vuole aprire il sito \"jisho.org\". Per prima cosa \u00e8 necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/\u53e3\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "custom_url_format": "Formato URL personalizzato",
+    "custom_url_hint": "URL del vostro dizionario",
+    "dictionary_system_translator": "Traduttore integrato nel sistema operativo",
+    "drawing_title": "Disegno",
+    "empty_canvas_after_double_tap": "Tela vuota dopo il doppio tocco",
+    "invert_short_long_press": "Invertire la pressione lunga/corta",
+    "long_press_opens": "La pressione prolungata apre",
+    "misc_settings_window_size": "Salva la dimensione attuale della finestra",
+    "miscellaneous_title": "Varie",
+    "show_tutorial": "Ripresenta le esercitazioni (@:General.restarts_app)",
+    "theme": "tema (@:General.restarts_app)",
+    "title": "Impostazioni",
+    "use_default_browser_for_online_dictionaries": "Utilizzare una webview per i dizionari web"
+  },
+  "Stores": {
+    "long_description": "State imparando il giapponese? Allora dovete provare DaKanji!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? DaKanji \u00e8 qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertir\u00e0 in un carattere digitale. Non \u00e8 nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana in modalit\u00e0 offline.\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole.",
+    "mockup_10": "",
+    "mockup_1_1": "Non conosci un Kanji? Basta disegnarlo!",
+    "mockup_1_2": "Anche l'ordine dei tratti non ha importanza.",
+    "mockup_2": "Parole di ricerca",
+    "mockup_3": "Tradurre con i dizionari",
+    "mockup_4": "",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "State imparando il giapponese? Allora dovete provare DaKanji!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
+    "shortest_description": "State imparando il giapponese? Allora dovete provare DaKanji!"
+  },
+  "WebviewScreen": {
+    "loading": "Ricerca",
+    "title": "Vista sul web"
+  }
+}

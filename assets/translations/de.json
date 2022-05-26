@@ -59,15 +59,15 @@
   },
   "Overview": {
     "": "",
-    "cn": "",
     "de": "",
     "en": "",
     "es": "",
     "fr": "",
     "it": "",
-    "jp": "",
+    "ja": "",
     "pl": "",
-    "ru": ""
+    "ru": "",
+    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Inferenz Backend (Neustart notwendig)",
@@ -102,7 +102,7 @@
     "mockup_8": "",
     "mockup_9": "",
     "short_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren"
+    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst."
   },
   "WebviewScreen": {
     "loading": "Suche",

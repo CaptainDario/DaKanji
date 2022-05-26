@@ -59,15 +59,15 @@
   },
   "Overview": {
     "": "",
-    "cn": "",
     "de": "",
     "en": "",
     "es": "",
     "fr": "",
     "it": "",
-    "jp": "",
+    "ja": "",
     "pl": "",
-    "ru": ""
+    "ru": "",
+    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Backend de inferencia (reinicio manual requerido)",

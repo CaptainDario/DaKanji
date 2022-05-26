@@ -66,7 +66,7 @@ msix_config:
   logo_path: ./assets/images/icons/icon.png
   capabilities: internetClient
   execution-alias: DaKanji
-  languages: en-us, de-de, pl-pl
+  languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es pl-pl
   
 
   # The following adds the Cupertino Icons font to your application.
