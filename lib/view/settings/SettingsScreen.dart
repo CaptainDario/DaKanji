@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'dart:io';
 
@@ -18,8 +19,9 @@ import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconIconButtonTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveShortcutInput.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -86,16 +88,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_long_press_opens.tr(),
                         value: settings.selectedDictionary,
-                        items: settings.dictionaries,
+                        items: settings.settingsDrawing.dictionaries,
                         onTap: (newValue) {
-                          settings.selectedDictionary = newValue ?? settings.dictionaries[0];
+                          settings.selectedDictionary = newValue
+                            ?? settings.settingsDrawing.dictionaries[0];
                           settings.save();
                         },
                       ),
                       // custom URL input
                       ResponsiveInputFieldTile(
                         text: settings.customURL,
-                        enabled: settings.selectedDictionary == settings.dictionaries[3],
+                        enabled: settings.selectedDictionary
+                          == settings.settingsDrawing.dictionaries[3],
                         hintText: LocaleKeys.SettingsScreen_custom_url_hint.tr(),
                         icon: Icons.info_outline,
                         onChanged: (value) {
@@ -132,8 +136,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
+                      // settings
+                      ExpansionTile(
+                        tilePadding: EdgeInsets.all(0),
+                        title: Align(
+                          alignment: Alignment.centerLeft,
+                          child: AutoSizeText(
+                            "Key bindings",
+                            group: settingsAutoSizeGroup,
+                          ),
+                        ),
+                        children: [
+                          // empty canvas - shortcut
+                          SettingsDrawBindingsInput(
+                            enabled: true,
+                            hintText: "Empty the canvas",
+                            defaultKey: LogicalKeyboardKey.keyD,
+                            onChanged: (String value) {
+                              
+                            },
+                          ),
+                        ],
+                      ),
+
 
                       Divider(),
+
+
                       // Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
@@ -143,10 +172,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_theme.tr(), 
                         value: settings.selectedTheme,
-                        items: settings.themesLocaleKeys,
+                        items: settings.settingsMisc.themesLocaleKeys,
                         translateItemTexts: true,
                         onTap: (value) {
-                          settings.selectedTheme = value ?? settings.themesLocaleKeys[0];
+                          settings.selectedTheme = value ?? settings.settingsMisc.themesLocaleKeys[0];
                           print(settings.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
@@ -181,12 +210,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onButtonPressed: () async {
                             var info = await getWindowInfo();
 
-                            settings.windowHeight = info.frame.height.toInt();
-                            settings.windowWidth = info.frame.width.toInt();
+                            settings.settingsMisc.windowHeight = info.frame.height.toInt();
+                            settings.settingsMisc.windowWidth = info.frame.width.toInt();
 
                             settings.save();
                           },
                         ),
+
+                      Divider(),
 
                       // advanced settings
                       ExpansionTile(
@@ -212,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.inferenceBackend, 
-                            items: settings.inferenceBackends,
+                            items: settings.settingsAdvanced.inferenceBackends,
                             onTap: (newValue) {
                               if(newValue != null){
                                 settings.inferenceBackend = newValue;
@@ -222,7 +253,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )
                         ],
                       ),
-              
                     ],
                   ),
                 ),
