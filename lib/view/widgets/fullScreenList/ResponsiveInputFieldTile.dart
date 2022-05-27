@@ -59,7 +59,7 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
                     enabled: widget.enabled,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
-                      labelText: widget.text,
+                      labelText: widget.hintText,
                       border: OutlineInputBorder(),
                       hintText: widget.hintText,
                     ),
