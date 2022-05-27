@@ -135,8 +135,8 @@ void desktopWindowSetup() {
     Rect.fromLTWH(
       0,
       0, 
-      GetIt.I<Settings>().windowWidth.toDouble(), 
-      GetIt.I<Settings>().windowHeight.toDouble()
+      GetIt.I<Settings>().settingsMisc.windowWidth.toDouble(), 
+      GetIt.I<Settings>().settingsMisc.windowHeight.toDouble()
     )
   );
 }

@@ -5,6 +5,9 @@ import 'dart:convert';
 
 import 'package:universal_io/io.dart';
 
+
+
+/// Class to store all settings in the drawing settings 
 class SettingsDrawing {
 
   /// The placeholder in the URL's which will be replaced by the predicted kanji

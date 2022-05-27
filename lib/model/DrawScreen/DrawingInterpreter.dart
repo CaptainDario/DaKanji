@@ -252,7 +252,7 @@ class DrawingInterpreter with ChangeNotifier{
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
-    if(!GetIt.I<Settings>().inferenceBackends.contains(selectedBackend)){
+    if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
       try{
         if(androidInfo.isPhysicalDevice!){
           // use NNAPI on android if android API >= 27
@@ -275,13 +275,13 @@ class DrawingInterpreter with ChangeNotifier{
       }
     }
     // use the inference backend from the settings
-    else if(selectedBackend == Settings().inferenceBackends[0]){
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
-    else if(selectedBackend == Settings().inferenceBackends[1]){
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[1]){
       interpreter = await _gpuInterpreterAndroid();
     }
-    else if(selectedBackend == Settings().inferenceBackends[2]){
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[2]){
       interpreter = await _nnapiInterpreter();
     }
     // if all fails return a CPU based interpreter
@@ -306,7 +306,7 @@ class DrawingInterpreter with ChangeNotifier{
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
-    if(!GetIt.I<Settings>().inferenceBackends.contains(selectedBackend)){
+    if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
       if (iosInfo.isPhysicalDevice && false) {
         interpreter = await _metalInterpreterIOS();
       }
@@ -316,10 +316,10 @@ class DrawingInterpreter with ChangeNotifier{
       }
     }
     // use the inference backend from the settings
-    else if(selectedBackend == Settings().inferenceBackends[0]){
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
-    else if(selectedBackend == Settings().inferenceBackends[3]){
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[3]){
       interpreter = await _metalInterpreterIOS();
     }
     // if all fails return a CPU based interpreter
@@ -362,7 +362,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath, 
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[2];
+    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[2];
     return i; 
   }
 
@@ -374,7 +374,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
     return i;
   }
 
@@ -387,7 +387,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
     return i;
   }
 
@@ -397,7 +397,7 @@ class DrawingInterpreter with ChangeNotifier{
       ..threads = Platform.numberOfProcessors - 1;
     Interpreter i = await Interpreter.fromAsset(
       _usedTFLiteAssetPath, options: options);
-    GetIt.I<Settings>().inferenceBackend = Settings().inferenceBackends[0];
+    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[0];
     return i;
   }
 

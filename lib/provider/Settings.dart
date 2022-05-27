@@ -1,204 +1,110 @@
-import 'package:da_kanji_mobile/model/InferenceBackends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_io/io.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/provider/SettingsDrawing.dart';
+import 'package:da_kanji_mobile/provider/SettingsAdvanced.dart';
+import 'package:da_kanji_mobile/provider/SettingsMisc.dart';
 
 
 
+/// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {
-  /// The placeholder in the URL's which will be replaced by the predicted kanji
-  String kanjiPlaceholder = "%X%";
 
-  /// The custom URL a user can define on the settings page.
-  String customURL = "";
+  late SettingsDrawing settingsDrawing;
 
-  /// The URL of the jisho website
-  late String jishoURL;
+  late SettingsMisc settingsMisc;
 
-  /// The URL of the weblio website
-  late String wadokuURL;
-
-  /// The URL of the weblio website
-  late String weblioURL;
-
-  /// A list with all available dictionary options.
-  List<String> dictionaries = [];
-
-  /// A list with all web dictionaries
-  late List<String> web_dictionaries;
-
-  /// The string representation of the dictionary which will be used (long press)
-  String _selectedDictionary = "";
-  
-  /// The theme which the application will use.
-  /// System will match the settings of the system.
-  String _selectedTheme = "";
-
-  /// the available options of themes
-  List<String> themesLocaleKeys = [
-    LocaleKeys.General_light,
-    LocaleKeys.General_dark,
-    LocaleKeys.General_system
-  ];
-  
-  /// A Map from the string of a theme to the ThemeMode of the theme.
-  Map<String, ThemeMode> themesDict = {
-      LocaleKeys.General_light : ThemeMode.light,
-      LocaleKeys.General_dark : ThemeMode.dark,
-      LocaleKeys.General_system : ThemeMode.system
-    };
-
-  /// Should the behavior of long and short press be inverted
-  bool _invertShortLongPress = false;
-
-  /// Should the canvas be cleared when a prediction was copied to kanjibuffer
-  bool _emptyCanvasAfterDoubleTap = true;
-
-  /// should the default app browser be used for opening predictions or a webview
-  bool _useWebview = true;
-
-  // MISC SETTINGS
-  /// width of the current window
-  int windowWidth = 0;
-  /// height of the current window
-  int windowHeight = 0;
-
-  // ADVANCED SETTINGS
-  /// The available backends for inference
-  List<String> inferenceBackends= [
-      InferenceBackends.CPU.name.toString(),
-    ];
-
-  /// The inference backend used for the single character CNN
-  String _inferenceBackend = "";
-
-  /// use a thanos like snap effect to dissolve the drawing from the screen
-  bool _useThanosSnap = false;
+  late SettingsAdvanced settingsAdvanced;
 
 
 
   Settings() {
-    kanjiPlaceholder;
 
-    web_dictionaries = [
-      "jisho (web)",
-      "wadoku (web)",
-      "weblio (web)",
-      "url"
-    ];
+    settingsDrawing  = SettingsDrawing();
+    settingsMisc     = SettingsMisc();
+    settingsAdvanced = SettingsAdvanced();
 
-    dictionaries.addAll(web_dictionaries);
-    
-    if(Platform.isAndroid)
-      dictionaries.addAll([
-        "system (app",
-        "aedict (app)",
-        "akebi (app)",
-        "takoboto (app)", 
-      ]);
-    else if(Platform.isIOS)
-      dictionaries.addAll([
-        "shirabe jisho (app)",
-        "imiwa? (app)",
-        "Japanese (app)",
-        "midori (app)",
-      ]);
-
-    if(Platform.isAndroid)
-      inferenceBackends.addAll([
-        InferenceBackends.GPU.toString(),
-        InferenceBackends.NNAPI.toString(),
-      ]);
-    //else if(Platform.isIOS)
-    //  inferenceBackends.addAll([
-    //    InferenceBackends.GPU.toString(),
-    //    InferenceBackends.CoreML.toString(),
-    //  ]);
-    //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
-    //  inferenceBackends.addAll([
-    //    InferenceBackends.XXNPACK.toString()
-    //  ]);
-
-    jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
-    wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
-    weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
-
-    load();
-    save();
   }
 
-  String get selectedDictionary{
-    return _selectedDictionary;
+  // #region DRAWING SETTINGS 
+  /// The custom URL a user can define on the settings page.
+  String get customURL {
+    return this.settingsDrawing.customURL;
   }
-
-  set selectedDictionary(String newDictionary){
-    _selectedDictionary = newDictionary;
+  set customURL(String newValue){
+    this.settingsDrawing.customURL = newValue;
     notifyListeners();
   }
 
-  set selectedTheme(String newTheme){
-    _selectedTheme = newTheme;
-    notifyListeners();
+  /// The string representation of the dictionary which will be used (long press)
+  String get selectedDictionary {
+    return this.settingsDrawing.selectedDictionary;
   }
-  
-  bool get invertShortLongPress{
-    return _invertShortLongPress;
-  }
-
-  set invertShortLongPress(bool invert){
-    _invertShortLongPress = invert;
+  set selectedDictionary(String newValue){
+    this.settingsDrawing.selectedDictionary = newValue;
     notifyListeners();
   }
 
-  bool get emptyCanvasAfterDoubleTap{
-    return _emptyCanvasAfterDoubleTap;
+  /// Should the behavior of long and short press be inverted
+  bool get invertShortLongPress {
+    return this.settingsDrawing.invertShortLongPress;
   }
-  
-  set emptyCanvasAfterDoubleTap(bool empty){
-    _emptyCanvasAfterDoubleTap = empty;
-    notifyListeners();
-  }
-  
-  bool get useWebview{
-    return _useWebview;
-  }
-  
-  set useWebview(bool empty){
-    _useWebview = empty;
+  set invertShortLongPress(bool newValue){
+    this.settingsDrawing.invertShortLongPress = newValue;
     notifyListeners();
   }
 
-  // MISC SETTINGS
+  /// Should the canvas be cleared when a prediction was copied to kanjibuffer
+  bool get emptyCanvasAfterDoubleTap {
+    return this.settingsDrawing.emptyCanvasAfterDoubleTap;
+  }
+  set emptyCanvasAfterDoubleTap(bool newValue){
+    this.settingsDrawing.emptyCanvasAfterDoubleTap = newValue;
+    notifyListeners();
+  }
+
+  /// should the default app browser be used for opening predictions or a webview
+  bool get useWebview {
+    return this.settingsDrawing.useWebview;
+  }
+  set useWebview(bool newValue){
+    this.settingsDrawing.useWebview = newValue;
+    notifyListeners();
+  }
+  // #endregion
+
+  // #region MISC SETTINGS
   String get selectedTheme{
-    return _selectedTheme;
+    return this.settingsMisc.selectedTheme;
+  }
+  set selectedTheme(String newValue){
+    this.settingsMisc.selectedTheme = newValue;
+    notifyListeners();
   }
 
   ThemeMode? selectedThemeMode() {
-    return themesDict[_selectedTheme];
+    return this.settingsMisc.themesDict[selectedTheme];
   }
-  
-  // ADVANCED SETTINGS
-  String get inferenceBackend{
-    return _inferenceBackend;
-  }
+  // #endregion
 
-  set inferenceBackend(String newBackend){
-    _inferenceBackend = newBackend;
+  // #region ADVANCED SETTINGS
+  String get inferenceBackend{
+    return this.settingsAdvanced.inferenceBackend;
+  }
+  set inferenceBackend(String newValue){
+    this.settingsAdvanced.inferenceBackend = newValue;
     notifyListeners();
   }
 
   bool get useThanosSnap{
-    return _useThanosSnap;
+    return this.settingsAdvanced.useThanosSnap;
   }
-
   set useThanosSnap(bool newValue){
-    _useThanosSnap = newValue;
+    this.settingsAdvanced.useThanosSnap = newValue;
     notifyListeners();
   }
-
+  // #endregion
 
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
@@ -206,22 +112,9 @@ class Settings with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
 
     // set value in shared preferences
-
-    // drawing screen
-    prefs.setString('selectedDictionary', selectedDictionary);
-    prefs.setString('customURL', customURL);
-    prefs.setBool('invertShortLongPress', invertShortLongPress);
-    prefs.setBool('emptyCanvasAfterDoubleTap', emptyCanvasAfterDoubleTap);
-    prefs.setBool('useWebview', useWebview);
-
-    // misc
-    prefs.setString('selectedTheme', _selectedTheme);
-    prefs.setInt("windowWidth", windowWidth);
-    prefs.setInt("windowHeight", windowHeight);
-    
-    // advanced settings
-    prefs.setString('inferenceBackend', inferenceBackend);
-    prefs.setBool('useThanosSnap', useThanosSnap);
+    prefs.setString('settingsDrawing', settingsDrawing.toJson());
+    prefs.setString('settingsMisc', settingsMisc.toJson());
+    prefs.setString('settingsAdvanced', settingsAdvanced.toJson());
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -229,20 +122,17 @@ class Settings with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
     // drawing screen
-    selectedDictionary = prefs.getString('selectedDictionary') ?? dictionaries[0];
-    customURL = prefs.getString('customURL') ?? '';
-    invertShortLongPress = prefs.getBool('invertShortLongPress') ?? false;
-    emptyCanvasAfterDoubleTap = prefs.getBool('emptyCanvasAfterDoubleTap') ?? false;
-    useWebview = prefs.getBool('useWebview') ?? false;
+    String tmp = prefs.getString('settingsDrawing') ?? "";
+    if(tmp != "")
+      settingsDrawing.initFromJson(tmp);
     
-    // misc
-    _selectedTheme = prefs.getString('selectedTheme') ?? themesLocaleKeys[2];
-    windowWidth = prefs.getInt("windowWidth") ?? 480;
-    windowHeight = prefs.getInt("windowHeight") ?? 720;
+    tmp = prefs.getString('settingsMisc') ?? "";
+    if(tmp != "")
+      settingsMisc.initFromJson(tmp);
 
-    // advanced settings
-    inferenceBackend = prefs.getString("inferenceBackend") ?? '';
-    useThanosSnap = prefs.getBool('useThanosSnap') ?? false;
+    tmp = prefs.getString('settingsAdvanced') ?? "";
+    if(tmp != "")
+      settingsAdvanced.initFromJson(tmp);
   }
 }
 

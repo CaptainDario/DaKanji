@@ -63,7 +63,9 @@ void openDictionary(BuildContext context, String char) async {
   // only open a page when there is a prediction
   if (char != " " && char != "") {
     // url dict
-    if(GetIt.I<Settings>().web_dictionaries.contains(GetIt.I<Settings>().selectedDictionary)){ 
+    if(GetIt.I<Settings>().settingsDrawing.webDictionaries.contains(
+      GetIt.I<Settings>().selectedDictionary)
+    ){ 
       // use the default browser
       if(!GetIt.I<Settings>().useWebview){
         launchUrlString(openWithSelectedDictionary(char));
@@ -86,7 +88,8 @@ void openDictionary(BuildContext context, String char) async {
     // handle dictionary opening on ANDROID
     else if(Platform.isAndroid){
       // the prediction should be translated with system dialogue
-      if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[4]){ 
+      if(GetIt.I<Settings>().selectedDictionary == 
+        GetIt.I<Settings>().settingsDrawing.dictionaries[4]){ 
           AndroidIntent intent = AndroidIntent(
             action: 'android.intent.action.TRANSLATE',
             arguments: <String, dynamic>{
@@ -106,7 +109,8 @@ void openDictionary(BuildContext context, String char) async {
           }
       }
       // offline dictionary aedict3 (android)
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[5]){
+      else if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[5]){
         if(Platform.isAndroid){
           try{
             // make sure the package is installed
@@ -137,7 +141,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // offline dictionary akebi (android)
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[6]){
+      else if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[6]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: AKEBI_ID,
@@ -163,7 +168,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // offline dictionary takoboto (android)
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[7]){
+      else if(GetIt.I<Settings>().selectedDictionary == 
+        GetIt.I<Settings>().settingsDrawing.dictionaries[7]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: TAKOBOTO_ID,
@@ -191,7 +197,8 @@ void openDictionary(BuildContext context, String char) async {
     // shirabe jisho
     else if(Platform.isIOS){
       // dictionary shirabe (iOS)
-      if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[4]){
+      if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[4]){
         print("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
         if(await canLaunchUrlString(url)) 
@@ -208,7 +215,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // imiwa?
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[5]){
+      else if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[5]){
         print("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
         if(await canLaunchUrlString(url))
@@ -225,7 +233,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // Japanese
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[6]){
+      else if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[6]){
         print("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
         if(await canLaunchUrlString(url)) 
@@ -241,7 +250,8 @@ void openDictionary(BuildContext context, String char) async {
           );
         }
       }
-      else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[7]){
+      else if(GetIt.I<Settings>().selectedDictionary ==
+        GetIt.I<Settings>().settingsDrawing.dictionaries[7]){
         print("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
         if(await canLaunchUrlString(url)) 
@@ -275,13 +285,17 @@ String openWithSelectedDictionary(String kanji) {
   String url = "";
 
   // determine which URL should be used for finding the character
-  if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[0])
-    url = GetIt.I<Settings>().jishoURL;
-  else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[1])
-    url = GetIt.I<Settings>().wadokuURL;
-  else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[2])
-    url = GetIt.I<Settings>().weblioURL;
-  else if(GetIt.I<Settings>().selectedDictionary == GetIt.I<Settings>().dictionaries[3])
+  if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[0])
+    url = GetIt.I<Settings>().settingsDrawing.jishoURL;
+  else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[1])
+    url = GetIt.I<Settings>().settingsDrawing.wadokuURL;
+  else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[2])
+    url = GetIt.I<Settings>().settingsDrawing.weblioURL;
+  else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[3])
     url = GetIt.I<Settings>().customURL;
 
   if(url != ""){
@@ -290,7 +304,9 @@ String openWithSelectedDictionary(String kanji) {
       url = "https://" + url;
 
     // replace the placeholder with the actual character
-    url = url.replaceFirst(new RegExp(GetIt.I<Settings>().kanjiPlaceholder), kanji);
+    url = url.replaceFirst(
+      new RegExp(GetIt.I<Settings>().settingsDrawing.kanjiPlaceholder), kanji
+    );
     url = Uri.encodeFull(url);
   }
   return url;
