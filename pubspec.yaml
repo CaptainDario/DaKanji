@@ -32,7 +32,8 @@ dependencies:
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
   flutter_svg: 1.0.3
-  keymap: 0.0.90
+  keyboard_shortcuts:
+    path: ./plugins/keyboard_shortcuts
 
   onboarding_overlay : 3.0.0
   auto_size_text: 3.0.0
