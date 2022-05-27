@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'dart:io';
 
@@ -21,7 +20,7 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTi
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveShortcutInput.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveKeybindingInput.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -78,7 +77,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: <Widget>[
-
+                      
+                      // #region - Drawing
                       // Drawing header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_drawing_title.tr(),
@@ -148,22 +148,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         children: [
                           // empty canvas - shortcut
-                          SettingsDrawBindingsInput(
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbClearCanvas,
                             enabled: true,
-                            hintText: "Empty the canvas",
-                            defaultKey: LogicalKeyboardKey.keyD,
-                            onChanged: (String value) {
-                              
+                            hintText: "Clear canvas",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbClearCanvasDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbClearCanvas = key;
+                              settings.save();
                             },
                           ),
                         ],
                       ),
-
+                      // #endregion
 
                       Divider(),
 
-
-                      // Miscellaneous header
+                      // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
                         autoSizeGroup: settingsAutoSizeGroup
@@ -216,10 +218,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
+                      // #endregion
 
                       Divider(),
 
-                      // advanced settings
+                      // #region - advanced settings
                       ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
                         title: Align(
@@ -253,6 +256,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )
                         ],
                       ),
+                      // #endregion
                     ],
                   ),
                 ),
