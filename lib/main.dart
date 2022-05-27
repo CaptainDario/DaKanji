@@ -110,6 +110,7 @@ Future<void> initGetIt() async {
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
+  await GetIt.I<Settings>().save();
   
   // inference services
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
