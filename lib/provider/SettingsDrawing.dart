@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:universal_io/io.dart';
 
 
@@ -50,6 +51,16 @@ class SettingsDrawing {
   /// should the default app browser be used for opening predictions or a webview
   bool useWebview = false;
 
+  // KEY BINDING (kb)
+  /// default key binding for clearing the canvas
+  Set<LogicalKeyboardKey> kbClearCanvasDefault = {LogicalKeyboardKey.keyD};
+  /// key binding for clearing the canvas
+  late Set<LogicalKeyboardKey> kbClearCanvas;
+  /// default key binding for clearing the canvas
+  Set<LogicalKeyboardKey> kbUndoStrokeDefault = {LogicalKeyboardKey.keyU};
+  /// key binding for clearing the canvas
+  late Set<LogicalKeyboardKey> kbUndoStroke;
+
 
 
   SettingsDrawing (){
@@ -75,6 +86,10 @@ class SettingsDrawing {
       ]);
 
     selectedDictionary = dictionaries[0];
+
+    // key bindings
+    kbClearCanvas = kbClearCanvasDefault;
+    kbUndoStroke  = kbUndoStrokeDefault;
   }
 
   void initFromMap(Map<String, dynamic> map){
@@ -84,20 +99,43 @@ class SettingsDrawing {
     invertShortLongPress      = map['invertShortLongPress'];
     emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
     useWebview                = map['useWebview'];
+
+    kbClearCanvas  = keyBinding(map['kbClearCanvas']);
+    //kbUndoStroke = map['kbUndoStroke'];
   }
 
   void initFromJson(String jsonString) =>
     initFromMap(json.decode(jsonString));
   
 
-  Map<String, dynamic> toMap() => {
-    'customURL'                 : customURL,
-    'selectedDictionary'        : selectedDictionary,
-    'invertShortLongPress'      : invertShortLongPress,
-    'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
-    'useWebview'                : useWebview,
-  };
+  Map<String, dynamic> toMap(){
+    var t = {
+      'customURL'                 : customURL,
+      'selectedDictionary'        : selectedDictionary,
+      'invertShortLongPress'      : invertShortLongPress,
+      'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
+      'useWebview'                : useWebview,
+
+      'kbClearCanvas'             : kbClearCanvas.map((e) => e.keyId).toList(),
+      //'kbUndoStroke'              : kbUndoStroke.toList().map((e) => e.keyId)
+    };
+
+    return t;
+  }
 
   String toJson() => json.encode(toMap());
 
+  /// converts a list of strings (values in list need to be strins!)
+  /// to a set of keybindings
+  Set<LogicalKeyboardKey> keyBinding(List<dynamic> keyBindings) {
+
+    Set<LogicalKeyboardKey> b = {};
+
+    for (var keyBinding in keyBindings) {
+      int a = int.parse(keyBinding.toString());
+      b.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
+    }
+
+    return b;
+  }
 }
