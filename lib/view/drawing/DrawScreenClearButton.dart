@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 
 import 'package:provider/provider.dart';
@@ -39,8 +38,7 @@ class DrawScreenClearButton extends StatelessWidget {
               width: canvasSize * 0.1,
               child: FittedBox(
                 child: KeyBoardShortcuts(
-                  keysToPress:
-                    {LogicalKeyboardKey.keyD},
+                  keysToPress: GetIt.I<Settings>().settingsDrawing.kbClearCanvas,
                   onKeysPressed: () => Clear(strokes),
                   child: IconButton(
                     icon: Icon(Icons.clear),
