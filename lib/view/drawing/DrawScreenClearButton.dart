@@ -1,5 +1,6 @@
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
@@ -8,6 +9,7 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawingPainter.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 
@@ -36,29 +38,16 @@ class DrawScreenClearButton extends StatelessWidget {
             child: Container(
               width: canvasSize * 0.1,
               child: FittedBox(
-                child: IconButton(
-                  icon: Icon(Icons.clear),
-                  iconSize: 100,
-                  color: Theme.of(context).highlightColor,
-                  onPressed: () async {
-                    if(!GetIt.I<Settings>().useThanosSnap)
-                      strokes.playDeleteAllStrokesAnimation = true;
-                    else{
-                      GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
-                        await DrawingPainter(
-                          GetIt.I<DrawScreenState>().strokes.path, 
-                          false, 
-                          Size(
-                            GetIt.I<DrawScreenState>().canvasSize,
-                            GetIt.I<DrawScreenState>().canvasSize
-                          ),
-                          1.0
-                        ).getRGBAListFromCanvas(),
-                        GetIt.I<DrawScreenState>().canvasSize.floor(),
-                        GetIt.I<DrawScreenState>().canvasSize.floor() 
-                      );
-                    }
-                  }
+                child: KeyBoardShortcuts(
+                  keysToPress:
+                    {LogicalKeyboardKey.keyD},
+                  onKeysPressed: () => Clear(strokes),
+                  child: IconButton(
+                    icon: Icon(Icons.clear),
+                    iconSize: 100,
+                    color: Theme.of(context).highlightColor,
+                    onPressed: () => Clear(strokes)
+                  ),
                 ),
               ),
             ),
@@ -67,4 +56,28 @@ class DrawScreenClearButton extends StatelessWidget {
       }
     );
   }
+
+  void Clear (Strokes strokes) async {
+
+    print("test");
+
+    if(!GetIt.I<Settings>().useThanosSnap)
+      strokes.playDeleteAllStrokesAnimation = true;
+    else{
+      GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
+        await DrawingPainter(
+          GetIt.I<DrawScreenState>().strokes.path, 
+          false, 
+          Size(
+            GetIt.I<DrawScreenState>().canvasSize,
+            GetIt.I<DrawScreenState>().canvasSize
+          ),
+          1.0
+        ).getRGBAListFromCanvas(),
+        GetIt.I<DrawScreenState>().canvasSize.floor(),
+        GetIt.I<DrawScreenState>().canvasSize.floor() 
+      );
+    }
+  }
+
 }
