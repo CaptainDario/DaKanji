@@ -159,6 +159,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               settings.save();
                             },
                           ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbUndoStroke,
+                            hintText: "Undo last stroke",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbUndoStrokeDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbUndoStroke = key;
+                              settings.save();
+                            },
+                          ),
                         ],
                       ),
                       // #endregion
