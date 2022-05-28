@@ -54,6 +54,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                 children: List.generate(10, (i) {
                   Widget tmp_widget = PredictionButton(
                     interpreter.predictions[i],
+                    i
                   );
                   // add short/long press showcase to the first button
                   if(i == 0)

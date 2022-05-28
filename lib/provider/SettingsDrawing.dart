@@ -53,14 +53,32 @@ class SettingsDrawing {
 
   // KEY BINDING (kb)
   /// default key binding for clearing the canvas
-  Set<LogicalKeyboardKey> kbClearCanvasDefault = {LogicalKeyboardKey.keyD};
+  final Set<LogicalKeyboardKey> kbLongPressModDefault = {LogicalKeyboardKey.shiftLeft};
+  /// key binding for clearing the canvas
+  late Set<LogicalKeyboardKey> kbLongPressMod;
+  /// default key binding for clearing the canvas
+  final Set<LogicalKeyboardKey> kbDoubleTapModDefault = {LogicalKeyboardKey.controlLeft};
+  /// current key binding for clearing the canvas
+  late Set<LogicalKeyboardKey> kbDoubleTapMod;
+
+  /// default key binding for clearing the canvas
+  final Set<LogicalKeyboardKey> kbClearCanvasDefault = {LogicalKeyboardKey.keyD};
   /// key binding for clearing the canvas
   late Set<LogicalKeyboardKey> kbClearCanvas;
   /// default key binding for clearing the canvas
-  Set<LogicalKeyboardKey> kbUndoStrokeDefault = {LogicalKeyboardKey.keyU};
-  /// key binding for clearing the canvas
+  final Set<LogicalKeyboardKey> kbUndoStrokeDefault = {LogicalKeyboardKey.keyU};
+  /// current key binding for clearing the canvas
   late Set<LogicalKeyboardKey> kbUndoStroke;
+  /// default key binding for tapping the word bar
+  final Set<LogicalKeyboardKey> kbWordBarDefault = {LogicalKeyboardKey.keyW};
+  /// current key binding for tapping the wordbar
+  late Set<LogicalKeyboardKey> kbWordBar;
 
+  /// default key binding for tapping the first prediction
+  late final List<Set<LogicalKeyboardKey>> kbPredsDefaults;
+  /// current key binding for tapping the first prediction
+  late List<Set<LogicalKeyboardKey>> kbPreds;
+    
 
 
   SettingsDrawing (){
@@ -88,8 +106,20 @@ class SettingsDrawing {
     selectedDictionary = dictionaries[0];
 
     // key bindings
+    kbLongPressMod = kbLongPressModDefault;
+    kbDoubleTapMod = kbDoubleTapModDefault;
+
     kbClearCanvas = kbClearCanvasDefault;
     kbUndoStroke  = kbUndoStrokeDefault;
+    kbWordBar     = kbWordBarDefault;
+
+    kbPredsDefaults = List.generate(9,(i) =>
+      {
+        LogicalKeyboardKey.findKeyByKeyId(LogicalKeyboardKey.digit1.keyId + i)!,
+      }
+    )..add({LogicalKeyboardKey.digit0});
+    kbPreds = kbPredsDefaults;
+
   }
 
   void initFromMap(Map<String, dynamic> map){
@@ -100,8 +130,12 @@ class SettingsDrawing {
     emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
     useWebview                = map['useWebview'];
 
-    kbClearCanvas  = keyBinding(map['kbClearCanvas']);
-    //kbUndoStroke = map['kbUndoStroke'];
+    kbLongPressMod = keyBindingStringToSet(map['kbLongPressMod']);
+    kbDoubleTapMod = keyBindingStringToSet(map['kbDoubleTapMod']);
+
+    kbClearCanvas  = keyBindingStringToSet(map['kbClearCanvas']);
+    kbUndoStroke   = keyBindingStringToSet(map['kbUndoStroke']);
+    kbWordBar      = keyBindingStringToSet(map['kbWordBar']);
   }
 
   void initFromJson(String jsonString) =>
@@ -109,25 +143,29 @@ class SettingsDrawing {
   
 
   Map<String, dynamic> toMap(){
-    var t = {
+    var m = {
       'customURL'                 : customURL,
       'selectedDictionary'        : selectedDictionary,
       'invertShortLongPress'      : invertShortLongPress,
       'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
       'useWebview'                : useWebview,
 
-      'kbClearCanvas'             : kbClearCanvas.map((e) => e.keyId).toList(),
-      //'kbUndoStroke'              : kbUndoStroke.toList().map((e) => e.keyId)
+      'kbLongPressMod' : kbLongPressMod.map((e) => e.keyId).toList(),
+      'kbDoubleTapMod' : kbDoubleTapMod.map((e) => e.keyId).toList(),
+
+      'kbClearCanvas' : kbClearCanvas.map((e) => e.keyId).toList(),
+      'kbUndoStroke'  : kbUndoStroke.map((e) => e.keyId).toList(),
+      'kbWordBar'     : kbWordBar.map((e) => e.keyId).toList(),
     };
 
-    return t;
+    return m;
   }
 
   String toJson() => json.encode(toMap());
 
   /// converts a list of strings (values in list need to be strins!)
   /// to a set of keybindings
-  Set<LogicalKeyboardKey> keyBinding(List<dynamic> keyBindings) {
+  Set<LogicalKeyboardKey> keyBindingStringToSet(List<dynamic> keyBindings) {
 
     Set<LogicalKeyboardKey> b = {};
 
