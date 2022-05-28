@@ -8,7 +8,6 @@ class ResponsiveKeybindingInput extends StatefulWidget {
   ResponsiveKeybindingInput(
   {
     required this.keyBinding,
-    required this.enabled,
     required this.hintText,
     required this.defaultKeyBinding,
     this.onChanged,
@@ -17,8 +16,6 @@ class ResponsiveKeybindingInput extends StatefulWidget {
 
   ///the key binding which should be used on instantiation
   final Set<LogicalKeyboardKey> keyBinding;
-  /// Is the Input field enabled
-  final bool enabled;
   /// explanatory text for the keybinding
   final String hintText;
   /// the default option for this keybinding
@@ -96,7 +93,6 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
                           readOnly: false,
                           controller: widget.textEditingController,
                           autocorrect: false,
-                          enabled: widget.enabled,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 1,
                           decoration: InputDecoration(
