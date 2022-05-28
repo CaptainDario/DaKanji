@@ -147,10 +147,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         children: [
-                          // empty canvas - shortcut
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbLongPressMod,
+                            hintText: "Long press modifier",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbLongPressModDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbLongPressMod = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbDoubleTapMod,
+                            hintText: "Double tap modifier",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbDoubleTapModDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbDoubleTapMod = key;
+                              settings.save();
+                            },
+                          ),
+
                           ResponsiveKeybindingInput(
                             keyBinding: settings.settingsDrawing.kbClearCanvas,
-                            enabled: true,
                             hintText: "Clear canvas",
                             defaultKeyBinding:
                               settings.settingsDrawing.kbClearCanvasDefault,
