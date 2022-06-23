@@ -178,19 +178,18 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                 GetIt.I<Tutorials>().reload();
 
                 return Onboarding(
-                steps: GetIt.I<Tutorials>().getSteps(),
-                //globalOnboarding: true,
-                autoSizeTexts: true,
-                onChanged: (int index){
-                  print("Tutorial step: ${index}");
-                  if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
-                    print("DrawScreen tutorial done, saving...");
-                    GetIt.I<UserData>().showShowcaseDrawing = false;
-                    GetIt.I<UserData>().save();
-                  }
-                },
-                child: screen,
-              );
+                  steps: GetIt.I<Tutorials>().getSteps(),
+                  autoSizeTexts: true,
+                  onChanged: (int index){
+                    print("Tutorial step: ${index}");
+                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
+                      print("DrawScreen tutorial done, saving...");
+                      GetIt.I<UserData>().showShowcaseDrawing = false;
+                      GetIt.I<UserData>().save();
+                    }
+                  },
+                  child: screen,
+                );
             },
             settings: settings,
             transitionsBuilder: (_, a, __, c) =>
