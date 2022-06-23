@@ -52,14 +52,14 @@ class SettingsDrawing {
   bool useWebview = false;
 
   // KEY BINDING (kb)
-  /// default key binding for clearing the canvas
-  final Set<LogicalKeyboardKey> kbLongPressModDefault = {LogicalKeyboardKey.shiftLeft};
-  /// key binding for clearing the canvas
+  /// default key binding for modifying a normal press to a long press
+  final Set<LogicalKeyboardKey> kbLongPressModDefault = {LogicalKeyboardKey.keyN};
+  /// current key binding for modifying a normal press to a long press
   late Set<LogicalKeyboardKey> kbLongPressMod;
-  /// default key binding for clearing the canvas
-  final Set<LogicalKeyboardKey> kbDoubleTapModDefault = {LogicalKeyboardKey.controlLeft};
-  /// current key binding for clearing the canvas
-  late Set<LogicalKeyboardKey> kbDoubleTapMod;
+  /// default key binding for modifying a normal press to a double press
+  final Set<LogicalKeyboardKey> kbDoublePressModDefault = {LogicalKeyboardKey.keyM};
+  /// current key binding for modifying a normal press to a double press
+  late Set<LogicalKeyboardKey> kbDoublePressMod;
 
   /// default key binding for clearing the canvas
   final Set<LogicalKeyboardKey> kbClearCanvasDefault = {LogicalKeyboardKey.keyD};
@@ -73,9 +73,19 @@ class SettingsDrawing {
   final Set<LogicalKeyboardKey> kbWordBarDefault = {LogicalKeyboardKey.keyW};
   /// current key binding for tapping the wordbar
   late Set<LogicalKeyboardKey> kbWordBar;
+  /// default key binding forn1 deleting a character from the word bar
+  final Set<LogicalKeyboardKey> kbWordBarDelCharDefault = {LogicalKeyboardKey.keyE};
+  /// current key binding for deleting a character from the word bar
+  late Set<LogicalKeyboardKey> kbWordBarDelChar;
 
   /// default key binding for tapping the first prediction
-  late final List<Set<LogicalKeyboardKey>> kbPredsDefaults;
+  final List<Set<LogicalKeyboardKey>> kbPredsDefaults = [
+    {LogicalKeyboardKey.digit1}, {LogicalKeyboardKey.digit2},
+    {LogicalKeyboardKey.digit3}, {LogicalKeyboardKey.digit4},
+    {LogicalKeyboardKey.digit5}, {LogicalKeyboardKey.digit6},
+    {LogicalKeyboardKey.digit7}, {LogicalKeyboardKey.digit8},
+    {LogicalKeyboardKey.digit9}, {LogicalKeyboardKey.digit0},
+  ];
   /// current key binding for tapping the first prediction
   late List<Set<LogicalKeyboardKey>> kbPreds;
     
@@ -106,57 +116,77 @@ class SettingsDrawing {
     selectedDictionary = dictionaries[0];
 
     // key bindings
-    kbLongPressMod = kbLongPressModDefault;
-    kbDoubleTapMod = kbDoubleTapModDefault;
+    kbLongPressMod   = kbLongPressModDefault;
+    kbDoublePressMod = kbDoublePressModDefault;
 
-    kbClearCanvas = kbClearCanvasDefault;
-    kbUndoStroke  = kbUndoStrokeDefault;
-    kbWordBar     = kbWordBarDefault;
+    kbClearCanvas    = kbClearCanvasDefault;
+    kbUndoStroke     = kbUndoStrokeDefault;
+    kbWordBar        = kbWordBarDefault;
+    kbWordBarDelChar = kbWordBarDelCharDefault;
 
-    kbPredsDefaults = List.generate(9,(i) =>
-      {
-        LogicalKeyboardKey.findKeyByKeyId(LogicalKeyboardKey.digit1.keyId + i)!,
-      }
-    )..add({LogicalKeyboardKey.digit0});
-    kbPreds = kbPredsDefaults;
-
+    kbPreds       = kbPredsDefaults;
   }
 
   void initFromMap(Map<String, dynamic> map){
 
-    customURL                 = map['customURL'];
-    selectedDictionary        = map['selectedDictionary'];
-    invertShortLongPress      = map['invertShortLongPress'];
-    emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
-    useWebview                = map['useWebview'];
+    if(map['customURL'] != null)
+      customURL                 = map['customURL'];
+    if(map['selectedDictionary'] != null)
+      selectedDictionary        = map['selectedDictionary'];
+    if(map['invertShortLongPress'] != null)
+      invertShortLongPress      = map['invertShortLongPress'];
+    if(map['emptyCanvasAfterDoubleTap'] != null)
+      emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
+    if(map['useWebview'] != null)
+      useWebview                = map['useWebview'];
 
-    kbLongPressMod = keyBindingStringToSet(map['kbLongPressMod']);
-    kbDoubleTapMod = keyBindingStringToSet(map['kbDoubleTapMod']);
+    if(map['kbLongPressMod'] != null)
+      kbLongPressMod   = keyBindingStringToSet(map['kbLongPressMod']);
+    if(map['kbDoublePressMod'] != null)
+      kbDoublePressMod = keyBindingStringToSet(map['kbDoublePressMod']);
 
-    kbClearCanvas  = keyBindingStringToSet(map['kbClearCanvas']);
-    kbUndoStroke   = keyBindingStringToSet(map['kbUndoStroke']);
-    kbWordBar      = keyBindingStringToSet(map['kbWordBar']);
+    if(map['kbClearCanvas'] != null)
+      kbClearCanvas    = keyBindingStringToSet(map['kbClearCanvas']);
+    if(map['kbUndoStroke'] != null)
+      kbUndoStroke     = keyBindingStringToSet(map['kbUndoStroke']);
+    if(map['kbWordBar'] != null)
+      kbWordBar        = keyBindingStringToSet(map['kbWordBar']);
+    if(map['kbWordBarDelChar'] != null)
+      kbWordBarDelChar = keyBindingStringToSet(map['kbWordBarDelChar']);
+
+    print("ASDJKLASDJKL: ${kbClearCanvas}");
+
+    kbPreds = List.generate(10, (i) => 
+      keyBindingStringToSet(map['kbPreds${i}'])
+    );
   }
 
-  void initFromJson(String jsonString) =>
+  void initFromJson(String jsonString) {
     initFromMap(json.decode(jsonString));
-  
+  }
 
   Map<String, dynamic> toMap(){
     var m = {
+
       'customURL'                 : customURL,
       'selectedDictionary'        : selectedDictionary,
       'invertShortLongPress'      : invertShortLongPress,
       'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
       'useWebview'                : useWebview,
 
-      'kbLongPressMod' : kbLongPressMod.map((e) => e.keyId).toList(),
-      'kbDoubleTapMod' : kbDoubleTapMod.map((e) => e.keyId).toList(),
+      //'kbLongPressMod'   : kbLongPressMod.map((e) => e.keyId).toList(),
+      //'kbDoublePressMod' : kbDoublePressMod.map((e) => e.keyId).toList(),
 
-      'kbClearCanvas' : kbClearCanvas.map((e) => e.keyId).toList(),
-      'kbUndoStroke'  : kbUndoStroke.map((e) => e.keyId).toList(),
-      'kbWordBar'     : kbWordBar.map((e) => e.keyId).toList(),
+      'kbClearCanvas'    : kbClearCanvas.map((e) => e.keyId).toList(),
+      'kbUndoStroke'     : kbUndoStroke.map((e) => e.keyId).toList(),
+      'kbWordBar'        : kbWordBar.map((e) => e.keyId).toList(),
+      'kbWordBarDelChar' : kbWordBarDelChar.map((e) => e.keyId).toList(),
+
     };
+
+    for (var i = 0; i < 10; i++) {
+      m['kbPreds${i}'] = kbPreds[i].map((e) => e.keyId).toList();
+    }
 
     return m;
   }
@@ -167,13 +197,17 @@ class SettingsDrawing {
   /// to a set of keybindings
   Set<LogicalKeyboardKey> keyBindingStringToSet(List<dynamic> keyBindings) {
 
-    Set<LogicalKeyboardKey> b = {};
+    Set<LogicalKeyboardKey> bindings = {};
 
     for (var keyBinding in keyBindings) {
       int a = int.parse(keyBinding.toString());
-      b.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
+      if(LogicalKeyboardKey.findKeyByKeyId(a) == null){
+        print("ID: ${a} not found");
+        bindings.add(LogicalKeyboardKey.add);
+      }
+      else bindings.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
     }
 
-    return b;
+    return bindings;
   }
 }
