@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
@@ -28,6 +29,12 @@ class DrawScreenClearButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    Keybinder.bind(
+      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbClearCanvas),
+      () => clear(GetIt.I<DrawScreenState>().strokes)
+    );
+    
     return Consumer<Strokes>(
       builder: (contxt, strokes, _) {
         return Focus(
@@ -37,16 +44,12 @@ class DrawScreenClearButton extends StatelessWidget {
             child: Container(
               width: canvasSize * 0.1,
               child: FittedBox(
-                child: KeyBoardShortcuts(
-                  keysToPress: GetIt.I<Settings>().settingsDrawing.kbClearCanvas,
-                  onKeysPressed: () => Clear(strokes),
-                  child: IconButton(
+                child: IconButton(
                     icon: Icon(Icons.clear),
                     iconSize: 100,
                     color: Theme.of(context).highlightColor,
-                    onPressed: () => Clear(strokes)
+                    onPressed: () => clear(strokes)
                   ),
-                ),
               ),
             ),
           ),
@@ -55,9 +58,7 @@ class DrawScreenClearButton extends StatelessWidget {
     );
   }
 
-  void Clear (Strokes strokes) async {
-
-    print("test");
+  void clear (Strokes strokes) async {
 
     if(!GetIt.I<Settings>().useThanosSnap)
       strokes.playDeleteAllStrokesAnimation = true;
