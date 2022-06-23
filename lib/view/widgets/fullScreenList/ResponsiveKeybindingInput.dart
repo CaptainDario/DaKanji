@@ -11,6 +11,7 @@ class ResponsiveKeybindingInput extends StatefulWidget {
     required this.hintText,
     required this.defaultKeyBinding,
     this.onChanged,
+    this.maxKeyCount = 3,
     Key? key
   }) : super(key: key);
 
@@ -25,7 +26,9 @@ class ResponsiveKeybindingInput extends StatefulWidget {
   final Set<LogicalKeyboardKey> defaultKeyBinding;
   /// callback which will be executed at every input change
   final Function (Set<LogicalKeyboardKey> keys)? onChanged;
-
+  /// the maximum allowed number of keys for a keybinding
+  final int maxKeyCount;
+  /// TextEditingController which manages the of this input
   late final TextEditingController textEditingController = TextEditingController(
     text: keyBinding.map((e) => e.debugName!).join(" + ")
   );
@@ -63,18 +66,17 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
         }
 
       },
-      child: RawKeyboardListener(
-        autofocus: false,
+      child: KeyboardListener(
         focusNode: FocusNode(),
-        onKey: (RawKeyEvent e) {
+        onKeyEvent: (KeyEvent e) {
           
           // only register key down events
-          if(!e.isKeyPressed(e.logicalKey)) return;
-          // do not register multiple down events
-          if(e.repeat) return;
+          if(e.runtimeType == RawKeyUpEvent) return;
     
-          currentKeys.add(e.logicalKey);
-          onChanged(currentKeys);
+          if(currentKeys.length < widget.maxKeyCount){
+            currentKeys.add(e.logicalKey);
+            onChanged(currentKeys);
+          }
         },
         child: Material(
           child: InkWell(
