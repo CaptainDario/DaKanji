@@ -149,7 +149,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           ResponsiveKeybindingInput(
                             keyBinding: settings.settingsDrawing.kbLongPressMod,
-                            hintText: "Long press modifier",
+                            hintText: "Long Press modifier",
                             defaultKeyBinding:
                               settings.settingsDrawing.kbLongPressModDefault,
                             onChanged: (key) {
@@ -158,16 +158,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             },
                           ),
                           ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbDoubleTapMod,
-                            hintText: "Double tap modifier",
+                            keyBinding: settings.settingsDrawing.kbDoublePressMod,
+                            hintText: "Double Press modifier",
                             defaultKeyBinding:
-                              settings.settingsDrawing.kbDoubleTapModDefault,
+                              settings.settingsDrawing.kbDoublePressModDefault,
                             onChanged: (key) {
-                              settings.settingsDrawing.kbDoubleTapMod = key;
+                              settings.settingsDrawing.kbDoublePressMod = key;
                               settings.save();
                             },
                           ),
-
                           ResponsiveKeybindingInput(
                             keyBinding: settings.settingsDrawing.kbClearCanvas,
                             hintText: "Clear canvas",
@@ -187,6 +186,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               settings.settingsDrawing.kbUndoStroke = key;
                               settings.save();
                             },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbWordBar,
+                            hintText: "Press word bar",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbWordBarDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbWordBar = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbWordBarDelChar,
+                            hintText: "Delete character from word bar",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbWordBarDelCharDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbWordBarDelChar = key;
+                              settings.save();
+                            },
+                          ),
+
+                          ...List.generate(
+                            settings.settingsDrawing.kbPreds.length,
+                            (i) => ResponsiveKeybindingInput(
+                              keyBinding: settings.settingsDrawing.kbPreds[i],
+                              hintText: "Press prediction ${i+1}",
+                              defaultKeyBinding:
+                                settings.settingsDrawing.kbPredsDefaults[i],
+                              onChanged: (key) {
+                                settings.settingsDrawing.kbPreds[i] = key;
+                                settings.save();
+                              },
+                            ),
                           ),
                         ],
                       ),
