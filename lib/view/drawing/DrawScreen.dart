@@ -102,13 +102,13 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         value: GetIt.I<DrawScreenState>().strokes,
         child: LayoutBuilder(
           builder: (context, constraints){
-
+              
             // set layout and canvas size
             var t = GetDrawScreenLayout(constraints);
             GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
             GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;
-
+              
             return DrawScreenResponsiveLayout(
               DrawScreenDrawingCanvas(
                 _canvasSize,
@@ -135,7 +135,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                 return drawScreenIncludesWebview(t.item1) ?
                   WebView(
                     initialUrl: openWithSelectedDictionary(""),
-                    onWebViewCreated: (controller) => landscapeWebViewController = controller
+                    onWebViewCreated: (controller) => 
+                      landscapeWebViewController = controller
                   ) : null;
               } ()
               
