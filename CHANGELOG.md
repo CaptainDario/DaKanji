@@ -1,7 +1,7 @@
 
 # Da Kanji - changelog
 
-## v 2.1.0 - ()
+## v 2.1.0 - 仕上げ ()
 
 new Features:
 
@@ -9,6 +9,7 @@ new Features:
 - credits page
 - (desktop) set a startup window size
 - new languages supported: ru, ja, zh, it, fr
+- keyboard shortcuts
 
 Changes:
 
