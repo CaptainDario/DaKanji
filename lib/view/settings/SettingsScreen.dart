@@ -18,8 +18,9 @@ import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconIconButtonTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveKeybindingInput.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
@@ -76,7 +77,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: <Widget>[
-
+                      
+                      // #region - Drawing
                       // Drawing header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_drawing_title.tr(),
@@ -86,16 +88,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_long_press_opens.tr(),
                         value: settings.selectedDictionary,
-                        items: settings.dictionaries,
+                        items: settings.settingsDrawing.dictionaries,
                         onTap: (newValue) {
-                          settings.selectedDictionary = newValue ?? settings.dictionaries[0];
+                          settings.selectedDictionary = newValue
+                            ?? settings.settingsDrawing.dictionaries[0];
                           settings.save();
                         },
                       ),
                       // custom URL input
                       ResponsiveInputFieldTile(
                         text: settings.customURL,
-                        enabled: settings.selectedDictionary == settings.dictionaries[3],
+                        enabled: settings.selectedDictionary
+                          == settings.settingsDrawing.dictionaries[3],
                         hintText: LocaleKeys.SettingsScreen_custom_url_hint.tr(),
                         icon: Icons.info_outline,
                         onChanged: (value) {
@@ -132,9 +136,100 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
+                      // settings
+                      /*
+                      ExpansionTile(
+                        tilePadding: EdgeInsets.all(0),
+                        title: Align(
+                          alignment: Alignment.centerLeft,
+                          child: AutoSizeText(
+                            "Key bindings",
+                            group: settingsAutoSizeGroup,
+                          ),
+                        ),
+                        children: [
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbLongPressMod,
+                            hintText: "Long Press modifier",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbLongPressModDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbLongPressMod = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbDoublePressMod,
+                            hintText: "Double Press modifier",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbDoublePressModDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbDoublePressMod = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbClearCanvas,
+                            hintText: "Clear canvas",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbClearCanvasDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbClearCanvas = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbUndoStroke,
+                            hintText: "Undo last stroke",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbUndoStrokeDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbUndoStroke = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbWordBar,
+                            hintText: "Press word bar",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbWordBarDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbWordBar = key;
+                              settings.save();
+                            },
+                          ),
+                          ResponsiveKeybindingInput(
+                            keyBinding: settings.settingsDrawing.kbWordBarDelChar,
+                            hintText: "Delete character from word bar",
+                            defaultKeyBinding:
+                              settings.settingsDrawing.kbWordBarDelCharDefault,
+                            onChanged: (key) {
+                              settings.settingsDrawing.kbWordBarDelChar = key;
+                              settings.save();
+                            },
+                          ),
+
+                          ...List.generate(
+                            settings.settingsDrawing.kbPreds.length,
+                            (i) => ResponsiveKeybindingInput(
+                              keyBinding: settings.settingsDrawing.kbPreds[i],
+                              hintText: "Press prediction ${i+1}",
+                              defaultKeyBinding:
+                                settings.settingsDrawing.kbPredsDefaults[i],
+                              onChanged: (key) {
+                                settings.settingsDrawing.kbPreds[i] = key;
+                                settings.save();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      */
+                      // #endregion
 
                       Divider(),
-                      // Miscellaneous header
+
+                      // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
                         autoSizeGroup: settingsAutoSizeGroup
@@ -143,10 +238,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_theme.tr(), 
                         value: settings.selectedTheme,
-                        items: settings.themesLocaleKeys,
+                        items: settings.settingsMisc.themesLocaleKeys,
                         translateItemTexts: true,
                         onTap: (value) {
-                          settings.selectedTheme = value ?? settings.themesLocaleKeys[0];
+                          settings.selectedTheme = value ?? settings.settingsMisc.themesLocaleKeys[0];
                           print(settings.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
@@ -181,14 +276,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onButtonPressed: () async {
                             var info = await getWindowInfo();
 
-                            settings.windowHeight = info.frame.height.toInt();
-                            settings.windowWidth = info.frame.width.toInt();
+                            settings.settingsMisc.windowHeight = info.frame.height.toInt();
+                            settings.settingsMisc.windowWidth = info.frame.width.toInt();
 
                             settings.save();
                           },
                         ),
+                      // #endregion
 
-                      // advanced settings
+                      Divider(),
+
+                      // #region - advanced settings
                       ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
                         title: Align(
@@ -212,7 +310,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.inferenceBackend, 
-                            items: settings.inferenceBackends,
+                            items: settings.settingsAdvanced.inferenceBackends,
                             onTap: (newValue) {
                               if(newValue != null){
                                 settings.inferenceBackend = newValue;
@@ -222,7 +320,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )
                         ],
                       ),
-              
+                      // #endregion
                     ],
                   ),
                 ),

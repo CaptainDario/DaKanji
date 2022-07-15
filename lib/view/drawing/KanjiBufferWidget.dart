@@ -1,13 +1,17 @@
 import 'dart:math';
 
-import 'package:da_kanji_mobile/globals.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:get_it/get_it.dart';
+import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
-import 'package:get_it/get_it.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
@@ -121,6 +125,50 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     ));
     // make sure all characters are show even if page changed
     _scaleInNewCharController.value = 1.0;
+
+    // add shortcuts
+    // delete one char
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbWordBarDelChar,
+        }
+      ),
+      () => leftSwipe()
+    );
+    // TODO: handle tap
+    // TODO: handle long press
+    /*
+    // long press
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
+          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
+        }
+      ),
+      () => doubleTap()
+    );
+    // tap
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
+        }
+      ),
+      () => tap()
+    );
+    */
+    // delete all chars
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod,
+          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
+        }
+      ),
+      () => doubleTap()
+    );
   }
 
   @override
@@ -128,6 +176,10 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     _springController.dispose();
     _rotationXController.dispose();
     _scaleInNewCharController.dispose();
+
+    // remove shortcuts
+
+
     super.dispose();
   }
 
@@ -157,23 +209,8 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
           // delete the last char if drag over the threshold
           if(_dragAlignment.x < -0.03 && !deletedWithSwipe &&
             GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
-
-            // if the delete animation is already running delete the character
-            // of the old animation
-            if(_scaleInNewCharController.status == AnimationStatus.reverse)
-              GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
-
-            // run the animation in reverse and at the end delete the char
-            _scaleInNewCharController.reverse();
-            Future.delayed(
-              Duration(milliseconds: (_scaleInNewCharDuration).round()),
-              () { 
-                _scaleInNewCharController.stop();
-                _scaleInNewCharController.value = 1.0;
-                GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
-              }
-             );
-            deletedWithSwipe = true;
+            
+            leftSwipe();
           }
         });
       },
@@ -184,17 +221,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
       },
       // empty on double press
       onDoubleTap: () {
-        // start the delete animation if there are characters in the buffer
-        if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
-          _rotationXController.forward(from: 0.0);
-
-          //delete the characters after the animation
-          Future.delayed(Duration(milliseconds: (_rotationXDuration/4).round()), (){
-            setState(() {
-               GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();           
-            });
-          });
-        }
+        doubleTap();
       },
       child: Align(
         alignment: _dragAlignment,
@@ -207,18 +234,11 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
             child: GestureDetector(
               // copy to clipboard and show snackbar
               onTap: (){
-                GetIt.I<DrawScreenState>().drawingLookup.setChar(
-                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, buffer: true
-                );
-                handlePress(context); 
+                tap();
               },
               // open with dictionary on long press
               onLongPress: (){
-                GetIt.I<DrawScreenState>().drawingLookup.setChar(
-                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer,
-                  buffer: true, longPress: true
-                );
-                handlePress(context); 
+                longPress();
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -285,5 +305,53 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
         )
       ),
     );
+  }
+
+  void leftSwipe(){
+    // if the delete animation is already running delete the character
+    // of the old animation
+    if(_scaleInNewCharController.status == AnimationStatus.reverse)
+      GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
+
+    // run the animation in reverse and at the end delete the char
+    _scaleInNewCharController.reverse();
+    Future.delayed(
+      Duration(milliseconds: (_scaleInNewCharDuration).round()),
+      () { 
+        _scaleInNewCharController.stop();
+        _scaleInNewCharController.value = 1.0;
+        GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
+      }
+      );
+    deletedWithSwipe = true;
+  }
+
+  void doubleTap(){
+    // start the delete animation if there are characters in the buffer
+    if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
+      _rotationXController.forward(from: 0.0);
+
+      //delete the characters after the animation
+      Future.delayed(Duration(milliseconds: (_rotationXDuration/4).round()), (){
+        setState(() {
+            GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();           
+        });
+      });
+    }
+  }
+
+  void tap(){
+    GetIt.I<DrawScreenState>().drawingLookup.setChar(
+      GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, buffer: true
+    );
+    handlePress(context); 
+  }
+
+  void longPress(){
+    GetIt.I<DrawScreenState>().drawingLookup.setChar(
+      GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer,
+      buffer: true, longPress: true
+    );
+    handlePress(context); 
   }
 }

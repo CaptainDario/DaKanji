@@ -148,7 +148,7 @@ class AboutScreen extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => CreditsScreen()),
                           );
                         }, 
-                        child: Text("Credits"),//LocaleKeys.AboutScreen_credits.tr())
+                        child: Text(LocaleKeys.AboutScreen_credits.tr())
                       ),
                     ),
                   ],

@@ -21,7 +21,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   async:
     dependency: transitive
     description:
@@ -154,7 +154,7 @@ packages:
       name: easy_localization
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1-dev"
+    version: "3.0.1"
   easy_logger:
     dependency: transitive
     description:
@@ -232,7 +232,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.9+1"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -316,6 +316,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  keybinder:
+    dependency: "direct main"
+    description:
+      name: keybinder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   liquid_swipe:
     dependency: "direct main"
     description:
@@ -323,6 +330,13 @@ packages:
       relative: true
     source: path
     version: "2.1.1"
+  list_utilities:
+    dependency: transitive
+    description:
+      name: list_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   lottie:
     dependency: "direct main"
     description:
@@ -469,7 +483,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.3"
   pub_semver:
     dependency: transitive
     description:

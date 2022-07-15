@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+
 
 
 /// A button which shows the given [char].
@@ -12,10 +15,15 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 /// It can copy [char] to the clipboard or open it in a dictionary.
 class PredictionButton extends StatefulWidget {
 
-  
+  /// the character which is shown in this button
   final String char;
+  /// the nr of this PrdictionButton [0..9]
+  final int nr;
 
-  PredictionButton(this.char, {Key? key}) : super(key: key);
+  PredictionButton(
+    this.char,
+    this.nr,
+  {Key? key}) : super(key : key);
   
   @override
   _PredictionButtonState createState() => _PredictionButtonState();
@@ -27,6 +35,8 @@ class _PredictionButtonState extends State<PredictionButton>
   late AnimationController controller;
   late Animation<double> animation;
 
+  
+
   void anim(){
    controller.forward(from: 0.0); 
   }
@@ -34,7 +44,28 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void initState() { 
     super.initState();
-    
+    //TODO: ADD SHORTCUTS
+    /*
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
+        }
+      ),
+      () => longPressed()
+    );
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
+        }
+      ),
+      () => doubleTap()
+    );
+    */
+
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
       vsync: this,
@@ -52,11 +83,32 @@ class _PredictionButtonState extends State<PredictionButton>
       if(status == AnimationStatus.completed)
         controller.reverse();
     });
+
   }
 
   @override
   void dispose() { 
     controller.dispose();
+
+    Keybinder.remove(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod
+        }
+      ),
+      () => longPressed()
+    );
+    Keybinder.remove(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
+        }
+      ),
+      () => doubleTap()
+    );
+
     super.dispose();
   }
 
@@ -66,30 +118,15 @@ class _PredictionButtonState extends State<PredictionButton>
       aspectRatio: 1,
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-
-        onDoubleTap: () {
-          if(widget.char == " ") return;
-
-          controller.forward(from: 0.0);
-          if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap)
-            GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true; 
-          GetIt.I<DrawScreenState>().kanjiBuffer.addToKanjiBuffer(widget.char);
-        },
-
+        onDoubleTap: () => doubleTap(),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(0),
           ),
           // handle a short press
-          onPressed: () {
-            GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
-            handlePress(context);
-          },
+          onPressed: pressed,
           // handle a long press 
-          onLongPress: () async {
-            GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
-            handlePress(context);
-          },
+          onLongPress: () => longPressed(),
           child: FittedBox(
             child: Text(
               widget.char,
@@ -103,5 +140,28 @@ class _PredictionButtonState extends State<PredictionButton>
         )
       )
     );
+  }
+
+  void doubleTap(){
+    if(widget.char == " ") return;
+
+    controller.forward(from: 0.0);
+    if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap)
+      GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true; 
+
+    GetIt.I<DrawScreenState>().kanjiBuffer.addToKanjiBuffer(widget.char);
+  
+  }
+
+  void longPressed(){
+    print("longPressed");
+    GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
+    handlePress(context);
+  }
+
+  void pressed(){
+    print("pressed");
+    GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
+    handlePress(context);
   }
 }

@@ -1,7 +1,7 @@
 
 # Da Kanji - changelog
 
-## v 2.1.0 - ()
+## v 2.1.0 - 仕上げ (19.7.2022)
 
 new Features:
 
@@ -16,7 +16,7 @@ Changes:
 
 Fixed:
 
-- Selecting an inference backend
+- Selecting an inference backend (iOS, Android)
 
 ## v 2.0.1 - 隈なく (24.04.2022)
 

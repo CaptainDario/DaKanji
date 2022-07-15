@@ -34,7 +34,8 @@ class DrawScreenPredictionButtons extends StatelessWidget {
 
     double width = MediaQuery.of(context).size.width;
 
-    return Container(              //use canvas height in runningInLandscape
+    return Container(              
+      //use canvas height when runningInLandscape
       width :  runningInLandscape ? (canvasSize * 0.4) : canvasSize,
       height: !runningInLandscape ? (canvasSize * 0.4) : canvasSize, 
       child: ChangeNotifierProvider.value(
@@ -54,6 +55,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                 children: List.generate(10, (i) {
                   Widget tmp_widget = PredictionButton(
                     interpreter.predictions[i],
+                    i
                   );
                   // add short/long press showcase to the first button
                   if(i == 0)

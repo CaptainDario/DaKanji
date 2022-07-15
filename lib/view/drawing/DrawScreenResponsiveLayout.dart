@@ -80,7 +80,7 @@ Tuple2<DrawScreenLayout, double> GetDrawScreenLayout(BoxConstraints constraints)
   double canvasSize = 0;
 
   // webview is enabled
-  if(GetIt.I<Settings>().useWebview){
+  if(GetIt.I<Settings>().settingsDrawing.useWebview){
     // LANDSCAPE + WEBVIEW
     if(cBWidth / 2 > cBHeight){
       layout = DrawScreenLayout.LandscapeWithWebview;

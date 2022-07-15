@@ -110,6 +110,7 @@ Future<void> initGetIt() async {
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
+  await GetIt.I<Settings>().save();
   
   // inference services
   GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
@@ -134,8 +135,8 @@ void desktopWindowSetup() {
     Rect.fromLTWH(
       0,
       0, 
-      GetIt.I<Settings>().windowWidth.toDouble(), 
-      GetIt.I<Settings>().windowHeight.toDouble()
+      GetIt.I<Settings>().settingsMisc.windowWidth.toDouble(), 
+      GetIt.I<Settings>().settingsMisc.windowHeight.toDouble()
     )
   );
 }
@@ -177,19 +178,18 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                 GetIt.I<Tutorials>().reload();
 
                 return Onboarding(
-                steps: GetIt.I<Tutorials>().getSteps(),
-                //globalOnboarding: true,
-                autoSizeTexts: true,
-                onChanged: (int index){
-                  print("Tutorial step: ${index}");
-                  if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
-                    print("DrawScreen tutorial done, saving...");
-                    GetIt.I<UserData>().showShowcaseDrawing = false;
-                    GetIt.I<UserData>().save();
-                  }
-                },
-                child: screen,
-              );
+                  steps: GetIt.I<Tutorials>().getSteps(),
+                  autoSizeTexts: true,
+                  onChanged: (int index){
+                    print("Tutorial step: ${index}");
+                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
+                      print("DrawScreen tutorial done, saving...");
+                      GetIt.I<UserData>().showShowcaseDrawing = false;
+                      GetIt.I<UserData>().save();
+                    }
+                  },
+                  child: screen,
+                );
             },
             settings: settings,
             transitionsBuilder: (_, a, __, c) =>
