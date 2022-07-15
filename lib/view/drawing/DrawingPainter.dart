@@ -28,6 +28,9 @@ class DrawingPainter extends CustomPainter {
   /// 
   /// All points given with [pointsList] will be drawn on the canvas.
   /// [darkMode] should reflect in which mode the app is running.
+  /// [size] is the desired size of the canvas and [progress] should be
+  /// a double in the range [0 .. 1] that indicates how much of the strokes
+  /// should be rendered
   DrawingPainter(Path path, bool darkMode, Size size, double progress) {
     this._size = size;
     this._path = path;
@@ -41,10 +44,11 @@ class DrawingPainter extends CustomPainter {
   /// Returns an image of the current canvas as ui.Image.
   ///
   /// Creates a new ui.Canvas and repaints the current image on it. This canvas 
-  /// than generates an image and returns it.
-  Future<ui.Image> getImageFromCanvas() async {
+  /// than generates an image and returns it. [inference] should indicate
+  /// if the returned image will be used for inference
+  Future<ui.Image> getImageFromCanvas(bool inference) async {
     // record the drawn character on a new canvas
-    this._recording = true;
+    this._recording = inference;
     ui.PictureRecorder drawnImageRecorder = ui.PictureRecorder();
     Canvas getImageCanvas = new ui.Canvas(drawnImageRecorder);
     paint(getImageCanvas, _size);
@@ -59,9 +63,9 @@ class DrawingPainter extends CustomPainter {
   ///
   /// Creates a new ui.Canvas and repaints the current image on it. This canvas 
   /// than generates an the drawn image and returns a Uint8List of it.
-  Future<Uint8List> getPNGListFromCanvas() async {
+  Future<Uint8List> getPNGListFromCanvas(bool inference) async {
 
-    final ui.Image img = await getImageFromCanvas();
+    final ui.Image img = await getImageFromCanvas(inference);
     
     ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -73,9 +77,9 @@ class DrawingPainter extends CustomPainter {
   ///
   /// Creates a new ui.Canvas and repaints the current image on it. This canvas 
   /// than generates an the drawn image and returns a Uint8List of it.
-  Future<Uint8List> getRGBAListFromCanvas() async {
+  Future<Uint8List> getRGBAListFromCanvas(bool inference) async {
 
-    final ui.Image img = await getImageFromCanvas();
+    final ui.Image img = await getImageFromCanvas(inference);
     
     ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.rawRgba);
     Uint8List rgbaBytes = byteData!.buffer.asUint8List();
@@ -107,20 +111,19 @@ class DrawingPainter extends CustomPainter {
       scaleX: _size.width, scaleY: _size.height
     );
 
-    // if image for inference is being recorded
-    if(!this._recording){
-
+    // if image is being recorded for inference
+    if(this._recording){
       canvas.drawPath(
         _path
           // move to origin
           .shift(Offset(-b.center.dx, -b.center.dy))
           // scale to 85% of canvas
           .transform(transformationMatrix(
-            scaleX: _size.width / (b.height > b.width ? b.height : b.width) * 0.8,
-            scaleY: _size.height / (b.height > b.width ? b.height : b.width) * 0.8
+            scaleX: _size.width / (b.height > b.width ? b.height : b.width) * 0.75,
+            scaleY: _size.height / (b.height > b.width ? b.height : b.width) * 0.75
           ))
           // move to center
-          .shift(Offset(_size.width/2.0, _size.height/2.0)),
+          .shift(Offset(_size.width / 2.0, _size.height / 2.0)),
           paint
       );
     }

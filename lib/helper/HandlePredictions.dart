@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:flutter_appavailability/flutter_appavailability.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;

@@ -68,13 +68,13 @@ class DrawScreenClearButton extends StatelessWidget {
       GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
         await DrawingPainter(
           GetIt.I<DrawScreenState>().strokes.path, 
-          false, 
+          true, 
           Size(
             GetIt.I<DrawScreenState>().canvasSize,
             GetIt.I<DrawScreenState>().canvasSize
           ),
           1.0
-        ).getRGBAListFromCanvas(),
+        ).getRGBAListFromCanvas(false),
         GetIt.I<DrawScreenState>().canvasSize.floor(),
         GetIt.I<DrawScreenState>().canvasSize.floor() 
       );
