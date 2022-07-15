@@ -103,30 +103,28 @@ class DrawingPainter extends CustomPainter {
       ui.Rect.fromLTRB(0, 0, 1, 1) :
       this._path.getBounds();
 
-    // if image for inference is being recorded
-    if(this._recording){
-      // move to origin
-      Float64List translation_1 = transformationMatrix(
-        transX: -b.left, transY: -b.top
-      );
-      // scale to fill image
-      Float64List scale_1 = transformationMatrix(
-        scaleX: 1/b.width, scaleY: 1/b.height, 
-      );
-      // move back
-      Float64List scale_2 = transformationMatrix(
-        scaleX: _size.width*0.80, scaleY: _size.height*0.80, 
-        transX: _size.width*0.1, transY: _size.height*0.1
-      );
-      canvas.drawPath(
-        _path.transform(translation_1).transform(scale_1).transform(scale_2), 
-      paint);
-    }
-    else{
-      
     Float64List scale = transformationMatrix(
       scaleX: _size.width, scaleY: _size.height
     );
+
+    // if image for inference is being recorded
+    if(!this._recording){
+
+      canvas.drawPath(
+        _path
+          // move to origin
+          .shift(Offset(-b.center.dx, -b.center.dy))
+          // scale to 85% of canvas
+          .transform(transformationMatrix(
+            scaleX: _size.width / (b.height > b.width ? b.height : b.width) * 0.8,
+            scaleY: _size.height / (b.height > b.width ? b.height : b.width) * 0.8
+          ))
+          // move to center
+          .shift(Offset(_size.width/2.0, _size.height/2.0)),
+          paint
+      );
+    }
+    else{
 
       // animate deleting the last stroke only if the animation is running
       if(_deleteProgress < 1){
