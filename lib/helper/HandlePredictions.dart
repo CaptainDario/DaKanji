@@ -111,33 +111,29 @@ void openDictionary(BuildContext context, String char) async {
       // offline dictionary aedict3 (android)
       else if(GetIt.I<Settings>().selectedDictionary ==
         GetIt.I<Settings>().settingsDrawing.dictionaries[5]){
-        if(Platform.isAndroid){
-          try{
-            // make sure the package is installed
-            await AppAvailability.checkAvailability(AEDICT_ID);
-            
-            AndroidIntent intent = AndroidIntent(
-                package: AEDICT_ID,
-                type: "text/plain",
-                action: 'android.intent.action.SEND',
-                category: 'android.intent.category.DEFAULT',
-                arguments: <String, dynamic>{
-                  "android.intent.extra.TEXT": char,
-                }
-            );
-            bool? cra = await intent.canResolveActivity();
-            if(cra != null && cra)
-              await intent.launch();
-          }
-          catch (e){
-            showDownloadDialogue(context,
-              LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
-                "DICTIONARY" : "aedict"
-              }), 
-              LocaleKeys.General_download.tr(), 
-              PLAYSTORE_BASE_URL + AEDICT_ID 
-            );
-          }
+        try{
+          
+          AndroidIntent intent = AndroidIntent(
+              package: AEDICT_ID,
+              type: "text/plain",
+              action: 'android.intent.action.SEND',
+              category: 'android.intent.category.DEFAULT',
+              arguments: <String, dynamic>{
+                "android.intent.extra.TEXT": char,
+              }
+          );
+          bool? cra = await intent.canResolveActivity();
+          if(cra != null && cra)
+            await intent.launch();
+        }
+        catch (e){
+          showDownloadDialogue(context,
+            LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
+              "DICTIONARY" : "aedict"
+            }), 
+            LocaleKeys.General_download.tr(), 
+            PLAYSTORE_BASE_URL + AEDICT_ID 
+          );
         }
       }
       // offline dictionary akebi (android)

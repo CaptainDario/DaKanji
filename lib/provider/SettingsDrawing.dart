@@ -78,7 +78,7 @@ class SettingsDrawing {
   /// current key binding for deleting a character from the word bar
   late Set<LogicalKeyboardKey> kbWordBarDelChar;
 
-  /// default key binding for tapping the first prediction
+  /// default key binding for tapping the 0 .. 10 prediction button
   final List<Set<LogicalKeyboardKey>> kbPredsDefaults = [
     {LogicalKeyboardKey.digit1}, {LogicalKeyboardKey.digit2},
     {LogicalKeyboardKey.digit3}, {LogicalKeyboardKey.digit4},
@@ -86,7 +86,7 @@ class SettingsDrawing {
     {LogicalKeyboardKey.digit7}, {LogicalKeyboardKey.digit8},
     {LogicalKeyboardKey.digit9}, {LogicalKeyboardKey.digit0},
   ];
-  /// current key binding for tapping the first prediction
+  /// current key binding for tapping the 0 .. 10 prediction button
   late List<Set<LogicalKeyboardKey>> kbPreds;
     
 
@@ -96,7 +96,7 @@ class SettingsDrawing {
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
     weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
 
-    dictionaries = webDictionaries;
+    dictionaries = List.from(webDictionaries);
 
     if(Platform.isAndroid)
       dictionaries.addAll([
@@ -154,8 +154,6 @@ class SettingsDrawing {
     if(map['kbWordBarDelChar'] != null)
       kbWordBarDelChar = keyBindingStringToSet(map['kbWordBarDelChar']);
 
-    print("ASDJKLASDJKL: ${kbClearCanvas}");
-
     kbPreds = List.generate(10, (i) => 
       keyBindingStringToSet(map['kbPreds${i}'])
     );
@@ -174,8 +172,8 @@ class SettingsDrawing {
       'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
       'useWebview'                : useWebview,
 
-      //'kbLongPressMod'   : kbLongPressMod.map((e) => e.keyId).toList(),
-      //'kbDoublePressMod' : kbDoublePressMod.map((e) => e.keyId).toList(),
+      'kbLongPressMod'   : kbLongPressMod.map((e) => e.keyId).toList(),
+      'kbDoublePressMod' : kbDoublePressMod.map((e) => e.keyId).toList(),
 
       'kbClearCanvas'    : kbClearCanvas.map((e) => e.keyId).toList(),
       'kbUndoStroke'     : kbUndoStroke.map((e) => e.keyId).toList(),
@@ -193,7 +191,7 @@ class SettingsDrawing {
 
   String toJson() => json.encode(toMap());
 
-  /// converts a list of strings (values in list need to be strins!)
+  /// converts a list of strings (values in list need to be strings!)
   /// to a set of keybindings
   Set<LogicalKeyboardKey> keyBindingStringToSet(List<dynamic> keyBindings) {
 
@@ -201,6 +199,7 @@ class SettingsDrawing {
 
     for (var keyBinding in keyBindings) {
       int a = int.parse(keyBinding.toString());
+      
       if(LogicalKeyboardKey.findKeyByKeyId(a) == null){
         print("ID: ${a} not found");
         bindings.add(LogicalKeyboardKey.add);

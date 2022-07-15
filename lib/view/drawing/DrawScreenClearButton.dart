@@ -14,26 +14,28 @@ import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 
 
 class DrawScreenClearButton extends StatelessWidget {
-  const DrawScreenClearButton(
+  DrawScreenClearButton(
     this.canvasSize,
     this.includeTutorial,
     {Key? key}
-  ) : super(key: key);
+  ){
+    Keybinder.bind(
+      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbClearCanvas),
+      () => clear(GetIt.I<DrawScreenState>().strokes)
+    );
+  }
 
   /// the size of the DrawingCanvas
   final double canvasSize;
   /// should the tutorial Focus be included
   final bool includeTutorial;
 
-
+  
 
   @override
   Widget build(BuildContext context) {
     
-    Keybinder.bind(
-      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbClearCanvas),
-      () => clear(GetIt.I<DrawScreenState>().strokes)
-    );
+
     
     return Consumer<Strokes>(
       builder: (contxt, strokes, _) {
