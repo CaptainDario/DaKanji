@@ -44,7 +44,8 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void initState() { 
     super.initState();
-
+    //TODO: ADD SHORTCUTS
+    /*
     Keybinder.bind(
       Keybinding.from(
         {
@@ -63,6 +64,7 @@ class _PredictionButtonState extends State<PredictionButton>
       ),
       () => doubleTap()
     );
+    */
 
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
