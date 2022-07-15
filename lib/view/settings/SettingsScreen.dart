@@ -137,6 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                         ),
                       // settings
+                      /*
                       ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
                         title: Align(
@@ -223,6 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ],
                       ),
+                      */
                       // #endregion
 
                       Divider(),
