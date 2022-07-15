@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:keybinder/keybinder.dart';
@@ -16,13 +17,13 @@ class PredictionButton extends StatefulWidget {
 
   /// the character which is shown in this button
   final String char;
-  ///
+  /// the nr of this PrdictionButton [0..9]
   final int nr;
 
   PredictionButton(
     this.char,
     this.nr,
-  {Key? key}) : super(key: key);
+  {Key? key}) : super(key : key);
   
   @override
   _PredictionButtonState createState() => _PredictionButtonState();
@@ -34,6 +35,8 @@ class _PredictionButtonState extends State<PredictionButton>
   late AnimationController controller;
   late Animation<double> animation;
 
+  
+
   void anim(){
    controller.forward(from: 0.0); 
   }
@@ -41,7 +44,26 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void initState() { 
     super.initState();
-    
+
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
+        }
+      ),
+      () => longPressed()
+    );
+    Keybinder.bind(
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
+        }
+      ),
+      () => doubleTap()
+    );
+
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
       vsync: this,
@@ -60,44 +82,31 @@ class _PredictionButtonState extends State<PredictionButton>
         controller.reverse();
     });
 
-    Keybinder.bind(
-      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]),
-      () => pressed()
-    );
-    Keybinder.bind(
-      Keybinding.from({
-        ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
-        ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]
-      }),
-      () => longPressed()
-    );
-    Keybinder.bind(
-      Keybinding.from({
-        ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod,
-        ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]
-      }),
-      () => doubleTap()
-    );
   }
 
   @override
   void dispose() { 
     controller.dispose();
+
     Keybinder.remove(
-      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]),
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod
+        }
+      ),
+      () => longPressed()
     );
     Keybinder.remove(
-      Keybinding.from({
-        ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
-        ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]
-      }),
+      Keybinding.from(
+        {
+          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
+        }
+      ),
+      () => doubleTap()
     );
-    Keybinder.remove(
-      Keybinding.from({
-        ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod,
-        ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr]
-      }),
-    );
+
     super.dispose();
   }
 

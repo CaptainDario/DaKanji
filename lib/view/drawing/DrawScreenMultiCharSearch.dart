@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 
 
 class DrawScreenMultiCharSearch extends StatelessWidget {
-  const DrawScreenMultiCharSearch(
+  DrawScreenMultiCharSearch(
     this.canvasSize,
     this.runningInLandscape,
     this.includeHeroes,
