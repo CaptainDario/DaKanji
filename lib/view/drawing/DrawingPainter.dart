@@ -119,8 +119,10 @@ class DrawingPainter extends CustomPainter {
           .shift(Offset(-b.center.dx, -b.center.dy))
           // scale to 85% of canvas
           .transform(transformationMatrix(
-            scaleX: _size.width / (b.height > b.width ? b.height : b.width) * 0.75,
-            scaleY: _size.height / (b.height > b.width ? b.height : b.width) * 0.75
+            //scaleX: _size.width / b.width * 0.75,
+            //scaleY: _size.height / b.height * 0.75
+            scaleX: _size.width / (b.height > b.width ? b.height : b.width) * 0.8,
+            scaleY: _size.height / (b.height > b.width ? b.height : b.width) * 0.8
           ))
           // move to center
           .shift(Offset(_size.width / 2.0, _size.height / 2.0)),
