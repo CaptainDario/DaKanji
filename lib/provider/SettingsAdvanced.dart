@@ -24,17 +24,17 @@ class SettingsAdvanced {
         InferenceBackends.GPU.toString(),
         InferenceBackends.NNAPI.toString(),
       ]);
-    //else if(Platform.isIOS)
-    //  inferenceBackends.addAll([
-    //    InferenceBackends.GPU.toString(),
-    //    InferenceBackends.CoreML.toString(),
-    //  ]);
+    else if(Platform.isIOS)
+      inferenceBackends.addAll([
+        InferenceBackends.GPU.toString(),
+        InferenceBackends.CoreML.toString(),
+      ]);
     //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
     //  inferenceBackends.addAll([
     //    InferenceBackends.XXNPACK.toString()
     //  ]);
 
-    inferenceBackend = inferenceBackends[0];
+    inferenceBackend = "";
   }
 
   void initFromMap(Map<String, dynamic> map){

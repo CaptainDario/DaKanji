@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
@@ -68,13 +67,13 @@ class DrawScreenClearButton extends StatelessWidget {
       GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
         await DrawingPainter(
           GetIt.I<DrawScreenState>().strokes.path, 
-          false, 
+          true, 
           Size(
             GetIt.I<DrawScreenState>().canvasSize,
             GetIt.I<DrawScreenState>().canvasSize
           ),
           1.0
-        ).getRGBAListFromCanvas(),
+        ).getRGBAListFromCanvas(false),
         GetIt.I<DrawScreenState>().canvasSize.floor(),
         GetIt.I<DrawScreenState>().canvasSize.floor() 
       );

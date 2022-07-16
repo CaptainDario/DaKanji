@@ -58,7 +58,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
   late DrawingPainter _canvas;
   /// the ID of the pointer which is currently drawing
   int? _pointerID;
-  /// Keep track of if the pointer moved
+  /// Keep track of, if the pointer moved
   bool pointerMoved = false;
   /// Animation controller of the delete stroke animation
   late AnimationController _canvasController;
@@ -95,7 +95,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
               1.0
             );
 
-            widget.onDeletedLastStroke!(await _canvas.getPNGListFromCanvas());
+            widget.onDeletedLastStroke!(await _canvas.getPNGListFromCanvas(true));
           }
         }
 
@@ -192,7 +192,8 @@ class _DrawingCanvasState extends State<DrawingCanvas>
               image: AssetImage("assets/images/ui/kanji_drawing_aid.png")
             ),
             CanvasSnappable(
-              key: GetIt.I<DrawScreenState>().snappableKey,
+              key: GetIt.I<Settings>().useThanosSnap ?
+                GetIt.I<DrawScreenState>().snappableKey : GlobalKey(),
               snapColor: GetIt.I<Settings>().selectedTheme == LocaleKeys.General_light
                 ? Colors.black
                 : Colors.white,
@@ -235,12 +236,12 @@ class _DrawingCanvasState extends State<DrawingCanvas>
 
   /// convenience wrapper for getting a PNG-image as list of the current canvas.
   Future<Uint8List> getPNGImage() async {
-    return _canvas.getPNGListFromCanvas();
+    return _canvas.getPNGListFromCanvas(true);
   } 
   
   /// convenience wrapper for getting a RGBA-list of the current canvas.
   Future<Uint8List> getRGBAImage() async {
-    return _canvas.getRGBAListFromCanvas();
+    return _canvas.getRGBAListFromCanvas(true);
   } 
 
   /// Handle all cases how the DeleteLastAnimation could be triggered

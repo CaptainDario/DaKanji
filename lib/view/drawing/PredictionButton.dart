@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:keybinder/keybinder.dart';
@@ -44,7 +43,8 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void initState() { 
     super.initState();
-
+    //TODO: ADD SHORTCUTS
+    /*
     Keybinder.bind(
       Keybinding.from(
         {
@@ -63,6 +63,7 @@ class _PredictionButtonState extends State<PredictionButton>
       ),
       () => doubleTap()
     );
+    */
 
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
