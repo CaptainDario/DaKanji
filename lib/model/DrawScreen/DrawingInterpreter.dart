@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:image/image.dart' as image;
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
@@ -99,7 +98,18 @@ class DrawingInterpreter with ChangeNotifier{
         print("You are using the mock model!");
         _usedTFLiteAssetPath = _mockTFLiteAssetPath;
       }
+
+      // load the labels from file
+      var l = await rootBundle.loadString(_labelAssetPath);
+      _labels = l.split("");
       
+      // allocate memory for inference in / output
+      _input = List<List<double>>.generate(
+        height, (i) => List.generate(width, (j) => 0.0)).
+      reshape<double>([1, height, width, 1]).cast();
+      this._output =
+        List<List<double>>.generate(1, (i) => 
+        List<double>.generate(_labels.length, (j) => 0.0));
 
       if (Platform.isAndroid)
         _interpreter = await _initInterpreterAndroid();
@@ -116,17 +126,6 @@ class DrawingInterpreter with ChangeNotifier{
       GetIt.I<Settings>().save();
 
       print(GetIt.I<Settings>().inferenceBackend);
-
-      var l = await rootBundle.loadString(_labelAssetPath);
-      _labels = l.split("");
-      
-      // allocate memory for inference in / output
-      _input = List<List<double>>.generate(
-        height, (i) => List.generate(width, (j) => 0.0)).
-      reshape<double>([1, height, width, 1]).cast();
-      this._output =
-        List<List<double>>.generate(1, (i) => 
-        List<double>.generate(_labels.length, (j) => 0.0));
 
       _isolateUtils = DrawingIsolateUtils();
       _isolateUtils?.start();
@@ -247,34 +246,31 @@ class DrawingInterpreter with ChangeNotifier{
     Interpreter interpreter;
 
     // get platform information
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    //DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    //AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
     if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
+      // try NNAPI delegate
       try{
-        if(androidInfo.isPhysicalDevice!){
-          // use NNAPI on android if android API >= 27
-          if (androidInfo.version.sdkInt! >= 27) {
-            interpreter = await _nnapiInterpreter();
-          }
-          // otherwise fallback to GPU delegate
-          else {
-            interpreter = await _gpuInterpreterAndroid();
-          }
-        }
-        // use CPU inference on emulators
-        else{ 
-          interpreter = await _cpuInterpreter();
-        }
+        interpreter = await _nnapiInterpreter();
+        interpreter.run(this._input, this._output);
       }
-      // use CPU inference on exceptions
-      catch (e){
-        interpreter = await _cpuInterpreter();
+      // on exception try GPU delegate
+      catch (e){ 
+        try {
+          interpreter = await _gpuInterpreterAndroid();
+          interpreter.run(this._input, this._output);
+        }
+        // on exception use CPU delegate
+        catch (e){
+          interpreter = await _cpuInterpreter();
+          interpreter.run(this._input, this._output);
+        }
       }
     }
-    // use the inference backend from the settings
+    // an inference backend was set -> load from settings
     else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
@@ -301,26 +297,40 @@ class DrawingInterpreter with ChangeNotifier{
     Interpreter interpreter;
 
     // get platform information
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    //DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    //IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
     if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
-      if (iosInfo.isPhysicalDevice && false) {
-        interpreter = await _metalInterpreterIOS();
+      // try NNAPI delegate
+      try{
+        interpreter = await _coreMLInterpreterIOS();
+        interpreter.run(this._input, this._output);
       }
-      // use CPU inference on emulators
-      else{
-        interpreter = await _cpuInterpreter();
+      // on exception try GPU delegate
+      catch (e){ 
+        try {
+          interpreter = await _metalInterpreterIOS();
+          interpreter.run(this._input, this._output);
+        }
+        // on exception use CPU delegate
+        catch (e){
+          interpreter = await _cpuInterpreter();
+          interpreter.run(this._input, this._output);
+        }
       }
     }
-    // use the inference backend from the settings
+
+    // an inference backend was set -> load from settings
     else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
     else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[3]){
       interpreter = await _metalInterpreterIOS();
+    }
+    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[4]){
+      interpreter = await _coreMLInterpreterIOS();
     }
     // if all fails return a CPU based interpreter
     else{
@@ -378,11 +388,27 @@ class DrawingInterpreter with ChangeNotifier{
     return i;
   }
 
-  /// Initializes the interpreter with GPU acceleration for iOS.
+  /// Initializes the interpreter with metal acceleration for iOS.
   Future<Interpreter> _metalInterpreterIOS() async {
 
-    final gpuDelegate = GpuDelegate();
+    final gpuDelegate = GpuDelegate(
+      options: GpuDelegateOptions(
+        allowPrecisionLoss: true, 
+        waitType: TFLGpuDelegateWaitType.active),
+    );
     var interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegate);
+    Interpreter i = await Interpreter.fromAsset(
+      _usedTFLiteAssetPath,
+      options: interpreterOptions
+    );
+    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
+    return i;
+  }
+
+  /// Initializes the interpreter with coreML acceleration for iOS.
+  Future<Interpreter> _coreMLInterpreterIOS() async {
+
+    var interpreterOptions = InterpreterOptions()..addDelegate(CoreMlDelegate());
     Interpreter i = await Interpreter.fromAsset(
       _usedTFLiteAssetPath,
       options: interpreterOptions
