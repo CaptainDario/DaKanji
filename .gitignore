@@ -55,8 +55,10 @@ CNN_single_char.tflite
 # force add tf lite desktop binaries
 !blobs/**
 
+# plugins to ignore
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
+./plugins/kagome_dart/*
 
 # ignore all keys in keys folder
 keys/DaKanjiRecognizer.jks
