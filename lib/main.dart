@@ -31,6 +31,7 @@ import 'package:da_kanji_mobile/view/settings/SettingsScreen.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
+import 'package:da_kanji_mobile/view/text/TextScreen.dart';
 import 'package:da_kanji_mobile/view/AboutScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -210,6 +211,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(OnBoardingScreen());
           case "/drawing":
             return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
+          case "/text":
+            return switchScreen(TextScreen(args.navigatedByDrawer, false, false));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
