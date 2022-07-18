@@ -7,7 +7,7 @@ version: 2.1.0+31
 
 environment:
   sdk: ">=2.16.0"
-  flutter: 3.0.0
+  flutter: 3.0.5
 
 dependencies:
   flutter:
@@ -35,7 +35,7 @@ dependencies:
   onboarding_overlay : 3.0.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
-
+  ruby_text: 3.0.1
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
@@ -44,6 +44,8 @@ dependencies:
     path: ./plugins/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
+  kagome_dart: 
+    path: ./plugins/kagome_dart
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms
@@ -114,16 +116,22 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    # icons
     - assets/images/icons/icon.png
     - assets/images/icons/banner.png
+    # draw screen
     - assets/images/ui/kanji_drawing_aid.png
+    # onboarding graphics
     - assets/images/onboarding/onboarding_1_1.png
     - assets/images/onboarding/onboarding_1_2.png
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
+    # tf lite models
     - assets/tflite_models/
-
+    # mecab 
+    - assets/ipadic/
+    # 
     - CHANGELOG.md
     - pubspec.yaml
     - CREDITS.md
