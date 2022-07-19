@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:kagome_dart/kagome_dart.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
@@ -24,6 +26,8 @@ class TextScreen extends StatefulWidget {
   final bool includeHeroes;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
+  
+  final TextEditingController inputController = TextEditingController();
 
   TextScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
 
@@ -32,6 +36,11 @@ class TextScreen extends StatefulWidget {
 }
 
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
+
+
+  Tuple2<List<String>, List<List<String>>> analyzed = Tuple2([], []);
+
+  final double padding = 8.0;
 
 
   @override
@@ -64,6 +73,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
+    
+
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
       animationAtStart: !widget.openedByDrawer,
@@ -72,8 +83,44 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         child: LayoutBuilder(
           builder: (context, constraints){
               
-            return TextWidget();
-              
+            return Padding(
+              padding: EdgeInsets.all(padding),
+              child: Column(
+                children: [
+                  Card(
+                    child: Container(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight/2-2*padding,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: widget.inputController,
+                          maxLines: null,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          onChanged: ((value) {
+                            analyzed = runAnalyzer(value, AnalyzeModes.search);
+                            print(analyzed);
+                            setState(() {
+                              
+                            });
+                          }),
+                        ),
+                      )
+                    ),
+                  ),
+                  TextWidget(
+                    texts: analyzed.item1,
+                    rubys: analyzed.item2.map(
+                      (e) => (e.length == 9 ? e[7] : "")
+                    ).toList(),
+                    width: constraints.maxWidth,
+                    height: constraints.maxHeight/2-2*padding,
+                  )
+                ]
+              ),
+            );
           }
         ),
       ),
