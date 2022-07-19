@@ -94,6 +94,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
+                          decoration: new InputDecoration(
+                            hintText: "Input text here..."
+                          ),
                           controller: widget.inputController,
                           maxLines: null,
                           style: TextStyle(
