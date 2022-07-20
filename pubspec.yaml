@@ -116,7 +116,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    # icons
+    # DaKanji icons/images...
     - assets/images/icons/icon.png
     - assets/images/icons/banner.png
     # draw screen
@@ -127,6 +127,9 @@ flutter:
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
+    # text screen
+    - assets/images/ui/furigana_on.svg
+    - assets/images/ui/furigana_off.svg
     # tf lite models
     - assets/tflite_models/
     # 
