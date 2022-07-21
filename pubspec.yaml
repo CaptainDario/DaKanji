@@ -127,9 +127,11 @@ flutter:
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
-    # text screen
-    - assets/images/ui/furigana_on.svg
-    - assets/images/ui/furigana_off.svg
+    # icons
+    - assets/fonts/icons/furigana_on.svg
+    - assets/fonts/icons/furigana_off.svg
+    - assets/fonts/icons/space_bar_on.svg
+    - assets/fonts/icons/space_bar_off.svg
     # tf lite models
     - assets/tflite_models/
     # 
