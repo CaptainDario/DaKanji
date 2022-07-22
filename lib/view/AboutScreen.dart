@@ -84,18 +84,21 @@ class AboutScreen extends StatelessWidget {
               // text with link to open the "complete changelog"-screen
               Container(
                 padding: EdgeInsets.fromLTRB(16, 2, 16, 0),
-                child: GestureDetector(
-                  child: Text(
-                    LocaleKeys.AboutScreen_show_changelog.tr(),
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Theme.of(context).highlightColor
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    child: Text(
+                      LocaleKeys.AboutScreen_show_changelog.tr(),
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor
+                      ),
                     ),
+                    onTap: () => Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => ChangelogScreen()),
+                    )
                   ),
-                  onTap: () => Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => ChangelogScreen()),
-                  )
                 )
               ),
               Padding(
