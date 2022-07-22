@@ -61,9 +61,9 @@ class DrawScreenClearButton extends StatelessWidget {
 
   void clear (Strokes strokes) async {
 
-    if(!GetIt.I<Settings>().useThanosSnap)
-      strokes.playDeleteAllStrokesAnimation = true;
-    else{
+    strokes.playDeleteAllStrokesAnimation = true;
+
+    if(GetIt.I<Settings>().useThanosSnap){
       GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
         await DrawingPainter(
           GetIt.I<DrawScreenState>().strokes.path, 
