@@ -19,6 +19,7 @@ import 'package:da_kanji_mobile/view/drawing/DrawScreenMultiCharSearch.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenPredictionButtons.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreenUndoButton.dart';
 import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
@@ -132,7 +133,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               _canvasSize,
               GetIt.I<DrawScreenState>().drawScreenLayout,
               () {
-                return drawScreenIncludesWebview(t.item1) ?
+                return drawScreenIncludesWebview(t.item1) & 
+                GetIt.I<Settings>().settingsDrawing.webDictionaries.contains(
+                GetIt.I<Settings>().settingsDrawing.selectedDictionary) ? 
                   WebView(
                     initialUrl: openWithSelectedDictionary(""),
                     onWebViewCreated: (controller) => 
