@@ -182,7 +182,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               constraints.maxHeight - 2*padding,
                             child: Card(
                               child: Padding(
-                                padding: EdgeInsets.all(2*padding),
+                                padding: EdgeInsets.fromLTRB(
+                                  2*padding, 2*padding, 2*padding, padding/2
+                                ),
                                 child: Column(
                                   children: [
                                     Expanded(
