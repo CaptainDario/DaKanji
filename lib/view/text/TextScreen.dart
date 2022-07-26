@@ -38,19 +38,25 @@ class TextScreen extends StatefulWidget {
 
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
-
+  /// the output of the analyzer
   Tuple2<List<String>, List<List<String>>> analyzed = Tuple2([], []);
 
+  /// the padding used between all widges
   final double padding = 8.0;
 
-  bool fullScreen = false;
-
+  /// if the option to make the analyzed text fullscreen
+  bool fullScreen = false;  
+  /// if the option for showing furigana above words is enabled
   bool showFurigana = false;
-
+  /// if the option for showing spaces between words is enabled
   bool showSpaces = false;
 
+  /// should this screen be shown in portrait or not
+  bool runningInPortrait = false;
 
+  /// the animation controller for animating maximizing the processed text widget
   late final AnimationController _controller;
+  /// the animation for animating maximizing the processed text widget
   late Animation _animation;
 
 
@@ -111,6 +117,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         value: GetIt.I<DrawScreenState>().strokes,
         child: LayoutBuilder(
           builder: (context, constraints){
+
+            // set if the app should be layed out in portrait or landscape
+            runningInPortrait = constraints.maxHeight > constraints.maxWidth;
               
             return AnimatedBuilder(
               animation: _controller,
@@ -124,128 +133,132 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                       children: [
                         // Text input
                         Container(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight/2-2*padding,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              decoration: new InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                                hintText: "Input text here..."
+                          width: runningInPortrait ?  
+                            constraints.maxWidth - 2*padding: 
+                            constraints.maxWidth / 2 - padding,
+                          height: runningInPortrait ? 
+                            constraints.maxHeight / 2 - 2*padding :
+                            constraints.maxHeight - 2*padding,
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                2*padding, padding, 2*padding, padding
                               ),
-                              controller: widget.inputController,
-                              maxLines: null,
-                              style: TextStyle(
-                                fontSize: 20,
+                              child: TextField(
+                                decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                  hintText: "Input text here..."
+                                ),
+                                controller: widget.inputController,
+                                maxLines: null,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                                onChanged: ((value) {
+                                  setState(() {
+                                    analyzed = runAnalyzer(value, AnalyzeModes.normal);
+                                  });
+                                }),
                               ),
-                              onChanged: ((value) {
-                                setState(() {
-                                  analyzed = runAnalyzer(value, AnalyzeModes.normal);
-                                });
-                              }),
                             ),
-                          )
+                          ),
                         ),
-                        // processed
+                        // processed text
                         Positioned(
                           bottom: 0,
+                          right: runningInPortrait ? null : 0,
                           child: Container(
-                            width: constraints.maxWidth-3*padding,
-                            height: (constraints.maxHeight/2-(fullScreen ? 1.5 : 2)*padding) 
-                                * (_animation.value+1.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              borderRadius: BorderRadius.circular(5.0)
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(padding),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    child: Divider(
-                                      color: Theme.of(context).hintColor,
+                            width: runningInPortrait ?
+                              constraints.maxWidth - 2*padding: 
+                              (constraints.maxWidth/2-2*padding) 
+                              * (_animation.value+1.0),
+                            height: runningInPortrait ?
+                              (constraints.maxHeight/2-padding) 
+                              * (_animation.value+1.0) :
+                              constraints.maxHeight - 2*padding,
+                            child: Card(
+                              child: Padding(
+                                padding: EdgeInsets.all(2*padding),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: TextWidget(
+                                        texts: analyzed.item1,
+                                        rubys: analyzed.item2.map(
+                                          (e) => (e.length == 9 ? e[7] : "")
+                                        ).toList(),
+                                        showFurigana: showFurigana,
+                                        addSpaces: showSpaces,
+                                      ),
                                     ),
-                                    width: 50,
-                                    height: 1,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Expanded(
-                                    child: TextWidget(
-                                      texts: analyzed.item1,
-                                      rubys: analyzed.item2.map(
-                                        (e) => (e.length == 9 ? e[7] : "")
-                                      ).toList(),
-                                      showFurigana: showFurigana,
-                                      addSpaces: showSpaces,
-                                    ),
-                                  ),
-                                  Divider(),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Material(
-                                        child: IconButton(
-                                          icon: SvgPicture.asset(
-                                            !showSpaces ?
-                                            "assets/fonts/icons/space_bar_off.svg" :
-                                            "assets/fonts/icons/space_bar_on.svg",
-                                            color: Colors.white,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: SvgPicture.asset(
+                                              !showSpaces ?
+                                              "assets/fonts/icons/space_bar_off.svg" :
+                                              "assets/fonts/icons/space_bar_on.svg",
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                showSpaces = !showSpaces;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              showSpaces = !showSpaces;
-                                            });
-                                          },
                                         ),
-                                      ),
-                                      Material(
-                                        child: IconButton(
-                                          key: GlobalKey(),
-                                          icon: SvgPicture.asset(
-                                            showFurigana ?
-                                            "assets/fonts/icons/furigana_off.svg" :
-                                            "assets/fonts/icons/furigana_on.svg",
-                                            color: Colors.white,
+                                        Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            key: GlobalKey(),
+                                            icon: SvgPicture.asset(
+                                              showFurigana ?
+                                              "assets/fonts/icons/furigana_off.svg" :
+                                              "assets/fonts/icons/furigana_on.svg",
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                showFurigana = !showFurigana;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              showFurigana = !showFurigana;
-                                            });
-                                          },
                                         ),
-                                      ),
-                                      Material(
-                                        child: IconButton(
-                                          icon: Icon(!fullScreen ? 
-                                            Icons.fullscreen : 
-                                            Icons.fullscreen_exit
+                                        Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: Icon(!fullScreen ? 
+                                              Icons.fullscreen : 
+                                              Icons.fullscreen_exit
+                                            ),
+                                            onPressed: () {
+                                              // do not allow change while animation is running
+                                              if (_controller.isAnimating)
+                                                return;
+                                        
+                                              if(_controller.isCompleted)
+                                                _controller.reverse();
+                                              else if(_controller.isDismissed)
+                                                _controller.forward();
+                        
+                                              setState(() {
+                                                fullScreen = !fullScreen;
+                                              });
+                                              
+                                            },
                                           ),
-                                          onPressed: () {
-                                            // do not allow change while animation is running
-                                            if (_controller.isAnimating)
-                                              return;
-                                      
-                                            if(_controller.isCompleted)
-                                              _controller.reverse();
-                                            else if(_controller.isDismissed)
-                                              _controller.forward();
-
-                                            setState(() {
-                                              fullScreen = !fullScreen;
-                                            });
-                                            
-                                          },
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
