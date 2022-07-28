@@ -30,7 +30,7 @@
 
 "You are learning Japanese? Then you need to give DaKanji a try!
 
-Did you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.
+Did you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters or words to translate them, and all of that completely offline.
 
 Feature overview:
 
