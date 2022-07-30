@@ -250,6 +250,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
                                           onSelectionChange: _onSelectionChange,
+                                          onTextLostFocus: () {
+                                            setState(() {
+                                              popupPositionLeft = 0;
+                                            });
+                                          },
                                         ),
                                       ),
                                     ),
@@ -321,7 +326,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        
+                        /// Popup window to show text selection in dict / DeepL
                         Positioned(
                           width: popupSizeWidth,
                           height: popupSizeHeight,

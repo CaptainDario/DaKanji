@@ -24,6 +24,7 @@ class CustomSelectableText extends StatefulWidget {
     this.paintTextBoxes = false,
     this.textBoxesColor = Colors.grey,
     this.onSelectionChange,
+    this.onTextLostFocus,
   }) : super(key: key);
 
   /// a list containing all words that should be displayed
@@ -49,6 +50,7 @@ class CustomSelectableText extends StatefulWidget {
   final bool paintTextBoxes;
   final Color textBoxesColor;
   final void Function(TextSelection)? onSelectionChange;
+  final void Function()? onTextLostFocus;
 
   @override
   _CustomSelectableTextState createState() => _CustomSelectableTextState();
@@ -76,6 +78,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   Timer? multiTapTimer;
   /// how many times was tapped on this widget
   num tapped = 0;
+
+  FocusNode focused = FocusNode(canRequestFocus: true);
 
 
 
@@ -254,6 +258,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return Listener(
       //onPointerHover: _onMouseMove,
       onPointerDown: (event) {
+
+        focused.requestFocus();
+
         tapped++;
 
         if (multiTapTimer != null) {
@@ -317,19 +324,34 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
               _onUserSelectionChange(sel);
             }
             tapped = 0;
-          });
+          }
+        );
+        
       },
-      child: Focus(
-        onFocusChange: (value) => print(value),
-        child: MouseRegion(
-          cursor: _cursor,
-          child: GestureDetector(
-            onPanStart: widget.allowSelection ? _onDragStart : null,
-            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-            onPanEnd: widget.allowSelection ? _onDragEnd : null,
-            onPanCancel: widget.allowSelection ? _onDragCancel : null,
-            behavior: HitTestBehavior.translucent,
-            child: SingleChildScrollView(
+      child: MouseRegion(
+        cursor: _cursor,
+        child: GestureDetector(
+          onPanStart: widget.allowSelection ? _onDragStart : null,
+          onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+          onPanEnd: widget.allowSelection ? _onDragEnd : null,
+          onPanCancel: widget.allowSelection ? _onDragCancel : null,
+          behavior: HitTestBehavior.translucent,
+          child: SingleChildScrollView(
+            child: Focus(
+              onFocusChange: (value) {
+                print("focus changed: ${value}");
+                if(!value){
+                  TextSelection _textSelection =
+                    TextSelection(baseOffset: 0, extentOffset: 0);
+                  setState(() {
+                    _onUserSelectionChange(_textSelection);
+                  });
+
+                  if(this.widget.onTextLostFocus != null)
+                    this.widget.onTextLostFocus!();
+                }
+              },
+              focusNode: focused,
               child: Stack(
                 children: [
                   CustomPaint(
