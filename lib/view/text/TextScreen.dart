@@ -67,6 +67,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   double popupPositionTop = 0.0;
   double popupSizeWidth = 300;
   double popupSizeHeight = 200;
+  double popupSizeWidthMin = 300;
+  double popupSizeHeightMin = 200;
 
 
   TextSelection _currentSelection = TextSelection.collapsed(offset: 0);
@@ -344,9 +346,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                             },
                             onResizedViaCorner: (event) {
                               setState(() {
-                                if(popupSizeWidth + event.delta.dx > 200)
+                                // don't allow resizing the popup over the 
+                                // window or smaller than the threshold 
+                                if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
+                                  popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
                                   popupSizeWidth += event.delta.dx;
-                                if(popupSizeHeight + event.delta.dy > 200)
+
+                                // don't allow resizing the popup over the 
+                                // window or smaller than the threshold 
+                                if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
+                                  popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
                                   popupSizeHeight += event.delta.dy;
                               });
                             },
