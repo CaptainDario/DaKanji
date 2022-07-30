@@ -264,12 +264,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           const Duration(milliseconds: 200),
           () {
             if (tapped == 1){
-              print("tap");
             }
             else if (tapped == 2) {
               
-              if(_isOffsetOverText(event.localPosition)){
-                print("double tap");
                 TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
                 
                 TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
@@ -287,108 +284,105 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                 }
                 
                 _onUserSelectionChange(sel);
-              }
             }
-            else if (tapped == 3) {
-              if(_isOffsetOverText(event.localPosition)){
-                print("triple tap");
-                TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
+            else if (tapped >= 3) {
+              TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
+              
+              TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+              var cntStart = 0, cntEnd = 0;
+              for (int i = 0; i < widget.words.length; i++) {
                 
-                TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
-                var cntStart = 0, cntEnd = 0;
-                for (int i = 0; i < widget.words.length; i++) {
-                  
-                  // end of paragraph  or  end of text
-                  if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
-                    i == widget.words.length-1){
+                // end of paragraph  or  end of text
+                if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
+                  i == widget.words.length-1){
 
-                    // 
-                    if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-                      if(i == widget.words.length-1)
-                        cntEnd += widget.words[i].length;
-                      
-                      sel = TextSelection(
-                        baseOffset: cntStart,
-                        extentOffset: cntEnd
-                      );
-                      break;
-                    }
-
-                    cntStart = cntEnd;
-
+                  // 
+                  if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
+                    if(i == widget.words.length-1)
+                      cntEnd += widget.words[i].length;
+                    
+                    sel = TextSelection(
+                      baseOffset: cntStart,
+                      extentOffset: cntEnd
+                    );
+                    break;
                   }
-                  cntEnd += widget.words[i].length;
+
+                  cntStart = cntEnd;
+
                 }
-                
-                _onUserSelectionChange(sel);
+                cntEnd += widget.words[i].length;
               }
+              
+              _onUserSelectionChange(sel);
             }
             tapped = 0;
           });
       },
-      child: MouseRegion(
-        cursor: _cursor,
-        child: GestureDetector(
-          onPanStart: widget.allowSelection ? _onDragStart : null,
-          onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-          onPanEnd: widget.allowSelection ? _onDragEnd : null,
-          onPanCancel: widget.allowSelection ? _onDragCancel : null,
-          
-          behavior: HitTestBehavior.translucent,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                CustomPaint(
-                  painter: _SelectionPainter(
-                    color: widget.selectionColor,
-                    rects: _selectionRects,
-                  ),
-                ),
-                if (widget.paintTextBoxes)
+      child: Focus(
+        onFocusChange: (value) => print(value),
+        child: MouseRegion(
+          cursor: _cursor,
+          child: GestureDetector(
+            onPanStart: widget.allowSelection ? _onDragStart : null,
+            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+            onPanEnd: widget.allowSelection ? _onDragEnd : null,
+            onPanCancel: widget.allowSelection ? _onDragCancel : null,
+            behavior: HitTestBehavior.translucent,
+            child: SingleChildScrollView(
+              child: Stack(
+                children: [
                   CustomPaint(
                     painter: _SelectionPainter(
-                      color: widget.textBoxesColor,
-                      rects: _textBoxRects,
-                      fill: false,
+                      color: widget.selectionColor,
+                      rects: _selectionRects,
                     ),
                   ),
-                Text(
-                  widget.words.join(widget.addSpaces ? " " : ""),
-                  key: _textKey,
-                  style: widget.style,
-                ),
-                CustomPaint(
-                  painter: _SelectionPainter(
-                    color: widget.caretColor,
-                    rects: _caretRect != null ? [_caretRect!] : const [],
+                  if (widget.paintTextBoxes)
+                    CustomPaint(
+                      painter: _SelectionPainter(
+                        color: widget.textBoxesColor,
+                        rects: _textBoxRects,
+                        fill: false,
+                      ),
+                    ),
+                  Text(
+                    widget.words.join(widget.addSpaces ? " " : ""),
+                    key: _textKey,
+                    style: widget.style,
                   ),
-                ),
-                /*
-                ...List.generate(rubyPositions.length, ((index) {
-                  return Positioned(
-                    width: rubyPositions[index].right - rubyPositions[index].left,
-                    top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
-                    left: rubyPositions[index].left,
-                    height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                    child: Container(
-                      //.color: Colors.amber,
-                      child: Center(
-                        child: Text(
-                          widget.rubys[index],
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontSize: 10,
+                  CustomPaint(
+                    painter: _SelectionPainter(
+                      color: widget.caretColor,
+                      rects: _caretRect != null ? [_caretRect!] : const [],
+                    ),
+                  ),
+                  /*
+                  ...List.generate(rubyPositions.length, ((index) {
+                    return Positioned(
+                      width: rubyPositions[index].right - rubyPositions[index].left,
+                      top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                      left: rubyPositions[index].left,
+                      height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
+                      child: Container(
+                        //.color: Colors.amber,
+                        child: Center(
+                          child: Text(
+                            widget.rubys[index],
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  );
-                })),
-                */
-              ],
+                      )
+                    );
+                  })),
+                  */
+                ],
+              ),
             ),
           ),
-            
         ),
       ),
     );
