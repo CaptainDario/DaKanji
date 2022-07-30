@@ -1,5 +1,5 @@
+import 'dart:convert';
 
-import 'package:da_kanji_mobile/view/text/TextWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
+import 'package:da_kanji_mobile/view/text/CustomSelectableText.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
+import 'package:da_kanji_mobile/view/text/CustomTextPopup.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -39,7 +42,8 @@ class TextScreen extends StatefulWidget {
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the output of the analyzer
-  Tuple2<List<String>, List<List<String>>> analyzed = Tuple2([], []);
+  Tuple2<List<String>, List<List<String>>> analyzedWords = Tuple2([], []);
+
 
   /// the padding used between all widges
   final double padding = 8.0;
@@ -47,9 +51,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// if the option to make the analyzed text fullscreen
   bool fullScreen = false;  
   /// if the option for showing furigana above words is enabled
-  bool showFurigana = false;
+  bool showRubys = false;
   /// if the option for showing spaces between words is enabled
-  bool showSpaces = false;
+  bool addSpaces = false;
 
   /// should this screen be shown in portrait or not
   bool runningInPortrait = false;
@@ -58,6 +62,28 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   late final AnimationController _controller;
   /// the animation for animating maximizing the processed text widget
   late Animation _animation;
+
+  double popupPositionLeft = 0.0;
+  double popupPositionTop = 0.0;
+  double popupSizeWidth = 300;
+  double popupSizeHeight = 200;
+
+
+  TextSelection _currentSelection = TextSelection.collapsed(offset: 0);
+
+  var sharedText = "";
+  void _onSelectionChange(TextSelection textSelection) {
+    setState(() {
+      _currentSelection = textSelection;
+    });
+  }
+
+  var sharedTextStyle = const TextStyle(
+    fontSize: 20,
+    height: 1.4,
+  );
+
+  
 
 
   @override
@@ -108,6 +134,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       parent: _controller,
       curve: Curves.easeInOut
     ));
+
+    sharedText = widget.inputController.text;
     
 
     return DaKanjiDrawer(
@@ -133,12 +161,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                       children: [
                         // Text input
                         Container(
-                          width: runningInPortrait ?  
-                            constraints.maxWidth - 2*padding: 
-                            constraints.maxWidth / 2 - padding,
-                          height: runningInPortrait ? 
-                            constraints.maxHeight / 2 - 2*padding :
-                            constraints.maxHeight - 2*padding,
+                          width: runningInPortrait ?
+                            constraints.maxWidth - padding: 
+                              (constraints.maxWidth/2-padding) 
+                              * (1-_animation.value),
+                            height: runningInPortrait ?
+                              (constraints.maxHeight/2-padding) 
+                              * (1-_animation.value) :
+                              constraints.maxHeight - padding,
                           child: Card(
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(
@@ -153,6 +183,18 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 disabledBorder: InputBorder.none,
                                   hintText: "Input text here..."
                                 ),
+                                inputFormatters: [
+                                  
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000d"),
+                                    //replacementString: "\r"
+                                  ),
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000a"),
+                                    replacementString: "\n"
+                                  )
+                                  
+                                ],
                                 controller: widget.inputController,
                                 maxLines: null,
                                 style: TextStyle(
@@ -160,7 +202,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 ),
                                 onChanged: ((value) {
                                   setState(() {
-                                    analyzed = runAnalyzer(value, AnalyzeModes.normal);
+                                    analyzedWords = runAnalyzer(value, AnalyzeModes.normal);
                                   });
                                 }),
                               ),
@@ -173,8 +215,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           right: runningInPortrait ? null : 0,
                           child: Container(
                             width: runningInPortrait ?
-                              constraints.maxWidth - 2*padding: 
-                              (constraints.maxWidth/2-2*padding) 
+                              constraints.maxWidth - padding: 
+                              (constraints.maxWidth/2-padding) 
                               * (_animation.value+1.0),
                             height: runningInPortrait ?
                               (constraints.maxHeight/2-padding) 
@@ -188,13 +230,25 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 child: Column(
                                   children: [
                                     Expanded(
-                                      child: TextWidget(
-                                        texts: analyzed.item1,
-                                        rubys: analyzed.item2.map(
-                                          (e) => (e.length == 9 ? e[7] : "")
-                                        ).toList(),
-                                        showFurigana: showFurigana,
-                                        addSpaces: showSpaces,
+                                      child: Center(
+                                        child: CustomSelectableText(
+                                          words: analyzedWords.item1,
+                                          rubys: analyzedWords.item2.map(
+                                            (e) => (e.length == 9 ? e[7] : "")
+                                          ).toList(),
+                                          width: runningInPortrait ?
+                                            constraints.maxWidth - padding: 
+                                            (constraints.maxWidth/2-padding) 
+                                            * (_animation.value+1.0),
+                                          height: runningInPortrait ?
+                                            (constraints.maxHeight/2-padding) 
+                                            * (_animation.value+1.0) :
+                                            constraints.maxHeight - 2*padding,
+                                          style: sharedTextStyle,
+                                          showRubys: showRubys,
+                                          addSpaces: addSpaces,
+                                          onSelectionChange: _onSelectionChange,
+                                        ),
                                       ),
                                     ),
                                     Row(
@@ -204,14 +258,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
                                             icon: SvgPicture.asset(
-                                              !showSpaces ?
+                                              !addSpaces ?
                                               "assets/fonts/icons/space_bar_off.svg" :
                                               "assets/fonts/icons/space_bar_on.svg",
                                               color: Colors.white,
                                             ),
                                             onPressed: () {
                                               setState(() {
-                                                showSpaces = !showSpaces;
+                                                addSpaces = !addSpaces;
                                               });
                                             },
                                           ),
@@ -221,14 +275,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           child: IconButton(
                                             key: GlobalKey(),
                                             icon: SvgPicture.asset(
-                                              showFurigana ?
+                                              showRubys ?
                                               "assets/fonts/icons/furigana_off.svg" :
                                               "assets/fonts/icons/furigana_on.svg",
                                               color: Colors.white,
                                             ),
                                             onPressed: () {
                                               setState(() {
-                                                showFurigana = !showFurigana;
+                                                showRubys = !showRubys;
                                               });
                                             },
                                           ),
@@ -237,8 +291,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
                                             icon: Icon(!fullScreen ? 
-                                              Icons.fullscreen : 
-                                              Icons.fullscreen_exit
+                                              Icons.open_in_full : 
+                                              Icons.close_fullscreen
                                             ),
                                             onPressed: () {
                                               // do not allow change while animation is running
@@ -264,7 +318,31 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        
+                        Positioned(
+                          width: popupSizeWidth,
+                          height: popupSizeHeight,
+                          left: popupPositionLeft,
+                          top: popupPositionTop,
+                          child: CustomTextPopup(
+                            onMovedViaHeader: (event) {
+                              setState(() {
+                                popupPositionLeft += event.delta.dx;
+                                popupPositionTop  += event.delta.dy;
+                              });
+                            },
+                            onResizedViaCorner: (event) {
+                              setState(() {
+                                if(popupSizeWidth + event.delta.dx > 200)
+                                  popupSizeWidth += event.delta.dx;
+                                if(popupSizeHeight + event.delta.dy > 200)
+                                  popupSizeHeight += event.delta.dy;
+                              });
+                            },
+                          )
+                        ),
+                        
                       ]
                     ),
                   ),
