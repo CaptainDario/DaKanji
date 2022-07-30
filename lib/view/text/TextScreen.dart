@@ -191,13 +191,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               child: TextField(
                                 decoration: new InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                  hintText: "Input text here..."
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  hintText: "Input text here...",
                                 ),
+                                
                                 inputFormatters: [
                                   
                                   FilteringTextInputFormatter.deny(
