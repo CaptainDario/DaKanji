@@ -262,6 +262,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           style: sharedTextStyle,
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
+                                          selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                           onSelectionChange: (selection) {
                                             if(selection != TextSelection.collapsed(offset: 0))
                                               popupAnimationController.forward();
