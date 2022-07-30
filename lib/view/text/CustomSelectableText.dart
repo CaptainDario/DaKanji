@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 
-
+/// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
   const CustomSelectableText({
     Key? key,
@@ -39,7 +40,9 @@ class CustomSelectableText extends StatefulWidget {
   final double? width;
   /// give this widget a fixed height
   final double? height;
+  /// the initial selection of this widget
   final TextSelection? initialSelection;
+  /// text text style used for the main text
   final TextStyle? style;
   /// the color that should be used when selecting text
   final Color selectionColor;
@@ -49,7 +52,7 @@ class CustomSelectableText extends StatefulWidget {
   final bool allowSelection;
   final bool paintTextBoxes;
   final Color textBoxesColor;
-  final void Function(TextSelection)? onSelectionChange;
+  final void Function(String)? onSelectionChange;
   final void Function()? onTextLostFocus;
 
   @override
@@ -78,7 +81,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   Timer? multiTapTimer;
   /// how many times was tapped on this widget
   num tapped = 0;
-
+  /// should the text selection rexts be drawn
+  bool paintSelection = false;
+  /// the focus node of this widget
   FocusNode focused = FocusNode(canRequestFocus: true);
 
 
@@ -151,7 +156,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void _onUserSelectionChange(TextSelection textSelection) {
     _textSelection = textSelection;
     _updateSelectionDisplay();
-    widget.onSelectionChange?.call(textSelection);
+    int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
+    int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
+    widget.onSelectionChange?.call(
+      widget.words.join().substring(start, end)
+    );
   }
 
   void _updateSelectionDisplay() {
@@ -256,7 +265,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   Widget build(BuildContext context) {
 
     return Listener(
-      //onPointerHover: _onMouseMove,
       onPointerDown: (event) {
 
         focused.requestFocus();
@@ -336,30 +344,29 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           onPanEnd: widget.allowSelection ? _onDragEnd : null,
           onPanCancel: widget.allowSelection ? _onDragCancel : null,
           behavior: HitTestBehavior.translucent,
-          child: SingleChildScrollView(
-            child: Focus(
-              onFocusChange: (value) {
-                print("focus changed: ${value}");
-                if(!value){
-                  TextSelection _textSelection =
-                    TextSelection(baseOffset: 0, extentOffset: 0);
-                  setState(() {
-                    _onUserSelectionChange(_textSelection);
-                  });
-
-                  if(this.widget.onTextLostFocus != null)
-                    this.widget.onTextLostFocus!();
-                }
-              },
-              focusNode: focused,
+          child: Focus(
+            onFocusChange: (value) {
+              print("focus changed: ${value}");
+              setState(() {
+                paintSelection = value;  
+              });
+              
+              if(!value){
+                if(this.widget.onTextLostFocus != null)
+                  this.widget.onTextLostFocus!();
+              }
+            },
+            focusNode: focused,
+            child: SingleChildScrollView(
               child: Stack(
                 children: [
-                  CustomPaint(
-                    painter: _SelectionPainter(
-                      color: widget.selectionColor,
-                      rects: _selectionRects,
+                  if(paintSelection)
+                    CustomPaint(
+                      painter: _SelectionPainter(
+                        color: widget.selectionColor,
+                        rects: _selectionRects,
+                      ),
                     ),
-                  ),
                   if (widget.paintTextBoxes)
                     CustomPaint(
                       painter: _SelectionPainter(

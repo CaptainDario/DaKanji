@@ -6,10 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomTextPopup extends StatefulWidget {
   CustomTextPopup(
     {
+      required String this.selectedText,
       Function(PointerMoveEvent)? this.onMovedViaHeader,
       Function(PointerMoveEvent)? this.onResizedViaCorner,
       Key? key
     }) : super(key: key);
+
+
+  String selectedText;
 
   Function(PointerMoveEvent)? onMovedViaHeader;
 
@@ -55,7 +59,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                       child: TabBar(
                         tabs: [
                           Text("Dictionary"),
-                          Text("Dictionary"),
+                          Text("Translation"),
                         ],
                         
                       ),
@@ -63,27 +67,30 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                     Expanded(
                       child: TabBarView(
                         children: [
-                          Column(
+                          ListView(
+                            controller: ScrollController(),
                             children: [
                               Card(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "Some dict stuff here\nSome dict stuff here"
-                                  ),
+                                    "Imagine a Dict entries of\n\n${widget.selectedText}\n\nhere"
+                                  )
                                 ),
                               ),
                               Card(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text("Some dict stuff here\nSome dict stuff here"),
+                                  child: Text(
+                                    "Imagine a Dict entries of\n\n${widget.selectedText}\n\nhere"
+                                  ),
                                 ),
                               )
                             ],
                           ),
                           Container(
                             child: Card(
-                              child: Text("Imagine a translation here"),
+                              child: Text("Imagine a translation of\n\n${widget.selectedText}\n\nhere"),
                             )
                           )
                         ]

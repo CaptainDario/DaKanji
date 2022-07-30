@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +12,6 @@ import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/text/CustomSelectableText.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/text/CustomTextPopup.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -63,20 +60,30 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the animation for animating maximizing the processed text widget
   late Animation _animation;
 
+  /// the distance to the left window border of the popup
   double popupPositionLeft = 0.0;
+  /// the distance to the top window border of the popup
   double popupPositionTop = 0.0;
+  /// the width of the popup
   double popupSizeWidth = 300;
+  /// the height of the popup
   double popupSizeHeight = 200;
+  /// the minimal width the popup can be
   double popupSizeWidthMin = 300;
+  /// the minimal height the popup can be
   double popupSizeHeightMin = 200;
 
+  late final AnimationController popupAnimationController;
 
-  TextSelection _currentSelection = TextSelection.collapsed(offset: 0);
+  FocusNode popupFocusNode = FocusNode(canRequestFocus: true);
+
+  String selectedText = "";
+
 
   var sharedText = "";
-  void _onSelectionChange(TextSelection textSelection) {
+  void _onSelectionChange(String textSelection) {
     setState(() {
-      _currentSelection = textSelection;
+      selectedText = textSelection;
     });
   }
 
@@ -97,6 +104,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
+      value: 0.0,
+      vsync: this,
+    );
+
+    popupAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 250),
       value: 0.0,
       vsync: this,
     );
@@ -249,11 +262,18 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           style: sharedTextStyle,
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
-                                          onSelectionChange: _onSelectionChange,
+                                          onSelectionChange: (selection) {
+                                            if(selection != TextSelection.collapsed(offset: 0))
+                                              popupAnimationController.forward();
+                                            _onSelectionChange(selection);
+                                          },
                                           onTextLostFocus: () {
-                                            setState(() {
-                                              popupPositionLeft = 0;
-                                            });
+                                            if(!popupFocusNode.hasFocus)
+                                              setState(() {
+                                                if(popupAnimationController.isCompleted)
+                                                  popupAnimationController.reverse();
+                                                popupPositionLeft = 0;
+                                              });
                                           },
                                         ),
                                       ),
@@ -332,39 +352,55 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           height: popupSizeHeight,
                           left: popupPositionLeft,
                           top: popupPositionTop,
-                          child: CustomTextPopup(
-                            onMovedViaHeader: (event) {
-                              setState(() {
-                                // assure that the popup is not moved out of view
-                                if(popupPositionLeft + event.delta.dx > 0 &&
-                                  popupPositionLeft + popupSizeWidth + 
-                                  2*padding + event.delta.dx < constraints.maxWidth)
-                                  popupPositionLeft += event.delta.dx;
-
-                                // assure that the popup is not moved out of view
-                                if(popupPositionTop + event.delta.dy > 0 &&
-                                  popupPositionTop + popupSizeHeight + 
-                                  2*padding + event.delta.dy < constraints.maxHeight)
-
-                                  popupPositionTop  += event.delta.dy;
-                              });
+                          child: Listener(
+                            onPointerDown: (event) {
+                              popupFocusNode.requestFocus();
                             },
-                            onResizedViaCorner: (event) {
-                              setState(() {
-                                // don't allow resizing the popup over the 
-                                // window or smaller than the threshold 
-                                if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
-                                  popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
-                                  popupSizeWidth += event.delta.dx;
-
-                                // don't allow resizing the popup over the 
-                                // window or smaller than the threshold 
-                                if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
-                                  popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
-                                  popupSizeHeight += event.delta.dy;
-                              });
-                            },
-                          )
+                            child: Focus(
+                              focusNode: popupFocusNode,
+                              onFocusChange: (value) {
+                                if(!popupFocusNode.hasFocus && popupAnimationController.isCompleted)
+                                  popupAnimationController.reverse();
+                              },
+                              child: ScaleTransition(
+                                scale: popupAnimationController,
+                                child: CustomTextPopup(
+                                  selectedText: selectedText,
+                                  onMovedViaHeader: (event) {
+                                    setState(() {
+                                      // assure that the popup is not moved out of view
+                                      if(popupPositionLeft + event.delta.dx > 0 &&
+                                        popupPositionLeft + popupSizeWidth + 
+                                        2*padding + event.delta.dx < constraints.maxWidth)
+                                        popupPositionLeft += event.delta.dx;
+                                                      
+                                      // assure that the popup is not moved out of view
+                                      if(popupPositionTop + event.delta.dy > 0 &&
+                                        popupPositionTop + popupSizeHeight + 
+                                        2*padding + event.delta.dy < constraints.maxHeight)
+                                                      
+                                        popupPositionTop  += event.delta.dy;
+                                    });
+                                  },
+                                  onResizedViaCorner: (event) {
+                                    setState(() {
+                                      // don't allow resizing the popup over the 
+                                      // window or smaller than the threshold 
+                                      if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
+                                        popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
+                                        popupSizeWidth += event.delta.dx;
+                                                      
+                                      // don't allow resizing the popup over the 
+                                      // window or smaller than the threshold 
+                                      if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
+                                        popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
+                                        popupSizeHeight += event.delta.dy;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                         
                       ]
