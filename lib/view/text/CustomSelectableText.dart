@@ -264,151 +264,154 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   Widget build(BuildContext context) {
 
-    return Listener(
-      onPointerDown: (event) {
-
-        focused.requestFocus();
-
-        tapped++;
-
-        if (multiTapTimer != null) {
-          multiTapTimer!.cancel();
-        }
-
-        multiTapTimer = Timer(
-          const Duration(milliseconds: 200),
-          () {
-            if (tapped == 1){
-            }
-            else if (tapped == 2) {
-              
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Listener(
+        onPointerDown: (event) {
+    
+          focused.requestFocus();
+    
+          tapped++;
+    
+          if (multiTapTimer != null) {
+            multiTapTimer!.cancel();
+          }
+    
+          multiTapTimer = Timer(
+            const Duration(milliseconds: 200),
+            () {
+              if (tapped == 1){
+              }
+              else if (tapped == 2) {
+                
+                  TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
+                  
+                  TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+                  var cnt = 0;
+                  for (var text in widget.words) {
+                    if(cnt + text.length > tapTextPos.offset){
+                      sel = TextSelection(
+                        baseOffset: cnt,
+                        extentOffset: cnt + text.length
+                      );
+                      break;
+                    }
+    
+                    cnt += text.length;
+                  }
+                  
+                  _onUserSelectionChange(sel);
+              }
+              else if (tapped >= 3) {
                 TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
                 
                 TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
-                var cnt = 0;
-                for (var text in widget.words) {
-                  if(cnt + text.length > tapTextPos.offset){
-                    sel = TextSelection(
-                      baseOffset: cnt,
-                      extentOffset: cnt + text.length
-                    );
-                    break;
+                var cntStart = 0, cntEnd = 0;
+                for (int i = 0; i < widget.words.length; i++) {
+                  
+                  // end of paragraph  or  end of text
+                  if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
+                    i == widget.words.length-1){
+    
+                    // 
+                    if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
+                      if(i == widget.words.length-1)
+                        cntEnd += widget.words[i].length;
+                      
+                      sel = TextSelection(
+                        baseOffset: cntStart,
+                        extentOffset: cntEnd
+                      );
+                      break;
+                    }
+    
+                    cntStart = cntEnd;
+    
                   }
-
-                  cnt += text.length;
+                  cntEnd += widget.words[i].length;
                 }
                 
                 _onUserSelectionChange(sel);
+              }
+              tapped = 0;
             }
-            else if (tapped >= 3) {
-              TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
-              
-              TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
-              var cntStart = 0, cntEnd = 0;
-              for (int i = 0; i < widget.words.length; i++) {
+          );
+          
+        },
+        child: MouseRegion(
+          cursor: _cursor,
+          child: GestureDetector(
+            onPanStart: widget.allowSelection ? _onDragStart : null,
+            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+            onPanEnd: widget.allowSelection ? _onDragEnd : null,
+            onPanCancel: widget.allowSelection ? _onDragCancel : null,
+            behavior: HitTestBehavior.translucent,
+            child: Focus(
+              onFocusChange: (value) {
+                print("focus changed: ${value}");
+                setState(() {
+                  paintSelection = value;  
+                });
                 
-                // end of paragraph  or  end of text
-                if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
-                  i == widget.words.length-1){
-
-                  // 
-                  if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-                    if(i == widget.words.length-1)
-                      cntEnd += widget.words[i].length;
-                    
-                    sel = TextSelection(
-                      baseOffset: cntStart,
-                      extentOffset: cntEnd
-                    );
-                    break;
-                  }
-
-                  cntStart = cntEnd;
-
+                if(!value){
+                  if(this.widget.onTextLostFocus != null)
+                    this.widget.onTextLostFocus!();
                 }
-                cntEnd += widget.words[i].length;
-              }
-              
-              _onUserSelectionChange(sel);
-            }
-            tapped = 0;
-          }
-        );
-        
-      },
-      child: MouseRegion(
-        cursor: _cursor,
-        child: GestureDetector(
-          onPanStart: widget.allowSelection ? _onDragStart : null,
-          onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-          onPanEnd: widget.allowSelection ? _onDragEnd : null,
-          onPanCancel: widget.allowSelection ? _onDragCancel : null,
-          behavior: HitTestBehavior.translucent,
-          child: Focus(
-            onFocusChange: (value) {
-              print("focus changed: ${value}");
-              setState(() {
-                paintSelection = value;  
-              });
-              
-              if(!value){
-                if(this.widget.onTextLostFocus != null)
-                  this.widget.onTextLostFocus!();
-              }
-            },
-            focusNode: focused,
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  if(paintSelection)
+              },
+              focusNode: focused,
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    if(paintSelection)
+                      CustomPaint(
+                        painter: _SelectionPainter(
+                          color: widget.selectionColor,
+                          rects: _selectionRects,
+                        ),
+                      ),
+                    if (widget.paintTextBoxes)
+                      CustomPaint(
+                        painter: _SelectionPainter(
+                          color: widget.textBoxesColor,
+                          rects: _textBoxRects,
+                          fill: false,
+                        ),
+                      ),
+                    Text(
+                      widget.words.join(widget.addSpaces ? " " : ""),
+                      key: _textKey,
+                      style: widget.style,
+                    ),
                     CustomPaint(
                       painter: _SelectionPainter(
-                        color: widget.selectionColor,
-                        rects: _selectionRects,
+                        color: widget.caretColor,
+                        rects: _caretRect != null ? [_caretRect!] : const [],
                       ),
                     ),
-                  if (widget.paintTextBoxes)
-                    CustomPaint(
-                      painter: _SelectionPainter(
-                        color: widget.textBoxesColor,
-                        rects: _textBoxRects,
-                        fill: false,
-                      ),
-                    ),
-                  Text(
-                    widget.words.join(widget.addSpaces ? " " : ""),
-                    key: _textKey,
-                    style: widget.style,
-                  ),
-                  CustomPaint(
-                    painter: _SelectionPainter(
-                      color: widget.caretColor,
-                      rects: _caretRect != null ? [_caretRect!] : const [],
-                    ),
-                  ),
-                  /*
-                  ...List.generate(rubyPositions.length, ((index) {
-                    return Positioned(
-                      width: rubyPositions[index].right - rubyPositions[index].left,
-                      top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
-                      left: rubyPositions[index].left,
-                      height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                      child: Container(
-                        //.color: Colors.amber,
-                        child: Center(
-                          child: Text(
-                            widget.rubys[index],
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 10,
+                    /*
+                    ...List.generate(rubyPositions.length, ((index) {
+                      return Positioned(
+                        width: rubyPositions[index].right - rubyPositions[index].left,
+                        top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                        left: rubyPositions[index].left,
+                        height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
+                        child: Container(
+                          //.color: Colors.amber,
+                          child: Center(
+                            child: Text(
+                              widget.rubys[index],
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    );
-                  })),
-                  */
-                ],
+                        )
+                      );
+                    })),
+                    */
+                  ],
+                ),
               ),
             ),
           ),
