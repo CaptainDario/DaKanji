@@ -328,8 +328,18 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           child: CustomTextPopup(
                             onMovedViaHeader: (event) {
                               setState(() {
-                                popupPositionLeft += event.delta.dx;
-                                popupPositionTop  += event.delta.dy;
+                                // assure that the popup is not moved out of view
+                                if(popupPositionLeft + event.delta.dx > 0 &&
+                                  popupPositionLeft + popupSizeWidth + 
+                                  2*padding + event.delta.dx < constraints.maxWidth)
+                                  popupPositionLeft += event.delta.dx;
+
+                                // assure that the popup is not moved out of view
+                                if(popupPositionTop + event.delta.dy > 0 &&
+                                  popupPositionTop + popupSizeHeight + 
+                                  2*padding + event.delta.dy < constraints.maxHeight)
+
+                                  popupPositionTop  += event.delta.dy;
                               });
                             },
                             onResizedViaCorner: (event) {
