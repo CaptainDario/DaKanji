@@ -120,13 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.2"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -172,13 +165,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_hooks:
-    dependency: transitive
-    description:
-      name: flutter_hooks
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.18.5+1"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -476,13 +462,6 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
-  ruby_text:
-    dependency: "direct main"
-    description:
-      path: "plugins/RubyText"
-      relative: true
-    source: path
     version: "3.0.1"
   shared_preferences:
     dependency: "direct main"

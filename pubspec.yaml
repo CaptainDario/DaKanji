@@ -34,8 +34,6 @@ dependencies:
   onboarding_overlay : 3.0.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
-  ruby_text:  
-    path: ./plugins/RubyText
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
@@ -132,6 +130,7 @@ flutter:
     - assets/fonts/icons/furigana_off.svg
     - assets/fonts/icons/space_bar_on.svg
     - assets/fonts/icons/space_bar_off.svg
+    - assets/fonts/icons/corner_resize.svg
     # tf lite models
     - assets/tflite_models/
     # 
