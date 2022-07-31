@@ -176,21 +176,62 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   void _updateVisibleTextBoxes() {
-    rubyPositions.clear();
-
-    int cnt = 0;
-    for (String t in widget.words) {
-      rubyPositions.addAll(_computeSelectionRects(
-        TextSelection(baseOffset: cnt, extentOffset: cnt + t.length)
-      ));
-      cnt += t.length;
-    }
     
     setState(() {
       _textBoxRects
         ..clear()
         ..addAll(_computeAllTextBoxRects());
     });
+  }
+
+  /// Recalculates all rubys and the rubyPositions
+  /// and writes them to `widget.rubyss` and `widget.rubyPos`
+  void recalculateRubys(){
+    rubyPositions.clear();
+
+    int cnt = 0, i = 0;
+    for (String word in widget.words) {
+
+      // get the rect surrounding the current word (this COULD span more than one line)
+      List<Rect> charRects = _computeSelectionRects(
+        TextSelection(baseOffset: cnt, extentOffset: cnt + word.length)
+      );
+
+      if(charRects.length == 0){
+        rubyPositions.add(Rect.zero);
+        i += 1;
+      }
+      // the text DOES NOT span more than one line
+      else if(charRects.length == 1){
+        rubyPositions.add(charRects[0]);
+        i += 1;
+      }
+      // the text DOES span more than one line
+      else if(charRects.length > 1){
+        // calculate the total width of all boxs summed
+        double totalWidth = charRects.fold(
+          0, (value, element) => value + element.width
+        );
+        
+        // remove the original split ruby text
+        String ruby = widget.rubys.removeAt(i);
+        // split the text into secgtions and add them to the ruby list
+        double cumPercent = 0.0;  
+        for (Rect rect in charRects) {
+          rubyPositions.add(rect);
+          double rectPercentag = rect.width / totalWidth;
+          String rubySplit = ruby.substring(
+            (cumPercent * ruby.length).floor(),
+            ((cumPercent + rectPercentag) * ruby.length).ceil(),
+          );
+          widget.rubys.insert(i, rubySplit);
+          cumPercent += rectPercentag;
+          i += 1;
+        }
+      }
+
+      cnt += word.length;
+    }
   }
 
   Rect _computeCursorRectForTextOffset(int offset) {
