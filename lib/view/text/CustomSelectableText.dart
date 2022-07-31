@@ -288,6 +288,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         extentOffset: widget.words.join().length,
       ),
     );
+
+    
   }
 
   List<Rect> _computeSelectionRects(TextSelection? selection) {
@@ -302,80 +304,88 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return textBoxes.map((box) => box.toRect()).toList();
   }
 
+  void tap(PointerDownEvent event){
+
+  }
+
+  void doubleTap(PointerDownEvent event){
+    TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
+                  
+    TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+    var cnt = 0;
+    for (var text in widget.words) {
+      if(cnt + text.length > tapTextPos.offset){
+        sel = TextSelection(
+          baseOffset: cnt,
+          extentOffset: cnt + text.length
+        );
+        break;
+      }
+
+      cnt += text.length;
+    }
+    
+    _onUserSelectionChange(sel);
+  }
+
+  void tripleTap(PointerDownEvent event){
+    TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
+    
+    TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+    var cntStart = 0, cntEnd = 0;
+    for (int i = 0; i < widget.words.length; i++) {
+      
+      // end of paragraph  or  end of text
+      if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
+        i == widget.words.length-1){
+
+        // 
+        if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
+          if(i == widget.words.length-1)
+            cntEnd += widget.words[i].length;
+          
+          sel = TextSelection(
+            baseOffset: cntStart,
+            extentOffset: cntEnd
+          );
+          break;
+        }
+
+        cntStart = cntEnd;
+
+      }
+      cntEnd += widget.words[i].length;
+    }
+    
+    _onUserSelectionChange(sel);
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Listener(
-        onPointerDown: (event) {
+    return Listener(
+      onPointerDown: (event) {
     
-          focused.requestFocus();
+        //focused.requestFocus();
     
-          tapped++;
+        tapped++;
     
-          if (multiTapTimer != null) {
-            multiTapTimer!.cancel();
+        if (multiTapTimer != null) {
+          multiTapTimer!.cancel();
+        }
+    
+        multiTapTimer = Timer(
+          const Duration(milliseconds: 200),
+          () {
+            if (tapped == 1)
+              tap(event);
+            else if (tapped == 2)
+              doubleTap(event);
+            else if (tapped >= 3) 
+              tripleTap(event);
+            
+            tapped = 0;
           }
-    
-          multiTapTimer = Timer(
-            const Duration(milliseconds: 200),
-            () {
-              if (tapped == 1){
-              }
-              else if (tapped == 2) {
-                
-                  TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
-                  
-                  TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
-                  var cnt = 0;
-                  for (var text in widget.words) {
-                    if(cnt + text.length > tapTextPos.offset){
-                      sel = TextSelection(
-                        baseOffset: cnt,
-                        extentOffset: cnt + text.length
-                      );
-                      break;
-                    }
-    
-                    cnt += text.length;
-                  }
-                  
-                  _onUserSelectionChange(sel);
-              }
-              else if (tapped >= 3) {
-                TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
-                
-                TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
-                var cntStart = 0, cntEnd = 0;
-                for (int i = 0; i < widget.words.length; i++) {
-                  
-                  // end of paragraph  or  end of text
-                  if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
-                    i == widget.words.length-1){
-    
-                    // 
-                    if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-                      if(i == widget.words.length-1)
-                        cntEnd += widget.words[i].length;
-                      
-                      sel = TextSelection(
-                        baseOffset: cntStart,
-                        extentOffset: cntEnd
-                      );
-                      break;
-                    }
-    
-                    cntStart = cntEnd;
-    
-                  }
-                  cntEnd += widget.words[i].length;
-                }
-                
-                _onUserSelectionChange(sel);
-              }
-              tapped = 0;
-            }
           );
           
         },
