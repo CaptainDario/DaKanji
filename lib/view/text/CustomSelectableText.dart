@@ -386,30 +386,31 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
             
             tapped = 0;
           }
-          );
-          
-        },
-        child: MouseRegion(
-          cursor: _cursor,
-          child: GestureDetector(
-            onPanStart: widget.allowSelection ? _onDragStart : null,
-            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-            onPanEnd: widget.allowSelection ? _onDragEnd : null,
-            onPanCancel: widget.allowSelection ? _onDragCancel : null,
-            behavior: HitTestBehavior.translucent,
-            child: Focus(
-              onFocusChange: (value) {
-                print("focus changed: ${value}");
-                setState(() {
-                  paintSelection = value;  
-                });
-                
-                if(!value){
-                  if(this.widget.onTextLostFocus != null)
-                    this.widget.onTextLostFocus!();
-                }
-              },
-              focusNode: focused,
+        );
+        
+      },
+      child: MouseRegion(
+        cursor: _cursor,
+        child: GestureDetector(
+          onPanStart: widget.allowSelection ? _onDragStart : null,
+          onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+          onPanEnd: widget.allowSelection ? _onDragEnd : null,
+          onPanCancel: widget.allowSelection ? _onDragCancel : null,
+          behavior: HitTestBehavior.translucent,
+          child: Focus(
+            onFocusChange: (value) {
+              setState(() {
+                //paintSelection = value;  
+              });
+              
+              if(!value){
+                if(this.widget.onTextLostFocus != null)
+                  this.widget.onTextLostFocus!();
+              }
+            },
+            focusNode: focused,
+            child: Align(
+              alignment: Alignment.topLeft,
               child: SingleChildScrollView(
                 child: Stack(
                   children: [
