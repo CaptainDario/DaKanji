@@ -107,6 +107,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         	_wordsWithSpaces.add(" ");
     }
   }
+  
+  double lastBuildScreenDimX = 0.0;
+  double lastBuildScreenDimY = 0.0;
+  /// true if the dimensions have changed compared to the last frame
+  /// false otherwise
+  bool dimChanged = false;
 
 
 
@@ -120,13 +126,15 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   void didUpdateWidget(CustomSelectableText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.words != oldWidget.words) {
+    
+    if (widget.words != oldWidget.words || dimChanged) {
       _textBoxRects.clear();
       _selectionRects.clear();
       _textSelection = TextSelection.collapsed(offset: -1);
       _caretRect = null;
       _scheduleTextLayoutUpdate();
       words = widget.words;
+      dimChanged = false;
     }
   }
 
@@ -425,66 +433,76 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           child: Align(
             alignment: Alignment.topLeft,
             child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  // text selection
-                  CustomPaint(
-                    painter: _SelectionPainter(
-                      color: widget.selectionColor,
-                      rects: _selectionRects,
-                    ),
-                  ),
-                  // text boxes 
-                  if (widget.paintTextBoxes)
-                    CustomPaint(
-                      painter: _SelectionPainter(
-                        color: widget.textBoxesColor,
-                        rects: _textBoxRects,
-                        fill: false,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  if(lastBuildScreenDimX != constraints.maxWidth ||
+                    lastBuildScreenDimY != constraints.maxHeight){
+                    lastBuildScreenDimX = constraints.maxWidth;
+                    lastBuildScreenDimY = constraints.maxHeight;
+                    dimChanged = true;
+                  }
+                  return Stack(
+                    children: [
+                      // text selection
+                      CustomPaint(
+                        painter: _SelectionPainter(
+                          color: widget.selectionColor,
+                          rects: _selectionRects,
+                        ),
                       ),
-                    ),
-                  // the actual text
-                  Text(
-                    words.join(),
-                    key: _textKey,
-                    style: TextStyle(
-                      fontSize: 20,
-                      height: widget.showRubys ? 2.0 : 1.4
-                    ),
-                  ),
-                  // the selection caret
-                  CustomPaint(
-                    painter: _SelectionPainter(
-                      color: widget.caretColor,
-                      rects: _caretRect != null ? [_caretRect!] : const [],
-                    ),
-                  ),
-                  // ruby texts
-                  if(widget.showRubys)
-                    ...List.generate(rubyPositions.length, ((index) {
-                      return Positioned(
-                        width: rubyPositions[index].right - rubyPositions[index].left,
-                        top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
-                        left: rubyPositions[index].left,
-                        height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                        child: Container(
-                          decoration: widget.paintTextBoxes ? BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent)
-                          ) : null,
-                          child: Center(
-                            child: Text(
-                              rubys[index],
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
+                      // text boxes 
+                      if (widget.paintTextBoxes)
+                        CustomPaint(
+                          painter: _SelectionPainter(
+                            color: widget.textBoxesColor,
+                            rects: _textBoxRects,
+                            fill: false,
                           ),
-                        )
-                      );
-                    })),
-                  
-                ],
+                        ),
+                      // the actual text
+                      Text(
+                        words.join(),
+                        key: _textKey,
+                        style: TextStyle(
+                          fontSize: 20,
+                          height: widget.showRubys ? 2.0 : 1.4
+                        ),
+                      ),
+                      // the selection caret
+                      CustomPaint(
+                        painter: _SelectionPainter(
+                          color: widget.caretColor,
+                          rects: _caretRect != null ? [_caretRect!] : const [],
+                        ),
+                      ),
+                      // ruby texts
+                      if(widget.showRubys)
+                        ...List.generate(rubyPositions.length, ((index) {
+                          return Positioned(
+                            width: rubyPositions[index].right - rubyPositions[index].left,
+                            top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                            left: rubyPositions[index].left,
+                            height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
+                            child: Container(
+                              decoration: widget.paintTextBoxes ? BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent)
+                              ) : null,
+                              child: Center(
+                                child: Text(
+                                  rubys[index],
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            )
+                          );
+                        })),
+                      
+                    ],
+                  );
+                }
               ),
             ),
           ),
