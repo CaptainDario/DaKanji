@@ -72,24 +72,25 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   double popupSizeWidthMin = 300;
   /// the minimal height the popup can be
   double popupSizeHeightMin = 200;
-
-  late final AnimationController popupAnimationController;
-
-  FocusNode popupFocusNode = FocusNode(canRequestFocus: true);
-
+  /// the animation controller for scaling in the popup window
+  late AnimationController popupAnimationController;
+  /// the animation for scaling in the popup window
+  late final Animation<double> popupAnimation;
+  /// the currently selected text
   String selectedText = "";
 
 
-  var sharedText = "";
+  //var sharedText = "";
   void _onSelectionChange(String textSelection) {
     setState(() {
       selectedText = textSelection;
     });
   }
 
-  var sharedTextStyle = const TextStyle(
+  /// the text style used for styling the 
+  TextStyle sharedTextStyle = const TextStyle(
     fontSize: 20,
-    height: 1.4,
+    height: 2.0,
   );
 
   
@@ -107,13 +108,19 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       value: 0.0,
       vsync: this,
     );
+    _animation = _controller.drive(
+      CurveTween(curve: Curves.easeInOut)
+    );
 
     popupAnimationController = AnimationController(
       duration: const Duration(milliseconds: 250),
       value: 0.0,
       vsync: this,
     );
-
+    popupAnimation = popupAnimationController.drive(
+      CurveTween(curve: Curves.easeInOut)
+    );
+    
 
     // initialize the drawing interpreter if it has not been already
     //if(!GetIt.I<DrawingInterpreter>().wasInitialized){
@@ -142,17 +149,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    _animation = new Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(new CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut
-    ));
-
-    sharedText = widget.inputController.text;
-    
-
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
       animationAtStart: !widget.openedByDrawer,
@@ -175,52 +171,56 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                     child: Stack(
                       children: [
                         // Text input
-                        Container(
-                          width: runningInPortrait ?
-                            constraints.maxWidth - padding: 
-                              (constraints.maxWidth/2-padding) 
-                              * (1-_animation.value),
-                            height: runningInPortrait ?
-                              (constraints.maxHeight/2-padding) 
-                              * (1-_animation.value) :
-                              constraints.maxHeight - padding,
-                          child: Card(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                2*padding, padding, 2*padding, padding
-                              ),
-                              child: TextField(
-                                decoration: new InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  hintText: "Input text here...",
+                        Focus(
+                          onFocusChange: (value) {
+                            if(value && popupAnimationController.isCompleted){
+                              popupAnimationController.reverse();
+                            }
+                          },
+                          child: Container(
+                            width: runningInPortrait ?
+                              constraints.maxWidth - padding: 
+                                (constraints.maxWidth/2-padding) 
+                                * (1-_animation.value),
+                              height: runningInPortrait ?
+                                (constraints.maxHeight/2-padding) 
+                                * (1-_animation.value) :
+                                constraints.maxHeight - padding,
+                            child: Card(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  2*padding, padding, 2*padding, padding
                                 ),
-                                
-                                inputFormatters: [
-                                  
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r"\u000d"),
-                                    //replacementString: "\r"
+                                child: TextField(
+                                  decoration: new InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    hintText: "Input text here...",
                                   ),
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r"\u000a"),
-                                    replacementString: "\n"
-                                  )
-                                  
-                                ],
-                                controller: widget.inputController,
-                                maxLines: null,
-                                style: TextStyle(
-                                  fontSize: 20,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r"\u000d"),
+                                      //replacementString: "\r"
+                                    ),
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r"\u000a"),
+                                      replacementString: "\n"
+                                    )
+                                  ],
+                                  controller: widget.inputController,
+                                  maxLines: null,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  onChanged: ((value) {
+                                    setState(() {
+                                      analyzedWords = runAnalyzer(value, AnalyzeModes.normal);
+                                    });
+                                  }),
                                 ),
-                                onChanged: ((value) {
-                                  setState(() {
-                                    analyzedWords = runAnalyzer(value, AnalyzeModes.normal);
-                                  });
-                                }),
                               ),
                             ),
                           ),
@@ -268,14 +268,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             if(selection != TextSelection.collapsed(offset: 0))
                                               popupAnimationController.forward();
                                             _onSelectionChange(selection);
-                                          },
-                                          onTextLostFocus: () {
-                                            if(!popupFocusNode.hasFocus)
-                                              setState(() {
-                                                if(popupAnimationController.isCompleted)
-                                                  popupAnimationController.reverse();
-                                                popupPositionLeft = 0;
-                                              });
                                           },
                                         ),
                                       ),
@@ -355,51 +347,41 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           left: popupPositionLeft,
                           top: popupPositionTop,
                           child: Listener(
-                            onPointerDown: (event) {
-                              popupFocusNode.requestFocus();
-                            },
-                            child: Focus(
-                              focusNode: popupFocusNode,
-                              onFocusChange: (value) {
-                                if(!popupFocusNode.hasFocus && popupAnimationController.isCompleted)
-                                  popupAnimationController.reverse();
-                              },
-                              child: ScaleTransition(
-                                scale: popupAnimationController,
-                                child: CustomTextPopup(
-                                  selectedText: selectedText,
-                                  onMovedViaHeader: (event) {
-                                    setState(() {
-                                      // assure that the popup is not moved out of view
-                                      if(popupPositionLeft + event.delta.dx > 0 &&
-                                        popupPositionLeft + popupSizeWidth + 
-                                        2*padding + event.delta.dx < constraints.maxWidth)
-                                        popupPositionLeft += event.delta.dx;
-                                                      
-                                      // assure that the popup is not moved out of view
-                                      if(popupPositionTop + event.delta.dy > 0 &&
-                                        popupPositionTop + popupSizeHeight + 
-                                        2*padding + event.delta.dy < constraints.maxHeight)
-                                                      
-                                        popupPositionTop  += event.delta.dy;
-                                    });
-                                  },
-                                  onResizedViaCorner: (event) {
-                                    setState(() {
-                                      // don't allow resizing the popup over the 
-                                      // window or smaller than the threshold 
-                                      if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
-                                        popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
-                                        popupSizeWidth += event.delta.dx;
-                                                      
-                                      // don't allow resizing the popup over the 
-                                      // window or smaller than the threshold 
-                                      if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
-                                        popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
-                                        popupSizeHeight += event.delta.dy;
-                                    });
-                                  },
-                                ),
+                            child: ScaleTransition(
+                              scale: popupAnimation,
+                              child: CustomTextPopup(
+                                selectedText: selectedText,
+                                onMovedViaHeader: (event) {
+                                  setState(() {
+                                    // assure that the popup is not moved out of view
+                                    if(popupPositionLeft + event.delta.dx > 0 &&
+                                      popupPositionLeft + popupSizeWidth + 
+                                      2*padding + event.delta.dx < constraints.maxWidth)
+                                      popupPositionLeft += event.delta.dx;
+                                                    
+                                    // assure that the popup is not moved out of view
+                                    if(popupPositionTop + event.delta.dy > 0 &&
+                                      popupPositionTop + popupSizeHeight + 
+                                      2*padding + event.delta.dy < constraints.maxHeight)
+                                                    
+                                      popupPositionTop  += event.delta.dy;
+                                  });
+                                },
+                                onResizedViaCorner: (event) {
+                                  setState(() {
+                                    // don't allow resizing the popup over the 
+                                    // window or smaller than the threshold 
+                                    if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
+                                      popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
+                                      popupSizeWidth += event.delta.dx;
+                                                    
+                                    // don't allow resizing the popup over the 
+                                    // window or smaller than the threshold 
+                                    if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
+                                      popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
+                                      popupSizeHeight += event.delta.dy;
+                                  });
+                                },
                               ),
                             ),
                           ),
