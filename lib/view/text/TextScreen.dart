@@ -231,7 +231,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           right: runningInPortrait ? null : 0,
                           child: Container(
                             width: runningInPortrait ?
-                              constraints.maxWidth - padding: 
+                              constraints.maxWidth - 2*padding: 
                               (constraints.maxWidth/2-padding) 
                               * (_animation.value+1.0),
                             height: runningInPortrait ?
