@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 
 
 /// Widget that implements custom text selection and furigana rendering
@@ -25,7 +25,6 @@ class CustomSelectableText extends StatefulWidget {
     this.paintTextBoxes = false,
     this.textBoxesColor = Colors.grey,
     this.onSelectionChange,
-    this.onTextLostFocus,
   }) : super(key: key);
 
   /// a list containing all words that should be displayed
@@ -46,14 +45,19 @@ class CustomSelectableText extends StatefulWidget {
   final TextStyle? style;
   /// the color that should be used when selecting text
   final Color selectionColor;
-  /// the color for the text selection caret
+  /// the color of the text selection caret
   final Color caretColor;
+  /// the width of the text selection caret
   final double caretWidth;
+  /// can the text be selected
   final bool allowSelection;
+  /// should boxes be drawn around the text
   final bool paintTextBoxes;
+  /// the color of the boxss create by `paintTextBoxes`
   final Color textBoxesColor;
+  /// callback that should be executed when the currently selected text chagnes
+  /// provides the current selection as parameter
   final void Function(String)? onSelectionChange;
-  final void Function()? onTextLostFocus;
 
   @override
   _CustomSelectableTextState createState() => _CustomSelectableTextState();
@@ -81,11 +85,29 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   Timer? multiTapTimer;
   /// how many times was tapped on this widget
   num tapped = 0;
-  /// should the text selection rexts be drawn
-  bool paintSelection = false;
-  /// the focus node of this widget
-  FocusNode focused = FocusNode(canRequestFocus: true);
+  /// the current split of ruby texts, this is used because when a text breaks
+  /// lines in a word the rubys need to be split
+  List<String> rubys = [];
+  /// a list of all words
+  List<String> _words = [];
+  /// a list of all words with spaces between them
+  List<String> _wordsWithSpaces = [];
+    /// a list of all words, when `widget.addSpaces == true` there are spaces
+  /// between all the words, otherwise not
+  List<String> get words {
+    if (!widget.addSpaces) return _words;
+    else return _wordsWithSpaces;
+  }
 
+  set words (List<String> newWords){
+    _words = newWords;
+    _wordsWithSpaces.clear();
+    for (var i = 0; i < _words.length; i++) {
+      _wordsWithSpaces.add(_words[i]);
+      if (i < _words.length-1)
+        	_wordsWithSpaces.add(" ");
+    }
+  }
 
 
 
@@ -104,16 +126,17 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       _selectionRects.clear();
       _textSelection = TextSelection.collapsed(offset: -1);
       _caretRect = null;
-
       _scheduleTextLayoutUpdate();
+      words = widget.words;
     }
   }
 
   RenderParagraph? get _renderParagraph => 
-    _textKey.currentContext?.findRenderObject() as RenderParagraph;
+    _textKey.currentContext?.findRenderObject()  as RenderParagraph;
 
   void _scheduleTextLayoutUpdate() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      recalculateRubys();
       _updateVisibleTextBoxes();
       _updateSelectionDisplay();
     });
@@ -159,7 +182,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
     int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
     widget.onSelectionChange?.call(
-      widget.words.join().substring(start, end)
+      words.join().substring(start, end)
     );
   }
 
@@ -188,22 +211,29 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// and writes them to `widget.rubyss` and `widget.rubyPos`
   void recalculateRubys(){
     rubyPositions.clear();
+    rubys.clear();
 
     int cnt = 0, i = 0;
-    for (String word in widget.words) {
+    for (String word in words) {
 
       // get the rect surrounding the current word (this COULD span more than one line)
       List<Rect> charRects = _computeSelectionRects(
         TextSelection(baseOffset: cnt, extentOffset: cnt + word.length)
       );
 
-      if(charRects.length == 0){
+      // skip spaces
+      if(word == " ");
+
+      // empty 
+      else if(charRects.length == 0 || widget.rubys[i] == ""){
         rubyPositions.add(Rect.zero);
+        rubys.add(widget.rubys[i]);
         i += 1;
       }
       // the text DOES NOT span more than one line
       else if(charRects.length == 1){
         rubyPositions.add(charRects[0]);
+        rubys.add(widget.rubys[i]);
         i += 1;
       }
       // the text DOES span more than one line
@@ -214,7 +244,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         );
         
         // remove the original split ruby text
-        String ruby = widget.rubys.removeAt(i);
+        String ruby = widget.rubys[i];
         // split the text into secgtions and add them to the ruby list
         double cumPercent = 0.0;  
         for (Rect rect in charRects) {
@@ -224,10 +254,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
             (cumPercent * ruby.length).floor(),
             ((cumPercent + rectPercentag) * ruby.length).ceil(),
           );
-          widget.rubys.insert(i, rubySplit);
+          rubys.add(rubySplit);
           cumPercent += rectPercentag;
-          i += 1;
+          
         }
+        i += 1;
       }
 
       cnt += word.length;
@@ -285,7 +316,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return _computeSelectionRects(
       TextSelection(
         baseOffset: 0,
-        extentOffset: widget.words.join().length,
+        extentOffset: words.join().length,
       ),
     );
 
@@ -313,7 +344,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                   
     TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
     var cnt = 0;
-    for (var text in widget.words) {
+    for (var text in words) {
       if(cnt + text.length > tapTextPos.offset){
         sel = TextSelection(
           baseOffset: cnt,
@@ -333,16 +364,16 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     
     TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
     var cntStart = 0, cntEnd = 0;
-    for (int i = 0; i < widget.words.length; i++) {
+    for (int i = 0; i < words.length; i++) {
       
       // end of paragraph  or  end of text
-      if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(widget.words[i]) ||
-        i == widget.words.length-1){
+      if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(words[i]) ||
+        i == words.length-1){
 
         // 
         if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-          if(i == widget.words.length-1)
-            cntEnd += widget.words[i].length;
+          if(i == words.length-1)
+            cntEnd += words[i].length;
           
           sel = TextSelection(
             baseOffset: cntStart,
@@ -354,7 +385,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         cntStart = cntEnd;
 
       }
-      cntEnd += widget.words[i].length;
+      cntEnd += words[i].length;
     }
     
     _onUserSelectionChange(sel);
@@ -366,8 +397,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return Listener(
       onPointerDown: (event) {
     
-        //focused.requestFocus();
-    
         tapped++;
     
         if (multiTapTimer != null) {
@@ -377,12 +406,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         multiTapTimer = Timer(
           const Duration(milliseconds: 200),
           () {
-            if (tapped == 1)
-              tap(event);
-            else if (tapped == 2)
-              doubleTap(event);
-            else if (tapped >= 3) 
-              tripleTap(event);
+            if (tapped == 1) tap(event);
+            else if (tapped == 2) doubleTap(event);
+            else if (tapped >= 3) tripleTap(event);
             
             tapped = 0;
           }
@@ -397,50 +423,45 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           onPanEnd: widget.allowSelection ? _onDragEnd : null,
           onPanCancel: widget.allowSelection ? _onDragCancel : null,
           behavior: HitTestBehavior.translucent,
-          child: Focus(
-            onFocusChange: (value) {
-              setState(() {
-                //paintSelection = value;  
-              });
-              
-              if(!value){
-                if(this.widget.onTextLostFocus != null)
-                  this.widget.onTextLostFocus!();
-              }
-            },
-            focusNode: focused,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    if(paintSelection)
-                      CustomPaint(
-                        painter: _SelectionPainter(
-                          color: widget.selectionColor,
-                          rects: _selectionRects,
-                        ),
-                      ),
-                    if (widget.paintTextBoxes)
-                      CustomPaint(
-                        painter: _SelectionPainter(
-                          color: widget.textBoxesColor,
-                          rects: _textBoxRects,
-                          fill: false,
-                        ),
-                      ),
-                    Text(
-                      widget.words.join(widget.addSpaces ? " " : ""),
-                      key: _textKey,
-                      style: widget.style,
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  // text selection
+                  CustomPaint(
+                    painter: _SelectionPainter(
+                      color: widget.selectionColor,
+                      rects: _selectionRects,
                     ),
+                  ),
+                  // text boxes 
+                  if (widget.paintTextBoxes)
                     CustomPaint(
                       painter: _SelectionPainter(
-                        color: widget.caretColor,
-                        rects: _caretRect != null ? [_caretRect!] : const [],
+                        color: widget.textBoxesColor,
+                        rects: _textBoxRects,
+                        fill: false,
                       ),
                     ),
-                    /*
+                  // the actual text
+                  Text(
+                    words.join(),
+                    key: _textKey,
+                    style: TextStyle(
+                      fontSize: 20,
+                      height: widget.showRubys ? 2.0 : 1.4
+                    ),
+                  ),
+                  // the selection caret
+                  CustomPaint(
+                    painter: _SelectionPainter(
+                      color: widget.caretColor,
+                      rects: _caretRect != null ? [_caretRect!] : const [],
+                    ),
+                  ),
+                  // ruby texts
+                  if(widget.showRubys)
                     ...List.generate(rubyPositions.length, ((index) {
                       return Positioned(
                         width: rubyPositions[index].right - rubyPositions[index].left,
@@ -448,10 +469,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         left: rubyPositions[index].left,
                         height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
                         child: Container(
-                          //.color: Colors.amber,
+                          decoration: widget.paintTextBoxes ? BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent)
+                          ) : null,
                           child: Center(
                             child: Text(
-                              widget.rubys[index],
+                              rubys[index],
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 10,
@@ -461,9 +484,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         )
                       );
                     })),
-                    */
-                  ],
-                ),
+                  
+                ],
               ),
             ),
           ),
