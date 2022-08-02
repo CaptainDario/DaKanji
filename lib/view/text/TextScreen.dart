@@ -78,24 +78,17 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   late final Animation<double> popupAnimation;
   /// the currently selected text
   String selectedText = "";
+  
 
-
-  //var sharedText = "";
+  /// callback that should be called when the current selection in the 
+  /// processed text widget changes
   void _onSelectionChange(String textSelection) {
     setState(() {
       selectedText = textSelection;
     });
   }
 
-  /// the text style used for styling the 
-  TextStyle sharedTextStyle = const TextStyle(
-    fontSize: 20,
-    height: 2.0,
-  );
-
   
-
-
   @override
   void initState() {
 
@@ -120,7 +113,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     popupAnimation = popupAnimationController.drive(
       CurveTween(curve: Curves.easeInOut)
     );
-    
 
     // initialize the drawing interpreter if it has not been already
     //if(!GetIt.I<DrawingInterpreter>().wasInitialized){
@@ -260,9 +252,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             (constraints.maxHeight/2-padding) 
                                             * (_animation.value+1.0) :
                                             constraints.maxHeight - 2*padding,
-                                          style: sharedTextStyle,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            height: 1.4
+                                          ),
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
+                                          paintTextBoxes: true,
                                           selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                           onSelectionChange: (selection) {
                                             if(selection != TextSelection.collapsed(offset: 0))
