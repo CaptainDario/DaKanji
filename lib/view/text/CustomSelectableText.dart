@@ -92,13 +92,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   List<String> _words = [];
   /// a list of all words with spaces between them
   List<String> _wordsWithSpaces = [];
-    /// a list of all words, when `widget.addSpaces == true` there are spaces
+  /// a list of all words, when `widget.addSpaces == true` there are spaces
   /// between all the words, otherwise not
   List<String> get words {
     if (!widget.addSpaces) return _words;
     else return _wordsWithSpaces;
   }
-
   set words (List<String> newWords){
     _words = newWords;
     _wordsWithSpaces.clear();
