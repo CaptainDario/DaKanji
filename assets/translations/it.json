@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\nDaKanji \u00e8 disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy pu\u00f2 essere trovata [qui]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" \u00e8 disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy pu\u00f2 essere trovata [qui]({PRIVACY_POLICE})",
     "credits": "Crediti",
     "show_changelog": "Mostrami il changelog completo.",
     "software_informations_button": "Informazioni sul software",
@@ -9,8 +9,11 @@
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "Dictionary": {
+    "title": "Dizionario"
+  },
   "DrawScreen": {
-    "not_installed": "{DICTIONARIO} non installato",
+    "not_installed": "{DICTIONARY} non installato",
     "title": "Disegno",
     "tutorial_begin_continue": "Toccare per continuare...",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -52,9 +55,9 @@
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe \u00e8 cos\u00ec, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Basta disegnarlo e DaKanji mostrer\u00e0 il carattere desiderato.",
+    "Onboarding_1_text": "Basta disegnarlo e \"DaKanji\" mostrer\u00e0 il carattere desiderato.",
     "Onboarding_1_title": "Non conosci un kanji?",
-    "Onboarding_2_text": "Con DaKanji \u00e8 possibile cercare rapidamente le parole utilizzando dizionari web e app.",
+    "Onboarding_2_text": "Con \"DaKanji\" \u00e8 possibile cercare rapidamente le parole utilizzando dizionari web e app.",
     "Onboarding_2_title": "Ricerca di caratteri e parole"
   },
   "Overview": {
@@ -89,7 +92,7 @@
     "use_default_browser_for_online_dictionaries": "Utilizzare una webview per i dizionari web"
   },
   "Stores": {
-    "long_description": "State imparando il giapponese? Allora dovete provare DaKanji!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? DaKanji \u00e8 qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertir\u00e0 in un carattere digitale. Non \u00e8 nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana in modalit\u00e0 offline.\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole.",
+    "long_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" \u00e8 qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertir\u00e0 in un carattere digitale. Non \u00e8 nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
     "mockup_10": "",
     "mockup_1_1": "Non conosci un Kanji? Basta disegnarlo!",
     "mockup_1_2": "Anche l'ordine dei tratti non ha importanza.",
@@ -101,8 +104,11 @@
     "mockup_7": "",
     "mockup_8": "",
     "mockup_9": "",
-    "short_description": "State imparando il giapponese? Allora dovete provare DaKanji!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-    "shortest_description": "State imparando il giapponese? Allora dovete provare DaKanji!"
+    "short_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
+    "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
+  },
+  "TextScreen": {
+    "title": "Testo"
   },
   "WebviewScreen": {
     "loading": "Ricerca",

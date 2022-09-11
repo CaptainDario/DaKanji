@@ -9,6 +9,8 @@ abstract class  LocaleKeys {
   static const AboutScreen = 'AboutScreen';
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
+  static const Dictionary_title = 'Dictionary.title';
+  static const Dictionary = 'Dictionary';
   static const DrawScreen_not_installed = 'DrawScreen.not_installed';
   static const DrawScreen_title = 'DrawScreen.title';
   static const DrawScreen_tutorial_begin_continue = 'DrawScreen.tutorial_begin_continue';
@@ -97,6 +99,8 @@ abstract class  LocaleKeys {
   static const Stores_short_description = 'Stores.short_description';
   static const Stores_shortest_description = 'Stores.shortest_description';
   static const Stores = 'Stores';
+  static const TextScreen_title = 'TextScreen.title';
+  static const TextScreen = 'TextScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';

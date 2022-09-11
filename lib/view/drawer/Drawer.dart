@@ -268,7 +268,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the text processing screen
                             DrawerElement(
                               leading: Icons.abc_outlined,
-                              title: "Texto",
+                              title: LocaleKeys.TextScreen_title.tr(),
                               route: "/text",
                               selected: widget.currentScreen == Screens.text,
                               drawerWidth: this._drawerWidth,
