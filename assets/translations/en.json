@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
     "credits": "Credits",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
@@ -8,6 +8,9 @@
   },
   "ChangelogScreen": {
     "title": "Changelog"
+  },
+  "Dictionary": {
+    "title": "Dictionary"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -52,9 +55,9 @@
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
     "Onboarding_2_title": "Lookup characters and words"
   },
   "Overview": {
@@ -89,7 +92,7 @@
     "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
   },
   "Stores": {
-    "long_description": "You are learning Japanese? Then you need to give DaKanji a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
+    "long_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
     "mockup_10": "",
     "mockup_1_1": "Don't know a Kanji? Just draw it!",
     "mockup_1_2": "Even the stroke order doesn't matter.",
@@ -101,8 +104,11 @@
     "mockup_7": "",
     "mockup_8": "",
     "mockup_9": "",
-    "short_description": "You are learning Japanese? Then you need to give DaKanji a try!\nFind characters and translate them just by drawing.",
-    "shortest_description": "You are learning Japanese? Then you need to give DaKanji a try!"
+    "short_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
+    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
+  },
+  "TextScreen": {
+    "title": "Text"
   },
   "WebviewScreen": {
     "loading": "Searching",

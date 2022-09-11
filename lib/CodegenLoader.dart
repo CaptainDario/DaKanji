@@ -16,7 +16,7 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> de = {
   "AboutScreen": {
-    "about_text": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nDaKanji ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
+    "about_text": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
     "credits": "Credits",
     "show_changelog": "Zeig mir alle Änderungen.",
     "software_informations_button": "Softwareinformationen",
@@ -24,6 +24,9 @@ class CodegenLoader extends AssetLoader{
   },
   "ChangelogScreen": {
     "title": "Änderungen"
+  },
+  "Dictionary": {
+    "title": "Wörterbuch"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
@@ -103,6 +106,9 @@ class CodegenLoader extends AssetLoader{
     "short_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
     "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst."
   },
+  "TextScreen": {
+    "title": "Text"
+  },
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"
@@ -110,7 +116,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> en = {
   "AboutScreen": {
-    "about_text": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
     "credits": "Credits",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
@@ -118,6 +124,9 @@ static const Map<String,dynamic> en = {
   },
   "ChangelogScreen": {
     "title": "Changelog"
+  },
+  "Dictionary": {
+    "title": "Dictionary"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -162,9 +171,9 @@ static const Map<String,dynamic> en = {
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Just draw it and DaKanji will show the character you need.",
+    "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_2_text": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
     "Onboarding_2_title": "Lookup characters and words"
   },
   "Overview": {
@@ -189,13 +198,16 @@ static const Map<String,dynamic> en = {
     "use_default_browser_for_online_dictionaries": "Use a webview for web dictionaries"
   },
   "Stores": {
-    "long_description": "You are learning Japanese? Then you need to give DaKanji a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
+    "long_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
     "mockup_1_1": "Don't know a Kanji? Just draw it!",
     "mockup_1_2": "Even the stroke order doesn't matter.",
     "mockup_2": "Search words",
     "mockup_3": "Translate with dictionaries",
-    "short_description": "You are learning Japanese? Then you need to give DaKanji a try!\nFind characters and translate them just by drawing.",
-    "shortest_description": "You are learning Japanese? Then you need to give DaKanji a try!"
+    "short_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
+    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
+  },
+  "TextScreen": {
+    "title": "Text"
   },
   "WebviewScreen": {
     "loading": "Searching",
@@ -205,12 +217,16 @@ static const Map<String,dynamic> en = {
 static const Map<String,dynamic> es = {
   "AboutScreen": {
     "about_text": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
+    "credits": "Créditos",
     "show_changelog": "Muéstrame la lista de cambios completa.",
     "software_informations_button": "Información del software",
     "title": "Acerca de"
   },
   "ChangelogScreen": {
     "title": "Lista de cambios"
+  },
+  "Dictionary": {
+    "title": "Diccionario"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",
@@ -264,6 +280,7 @@ static const Map<String,dynamic> es = {
   },
   "SettingsScreen": {
     "advanced_settings_drawing_inference_backend": "Backend de inferencia (reinicio manual requerido)",
+    "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "custom_url_format": "Formato de la URL personalizada",
@@ -273,6 +290,7 @@ static const Map<String,dynamic> es = {
     "empty_canvas_after_double_tap": "Vaciar lienzo después de una pulsación doble",
     "invert_short_long_press": "Invertir pulsación larga/breve",
     "long_press_opens": "Pulsación larga abre",
+    "misc_settings_window_size": "Guardar el tamaño actual de la ventana",
     "miscellaneous_title": "Misceláneo",
     "show_tutorial": "Volver a mostrar el tutorial (@:General.restarts_app)",
     "theme": "tema (@:General.restarts_app)",
@@ -288,6 +306,9 @@ static const Map<String,dynamic> es = {
     "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
     "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
   },
+  "TextScreen": {
+    "title": "Texto"
+  },
   "WebviewScreen": {
     "loading": "Buscando",
     "title": "Webview"
@@ -295,17 +316,20 @@ static const Map<String,dynamic> es = {
 };
 static const Map<String,dynamic> fr = {
   "AboutScreen": {
-    "about_text": "DaKanji aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\nDaKanji est disponible pour, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
+    "about_text": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
     "credits": "Crédits",
-    "show_changelog": "Montrez-moi le changelog complet.",
+    "show_changelog": "Montrez-moi le journal complet des modifications.",
     "software_informations_button": "Informations sur le logiciel",
     "title": "À propos de"
   },
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "Dictionary": {
+    "title": "Dictionnaire"
+  },
   "DrawScreen": {
-    "not_installed": "{DICTIONNAIRE} non installé",
+    "not_installed": "{DICTIONARY} non installé",
     "title": "Dessin",
     "tutorial_begin_continue": "Tapez pour continuer...",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -347,9 +371,9 @@ static const Map<String,dynamic> fr = {
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Il suffit de le dessiner et DaKanji affichera le caractère dont vous avez besoin.",
+    "Onboarding_1_text": "Il suffit de le dessiner et \"DaKanji\" affichera le caractère dont vous avez besoin.",
     "Onboarding_1_title": "Vous ne connaissez pas un Kanji ?",
-    "Onboarding_2_text": "Avec DaKanji, vous pouvez rechercher rapidement des mots à l'aide de dictionnaires Web et d'applications.",
+    "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rechercher rapidement des mots en utilisant les dictionnaires du web et des applications.",
     "Onboarding_2_title": "Recherche de caractères et de mots"
   },
   "Overview": {
@@ -374,13 +398,16 @@ static const Map<String,dynamic> fr = {
     "use_default_browser_for_online_dictionaries": "Utiliser une vue web pour les dictionnaires web"
   },
   "Stores": {
-    "long_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\n\nAvez-vous déjà essayé de lire un texte japonais mais vous ne saviez pas comment lire certains Kanji ? DaKanji est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est entièrement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
+    "long_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\n\nAvez-vous déjà essayé de lire un texte japonais sans savoir comment lire certains Kanji ? \"DaKanji\" est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est complètement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
     "mockup_1_1": "Vous ne connaissez pas un Kanji ? Il suffit de le dessiner !",
     "mockup_1_2": "Même l'ordre des coups n'a pas d'importance.",
     "mockup_2": "Mots à rechercher",
     "mockup_3": "Traduire avec des dictionnaires",
-    "short_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\nTrouvez des caractères et traduisez-les simplement en dessinant.",
-    "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !"
+    "short_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\nTrouvez des caractères et traduisez-les simplement en les dessinant.",
+    "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !"
+  },
+  "TextScreen": {
+    "title": "Texte"
   },
   "WebviewScreen": {
     "loading": "Recherche",
@@ -389,7 +416,7 @@ static const Map<String,dynamic> fr = {
 };
 static const Map<String,dynamic> it = {
   "AboutScreen": {
-    "about_text": "DaKanji aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\nDaKanji è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
     "credits": "Crediti",
     "show_changelog": "Mostrami il changelog completo.",
     "software_informations_button": "Informazioni sul software",
@@ -398,8 +425,11 @@ static const Map<String,dynamic> it = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "Dictionary": {
+    "title": "Dizionario"
+  },
   "DrawScreen": {
-    "not_installed": "{DICTIONARIO} non installato",
+    "not_installed": "{DICTIONARY} non installato",
     "title": "Disegno",
     "tutorial_begin_continue": "Toccare per continuare...",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -441,9 +471,9 @@ static const Map<String,dynamic> it = {
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Basta disegnarlo e DaKanji mostrerà il carattere desiderato.",
+    "Onboarding_1_text": "Basta disegnarlo e \"DaKanji\" mostrerà il carattere desiderato.",
     "Onboarding_1_title": "Non conosci un kanji?",
-    "Onboarding_2_text": "Con DaKanji è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
+    "Onboarding_2_text": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
     "Onboarding_2_title": "Ricerca di caratteri e parole"
   },
   "Overview": {
@@ -468,13 +498,16 @@ static const Map<String,dynamic> it = {
     "use_default_browser_for_online_dictionaries": "Utilizzare una webview per i dizionari web"
   },
   "Stores": {
-    "long_description": "State imparando il giapponese? Allora dovete provare DaKanji!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? DaKanji è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana in modalità offline.\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole.",
+    "long_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
     "mockup_1_1": "Non conosci un Kanji? Basta disegnarlo!",
     "mockup_1_2": "Anche l'ordine dei tratti non ha importanza.",
     "mockup_2": "Parole di ricerca",
     "mockup_3": "Tradurre con i dizionari",
-    "short_description": "State imparando il giapponese? Allora dovete provare DaKanji!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-    "shortest_description": "State imparando il giapponese? Allora dovete provare DaKanji!"
+    "short_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
+    "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
+  },
+  "TextScreen": {
+    "title": "Testo"
   },
   "WebviewScreen": {
     "loading": "Ricerca",
@@ -483,7 +516,7 @@ static const Map<String,dynamic> it = {
 };
 static const Map<String,dynamic> ja = {
   "AboutScreen": {
-    "about_text": "大漢字は、日本語を学ぶ人、日本語を使う人を支援します。\n大漢字は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
+    "about_text": "「大漢字」は、日本語を学ぶ人、日本語を使う人を支援します。\n「大漢字」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
     "credits": "クレジット",
     "show_changelog": "完全なチェンジログを表示してください。",
     "software_informations_button": "ソフトウェア情報",
@@ -491,6 +524,9 @@ static const Map<String,dynamic> ja = {
   },
   "ChangelogScreen": {
     "title": "チェンジログ"
+  },
+  "Dictionary": {
+    "title": "辞書"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません。",
@@ -532,12 +568,12 @@ static const Map<String,dynamic> ja = {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "またかよ！？",
-    "RatePopup_text": "あなたは「大漢字」が好きですか？\nもしそうなら、評価をいただけると、このプロジェクトの助けになります。"
+    "RatePopup_text": "あなたは「DaKanji」が好きですか？\nもしそうなら、評価をいただけると、このプロジェクトの助けになります。"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "描くだけで、大漢字は必要な文字を表示します。",
+    "Onboarding_1_text": "描くだけで、「DaKanji」が必要な文字を表示します。",
     "Onboarding_1_title": "漢字を知らないのですか？",
-    "Onboarding_2_text": "大漢字は、ウェブやアプリの辞書を使って素早く単語を調べることができます。",
+    "Onboarding_2_text": "「DaKanji」は、Webやアプリの辞書を使って素早く単語を調べることができます。",
     "Onboarding_2_title": "文字や言葉を調べる"
   },
   "Overview": {
@@ -562,13 +598,16 @@ static const Map<String,dynamic> ja = {
     "use_default_browser_for_online_dictionaries": "ウェブ辞書にウェブビューを使用する"
   },
   "Stores": {
-    "long_description": "日本語を勉強しているんですか？それなら、ぜひ大漢字を試してみてください。\n\n日本語の文章を読もうとしたとき、漢字の読み方が分からなかったことはありませんか？大漢字はそんなあなたのためにあります。漢字を描くと、アプリがそれをデジタル文字に変換してくれます。書き順を知らなくても大丈夫です。漢字を書き、単語を作り、それを翻訳する、しかも完全にオフラインで。\n\n機能の概要\n* オフラインで6500字の漢字と全カナを認識します。\n* ウェブやアプリの辞書を利用して、文字や単語を翻訳することができます。",
+    "long_description": "日本語を勉強しているんですか？それなら「DaKanji」を試してみる必要があります。\n\n日本語の文章を読もうとしたとき、漢字の読み方が分からなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。漢字を描くと、それをデジタル文字に変換してくれます。書き順を知らなくても大丈夫です。漢字を書き、単語を作り、それを翻訳します。\n\n機能の概要\n* オフラインで6500字の漢字と全カナを認識します。\n* ウェブやアプリの辞書を利用して、文字や単語を翻訳することができます。",
     "mockup_1_1": "漢字がわからない？描けばいいじゃん",
     "mockup_1_2": "筆順さえも関係ない。",
     "mockup_2": "検索ワード",
     "mockup_3": "辞書を使った翻訳",
-    "short_description": "日本語を勉強しているんですか？それなら、大漢字を試してみる必要があります。\n絵を描くだけで、漢字を探し、翻訳することができます。",
-    "shortest_description": "日本語を勉強しているんですか？それなら、ぜひ大漢字を試してみてください。"
+    "short_description": "日本語を勉強しているんですか？それなら「DaKanji」を試してみてください。\n絵を描くだけで、漢字を探し、翻訳することができます。",
+    "shortest_description": "日本語を勉強しているんですか？それなら「DaKanji」を試してみる必要があります。"
+  },
+  "TextScreen": {
+    "title": "テキスト"
   },
   "WebviewScreen": {
     "loading": "検索中",
@@ -577,48 +616,88 @@ static const Map<String,dynamic> ja = {
 };
 static const Map<String,dynamic> localizations = {
   "Overview": {
-    "": {},
-    "en": {},
-    "de": {},
-    "ru": {},
-    "ja": {},
-    "zh": {},
-    "it": {},
-    "fr": {},
-    "es": {},
-    "pl": {}
+    "": {
+      "A cell has a red background when there is no translation": "Stores",
+      "A cell has a yellow background when the reference (English) localization was updated.": "AboutScreen",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "ChangelogScreen"
+    },
+    "en": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "de": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "ru": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 7",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "ja": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 7",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "zh": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 7",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "it": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 7",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "fr": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 7",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "es": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 1",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "pl": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    }
   },
   "Stores": {
     "shortest_description": {
-      "en": "You are learning Japanese? Then you need to give DaKanji a try!",
+      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst.",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!",
-      "ja": "日本語を勉強しているんですか？それなら、ぜひ大漢字を試してみてください。",
-      "zh": "你正在学习日语？那么你需要给大汉字一个机会!",
-      "it": "State imparando il giapponese? Allora dovete provare DaKanji!",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !",
+      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!",
+      "ja": "日本語を勉強しているんですか？それなら「DaKanji」を試してみる必要があります。",
+      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!",
+      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!",
+      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
     },
     "short_description": {
-      "en": "You are learning Japanese? Then you need to give DaKanji a try!\nFind characters and translate them just by drawing.",
+      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!\nНаходите иероглифы и переводите их, просто рисуя.",
-      "ja": "日本語を勉強しているんですか？それなら、大漢字を試してみる必要があります。\n絵を描くだけで、漢字を探し、翻訳することができます。",
-      "zh": "你正在学习日语？那么你需要试试DaKanji!\n只需通过绘画就能找到字符并进行翻译。",
-      "it": "State imparando il giapponese? Allora dovete provare DaKanji!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\nTrouvez des caractères et traduisez-les simplement en dessinant.",
+      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\nНаходите иероглифы и переводите их, просто рисуя.",
+      "ja": "日本語を勉強しているんですか？それなら「DaKanji」を試してみてください。\n絵を描くだけで、漢字を探し、翻訳することができます。",
+      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n只需通过绘画就能找到字符并进行翻译。",
+      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
+      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\nTrouvez des caractères et traduisez-les simplement en les dessinant.",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
     },
     "long_description": {
-      "en": "You are learning Japanese? Then you need to give DaKanji a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
+      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
       "de": "Du lernst Japanisch? Dann musst du DaKanji ausprobieren.\r\n\r\nHast du schon mal versucht, einen japanischen Text zu lesen, aber kanntest ein Kanji nicht?\r\nDaKanji kann dir dabei helfen. Zeichne ein Kanji und die App wandelt es in einen digitales Zeichen um. Nicht einmal die Strichfolge ist wichtig! Male Zeichen und kombiniere sie zu Wörtern, die du dann übersetzen kannst und all das komplett offline.\r\n\r\nFunktionen:\r\n* Erkennt mehr als 6500 Kanji und alle Kana komplett offline\r\n* Benutze web und App Wörterbücher, um Zeichen und Wörter nachzuschlagen",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? DaKanji поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
-      "ja": "日本語を勉強しているんですか？それなら、ぜひ大漢字を試してみてください。\n\n日本語の文章を読もうとしたとき、漢字の読み方が分からなかったことはありませんか？大漢字はそんなあなたのためにあります。漢字を描くと、アプリがそれをデジタル文字に変換してくれます。書き順を知らなくても大丈夫です。漢字を書き、単語を作り、それを翻訳する、しかも完全にオフラインで。\n\n機能の概要\n* オフラインで6500字の漢字と全カナを認識します。\n* ウェブやアプリの辞書を利用して、文字や単語を翻訳することができます。",
-      "zh": "你正在学习日语？那么你需要给大汉字一个机会!\n\n你是否曾经尝试阅读日文文本，但不知道如何阅读一些汉字？DaKanji是来帮助你的。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!编写字符和建立单词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名离线\n* 使用网络和应用程序的字典来翻译字符或单词",
-      "it": "State imparando il giapponese? Allora dovete provare DaKanji!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? DaKanji è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana in modalità offline.\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole.",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\n\nAvez-vous déjà essayé de lire un texte japonais mais vous ne saviez pas comment lire certains Kanji ? DaKanji est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est entièrement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
+      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? \"DaKanji\" поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
+      "ja": "日本語を勉強しているんですか？それなら「DaKanji」を試してみる必要があります。\n\n日本語の文章を読もうとしたとき、漢字の読み方が分からなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。漢字を描くと、それをデジタル文字に変換してくれます。書き順を知らなくても大丈夫です。漢字を書き、単語を作り、それを翻訳します。\n\n機能の概要\n* オフラインで6500字の漢字と全カナを認識します。\n* ウェブやアプリの辞書を利用して、文字や単語を翻訳することができます。",
+      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n\n你是否曾经试图阅读一篇日语文章，但不知道如何阅读一些汉字？\"DaKanji \"在这里帮助你。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!写字和造词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名的脱机字符\n* 使用网络和应用程序的字典来翻译字符或单词",
+      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
+      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\n\nAvez-vous déjà essayé de lire un texte japonais sans savoir comment lire certains Kanji ? \"DaKanji\" est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est complètement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
     },
@@ -676,13 +755,13 @@ static const Map<String,dynamic> localizations = {
   },
   "AboutScreen": {
     "about_text": {
-      "en": "DaKanji helps students of the Japanese language and people who use it.\nDaKanji is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
-      "de": "DaKanji ist für alle, die Japanisch lernen oder benutzen.\nDaKanji ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
-      "ru": "DaKanji помогает изучающим японский язык и людям, которые его используют.\nDaKanji доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
-      "ja": "大漢字は、日本語を学ぶ人、日本語を使う人を支援します。\n大漢字は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
-      "zh": "大汉字》帮助日语学生和使用日语的人。\n大汉字》可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
-      "it": "DaKanji aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\nDaKanji è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
-      "fr": "DaKanji aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\nDaKanji est disponible pour, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
+      "en": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
+      "de": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
+      "ru": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
+      "ja": "「大漢字」は、日本語を学ぶ人、日本語を使う人を支援します。\n「大漢字」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
+      "zh": "\"大汉字 \"帮助日语学生和使用日语的人。\n\"大汉字 \"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
+      "it": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
+      "fr": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
       "es": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
       "pl": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nDaKanji dostępne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje możesz zobaczyć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJeżeli napotkasz problemy korzystając z tej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj]({GITHUB_ISSUES}), dołącz na [serwer discord]({DISCORD_SERVER}) albo wyślij [e-mail](daapplab@gmail.com). \nPolityka prywatności dostępna jest [tutaj]({PRIVACY_POLICE})"
     },
@@ -693,7 +772,7 @@ static const Map<String,dynamic> localizations = {
       "ja": "完全なチェンジログを表示してください。",
       "zh": "给我看完整的更新日志。",
       "it": "Mostrami il changelog completo.",
-      "fr": "Montrez-moi le changelog complet.",
+      "fr": "Montrez-moi le journal complet des modifications.",
       "es": "Muéstrame la lista de cambios completa.",
       "pl": "Pokaż pełną historię zmian"
     },
@@ -727,6 +806,8 @@ static const Map<String,dynamic> localizations = {
       "zh": "贷方",
       "it": "Crediti",
       "fr": "Crédits",
+      "es": "Créditos",
+      "pl": "Podziękowania"
     }
   },
   "ChangelogScreen": {
@@ -758,7 +839,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
       "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
       "ru": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
-      "ja": "あなたは「大漢字」が好きですか？\nもしそうなら、評価をいただけると、このプロジェクトの助けになります。",
+      "ja": "あなたは「DaKanji」が好きですか？\nもしそうなら、評価をいただけると、このプロジェクトの助けになります。",
       "zh": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
       "it": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
       "fr": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
@@ -849,7 +930,7 @@ static const Map<String,dynamic> localizations = {
       "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
       "ru": "Двойное нажатие опустошает поле",
       "ja": "ダブルタップでフィールドを空にする",
-      "zh": "双击就会清空字段",
+      "zh": "双击就会清空该区域",
       "it": "Un doppio tocco svuota il campo",
       "fr": "Un double tapotement vide le champ",
       "es": "Una pulsación doble vacía el campo",
@@ -971,10 +1052,36 @@ static const Map<String,dynamic> localizations = {
       "ru": "{DICTIONARY} не установлен",
       "ja": "{DICTIONARY}はインストールされていません。",
       "zh": "未安装{DICTIONARY}。",
-      "it": "{DICTIONARIO} non installato",
-      "fr": "{DICTIONNAIRE} non installé",
+      "it": "{DICTIONARY} non installato",
+      "fr": "{DICTIONARY} non installé",
       "es": "{DICTIONARY} no instalado",
       "pl": "{DICTIONARY} nie zainstalowany"
+    }
+  },
+  "TextScreen": {
+    "title": {
+      "en": "Text",
+      "de": "Text",
+      "ru": "Текст",
+      "ja": "テキスト",
+      "zh": "文本",
+      "it": "Testo",
+      "fr": "Texte",
+      "es": "Texto",
+      "pl": "Tekst"
+    }
+  },
+  "Dictionary": {
+    "title": {
+      "en": "Dictionary",
+      "de": "Wörterbuch",
+      "ru": "Словарь",
+      "ja": "辞書",
+      "zh": "词典",
+      "it": "Dizionario",
+      "fr": "Dictionnaire",
+      "es": "Diccionario",
+      "pl": "Słownik"
     }
   },
   "General": {
@@ -1150,20 +1257,20 @@ static const Map<String,dynamic> localizations = {
       "de": "Du kennst ein Kanji nicht?",
       "ru": "Вы не знаете ни одного кандзи?",
       "ja": "漢字を知らないのですか？",
-      "zh": "#ERROR!",
+      "zh": "你不知道一个汉字吗？",
       "it": "Non conosci un kanji?",
       "fr": "Vous ne connaissez pas un Kanji ?",
       "es": "No sabes un Kanji?",
       "pl": "Nie znasz Kanji?"
     },
     "Onboarding_1_text": {
-      "en": "Just draw it and DaKanji will show the character you need.",
+      "en": "Just draw it and \"DaKanji\" will show the character you need.",
       "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
-      "ru": "Просто нарисуйте его, и DaKanji покажет нужный вам иероглиф.",
-      "ja": "描くだけで、大漢字は必要な文字を表示します。",
-      "zh": "只要画出来，DaKanji就会显示你需要的字符。",
-      "it": "Basta disegnarlo e DaKanji mostrerà il carattere desiderato.",
-      "fr": "Il suffit de le dessiner et DaKanji affichera le caractère dont vous avez besoin.",
+      "ru": "Просто нарисуйте его, и \"DaKanji\" покажет нужный вам иероглиф.",
+      "ja": "描くだけで、「DaKanji」が必要な文字を表示します。",
+      "zh": "只要画出来，\"DaKanji \"就会显示出你需要的字符。",
+      "it": "Basta disegnarlo e \"DaKanji\" mostrerà il carattere desiderato.",
+      "fr": "Il suffit de le dessiner et \"DaKanji\" affichera le caractère dont vous avez besoin.",
       "es": "Solo dibújalo y DaKanji te mostrará el caracter que necesitas.",
       "pl": "Po prostu go narysuj i DaKanji pokaże Ci znak którego potrzebujesz"
     },
@@ -1179,13 +1286,13 @@ static const Map<String,dynamic> localizations = {
       "pl": "Podejrzyj znaki i wyrazy"
     },
     "Onboarding_2_text": {
-      "en": "With DaKanji you can quickly lookup words using web and app dictionaries.",
+      "en": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
       "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
-      "ru": "С помощью DaKanji вы можете быстро искать слова, используя веб-словари и словари приложений.",
-      "ja": "大漢字は、ウェブやアプリの辞書を使って素早く単語を調べることができます。",
-      "zh": "有了DaKanji，你可以使用网络和应用程序的字典快速查询单词。",
-      "it": "Con DaKanji è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
-      "fr": "Avec DaKanji, vous pouvez rechercher rapidement des mots à l'aide de dictionnaires Web et d'applications.",
+      "ru": "С помощью \"DaKanji\" вы можете быстро искать слова, используя веб-словари и словари приложений.",
+      "ja": "「DaKanji」は、Webやアプリの辞書を使って素早く単語を調べることができます。",
+      "zh": "通过 \"DaKanji\"，你可以使用网络和应用程序的字典快速查询单词。",
+      "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
+      "fr": "Avec \"DaKanji\", vous pouvez rechercher rapidement des mots en utilisant les dictionnaires du web et des applications.",
       "es": "Con DaKanji puedes buscar rápidamente palabras usando la web y diccionarios.",
       "pl": "Z DaKanji możesz szybko podglądnąć słówka używając internetu oraz słowników"
     }
@@ -1233,7 +1340,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Tela vuota dopo il doppio tocco",
       "fr": "Toile vide après un double tapotement",
       "es": "Vaciar lienzo después de una pulsación doble",
-      "pl": "Puste płótno po podwójnym kliknięciu"
+      "pl": "Wyczyść płótno podwójnym kliknięciem"
     },
     "invert_short_long_press": {
       "en": "Invert long/short press",
@@ -1343,7 +1450,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Backend di inferenza (richiede il riavvio)",
       "fr": "Backend d'inférence (nécessite un redémarrage)",
       "es": "Backend de inferencia (reinicio manual requerido)",
-      "pl": "System wnioskowania (aplikacja musi zostać zrestartowana)"
+      "pl": "System wnioskowania (wymaga restartu)"
     },
     "advanced_settings_title": {
       "en": "Advanced settings",
@@ -1363,7 +1470,9 @@ static const Map<String,dynamic> localizations = {
       "ja": "私は必然的に・・・。",
       "zh": "我是不可避免的...",
       "it": "Sono inevitabile...",
-      "fr": "Je suis inévitable..."
+      "fr": "Je suis inévitable...",
+      "es": "Soy inevitable...",
+      "pl": "Jestem nieunikniony..."
     },
     "misc_settings_window_size": {
       "en": "Save current window size",
@@ -1372,7 +1481,9 @@ static const Map<String,dynamic> localizations = {
       "ja": "現在のウィンドウサイズを保存",
       "zh": "保存当前窗口尺寸",
       "it": "Salva la dimensione attuale della finestra",
-      "fr": "Sauvegarder la taille actuelle de la fenêtre"
+      "fr": "Sauvegarder la taille actuelle de la fenêtre",
+      "es": "Guardar el tamaño actual de la ventana",
+      "pl": "Zapisz bieżący rozmiar okna"
     }
   },
   "WebviewScreen": {
@@ -1403,12 +1514,16 @@ static const Map<String,dynamic> localizations = {
 static const Map<String,dynamic> pl = {
   "AboutScreen": {
     "about_text": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nDaKanji dostępne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje możesz zobaczyć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJeżeli napotkasz problemy korzystając z tej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj]({GITHUB_ISSUES}), dołącz na [serwer discord]({DISCORD_SERVER}) albo wyślij [e-mail](daapplab@gmail.com). \nPolityka prywatności dostępna jest [tutaj]({PRIVACY_POLICE})",
+    "credits": "Podziękowania",
     "show_changelog": "Pokaż pełną historię zmian",
     "software_informations_button": "Informacje o oprogramowaniu",
     "title": "O aplikacji"
   },
   "ChangelogScreen": {
     "title": "Historia zmian"
+  },
+  "Dictionary": {
+    "title": "Słownik"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -1461,16 +1576,18 @@ static const Map<String,dynamic> pl = {
   "Overview": {
   },
   "SettingsScreen": {
-    "advanced_settings_drawing_inference_backend": "System wnioskowania (aplikacja musi zostać zrestartowana)",
+    "advanced_settings_drawing_inference_backend": "System wnioskowania (wymaga restartu)",
+    "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Niestandardowy format URL",
     "custom_url_hint": "URL twojego słownika",
     "dictionary_system_translator": "Tłumacz systemowy",
     "drawing_title": "Obraz",
-    "empty_canvas_after_double_tap": "Puste płótno po podwójnym kliknięciu",
+    "empty_canvas_after_double_tap": "Wyczyść płótno podwójnym kliknięciem",
     "invert_short_long_press": "Odwróć długie/krótkie kliknięcie",
     "long_press_opens": "Długie kliknięcie otwiera",
+    "misc_settings_window_size": "Zapisz bieżący rozmiar okna",
     "miscellaneous_title": "Inne",
     "show_tutorial": "Powtórz tutorial (@:General.restarts_app)",
     "theme": "Motyw(@:General.restarts_app)",
@@ -1486,6 +1603,9 @@ static const Map<String,dynamic> pl = {
     "short_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki.",
     "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
+  "TextScreen": {
+    "title": "Tekst"
+  },
   "WebviewScreen": {
     "loading": "Ładowanie",
     "title": "Webview"
@@ -1493,7 +1613,7 @@ static const Map<String,dynamic> pl = {
 };
 static const Map<String,dynamic> ru = {
   "AboutScreen": {
-    "about_text": "DaKanji помогает изучающим японский язык и людям, которые его используют.\nDaKanji доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
     "credits": "Кредиты",
     "show_changelog": "Покажите мне полный журнал изменений.",
     "software_informations_button": "Информация о программном обеспечении",
@@ -1501,6 +1621,9 @@ static const Map<String,dynamic> ru = {
   },
   "ChangelogScreen": {
     "title": "Changelog"
+  },
+  "Dictionary": {
+    "title": "Словарь"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} не установлен",
@@ -1545,9 +1668,9 @@ static const Map<String,dynamic> ru = {
     "RatePopup_text": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Просто нарисуйте его, и DaKanji покажет нужный вам иероглиф.",
+    "Onboarding_1_text": "Просто нарисуйте его, и \"DaKanji\" покажет нужный вам иероглиф.",
     "Onboarding_1_title": "Вы не знаете ни одного кандзи?",
-    "Onboarding_2_text": "С помощью DaKanji вы можете быстро искать слова, используя веб-словари и словари приложений.",
+    "Onboarding_2_text": "С помощью \"DaKanji\" вы можете быстро искать слова, используя веб-словари и словари приложений.",
     "Onboarding_2_title": "Поиск символов и слов"
   },
   "Overview": {
@@ -1572,13 +1695,16 @@ static const Map<String,dynamic> ru = {
     "use_default_browser_for_online_dictionaries": "Использование веб-просмотра для веб-словарей"
   },
   "Stores": {
-    "long_description": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? DaKanji поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
+    "long_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? \"DaKanji\" поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
     "mockup_1_1": "Не знаете кандзи? Просто нарисуйте его!",
     "mockup_1_2": "Даже порядок штрихов не имеет значения.",
     "mockup_2": "Поисковые слова",
     "mockup_3": "Переводите с помощью словарей",
-    "short_description": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!\nНаходите иероглифы и переводите их, просто рисуя.",
-    "shortest_description": "Вы изучаете японский язык? Тогда вам нужно попробовать DaKanji!"
+    "short_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\nНаходите иероглифы и переводите их, просто рисуя.",
+    "shortest_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!"
+  },
+  "TextScreen": {
+    "title": "Текст"
   },
   "WebviewScreen": {
     "loading": "Поиск",
@@ -1587,7 +1713,7 @@ static const Map<String,dynamic> ru = {
 };
 static const Map<String,dynamic> zh = {
   "AboutScreen": {
-    "about_text": "大汉字》帮助日语学生和使用日语的人。\n大汉字》可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
+    "about_text": "\"大汉字 \"帮助日语学生和使用日语的人。\n\"大汉字 \"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
     "credits": "贷方",
     "show_changelog": "给我看完整的更新日志。",
     "software_informations_button": "软件信息",
@@ -1595,6 +1721,9 @@ static const Map<String,dynamic> zh = {
   },
   "ChangelogScreen": {
     "title": "更新日志"
+  },
+  "Dictionary": {
+    "title": "词典"
   },
   "DrawScreen": {
     "not_installed": "未安装{DICTIONARY}。",
@@ -1608,7 +1737,7 @@ static const Map<String,dynamic> zh = {
     "tutorial_drawing": "在这里画一个人物",
     "tutorial_long_press_prediction": "长按可打开字典中的预测信息",
     "tutorial_multi_search": "在这里，你可以一次搜索多个字符",
-    "tutorial_multi_search_double_tap": "双击就会清空字段",
+    "tutorial_multi_search_double_tap": "双击就会清空该区域",
     "tutorial_multi_search_long_press": "长按可以打开字典中的字符",
     "tutorial_multi_search_short_press": "短暂的按下，将字符复制到剪贴板上",
     "tutorial_multi_search_swipe_left": "在这个字段上向左滑动，会删除最后一个字符",
@@ -1639,9 +1768,9 @@ static const Map<String,dynamic> zh = {
     "RatePopup_text": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "只要画出来，DaKanji就会显示你需要的字符。",
-    "Onboarding_1_title": "#ERROR!",
-    "Onboarding_2_text": "有了DaKanji，你可以使用网络和应用程序的字典快速查询单词。",
+    "Onboarding_1_text": "只要画出来，\"DaKanji \"就会显示出你需要的字符。",
+    "Onboarding_1_title": "你不知道一个汉字吗？",
+    "Onboarding_2_text": "通过 \"DaKanji\"，你可以使用网络和应用程序的字典快速查询单词。",
     "Onboarding_2_title": "查询字符和单词"
   },
   "Overview": {
@@ -1666,13 +1795,16 @@ static const Map<String,dynamic> zh = {
     "use_default_browser_for_online_dictionaries": "为网络字典使用网络视图"
   },
   "Stores": {
-    "long_description": "你正在学习日语？那么你需要给大汉字一个机会!\n\n你是否曾经尝试阅读日文文本，但不知道如何阅读一些汉字？DaKanji是来帮助你的。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!编写字符和建立单词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名离线\n* 使用网络和应用程序的字典来翻译字符或单词",
+    "long_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n\n你是否曾经试图阅读一篇日语文章，但不知道如何阅读一些汉字？\"DaKanji \"在这里帮助你。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!写字和造词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名的脱机字符\n* 使用网络和应用程序的字典来翻译字符或单词",
     "mockup_1_1": "不知道一个汉字？就画出来吧!",
     "mockup_1_2": "甚至笔画顺序也不重要。",
     "mockup_2": "搜索词",
     "mockup_3": "使用字典进行翻译",
-    "short_description": "你正在学习日语？那么你需要试试DaKanji!\n只需通过绘画就能找到字符并进行翻译。",
-    "shortest_description": "你正在学习日语？那么你需要给大汉字一个机会!"
+    "short_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n只需通过绘画就能找到字符并进行翻译。",
+    "shortest_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!"
+  },
+  "TextScreen": {
+    "title": "文本"
   },
   "WebviewScreen": {
     "loading": "搜索",

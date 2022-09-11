@@ -108,3 +108,10 @@ AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
 AutoSizeGroup drawerAutoSizeGroup = AutoSizeGroup();
 /// Global minimum font size for autosizing texts
 double GlobalMinFontSize = 8;
+
+/// Some japanese sample text
+const String SAMPLE_TEXT = """第二王子の成人と共に王太子が決まる大事な時期に、婚約者である第一王子から「少しの間、自由が欲しい」と言われて困惑した。あと二ヶ月しかないのに、ルエラが教育や社交などを放棄してしまえば、王太子には第二王子が選ばれることになる。
+
+そう説明しようとしたが、口の中が痺れてきた。何かがおかしいと思ったが、目の前が突然真っ暗になった。
+
+目を開ければ、そこは自分の部屋だった。どうやら王家の秘毒を飲まされたようだ。婚約者に毒を盛られたことで気持ちが一気に冷めた。しかも毒の副作用なのか、体に痺れが残っていた。毒の後遺症が残り、婚約は白紙に戻された。""";

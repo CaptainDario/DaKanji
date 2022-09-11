@@ -1,16 +1,19 @@
 {
   "AboutScreen": {
-    "about_text": "DaKanji aide les \u00e9tudiants de la langue japonaise et les personnes qui l'utilisent.\nDaKanji est disponible pour, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez \u00e9galement trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez \u00e9galement [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des probl\u00e8mes d'utilisation de cette application ou des suggestions pour l'am\u00e9liorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie priv\u00e9e peut \u00eatre trouv\u00e9e [ici]({PRIVACY_POLICE}).",
+    "about_text": "\"DaKanji\" aide les \u00e9tudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez \u00e9galement trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez \u00e9galement [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des probl\u00e8mes d'utilisation de cette application ou des suggestions pour l'am\u00e9liorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie priv\u00e9e peut \u00eatre trouv\u00e9e [ici]({PRIVACY_POLICE}).",
     "credits": "Cr\u00e9dits",
-    "show_changelog": "Montrez-moi le changelog complet.",
+    "show_changelog": "Montrez-moi le journal complet des modifications.",
     "software_informations_button": "Informations sur le logiciel",
     "title": "\u00c0 propos de"
   },
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "Dictionary": {
+    "title": "Dictionnaire"
+  },
   "DrawScreen": {
-    "not_installed": "{DICTIONNAIRE} non install\u00e9",
+    "not_installed": "{DICTIONARY} non install\u00e9",
     "title": "Dessin",
     "tutorial_begin_continue": "Tapez pour continuer...",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
@@ -52,9 +55,9 @@
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une \u00e9valuation serait g\u00e9niale et cela aiderait beaucoup ce projet !"
   },
   "OnBoarding": {
-    "Onboarding_1_text": "Il suffit de le dessiner et DaKanji affichera le caract\u00e8re dont vous avez besoin.",
+    "Onboarding_1_text": "Il suffit de le dessiner et \"DaKanji\" affichera le caract\u00e8re dont vous avez besoin.",
     "Onboarding_1_title": "Vous ne connaissez pas un Kanji ?",
-    "Onboarding_2_text": "Avec DaKanji, vous pouvez rechercher rapidement des mots \u00e0 l'aide de dictionnaires Web et d'applications.",
+    "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rechercher rapidement des mots en utilisant les dictionnaires du web et des applications.",
     "Onboarding_2_title": "Recherche de caract\u00e8res et de mots"
   },
   "Overview": {
@@ -89,7 +92,7 @@
     "use_default_browser_for_online_dictionaries": "Utiliser une vue web pour les dictionnaires web"
   },
   "Stores": {
-    "long_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\n\nAvez-vous d\u00e9j\u00e0 essay\u00e9 de lire un texte japonais mais vous ne saviez pas comment lire certains Kanji ? DaKanji est l\u00e0 pour vous aider. Dessinez un Kanji et l'application le convertira en un caract\u00e8re num\u00e9rique. Vous n'avez m\u00eame pas besoin de conna\u00eetre l'ordre des traits ! \u00c9crivez des caract\u00e8res et construisez des mots pour ensuite les traduire, et tout cela est enti\u00e8rement hors ligne.\n\nAper\u00e7u des fonctionnalit\u00e9s :\n* Reconna\u00eet 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caract\u00e8res ou des mots.",
+    "long_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\n\nAvez-vous d\u00e9j\u00e0 essay\u00e9 de lire un texte japonais sans savoir comment lire certains Kanji ? \"DaKanji\" est l\u00e0 pour vous aider. Dessinez un Kanji et l'application le convertira en un caract\u00e8re num\u00e9rique. Vous n'avez m\u00eame pas besoin de conna\u00eetre l'ordre des traits ! \u00c9crivez des caract\u00e8res et construisez des mots pour ensuite les traduire, et tout cela est compl\u00e8tement hors ligne.\n\nAper\u00e7u des fonctionnalit\u00e9s :\n* Reconna\u00eet 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caract\u00e8res ou des mots.",
     "mockup_10": "",
     "mockup_1_1": "Vous ne connaissez pas un Kanji ? Il suffit de le dessiner !",
     "mockup_1_2": "M\u00eame l'ordre des coups n'a pas d'importance.",
@@ -101,8 +104,11 @@
     "mockup_7": "",
     "mockup_8": "",
     "mockup_9": "",
-    "short_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !\nTrouvez des caract\u00e8res et traduisez-les simplement en dessinant.",
-    "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer DaKanji !"
+    "short_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\nTrouvez des caract\u00e8res et traduisez-les simplement en les dessinant.",
+    "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !"
+  },
+  "TextScreen": {
+    "title": "Texte"
   },
   "WebviewScreen": {
     "loading": "Recherche",
