@@ -1,11 +1,12 @@
 enum Screens{
-  about, changelog, drawing, text, home, settings, onboarding, webviewDict
+  about, changelog, drawing, dictionary, text, home, settings, onboarding, webviewDict
 }
 
 Map<Screens, String> Screen2Str = {
   Screens.about          : "about",
   Screens.changelog      : "changelog",
   Screens.drawing        : "drawing",
+  Screens.dictionary     : "dictionary",
   Screens.text           : "text",
   Screens.home           : "home",
   Screens.settings       : "settings",

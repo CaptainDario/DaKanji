@@ -265,6 +265,15 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: this._drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the text dictionary screen
+                            DrawerElement(
+                              leading: Icons.book,
+                              title: LocaleKeys.Dictionary_title.tr(),
+                              route: "/dictionary",
+                              selected: widget.currentScreen == Screens.dictionary,
+                              drawerWidth: this._drawerWidth,
+                              drawerController: _drawerController,
+                            ),
                             // Drawer entry to go to the text processing screen
                             DrawerElement(
                               leading: Icons.abc_outlined,

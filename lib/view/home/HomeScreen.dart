@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
         
       // otherwise open the default screen
       else{
-        Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, "/dictionary", (route) => false);
       }
     });
   }

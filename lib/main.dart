@@ -31,6 +31,7 @@ import 'package:da_kanji_mobile/view/settings/SettingsScreen.dart';
 import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
 import 'package:da_kanji_mobile/view/TestScreen.dart';
 import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
+import 'package:da_kanji_mobile/view/dictionary/DictionaryScreen.dart';
 import 'package:da_kanji_mobile/view/text/TextScreen.dart';
 import 'package:da_kanji_mobile/view/AboutScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
@@ -132,6 +133,7 @@ Future<void> initGetIt() async {
 void desktopWindowSetup() {
   setWindowMinSize(Size(480, 720));
   setWindowTitle(APP_TITLE);
+  
   setWindowFrame(
     Rect.fromLTWH(
       0,
@@ -211,6 +213,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(OnBoardingScreen());
           case "/drawing":
             return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
+          case "/dictionary":
+            return switchScreen(DictionaryScreen(args.navigatedByDrawer, false, false));
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, false, false));
           case "/settings":
