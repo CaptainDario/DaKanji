@@ -12,6 +12,7 @@ import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/text/CustomSelectableText.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/text/CustomTextPopup.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 
 
@@ -258,12 +259,17 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           ),
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
-                                          paintTextBoxes: true,
+                                          paintTextBoxes: false,
                                           selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                           onSelectionChange: (selection) {
-                                            if(selection != TextSelection.collapsed(offset: 0))
+                                            if(selection != ""
+                                              && popupAnimationController.status != AnimationStatus.forward)
                                               popupAnimationController.forward();
-                                            _onSelectionChange(selection);
+                                          },
+                                          onTap: (String selection) {
+                                            if(selection == "" &&
+                                              popupAnimationController.isCompleted)
+                                              popupAnimationController.reverse(from: 1.0);
                                           },
                                         ),
                                       ),
@@ -324,6 +330,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               setState(() {
                                                 fullScreen = !fullScreen;
                                               });
+                                              
+                                            },
+                                          ),
+                                        ),
+                                        Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: Icon(Icons.translate),
+                                            onPressed: () {
+                                              launchUrlString("https://www.deepl.com/translate#jp/en/${selectedText}");
                                               
                                             },
                                           ),
