@@ -139,275 +139,272 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     return DaKanjiDrawer(
-      currentScreen: Screens.drawing,
+      currentScreen: Screens.text,
       animationAtStart: !widget.openedByDrawer,
-      child: ChangeNotifierProvider.value(
-        value: GetIt.I<DrawScreenState>().strokes,
-        child: LayoutBuilder(
-          builder: (context, constraints){
+      child: LayoutBuilder(
+        builder: (context, constraints){
 
-            // set if the app should be layed out in portrait or landscape
-            runningInPortrait = constraints.maxHeight > constraints.maxWidth;
-              
-            return AnimatedBuilder(
-              animation: _controller,
-              builder: (context, builder) {
-                return Container(
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  child: Padding(
-                    padding: EdgeInsets.all(padding),
-                    child: Stack(
-                      children: [
-                        // Text input
-                        Focus(
-                          onFocusChange: (value) {
-                            if(value && popupAnimationController.isCompleted){
-                              popupAnimationController.reverse();
-                            }
-                          },
-                          child: Container(
-                            width: runningInPortrait ?
-                              constraints.maxWidth - padding: 
-                                (constraints.maxWidth/2-padding) 
-                                * (1-_animation.value),
-                              height: runningInPortrait ?
-                                (constraints.maxHeight/2-padding) 
-                                * (1-_animation.value) :
-                                constraints.maxHeight - padding,
-                            child: Card(
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                  2*padding, padding, 2*padding, padding
+          // set if the app should be layed out in portrait or landscape
+          runningInPortrait = constraints.maxHeight > constraints.maxWidth;
+            
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (context, builder) {
+              return Container(
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                child: Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: Stack(
+                    children: [
+                      // Text input
+                      Focus(
+                        onFocusChange: (value) {
+                          if(value && popupAnimationController.isCompleted){
+                            popupAnimationController.reverse();
+                          }
+                        },
+                        child: Container(
+                          width: runningInPortrait ?
+                            constraints.maxWidth - padding: 
+                              (constraints.maxWidth/2-padding) 
+                              * (1-_animation.value),
+                            height: runningInPortrait ?
+                              (constraints.maxHeight/2-padding) 
+                              * (1-_animation.value) :
+                              constraints.maxHeight - padding,
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                2*padding, padding, 2*padding, padding
+                              ),
+                              child: TextField(
+                                decoration: new InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  hintText: "Input text here...",
                                 ),
-                                child: TextField(
-                                  decoration: new InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintText: "Input text here...",
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000d"),
+                                    //replacementString: "\r"
                                   ),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.deny(
-                                      RegExp(r"\u000d"),
-                                      //replacementString: "\r"
-                                    ),
-                                    FilteringTextInputFormatter.deny(
-                                      RegExp(r"\u000a"),
-                                      replacementString: "\n"
-                                    )
-                                  ],
-                                  controller: widget.inputController,
-                                  maxLines: null,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                  onChanged: ((value) {
-                                    setState(() {
-                                      inputText = value;
-                                      analyzedWords = runAnalyzer(inputText, AnalyzeModes.normal);
-                                    });
-                                  }),
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000a"),
+                                    replacementString: "\n"
+                                  )
+                                ],
+                                controller: widget.inputController,
+                                maxLines: null,
+                                style: TextStyle(
+                                  fontSize: 20,
                                 ),
+                                onChanged: ((value) {
+                                  setState(() {
+                                    inputText = value;
+                                    analyzedWords = runAnalyzer(inputText, AnalyzeModes.normal);
+                                  });
+                                }),
                               ),
                             ),
                           ),
                         ),
-                        // processed text
-                        Positioned(
-                          bottom: 0,
-                          right: runningInPortrait ? null : 0,
-                          child: Container(
-                            width: runningInPortrait ?
-                              constraints.maxWidth - 2*padding: 
-                              (constraints.maxWidth/2-padding) 
-                              * (_animation.value+1.0),
-                            height: runningInPortrait ?
-                              (constraints.maxHeight/2-padding) 
-                              * (_animation.value+1.0) :
-                              constraints.maxHeight - 2*padding,
-                            child: Card(
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                  2*padding, 2*padding, 2*padding, padding/2
-                                ),
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Center(
-                                        child: CustomSelectableText(
-                                          words: analyzedWords.item1,
-                                          rubys: analyzedWords.item2.map(
-                                            (e) => (e.length == 9 ? e[7] : "")
-                                          ).toList(),
-                                          width: runningInPortrait ?
-                                            constraints.maxWidth - padding: 
-                                            (constraints.maxWidth/2-padding) 
-                                            * (_animation.value+1.0),
-                                          height: runningInPortrait ?
-                                            (constraints.maxHeight/2-padding) 
-                                            * (_animation.value+1.0) :
-                                            constraints.maxHeight - 2*padding,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            height: 1.4
+                      ),
+                      // processed text
+                      Positioned(
+                        bottom: 0,
+                        right: runningInPortrait ? null : 0,
+                        child: Container(
+                          width: runningInPortrait ?
+                            constraints.maxWidth - 2*padding: 
+                            (constraints.maxWidth/2-padding) 
+                            * (_animation.value+1.0),
+                          height: runningInPortrait ?
+                            (constraints.maxHeight/2-padding) 
+                            * (_animation.value+1.0) :
+                            constraints.maxHeight - 2*padding,
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                2*padding, 2*padding, 2*padding, padding/2
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: CustomSelectableText(
+                                        words: analyzedWords.item1,
+                                        rubys: analyzedWords.item2.map(
+                                          (e) => (e.length == 9 ? e[7] : "")
+                                        ).toList(),
+                                        width: runningInPortrait ?
+                                          constraints.maxWidth - padding: 
+                                          (constraints.maxWidth/2-padding) 
+                                          * (_animation.value+1.0),
+                                        height: runningInPortrait ?
+                                          (constraints.maxHeight/2-padding) 
+                                          * (_animation.value+1.0) :
+                                          constraints.maxHeight - 2*padding,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          height: 1.4
+                                        ),
+                                        showRubys: showRubys,
+                                        addSpaces: addSpaces,
+                                        paintTextBoxes: false,
+                                        selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
+                                        onSelectionChange: (selection) {
+                                          if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
+                                            popupAnimationController.forward();
+                                          }
+                                          _onSelectionChange(selection);
+                                        },
+                                        onTap: (String selection) {
+                                          if(selection == "" &&
+                                            popupAnimationController.isCompleted)
+                                            popupAnimationController.reverse(from: 1.0);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      // spaces toggle
+                                      Material(
+                                        color: Theme.of(context).cardColor,
+                                        child: IconButton(
+                                          icon: SvgPicture.asset(
+                                            !addSpaces ?
+                                            "assets/fonts/icons/space_bar_off.svg" :
+                                            "assets/fonts/icons/space_bar_on.svg",
+                                            color: Colors.white,
                                           ),
-                                          showRubys: showRubys,
-                                          addSpaces: addSpaces,
-                                          paintTextBoxes: false,
-                                          selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
-                                          onSelectionChange: (selection) {
-                                            if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
-                                              popupAnimationController.forward();
-                                            }
-                                            _onSelectionChange(selection);
-                                          },
-                                          onTap: (String selection) {
-                                            if(selection == "" &&
-                                              popupAnimationController.isCompleted)
-                                              popupAnimationController.reverse(from: 1.0);
+                                          onPressed: () {
+                                            setState(() {
+                                              addSpaces = !addSpaces;
+                                            });
                                           },
                                         ),
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        // spaces toggle
-                                        Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: SvgPicture.asset(
-                                              !addSpaces ?
-                                              "assets/fonts/icons/space_bar_off.svg" :
-                                              "assets/fonts/icons/space_bar_on.svg",
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                addSpaces = !addSpaces;
-                                              });
-                                            },
+                                      // furigana toggle
+                                      Material(
+                                        color: Theme.of(context).cardColor,
+                                        child: IconButton(
+                                          key: GlobalKey(),
+                                          icon: SvgPicture.asset(
+                                            showRubys ?
+                                            "assets/fonts/icons/furigana_off.svg" :
+                                            "assets/fonts/icons/furigana_on.svg",
+                                            color: Colors.white,
                                           ),
+                                          onPressed: () {
+                                            setState(() {
+                                              showRubys = !showRubys;
+                                            });
+                                          },
                                         ),
-                                        // furigana toggle
-                                        Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            key: GlobalKey(),
-                                            icon: SvgPicture.asset(
-                                              showRubys ?
-                                              "assets/fonts/icons/furigana_off.svg" :
-                                              "assets/fonts/icons/furigana_on.svg",
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                showRubys = !showRubys;
-                                              });
-                                            },
+                                      ),
+                                      // full screen toggle
+                                      Material(
+                                        color: Theme.of(context).cardColor,
+                                        child: IconButton(
+                                          icon: Icon(!fullScreen ? 
+                                            Icons.open_in_full : 
+                                            Icons.close_fullscreen
                                           ),
+                                          onPressed: () {
+                                            // do not allow change while animation is running
+                                            if (_controller.isAnimating)
+                                              return;
+                                            if(_controller.isCompleted)
+                                              _controller.reverse();
+                                            else if(_controller.isDismissed)
+                                              _controller.forward();
+                      
+                                            setState(() {
+                                              fullScreen = !fullScreen;
+                                            });
+                                            
+                                          },
                                         ),
-                                        // full screen toggle
-                                        Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: Icon(!fullScreen ? 
-                                              Icons.open_in_full : 
-                                              Icons.close_fullscreen
-                                            ),
-                                            onPressed: () {
-                                              // do not allow change while animation is running
-                                              if (_controller.isAnimating)
-                                                return;
-                                              if(_controller.isCompleted)
-                                                _controller.reverse();
-                                              else if(_controller.isDismissed)
-                                                _controller.forward();
-                        
-                                              setState(() {
-                                                fullScreen = !fullScreen;
-                                              });
-                                              
-                                            },
-                                          ),
+                                      ),
+                                      // button to open on DeepL website
+                                      Material(
+                                        color: Theme.of(context).cardColor,
+                                        child: IconButton(
+                                          icon: Icon(Icons.translate),
+                                          onPressed: () {
+                                            launchUrlString("https://www.deepl.com/translate#jp/en/${inputText}");
+                                            
+                                          },
                                         ),
-                                        // button to open on DeepL website
-                                        Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: Icon(Icons.translate),
-                                            onPressed: () {
-                                              launchUrlString("https://www.deepl.com/translate#jp/en/${inputText}");
-                                              
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),
                         ),
-                        /// Popup window to show text selection in dict / DeepL
-                        Positioned(
-                          width: popupSizeWidth,
-                          height: popupSizeHeight,
-                          left: popupPositionLeft,
-                          top: popupPositionTop,
-                          child: Listener(
-                            child: ScaleTransition(
-                              scale: popupAnimation,
-                              child: CustomTextPopup(
-                                selectedText: selectedText,
-                                onMovedViaHeader: (event) {
-                                  setState(() {
-                                    // assure that the popup is not moved out of view
-                                    if(popupPositionLeft + event.delta.dx > 0 &&
-                                      popupPositionLeft + popupSizeWidth + 
-                                      2*padding + event.delta.dx < constraints.maxWidth)
-                                      popupPositionLeft += event.delta.dx;
-                                                    
-                                    // assure that the popup is not moved out of view
-                                    if(popupPositionTop + event.delta.dy > 0 &&
-                                      popupPositionTop + popupSizeHeight + 
-                                      2*padding + event.delta.dy < constraints.maxHeight)
-                                                    
-                                      popupPositionTop  += event.delta.dy;
-                                  });
-                                },
-                                onResizedViaCorner: (event) {
-                                  setState(() {
-                                    // don't allow resizing the popup over the 
-                                    // window or smaller than the threshold 
-                                    if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
-                                      popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
-                                      popupSizeWidth += event.delta.dx;
-                                                    
-                                    // don't allow resizing the popup over the 
-                                    // window or smaller than the threshold 
-                                    if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
-                                      popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
-                                      popupSizeHeight += event.delta.dy;
-                                  });
-                                },
-                              ),
+                      ),
+                      /// Popup window to show text selection in dict / DeepL
+                      Positioned(
+                        width: popupSizeWidth,
+                        height: popupSizeHeight,
+                        left: popupPositionLeft,
+                        top: popupPositionTop,
+                        child: Listener(
+                          child: ScaleTransition(
+                            scale: popupAnimation,
+                            child: CustomTextPopup(
+                              selectedText: selectedText,
+                              onMovedViaHeader: (event) {
+                                setState(() {
+                                  // assure that the popup is not moved out of view
+                                  if(popupPositionLeft + event.delta.dx > 0 &&
+                                    popupPositionLeft + popupSizeWidth + 
+                                    2*padding + event.delta.dx < constraints.maxWidth)
+                                    popupPositionLeft += event.delta.dx;
+                                                  
+                                  // assure that the popup is not moved out of view
+                                  if(popupPositionTop + event.delta.dy > 0 &&
+                                    popupPositionTop + popupSizeHeight + 
+                                    2*padding + event.delta.dy < constraints.maxHeight)
+                                                  
+                                    popupPositionTop  += event.delta.dy;
+                                });
+                              },
+                              onResizedViaCorner: (event) {
+                                setState(() {
+                                  // don't allow resizing the popup over the 
+                                  // window or smaller than the threshold 
+                                  if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
+                                    popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
+                                    popupSizeWidth += event.delta.dx;
+                                                  
+                                  // don't allow resizing the popup over the 
+                                  // window or smaller than the threshold 
+                                  if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
+                                    popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
+                                    popupSizeHeight += event.delta.dy;
+                                });
+                              },
                             ),
                           ),
                         ),
-                        
-                      ]
-                    ),
+                      ),
+                      
+                    ]
                   ),
-                );
-              }
-            );
-          }
-        ),
+                ),
+              );
+            }
+          );
+        }
       ),
     );
   }
