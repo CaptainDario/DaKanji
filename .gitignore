@@ -53,7 +53,7 @@ CNN_single_char.tflite
 .VSCodeCounter/
 
 # force add tf lite desktop binaries
-!blobs/**
+blobs/**
 
 # plugins to ignore
 # ignore custom tf lite flutter repo
