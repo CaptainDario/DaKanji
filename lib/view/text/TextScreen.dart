@@ -42,7 +42,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the output of the analyzer
   Tuple2<List<String>, List<List<String>>> analyzedWords = Tuple2([], []);
 
-
   /// the padding used between all widges
   final double padding = 8.0;
 
@@ -79,7 +78,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   late final Animation<double> popupAnimation;
   /// the currently selected text
   String selectedText = "";
-  
+  /// the text that is currently in the input field
+  String inputText = "";
 
   /// callback that should be called when the current selection in the 
   /// processed text widget changes
@@ -115,11 +115,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       CurveTween(curve: Curves.easeInOut)
     );
 
-    // initialize the drawing interpreter if it has not been already
-    //if(!GetIt.I<DrawingInterpreter>().wasInitialized){
-    //  GetIt.I<DrawingInterpreter>().init();
-    //}
-
+    // Show the tutorial when opening this screen for the first time
     /*WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
@@ -210,7 +206,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   ),
                                   onChanged: ((value) {
                                     setState(() {
-                                      analyzedWords = runAnalyzer(value, AnalyzeModes.normal);
+                                      inputText = value;
+                                      analyzedWords = runAnalyzer(inputText, AnalyzeModes.normal);
                                     });
                                   }),
                                 ),
@@ -262,9 +259,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           paintTextBoxes: false,
                                           selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                           onSelectionChange: (selection) {
-                                            if(selection != ""
-                                              && popupAnimationController.status != AnimationStatus.forward)
+                                            if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
                                               popupAnimationController.forward();
+                                            }
+                                            _onSelectionChange(selection);
                                           },
                                           onTap: (String selection) {
                                             if(selection == "" &&
@@ -277,6 +275,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
+                                        // spaces toggle
                                         Material(
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
@@ -293,6 +292,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             },
                                           ),
                                         ),
+                                        // furigana toggle
                                         Material(
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
@@ -310,6 +310,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             },
                                           ),
                                         ),
+                                        // full screen toggle
                                         Material(
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
@@ -321,7 +322,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               // do not allow change while animation is running
                                               if (_controller.isAnimating)
                                                 return;
-                                        
                                               if(_controller.isCompleted)
                                                 _controller.reverse();
                                               else if(_controller.isDismissed)
@@ -334,12 +334,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             },
                                           ),
                                         ),
+                                        // button to open on DeepL website
                                         Material(
                                           color: Theme.of(context).cardColor,
                                           child: IconButton(
                                             icon: Icon(Icons.translate),
                                             onPressed: () {
-                                              launchUrlString("https://www.deepl.com/translate#jp/en/${selectedText}");
+                                              launchUrlString("https://www.deepl.com/translate#jp/en/${inputText}");
                                               
                                             },
                                           ),
