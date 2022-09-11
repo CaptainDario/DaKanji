@@ -136,7 +136,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void didUpdateWidget(CustomSelectableText oldWidget) {
     super.didUpdateWidget(oldWidget);
     
-    if (widget.words != oldWidget.words || dimChanged) {
+    // if the displayed text, widget dimensions, rubys/space-option changed
+    // recalculate the furigana
+    if (widget.words != oldWidget.words
+      || dimChanged
+      || widget.showRubys != oldWidget.showRubys
+      || widget.addSpaces != oldWidget.addSpaces) {
       _textBoxRects.clear();
       _selectionRects.clear();
       _textSelection = TextSelection.collapsed(offset: -1);
@@ -334,9 +339,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         baseOffset: 0,
         extentOffset: words.join().length,
       ),
-    );
-
-    
+    );  
   }
 
   List<Rect> _computeSelectionRects(TextSelection? selection) {
@@ -386,7 +389,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(words[i]) ||
         i == words.length-1){
 
-        // 
+        // update text selection
         if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
           if(i == words.length-1)
             cntEnd += words[i].length;
@@ -521,7 +524,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                             )
                           );
                         })),
-                      
                     ],
                   );
                 }
