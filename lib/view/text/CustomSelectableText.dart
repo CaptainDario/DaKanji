@@ -25,6 +25,9 @@ class CustomSelectableText extends StatefulWidget {
     this.paintTextBoxes = false,
     this.textBoxesColor = Colors.grey,
     this.onSelectionChange,
+    this.onTap,
+    this.onDoubleTap,
+    this.onTripleTap
   }) : super(key: key);
 
   /// a list containing all words that should be displayed
@@ -58,6 +61,12 @@ class CustomSelectableText extends StatefulWidget {
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current selection as parameter
   final void Function(String)? onSelectionChange;
+  /// callback that is executed when a single tap is executed on the text
+  final void Function(String)? onTap;
+  /// callback that is executed when a double tap is executed on the text
+  final void Function(String)? onDoubleTap;
+  /// callback that is executed when a triple tap is executed on the text
+  final void Function(String)? onTripleTap;
 
   @override
   _CustomSelectableTextState createState() => _CustomSelectableTextState();
@@ -413,9 +422,21 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         multiTapTimer = Timer(
           const Duration(milliseconds: 200),
           () {
-            if (tapped == 1) tap(event);
-            else if (tapped == 2) doubleTap(event);
-            else if (tapped >= 3) tripleTap(event);
+            int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
+            int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
+            String currentText = words.join().substring(start, end);
+            if (tapped == 1){
+              tap(event);
+              if(widget.onTap != null) widget.onTap!(currentText);
+            }
+            else if (tapped == 2){
+              doubleTap(event);
+              if(widget.onDoubleTap != null) widget.onDoubleTap!(currentText);
+            }
+            else if (tapped >= 3){
+              tripleTap(event);
+              if(widget.onTripleTap != null) widget.onTripleTap!(currentText);
+            }
             
             tapped = 0;
           }
@@ -480,7 +501,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         ...List.generate(rubyPositions.length, ((index) {
                           return Positioned(
                             width: rubyPositions[index].right - rubyPositions[index].left,
-                            top: rubyPositions[index].top - (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                            top: rubyPositions[index].top -
+                              (rubyPositions[index].bottom - rubyPositions[index].top)/2,
                             left: rubyPositions[index].left,
                             height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
                             child: Container(
