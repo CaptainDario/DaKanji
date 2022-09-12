@@ -17,6 +17,12 @@ class DictionaryScreenSearchTab extends StatefulWidget {
 }
 
 class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
+
+  final GlobalKey<AnimatedListState> animatedListKey =
+    GlobalKey<AnimatedListState>();
+
+  int currentItems = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,8 +30,21 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
         Container(
           height: widget.height * 0.1,
           child: Card(
-            child: TextField(
-              
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (text) {
+                  for (var i = 0; i < 10; i++) {
+                    Future.delayed(Duration(milliseconds: i*50), () {
+                        animatedListKey.currentState!.removeItem(i, 
+                          (context, animation) => FadeTransition(opacity: animation),
+                        );
+                        animatedListKey.currentState!.insertItem(i);
+                      }
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),
@@ -34,12 +53,16 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
           height: widget.height * 0.85,
           width: widget.width,
           child: AnimatedList(
-            initialItemCount: 100,
+            key: animatedListKey,
+            initialItemCount: 10,
             itemBuilder: ((context, index, animation) {
-              return Card(
-                child: Text(
-                  index.toString()
-                )
+              return FadeTransition(
+                opacity: animation,
+                child: Card(
+                  child: Text(
+                    index.toString()
+                  )
+                ),
               );
             })
           ),
