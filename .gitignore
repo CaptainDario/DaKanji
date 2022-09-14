@@ -55,6 +55,9 @@ CNN_single_char.tflite
 # force add tf lite desktop binaries
 blobs/**
 
+# ignore the dictionary files
+assets/dict
+
 # plugins to ignore
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
