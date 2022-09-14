@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenExampleTab.dart';
@@ -6,8 +7,6 @@ import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenSearchTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenWordTab.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 
 
@@ -27,6 +26,12 @@ class DictionaryScreen extends StatefulWidget {
 }
 
 class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -35,7 +40,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
       child: LayoutBuilder(
         builder: ((context, constraints) {
 
-          int tabsSideBySide = min(3, (constraints.maxWidth / 400).floor());
+          int tabsSideBySide = min(3, (constraints.maxWidth / 500).floor());
 
           return Row(
             children: [
