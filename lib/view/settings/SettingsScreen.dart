@@ -20,7 +20,6 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTi
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveKeybindingInput.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
