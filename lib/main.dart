@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -37,6 +39,7 @@ import 'package:da_kanji_mobile/view/AboutScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+import 'package:database_builder/database_builder.dart';
 
 
 
@@ -46,6 +49,21 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
+  // init Hive
+  Hive.registerAdapter(EntryAdapter());
+  Hive.registerAdapter(LanguageMeaningsAdapter());
+  
+  Directory appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+  await Hive.openBox("jm_enam_and_dict");
+
+  var box = Hive.box("jm_enam_and_dict");
+  String hiveLoc = "${appDocumentDirectory.path}/jm_enam_and_dict.hive";
+  await box.close();
+
+  ByteData data = await rootBundle.load("assets/dict/jm_enam_and_dict.hive");
+  List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  File(hiveLoc).writeAsBytes(bytes, flush: true);
 
   await init();
   
@@ -91,6 +109,12 @@ Future<void> init() async {
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
   }
+
+  await loadHive();
+}
+
+Future<void> loadHive() async {
+  await Hive.openBox('jm_enam_and_dict');
 }
 
 /// Convenience function to clear the SharedPreferences
