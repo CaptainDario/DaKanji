@@ -36,7 +36,8 @@ dependencies:
   keybinder: 1.0.1
   database_builder:
     path: ./plugins/DaKanji-Dictionary/database_builder
-  hive_flutter: ^1.1.0
+  hive_flutter: 1.1.0
+  flutter_staggered_animations: 1.1.1
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
@@ -137,7 +138,7 @@ flutter:
     # tf lite models
     - assets/tflite_models/
     # dictionary
-    - assets/dict/
+    #- assets/dict/
     # misc
     - CHANGELOG.md
     - pubspec.yaml
