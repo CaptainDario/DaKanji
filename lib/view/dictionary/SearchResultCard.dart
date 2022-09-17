@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 
 
 
+/// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
   SearchResultCard(
-    this.reading,
-    this.kanji,
-    this.meaning,
+    this.readings,
+    this.kanjis,
+    this.meanings,
+    this.partOfSpeech,
     {Key? key}
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  String reading;
+  final List<String> readings;
   /// The kanji that should be displayed in this card
-  String kanji;
+  final List<String> kanjis;
   /// The meaning that should be displayed in this card
-  String meaning;
+  final List<String> meanings;
+
+  final List<String> partOfSpeech;
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
@@ -29,59 +33,52 @@ class _SearchResultCardState extends State<SearchResultCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
-          print("test");
+          
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.kanjis.isEmpty ? "" : widget.readings.join(", "),
+                      style: TextStyle(
+                        fontSize: 10
+                      ),
+                    ),
+                    Text(
+                      (
+                        widget.kanjis.isNotEmpty ? widget.kanjis : widget.readings
+                      ).join(", "),
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
+                    ),
+                    Text(
+                      widget.meanings.join("/ "),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 10
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.reading,
-                    style: TextStyle(
-                      fontSize: 10
-                    ),
-                  ),
-                  Text(
-                    widget.kanji,
-                    style: TextStyle(
-                      fontSize: 20
-                    ),
-                  ),
-                  Text(
-                    widget.meaning,
+                    widget.partOfSpeech.first.toString(),
                     style: TextStyle(
                       fontSize: 10
                     ),
                   )
                 ],
-              ),
-              Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "common",
-                        style: TextStyle(
-                          fontSize: 10
-                        ),
-                      ),
-                      Text(
-                        "する"
-                      ),
-                      Text(
-                        "noun",
-                        style: TextStyle(
-                          fontSize: 10
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+              )
             ],
           ),
         ),
