@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiCard.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,6 +13,14 @@ class DictionaryScreenKanjiTab extends StatefulWidget {
 class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
   @override
   Widget build(BuildContext context) {
-    return Text("Kanji");
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          DictionaryScreenKanjiCard(
+            
+          ),
+        ],
+      ),
+    );
   }
 }
