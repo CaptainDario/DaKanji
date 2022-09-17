@@ -1,8 +1,11 @@
-import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
+import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
+import 'package:da_kanji_mobile/model/Dict/DictIsolate.dart';
 import 'package:hive/hive.dart';
+import 'package:database_builder/database_builder.dart';
 
 
 
@@ -22,11 +25,15 @@ class DictionaryScreenSearchTab extends StatefulWidget {
 
 class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
 
-  /// Global key to add/remove elements from the search result list UI
-  final GlobalKey<AnimatedListState> animatedListKey =
-    GlobalKey<AnimatedListState>();
-  /// data onject of the search results
+  /// data object of the search results
   List searchResults = [];
+
+  String lastInput = "";
+  
+  DictIsolate dictIsolate = DictIsolate();
+
+  TextEditingController searchInputController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +47,32 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    onChanged: (text) {
-                      // remove old search results
-                      for (var i = 0; i < searchResults.length; i++) {
-                        animatedListKey.currentState!.removeItem(0, 
-                          (context, animation) => Opacity(
-                            opacity: animation.value,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: searchInputController,
+                          onChanged: (text) async {
+                            updateSearchResults(text);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: widget.height * 0.1,
+                        width: widget.height * 0.1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              searchInputController.clear();
+                              searchResults = [];
+                            });
+                          },
+                          child: Icon(
+                            Icons.clear
                           ),
-                        );
-                      }
-
-                      // lookup words in database
-                      var box = Hive.box('jm_enam_and_dict');
-                      searchResults = box.values.where((entry) => 
-                        entry.readings.contains(text) ? true : false
-                      ).toList();
-
-                      // add new search results with staggered effect
-                      Future ft = Future((){});
-                      for (var i = 0; i < searchResults.length; i++) {
-                        ft = ft.then((value) {
-                          return Future.delayed(Duration(milliseconds: 50), (){
-                            animatedListKey.currentState!.insertItem(i);
-                          });
-                        });
-                      }
-                    },
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -75,21 +81,21 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
             Container(
               height: widget.height * 0.85,
               width: widget.width,
-              child: AnimatedList(
-                key: animatedListKey,
-                initialItemCount: 0,
-                itemBuilder: ((context, index, animation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: SearchResultCard(
-                      searchResults[index].readings.join(", "),
-                      searchResults[index].kanjis.join(", "),
-                      () {
-                        String s = searchResults[index].meanings[0].meanings.join(", ");
-                        if(s.length > 50) s = s.substring(0, 50);
-                        return s;
-                      } (),
-                    )
+              child: ListView.builder(
+                itemCount: searchResults.length,
+                itemBuilder: ((context, index) {
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: SearchResultCard(
+                          searchResults[index].readings,
+                          searchResults[index].kanjis,
+                          searchResults[index].meanings[0].meanings,
+                          searchResults[index].partOfSpeech
+                        )
+                      ),
+                    ),
                   );
                 })
               ),
@@ -116,5 +122,38 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
         )
       ],
     );
+  }
+
+  Future<void> updateSearchResults(String text) async {
+
+    Stopwatch stopwatch = new Stopwatch()..start();
+    if(!Hive.isBoxOpen("jm_enam_and_dict")){
+      Hive.init("C:/Users/Dario/Documents");
+      Hive.registerAdapter(EntryAdapter());
+      Hive.registerAdapter(MeaningAdapter());
+    }
+
+    Box box = await Hive.openBox("jm_enam_and_dict");
+    print('Loading the box executed in ${stopwatch.elapsed}');
+    
+    /*
+    if(!dictIsolate.initialized && !dictIsolate.isInitializing)
+      await dictIsolate.init();
+    if(dictIsolate.isInitializing)
+      return;
+    */
+
+    // only search in dictionary if the input text changed
+    if(!(lastInput != text))
+      return;
+
+    searchResults = box.values.where((entry) => 
+        entry.readings.contains(text) ? true : false
+      ).toList();
+    //searchResults = await dictIsolate.sendAndReceive([text]).first;
+
+    setState(() {
+      lastInput = text;
+    });
   }
 }
