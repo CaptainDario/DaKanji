@@ -149,7 +149,10 @@ Future<void> initGetIt() async {
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
   
-  // screen independent
+  // Kagome
+  GetIt.I.registerSingleton<Kagome>(Kagome());
+
+  // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 }
 

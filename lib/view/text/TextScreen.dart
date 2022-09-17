@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 import 'package:kagome_dart/kagome_dart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:da_kanji_mobile/model/Screens.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/view/text/CustomSelectableText.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/text/CustomTextPopup.dart';
@@ -94,8 +92,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   void initState() {
 
     super.initState();
-
-    initTokenizer();
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -185,7 +181,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
-                                  hintText: "Input text here...",
+                                  hintText: "Add localization here",
                                 ),
                                 inputFormatters: [
                                   FilteringTextInputFormatter.deny(
@@ -205,7 +201,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 onChanged: ((value) {
                                   setState(() {
                                     inputText = value;
-                                    analyzedWords = runAnalyzer(inputText, AnalyzeModes.normal);
+                                    analyzedWords = 
+                                      GetIt.I<Kagome>().runAnalyzer(inputText, AnalyzeModes.normal);
                                   });
                                 }),
                               ),
