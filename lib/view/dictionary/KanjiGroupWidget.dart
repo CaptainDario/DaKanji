@@ -40,22 +40,30 @@ class KanjiGroupsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    canvas.drawRect(
-      Rect.fromLTRB(0, 0, size.width, size.height),
-      Paint()..color = Colors.blue
-    );
+    //canvas.drawRect(
+    //  Rect.fromLTRB(0, 0, size.width, size.height),
+    //  Paint()..color = Colors.blue
+    //);
 
-    // circle radius
-    double cR = 50;
-    // circle offset
-    Offset cO = Offset(100, 50);
+    drawCircleChar(30, Offset(100, 30), "品", canvas);
 
-    // text side length
-    double tS = cR * sqrt(2);
+    drawCircleChar(30, Offset(30, 100), "口", canvas);
+    drawCircleChar(30, Offset(100, 100), "口", canvas);
+    drawCircleChar(30, Offset(170, 100), "口", canvas);
+    
+  }
+
+  /// Draws a hollow circle with `char` in it at `circleOffset`
+  void drawCircleChar(double circleRadius, Offset circleOffset, String char, Canvas canvas){
+
+    if(char.length > 1) throw "Only *single* characters are allowed as input";
+
+    // text max side length
+    double tS = circleRadius * sqrt(2);
     // text offset (x and y)
-    double tO = (2*cR - tS) / 2;
+    double tO = (2*circleRadius - tS) / 2;
 
-    drawCircle(cO, cR, canvas);
+    drawCircle(circleOffset, circleRadius, canvas);
 
     TextStyle textStyle = TextStyle(color: Colors.black, fontSize: 1);
     TextPainter textPainter;
@@ -66,7 +74,7 @@ class KanjiGroupsPainter extends CustomPainter {
         color: Colors.black,
         fontSize: textStyle.fontSize!+1
       );
-      final textSpan = TextSpan(text: '鬱', style: textStyle,);
+      final textSpan = TextSpan(text: char, style: textStyle,);
       textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr);
       textPainter.layout();
 
@@ -75,17 +83,19 @@ class KanjiGroupsPainter extends CustomPainter {
 
     double h = textPainter.size.height;
     double w = textPainter.size.width;
-    final offset = Offset(
+    final textOffset = Offset(
       // rectangle offset + offset if the character is taller than wide 
-      tO + cO.dx - cR + (h > w ? ((h - w) / 2) : 0),
+      tO + circleOffset.dx - circleRadius + (h > w ? ((h - w) / 2) : 0),
       // rectangle offset + offset if the character is wider than tall
-      tO + cO.dy - cR + (w > h ? ((w - h) / 2) : 0),
+      tO + circleOffset.dy - circleRadius + (w > h ? ((w - h) / 2) : 0),
     );
-    textPainter.paint(canvas, offset);
-    
+    textPainter.paint(canvas, textOffset);
   }
 
+  /// Draws a hollow circle at `center` with radius of `radius` on the given
+  /// `canvas`
   void drawCircle(Offset center, double radius, Canvas canvas){
+
     double strokeWidth = 2;
     final paint = Paint()
       ..color = Colors.black
@@ -107,11 +117,6 @@ class KanjiGroupsPainter extends CustomPainter {
     canvas.drawPath(path, paint);
   }
 
-  // Since this Sky painter has no fields, it always paints
-  // the same thing and semantics information is the same.
-  // Therefore we return false here. If we had fields (set
-  // from the constructor) then we would return true if any
-  // of them differed from the same fields on the oldDelegate.
   @override
   bool shouldRepaint(KanjiGroupsPainter oldDelegate) => false;
   @override
