@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenExampleTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiTab.dart';
@@ -59,7 +62,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
                 ),
               if(tabsSideBySide > 2)
                 Container(
-                  child: DictionaryScreenKanjiTab(),
+                  child: DictionaryScreenKanjiTab(["鬱"]),
                   width: constraints.maxWidth / (tabsSideBySide+1),
                 ),
               if(tabsSideBySide >= 3) 
@@ -92,7 +95,9 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
                                   constraints.maxWidth / (tabsSideBySide+1)
                                 ),
                                 if(tabsSideBySide < 2) DictionaryScreenWordTab(),
-                                if(tabsSideBySide < 3) DictionaryScreenKanjiTab(),
+                                if(tabsSideBySide < 3) DictionaryScreenKanjiTab(
+                                  [GetIt.I<Box>().get("鬱").SVG]
+                                ),
                                 if(tabsSideBySide < 4) DictionaryScreenExampleTab()
                               ],
                             );
