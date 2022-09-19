@@ -1,20 +1,23 @@
-import 'package:flutter/material.dart';
-import 'dart:math';
+import 'dart:collection';
 
-import 'package:da_kanji_mobile/model/TreeNode.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:xml/xml.dart';
+import 'package:graphview/GraphView.dart';
 
 
 
 class KanjiGroupWidget extends StatefulWidget {
   KanjiGroupWidget(
-    this.kanjiGroups,
+    this.kanjiVG,
     this.width,
     this.height,
     {Key? key}
   ) : super(key: key);
 
   /// Tree containing the kanji group hirarchy to be displayed
-  final TreeNode<String> kanjiGroups; 
+  final String kanjiVG; 
   /// the height of this widget
   final double height;
   /// the width of this widget
@@ -25,100 +28,142 @@ class KanjiGroupWidget extends StatefulWidget {
 }
 
 class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
+
+  /// graph of the KanjiVG element
+  final Graph graph = Graph()..isTree = true;
+  // builder configuration for the GraphView
+  BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
+  // List containing all sub SVGs of the KanjiVG entry and its order matches
+  // all `Node.Id` in `graph`
+  late List<String> kanjiVGStringList;
+
+  @override
+  void initState() {
+
+    kanjiVGStringList = kanjiVGToGraph(widget.kanjiVG, graph);
+
+    builder
+      ..siblingSeparation = (10)
+      ..levelSeparation = (15)
+      ..subtreeSeparation = (30)
+      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: KanjiGroupsPainter(),
-      size: Size(widget.width, widget.height),
+
+    return Container(
+      width: widget.width,
+      height: 400,
+      child: InteractiveViewer(
+        constrained: false,
+        boundaryMargin: EdgeInsets.all(100),
+        minScale: 0.01,
+        maxScale: 5.6,
+        panEnabled: true,
+        scaleEnabled: true,
+        child: GraphView(
+          graph: graph,
+          algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+          paint: Paint()
+            ..color = Colors.black
+            ..strokeWidth = 1
+            ..style = PaintingStyle.stroke,
+          builder: (Node node) {
+            return Container(
+              width:  75,
+              height: 75,
+              decoration: BoxDecoration(
+              //    borderRadius: BorderRadius.circular(100),
+                  border: Border.all(width: 2, color: Colors.black)
+              ),
+              child: Center(
+                child: SvgPicture.string(
+                  kanjiVGStringList[(node.key!.value as int)]
+                ),
+              ),
+            );
+          },
+        )
+      ),
     );
   }
-}
 
-/// CustomPainter used for drawing a tree of characters
-class KanjiGroupsPainter extends CustomPainter {
+  /// Parses a KanjiVG entry `kanjiVGEntry` and adds it to the given `graph`
+  /// Returns a List with all SVG strings that were added to `graph` matching
+  /// the order of the Id in `graph`
+  List<String> kanjiVGToGraph(String kanjiVGEntry, Graph graph){
 
-  @override
-  void paint(Canvas canvas, Size size) {
-
-    //canvas.drawRect(
-    //  Rect.fromLTRB(0, 0, size.width, size.height),
-    //  Paint()..color = Colors.blue
-    //);
-
-    drawCircleChar(30, Offset(100, 30), "品", canvas);
-
-    drawCircleChar(30, Offset(30, 100), "口", canvas);
-    drawCircleChar(30, Offset(100, 100), "口", canvas);
-    drawCircleChar(30, Offset(170, 100), "口", canvas);
+    // convert the KanjiVG entry to a Xml doc
+    final document = XmlDocument.parse(kanjiVGEntry);
     
-  }
+    // find the first complete kanji definition in the XML doc (without numbers)
+    XmlElement firstElem = document.root.findAllElements('g').where(
+      (element) => element.getAttribute("kvg:element") != null
+    ).first;
 
-  /// Draws a hollow circle with `char` in it at `circleOffset`
-  void drawCircleChar(double circleRadius, Offset circleOffset, String char, Canvas canvas){
-
-    if(char.length > 1) throw "Only *single* characters are allowed as input";
-
-    // text max side length
-    double tS = circleRadius * sqrt(2);
-    // text offset (x and y)
-    double tO = (2*circleRadius - tS) / 2;
-
-    drawCircle(circleOffset, circleRadius, canvas);
-
-    TextStyle textStyle = TextStyle(color: Colors.black, fontSize: 1);
-    TextPainter textPainter;
+    // list of sub-SVGs ordered the same way as `graph`
+    List<String> kanjiSVGStringList = [KanjiVGHeader + firstElem.toString() + "</g>"];
     
-    // iterate over font sizes until a font size fills the circle either in x or y
-    while (true){
-      textStyle = TextStyle(
-        color: Colors.black,
-        fontSize: textStyle.fontSize!+1
-      );
-      final textSpan = TextSpan(text: char, style: textStyle,);
-      textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr);
-      textPainter.layout();
+    // traverse the XML document with breadth first search
+    Queue<XmlElement> elemQueue = Queue()..add(firstElem);
+    Queue<Node> nodeQueue = Queue()..add(Node.Id(0));
+    int cnt = 1;
+    while (elemQueue.isNotEmpty){
+      XmlElement parentElement = elemQueue.removeFirst();
+      Node parentNode = nodeQueue.removeFirst();
 
-      if(textPainter.size.width > tS || textPainter.size.height > tS) break;
+      // iterate over all children of this element that are <g> elem
+      for (XmlElement childElement in parentElement.childElements) {
+        if(childElement.name.local == "g"){
+            
+            String t = "";
+          
+            // get the whole subtree and create a string of it
+            for (var node in childElement.descendantElements) 
+              t += node.toString();
+            kanjiSVGStringList.add(KanjiVGHeader + t + "</g>");
+
+            // create new Graph Node, connect it with parent and append to queue
+            Node newNode = Node.Id(cnt);
+            graph.addEdge(parentNode, newNode);
+            nodeQueue.add(newNode);
+            elemQueue.add(childElement);
+
+            cnt++;
+        }
+      }
     }
 
-    double h = textPainter.size.height;
-    double w = textPainter.size.width;
-    final textOffset = Offset(
-      // rectangle offset + offset if the character is taller than wide 
-      tO + circleOffset.dx - circleRadius + (h > w ? ((h - w) / 2) : 0),
-      // rectangle offset + offset if the character is wider than tall
-      tO + circleOffset.dy - circleRadius + (w > h ? ((w - h) / 2) : 0),
-    );
-    textPainter.paint(canvas, textOffset);
+    return kanjiSVGStringList;
+
   }
-
-  /// Draws a hollow circle at `center` with radius of `radius` on the given
-  /// `canvas`
-  void drawCircle(Offset center, double radius, Canvas canvas){
-
-    double strokeWidth = 2;
-    final paint = Paint()
-      ..color = Colors.black
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-      
-    final path = Path()
-      ..moveTo(center.dx, center.dy - radius)
-      ..arcToPoint(
-        Offset(center.dx, center.dy + radius),
-        radius: Radius.circular(0.01)
-      )
-      ..arcToPoint(
-        Offset(center.dx, center.dy - radius),
-        radius: Radius.circular(0.01)
-      );
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(KanjiGroupsPainter oldDelegate) => false;
-  @override
-  bool shouldRebuildSemantics(KanjiGroupsPainter oldDelegate) => false;
 }
+
+/// Header of all KanjiVG entries
+String KanjiVGHeader = """
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
+<!ATTLIST g
+xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
+kvg:element CDATA #IMPLIED
+kvg:variant CDATA #IMPLIED
+kvg:partial CDATA #IMPLIED
+kvg:original CDATA #IMPLIED
+kvg:part CDATA #IMPLIED
+kvg:number CDATA #IMPLIED
+kvg:tradForm CDATA #IMPLIED
+kvg:radicalForm CDATA #IMPLIED
+kvg:position CDATA #IMPLIED
+kvg:radical CDATA #IMPLIED
+kvg:phon CDATA #IMPLIED >
+<!ATTLIST path
+xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
+kvg:type CDATA #IMPLIED >
+]>
+<svg xmlns="http://www.w3.org/2000/svg" width="109" height="109" viewBox="0 0 109 109">
+<g id="kvg:StrokePaths_09b31" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;">
+""";
