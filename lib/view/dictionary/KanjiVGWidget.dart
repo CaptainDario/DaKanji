@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +10,10 @@ class KanjiVGWidget extends StatefulWidget {
     this.kanjiVGString,
     this.height,
     this.width,
-    {Key? key}
+    {
+      this.colorize = false,
+      Key? key
+    }
   ) : super(key: key);
 
   /// String containing a KanjiVG entry
@@ -21,6 +22,8 @@ class KanjiVGWidget extends StatefulWidget {
   final double height;
   /// width of this widget
   final double width;
+  /// should the strokes and text of the KanjiVG be colorized
+  final bool colorize;
 
   @override
   State<KanjiVGWidget> createState() => _KanjiVGWidgetState();
@@ -28,12 +31,12 @@ class KanjiVGWidget extends StatefulWidget {
 
 class _KanjiVGWidgetState extends State<KanjiVGWidget> {
 
-  String tmp = '';
+  late String colorizedKanjiVG;
 
   @override
   void initState() {
     
-    
+    colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
 
     super.initState();
   }
@@ -41,13 +44,11 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
   @override
   Widget build(BuildContext context) {
 
-    tmp = colorizeKanjiVG(widget.kanjiVGString);
-
     return Container(
       height: widget.height,
       width: widget.width,
       child: SvgPicture.string(
-        tmp
+        widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
       ),
     );
   }
