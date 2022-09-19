@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
-//import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -40,6 +40,7 @@ import 'package:da_kanji_mobile/view/AboutScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+import 'package:database_builder/database_builder.dart';
 
 
 
@@ -86,10 +87,11 @@ Future<void> init() async {
   VERSION = yaml['version'];
 
   // init Hive
-  //String hivePath = (await path_provider.getApplicationDocumentsDirectory()).path;
-  //Hive.init(hivePath);
-  //Hive.registerAdapter(EntryAdapter());
-  //Hive.registerAdapter(LanguageMeaningsAdapter());
+  String hivePath = (await path_provider.getApplicationDocumentsDirectory()).path;
+  Hive.init(hivePath);
+  Hive.registerAdapter(EntryAdapter());
+  Hive.registerAdapter(MeaningAdapter());
+  Hive.registerAdapter(KanjiSVGAdapter());
 
   await initGetIt();
 
@@ -101,7 +103,7 @@ Future<void> init() async {
     desktopWindowSetup();
   }
 
-  //await setupDicts(hivePath);
+  await setupDicts(hivePath);
 }
 
 /// Init the dictionary hive boxes in `path`
@@ -110,17 +112,23 @@ Future<void> init() async {
 /// will be created.
 Future<void> setupDicts(String hivePath) async {
   
-  // if the EDICT Box does not exist yet create it
-  if(!await Hive.boxExists("jm_enam_and_dict", path: hivePath)){
-    print("Enam dict not found, Copying!");
+    getDict("jm_enam_and_dict", hivePath);
+    getDict("kanji_svg", hivePath);
+    getDict("kanjidic2", hivePath);
+    
+}
 
-    await Hive.openBox("jm_enam_and_dict");
+Future<void> getDict(String name, String hivePath) async{
+if(!await Hive.boxExists(name, path: hivePath)){
+    print("$name not found, Copying!");
 
-    var box = Hive.box("jm_enam_and_dict");
-    String hiveLoc = "${hivePath}/jm_enam_and_dict.hive";
+    await Hive.openBox(name);
+
+    var box = Hive.box(name);
+    String hiveLoc = "${hivePath}/$name.hive";
     await box.close();
 
-    ByteData data = await rootBundle.load("assets/dict/jm_enam_and_dict.hive");
+    ByteData data = await rootBundle.load("assets/dict/$name.hive");
     List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     File(hiveLoc).writeAsBytes(bytes, flush: true);
   }
@@ -157,6 +165,9 @@ Future<void> initGetIt() async {
 
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
+
+  // hive
+  GetIt.I.registerSingleton<Box>(await Hive.openBox("kanji_svg"));
   
   // Kagome
   GetIt.I.registerSingleton<Kagome>(Kagome());
