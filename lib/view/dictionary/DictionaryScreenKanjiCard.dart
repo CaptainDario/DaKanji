@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:da_kanji_mobile/view/dictionary/KanjiVGWidget.dart';
 import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
 
 
@@ -34,10 +33,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                 Row(
                   children: [
                     // Kanji preview
-                    Container(
-                      height: constrains.maxWidth * 0.33,
-                      width: constrains.maxWidth * 0.33,
-                      child: SvgPicture.string(widget.kanji),
+                    KanjiVGWidget(
+                      widget.kanji,
+                      constrains.maxWidth * 0.5,
+                      constrains.maxWidth * 0.5,
+                      colorize: true,
                     ),
                     SizedBox(width: 8,),
                     Column(
