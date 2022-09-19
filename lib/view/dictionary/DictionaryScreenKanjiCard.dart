@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
-import 'package:da_kanji_mobile/model/TreeNode.dart';
 
 
 
 class DictionaryScreenKanjiCard extends StatefulWidget {
-  DictionaryScreenKanjiCard({Key? key}) : super(key: key);
+  DictionaryScreenKanjiCard(
+    this.kanji,
+    {Key? key}
+  ) : super(key: key);
+
+  /// The kanji that should be shown in this card as a svg string
+  final String kanji;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
@@ -30,7 +37,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     Container(
                       height: constrains.maxWidth * 0.33,
                       width: constrains.maxWidth * 0.33,
-                      color: Colors.orange,
+                      child: SvgPicture.string(widget.kanji),
                     ),
                     SizedBox(width: 8,),
                     Column(
@@ -54,13 +61,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                 ),
                 Text("Radicals"),
                 KanjiGroupWidget(
-                  () {
-                    TreeNode<String> tree = TreeNode("品");
-                    tree.add(TreeNode("口"));
-                    tree.add(TreeNode("口"));
-                    tree.add(TreeNode("口"));
-                    return tree;
-                  } (),
+                  widget.kanji,
                   constrains.maxWidth,
                   constrains.maxWidth
                 )

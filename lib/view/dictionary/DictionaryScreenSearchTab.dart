@@ -6,6 +6,7 @@ import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
 import 'package:da_kanji_mobile/model/Dict/DictIsolate.dart';
 import 'package:hive/hive.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:hive_flutter/adapters.dart';
 
 
 
@@ -34,6 +35,11 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
 
   TextEditingController searchInputController = TextEditingController();
 
+  @override
+  void initState() {
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
