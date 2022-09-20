@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import 'package:xml/xml.dart';
 import 'package:graphview/GraphView.dart';
@@ -36,6 +37,31 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
   // List containing all sub SVGs of the KanjiVG entry and its order matches
   // all `Node.Id` in `graph`
   late List<String> kanjiVGStringList;
+  /// Header of all KanjiVG entries
+  String KanjiVGHeader = """
+  <?xml version="1.0" encoding="UTF-8"?>
+
+  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
+  <!ATTLIST g
+  xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
+  kvg:element CDATA #IMPLIED
+  kvg:variant CDATA #IMPLIED
+  kvg:partial CDATA #IMPLIED
+  kvg:original CDATA #IMPLIED
+  kvg:part CDATA #IMPLIED
+  kvg:number CDATA #IMPLIED
+  kvg:tradForm CDATA #IMPLIED
+  kvg:radicalForm CDATA #IMPLIED
+  kvg:position CDATA #IMPLIED
+  kvg:radical CDATA #IMPLIED
+  kvg:phon CDATA #IMPLIED >
+  <!ATTLIST path
+  xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
+  kvg:type CDATA #IMPLIED >
+  ]>
+  <svg xmlns="http://www.w3.org/2000/svg" width="109" height="109" viewBox="0 0 109 109">
+  <g id="kvg:StrokePaths_09b31" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;">
+  """;
 
   @override
   void initState() {
@@ -53,40 +79,42 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: widget.width,
-      height: 400,
+      height: widget.height,
       child: InteractiveViewer(
-        constrained: false,
-        boundaryMargin: EdgeInsets.all(100),
-        minScale: 0.01,
-        maxScale: 5.6,
-        panEnabled: true,
-        scaleEnabled: true,
-        child: GraphView(
-          graph: graph,
-          algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
-          paint: Paint()
-            ..color = Colors.black
-            ..strokeWidth = 1
-            ..style = PaintingStyle.stroke,
-          builder: (Node node) {
-            return Container(
-              width:  75,
-              height: 75,
-              decoration: BoxDecoration(
-              //    borderRadius: BorderRadius.circular(100),
-                  border: Border.all(width: 2, color: Colors.black)
-              ),
-              child: Center(
-                child: SvgPicture.string(
-                  kanjiVGStringList[(node.key!.value as int)]
-                ),
-              ),
-            );
-          },
-        )
+        constrained: true,
+        child: OverflowBox(
+          alignment: Alignment.topLeft,
+          minHeight: 0,
+          minWidth: 0,
+          maxHeight: widget.height-16,
+          maxWidth: widget.width-16,
+          child: FittedBox(
+            child: GraphView(
+              graph: graph,
+              algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+              paint: Paint()
+                ..color = Colors.black
+                ..strokeWidth = 2
+                ..style = PaintingStyle.stroke,
+              builder: (Node node) {
+                return Container(
+                  width:  75,
+                  height: 75,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.black)
+                  ),
+                  child: Center(
+                    child: SvgPicture.string(
+                      kanjiVGStringList[(node.key!.value as int)]
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -141,29 +169,3 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   }
 }
-
-/// Header of all KanjiVG entries
-String KanjiVGHeader = """
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
-<!ATTLIST g
-xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
-kvg:element CDATA #IMPLIED
-kvg:variant CDATA #IMPLIED
-kvg:partial CDATA #IMPLIED
-kvg:original CDATA #IMPLIED
-kvg:part CDATA #IMPLIED
-kvg:number CDATA #IMPLIED
-kvg:tradForm CDATA #IMPLIED
-kvg:radicalForm CDATA #IMPLIED
-kvg:position CDATA #IMPLIED
-kvg:radical CDATA #IMPLIED
-kvg:phon CDATA #IMPLIED >
-<!ATTLIST path
-xmlns:kvg CDATA #FIXED "http://kanjivg.tagaini.net"
-kvg:type CDATA #IMPLIED >
-]>
-<svg xmlns="http://www.w3.org/2000/svg" width="109" height="109" viewBox="0 0 109 109">
-<g id="kvg:StrokePaths_09b31" style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;">
-""";
