@@ -60,10 +60,16 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                   ],
                 ),
                 Text("Radicals"),
-                KanjiGroupWidget(
-                  widget.kanji,
-                  constrains.maxWidth,
-                  constrains.maxWidth
+                ExpansionTile(
+                  title: Text("Kanji"),
+                  children:
+                  [
+                    KanjiGroupWidget(
+                      widget.kanji,
+                      constrains.maxWidth - 16,
+                      constrains.maxWidth - 16
+                    ),
+                  ]
                 )
               ],
             ),
