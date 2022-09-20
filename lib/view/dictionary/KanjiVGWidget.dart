@@ -47,6 +47,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
     return Container(
       height: widget.height,
       width: widget.width,
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: Colors.black)
+      ),
       child: SvgPicture.string(
         widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
       ),
