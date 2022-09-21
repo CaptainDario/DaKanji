@@ -36,10 +36,11 @@ dependencies:
   keybinder: 1.0.1
   database_builder:
     path: ./plugins/DaKanji-Dictionary/database_builder
-  hive_flutter: 1.1.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0
+  objectbox: ^1.6.2
+  objectbox_flutter_libs: any
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS

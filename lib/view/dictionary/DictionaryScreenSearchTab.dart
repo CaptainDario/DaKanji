@@ -1,12 +1,13 @@
+import 'package:database_builder/objectbox.g.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:objectbox/objectbox.dart';
 
+import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
 import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
 import 'package:da_kanji_mobile/model/Dict/DictIsolate.dart';
-import 'package:hive/hive.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -130,36 +131,18 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
     );
   }
 
-  Future<void> updateSearchResults(String text) async {
-
-    Stopwatch stopwatch = new Stopwatch()..start();
-    if(!Hive.isBoxOpen("jm_enam_and_dict")){
-      Hive.init("C:/Users/Dario/Documents");
-      Hive.registerAdapter(EntryAdapter());
-      Hive.registerAdapter(MeaningAdapter());
-    }
-
-    Box box = await Hive.openBox("jm_enam_and_dict");
-    print('Loading the box executed in ${stopwatch.elapsed}');
-    
-    /*
-    if(!dictIsolate.initialized && !dictIsolate.isInitializing)
-      await dictIsolate.init();
-    if(dictIsolate.isInitializing)
-      return;
-    */
+  Future<void> updateSearchResults(String query) async {
 
     // only search in dictionary if the input text changed
-    if(!(lastInput != text))
+    if(!(lastInput != query))
       return;
 
-    searchResults = box.values.where((entry) => 
-        entry.readings.contains(text) ? true : false
-      ).toList();
-    //searchResults = await dictIsolate.sendAndReceive([text]).first;
+    searchResults = GetIt.I<Box<Jm_enam_and_dict_Entry>>().query(
+      Jm_enam_and_dict_Entry_.readings.contains(query)
+    ).build().find();
 
     setState(() {
-      lastInput = text;
+      lastInput = query;
     });
   }
 }

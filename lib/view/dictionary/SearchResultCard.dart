@@ -18,7 +18,7 @@ class SearchResultCard extends StatefulWidget {
   final List<String> kanjis;
   /// The meaning that should be displayed in this card
   final List<String> meanings;
-
+  /// part of speech information from enam dict
   final List<String> partOfSpeech;
 
   @override

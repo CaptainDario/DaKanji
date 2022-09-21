@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kagome_dart/kagome_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kagome_dart/kagome_dart.dart';
+import 'package:database_builder/objectbox.g.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
@@ -40,7 +41,6 @@ import 'package:da_kanji_mobile/view/AboutScreen.dart';
 import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
-import 'package:database_builder/database_builder.dart';
 
 
 
@@ -84,14 +84,7 @@ Future<void> init() async {
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   print(yaml['version']);
-  VERSION = yaml['version'];
-
-  // init Hive
-  String hivePath = (await path_provider.getApplicationDocumentsDirectory()).path;
-  Hive.init(hivePath);
-  Hive.registerAdapter(EntryAdapter());
-  Hive.registerAdapter(MeaningAdapter());
-  Hive.registerAdapter(KanjiSVGAdapter());
+  VERSION = yaml['version'];  
 
   await initGetIt();
 
@@ -103,23 +96,26 @@ Future<void> init() async {
     desktopWindowSetup();
   }
 
-  await setupDicts(hivePath);
+  // init databases
+  String dbPath = (await path_provider.getApplicationDocumentsDirectory()).path;
+  await setupDicts(dbPath);
 }
 
 /// Init the dictionary hive boxes in `path`
 /// 
 /// If this is the first time using the app / new version the dictionary files
 /// will be created.
-Future<void> setupDicts(String hivePath) async {
+Future<void> setupDicts(String path) async {
   
-    getDict("jm_enam_and_dict", hivePath);
-    getDict("kanji_svg", hivePath);
-    getDict("kanjidic2", hivePath);
+  //getDict("jm_enam_and_dict", hivePath);
+  //getDict("kanji_svg", hivePath);
+  //getDict("kanjidic2", hivePath);
     
 }
 
 Future<void> getDict(String name, String hivePath) async{
-if(!await Hive.boxExists(name, path: hivePath)){
+  /*
+  if(!await Hive.boxExists(name, path: hivePath)){
     print("$name not found, Copying!");
 
     await Hive.openBox(name);
@@ -132,6 +128,7 @@ if(!await Hive.boxExists(name, path: hivePath)){
     List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     File(hiveLoc).writeAsBytes(bytes, flush: true);
   }
+  */
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -142,7 +139,8 @@ Future<void> clearPreferences() async {
   print("CLEARED PREFERENCES AT APP START.");
 }
 
-/// Initialize GetIt by initializing and registering all the instances for it
+/// Initialize GetIt by initializing and registering all the instances that
+/// are accessed through getIt
 Future<void> initGetIt() async {
 
   // services to load from disk
@@ -165,12 +163,15 @@ Future<void> initGetIt() async {
 
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
-
-  // hive
-  GetIt.I.registerSingleton<Box>(await Hive.openBox("kanji_svg"));
   
   // Kagome
   GetIt.I.registerSingleton<Kagome>(Kagome());
+
+  // ObjectBox
+  Store store = await openStore(
+    directory: (await path_provider.getApplicationDocumentsDirectory()).path,
+  );
+  GetIt.I.registerSingleton(store.box<Jm_enam_and_dict_Entry>());
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
