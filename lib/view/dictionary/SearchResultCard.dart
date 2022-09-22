@@ -1,25 +1,26 @@
+import 'dart:math';
+
+import 'package:database_builder/objectbox.g.dart';
 import 'package:flutter/material.dart';
+
+import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
 
 
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
   SearchResultCard(
-    this.readings,
-    this.kanjis,
-    this.meanings,
-    this.partOfSpeech,
-    {Key? key}
+    this.dict_entry,
+    {
+      this.onPressed,
+      Key? key
+    }
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  final List<String> readings;
-  /// The kanji that should be displayed in this card
-  final List<String> kanjis;
-  /// The meaning that should be displayed in this card
-  final List<String> meanings;
-  /// part of speech information from enam dict
-  final List<String> partOfSpeech;
+  final Jm_enam_and_dict_Entry dict_entry;
+  /// 
+  final Function(Jm_enam_and_dict_Entry selection)? onPressed;
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
@@ -33,7 +34,8 @@ class _SearchResultCardState extends State<SearchResultCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
-          
+          if(widget.onPressed != null)
+            widget.onPressed!(widget.dict_entry);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -43,36 +45,50 @@ class _SearchResultCardState extends State<SearchResultCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // reading
                     Text(
-                      widget.kanjis.isEmpty ? "" : widget.readings.join(", "),
+                      widget.dict_entry.kanjis.isEmpty ? 
+                        "" : widget.dict_entry.readings.join(", "),
                       style: TextStyle(
                         fontSize: 10
                       ),
                     ),
+                    // kanjis
                     Text(
                       (
-                        widget.kanjis.isNotEmpty ? widget.kanjis : widget.readings
+                        widget.dict_entry.kanjis.isNotEmpty ? 
+                          widget.dict_entry.kanjis : widget.dict_entry.readings
                       ).join(", "),
                       style: TextStyle(
                         fontSize: 20
                       ),
                     ),
-                    Text(
-                      widget.meanings.join("/ "),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 10
-                      ),
+                    // meanings
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ...List.generate(
+                          min(widget.dict_entry.meanings[0].meanings.length, 3),
+                          (int index) => Text(
+                            "${(index+1).toString()}. ${widget.dict_entry.meanings[0].meanings[index]}",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 10
+                            ),
+                          )
+                        )
+                      ],
                     )
                   ],
                 ),
               ),
+              //part of speech information
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.partOfSpeech.first.toString(),
+                    widget.dict_entry.partOfSpeech.first.toString(),
                     style: TextStyle(
                       fontSize: 10
                     ),
