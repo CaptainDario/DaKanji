@@ -1,13 +1,13 @@
-import 'package:database_builder/objectbox.g.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:objectbox/objectbox.dart';
-
-import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
-import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
-import 'package:da_kanji_mobile/model/Dict/DictIsolate.dart';
+import 'package:database_builder/objectbox.g.dart';
+import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
+
+import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
+import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
 
 
 
@@ -27,14 +27,11 @@ class DictionaryScreenSearchTab extends StatefulWidget {
 
 class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
 
-  /// data object of the search results
-  List searchResults = [];
-
+  /// the text that was last entered in the search field
   String lastInput = "";
-  
-  DictIsolate dictIsolate = DictIsolate();
-
+  /// the TextEditingController of the search field
   TextEditingController searchInputController = TextEditingController();
+
 
   @override
   void initState() {
@@ -60,7 +57,20 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                         child: TextField(
                           controller: searchInputController,
                           onChanged: (text) async {
-                            updateSearchResults(text);
+                            // only search in dictionary if the query changed
+                            if(!(lastInput != text))
+                              return;
+
+                            context.read<DictSearch>().currentSearch = text;
+
+                            context.read<DictSearch>().searchResults = 
+                              GetIt.I<Box<Jm_enam_and_dict_Entry>>().query(
+                                Jm_enam_and_dict_Entry_.readings.contains(text)
+                              ).build().find();
+
+                            setState(() {
+                              lastInput = text;
+                            });
                           },
                         ),
                       ),
@@ -71,7 +81,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                           onTap: () {
                             setState(() {
                               searchInputController.clear();
-                              searchResults = [];
+                              context.read<DictSearch>().searchResults = [];
                             });
                           },
                           child: Icon(
@@ -89,17 +99,20 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               height: widget.height * 0.85,
               width: widget.width,
               child: ListView.builder(
-                itemCount: searchResults.length,
+                itemCount: context.watch<DictSearch>().searchResults.length,
                 itemBuilder: ((context, index) {
                   return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
                       child: FadeInAnimation(
                         child: SearchResultCard(
-                          searchResults[index].readings,
-                          searchResults[index].kanjis,
-                          searchResults[index].meanings[0].meanings,
-                          searchResults[index].partOfSpeech
+                          context.watch<DictSearch>().searchResults[index],
+                          onPressed: (selection) {
+                            setState(() {
+                              context.read<DictSearch>().selectedResult = 
+                                context.read<DictSearch>().searchResults[index];
+                            });
+                          }
                         )
                       ),
                     ),
@@ -129,20 +142,5 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
         )
       ],
     );
-  }
-
-  Future<void> updateSearchResults(String query) async {
-
-    // only search in dictionary if the input text changed
-    if(!(lastInput != query))
-      return;
-
-    searchResults = GetIt.I<Box<Jm_enam_and_dict_Entry>>().query(
-      Jm_enam_and_dict_Entry_.readings.contains(query)
-    ).build().find();
-
-    setState(() {
-      lastInput = query;
-    });
   }
 }

@@ -2,8 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
+import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenExampleTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiTab.dart';
@@ -30,6 +31,12 @@ class DictionaryScreen extends StatefulWidget {
 
 class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerProviderStateMixin {
 
+
+  TabController? dictTabController;
+
+  int previousTabsSideBySide = -1;
+
+
   @override
   void initState() {
     super.initState();
@@ -45,39 +52,56 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
 
           int tabsSideBySide = min(3, (constraints.maxWidth / 500).floor());
 
-          return Row(
-            children: [
-              if(tabsSideBySide > 0) 
-                Container(
-                  child: DictionaryScreenSearchTab(
-                    constraints.maxHeight,
-                    constraints.maxWidth / (tabsSideBySide+1)
+          if(previousTabsSideBySide != tabsSideBySide){
+            if(dictTabController != null)
+              dictTabController!.dispose();
+
+            dictTabController = TabController(
+              length: 4 - tabsSideBySide,
+              vsync: this
+            );
+            previousTabsSideBySide = tabsSideBySide;
+          }
+
+          return ChangeNotifierProvider(
+            create: (context) => DictSearch(),
+            child: Row(
+              children: [
+                if(tabsSideBySide > 0) 
+                  Container(
+                    child: DictionaryScreenSearchTab(
+                      constraints.maxHeight,
+                      constraints.maxWidth / (tabsSideBySide+1)
+                    ),
+                    width: constraints.maxWidth / (tabsSideBySide+1),
                   ),
+                if(tabsSideBySide > 1)
+                  Container(
+                    child: DictionaryScreenWordTab(
+                      context.watch<DictSearch>().selectedResult
+                    ),
+                    width: constraints.maxWidth / (tabsSideBySide+1),
+                  ),
+                if(tabsSideBySide > 2)
+                  Container(
+                    child: DictionaryScreenKanjiTab(
+                      ["鬱"],
+                      ["鬱"]
+                    ),
+                    width: constraints.maxWidth / (tabsSideBySide+1),
+                  ),
+                if(tabsSideBySide >= 3) 
+                  Container(
+                    child: DictionaryScreenExampleTab(),
+                    width: constraints.maxWidth / (tabsSideBySide+1),
+                  ),
+                if(tabsSideBySide < 3) Container(
                   width: constraints.maxWidth / (tabsSideBySide+1),
-                ),
-              if(tabsSideBySide > 1)
-                Container(
-                  child: DictionaryScreenWordTab(),
-                  width: constraints.maxWidth / (tabsSideBySide+1),
-                ),
-              if(tabsSideBySide > 2)
-                Container(
-                  child: DictionaryScreenKanjiTab(["鬱"]),
-                  width: constraints.maxWidth / (tabsSideBySide+1),
-                ),
-              if(tabsSideBySide >= 3) 
-                Container(
-                  child: DictionaryScreenExampleTab(),
-                  width: constraints.maxWidth / (tabsSideBySide+1),
-                ),
-              if(tabsSideBySide < 3) Container(
-                width: constraints.maxWidth / (tabsSideBySide+1),
-                height: constraints.maxHeight,
-                child: DefaultTabController(
-                  length: 4 - tabsSideBySide,
+                  height: constraints.maxHeight,
                   child: Column(
                     children: [
                       TabBar(
+                        controller: dictTabController,
                         tabs: [
                           if(tabsSideBySide < 1) Tab(text: "Search",),
                           if(tabsSideBySide < 2) Tab(text: "Word"),
@@ -89,14 +113,19 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             return TabBarView(
+                              controller: dictTabController,
                               children: [
                                 if(tabsSideBySide < 1) DictionaryScreenSearchTab(
                                   constraints.maxHeight,
                                   constraints.maxWidth / (tabsSideBySide+1)
                                 ),
-                                if(tabsSideBySide < 2) DictionaryScreenWordTab(),
+                                if(tabsSideBySide < 2) DictionaryScreenWordTab(
+                                  context.watch<DictSearch>().selectedResult
+                                ),
                                 if(tabsSideBySide < 3) DictionaryScreenKanjiTab(
-                                  [GetIt.I<Box>().get("鬱").SVG]
+                                  ["鬱"],
+                                  ["鬱"]
+                                  //[GetIt.I<Box>().get("鬱").SVG]
                                 ),
                                 if(tabsSideBySide < 4) DictionaryScreenExampleTab()
                               ],
@@ -107,8 +136,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         })
       ),
