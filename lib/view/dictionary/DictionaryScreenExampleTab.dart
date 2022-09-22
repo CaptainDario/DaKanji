@@ -1,4 +1,6 @@
+import 'package:da_kanji_mobile/view/dictionary/ExampleSentenceCard.dart';
 import 'package:flutter/material.dart';
+
 
 
 class DictionaryScreenExampleTab extends StatefulWidget {
@@ -11,9 +13,18 @@ class DictionaryScreenExampleTab extends StatefulWidget {
 class _DictionaryScreenExampleTabState extends State<DictionaryScreenExampleTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.orange,
-      child: Text("Example")
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedList(
+          initialItemCount: 40,
+          itemBuilder: (context, no, animation) {
+            return ExampleSentenceCard(
+              "Example: ${no.toString()}", 
+              "translation: ${no.toString()}"
+            );
+          }
+        );
+      }
     );
   }
 }
