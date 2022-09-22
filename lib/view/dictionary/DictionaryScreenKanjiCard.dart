@@ -8,11 +8,14 @@ import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
 class DictionaryScreenKanjiCard extends StatefulWidget {
   DictionaryScreenKanjiCard(
     this.kanji,
+    this.kanjiSVG,
     {Key? key}
   ) : super(key: key);
 
-  /// The kanji that should be shown in this card as a svg string
+  /// The kanji that should be shown in this card as a string (char)
   final String kanji;
+  /// The kanji that should be shown in this card as a svg string
+  final String kanjiSVG;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
