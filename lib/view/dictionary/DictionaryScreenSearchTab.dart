@@ -80,10 +80,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                         width: widget.height * 0.1,
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              searchInputController.clear();
-                              context.read<DictSearch>().searchResults = [];
-                            });
+                            searchInputController.clear();
+                            context.read<DictSearch>().searchResults = [];
                           },
                           child: Icon(
                             Icons.clear
@@ -110,11 +108,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                           dictEntry: context.watch<DictSearch>().searchResults[index],
                           resultIndex: index,
                           onPressed: (selection) {
-                            setState(() {
-                              context.read<DictSearch>().selectedResult = 
-                                context.read<DictSearch>().searchResults[index];
-                            });
-                            
+                            context.read<DictSearch>().selectedResult = 
+                              context.read<DictSearch>().searchResults[index];
                           }
                         )
                       ),

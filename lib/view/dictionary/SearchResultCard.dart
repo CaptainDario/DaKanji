@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:database_builder/objectbox.g.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';

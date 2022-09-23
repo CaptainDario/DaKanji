@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenSearchResult.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -33,55 +32,76 @@ class DictionaryScreen extends StatefulWidget {
   _DictionaryScreenState createState() => _DictionaryScreenState();
 }
 
-class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerProviderStateMixin {
+class _DictionaryScreenState
+  extends State<DictionaryScreen>
+  with TickerProviderStateMixin {
 
+  late TabController dictionaryTabController;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  int tabsSideBySide = -1;
+
+  int noTabs = -1;
+
+  late void Function() changeTab;
+
+  DictSearch search = DictSearch();
+
 
   @override
   Widget build(BuildContext context) {
 
     return DaKanjiDrawer(
       currentScreen: Screens.dictionary,
-      child: ChangeNotifierProvider(
-        create: (context) => DictSearch(),
+      child: ChangeNotifierProvider<DictSearch>.value(
+        value: search,
         child: LayoutBuilder(
           builder: ((context, constraints) {
+
+            tabsSideBySide = min(3, (constraints.maxWidth / 500).floor()) + 1;
+            int newNoTabs = 5 - tabsSideBySide;
+
+            if(newNoTabs != noTabs){
+              noTabs = newNoTabs;
+              dictionaryTabController = TabController(length: noTabs, vsync: this);
+
+              changeTab = () {
+                // only change the tab if the tab bar includes the search tab
+                if(noTabs != 4) return;
+                
+                // if a search result was selected change the tab
+                if(context.read<DictSearch>().selectedResult != null)
+                  // IMPORTANT: use addPostFrameCallback to avoid race condition 
+                  // between `animateTo()` and `setState()`
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
+                    dictionaryTabController.animateTo(1);
+                  });
+              };
+
+              context.read<DictSearch>().removeListener(changeTab);
+              context.read<DictSearch>().addListener(changeTab);
+            }
       
-            int tabsSideBySide = min(3, (constraints.maxWidth / 500).floor()) + 1;
-      
-            return Stack(
+            return Row(
               children: [
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  width: constraints.maxWidth / (tabsSideBySide),
-                  height: constraints.maxHeight,
-                  child: DictionaryScreenSearchTab(
-                    constraints.maxHeight,
-                    constraints.maxWidth / (tabsSideBySide)
-                  ),
-                ),
-                if(tabsSideBySide > 2)
-                  Positioned(
-                    left: constraints.maxWidth / (tabsSideBySide),
-                    top: 0,
+                if(tabsSideBySide > 1)
+                  Container(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
-                    child: Container(
-                      child: DictionaryScreenWordTab(
-                        context.watch<DictSearch>().selectedResult
-                      ),
-                      width: constraints.maxWidth / (tabsSideBySide),
+                    child: DictionaryScreenSearchTab(
+                      constraints.maxHeight,
+                      constraints.maxWidth / (tabsSideBySide)
+                    ),
+                  ),
+                if(tabsSideBySide > 2)
+                  Container(
+                    width: constraints.maxWidth / (tabsSideBySide),
+                    height: constraints.maxHeight,
+                    child: DictionaryScreenWordTab(
+                      context.watch<DictSearch>().selectedResult
                     ),
                   ),
                 if(tabsSideBySide > 3)
-                  Positioned(
-                    left: constraints.maxWidth / (tabsSideBySide) * 2,
-                    top: 0,
+                  Container(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenKanjiTab(
@@ -97,18 +117,54 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
                     height: constraints.maxHeight,
                     child: DictionaryScreenExampleTab(),
                   ),
-                // dict entry tabs
-                if(tabsSideBySide < 4 && tabsSideBySide > 1) 
-                  Positioned(
-                    left: (constraints.maxWidth / (tabsSideBySide)) * 
-                      (tabsSideBySide-1),
-                    top: 0,
+                // 
+                if(tabsSideBySide < 4)
+                  Container(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
-                    child: DictionaryScreenSearchResult(
-                      noTabs: 5 - tabsSideBySide, 
+                    child: Column(
+                      children: [
+                        TabBar(
+                          controller: dictionaryTabController,
+                          tabs: [
+                            if(noTabs > 3) Tab(text: "Search"),
+                            if(noTabs > 2) Tab(text: "Word"),
+                            if(noTabs > 1) Tab(text: "Kanji"),
+                            if(noTabs > 0) Tab(text: "Example"),
+                          ],
+                        ),
+                        Expanded(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return TabBarView(
+                                controller: dictionaryTabController,
+                                children: [
+                                  if(noTabs > 3) 
+                                    DictionaryScreenSearchTab(
+                                      constraints.maxHeight,
+                                      constraints.maxWidth
+                                    ),
+                                  if(noTabs > 2)
+                                    DictionaryScreenWordTab(
+                                      context.watch<DictSearch>().selectedResult
+                                    ),
+                                  if(noTabs > 1) 
+                                    DictionaryScreenKanjiTab(
+                                      ["鬱"],
+                                      ["鬱"]
+                                      //[GetIt.I<Box>().get("鬱").SVG]
+                                    ),
+                                  if(noTabs > 0) 
+                                    DictionaryScreenExampleTab(),
+                                  
+                                ],
+                              );
+                            }
+                          ),
+                        ),
+                      ],
                     ),
-                  )
+                  ),
               ],
             );
           })
