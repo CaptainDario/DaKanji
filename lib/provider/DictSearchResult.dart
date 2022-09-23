@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 
 
 
-/// Class to store information about a dictionary search
-/// Notifies its listeners when the selected results changes
+/// Class to store information about a dictionary search.
+/// Notifies its listeners when the selected results changes.
 class DictSearch with ChangeNotifier {
 
   /// the string that is currently searched
