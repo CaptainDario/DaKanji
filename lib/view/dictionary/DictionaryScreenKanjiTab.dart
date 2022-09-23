@@ -6,10 +6,13 @@ import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiCard.dart';
 
 class DictionaryScreenKanjiTab extends StatefulWidget {
   DictionaryScreenKanjiTab(
+    this.kanjis,
     this.kanjiSVGs,
     {Key? key}
   ) : super(key: key);
 
+  /// Alist of strings containing characters
+  final List<String> kanjis;
   /// A list of SVG strings that contain Kanjis
   final List<String> kanjiSVGs;
 
@@ -24,6 +27,7 @@ class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
       child: Column(
         children: [
           DictionaryScreenKanjiCard(
+            "",
             widget.kanjiSVGs[0]
           ),
         ],

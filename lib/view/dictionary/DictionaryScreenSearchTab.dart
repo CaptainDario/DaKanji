@@ -48,6 +48,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
             SizedBox(height: widget.height*0.025,),
             Container(
               height: widget.height * 0.1,
+              width: widget.width,
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -106,12 +107,14 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                     child: SlideAnimation(
                       child: FadeInAnimation(
                         child: SearchResultCard(
-                          context.watch<DictSearch>().searchResults[index],
+                          dictEntry: context.watch<DictSearch>().searchResults[index],
+                          resultIndex: index,
                           onPressed: (selection) {
                             setState(() {
                               context.read<DictSearch>().selectedResult = 
                                 context.read<DictSearch>().searchResults[index];
                             });
+                            
                           }
                         )
                       ),

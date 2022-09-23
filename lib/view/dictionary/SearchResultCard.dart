@@ -10,16 +10,20 @@ import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_object
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
   SearchResultCard(
-    this.dict_entry,
     {
+      required this.dictEntry,
+      required this.resultIndex,
       this.onPressed,
       Key? key
     }
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  final Jm_enam_and_dict_Entry dict_entry;
+  final Jm_enam_and_dict_Entry dictEntry;
   /// 
+  final int resultIndex;
+  /// Callback that is invoked if the card is pressed, passes `dict_entry`
+  /// as parameter
   final Function(Jm_enam_and_dict_Entry selection)? onPressed;
 
   @override
@@ -35,7 +39,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
           if(widget.onPressed != null)
-            widget.onPressed!(widget.dict_entry);
+            widget.onPressed!(widget.dictEntry);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -46,18 +50,21 @@ class _SearchResultCardState extends State<SearchResultCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // reading
-                    Text(
-                      widget.dict_entry.kanjis.isEmpty ? 
-                        "" : widget.dict_entry.readings.join(", "),
-                      style: TextStyle(
-                        fontSize: 10
+                    Hero(
+                      tag: "resultCard_${widget.resultIndex}",
+                      child: Text(
+                        widget.dictEntry.kanjis.isEmpty ? 
+                          "" : widget.dictEntry.readings.join(", "),
+                        style: TextStyle(
+                          fontSize: 10
+                        ),
                       ),
                     ),
                     // kanjis
                     Text(
                       (
-                        widget.dict_entry.kanjis.isNotEmpty ? 
-                          widget.dict_entry.kanjis : widget.dict_entry.readings
+                        widget.dictEntry.kanjis.isNotEmpty ? 
+                          widget.dictEntry.kanjis : widget.dictEntry.readings
                       ).join(", "),
                       style: TextStyle(
                         fontSize: 20
@@ -68,9 +75,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ...List.generate(
-                          min(widget.dict_entry.meanings[0].meanings.length, 3),
+                          min(widget.dictEntry.meanings[0].meanings.length, 3),
                           (int index) => Text(
-                            "${(index+1).toString()}. ${widget.dict_entry.meanings[0].meanings[index]}",
+                            "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings[index]}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 10
@@ -88,7 +95,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.dict_entry.partOfSpeech.first.toString(),
+                    widget.dictEntry.partOfSpeech.first.toString(),
                     style: TextStyle(
                       fontSize: 10
                     ),

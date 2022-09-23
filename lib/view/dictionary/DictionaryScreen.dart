@@ -1,7 +1,7 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenSearchResult.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
@@ -23,18 +23,17 @@ class DictionaryScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
-  DictionaryScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
+  DictionaryScreen(
+    this.openedByDrawer,
+    this.includeHeroes,
+    this.includeTutorial
+  );
 
   @override
   _DictionaryScreenState createState() => _DictionaryScreenState();
 }
 
 class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerProviderStateMixin {
-
-
-  TabController? dictTabController;
-
-  int previousTabsSideBySide = -1;
 
 
   @override
@@ -47,99 +46,73 @@ class _DictionaryScreenState extends State<DictionaryScreen> with SingleTickerPr
 
     return DaKanjiDrawer(
       currentScreen: Screens.dictionary,
-      child: LayoutBuilder(
-        builder: ((context, constraints) {
-
-          int tabsSideBySide = min(3, (constraints.maxWidth / 500).floor());
-
-          if(previousTabsSideBySide != tabsSideBySide){
-            if(dictTabController != null)
-              dictTabController!.dispose();
-
-            dictTabController = TabController(
-              length: 4 - tabsSideBySide,
-              vsync: this
-            );
-            previousTabsSideBySide = tabsSideBySide;
-          }
-
-          return ChangeNotifierProvider(
-            create: (context) => DictSearch(),
-            child: Row(
+      child: ChangeNotifierProvider(
+        create: (context) => DictSearch(),
+        child: LayoutBuilder(
+          builder: ((context, constraints) {
+      
+            int tabsSideBySide = min(3, (constraints.maxWidth / 500).floor()) + 1;
+      
+            return Stack(
               children: [
-                if(tabsSideBySide > 0) 
-                  Container(
-                    child: DictionaryScreenSearchTab(
-                      constraints.maxHeight,
-                      constraints.maxWidth / (tabsSideBySide+1)
-                    ),
-                    width: constraints.maxWidth / (tabsSideBySide+1),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  width: constraints.maxWidth / (tabsSideBySide),
+                  height: constraints.maxHeight,
+                  child: DictionaryScreenSearchTab(
+                    constraints.maxHeight,
+                    constraints.maxWidth / (tabsSideBySide)
                   ),
-                if(tabsSideBySide > 1)
-                  Container(
-                    child: DictionaryScreenWordTab(
-                      context.watch<DictSearch>().selectedResult
-                    ),
-                    width: constraints.maxWidth / (tabsSideBySide+1),
-                  ),
+                ),
                 if(tabsSideBySide > 2)
-                  Container(
+                  Positioned(
+                    left: constraints.maxWidth / (tabsSideBySide),
+                    top: 0,
+                    width: constraints.maxWidth / (tabsSideBySide),
+                    height: constraints.maxHeight,
+                    child: Container(
+                      child: DictionaryScreenWordTab(
+                        context.watch<DictSearch>().selectedResult
+                      ),
+                      width: constraints.maxWidth / (tabsSideBySide),
+                    ),
+                  ),
+                if(tabsSideBySide > 3)
+                  Positioned(
+                    left: constraints.maxWidth / (tabsSideBySide) * 2,
+                    top: 0,
+                    width: constraints.maxWidth / (tabsSideBySide),
+                    height: constraints.maxHeight,
                     child: DictionaryScreenKanjiTab(
                       ["鬱"],
                       ["鬱"]
                     ),
-                    width: constraints.maxWidth / (tabsSideBySide+1),
                   ),
-                if(tabsSideBySide >= 3) 
-                  Container(
+                if(tabsSideBySide >= 4) 
+                  Positioned(
+                    left: constraints.maxWidth / (tabsSideBySide) * 3,
+                    top: 0,
+                    width: constraints.maxWidth / (tabsSideBySide),
+                    height: constraints.maxHeight,
                     child: DictionaryScreenExampleTab(),
-                    width: constraints.maxWidth / (tabsSideBySide+1),
                   ),
-                if(tabsSideBySide < 3) Container(
-                  width: constraints.maxWidth / (tabsSideBySide+1),
-                  height: constraints.maxHeight,
-                  child: Column(
-                    children: [
-                      TabBar(
-                        controller: dictTabController,
-                        tabs: [
-                          if(tabsSideBySide < 1) Tab(text: "Search",),
-                          if(tabsSideBySide < 2) Tab(text: "Word"),
-                          if(tabsSideBySide < 3) Tab(text: "Kanji"),
-                          if(tabsSideBySide < 4) Tab(text: "Example"),
-                        ],
-                      ),
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return TabBarView(
-                              controller: dictTabController,
-                              children: [
-                                if(tabsSideBySide < 1) DictionaryScreenSearchTab(
-                                  constraints.maxHeight,
-                                  constraints.maxWidth / (tabsSideBySide+1)
-                                ),
-                                if(tabsSideBySide < 2) DictionaryScreenWordTab(
-                                  context.watch<DictSearch>().selectedResult
-                                ),
-                                if(tabsSideBySide < 3) DictionaryScreenKanjiTab(
-                                  ["鬱"],
-                                  ["鬱"]
-                                  //[GetIt.I<Box>().get("鬱").SVG]
-                                ),
-                                if(tabsSideBySide < 4) DictionaryScreenExampleTab()
-                              ],
-                            );
-                          }
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // dict entry tabs
+                if(tabsSideBySide < 4 && tabsSideBySide > 1) 
+                  Positioned(
+                    left: (constraints.maxWidth / (tabsSideBySide)) * 
+                      (tabsSideBySide-1),
+                    top: 0,
+                    width: constraints.maxWidth / (tabsSideBySide),
+                    height: constraints.maxHeight,
+                    child: DictionaryScreenSearchResult(
+                      noTabs: 5 - tabsSideBySide, 
+                    ),
+                  )
               ],
-            ),
-          );
-        })
+            );
+          })
+        ),
       ),
     );
   }
