@@ -134,6 +134,9 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     ExpansionTile(
                       title: Text("Images")
                     ),
