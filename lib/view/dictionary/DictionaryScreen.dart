@@ -57,7 +57,7 @@ class _DictionaryScreenState
         child: LayoutBuilder(
           builder: ((context, constraints) {
 
-            tabsSideBySide = min(3, (constraints.maxWidth / 500).floor()) + 1;
+            tabsSideBySide = min(4, (constraints.maxWidth / 500).floor()) + 1;
             int newNoTabs = 5 - tabsSideBySide;
 
             if(newNoTabs != noTabs){
@@ -110,9 +110,7 @@ class _DictionaryScreenState
                     ),
                   ),
                 if(tabsSideBySide >= 4) 
-                  Positioned(
-                    left: constraints.maxWidth / (tabsSideBySide) * 3,
-                    top: 0,
+                  Container(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenExampleTab(),
