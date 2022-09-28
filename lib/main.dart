@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
 import 'package:kagome_dart/kagome_dart.dart';
-import 'package:database_builder/objectbox.g.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
@@ -12,8 +11,8 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:database_builder/database_builder.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
@@ -95,22 +94,6 @@ Future<void> init() async {
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
   }
-
-  // init databases
-  String dbPath = (await path_provider.getApplicationDocumentsDirectory()).path;
-  await setupDicts(dbPath);
-}
-
-/// Init the dictionary hive boxes in `path`
-/// 
-/// If this is the first time using the app / new version the dictionary files
-/// will be created.
-Future<void> setupDicts(String path) async {
-  
-  //getDict("jm_enam_and_dict", hivePath);
-  //getDict("kanji_svg", hivePath);
-  //getDict("kanjidic2", hivePath);
-    
 }
 
 Future<void> getDict(String name, String hivePath) async{
@@ -171,7 +154,9 @@ Future<void> initGetIt() async {
   Store store = await openStore(
     directory: (await path_provider.getApplicationDocumentsDirectory()).path,
   );
-  GetIt.I.registerSingleton(store.box<Jm_enam_and_dict_Entry>());
+  GetIt.I.registerSingleton<Box<Entry>>(store.box<Entry>());
+  GetIt.I.registerSingleton<Box<KanjiSVG>>(store.box<KanjiSVG>());
+  GetIt.I.registerSingleton<Box<Kanjidic2Entry>>(store.box<Kanjidic2Entry>());
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
