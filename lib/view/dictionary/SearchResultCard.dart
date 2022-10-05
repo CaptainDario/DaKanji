@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
 
 
 
@@ -18,12 +18,12 @@ class SearchResultCard extends StatefulWidget {
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  final Jm_enam_and_dict_Entry dictEntry;
+  final Jmdict.Entry dictEntry;
   /// 
   final int resultIndex;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
-  final Function(Jm_enam_and_dict_Entry selection)? onPressed;
+  final Function(Jmdict.Entry selection)? onPressed;
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();

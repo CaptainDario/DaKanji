@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:database_builder/objectbox.g.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
+import 'package:database_builder/objectbox.g.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
 import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
@@ -65,8 +65,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                             context.read<DictSearch>().currentSearch = text;
 
                             context.read<DictSearch>().searchResults = 
-                              GetIt.I<Box<Jm_enam_and_dict_Entry>>().query(
-                                Jm_enam_and_dict_Entry_.readings.contains(text)
+                              GetIt.I<Box<Jmdict.Entry>>().query(
+                                Entry_.readings.contains(text)
                               ).build().find();
 
                             setState(() {

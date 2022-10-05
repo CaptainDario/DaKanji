@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_hive/dataClasses_objectbox.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
+
 
 
 
@@ -11,7 +12,7 @@ class DictionaryScreenWordTab extends StatefulWidget {
   ) : super(key: key);
 
   /// the dict entry that should be shown 
-  final Jm_enam_and_dict_Entry? entry;
+  final Jmdict.Entry? entry;
 
 
   @override
