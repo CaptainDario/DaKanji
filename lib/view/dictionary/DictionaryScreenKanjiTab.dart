@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:database_builder/database_builder.dart';
+
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiCard.dart';
 
 
 
 class DictionaryScreenKanjiTab extends StatefulWidget {
   DictionaryScreenKanjiTab(
-    this.kanjis,
-    this.kanjiSVGs,
+    this.kanjiVGs,
     {Key? key}
   ) : super(key: key);
 
-  /// Alist of strings containing characters
-  final List<String> kanjis;
-  /// A list of SVG strings that contain Kanjis
-  final List<String> kanjiSVGs;
+  /// A list of KanjiVG entries that should be shown
+  final List<KanjiSVG> kanjiVGs;
 
   @override
   State<DictionaryScreenKanjiTab> createState() => _DictionaryScreenKanjiTabState();
@@ -26,10 +25,12 @@ class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          DictionaryScreenKanjiCard(
-            "",
-            widget.kanjiSVGs[0]
-          ),
+          ...List.generate(widget.kanjiVGs.length,
+            (int i) => 
+            DictionaryScreenKanjiCard(
+              widget.kanjiVGs[i]
+            ),
+          )
         ],
       ),
     );

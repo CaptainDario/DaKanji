@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
+import 'package:da_kanji_mobile/helper/JapaneseTextConversion.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenExampleTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenSearchTab.dart';
@@ -36,15 +39,18 @@ class _DictionaryScreenState
   extends State<DictionaryScreen>
   with TickerProviderStateMixin {
 
+  /// TabController to manage the different tabs in the dictionary
   late TabController dictionaryTabController;
-
+  /// How many tabs should be shown side by side in the window 
   int tabsSideBySide = -1;
-
+  /// Number of tabs in the Dictionaries TabBar
   int noTabs = -1;
-
+  /// Function that is executed when the tab was changed
   late void Function() changeTab;
-
+  /// Current search in the dictionary
   DictSearch search = DictSearch();
+  /// A
+  List<KanjiSVG> kanjiVGs = [];
 
 
   @override
@@ -57,9 +63,12 @@ class _DictionaryScreenState
         child: LayoutBuilder(
           builder: ((context, constraints) {
 
+            // calculate how many tabs should be placed side by side
             tabsSideBySide = min(4, (constraints.maxWidth / 500).floor()) + 1;
             int newNoTabs = 5 - tabsSideBySide;
 
+            // if the window size was changed and a different number of tabs 
+            // should be shown 
             if(newNoTabs != noTabs){
               noTabs = newNoTabs;
               dictionaryTabController = TabController(length: noTabs, vsync: this);
@@ -79,6 +88,19 @@ class _DictionaryScreenState
 
               context.read<DictSearch>().removeListener(changeTab);
               context.read<DictSearch>().addListener(changeTab);
+            }
+
+            if(context.watch<DictSearch>().selectedResult != null){
+
+              List<String> kanjis = 
+                removeKana(context.watch<DictSearch>().selectedResult!.kanjis);
+
+              kanjiVGs = List.generate(
+                kanjis.length,
+                (index) => GetIt.I<Box<KanjiSVG>>().query(
+                  KanjiSVG_.character.equals(kanjis[index])
+                ).build().find()
+              ).expand((element) => element).toList();
             }
       
             return Row(
@@ -105,8 +127,7 @@ class _DictionaryScreenState
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenKanjiTab(
-                      ["鬱"],
-                      ["鬱"]
+                      kanjiVGs
                     ),
                   ),
                 if(tabsSideBySide >= 4) 
@@ -148,9 +169,7 @@ class _DictionaryScreenState
                                     ),
                                   if(noTabs > 1) 
                                     DictionaryScreenKanjiTab(
-                                      ["鬱"],
-                                      ["鬱"]
-                                      //[GetIt.I<Box>().get("鬱").SVG]
+                                      kanjiVGs,
                                     ),
                                   if(noTabs > 0) 
                                     DictionaryScreenExampleTab(),

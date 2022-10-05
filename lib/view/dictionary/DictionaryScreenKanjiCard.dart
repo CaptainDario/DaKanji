@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
+import 'package:database_builder/database_builder.dart';
+
 import 'package:da_kanji_mobile/view/dictionary/KanjiVGWidget.dart';
 import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
 
 
 
+/// Card to show a kanji and all important attribtues of it. This includes
+/// a tree to show the different groups.
 class DictionaryScreenKanjiCard extends StatefulWidget {
   DictionaryScreenKanjiCard(
-    this.kanji,
-    this.kanjiSVG,
+    this.kanjiVG,
     {Key? key}
   ) : super(key: key);
 
-  /// The kanji that should be shown in this card as a string (char)
-  final String kanji;
   /// The kanji that should be shown in this card as a svg string
-  final String kanjiSVG;
+  final KanjiSVG kanjiVG;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
@@ -37,11 +38,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                   children: [
                     // Kanji preview
                     KanjiVGWidget(
-                      widget.kanji,
+                      widget.kanjiVG.svg,
                       constrains.maxWidth * 0.5,
                       constrains.maxWidth * 0.5,
                       colorize: true,
                     ),
+                    
                     SizedBox(width: 8,),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,7 +70,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                   children:
                   [
                     KanjiGroupWidget(
-                      widget.kanji,
+                      widget.kanjiVG.svg,
                       constrains.maxWidth - 16,
                       constrains.maxWidth - 16
                     ),
