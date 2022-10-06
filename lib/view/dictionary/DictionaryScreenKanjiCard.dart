@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/KanjiVGWidget.dart';
 import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
+import 'package:xml/xml.dart';
 
 
 
@@ -12,17 +14,60 @@ import 'package:da_kanji_mobile/view/dictionary/KanjiGroupWidget.dart';
 class DictionaryScreenKanjiCard extends StatefulWidget {
   DictionaryScreenKanjiCard(
     this.kanjiVG,
+    this.kanjidic2entry,
+    this.targetLanguage,
     {Key? key}
   ) : super(key: key);
 
   /// The kanji that should be shown in this card as a svg string
   final KanjiSVG kanjiVG;
+  /// List of all kanjidict entries 
+  final Kanjidic2Entry kanjidic2entry;
+  /// String denoting the target language
+  final String targetLanguage;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
 }
 
 class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
+
+  /// List containing all on readings of this kanji
+  final List<String> onReadings = [];
+  /// List containing all kun readings of this kanji
+  final List<String> kunReadings = [];
+  /// List containing all readings in the target language
+  final List<String> meanings = [];
+  /// The stroke count information extracted from the KanjiVG data
+  int strokeCount = -1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (var i = 0; i < widget.kanjidic2entry.readings.length; i++) {
+      // init on reading list
+      if(widget.kanjidic2entry.readings[i].r_type.contains("ja_on"))
+        onReadings.add(widget.kanjidic2entry.readings[i].value);
+
+      // init kun reading list
+      if(widget.kanjidic2entry.readings[i].r_type.contains("ja_kun"))
+        kunReadings.add(widget.kanjidic2entry.readings[i].value);
+    }
+
+    for (var i = 0; i < widget.kanjidic2entry.meanings.length; i++) {
+      // init meaning list with all meanings that match `targetLanguage`
+      if(widget.kanjidic2entry.meanings[i].language == widget.targetLanguage)
+        meanings.add(widget.kanjidic2entry.meanings[i].meaning);
+    }
+
+    // get stroke count from kanjiVG
+    final document = XmlDocument.parse(widget.kanjiVG.svg);
+    strokeCount = document.root.findAllElements('text').map(
+        (e) => int.parse(e.children.first.text)
+      ).toList().reduce(max);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,28 +90,45 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     ),
                     
                     SizedBox(width: 8,),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("On:"),
-                        Text("Kun:"),
-                      ],
+                    Expanded(
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Meanings:"
+                          ),
+                          SelectableText(
+                            "${meanings.join(", ")}"
+                          ),
+                          Text(
+                            "On:"
+                          ),
+                          SelectableText(
+                            "${onReadings.join(", ")}"
+                          ),
+                          Text(
+                            "Kun:"
+                          ),
+                          SelectableText(
+                            "${kunReadings.join(", ")}"
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 8,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Strokes:"),
-                    Text("Grade:"),
-                    Text("JLPT:"),
-                  ],
+                SizedBox(height: 16,),
+                Text(
+                  "Strokes: ${strokeCount}, " +
+                  "Grade: ${widget.kanjidic2entry.grade}, " + 
+                  "JLPT: N${widget.kanjidic2entry.jlpt}, " +
+                  "Heisig: NONE, " + 
+                  "SKIP: NONE"
                 ),
-                Text("Radicals"),
+                SizedBox(height: 16,),
                 ExpansionTile(
-                  title: Text("Kanji"),
+                  title: Text("Kanji groups"),
                   children:
                   [
                     KanjiGroupWidget(

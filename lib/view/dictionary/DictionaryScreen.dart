@@ -51,7 +51,8 @@ class _DictionaryScreenState
   DictSearch search = DictSearch();
   /// A
   List<KanjiSVG> kanjiVGs = [];
-
+  /// A List of kanjidic2 entries thath should be shown
+  List<Kanjidic2Entry> kanjidic2Entries = [];
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +91,23 @@ class _DictionaryScreenState
               context.read<DictSearch>().addListener(changeTab);
             }
 
+            // if a search result was selected
+            // search the kanjis from the selected word in KanjiVG
             if(context.watch<DictSearch>().selectedResult != null){
 
               List<String> kanjis = 
                 removeKana(context.watch<DictSearch>().selectedResult!.kanjis);
 
               kanjiVGs = List.generate(
-                kanjis.length,
-                (index) => GetIt.I<Box<KanjiSVG>>().query(
-                  KanjiSVG_.character.equals(kanjis[index])
+                kanjis.length, (index) => 
+                  GetIt.I<Box<KanjiSVG>>().query(
+                    KanjiSVG_.character.equals(kanjis[index])
+                  ).build().find()
+              ).expand((element) => element).toList();
+
+              kanjidic2Entries = List.generate(kanjiVGs.length, (index) =>
+                GetIt.I<Box<Kanjidic2Entry>>().query(
+                  Kanjidic2Entry_.literal.equals(kanjiVGs[index].character)
                 ).build().find()
               ).expand((element) => element).toList();
             }
@@ -127,7 +136,8 @@ class _DictionaryScreenState
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenKanjiTab(
-                      kanjiVGs
+                      kanjiVGs,
+                      kanjidic2Entries
                     ),
                   ),
                 if(tabsSideBySide >= 4) 
@@ -170,6 +180,7 @@ class _DictionaryScreenState
                                   if(noTabs > 1) 
                                     DictionaryScreenKanjiTab(
                                       kanjiVGs,
+                                      kanjidic2Entries
                                     ),
                                   if(noTabs > 0) 
                                     DictionaryScreenExampleTab(),
