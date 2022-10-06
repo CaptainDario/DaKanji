@@ -54,7 +54,7 @@ class DrawerElement extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(
               context, this.route,
               (Route<dynamic> route) => false,
-              arguments: SettingsArguments(true)
+              arguments: NavigationArguments(true, "")
             );
           }
           else{

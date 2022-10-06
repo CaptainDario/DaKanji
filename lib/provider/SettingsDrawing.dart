@@ -31,10 +31,25 @@ class SettingsDrawing {
     "url"
   ];
 
+  List<String> androidDictionaries = [
+    "system (app)",
+    "aedict (app)",
+    "akebi (app)",
+    "takoboto (app)", 
+  ];
+
+  List<String> iosDictionaries = [
+    "shirabe jisho (app)",
+    "imiwa? (app)",
+    "Japanese (app)",
+    "midori (app)",
+  ];
+
   /// A list with all available dictionary options.
   late List<String> dictionaries;
 
-
+  /// Identifier for the inbuilt dictionary
+  String inbuiltDictId = "inbuilt";
 
   /// The custom URL a user can define on the settings page.
   String customURL = "";
@@ -96,22 +111,12 @@ class SettingsDrawing {
     wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
     weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
 
-    dictionaries = List.from(webDictionaries);
+    dictionaries = [inbuiltDictId] + List.from(webDictionaries);
 
     if(Platform.isAndroid)
-      dictionaries.addAll([
-        "system (app)",
-        "aedict (app)",
-        "akebi (app)",
-        "takoboto (app)", 
-      ]);
+      dictionaries.addAll(androidDictionaries);
     else if(Platform.isIOS)
-      dictionaries.addAll([
-        "shirabe jisho (app)",
-        "imiwa? (app)",
-        "Japanese (app)",
-        "midori (app)",
-      ]);
+      dictionaries.addAll(iosDictionaries);
 
     selectedDictionary = dictionaries[0];
 

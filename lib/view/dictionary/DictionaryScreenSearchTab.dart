@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
@@ -15,11 +16,17 @@ class DictionaryScreenSearchTab extends StatefulWidget {
   DictionaryScreenSearchTab(
     this.height,
     this.width,
+    this.initialQuery,
     {Key? key}
   ) : super(key: key);
 
+  
+  /// height of this widget
   final double height;
+  /// width of this widget
   final double width;
+  /// The query that should be initially searched
+  late final initialQuery;
 
   @override
   State<DictionaryScreenSearchTab> createState() => _DictionaryScreenSearchTabState();
@@ -35,7 +42,12 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
 
   @override
   void initState() {
+    if(widget.initialQuery != ""){
+      searchInputController.text = widget.initialQuery;
+      context.read<DictSearch>().currentSearch = widget.initialQuery;
 
+      context.read<DictSearch>().searchResults = searchInDict(widget.initialQuery);
+    }
     super.initState();
   }
 
@@ -59,17 +71,13 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                           controller: searchInputController,
                           onChanged: (text) async {
                             // only search in dictionary if the query changed
-                            if(!(lastInput != text))
+                            if(lastInput == text)
                               return;
 
                             context.read<DictSearch>().currentSearch = text;
-
-                            context.read<DictSearch>().searchResults = 
-                              GetIt.I<Box<Jmdict.Entry>>().query(
-                                Entry_.readings.contains(text)
-                              ).build().find();
-
+                            
                             setState(() {
+                              context.read<DictSearch>().searchResults = searchInDict(text);
                               lastInput = text;
                             });
                           },
@@ -128,7 +136,9 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               shape: CircleBorder(),
               padding: EdgeInsets.all(24),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/drawing");
+            },
             child: SizedBox(
               width: widget.width*0.08,
               height: widget.height*0.08,
@@ -140,5 +150,28 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
         )
       ],
     );
+  }
+
+  /// Searches `queryText` in the database
+  List<Jmdict.Entry> searchInDict(String queryText){
+
+    String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
+    String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
+
+    var query = GetIt.I<Box<Jmdict.Entry>>().query(
+      // search the query as is
+      Entry_.readings.contains(queryText)
+      // search the input if it 
+      .or(Entry_.kanjis.contains(queryText))
+      // search the query converted to hiragana
+      .or(Entry_.readings.contains(hiraText))
+      // search the query converted to katakana
+      .or(Entry_.readings.contains(kataText))
+    ).build();
+    
+    List<Jmdict.Entry> searchResults = query.find();
+    query.close();
+
+    return searchResults;
   }
 }

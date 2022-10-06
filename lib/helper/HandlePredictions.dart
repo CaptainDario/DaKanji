@@ -1,4 +1,5 @@
 
+import 'package:da_kanji_mobile/model/SettingsArguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -79,16 +80,24 @@ void openDictionary(BuildContext context, String char) async {
             )
           );
         else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
-          
+            
           //print("webview is side by side");
+        }
       }
-      }
+    }
+    //
+    else if(GetIt.I<Settings>().selectedDictionary ==
+      GetIt.I<Settings>().settingsDrawing.inbuiltDictId){
+      Navigator.pushNamedAndRemoveUntil(
+        context, "/dictionary", (route) => false,
+        arguments: NavigationArguments(false, char)
+      );
     }
     // handle dictionary opening on ANDROID
     else if(Platform.isAndroid){
       // the prediction should be translated with system dialogue
       if(GetIt.I<Settings>().selectedDictionary == 
-        GetIt.I<Settings>().settingsDrawing.dictionaries[4]){ 
+        GetIt.I<Settings>().settingsDrawing.androidDictionaries[0]){ 
           AndroidIntent intent = AndroidIntent(
             action: 'android.intent.action.TRANSLATE',
             arguments: <String, dynamic>{
@@ -109,7 +118,7 @@ void openDictionary(BuildContext context, String char) async {
       }
       // offline dictionary aedict3 (android)
       else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[5]){
+        GetIt.I<Settings>().settingsDrawing.androidDictionaries[1]){
         try{
           
           AndroidIntent intent = AndroidIntent(
@@ -137,7 +146,7 @@ void openDictionary(BuildContext context, String char) async {
       }
       // offline dictionary akebi (android)
       else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[6]){
+        GetIt.I<Settings>().settingsDrawing.androidDictionaries[2]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: AKEBI_ID,
@@ -164,7 +173,7 @@ void openDictionary(BuildContext context, String char) async {
       }
       // offline dictionary takoboto (android)
       else if(GetIt.I<Settings>().selectedDictionary == 
-        GetIt.I<Settings>().settingsDrawing.dictionaries[7]){
+        GetIt.I<Settings>().settingsDrawing.androidDictionaries[3]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: TAKOBOTO_ID,
@@ -193,7 +202,7 @@ void openDictionary(BuildContext context, String char) async {
     else if(Platform.isIOS){
       // dictionary shirabe (iOS)
       if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[4]){
+        GetIt.I<Settings>().settingsDrawing.iosDictionaries[0]){
         print("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
         if(await canLaunchUrlString(url)) 
@@ -211,7 +220,7 @@ void openDictionary(BuildContext context, String char) async {
       }
       // imiwa?
       else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[5]){
+        GetIt.I<Settings>().settingsDrawing.iosDictionaries[1]){
         print("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
         if(await canLaunchUrlString(url))
@@ -229,7 +238,7 @@ void openDictionary(BuildContext context, String char) async {
       }
       // Japanese
       else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[6]){
+        GetIt.I<Settings>().settingsDrawing.iosDictionaries[2]){
         print("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
         if(await canLaunchUrlString(url)) 
@@ -246,7 +255,7 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.dictionaries[7]){
+        GetIt.I<Settings>().settingsDrawing.iosDictionaries[3]){
         print("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
         if(await canLaunchUrlString(url)) 

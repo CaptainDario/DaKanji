@@ -18,18 +18,21 @@ import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 
 class DictionaryScreen extends StatefulWidget {
 
+  DictionaryScreen(
+    this.openedByDrawer,
+    this.includeHeroes,
+    this.includeTutorial,
+    this.initialSearch
+  );
+
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
-
-  DictionaryScreen(
-    this.openedByDrawer,
-    this.includeHeroes,
-    this.includeTutorial
-  );
+  /// the term that should be searched when this screen was opened
+  final String initialSearch;
 
   @override
   _DictionaryScreenState createState() => _DictionaryScreenState();
@@ -53,6 +56,12 @@ class _DictionaryScreenState
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
   List<Kanjidic2Entry> kanjidic2Entries = [];
+
+  @override
+  void initState() {
+    search.currentSearch = widget.initialSearch;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +129,8 @@ class _DictionaryScreenState
                     height: constraints.maxHeight,
                     child: DictionaryScreenSearchTab(
                       constraints.maxHeight,
-                      constraints.maxWidth / (tabsSideBySide)
+                      constraints.maxWidth / (tabsSideBySide),
+                      context.watch<DictSearch>().currentSearch
                     ),
                   ),
                 if(tabsSideBySide > 2)
@@ -171,7 +181,8 @@ class _DictionaryScreenState
                                   if(noTabs > 3) 
                                     DictionaryScreenSearchTab(
                                       constraints.maxHeight,
-                                      constraints.maxWidth
+                                      constraints.maxWidth,
+                                      context.watch<DictSearch>().currentSearch
                                     ),
                                   if(noTabs > 2)
                                     DictionaryScreenWordTab(
