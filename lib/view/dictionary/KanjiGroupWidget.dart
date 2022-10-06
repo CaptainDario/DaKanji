@@ -78,42 +78,31 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      child: InteractiveViewer(
-        constrained: true,
-        panEnabled: false,
-        scaleEnabled: false,
-        child: OverflowBox(
-          alignment: Alignment.topLeft,
-          minHeight: 0,
-          minWidth: 0,
-          maxHeight: widget.height-16,
-          maxWidth: widget.width-16,
-          child: FittedBox(
-            child: GraphView(
-              graph: graph,
-              algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
-              paint: Paint()
-                ..color = Colors.black
-                ..strokeWidth = 2
-                ..style = PaintingStyle.stroke,
-              builder: (Node node) {
-                return Container(
-                  width:  75,
-                  height: 75,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.black)
+    return Center(
+      child: FittedBox(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GraphView(
+            graph: graph,
+            algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+            paint: Paint()
+              ..color = Colors.black
+              ..strokeWidth = 2
+              ..style = PaintingStyle.stroke,
+            builder: (Node node) {
+              return Container(
+                width:  50,
+                height: 50,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: Colors.black)
+                ),
+                child: Center(
+                  child: SvgPicture.string(
+                    kanjiVGStringList[(node.key!.value as int)]
                   ),
-                  child: Center(
-                    child: SvgPicture.string(
-                      kanjiVGStringList[(node.key!.value as int)]
-                    ),
-                  ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
