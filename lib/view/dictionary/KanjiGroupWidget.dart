@@ -83,6 +83,8 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
       height: widget.height,
       child: InteractiveViewer(
         constrained: true,
+        panEnabled: false,
+        scaleEnabled: false,
         child: OverflowBox(
           alignment: Alignment.topLeft,
           minHeight: 0,
