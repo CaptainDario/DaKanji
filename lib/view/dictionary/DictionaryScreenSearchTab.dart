@@ -9,6 +9,7 @@ import 'package:database_builder/objectbox.g.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/SearchResultCard.dart';
 import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
+import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 
@@ -137,6 +138,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               padding: EdgeInsets.all(24),
             ),
             onPressed: () {
+              GetIt.I<Settings>().selectedDictionary = 
+                GetIt.I<Settings>().settingsDrawing.inbuiltDictId;
               Navigator.pushNamed(context, "/drawing");
             },
             child: SizedBox(
