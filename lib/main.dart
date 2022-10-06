@@ -233,11 +233,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           );
 
         // check type and extract arguments
-        SettingsArguments args;
-        if((settings.arguments is SettingsArguments))
-          args = settings.arguments as SettingsArguments;
+        NavigationArguments args;
+        if((settings.arguments is NavigationArguments))
+          args = settings.arguments as NavigationArguments;
         else
-          args = SettingsArguments(false);
+          args = NavigationArguments(false, "");
 
         switch(settings.name){
           case "/home":
@@ -247,7 +247,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/drawing":
             return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
           case "/dictionary":
-            return switchScreen(DictionaryScreen(args.navigatedByDrawer, false, false));
+            return switchScreen(DictionaryScreen(args.navigatedByDrawer, false, false, args.dictSearch));
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, false, false));
           case "/settings":
