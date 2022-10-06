@@ -101,6 +101,16 @@ const MIDORI_ID = "id385231773";
 /// url to the privacy police of DaKanji
 const PRIVACY_POLICE = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
 
+/// LINKS
+/// Link to japanese wikipedia
+const WIKIPEDIA_JP_URL = "https://ja.wikipedia.org/wiki/";
+/// Link to english wikipedia
+const WIKIPEDIA_EN_URL = "https://en.wikipedia.org/wiki/";
+/// Link to DBPedia
+const DBPEDIA_URL = "https://dbpedia.org/page/";
+/// Link to Wiktionary
+const WIKTIONARY_URL = "https://en.wiktionary.org/wiki/";
+
 
 /// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
