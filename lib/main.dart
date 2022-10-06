@@ -12,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:kana_kit/kana_kit.dart';
 
 import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
 import 'package:da_kanji_mobile/model/LightTheme.dart';
@@ -149,6 +150,9 @@ Future<void> initGetIt() async {
   
   // Kagome
   GetIt.I.registerSingleton<Kagome>(Kagome());
+
+  // package for converting between kana
+  GetIt.I.registerSingleton<KanaKit>(KanaKit());
 
   // ObjectBox
   Store store = await openStore(
