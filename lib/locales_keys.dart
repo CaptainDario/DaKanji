@@ -72,11 +72,14 @@ abstract class  LocaleKeys {
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_custom_url_format = 'SettingsScreen.custom_url_format';
   static const SettingsScreen_custom_url_hint = 'SettingsScreen.custom_url_hint';
+  static const SettingsScreen_dict_include_names_in_dict = 'SettingsScreen.dict_include_names_in_dict';
+  static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
   static const SettingsScreen_dictionary_system_translator = 'SettingsScreen.dictionary_system_translator';
   static const SettingsScreen_drawing_title = 'SettingsScreen.drawing_title';
   static const SettingsScreen_empty_canvas_after_double_tap = 'SettingsScreen.empty_canvas_after_double_tap';
   static const SettingsScreen_invert_short_long_press = 'SettingsScreen.invert_short_long_press';
   static const SettingsScreen_long_press_opens = 'SettingsScreen.long_press_opens';
+  static const SettingsScreen_misc_default_screen = 'SettingsScreen.misc_default_screen';
   static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
   static const SettingsScreen_miscellaneous_title = 'SettingsScreen.miscellaneous_title';
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
@@ -99,6 +102,7 @@ abstract class  LocaleKeys {
   static const Stores_short_description = 'Stores.short_description';
   static const Stores_shortest_description = 'Stores.shortest_description';
   static const Stores = 'Stores';
+  static const TextScreen_input_text_here = 'TextScreen.input_text_here';
   static const TextScreen_title = 'TextScreen.title';
   static const TextScreen = 'TextScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';

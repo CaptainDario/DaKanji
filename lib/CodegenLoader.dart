@@ -107,6 +107,7 @@ class CodegenLoader extends AssetLoader{
     "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst."
   },
   "TextScreen": {
+    "input_text_here": "Text hier eingeben...",
     "title": "Text"
   },
   "WebviewScreen": {
@@ -185,11 +186,14 @@ static const Map<String,dynamic> en = {
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
     "custom_url_hint": "URL of your dictionary",
+    "dict_include_names_in_dict": "Should names be included in the dictionary",
+    "dict_languages": "Show dictionary entries for those languages",
     "dictionary_system_translator": "OS integrated translator",
     "drawing_title": "Drawing",
     "empty_canvas_after_double_tap": "Empty canvas after double tap",
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
+    "misc_default_screen": "Initial screen when starting the app",
     "misc_settings_window_size": "Save current window size",
     "miscellaneous_title": "Miscellaneous",
     "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
@@ -207,6 +211,7 @@ static const Map<String,dynamic> en = {
     "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
+    "input_text_here": "Input text here...",
     "title": "Text"
   },
   "WebviewScreen": {
@@ -307,6 +312,7 @@ static const Map<String,dynamic> es = {
     "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
   },
   "TextScreen": {
+    "input_text_here": "Introduzca el texto aquí...",
     "title": "Texto"
   },
   "WebviewScreen": {
@@ -407,6 +413,7 @@ static const Map<String,dynamic> fr = {
     "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !"
   },
   "TextScreen": {
+    "input_text_here": "Entrez le texte ici...",
     "title": "Texte"
   },
   "WebviewScreen": {
@@ -507,6 +514,7 @@ static const Map<String,dynamic> it = {
     "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
   },
   "TextScreen": {
+    "input_text_here": "Inserire il testo qui...",
     "title": "Testo"
   },
   "WebviewScreen": {
@@ -516,7 +524,7 @@ static const Map<String,dynamic> it = {
 };
 static const Map<String,dynamic> ja = {
   "AboutScreen": {
-    "about_text": "「大漢字」は、日本語を学ぶ人、日本語を使う人を支援します。\n「大漢字」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
+    "about_text": "「DaKanji」は、日本語を学ぶ人、日本語を使う人を支援します。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
     "credits": "クレジット",
     "show_changelog": "完全なチェンジログを表示してください。",
     "software_informations_button": "ソフトウェア情報",
@@ -567,7 +575,7 @@ static const Map<String,dynamic> ja = {
     "whats_new": "更新情報"
   },
   "HomeScreen": {
-    "RatePopup_dont_ask_again": "またかよ！？",
+    "RatePopup_dont_ask_again": "またかよ！",
     "RatePopup_text": "あなたは「DaKanji」が好きですか？\nもしそうなら、評価をいただけると、このプロジェクトの助けになります。"
   },
   "OnBoarding": {
@@ -607,6 +615,7 @@ static const Map<String,dynamic> ja = {
     "shortest_description": "日本語を勉強しているんですか？それなら「DaKanji」を試してみる必要があります。"
   },
   "TextScreen": {
+    "input_text_here": "ここにテキストを入力...",
     "title": "テキスト"
   },
   "WebviewScreen": {
@@ -638,7 +647,7 @@ static const Map<String,dynamic> localizations = {
     },
     "ja": {
       "A cell has a red background when there is no translation": "0 ; 0 ; 7",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 5",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 4",
       "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
     },
     "zh": {
@@ -758,8 +767,8 @@ static const Map<String,dynamic> localizations = {
       "en": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}) or send an [e-mail](daapplab@gmail.com).\n\nThe privacy police can be found [here]({PRIVACY_POLICE})",
       "de": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App hast oder Verbesserungsvorschläge, bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder schicke eine [E-Mail](daapplab@gmail.com).\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
       "ru": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
-      "ja": "「大漢字」は、日本語を学ぶ人、日本語を使う人を支援します。\n「大漢字」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
-      "zh": "\"大汉字 \"帮助日语学生和使用日语的人。\n\"大汉字 \"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
+      "ja": "「DaKanji」は、日本語を学ぶ人、日本語を使う人を支援します。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})に参加するか、[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリスは[こちら]({PRIVACY_POLICE})で確認できます。",
+      "zh": "\"DaKanji\"帮助日语学生和使用日语的人。\n\"DaKanji\"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
       "it": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
       "fr": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
       "es": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
@@ -828,7 +837,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Not again!",
       "de": "Nie wieder!",
       "ru": "Только не это!",
-      "ja": "またかよ！？",
+      "ja": "またかよ！",
       "zh": "不要再来了!",
       "it": "Non di nuovo!",
       "fr": "Pas encore !",
@@ -1069,6 +1078,17 @@ static const Map<String,dynamic> localizations = {
       "fr": "Texte",
       "es": "Texto",
       "pl": "Tekst"
+    },
+    "input_text_here": {
+      "en": "Input text here...",
+      "de": "Text hier eingeben...",
+      "ru": "Введите текст здесь...",
+      "ja": "ここにテキストを入力...",
+      "zh": "在这里输入文字...",
+      "it": "Inserire il testo qui...",
+      "fr": "Entrez le texte ici...",
+      "es": "Introduzca el texto aquí...",
+      "pl": "Wprowadź tekst tutaj..."
     }
   },
   "Dictionary": {
@@ -1484,6 +1504,15 @@ static const Map<String,dynamic> localizations = {
       "fr": "Sauvegarder la taille actuelle de la fenêtre",
       "es": "Guardar el tamaño actual de la ventana",
       "pl": "Zapisz bieżący rozmiar okna"
+    },
+    "misc_default_screen": {
+      "en": "Initial screen when starting the app"
+    },
+    "dict_include_names_in_dict": {
+      "en": "Should names be included in the dictionary"
+    },
+    "dict_languages": {
+      "en": "Show dictionary entries for those languages"
     }
   },
   "WebviewScreen": {
@@ -1604,6 +1633,7 @@ static const Map<String,dynamic> pl = {
     "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
   "TextScreen": {
+    "input_text_here": "Wprowadź tekst tutaj...",
     "title": "Tekst"
   },
   "WebviewScreen": {
@@ -1704,6 +1734,7 @@ static const Map<String,dynamic> ru = {
     "shortest_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!"
   },
   "TextScreen": {
+    "input_text_here": "Введите текст здесь...",
     "title": "Текст"
   },
   "WebviewScreen": {
@@ -1713,7 +1744,7 @@ static const Map<String,dynamic> ru = {
 };
 static const Map<String,dynamic> zh = {
   "AboutScreen": {
-    "about_text": "\"大汉字 \"帮助日语学生和使用日语的人。\n\"大汉字 \"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
+    "about_text": "\"DaKanji\"帮助日语学生和使用日语的人。\n\"DaKanji\"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
     "credits": "贷方",
     "show_changelog": "给我看完整的更新日志。",
     "software_informations_button": "软件信息",
@@ -1804,6 +1835,7 @@ static const Map<String,dynamic> zh = {
     "shortest_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!"
   },
   "TextScreen": {
+    "input_text_here": "在这里输入文字...",
     "title": "文本"
   },
   "WebviewScreen": {

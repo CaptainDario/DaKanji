@@ -8,12 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:window_size/window_size.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/UserData.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveHeaderTile.dart';
+import 'package:da_kanji_mobile/model/Dict/DictLanguages.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveHeaderTile.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
@@ -21,6 +22,7 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTi
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -228,6 +230,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       Divider(),
 
+                      // #region - Dict header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.Dictionary_title.tr(),
+                        autoSizeGroup: settingsAutoSizeGroup
+                      ),
+
+                      MultiSelectDialogField(
+                        title: Text("Select languages"),
+                        buttonText: Text(LocaleKeys.SettingsScreen_dict_languages.tr()),
+                        items: DictLanguages.values.map(
+                          (e) => MultiSelectItem(e, e.name)
+                        ).toList(),
+                        listType: MultiSelectListType.CHIP,
+                        onConfirm: (values) {
+                          //_selectedAnimals = values;
+                        },
+                      ),
+
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_include_names_in_dict.tr(),
+                        value: GetIt.I<Settings>().emptyCanvasAfterDoubleTap,
+                        onTileTapped: (bool? newValue){
+                          settings.emptyCanvasAfterDoubleTap = newValue ?? false;
+                          settings.save();
+                        }
+                      ),
+
+
+                      // #endregion
+
+                      Divider(),
+
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
@@ -244,6 +279,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           print(settings.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
+                        },
+                      ),
+                      ResponsiveDropDownTile(
+                        text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
+                        value: Screens.drawing.name,
+                        items: [
+                          Screens.drawing.name,
+                          Screens.dictionary.name,
+                          Screens.text.name,
+                        ],
+                        onTap: (newValue) {
+                          settings.selectedDictionary = newValue
+                            ?? settings.settingsDrawing.dictionaries[0];
+                          settings.save();
                         },
                       ),
                       // language

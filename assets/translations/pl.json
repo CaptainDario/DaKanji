@@ -79,11 +79,14 @@
     "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Nast\u0119pnie symbol zast\u0119pczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Niestandardowy format URL",
     "custom_url_hint": "URL twojego s\u0142ownika",
+    "dict_include_names_in_dict": "",
+    "dict_languages": "",
     "dictionary_system_translator": "T\u0142umacz systemowy",
     "drawing_title": "Obraz",
     "empty_canvas_after_double_tap": "Wyczy\u015b\u0107 p\u0142\u00f3tno podw\u00f3jnym klikni\u0119ciem",
     "invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
     "long_press_opens": "D\u0142ugie klikni\u0119cie otwiera",
+    "misc_default_screen": "",
     "misc_settings_window_size": "Zapisz bie\u017c\u0105cy rozmiar okna",
     "miscellaneous_title": "Inne",
     "show_tutorial": "Powt\u00f3rz tutorial (@:General.restarts_app)",
@@ -108,6 +111,7 @@
     "shortest_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!"
   },
   "TextScreen": {
+    "input_text_here": "Wprowad\u017a tekst tutaj...",
     "title": "Tekst"
   },
   "WebviewScreen": {

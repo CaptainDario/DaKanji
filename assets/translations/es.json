@@ -79,11 +79,14 @@
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "custom_url_format": "Formato de la URL personalizada",
     "custom_url_hint": "URL de tu diccionario",
+    "dict_include_names_in_dict": "",
+    "dict_languages": "",
     "dictionary_system_translator": "Traductor integrado de tu SO",
     "drawing_title": "Dibujar",
     "empty_canvas_after_double_tap": "Vaciar lienzo despu\u00e9s de una pulsaci\u00f3n doble",
     "invert_short_long_press": "Invertir pulsaci\u00f3n larga/breve",
     "long_press_opens": "Pulsaci\u00f3n larga abre",
+    "misc_default_screen": "",
     "misc_settings_window_size": "Guardar el tama\u00f1o actual de la ventana",
     "miscellaneous_title": "Miscel\u00e1neo",
     "show_tutorial": "Volver a mostrar el tutorial (@:General.restarts_app)",
@@ -108,6 +111,7 @@
     "shortest_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!"
   },
   "TextScreen": {
+    "input_text_here": "Introduzca el texto aqu\u00ed...",
     "title": "Texto"
   },
   "WebviewScreen": {

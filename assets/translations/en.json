@@ -79,11 +79,14 @@
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Custom URL format",
     "custom_url_hint": "URL of your dictionary",
+    "dict_include_names_in_dict": "Should names be included in the dictionary",
+    "dict_languages": "Show dictionary entries for those languages",
     "dictionary_system_translator": "OS integrated translator",
     "drawing_title": "Drawing",
     "empty_canvas_after_double_tap": "Empty canvas after double tap",
     "invert_short_long_press": "Invert long/short press",
     "long_press_opens": "Long press opens",
+    "misc_default_screen": "Initial screen when starting the app",
     "misc_settings_window_size": "Save current window size",
     "miscellaneous_title": "Miscellaneous",
     "show_tutorial": "Reshow tutorials (@:General.restarts_app)",
@@ -108,6 +111,7 @@
     "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
+    "input_text_here": "Input text here...",
     "title": "Text"
   },
   "WebviewScreen": {

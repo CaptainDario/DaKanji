@@ -79,11 +79,14 @@
     "custom_url_explanation": "L'applicazione sostituir\u00e0 un segnaposto nell'URL con il carattere previsto. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto \u00e8: \"\u53e3\" e si vuole aprire il sito \"jisho.org\". Per prima cosa \u00e8 necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/\u53e3\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Formato URL personalizzato",
     "custom_url_hint": "URL del vostro dizionario",
+    "dict_include_names_in_dict": "",
+    "dict_languages": "",
     "dictionary_system_translator": "Traduttore integrato nel sistema operativo",
     "drawing_title": "Disegno",
     "empty_canvas_after_double_tap": "Tela vuota dopo il doppio tocco",
     "invert_short_long_press": "Invertire la pressione lunga/corta",
     "long_press_opens": "La pressione prolungata apre",
+    "misc_default_screen": "",
     "misc_settings_window_size": "Salva la dimensione attuale della finestra",
     "miscellaneous_title": "Varie",
     "show_tutorial": "Ripresenta le esercitazioni (@:General.restarts_app)",
@@ -108,6 +111,7 @@
     "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
   },
   "TextScreen": {
+    "input_text_here": "Inserire il testo qui...",
     "title": "Testo"
   },
   "WebviewScreen": {

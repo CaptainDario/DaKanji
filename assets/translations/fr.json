@@ -79,11 +79,14 @@
     "custom_url_explanation": "L'application remplacera un caract\u00e8re de remplacement dans l'URL par le caract\u00e8re pr\u00e9dit. Ce caract\u00e8re de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caract\u00e8re pr\u00e9dit est : '\u53e3' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web \u00e0 rechercher. Dans ce cas : 'https://jisho.org/search/\u53e3'. Maintenant, seul le caract\u00e8re dans l'URL doit \u00eatre remplac\u00e9 par le caract\u00e8re de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "custom_url_format": "Format d'URL personnalis\u00e9",
     "custom_url_hint": "URL de votre dictionnaire",
+    "dict_include_names_in_dict": "",
+    "dict_languages": "",
     "dictionary_system_translator": "Traducteur int\u00e9gr\u00e9 au syst\u00e8me d'exploitation",
     "drawing_title": "Dessin",
     "empty_canvas_after_double_tap": "Toile vide apr\u00e8s un double tapotement",
     "invert_short_long_press": "Inverser la presse long/short",
     "long_press_opens": "Une pression longue ouvre",
+    "misc_default_screen": "",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",
     "miscellaneous_title": "Divers",
     "show_tutorial": "Relancer les didacticiels (@:General.restarts_app)",
@@ -108,6 +111,7 @@
     "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !"
   },
   "TextScreen": {
+    "input_text_here": "Entrez le texte ici...",
     "title": "Texte"
   },
   "WebviewScreen": {
