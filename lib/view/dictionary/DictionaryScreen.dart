@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:da_kanji_mobile/provider/DictSearchResult.dart';
 import 'package:da_kanji_mobile/model/Screens.dart';
-import 'package:da_kanji_mobile/helper/JapaneseTextConversion.dart';
+import 'package:da_kanji_mobile/helper/japanese_text_conversion.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenExampleTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiTab.dart';
 import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenSearchTab.dart';

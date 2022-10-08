@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveHeaderTile.dart';
 import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 import 'package:da_kanji_mobile/view/settings/customURLPopup.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveCheckBoxTile.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveDropDownTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveIconButtonTile.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/ResponsiveInputFieldTile.dart';

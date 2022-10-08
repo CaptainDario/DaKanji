@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/helper/HandlePredictions.dart';
+import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/provider/Settings.dart';
 

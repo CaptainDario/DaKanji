@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/model/LightTheme.dart';
 import 'package:da_kanji_mobile/model/DarkTheme.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
 import 'package:da_kanji_mobile/model/SettingsArguments.dart';
-import 'package:da_kanji_mobile/helper/DeepLinks.dart';
+import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
 import 'package:da_kanji_mobile/model/Changelog.dart';
