@@ -22,7 +22,7 @@ class DrawerAppBar extends StatelessWidget {
   /// The currently opened screen
   final Screens currentScreen;
   /// the height of the appbar
-  final height;
+  final double height;
 
 
 

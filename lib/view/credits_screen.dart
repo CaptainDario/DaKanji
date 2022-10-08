@@ -35,28 +35,25 @@ class _CreditsScreenState extends State<CreditsScreen> {
           return true;
         },
         child: Center(
-          child: 
-            Container(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: FutureBuilder<String>(
-                      future: rootBundle.loadString("CREDITS.md"),
-                      builder: (context, snapshot) {
-                        if(snapshot.hasData) {
-                          return Markdown(
-                            data: snapshot.data!,
-                            selectable: false,
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    )
-                  ),
-                ]
-              )
-            )
+          child: Column(
+            children: [
+              Expanded(
+                child: FutureBuilder<String>(
+                  future: rootBundle.loadString("CREDITS.md"),
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData) {
+                      return Markdown(
+                        data: snapshot.data!,
+                        selectable: false,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                )
+              ),
+            ]
+          )
         ),
       ),
     );

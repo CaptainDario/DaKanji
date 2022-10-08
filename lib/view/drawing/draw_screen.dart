@@ -91,7 +91,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   void dispose() {
     super.dispose();
     GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
-      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview) {
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview) {
         landscapeWebViewController?.loadUrl(
           openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
         );
@@ -111,7 +111,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
           builder: (context, constraints){
               
             // set layout and canvas size
-            var t = GetDrawScreenLayout(constraints);
+            var t = getDrawScreenLayout(constraints);
             GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
             GetIt.I<DrawScreenState>().canvasSize = t.item2;
             _canvasSize = t.item2;

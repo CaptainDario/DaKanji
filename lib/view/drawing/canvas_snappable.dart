@@ -82,10 +82,11 @@ class CanvasSnappableState extends State<CanvasSnappable>
 
     if (widget.onSnapped != null) {
       _animationController.addStatusListener((status) {
-        if (status == AnimationStatus.completed)
+        if (status == AnimationStatus.completed){
           if(widget.onSnapped != null) {
             widget.onSnapped!();
           }
+        }
       });
     }
   }

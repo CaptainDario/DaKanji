@@ -96,7 +96,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   onTap: () => Navigator.push(
                     context, 
-                    MaterialPageRoute(builder: (context) => ChangelogScreen()),
+                    MaterialPageRoute(builder: (context) => const ChangelogScreen()),
                   )
                 )
               ),
@@ -147,7 +147,7 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           Navigator.push(
                             context, 
-                            MaterialPageRoute(builder: (context) => CreditsScreen()),
+                            MaterialPageRoute(builder: (context) => const CreditsScreen()),
                           );
                         }, 
                         child: Text(LocaleKeys.AboutScreen_credits.tr())

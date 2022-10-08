@@ -105,7 +105,7 @@ class WhatsNewDialogue extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Navigator.push(
                               context, 
-                              MaterialPageRoute(builder: (context) => ChangelogScreen()),
+                              MaterialPageRoute(builder: (context) => const ChangelogScreen()),
                             ),
                             child: Text(
                               LocaleKeys.General_complete_log.tr(),
@@ -143,11 +143,8 @@ class WhatsNewDialogue extends StatelessWidget {
                 right: -innerDialogueWidth,
                 height: innerDialogueWidth*2,
                 width: innerDialogueWidth*2,
-                child: Container(
-                  //color: Colors.black,
-                  child: IgnorePointer(
-                    child: confettiAnimation_1
-                  ),
+                child: IgnorePointer(
+                  child: confettiAnimation_1
                 ),
               ),
               Positioned(

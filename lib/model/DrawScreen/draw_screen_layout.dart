@@ -2,23 +2,23 @@
 
 
 enum DrawScreenLayout {
-  Portrait,
-  PortraitWithWebview,
-  Landscape,
-  LandscapeWithWebview,
+  portrait,
+  portraitWithWebview,
+  landscape,
+  landscapeWithWebview,
 }
 
 bool drawScreenIsLandscape(DrawScreenLayout drawScreenLayout){
-  return (drawScreenLayout == DrawScreenLayout.Landscape || 
-    drawScreenLayout == DrawScreenLayout.LandscapeWithWebview);
+  return (drawScreenLayout == DrawScreenLayout.landscape || 
+    drawScreenLayout == DrawScreenLayout.landscapeWithWebview);
 }
 
 bool drawScreenIsPortrait(DrawScreenLayout drawScreenLayout){
-  return (drawScreenLayout == DrawScreenLayout.Portrait ||
-    drawScreenLayout == DrawScreenLayout.PortraitWithWebview);
+  return (drawScreenLayout == DrawScreenLayout.portrait ||
+    drawScreenLayout == DrawScreenLayout.portraitWithWebview);
 }
 
 bool drawScreenIncludesWebview(DrawScreenLayout drawScreenLayout){
-  return (drawScreenLayout == DrawScreenLayout.PortraitWithWebview || 
-    drawScreenLayout == DrawScreenLayout.PortraitWithWebview);
+  return (drawScreenLayout == DrawScreenLayout.portraitWithWebview || 
+    drawScreenLayout == DrawScreenLayout.portraitWithWebview);
 }

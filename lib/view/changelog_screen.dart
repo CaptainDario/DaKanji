@@ -30,24 +30,21 @@ class ChangelogScreen extends StatelessWidget {
           return true;
         },
         child: Center(
-          child: 
-            Container(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Markdown(
-                      data: GetIt.I<Changelog>().wholeChangelog,
-                      selectable: false,
-                      onTapLink: 
-                      (String text, String? url, String? title) async {
-                        if(await canLaunchUrlString(url!)) {
-                          launchUrlString(url);
-                        }
-                      },
-                    )
-                  ),
-                ]
-              )
+          child: Column(
+              children: [
+                Expanded(
+                  child: Markdown(
+                    data: GetIt.I<Changelog>().wholeChangelog,
+                    selectable: false,
+                    onTapLink: 
+                    (String text, String? url, String? title) async {
+                      if(await canLaunchUrlString(url!)) {
+                        launchUrlString(url);
+                      }
+                    },
+                  )
+                ),
+              ]
             )
         ),
       ),

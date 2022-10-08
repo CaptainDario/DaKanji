@@ -104,85 +104,82 @@ class _WebviewScreenState extends State<WebviewScreen>
           });
           return Future.delayed(const Duration(milliseconds: 500), () => true);
         },
-        child: Container(
-          child: 
-            Stack(
-              children: [
-                // webview
-                Transform.translate(
-                  offset: Offset(
-                    (width) * (1 - _rotationAnimation.value), 
-                    0
+        child: Stack(
+          children: [
+            // webview
+            Transform.translate(
+              offset: Offset(
+                (width) * (1 - _rotationAnimation.value), 
+                0
+              ),
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..multiply(Matrix4.rotationY(
+                    (_rotationAnimation.value - 1) * (pi/2))
                   ),
-                  child: Transform(
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001)
-                      ..multiply(Matrix4.rotationY(
-                        (_rotationAnimation.value - 1) * (pi/2))
-                      ),
-                    alignment: Alignment.centerLeft,
-                    child: () {
-                        if(loadWebview){
-                          return WebView(
-                            initialUrl: GetIt.I<DrawScreenState>().drawingLookup.url,
-                            onPageFinished: (s) {
-                              _controller.forward(from: 0.0);
-                            }
-                          );
+                alignment: Alignment.centerLeft,
+                child: () {
+                    if(loadWebview){
+                      return WebView(
+                        initialUrl: GetIt.I<DrawScreenState>().drawingLookup.url,
+                        onPageFinished: (s) {
+                          _controller.forward(from: 0.0);
                         }
-                        else {
-                          return Container(color: Colors.green,);
-                        }
-                    } ()
-                  )
-                ),
-                
-                // show DaKanji icon while the webview is loading
-                Transform.translate(
-                  offset: Offset(
-                    (width) * (1 - _rotationAnimation.value) - width,
-                    0
-                  ),
-                  child: Transform(
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001)
-                      ..multiply(Matrix4.rotationY(
-                        _rotationAnimation.value * pi/2
-                      )),
-                    alignment: Alignment.centerRight,
-                    child: Hero(
-                      tag: "webviewHero_" 
-                        + (GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : "")
-                        + GetIt.I<DrawScreenState>().drawingLookup.chars,
-                      child: Container(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        child: Center(
-                          child: () {
-                            return DefaultTextStyle(
-                              style: TextStyle(
-                                color: Theme.of(context).textTheme.button?.color,
-                                decoration: TextDecoration.none,
-                                fontSize: 50,
-                                fontWeight: FontWeight.normal,
-                              ),
-                              child: RotationTransition(
-                                turns: _loadingAnimation,
-                                child: const Image(
-                                  image: AssetImage('assets/images/icons/icon.png'),
-                                  width: 150,
-                                ),
-                              ),
-                            );
-                          } (),
-                        )
-                      )
+                      );
+                    }
+                    else {
+                      return Container(color: Colors.green,);
+                    }
+                } ()
+              )
+            ),
+            
+            // show DaKanji icon while the webview is loading
+            Transform.translate(
+              offset: Offset(
+                (width) * (1 - _rotationAnimation.value) - width,
+                0
+              ),
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..multiply(Matrix4.rotationY(
+                    _rotationAnimation.value * pi/2
+                  )),
+                alignment: Alignment.centerRight,
+                child: Hero(
+                  tag: "webviewHero_" 
+                    + (GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : "")
+                    + GetIt.I<DrawScreenState>().drawingLookup.chars,
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Center(
+                      child: () {
+                        return DefaultTextStyle(
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.button?.color,
+                            decoration: TextDecoration.none,
+                            fontSize: 50,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          child: RotationTransition(
+                            turns: _loadingAnimation,
+                            child: const Image(
+                              image: AssetImage('assets/images/icons/icon.png'),
+                              width: 150,
+                            ),
+                          ),
+                        );
+                      } (),
                     )
                   )
                 )
-              ]
-            ),
-          )
-        )
+              )
+            )
+          ]
+        ),
+      )
     );
   }
 }

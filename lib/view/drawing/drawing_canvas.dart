@@ -82,7 +82,6 @@ class _DrawingCanvasState extends State<DrawingCanvas>
       // when the animation finished 
       if(status == AnimationStatus.dismissed){
         if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke){
-          print("deleted last stroke");
           widget.strokes.removeLastStroke();
           GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
           _canvasController.value = 1.0;

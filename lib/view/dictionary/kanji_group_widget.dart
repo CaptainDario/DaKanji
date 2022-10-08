@@ -37,7 +37,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
   // all `Node.Id` in `graph`
   late List<String> kanjiVGStringList;
   /// Header of all KanjiVG entries
-  String KanjiVGHeader = """
+  String kanjiVGHeader = """
   <?xml version="1.0" encoding="UTF-8"?>
 
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd" [
@@ -123,7 +123,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
     ).first;
 
     // list of sub-SVGs ordered the same way as `graph`
-    List<String> kanjiSVGStringList = [KanjiVGHeader + firstElem.toString() + "</g>"];
+    List<String> kanjiSVGStringList = [kanjiVGHeader + firstElem.toString() + "</g>"];
     
     // traverse the XML document with breadth first search
     Queue<XmlElement> elemQueue = Queue()..add(firstElem);
@@ -143,7 +143,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
             for (var node in childElement.descendantElements) {
               t += node.toString();
             }
-            kanjiSVGStringList.add(KanjiVGHeader + t + "</g>");
+            kanjiSVGStringList.add(kanjiVGHeader + t + "</g>");
 
             // create new Graph Node, connect it with parent and append to queue
             Node newNode = Node.Id(cnt);

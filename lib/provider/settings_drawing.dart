@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:universal_io/io.dart';
 
@@ -218,7 +219,7 @@ class SettingsDrawing {
       int a = int.parse(keyBinding.toString());
       
       if(LogicalKeyboardKey.findKeyByKeyId(a) == null){
-        print("ID: $a not found");
+        debugPrint("ID: $a not found");
         bindings.add(LogicalKeyboardKey.add);
       }
       else {

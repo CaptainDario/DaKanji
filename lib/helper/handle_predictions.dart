@@ -73,15 +73,15 @@ void openDictionary(BuildContext context, String char) async {
         launchUrlString(openWithSelectedDictionary(char));
       }
       else{ 
-        if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Portrait ||
-          GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Landscape) {
+        if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.portrait ||
+          GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscape) {
           Navigator.push(
             context, 
             MaterialPageRoute(
               builder: (BuildContext context) => const WebviewScreen()
             )
           );
-        } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
+        } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview){
             
           //print("webview is side by side");
         }

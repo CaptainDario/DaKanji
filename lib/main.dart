@@ -84,7 +84,7 @@ Future<void> init() async {
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  print(yaml['version']);
+  debugPrint(yaml['version']);
   globalVersion = yaml['version'];  
 
   await copyDatabaseFilesFromAssets();
@@ -133,7 +133,7 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
-  print("CLEARED PREFERENCES AT APP START.");
+  debugPrint("CLEARED PREFERENCES AT APP START.");
 }
 
 /// Initialize GetIt by initializing and registering all the instances that
@@ -155,7 +155,7 @@ Future<void> initGetIt() async {
 
   // draw screen services 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
-    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
+    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.portrait)
   );
 
   // tutorial services
@@ -174,7 +174,6 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Box<Entry>>(store.box<Entry>());
   GetIt.I.registerSingleton<Box<KanjiSVG>>(store.box<KanjiSVG>());
   GetIt.I.registerSingleton<Box<Kanjidic2Entry>>(store.box<Kanjidic2Entry>());
-  print(GetIt.I<Box<Entry>>().isEmpty());
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());

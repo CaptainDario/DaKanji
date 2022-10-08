@@ -9,7 +9,7 @@ class SettingsAdvanced {
 
   /// The available backends for inference
   List<String> inferenceBackends= [
-      InferenceBackends.CPU.name.toString(),
+      InferenceBackends.cpu.name.toString(),
     ];
 
   /// The inference backend used for the tf lite interpreter
@@ -21,13 +21,13 @@ class SettingsAdvanced {
   SettingsAdvanced(){
     if(Platform.isAndroid) {
       inferenceBackends.addAll([
-        InferenceBackends.GPU.toString(),
-        InferenceBackends.NNAPI.toString(),
+        InferenceBackends.gpu.toString(),
+        InferenceBackends.nnapi.toString(),
       ]);
     } else if(Platform.isIOS) {
       inferenceBackends.addAll([
-        InferenceBackends.GPU.toString(),
-        InferenceBackends.CoreML.toString(),
+        InferenceBackends.gpu.toString(),
+        InferenceBackends.coreML.toString(),
       ]);
     }
     //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)

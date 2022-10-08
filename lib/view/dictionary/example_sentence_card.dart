@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 class ExampleSentenceCard extends StatefulWidget {
   const ExampleSentenceCard(
     this.sentence,
-    this.translation,
+    this.translations,
     {Key? key}
   ) : super(key: key);
 
-  final sentence;
-
-  final translation;
+  /// the japanese example sentence
+  final String sentence;
+  /// a list containing all translations that should be shown
+  final List<String> translations;
 
   @override
   State<ExampleSentenceCard> createState() => _ExampleSentenceCardState();
@@ -30,7 +31,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
               widget.sentence
             ),
             Text(
-              widget.translation
+              widget.translations.join("\n")
             ),
           ],
         )

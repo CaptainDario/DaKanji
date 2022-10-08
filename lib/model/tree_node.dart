@@ -127,7 +127,6 @@ class TreeNode<T> {
     TreeNode newTree = TreeNode(value);
 
     for (var child in children) {
-      print(child.value);
       newTree.add(child.copy());
     }
 

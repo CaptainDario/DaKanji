@@ -4,7 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
 import 'package:database_builder/objectbox.g.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
@@ -27,7 +27,7 @@ class DictionaryScreenSearchTab extends StatefulWidget {
   /// width of this widget
   final double width;
   /// The query that should be initially searched
-  final initialQuery;
+  final String initialQuery;
 
   @override
   State<DictionaryScreenSearchTab> createState() => _DictionaryScreenSearchTabState();
@@ -157,12 +157,12 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
   }
 
   /// Searches `queryText` in the database
-  List<Jmdict.Entry> searchInDict(String queryText){
+  List<_jmdict.Entry> searchInDict(String queryText){
 
     String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
     String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
 
-    var query = GetIt.I<Box<Jmdict.Entry>>().query(
+    var query = GetIt.I<Box<_jmdict.Entry>>().query(
       // search the query as is
       Entry_.readings.contains(queryText)
       // search the input if it 
@@ -173,7 +173,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
       .or(Entry_.readings.contains(kataText))
     ).build();
     
-    List<Jmdict.Entry> searchResults = query.find();
+    List<_jmdict.Entry> searchResults = query.find();
     query.close();
 
     return searchResults;

@@ -2,9 +2,9 @@
 
 
 enum InferenceBackends{
-  CPU,
-  GPU,
-  NNAPI,
-  CoreML,
-  XXNPACK
+  cpu,
+  gpu,
+  nnapi,
+  coreML,
+  xxnPack
 }

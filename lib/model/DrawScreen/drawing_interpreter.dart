@@ -26,7 +26,7 @@ class DrawingInterpreter with ChangeNotifier{
   bool wasInitialized = false;
 
   /// The path to the tf lite asset
-  final String _TFLiteAssetPath = "tflite_models/CNN_single_char.tflite";
+  final String _tfLiteAssetPath = "tflite_models/CNN_single_char.tflite";
 
   /// The path to the mock tf lite asset (small size can be included in repo)
   final String _mockTFLiteAssetPath = "tflite_models/mock_CNN_single_char.tflite";
@@ -86,15 +86,15 @@ class DrawingInterpreter with ChangeNotifier{
   void init() async {
 
     if(wasInitialized){
-      print("Drawing interpreter already initialized. Skipping init.");
+      debugPrint("Drawing interpreter already initialized. Skipping init.");
     }
     else{
       //  check if the actual model is available or only the mock model
       try {   
-        await Interpreter.fromAsset(_TFLiteAssetPath);
-        _usedTFLiteAssetPath = _TFLiteAssetPath;
+        await Interpreter.fromAsset(_tfLiteAssetPath);
+        _usedTFLiteAssetPath = _tfLiteAssetPath;
       } catch (e) {
-        print("You are using the mock model!");
+        debugPrint("You are using the mock model!");
         _usedTFLiteAssetPath = _mockTFLiteAssetPath;
       }
 
@@ -125,7 +125,7 @@ class DrawingInterpreter with ChangeNotifier{
       }
       GetIt.I<Settings>().save();
 
-      print(GetIt.I<Settings>().inferenceBackend);
+      debugPrint(GetIt.I<Settings>().inferenceBackend);
 
       _isolateUtils = DrawingIsolateUtils();
       _isolateUtils?.start();
@@ -157,7 +157,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// different interpreter.
   void free() {
     if(_interpreter == null){
-      print("No interpreter was initialized");
+      debugPrint("No interpreter was initialized");
       return;
     }
 
@@ -427,7 +427,7 @@ class DrawingInterpreter with ChangeNotifier{
     return i;
   }
 
-  Future<Interpreter> _XXNPackInterpreter() async {
+  Future<Interpreter> _xxnPackInterpreter() async {
 
     Interpreter interpreter;
     final options = InterpreterOptions()..addDelegate(

@@ -94,6 +94,7 @@ class Bitmap {
 
 class RGBA32BitmapHeader {
   static const int pixelLength = 4;
+  // ignore: constant_identifier_names
   static const int RGBA32HeaderSize = 122;
 
   RGBA32BitmapHeader(this.contentSize, int width, int height) {

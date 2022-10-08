@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 class CustomTextPopup extends StatefulWidget {
-  CustomTextPopup(
+  
+  const CustomTextPopup(
     {
       required this.selectedText,
       this.onMovedViaHeader,
@@ -12,12 +13,12 @@ class CustomTextPopup extends StatefulWidget {
       Key? key
     }) : super(key: key);
 
+  /// 
+  final String selectedText;
+  /// 
+  final Function(PointerMoveEvent)? onMovedViaHeader;
 
-  String selectedText;
-
-  Function(PointerMoveEvent)? onMovedViaHeader;
-
-  Function(PointerMoveEvent)? onResizedViaCorner;
+  final Function(PointerMoveEvent)? onResizedViaCorner;
 
   @override
   State<CustomTextPopup> createState() => _CustomTextPopupState();
@@ -89,10 +90,8 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                               )
                             ],
                           ),
-                          Container(
-                            child: Card(
-                              child: Text("Imagine a translation of\n\n${widget.selectedText}\n\nhere"),
-                            )
+                          Card(
+                            child: Text("Imagine a translation of\n\n${widget.selectedText}\n\nhere"),
                           )
                         ]
                       ),
@@ -116,11 +115,9 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                     widget.onResizedViaCorner!(event);
                   }
                 },
-                child: Container(
-                  child: SvgPicture.asset(
-                    "assets/fonts/icons/corner_resize.svg",
-                    color: Colors.grey,
-                  ),
+                child: SvgPicture.asset(
+                  "assets/fonts/icons/corner_resize.svg",
+                  color: Colors.grey,
                 ),
               ),
             ),

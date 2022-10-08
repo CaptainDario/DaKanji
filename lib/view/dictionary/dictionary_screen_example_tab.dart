@@ -20,7 +20,7 @@ class _DictionaryScreenExampleTabState extends State<DictionaryScreenExampleTab>
           itemBuilder: (context, no, animation) {
             return ExampleSentenceCard(
               "Example: ${no.toString()}", 
-              "translation: ${no.toString()}"
+              ["translation: ${no.toString()}"]
             );
           }
         );

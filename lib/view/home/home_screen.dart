@@ -50,12 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // if the app is being tested for different startup situations
       if(globalIsTestingAppStartup) {
-        print("RUNNING IN 'APP STARTUP TESTING'-mode");
+        debugPrint("RUNNING IN 'APP STARTUP TESTING'-mode");
       }
 
       // if the DrawScreen is being tested switch there immediately
       if(globalIsTestingDrawscreen){
-        print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
+        debugPrint("RUNNING IN 'DRAWSCREEN TESTING'-mode");
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
       }
 

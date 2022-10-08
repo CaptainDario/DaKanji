@@ -174,66 +174,64 @@ class OnBoardingPage extends StatelessWidget {
           ),
           Positioned(
             bottom: 5,
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                children: () {
-                  List<Widget> widgets = [];
+              children: () {
+                List<Widget> widgets = [];
 
-                  widgets.add(OutlinedButton(
-                    style: ButtonStyle(
-                      shadowColor:  MaterialStateProperty.all(Colors.white),
-                      foregroundColor: MaterialStateProperty.all(const Color.fromARGB(150, 255, 255, 255)),
-                      side: MaterialStateProperty.all(
-                        const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                      ),
+                widgets.add(OutlinedButton(
+                  style: ButtonStyle(
+                    shadowColor:  MaterialStateProperty.all(Colors.white),
+                    foregroundColor: MaterialStateProperty.all(const Color.fromARGB(150, 255, 255, 255)),
+                    side: MaterialStateProperty.all(
+                      const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
                     ),
-                    onPressed: (){
-                      liquidController.animateToPage(page: totalPages);
-                    }, 
-                    child:Text(LocaleKeys.General_skip.tr())
-                  ));
+                  ),
+                  onPressed: (){
+                    liquidController.animateToPage(page: totalPages);
+                  }, 
+                  child:Text(LocaleKeys.General_skip.tr())
+                ));
 
-                  widgets.add(const SizedBox(width: 50));
+                widgets.add(const SizedBox(width: 50));
 
-                  for (int i = 0; i < totalPages; i++) {
-                    widgets.add(
-                      Container(
-                        width: indicatorSize,
-                        height: indicatorSize,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: nr-1 == i ? Colors.white : Colors.black,
-                        ),
-                      )
-                    );
-                    if(i+1 < totalPages) {
-                      widgets.add(SizedBox(width: indicatorSize,));
-                    }
+                for (int i = 0; i < totalPages; i++) {
+                  widgets.add(
+                    Container(
+                      width: indicatorSize,
+                      height: indicatorSize,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: nr-1 == i ? Colors.white : Colors.black,
+                      ),
+                    )
+                  );
+                  if(i+1 < totalPages) {
+                    widgets.add(SizedBox(width: indicatorSize,));
                   }
-                  
-                  widgets.add(const SizedBox(width: 50));
+                }
                 
-                  widgets.add(OutlinedButton(
-                    style: ButtonStyle(
-                      shadowColor:  MaterialStateProperty.all(Colors.white),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      side: MaterialStateProperty.all(
-                        const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                      ),
+                widgets.add(const SizedBox(width: 50));
+              
+                widgets.add(OutlinedButton(
+                  style: ButtonStyle(
+                    shadowColor:  MaterialStateProperty.all(Colors.white),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    side: MaterialStateProperty.all(
+                      const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
                     ),
-                    onPressed: (){
-                      liquidController.animateToPage(
-                        page: liquidController.currentPage + 1
-                      );
-                    }, 
-                    child: Text("${LocaleKeys.General_next.tr()} →")
-                  ));
-                  return widgets;
-                } ()
-              ),
-            )
+                  ),
+                  onPressed: (){
+                    liquidController.animateToPage(
+                      page: liquidController.currentPage + 1
+                    );
+                  }, 
+                  child: Text("${LocaleKeys.General_next.tr()} →")
+                ));
+                return widgets;
+              } ()
+            ),
           )
         ],
       )
