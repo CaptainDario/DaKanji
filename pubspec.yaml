@@ -14,6 +14,10 @@ dependencies:
     sdk: flutter
   
   # all platforms supported
+  database_builder:
+    path: ./plugins/DaKanji-Dictionary/database_builder
+  liquid_swipe:
+    path: ./plugins/liquid_swipe_flutter
   platform: 3.1.0
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
@@ -28,14 +32,11 @@ dependencies:
   flutter_layout_grid: 1.0.3
   tuple: 2.0.0
   lottie: 1.2.1
-  liquid_swipe:
-    path: ./plugins/liquid_swipe_flutter
   flutter_svg: 1.1.5
   onboarding_overlay : 3.0.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
-  database_builder:
-    path: ./plugins/DaKanji-Dictionary/database_builder
+
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0

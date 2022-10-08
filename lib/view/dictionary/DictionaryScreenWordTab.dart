@@ -1,14 +1,18 @@
-import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
+import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
 
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
 class DictionaryScreenWordTab extends StatefulWidget {
-  DictionaryScreenWordTab(
+  const DictionaryScreenWordTab(
     this.entry,
     {Key? key}
   ) : super(key: key);
@@ -23,40 +27,45 @@ class DictionaryScreenWordTab extends StatefulWidget {
 
 class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
 
+  /// the text style to use for all words
+  TextStyle kanjiStyle = const TextStyle(
+    fontSize: 30
+  );
 
+  /// the text style to use for all readings
+  TextStyle readingStyle = const TextStyle(
+    fontSize: 20
+  );
+
+  /// the text style to use for all partOfSpeech elements
+  TextStyle partOfSpeechStyle = const TextStyle(
+    fontSize: 12,
+    color: Colors.blueGrey
+  );
+
+  /// the text style to use for all meaning elements
+  TextStyle meaningsStyle = const TextStyle(
+    fontSize: 20
+  );
+
+  /// the menu elements of the more-popup-menu
+  List<String> menuItems = [
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary"
+  ];
+
+  /// Gesture recognizers for the webview to be scrollable
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {
+    Factory(() => EagerGestureRecognizer())
+  };
 
 
   @override
   Widget build(BuildContext context) {
 
-  /// the text style to use for all words
-  TextStyle kanjiStyle = TextStyle(
-    fontSize: 30
-  );
-
-  /// the text style to use for all readings
-  TextStyle readingStyle = TextStyle(
-    fontSize: 20
-  );
-
-  /// the text style to use for all partOfSpeech elementes
-  TextStyle partOfSpeechStyle = TextStyle(
-    fontSize: 12,
-    color: Colors.blueGrey
-  );
-
-  TextStyle meaningsStyle = TextStyle(
-    fontSize: 20
-  );
-
-  List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary"
-  ];
-
-
-    if(widget.entry == null)
+    if(widget.entry == null){
       return Container();
-    else
+    }
+    else {
       return SingleChildScrollView(
         child: Column(
           children: [
@@ -70,7 +79,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                       children: [
                         // word
                         SelectableText(
-                          widget.entry!.kanjis.length != 0 ?
+                          widget.entry!.kanjis.isNotEmpty ?
                             widget.entry!.kanjis[0] : "",
                           style: kanjiStyle
                         ),
@@ -87,7 +96,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                                     ...List.generate(
                                       widget.entry!.readings[index_1].length,
                                       (index_2) => Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           border: Border(
                                             right: BorderSide(
                                               color: Colors.white,
@@ -113,7 +122,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         // part of speech
@@ -123,7 +132,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                             style: partOfSpeechStyle,
                           )
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         // meaning 
@@ -141,7 +150,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                                   ),
                                   Expanded(
                                     child: SelectableText(
-                                      "${widget.entry!.meanings[0].meanings[index]}",
+                                      widget.entry!.meanings[0].meanings[index],
                                       style: meaningsStyle
                                     ),
                                   ),
@@ -150,36 +159,59 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        ExpansionTile(
-                          title: Text("Images")
+                        if (Platform.isAndroid || Platform.isIOS) 
+                          ExpansionTile(
+                            title: const Text("Images"),
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 1,
+                                child: WebView(
+                                  gestureRecognizers: gestureRecognizers,
+                                  initialUrl: "$GOOGLE_IMG_SEARCH_URL${widget.entry!.kanjis[0]} ${widget.entry!.readings[0]}",
+                                  
+                                ),
+                              )
+                            ],
+                          ),
+                        //},
+                        const ExpansionTile(
+                          title: Text("Proverbs"),
+                          children: [
+                            Text("This could be done by using kotowaza?")
+                          ],
                         ),
-                        ExpansionTile(
-                          title: Text("Proverbs")
-                        ),
-                        ExpansionTile(
-                          title: Text("Synonyms")
+                        const ExpansionTile(
+                          title: Text("Synonyms"),
+                          children: [
+                            Text("This could be done by using wordnet jp?")
+                          ],
                         )
                       ],
                     ),
                   ),
+                  // more menu, to open this word in different web pages
                   Positioned(
                     right: 0,
                     top: 0,
                     child: PopupMenuButton(
-                      icon: Icon(Icons.more_vert),
+                      icon: const Icon(Icons.more_vert),
                       onSelected: (String selection) {
                         // Wiki
-                        if(selection == menuItems[0])
+                        if(selection == menuItems[0]) {
                           launchUrlString("$WIKIPEDIA_JP_URL${widget.entry!.kanjis[0]}");
-                        if(selection == menuItems[1])
+                        }
+                        if(selection == menuItems[1]) {
                           launchUrlString("$WIKIPEDIA_EN_URL${widget.entry!.meanings[0].meanings[0]}");
-                        if(selection == menuItems[2])
+                        }
+                        if(selection == menuItems[2]) {
                           launchUrlString("$DBPEDIA_URL${widget.entry!.meanings[0].meanings[0]}");
-                        if(selection == menuItems[3])
+                        }
+                        if(selection == menuItems[3]) {
                           launchUrlString("$WIKTIONARY_URL${widget.entry!.kanjis[0]}");
+                        }
                       },
                       itemBuilder: (context) => List.generate(
                         menuItems.length,
@@ -197,5 +229,6 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
           ],
         ),
       );
+    }
   }
 }

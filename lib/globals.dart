@@ -110,7 +110,8 @@ const WIKIPEDIA_EN_URL = "https://en.wikipedia.org/wiki/";
 const DBPEDIA_URL = "https://dbpedia.org/page/";
 /// Link to Wiktionary
 const WIKTIONARY_URL = "https://en.wiktionary.org/wiki/";
-
+/// Link to search for an images on google image search
+const GOOGLE_IMG_SEARCH_URL = "https://www.google.com/search?tbm=isch&q=";
 
 /// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup settingsAutoSizeGroup = AutoSizeGroup();
