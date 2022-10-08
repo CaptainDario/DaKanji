@@ -43,6 +43,7 @@ dependencies:
   objectbox_flutter_libs: any
   kana_kit: 2.0.0
   multi_select_flutter: 4.1.2
+  archive: 3.3.0
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS

@@ -1,3 +1,4 @@
+import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,13 +53,13 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
       path: 'assets/translations',
-      fallbackLocale: Locale('en'),
+      fallbackLocale: const Locale('en'),
       useFallbackTranslations: true,
       useOnlyLangCode: true,
-      assetLoader: CodegenLoader(),
+      assetLoader: const CodegenLoader(),
       saveLocale: true,
       child: Phoenix(
-        child: DaKanjiApp(),
+        child: const DaKanjiApp(),
       ),
     ),
   );
@@ -86,6 +87,8 @@ Future<void> init() async {
   print(yaml['version']);
   VERSION = yaml['version'];  
 
+  await copyDatabaseFilesFromAssets();
+
   await initGetIt();
 
   if(Platform.isAndroid || Platform.isIOS){
@@ -97,22 +100,32 @@ Future<void> init() async {
   }
 }
 
-Future<void> getDict(String name, String hivePath) async{
-  /*
-  if(!await Hive.boxExists(name, path: hivePath)){
-    print("$name not found, Copying!");
+/// Download the objectbox databases
+Future<void> downloadDatabases() async {
+  
+  
+  
+}
 
-    await Hive.openBox(name);
-
-    var box = Hive.box(name);
-    String hiveLoc = "${hivePath}/$name.hive";
-    await box.close();
-
-    ByteData data = await rootBundle.load("assets/dict/$name.hive");
-    List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    File(hiveLoc).writeAsBytes(bytes, flush: true);
+Future<void> copyDatabaseFilesFromAssets() async {
+  // Search and create db file destination folder if not exist
+  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+  final objectBoxDirectory = Directory(documentsDirectory.path + "/objectbox");
+  
+  if (!objectBoxDirectory.existsSync()) {
+    await objectBoxDirectory.create(recursive: true);
   }
-  */
+
+  final dbFile = File(objectBoxDirectory.path + '/data.mdb');
+  if (!dbFile.existsSync()) {
+    // Get pre-populated db file.
+    ByteData data = await rootBundle.load("assets/dict/data.zip");
+
+    final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
+
+    // Copying source data into destination file.
+    extractArchiveToDisk(archive, objectBoxDirectory.path);
+  }
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -152,15 +165,16 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Kagome>(Kagome());
 
   // package for converting between kana
-  GetIt.I.registerSingleton<KanaKit>(KanaKit());
+  GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
   // ObjectBox
-  Store store = await openStore(
-    directory: (await path_provider.getApplicationDocumentsDirectory()).path,
+  Store store = openStore(
+    directory: (await path_provider.getApplicationDocumentsDirectory()).path + "/objectbox"
   );
   GetIt.I.registerSingleton<Box<Entry>>(store.box<Entry>());
   GetIt.I.registerSingleton<Box<KanjiSVG>>(store.box<KanjiSVG>());
   GetIt.I.registerSingleton<Box<Kanjidic2Entry>>(store.box<Kanjidic2Entry>());
+  print(GetIt.I<Box<Entry>>().isEmpty());
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
@@ -168,7 +182,7 @@ Future<void> initGetIt() async {
 
 /// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
-  setWindowMinSize(Size(480, 720));
+  setWindowMinSize(const Size(480, 720));
   setWindowTitle(APP_TITLE);
   
   setWindowFrame(
@@ -183,6 +197,8 @@ void desktopWindowSetup() {
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
+
+  const DaKanjiApp({Key? key}) : super(key: key);
 
   @override
   _DaKanjiAppState createState() => _DaKanjiAppState();
@@ -238,10 +254,12 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
         // check type and extract arguments
         NavigationArguments args;
-        if((settings.arguments is NavigationArguments))
+        if((settings.arguments is NavigationArguments)){
           args = settings.arguments as NavigationArguments;
-        else
+        }
+        else{
           args = NavigationArguments(false, "");
+        }
 
         switch(settings.name){
           case "/home":
