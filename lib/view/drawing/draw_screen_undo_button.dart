@@ -12,11 +12,12 @@ import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 
 
 class DrawScreenUndoButton extends StatelessWidget {
+  
   DrawScreenUndoButton(
-  this.canvasSize,
-  this.includeTutorial,
-  {Key? key}
-  ){
+    this.canvasSize,
+    this.includeTutorial,
+    {Key? key}
+  ) : super(key: key) {
     Keybinder.bind(
       Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbUndoStroke),
       () => undo(GetIt.I<DrawScreenState>().strokes)

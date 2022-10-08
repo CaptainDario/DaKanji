@@ -14,7 +14,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// Shows the complete CREDITS.md 
 class CreditsScreen extends StatefulWidget {
 
-  
+  const CreditsScreen({Key? key}) : super(key: key);
+
   @override
   State<CreditsScreen> createState() => _CreditsScreenState();
 }

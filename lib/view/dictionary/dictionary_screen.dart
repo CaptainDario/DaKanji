@@ -22,8 +22,9 @@ class DictionaryScreen extends StatefulWidget {
     this.openedByDrawer,
     this.includeHeroes,
     this.includeTutorial,
-    this.initialSearch
-  );
+    this.initialSearch,
+    {Key? key}
+  ) : super(key: key);
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;

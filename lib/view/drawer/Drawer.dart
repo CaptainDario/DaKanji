@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/view/drawer/DrawerElement.dart';
-import 'package:da_kanji_mobile/view/drawer/DrawerAppBar.dart';
+import 'package:da_kanji_mobile/view/drawer/drawer_element.dart';
+import 'package:da_kanji_mobile/view/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/provider/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
@@ -31,9 +31,10 @@ class DaKanjiDrawer extends StatefulWidget{
     {
       required this.child,
       required this.currentScreen,
-      this.animationAtStart = true 
+      this.animationAtStart = true,
+      Key? key, 
     }
-  );
+  ) : super(key: key);
 
   @override
   DaKanjiDrawerState createState() => DaKanjiDrawerState();

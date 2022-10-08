@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/view/dictionary/kanjiVG_widget.dart';
+import 'package:da_kanji_mobile/view/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_group_widget.dart';
 import 'package:xml/xml.dart';
 

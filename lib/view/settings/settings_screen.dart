@@ -34,7 +34,7 @@ class SettingsScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
 
-  const SettingsScreen(this.openedByDrawer);
+  const SettingsScreen(this.openedByDrawer, {Key? key}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();

@@ -15,6 +15,8 @@ import 'package:da_kanji_mobile/model/changelog.dart';
 /// 
 /// Shows the complete CHANGELOG.md 
 class ChangelogScreen extends StatelessWidget {
+
+  const ChangelogScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {

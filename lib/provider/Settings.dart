@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/provider/SettingsDrawing.dart';
-import 'package:da_kanji_mobile/provider/SettingsAdvanced.dart';
-import 'package:da_kanji_mobile/provider/SettingsMisc.dart';
+import 'package:da_kanji_mobile/provider/settings_drawing.dart';
+import 'package:da_kanji_mobile/provider/settings_advanced.dart';
+import 'package:da_kanji_mobile/provider/settings_misc.dart';
 
 
 

@@ -29,7 +29,13 @@ class TextScreen extends StatefulWidget {
   
   final TextEditingController inputController = TextEditingController();
 
-  TextScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
+  TextScreen(
+    this.openedByDrawer, 
+    this.includeHeroes, 
+    this.includeTutorial, 
+    {
+      Key? key
+    }) : super(key: key);
 
   @override
   _TextScreenState createState() => _TextScreenState();

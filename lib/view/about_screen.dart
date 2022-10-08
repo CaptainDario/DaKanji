@@ -37,7 +37,8 @@ class AboutScreen extends StatelessWidget {
     "MICROSOFT_STORE_PAGE" : MICROSOFT_STORE_PAGE,
     "GITHUB_RELEASES_PAGE" : GITHUB_RELEASES_PAGE,
   });
-  AboutScreen(this.openedByDrawer);
+
+  AboutScreen(this.openedByDrawer, {Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {

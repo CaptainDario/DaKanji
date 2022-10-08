@@ -25,7 +25,12 @@ class KanjiBufferWidget extends StatefulWidget {
   final double canvasSizePercentageToUse;
 
 
-  const KanjiBufferWidget(this.canvasSize, this.canvasSizePercentageToUse);
+  const KanjiBufferWidget(
+    this.canvasSize, 
+    this.canvasSizePercentageToUse, 
+    {
+      Key? key
+    }) : super(key: key);
 
   @override
   _KanjiBufferWidgetState createState() => _KanjiBufferWidgetState();

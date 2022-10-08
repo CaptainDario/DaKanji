@@ -19,6 +19,11 @@ import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
 /// Otherwise navigates to the "draw"-screen.
 class HomeScreen extends StatefulWidget {
 
+  const HomeScreen(
+    {
+      Key? key
+    }) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

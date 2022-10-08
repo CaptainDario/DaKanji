@@ -21,6 +21,11 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 /// Otherwise navigates to the "draw"-screen.
 class OnBoardingScreen extends StatefulWidget {
 
+  const OnBoardingScreen(
+    {
+      Key? key
+    }) : super(key: key);
+
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
 }

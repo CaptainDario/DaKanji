@@ -35,7 +35,12 @@ class DrawScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
-  const DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
+  const DrawScreen(
+    this.openedByDrawer, 
+    this.includeHeroes, 
+    this.includeTutorial, 
+    {Key? key}
+  ) : super(key: key);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();

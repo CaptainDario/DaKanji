@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 /// and shows [char] fullscreen while loading.
 class WebviewScreen extends StatefulWidget {
 
-  const WebviewScreen();
+  const WebviewScreen({Key? key}) : super(key: key);
 
   @override
   _WebviewScreenState createState() => _WebviewScreenState();

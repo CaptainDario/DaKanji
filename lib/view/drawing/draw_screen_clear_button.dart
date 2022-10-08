@@ -13,11 +13,12 @@ import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 
 
 class DrawScreenClearButton extends StatelessWidget {
+  
   DrawScreenClearButton(
     this.canvasSize,
     this.includeTutorial,
     {Key? key}
-  ){
+  ) : super(key: key){
     Keybinder.bind(
       Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbClearCanvas),
       () => clear(GetIt.I<DrawScreenState>().strokes)
