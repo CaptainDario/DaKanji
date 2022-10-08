@@ -1,6 +1,6 @@
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/show_cases/DrawScreenTutorial.dart';
+import 'package:da_kanji_mobile/show_cases/draw_screen_tutorial.dart';
 
 
 

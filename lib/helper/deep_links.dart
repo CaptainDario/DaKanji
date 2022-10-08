@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uni_links/uni_links.dart';
 
-import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:universal_io/io.dart';
 

@@ -1,5 +1,5 @@
 
-import 'package:da_kanji_mobile/model/SettingsArguments.dart';
+import 'package:da_kanji_mobile/model/settings_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,11 +10,11 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/view/DownloadAppDialogue.dart';
-import 'package:da_kanji_mobile/view/WebviewScreen.dart';
+import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
+import 'package:da_kanji_mobile/view/download_app_dialogue.dart';
+import 'package:da_kanji_mobile/view/webview_screen.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/home/WhatsNewDialog.dart';
+import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
@@ -6,7 +6,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/view/onboarding/OnBoardingPage.dart';
+import 'package:da_kanji_mobile/view/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/main.dart' as app;
