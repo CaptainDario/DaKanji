@@ -56,7 +56,7 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     
-    print("Passed step: 1");
+    debugPrint("Passed step: 1");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -76,7 +76,7 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     
-    print("Passed step: 2");
+    debugPrint("Passed step: 2");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
     
@@ -97,7 +97,7 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 1));
     
     expect(find.text("Ustawienia"), findsOneWidget);
-    print("Passed step: 3");
+    debugPrint("Passed step: 3");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -121,14 +121,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 250));
-      print('waiting for welcome to show');
+      debugPrint('waiting for welcome to show');
     }
 
     expect(find.byType(DrawingCanvas), findsOneWidget);
     expect(find.text("Obraz"), findsOneWidget);
     expect(GetIt.I<UserData>().showShowcaseDrawing, true);
 
-    print("Passed step: 4");
+    debugPrint("Passed step: 4");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
   });

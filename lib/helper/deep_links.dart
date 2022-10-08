@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
@@ -17,12 +18,12 @@ Future<void> initDeepLinksStream() async {
   // Attach a listener to the stream
   linkSub = linkStream.listen((String? link) {
 
-    print("Stream: "+ (link ?? "none"));
+    debugPrint("Stream: "+ (link ?? "none"));
     handleLink(link);
 
   },
   onError: (err) {
-    print("An error occurred handling the DeepLink stream!");
+    debugPrint("An error occurred handling the DeepLink stream!");
   });
 }
 
@@ -31,11 +32,11 @@ Future<void> getInitialDeepLink() async {
   
   try {
     String? initialLink = await getInitialLink();
-    print("Initial Link: " + (initialLink ?? "none"));
+    debugPrint("Initial Link: " + (initialLink ?? "none"));
     handleLink(initialLink);
   }
   on PlatformException {
-    print("Not started by DeepLink.");
+    debugPrint("Not started by DeepLink.");
   }
 }
 
@@ -46,68 +47,68 @@ void handleLink(String? link){
   String short = link.replaceFirst(APP_LINK, "");
 
   if(short.startsWith("jisho")){
-    print("contains jisho");
+    debugPrint("contains jisho");
     GetIt.I<Settings>().selectedDictionary =
       GetIt.I<Settings>().settingsDrawing.dictionaries[0];
   }
   else if(short.startsWith("wadoku")){
-    print("contains wadoku");
+    debugPrint("contains wadoku");
     GetIt.I<Settings>().selectedDictionary =
       GetIt.I<Settings>().settingsDrawing.dictionaries[1];
   }
   else if(short.startsWith("weblio")){
-    print("contains weblio");
+    debugPrint("contains weblio");
     GetIt.I<Settings>().selectedDictionary =
       GetIt.I<Settings>().settingsDrawing.dictionaries[2];
   }
   else if(short.startsWith("URL")){
-    print("contains custom URL");
+    debugPrint("contains custom URL");
     GetIt.I<Settings>().selectedDictionary =
       GetIt.I<Settings>().settingsDrawing.dictionaries[3];
     short = Uri.decodeFull(short.replaceFirst("URL/", ""));
-    print("given custom url:" + short);
+    debugPrint("given custom url:" + short);
     GetIt.I<Settings>().customURL = short;
   }
   else if(Platform.isAndroid){
     if(short.startsWith("aedict")){
-      print("contains aedict");
+      debugPrint("contains aedict");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[5];
     }
     else if(short.startsWith("akebi")){
-      print("contains akebi");
+      debugPrint("contains akebi");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[6];
     }
     else if(short.startsWith("takoboto")){
-      print("contains takoboto");
+      debugPrint("contains takoboto");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[7];
     }
   }
   else if(Platform.isIOS){
     if(short.startsWith("shirabe")){
-      print("contains shirabe");
+      debugPrint("contains shirabe");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[4];
     }
     else if(short.startsWith("imiwa")){
-      print("contains imiwa");
+      debugPrint("contains imiwa");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[5];
     }
     else if(short.startsWith("japanese")){
-      print("contains japanese");
+      debugPrint("contains japanese");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[6];
     }
     else if(short.startsWith("midori")){
-      print("contains midori");
+      debugPrint("contains midori");
       GetIt.I<Settings>().selectedDictionary =
         GetIt.I<Settings>().settingsDrawing.dictionaries[7];
     }
   }
   else{
-    print("No matching dictionary found!");
+    debugPrint("No matching dictionary found!");
   }
 }

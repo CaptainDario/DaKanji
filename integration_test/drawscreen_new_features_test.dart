@@ -1,5 +1,6 @@
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
@@ -38,14 +39,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      print('waiting for app to boot');
+      debugPrint('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.General_whats_new.tr()), findsOneWidget);
     
     Offset closeButton = tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
     await tester.tapAt(closeButton);
-    print("Passed step: 1");
+    debugPrint("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the drawscreen tutorial is shown
@@ -54,11 +55,11 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      print('waiting for onboarding to show');
+      debugPrint('waiting for onboarding to show');
     }
     
     expect(find.byType(DrawingCanvas), findsOneWidget);
-    print("Passed step: 2");
+    debugPrint("Passed step: 2");
     // #endregion
   });
 }
