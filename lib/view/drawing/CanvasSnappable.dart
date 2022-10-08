@@ -59,7 +59,7 @@ class CanvasSnappableState extends State<CanvasSnappable>
   late AnimationController _animationController;
 
   /// Key to get image of a [widget.child]
-  GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey();
 
   /// Layers of image
   List<Uint8List>? _layers;
@@ -83,7 +83,9 @@ class CanvasSnappableState extends State<CanvasSnappable>
     if (widget.onSnapped != null) {
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed)
-          if(widget.onSnapped != null) widget.onSnapped!();
+          if(widget.onSnapped != null) {
+            widget.onSnapped!();
+          }
       });
     }
   }
@@ -159,7 +161,7 @@ class CanvasSnappableState extends State<CanvasSnappable>
     });
 
     //give a short delay to draw images
-    await Future.delayed(Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 50));
 
     //start the snap!
     _animationController.forward();
@@ -176,8 +178,9 @@ class CanvasSnappableState extends State<CanvasSnappable>
   /// Turn the given [layer] image to a Widget.
   Widget _imageToWidget(Uint8List layer) {
 
-    if(_layers == null)
+    if(_layers == null) {
       throw "this._layers is null";
+    }
 
     //get layer's index in the list
     int index = _layers!.indexOf(layer);
@@ -209,8 +212,8 @@ class CanvasSnappableState extends State<CanvasSnappable>
     return AnimatedBuilder(
       animation: _animationController,
       child: Image.memory(
-        Bitmap.fromHeadless(this.width, this.height, layer).buildHeaded(),
-        color: this.widget.snapColor,
+        Bitmap.fromHeadless(width, height, layer).buildHeaded(),
+        color: widget.snapColor,
       ),
       builder: (context, child) {
         return Transform.translate(

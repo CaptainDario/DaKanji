@@ -35,7 +35,7 @@ class DrawScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
-  DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
+  const DrawScreen(this.openedByDrawer, this.includeHeroes, this.includeTutorial);
 
   @override
   _DrawScreenState createState() => _DrawScreenState();
@@ -57,10 +57,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     super.initState();
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout))
+      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
         landscapeWebViewController?.loadUrl(
           openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
         );
+      }
     });
 
     // initialize the drawing interpreter if it has not been already
@@ -85,10 +86,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   void dispose() {
     super.dispose();
     GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
-      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview)
+      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview) {
         landscapeWebViewController?.loadUrl(
           openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
         );
+      }
     });
   }
 
@@ -118,7 +120,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               DrawScreenPredictionButtons(
                 drawScreenIsLandscape(t.item1),
                 _canvasSize,
-                this.widget.includeHeroes,
+                widget.includeHeroes,
                 widget.includeTutorial
               ), 
               DrawScreenMultiCharSearch(

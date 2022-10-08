@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
 /// and shows [char] fullscreen while loading.
 class WebviewScreen extends StatefulWidget {
 
-  WebviewScreen();
+  const WebviewScreen();
 
   @override
   _WebviewScreenState createState() => _WebviewScreenState();
@@ -53,12 +53,12 @@ class _WebviewScreenState extends State<WebviewScreen>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _rotationAnimation = new Tween(
+    _rotationAnimation = Tween(
       begin: 0.0,
       end: 1.0,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Interval(
+      curve: const Interval(
         0.0, 1.00,
         curve: Curves.linear
       ),
@@ -102,7 +102,7 @@ class _WebviewScreenState extends State<WebviewScreen>
             showLoading = false;
             _controller.reverse();
           });
-          return Future.delayed(Duration(milliseconds: 500), () => true);
+          return Future.delayed(const Duration(milliseconds: 500), () => true);
         },
         child: Container(
           child: 
@@ -115,7 +115,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                     0
                   ),
                   child: Transform(
-                    transform: new Matrix4.identity()
+                    transform: Matrix4.identity()
                       ..setEntry(3, 2, 0.001)
                       ..multiply(Matrix4.rotationY(
                         (_rotationAnimation.value - 1) * (pi/2))
@@ -130,8 +130,9 @@ class _WebviewScreenState extends State<WebviewScreen>
                             }
                           );
                         }
-                        else
+                        else {
                           return Container(color: Colors.green,);
+                        }
                     } ()
                   )
                 ),
@@ -143,7 +144,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                     0
                   ),
                   child: Transform(
-                    transform: new Matrix4.identity()
+                    transform: Matrix4.identity()
                       ..setEntry(3, 2, 0.001)
                       ..multiply(Matrix4.rotationY(
                         _rotationAnimation.value * pi/2
@@ -166,7 +167,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                               ),
                               child: RotationTransition(
                                 turns: _loadingAnimation,
-                                child: Image(
+                                child: const Image(
                                   image: AssetImage('assets/images/icons/icon.png'),
                                   width: 150,
                                 ),

@@ -9,7 +9,7 @@ import 'package:graphview/GraphView.dart';
 
 
 class KanjiGroupWidget extends StatefulWidget {
-  KanjiGroupWidget(
+  const KanjiGroupWidget(
     this.kanjiVG,
     this.width,
     this.height,
@@ -140,8 +140,9 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
             String t = "";
           
             // get the whole subtree and create a string of it
-            for (var node in childElement.descendantElements) 
+            for (var node in childElement.descendantElements) {
               t += node.toString();
+            }
             kanjiSVGStringList.add(KanjiVGHeader + t + "</g>");
 
             // create new Graph Node, connect it with parent and append to queue

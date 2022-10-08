@@ -34,7 +34,7 @@ class DrawScreenPortrait extends StatelessWidget {
           SizedBox(height: height*0.02,),
           drawingCanvas,
           SizedBox(height: height*0.04,),
-          Container(
+          SizedBox(
             width: canvasSize,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

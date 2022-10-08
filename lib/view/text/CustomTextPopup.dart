@@ -6,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomTextPopup extends StatefulWidget {
   CustomTextPopup(
     {
-      required String this.selectedText,
-      Function(PointerMoveEvent)? this.onMovedViaHeader,
-      Function(PointerMoveEvent)? this.onResizedViaCorner,
+      required this.selectedText,
+      this.onMovedViaHeader,
+      this.onResizedViaCorner,
       Key? key
     }) : super(key: key);
 
@@ -35,7 +35,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
       child: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               boxShadow: [
                 BoxShadow(
                   color: Colors.black,
@@ -53,10 +53,11 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                     Listener(
                       behavior: HitTestBehavior.translucent,
                       onPointerMove: (event) {
-                        if(widget.onMovedViaHeader != null)
+                        if(widget.onMovedViaHeader != null) {
                           widget.onMovedViaHeader!(event);
+                        }
                       },
-                      child: TabBar(
+                      child: const TabBar(
                         tabs: [
                           Text("Dictionary"),
                           Text("Translation"),
@@ -111,8 +112,9 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
               cursor: SystemMouseCursors.resizeDownRight,
               child: Listener(
                 onPointerMove: (event) {
-                  if(widget.onResizedViaCorner != null)
+                  if(widget.onResizedViaCorner != null) {
                     widget.onResizedViaCorner!(event);
+                  }
                 },
                 child: Container(
                   child: SvgPicture.asset(

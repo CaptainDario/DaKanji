@@ -53,10 +53,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     // is being tested
     if(!IS_TESTING_APP_STARTUP) _controller.repeat(reverse: true);
     
-    scaleAnimation = new Tween(
+    scaleAnimation = Tween(
       begin: 0.5,
       end: 1.0,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.bounceOut
     ));
@@ -91,7 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             liquidController: liquidController,
             fullTransitionValue: 880,
             enableLoop: false,
-            slideIconWidget: Container(
+            slideIconWidget: const SizedBox(
               width:  15, 
               height: 15,
             ),
@@ -110,14 +110,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
                 liquidController
               ),
-              DrawScreen(false, false, false),
+              const DrawScreen(false, false, false),
             ],
             onPageChangeCallback: (int activePageIndex) {
               // change the current route to the drawing screen
               if (activePageIndex == totalPages){
                 GetIt.I<UserData>().showOnboarding = false;
                 GetIt.I<UserData>().save();
-                Future.delayed(Duration(milliseconds: 500), () =>
+                Future.delayed(const Duration(milliseconds: 500), () =>
                   Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
                 );
               }

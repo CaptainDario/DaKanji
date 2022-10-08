@@ -36,7 +36,7 @@ class _ControllableLottieAnimationState extends State<ControllableLottieAnimatio
     super.initState();
     lottieAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     );
   }
 

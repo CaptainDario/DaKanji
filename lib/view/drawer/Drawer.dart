@@ -27,7 +27,7 @@ class DaKanjiDrawer extends StatefulWidget{
   final bool animationAtStart;
 
 
-  DaKanjiDrawer(
+  const DaKanjiDrawer(
     {
       required this.child,
       required this.currentScreen,
@@ -69,19 +69,21 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       end: 1.0,
     ).animate( CurvedAnimation(
       parent: _drawerController,
-      curve: Interval(0.0, 1.0, curve: Curves.linear)
+      curve: const Interval(0.0, 1.0, curve: Curves.linear)
     ));
 
-    if(!widget.animationAtStart)
+    if(!widget.animationAtStart) {
       _drawerController.value = 1.0;
+    }
 
     // add a listener to animate the drawer when it should be opened/closed 
     _handleDrawer = ()  {
       setState(() {
-        if(GetIt.I<DrawerListener>().playForward)
+        if(GetIt.I<DrawerListener>().playForward) {
           _drawerController.forward();
-        else
+        } else {
           _drawerController.reverse();
+        }
       });
     };
     GetIt.I<DrawerListener>().addListener(_handleDrawer);
@@ -101,10 +103,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     _screenWidth = MediaQuery.of(context).size.width;
 
     // drawer should not use 50% of screen if screen is very wide
-    if(_screenWidth < 500)
+    if(_screenWidth < 500) {
       _drawerWidth = _screenWidth * 0.5;
-    else
+    } else {
       _drawerWidth = 500 * 0.5;
+    }
     
 
     DragStartDetails? _start;
@@ -169,8 +172,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                       _drawerController.reverse();
                     },
                     onHorizontalDragStart: (DragStartDetails details){
-                      if(_start == null)
-                        _start = details;
+                      _start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
                       var newState = _start!.localPosition.dx - 
@@ -180,10 +182,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
                       _start = null;
-                      if(_moveDrawer.value < 0.5)
+                      if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
-                      else
+                      } else {
                         _drawerController.forward();
+                      }
                     },
                     child: Opacity(
                       opacity: _moveDrawer.value,
@@ -206,8 +209,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onHorizontalDragStart: (DragStartDetails details){
-                      if(_start == null)
-                        _start = details;
+                      _start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
                       var newState = _start!.localPosition.dx - 
@@ -217,16 +219,17 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
                       _start = null;
-                      if(_moveDrawer.value < 0.5)
+                      if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
-                      else
+                      } else {
                         _drawerController.forward();
+                      }
                     },
                     // the actual drawer
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             offset: Offset(10, 0),
                             blurRadius: 10,
@@ -239,7 +242,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         style: ListTileStyle.drawer,
                         selectedColor: Theme.of(context).colorScheme.secondary,
                         child: ListView(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
                           children: <Widget>[
                             // DaKanji Logo at the top
@@ -251,7 +254,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   child: Image(
                                     width: _drawerWidth * 0.6,
                                     //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                    image: AssetImage("assets/images/icons/banner.png"),
+                                    image: const AssetImage("assets/images/icons/banner.png"),
                                   ),
                                 ),
                               ),
@@ -262,7 +265,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               title: LocaleKeys.DrawScreen_title.tr(),
                               route: "/drawing",
                               selected: widget.currentScreen == Screens.drawing,
-                              drawerWidth: this._drawerWidth,
+                              drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the text dictionary screen
@@ -271,7 +274,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               title: LocaleKeys.Dictionary_title.tr(),
                               route: "/dictionary",
                               selected: widget.currentScreen == Screens.dictionary,
-                              drawerWidth: this._drawerWidth,
+                              drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the text processing screen
@@ -280,7 +283,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               title: LocaleKeys.TextScreen_title.tr(),
                               route: "/text",
                               selected: widget.currentScreen == Screens.text,
-                              drawerWidth: this._drawerWidth,
+                              drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the settings screen
@@ -289,7 +292,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               title: LocaleKeys.SettingsScreen_title.tr(),
                               route: "/settings",
                               selected: widget.currentScreen == Screens.settings,
-                              drawerWidth: this._drawerWidth,
+                              drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the about screen
@@ -298,7 +301,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               title: LocaleKeys.AboutScreen_title.tr(),
                               route: "/about",
                               selected: widget.currentScreen == Screens.about,
-                              drawerWidth: this._drawerWidth,
+                              drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),                               
                           ],

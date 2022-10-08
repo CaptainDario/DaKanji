@@ -237,7 +237,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   steps: GetIt.I<Tutorials>().getSteps(),
                   autoSizeTexts: true,
                   onChanged: (int index){
-                    print("Tutorial step: ${index}");
+                    print("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
                       print("DrawScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseDrawing = false;
@@ -279,7 +279,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/changelog":
             return switchScreen(ChangelogScreen());
           case "/testScreen":
-            return switchScreen(TestScreen());
+            return switchScreen(const TestScreen());
         }
         throw UnsupportedError("Unknown route: ${settings.name}");
       },

@@ -35,7 +35,7 @@ class DrawerAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(width: height*0.2,),
-        Container(
+        SizedBox(
           height: height * 0.99,
           width: height * 0.99,
           child: Material(
@@ -50,7 +50,7 @@ class DrawerAppBar extends StatelessWidget {
           ),
         ),
         SizedBox(width: height*0.2,),
-        Container(
+        SizedBox(
           height: height*0.5,
           child: Center(
             child: AutoSizeText(

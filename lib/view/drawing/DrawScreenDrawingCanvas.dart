@@ -33,15 +33,16 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
           child: DrawingCanvas(
             canvasSize, canvasSize,
             strokes,
-            EdgeInsets.all(0),
+            const EdgeInsets.all(0),
             onFinishedDrawing: (Uint8List image) async {
               drawingInterpreter.runInference(image);
             },
             onDeletedLastStroke: (Uint8List image) {
-              if(strokes.strokeCount > 0)
+              if(strokes.strokeCount > 0) {
                 drawingInterpreter.runInference(image);
-              else
+              } else {
                 drawingInterpreter.clearPredictions();
+              }
             },
             onDeletedAllStrokes: () {
               drawingInterpreter.clearPredictions();

@@ -19,7 +19,7 @@ class PredictionButton extends StatefulWidget {
   /// the nr of this PrdictionButton [0..9]
   final int nr;
 
-  PredictionButton(
+  const PredictionButton(
     this.char,
     this.nr,
   {Key? key}) : super(key : key);
@@ -69,18 +69,19 @@ class _PredictionButtonState extends State<PredictionButton>
       duration: const Duration(milliseconds: 100),
       vsync: this,
     );
-    animation = new Tween(
+    animation = Tween(
       begin: 1.0,
       end: 1.05,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: controller,
       curve: Curves.decelerate,
     ));
 
     // run the animation always reversed after completion 
     animation.addStatusListener((status) {
-      if(status == AnimationStatus.completed)
+      if(status == AnimationStatus.completed) {
         controller.reverse();
+      }
     });
 
   }
@@ -120,7 +121,7 @@ class _PredictionButtonState extends State<PredictionButton>
         onDoubleTap: () => doubleTap(),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
           ),
           // handle a short press
           onPressed: pressed,
@@ -130,7 +131,7 @@ class _PredictionButtonState extends State<PredictionButton>
             child: Text(
               widget.char,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 600,
                 fontFamily: "NotoSans"
               ),
@@ -145,8 +146,9 @@ class _PredictionButtonState extends State<PredictionButton>
     if(widget.char == " ") return;
 
     controller.forward(from: 0.0);
-    if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap)
-      GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true; 
+    if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap) {
+      GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true;
+    } 
 
     GetIt.I<DrawScreenState>().kanjiBuffer.addToKanjiBuffer(widget.char);
   

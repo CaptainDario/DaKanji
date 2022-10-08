@@ -6,7 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 
 class ResponsiveCheckBoxTile extends StatefulWidget {
-  ResponsiveCheckBoxTile(
+  const ResponsiveCheckBoxTile(
     {
       required this.text,
       required this.value,
@@ -46,7 +46,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
             if(widget.onTileTapped != null) widget.onTileTapped!(checked);
           });
         },
-        child: Container(
+        child: SizedBox(
           height: tileHeight,
           width: width,
           child: Row(
@@ -68,8 +68,9 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                 value: widget.value,
                 onChanged: (value){
                   setState(() {
-                    if(value != null)
+                    if(value != null) {
                       checked = value;
+                    }
 
                     if(widget.onTileTapped != null) widget.onTileTapped!(checked);
                   });

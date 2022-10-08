@@ -38,7 +38,7 @@ class DrawScreenTutorial {
 
   DrawScreenTutorial() {
     
-    this.drawScreenTutorialTitles = [
+    drawScreenTutorialTitles = [
       LocaleKeys.DrawScreen_tutorial_begin_title.tr(),
       "",
       "",
@@ -55,7 +55,7 @@ class DrawScreenTutorial {
       "",
     ];
   
-    this.drawScreenTutorialBodies = [
+    drawScreenTutorialBodies = [
       LocaleKeys.DrawScreen_tutorial_begin_text.tr(),
       LocaleKeys.DrawScreen_tutorial_drawing.tr(),
       LocaleKeys.DrawScreen_tutorial_undo.tr(),
@@ -72,13 +72,13 @@ class DrawScreenTutorial {
       LocaleKeys.DrawScreen_tutorial_multi_search_swipe_left.tr(),
     ];
  
-    this.drawScreenTutorialIndexes = List.generate(
+    drawScreenTutorialIndexes = List.generate(
       drawScreenTutorialBodies.length, (index) => index);
 
-    this.drawScreenTutorialFocusNodes = 
+    drawScreenTutorialFocusNodes = 
       List.generate(drawScreenTutorialIndexes.length, (index) => FocusNode());
 
-    this.drawScreenTutorialSteps = 
+    drawScreenTutorialSteps = 
       List.generate(drawScreenTutorialIndexes.length, (index) => 
         OnboardingStep(
           focusNode: drawScreenTutorialFocusNodes[index], 
@@ -88,18 +88,18 @@ class DrawScreenTutorial {
       );
   
     /// init the tutorial steps
-    this.multiCharSearchSteps = 
+    multiCharSearchSteps = 
       [drawScreenTutorialFocusNodes[8]] + drawScreenTutorialFocusNodes.sublist(10, 14);
 
-    this.predictionbuttonSteps = drawScreenTutorialFocusNodes.sublist(5, 8) + 
+    predictionbuttonSteps = drawScreenTutorialFocusNodes.sublist(5, 8) + 
       [drawScreenTutorialFocusNodes[9]];
 
-    this.predictionButtonGridSteps = drawScreenTutorialFocusNodes[4];
+    predictionButtonGridSteps = drawScreenTutorialFocusNodes[4];
 
-    this.undoButtonSteps = drawScreenTutorialFocusNodes[2];
+    undoButtonSteps = drawScreenTutorialFocusNodes[2];
     
-    this.clearButtonSteps = drawScreenTutorialFocusNodes[3];
+    clearButtonSteps = drawScreenTutorialFocusNodes[3];
     
-    this.canvasSteps = drawScreenTutorialFocusNodes[1];
+    canvasSteps = drawScreenTutorialFocusNodes[1];
   }
 }

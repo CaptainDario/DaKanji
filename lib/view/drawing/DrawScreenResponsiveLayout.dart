@@ -40,22 +40,21 @@ class DrawScreenResponsiveLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget drawScreen;
 
-    if (layout == DrawScreenLayout.Portrait)
+    if (layout == DrawScreenLayout.Portrait) {
       drawScreen = DrawScreenPortrait(drawingCanvas, predictionButtons, multiCharSearch,
         undoButton, clearButton, canvasSize
       );
-    else if (layout == DrawScreenLayout.Landscape)
+    } else if (layout == DrawScreenLayout.Landscape) {
       drawScreen = DrawScreenLandscape(drawingCanvas, predictionButtons, multiCharSearch, 
         undoButton, clearButton, canvasSize
       );
-    // landscape with webview
-    else if (layout == DrawScreenLayout.PortraitWithWebview)
+    } else if (layout == DrawScreenLayout.PortraitWithWebview) {
       drawScreen = DrawScreenPortraitWithWebview(drawingCanvas, predictionButtons, multiCharSearch, 
         undoButton, clearButton, canvasSize, webView);
-    // else if (layout == DrawScreenLayout.LandscapeWithWebview)
-    else
+    } else {
       drawScreen = DrawScreenLandscapeWithWebview(drawingCanvas, predictionButtons, multiCharSearch, 
         undoButton, clearButton, canvasSize, webView);
+    }
 
     return Center(
       child: drawScreen

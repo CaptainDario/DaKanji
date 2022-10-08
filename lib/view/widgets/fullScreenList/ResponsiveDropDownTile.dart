@@ -8,12 +8,12 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 class ResponsiveDropDownTile extends StatefulWidget {
-  ResponsiveDropDownTile(
+  const ResponsiveDropDownTile(
     {
       required this.text,
       required this.value,
       required this.items,
-      this.translateItemTexts : false,
+      this.translateItemTexts  = false,
       this.onTap,
       this.autoSizeGroup,
       Key? key
@@ -54,7 +54,7 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
         onTap: () {
           
         },
-        child: Container(
+        child: SizedBox(
           height: tileHeight,
           width: width,
           child: Row(
@@ -79,7 +79,7 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   
                   return DropdownMenuItem<String>(
                     value: text,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width*0.35,
                       child: AutoSizeText(
                         widget.translateItemTexts ? text.tr() : text, 

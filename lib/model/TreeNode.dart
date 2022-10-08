@@ -26,10 +26,11 @@ class TreeNode<T> {
     
     // update the level information for the whole subtree
     forEachBreadthFirst((node) {
-      if(node.parent != null)
+      if(node.parent != null) {
         node.level = node.parent!.level + 1;
-      else
+      } else {
         node.level = 1;
+      }
     });
   }
 
@@ -72,7 +73,7 @@ class TreeNode<T> {
   /// nodes, returns the first one found. If the tree does not contain the 
   /// `query` returns null
   TreeNode<T>? find(TreeNode<T> query){
-    TreeNode<T>? result = null;
+    TreeNode<T>? result;
     
     Queue queue = Queue();
     queue.add(this);
@@ -112,7 +113,7 @@ class TreeNode<T> {
 
     TreeNode newTree = TreeNode(initValue);
 
-    for (var child in this.children) {
+    for (var child in children) {
       TreeNode newChild = child._copyChildStructure(initValue);
       newChild.value = newChild.value(child);
       newTree.add(newChild);
@@ -123,9 +124,9 @@ class TreeNode<T> {
 
   /// Copies the tree to a new tree and returns it
   TreeNode copy(){
-    TreeNode newTree = TreeNode(this.value);
+    TreeNode newTree = TreeNode(value);
 
-    for (var child in this.children) {
+    for (var child in children) {
       print(child.value);
       newTree.add(child.copy());
     }
@@ -135,7 +136,7 @@ class TreeNode<T> {
 
   @override
   String toString() {
-    return this.value.toString();
+    return value.toString();
   }
 
   List<T> toList() {

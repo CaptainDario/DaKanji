@@ -29,7 +29,7 @@ class ResponsiveHeaderTile extends StatelessWidget {
       height: tileHeight,
       width: screenWidth,
       alignment: Alignment.centerLeft,
-      child: Container(
+      child: SizedBox(
         height: tileHeight*0.5,
         child: FittedBox(
           child: Text(
@@ -37,7 +37,7 @@ class ResponsiveHeaderTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textScaleFactor: 1.25,
             maxLines: 1,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),

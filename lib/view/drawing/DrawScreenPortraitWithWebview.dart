@@ -40,17 +40,17 @@ class DrawScreenPortraitWithWebview extends StatelessWidget {
       drawScreen = Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
           Expanded(
             child: Center(child: 
               drawScreen
             )
           ),
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
           Expanded(
-            child: this.webView!,
+            child: webView!,
           ),
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
         ],
       );
     }

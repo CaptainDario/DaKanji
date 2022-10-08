@@ -9,14 +9,14 @@ class Tutorials{
   /// the draw screen tutorial
   late DrawScreenTutorial drawScreenTutorial;
 
-  Tutorials(){}
+  Tutorials();
 
   /// Reloads the all tutorials
   void reload(){
-    this.drawScreenTutorial = DrawScreenTutorial();
+    drawScreenTutorial = DrawScreenTutorial();
   }
 
   List<OnboardingStep> getSteps (){
-    return this.drawScreenTutorial.drawScreenTutorialSteps;
+    return drawScreenTutorial.drawScreenTutorialSteps;
   }
 }

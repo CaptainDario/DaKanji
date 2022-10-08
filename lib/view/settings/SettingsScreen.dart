@@ -34,7 +34,7 @@ class SettingsScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
 
-  SettingsScreen(this.openedByDrawer);
+  const SettingsScreen(this.openedByDrawer);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -228,7 +228,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       */
                       // #endregion
 
-                      Divider(),
+                      const Divider(),
 
                       // #region - Dict header
 
@@ -238,7 +238,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
 
                       MultiSelectDialogField(
-                        title: Text("Select languages"),
+                        title: const Text("Select languages"),
                         buttonText: Text(LocaleKeys.SettingsScreen_dict_languages.tr()),
                         items: DictLanguages.values.map(
                           (e) => MultiSelectItem(e, e.name)
@@ -261,7 +261,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion
 
-                      Divider(),
+                      const Divider(),
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
@@ -332,11 +332,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       // #endregion
 
-                      Divider(),
+                      const Divider(),
 
                       // #region - advanced settings
                       ExpansionTile(
-                        tilePadding: EdgeInsets.all(0),
+                        tilePadding: const EdgeInsets.all(0),
                         title: Align(
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(

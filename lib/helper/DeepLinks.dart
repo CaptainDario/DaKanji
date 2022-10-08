@@ -11,7 +11,7 @@ import 'package:universal_io/io.dart';
 
 StreamSubscription? linkSub;
 
-Future<Null> initDeepLinksStream() async {
+Future<void> initDeepLinksStream() async {
   // ... check initialUri
 
   // Attach a listener to the stream
@@ -27,7 +27,7 @@ Future<Null> initDeepLinksStream() async {
 }
 
 /// 
-Future<Null> getInitialDeepLink() async {
+Future<void> getInitialDeepLink() async {
   
   try {
     String? initialLink = await getInitialLink();

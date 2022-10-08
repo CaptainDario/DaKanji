@@ -3,25 +3,25 @@ import 'package:flutter_test/flutter_test.dart';
 
 
 final List<Offset> kuchiStrokes = [
-  Offset( 0.75,  0.75),
-  Offset(-0.75,  0.75),
-  Offset(-0.75, -0.75),
-  Offset( 0.75, -0.75),
-  Offset( 0.75,  0.75),
+  const Offset( 0.75,  0.75),
+  const Offset(-0.75,  0.75),
+  const Offset(-0.75, -0.75),
+  const Offset( 0.75, -0.75),
+  const Offset( 0.75,  0.75),
 ];
 
 final List<Offset> nichiStroke = [
-  Offset( 0.75,  0.0),
-  Offset(-0.75,  0.0),
+  const Offset( 0.75,  0.0),
+  const Offset(-0.75,  0.0),
 ];
 
 final List<Offset> meStroke1 = [
-  Offset( 0.75,  0.25),
-  Offset(-0.75,  0.25),
+  const Offset( 0.75,  0.25),
+  const Offset(-0.75,  0.25),
 ];
 final List<Offset> meStroke2 = [
-  Offset( 0.75, -0.25),
-  Offset(-0.75, -0.25),
+  const Offset( 0.75, -0.25),
+  const Offset(-0.75, -0.25),
 ];
 
 

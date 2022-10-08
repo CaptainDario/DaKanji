@@ -26,30 +26,30 @@ void main() {
     // create app instance and wait until it finished initializing
     await app.main();
 
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
 
     // #region 1 - check that the onboarding is shown and skip it
     int cnt = 0;
-    while(tester.widgetList(find.byType(OnBoardingPage)).toList().length == 0 &&
+    while(tester.widgetList(find.byType(OnBoardingPage)).toList().isEmpty &&
       cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
       print('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
     
-    Offset skipButton = await tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first);
+    Offset skipButton = tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first);
     await tester.tapAt(skipButton);
     print("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the onboarding is shown and skip it
     cnt = 0;
-    while(tester.widgetList(find.byType(DrawingCanvas)).toList().length == 0 &&
+    while(tester.widgetList(find.byType(DrawingCanvas)).toList().isEmpty &&
       cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
       print('waiting for tutorial to show up');
     }
     
@@ -59,10 +59,10 @@ void main() {
 
     // #region 3 - check that the DrawScreen tutorial is shown
     cnt = 0;
-    while(tester.widgetList(find.byType(DrawingCanvas)).toList().length == 0 &&
+    while(tester.widgetList(find.byType(DrawingCanvas)).toList().isEmpty &&
       cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
       print('waiting for tutorial to show up');
     }
     

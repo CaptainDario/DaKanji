@@ -7,7 +7,7 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 class SettingsAutoSizeText extends StatefulWidget {
-  SettingsAutoSizeText(
+  const SettingsAutoSizeText(
     {
       required this.text,
       this.maxLines,

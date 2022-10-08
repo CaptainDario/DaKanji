@@ -42,11 +42,11 @@ class DrawScreenClearButton extends StatelessWidget {
           focusNode: includeTutorial ?
             GetIt.I<Tutorials>().drawScreenTutorial.clearButtonSteps : null,
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: canvasSize * 0.1,
               child: FittedBox(
                 child: IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     iconSize: 100,
                     color: Theme.of(context).highlightColor,
                     onPressed: () => clear(strokes)
@@ -61,9 +61,9 @@ class DrawScreenClearButton extends StatelessWidget {
 
   void clear (Strokes strokes) async {
 
-    if(!GetIt.I<Settings>().useThanosSnap)
+    if(!GetIt.I<Settings>().useThanosSnap) {
       strokes.playDeleteAllStrokesAnimation = true;
-    else{
+    } else{
       GetIt.I<DrawScreenState>().snappableKey.currentState?.snap(
         await DrawingPainter(
           GetIt.I<DrawScreenState>().strokes.path, 

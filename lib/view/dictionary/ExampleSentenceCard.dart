@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class ExampleSentenceCard extends StatefulWidget {
-  ExampleSentenceCard(
+  const ExampleSentenceCard(
     this.sentence,
     this.translation,
     {Key? key}
@@ -19,7 +19,7 @@ class ExampleSentenceCard extends StatefulWidget {
 class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 150,
       child: Card(
         child: Column(

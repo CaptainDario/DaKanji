@@ -6,7 +6,7 @@ import 'package:xml/xml.dart';
 
 
 class KanjiVGWidget extends StatefulWidget {
-  KanjiVGWidget(
+  const KanjiVGWidget(
     this.kanjiVGString,
     this.height,
     this.width,

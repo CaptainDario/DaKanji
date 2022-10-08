@@ -14,7 +14,7 @@ import 'package:da_kanji_mobile/provider/Settings.dart';
 
 
 class DictionaryScreenSearchTab extends StatefulWidget {
-  DictionaryScreenSearchTab(
+  const DictionaryScreenSearchTab(
     this.height,
     this.width,
     this.initialQuery,
@@ -27,7 +27,7 @@ class DictionaryScreenSearchTab extends StatefulWidget {
   /// width of this widget
   final double width;
   /// The query that should be initially searched
-  late final initialQuery;
+  final initialQuery;
 
   @override
   State<DictionaryScreenSearchTab> createState() => _DictionaryScreenSearchTabState();
@@ -59,7 +59,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
         Column(
           children: [
             SizedBox(height: widget.height*0.025,),
-            Container(
+            SizedBox(
               height: widget.height * 0.1,
               width: widget.width,
               child: Card(
@@ -72,8 +72,9 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                           controller: searchInputController,
                           onChanged: (text) async {
                             // only search in dictionary if the query changed
-                            if(lastInput == text)
+                            if(lastInput == text) {
                               return;
+                            }
 
                             context.read<DictSearch>().currentSearch = text;
                             
@@ -92,7 +93,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                             searchInputController.clear();
                             context.read<DictSearch>().searchResults = [];
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.clear
                           ),
                         ),
@@ -103,7 +104,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               ),
             ),
             SizedBox(height: widget.height*0.025,),
-            Container(
+            SizedBox(
               height: widget.height * 0.85,
               width: widget.width,
               child: ListView.builder(
@@ -134,8 +135,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
           right: widget.width*0.02,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(24),
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(24),
             ),
             onPressed: () {
               GetIt.I<Settings>().selectedDictionary = 
@@ -145,7 +146,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
             child: SizedBox(
               width: widget.width*0.08,
               height: widget.height*0.08,
-              child: Icon(
+              child: const Icon(
                 Icons.brush
               ),
             ),

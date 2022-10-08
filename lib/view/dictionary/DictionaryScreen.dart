@@ -18,7 +18,7 @@ import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 
 class DictionaryScreen extends StatefulWidget {
 
-  DictionaryScreen(
+  const DictionaryScreen(
     this.openedByDrawer,
     this.includeHeroes,
     this.includeTutorial,
@@ -88,12 +88,11 @@ class _DictionaryScreenState
                 if(noTabs != 4) return;
                 
                 // if a search result was selected change the tab
-                if(context.read<DictSearch>().selectedResult != null)
-                  // IMPORTANT: use addPostFrameCallback to avoid race condition 
-                  // between `animateTo()` and `setState()`
+                if(context.read<DictSearch>().selectedResult != null) {
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
                     dictionaryTabController.animateTo(1);
                   });
+                }
               };
 
               context.read<DictSearch>().removeListener(changeTab);
@@ -124,7 +123,7 @@ class _DictionaryScreenState
             return Row(
               children: [
                 if(tabsSideBySide > 1)
-                  Container(
+                  SizedBox(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenSearchTab(
@@ -134,7 +133,7 @@ class _DictionaryScreenState
                     ),
                   ),
                 if(tabsSideBySide > 2)
-                  Container(
+                  SizedBox(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenWordTab(
@@ -142,7 +141,7 @@ class _DictionaryScreenState
                     ),
                   ),
                 if(tabsSideBySide > 3)
-                  Container(
+                  SizedBox(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: DictionaryScreenKanjiTab(
@@ -151,14 +150,14 @@ class _DictionaryScreenState
                     ),
                   ),
                 if(tabsSideBySide >= 4) 
-                  Container(
+                  SizedBox(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
-                    child: DictionaryScreenExampleTab(),
+                    child: const DictionaryScreenExampleTab(),
                   ),
                 // 
                 if(tabsSideBySide < 4)
-                  Container(
+                  SizedBox(
                     width: constraints.maxWidth / (tabsSideBySide),
                     height: constraints.maxHeight,
                     child: Column(
@@ -166,10 +165,10 @@ class _DictionaryScreenState
                         TabBar(
                           controller: dictionaryTabController,
                           tabs: [
-                            if(noTabs > 3) Tab(text: "Search"),
-                            if(noTabs > 2) Tab(text: "Word"),
-                            if(noTabs > 1) Tab(text: "Kanji"),
-                            if(noTabs > 0) Tab(text: "Example"),
+                            if(noTabs > 3) const Tab(text: "Search"),
+                            if(noTabs > 2) const Tab(text: "Word"),
+                            if(noTabs > 1) const Tab(text: "Kanji"),
+                            if(noTabs > 0) const Tab(text: "Example"),
                           ],
                         ),
                         Expanded(
@@ -194,7 +193,7 @@ class _DictionaryScreenState
                                       kanjidic2Entries
                                     ),
                                   if(noTabs > 0) 
-                                    DictionaryScreenExampleTab(),
+                                    const DictionaryScreenExampleTab(),
                                   
                                 ],
                               );

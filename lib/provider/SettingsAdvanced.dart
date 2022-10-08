@@ -19,16 +19,17 @@ class SettingsAdvanced {
   bool useThanosSnap = false;
 
   SettingsAdvanced(){
-    if(Platform.isAndroid)
+    if(Platform.isAndroid) {
       inferenceBackends.addAll([
         InferenceBackends.GPU.toString(),
         InferenceBackends.NNAPI.toString(),
       ]);
-    else if(Platform.isIOS)
+    } else if(Platform.isIOS) {
       inferenceBackends.addAll([
         InferenceBackends.GPU.toString(),
         InferenceBackends.CoreML.toString(),
       ]);
+    }
     //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
     //  inferenceBackends.addAll([
     //    InferenceBackends.XXNPACK.toString()

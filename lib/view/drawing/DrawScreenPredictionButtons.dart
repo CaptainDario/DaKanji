@@ -34,7 +34,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
 
     double width = MediaQuery.of(context).size.width;
 
-    return Container(              
+    return SizedBox(              
       //use canvas height when runningInLandscape
       width :  runningInLandscape ? (canvasSize * 0.4) : canvasSize,
       height: !runningInLandscape ? (canvasSize * 0.4) : canvasSize, 
@@ -46,34 +46,36 @@ class DrawScreenPredictionButtons extends StatelessWidget {
               focusNode: includeTutorial ?
                 GetIt.I<Tutorials>().drawScreenTutorial.predictionButtonGridSteps : null,
               child: GridView.count(
-                physics: new NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: runningInLandscape ? Axis.horizontal : Axis.vertical,
                 crossAxisCount: 5,
                 mainAxisSpacing: (width*0.01).clamp(0, 5),
                 crossAxisSpacing: (width*0.01).clamp(0, 5),
                 
                 children: List.generate(10, (i) {
-                  Widget tmp_widget = PredictionButton(
+                  Widget tmpWidget = PredictionButton(
                     interpreter.predictions[i],
                     i
                   );
                   // add short/long press showcase to the first button
-                  if(i == 0)
-                    tmp_widget = MultiFocus(
+                  if(i == 0) {
+                    tmpWidget = MultiFocus(
                       focusNodes: includeTutorial ? 
                         GetIt.I<Tutorials>().drawScreenTutorial.predictionbuttonSteps : null,
-                      child: tmp_widget,
+                      child: tmpWidget,
                     );
+                  }
                   
-                  if(includeHeroes)
-                    tmp_widget = Hero(
+                  if(includeHeroes) {
+                    tmpWidget = Hero(
                       tag: "webviewHero_" + (interpreter.predictions[i] == " " 
                         ? i.toString() 
                         : interpreter.predictions[i]),
-                      child: tmp_widget,
+                      child: tmpWidget,
                     );
+                  }
             
-                  return tmp_widget;
+                  return tmpWidget;
                 },
                 )
               ),

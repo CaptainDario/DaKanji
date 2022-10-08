@@ -41,8 +41,7 @@ class UserData{
     return _versionUsed;
   }
 
-  UserData(){
-  }
+  UserData();
 
   /// initializes the user data.
   /// 

@@ -38,8 +38,9 @@ class ChangelogScreen extends StatelessWidget {
                       selectable: false,
                       onTapLink: 
                       (String text, String? url, String? title) async {
-                        if(await canLaunchUrlString(url!))
+                        if(await canLaunchUrlString(url!)) {
                           launchUrlString(url);
+                        }
                       },
                     )
                   ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 class DictionaryScreenExampleTab extends StatefulWidget {
-  DictionaryScreenExampleTab({Key? key}) : super(key: key);
+  const DictionaryScreenExampleTab({Key? key}) : super(key: key);
 
   @override
   State<DictionaryScreenExampleTab> createState() => _DictionaryScreenExampleTabState();

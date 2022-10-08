@@ -45,8 +45,9 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
     // set the input field's text to the key binding
     widget.textEditingController.text = keys.map((e) => e.debugName!).join(" + ");
 
-    if(widget.onChanged != null)
+    if(widget.onChanged != null) {
       widget.onChanged!(keys);
+    }
   }
 
   @override
@@ -60,7 +61,7 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
       onFocusChange: (focused) {
         
         // if the widget is loosing focus and there is no text
-        if(!focused && widget.textEditingController.text.length == 0){
+        if(!focused && widget.textEditingController.text.isEmpty){
           currentKeys = widget.defaultKeyBinding;
           onChanged(currentKeys);
         }
@@ -82,14 +83,14 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
           child: InkWell(
             onTap: () {
             },
-            child: Container(
+            child: SizedBox(
               height: tileHeight,
               width: width,
               child: Row(
                 children: [
                   Expanded(
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         height: (tileHeight*0.75),
                         child: TextField(
                           readOnly: false,
@@ -99,10 +100,10 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
                           maxLines: 1,
                           decoration: InputDecoration(
                             labelText: widget.hintText,
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             hintText: widget.hintText,
                           ),
-                          style: TextStyle(
+                          style: const TextStyle(
                             overflow: TextOverflow.ellipsis,
                           ),
                           onTap: (){

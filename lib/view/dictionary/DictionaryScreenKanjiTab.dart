@@ -7,7 +7,7 @@ import 'package:da_kanji_mobile/view/dictionary/DictionaryScreenKanjiCard.dart';
 
 
 class DictionaryScreenKanjiTab extends StatefulWidget {
-  DictionaryScreenKanjiTab(
+  const DictionaryScreenKanjiTab(
     this.kanjiVGs,
     this.kanjidic2entries,
     {Key? key}

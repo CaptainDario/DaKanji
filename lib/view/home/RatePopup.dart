@@ -33,7 +33,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
             LocaleKeys.HomeScreen_RatePopup_text.tr(),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 50,),
+          const SizedBox(height: 50,),
           Wrap(
             alignment: WrapAlignment.spaceAround,    
             children: [
@@ -45,7 +45,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 },
                 child: Text(LocaleKeys.General_close.tr())
               ),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5,),
               // rate button
               ElevatedButton(
                 onPressed: () async {
@@ -53,11 +53,11 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 },
                 child: Text(LocaleKeys.General_rate_this_app.tr())
               ),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5,),
               // do not ask again button
               if(hasDoNotShowOption)
                 ElevatedButton(
-                  style: ButtonStyle(
+                  style: const ButtonStyle(
                   ),
                   onPressed: () {
                     GetIt.I<UserData>().doNotShowRateAgain = true;
@@ -69,10 +69,10 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 ),
             ],
           ),
-          SizedBox(height: 10,)
+          const SizedBox(height: 10,)
         ],
       )
     )
-  )..show();
+  ).show();
 
 }

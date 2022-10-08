@@ -30,78 +30,78 @@ class Settings with ChangeNotifier {
   // #region DRAWING SETTINGS 
   /// The custom URL a user can define on the settings page.
   String get customURL {
-    return this.settingsDrawing.customURL;
+    return settingsDrawing.customURL;
   }
   set customURL(String newValue){
-    this.settingsDrawing.customURL = newValue;
+    settingsDrawing.customURL = newValue;
     notifyListeners();
   }
 
   /// The string representation of the dictionary which will be used (long press)
   String get selectedDictionary {
-    return this.settingsDrawing.selectedDictionary;
+    return settingsDrawing.selectedDictionary;
   }
   set selectedDictionary(String newValue){
-    this.settingsDrawing.selectedDictionary = newValue;
+    settingsDrawing.selectedDictionary = newValue;
     notifyListeners();
   }
 
   /// Should the behavior of long and short press be inverted
   bool get invertShortLongPress {
-    return this.settingsDrawing.invertShortLongPress;
+    return settingsDrawing.invertShortLongPress;
   }
   set invertShortLongPress(bool newValue){
-    this.settingsDrawing.invertShortLongPress = newValue;
+    settingsDrawing.invertShortLongPress = newValue;
     notifyListeners();
   }
 
   /// Should the canvas be cleared when a prediction was copied to kanjibuffer
   bool get emptyCanvasAfterDoubleTap {
-    return this.settingsDrawing.emptyCanvasAfterDoubleTap;
+    return settingsDrawing.emptyCanvasAfterDoubleTap;
   }
   set emptyCanvasAfterDoubleTap(bool newValue){
-    this.settingsDrawing.emptyCanvasAfterDoubleTap = newValue;
+    settingsDrawing.emptyCanvasAfterDoubleTap = newValue;
     notifyListeners();
   }
 
   /// should the default app browser be used for opening predictions or a webview
   bool get useWebview {
-    return this.settingsDrawing.useWebview;
+    return settingsDrawing.useWebview;
   }
   set useWebview(bool newValue){
-    this.settingsDrawing.useWebview = newValue;
+    settingsDrawing.useWebview = newValue;
     notifyListeners();
   }
   // #endregion
 
   // #region MISC SETTINGS
   String get selectedTheme{
-    return this.settingsMisc.selectedTheme;
+    return settingsMisc.selectedTheme;
   }
   set selectedTheme(String newValue){
-    this.settingsMisc.selectedTheme = newValue;
+    settingsMisc.selectedTheme = newValue;
     notifyListeners();
   }
 
   ThemeMode? selectedThemeMode() {
-    return this.settingsMisc.themesDict[selectedTheme];
+    return settingsMisc.themesDict[selectedTheme];
   }
   // #endregion
 
   // #region ADVANCED SETTINGS
   String get inferenceBackend{
-    return this.settingsAdvanced.inferenceBackend;
+    return settingsAdvanced.inferenceBackend;
   }
   set inferenceBackend(String newValue){
-    this.settingsAdvanced.inferenceBackend = newValue;
+    settingsAdvanced.inferenceBackend = newValue;
     notifyListeners();
   }
 
   bool get useThanosSnap{
-    return this.settingsAdvanced.useThanosSnap;
+    return settingsAdvanced.useThanosSnap;
   }
   set useThanosSnap(bool newValue){
-    this.settingsAdvanced.useThanosSnap = newValue;
+    settingsAdvanced.useThanosSnap = newValue;
     notifyListeners();
   }
   // #endregion
@@ -123,16 +123,19 @@ class Settings with ChangeNotifier {
     
     // drawing screen
     String tmp = prefs.getString('settingsDrawing') ?? "";
-    if(tmp != "")
+    if(tmp != "") {
       settingsDrawing.initFromJson(tmp);
+    }
     
     tmp = prefs.getString('settingsMisc') ?? "";
-    if(tmp != "")
+    if(tmp != "") {
       settingsMisc.initFromJson(tmp);
+    }
 
     tmp = prefs.getString('settingsAdvanced') ?? "";
-    if(tmp != "")
+    if(tmp != "") {
       settingsAdvanced.initFromJson(tmp);
+    }
   }
 }
 

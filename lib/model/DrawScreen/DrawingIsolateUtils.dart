@@ -10,7 +10,7 @@ class DrawingIsolateUtils {
   static const String DEBUG_NAME = "InferenceIsolate";
 
   late Isolate? _isolate;
-  ReceivePort _receivePort = ReceivePort();
+  final ReceivePort _receivePort = ReceivePort();
   late SendPort _sendPort;
 
   SendPort get sendPort => _sendPort;

@@ -35,7 +35,7 @@ class DrawingCanvas extends StatefulWidget {
   final void Function()? onDeletedAllStrokes;
 
 
-  DrawingCanvas(
+  const DrawingCanvas(
     this.width,
     this.height,
     this.strokes,
@@ -73,7 +73,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
     // delete last stroke / clear canvas animation
     _canvasController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200)
+      duration: const Duration(milliseconds: 200)
     );
     _canvasController.value = 1.0;
     
@@ -188,7 +188,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         },
         child: Stack(
           children: [
-            Image( 
+            const Image( 
               image: AssetImage("assets/images/ui/kanji_drawing_aid.png")
             ),
             CanvasSnappable(
@@ -197,8 +197,8 @@ class _DrawingCanvasState extends State<DrawingCanvas>
               snapColor: GetIt.I<Settings>().selectedTheme == LocaleKeys.General_light
                 ? Colors.black
                 : Colors.white,
-              offset: Offset(20, -20),
-              randomDislocationOffset: Offset(5, 5),
+              offset: const Offset(20, -20),
+              randomDislocationOffset: const Offset(5, 5),
               numberOfBuckets: 16,
               onSnapped: () {
                 GetIt.I<DrawScreenState>().strokes.removeAllStrokes();
@@ -218,13 +218,14 @@ class _DrawingCanvasState extends State<DrawingCanvas>
                       painter: _canvas,
                   );
             
-                  if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes)
+                  if(GetIt.I<DrawScreenState>().strokes.deletingAllStrokes) {
                     return Opacity(
                       opacity: _canvasController.value,
                       child: canvas
                     );
-                  else 
+                  } else {
                     return canvas;
+                  }
                 }
               ),
             ),

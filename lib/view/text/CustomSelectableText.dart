@@ -87,7 +87,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// the selection caret rect
   Rect? _caretRect;
   /// the cursor to use when hovering over text
-  MouseCursor _cursor = SystemMouseCursors.text;
+  final MouseCursor _cursor = SystemMouseCursors.text;
   /// list containg all positions for the ruby texts
   List<Rect> rubyPositions = []; 
   /// the timer to check for multi taps on the text
@@ -100,20 +100,24 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// a list of all words
   List<String> _words = [];
   /// a list of all words with spaces between them
-  List<String> _wordsWithSpaces = [];
+  final List<String> _wordsWithSpaces = [];
   /// a list of all words, when `widget.addSpaces == true` there are spaces
   /// between all the words, otherwise not
   List<String> get words {
-    if (!widget.addSpaces) return _words;
-    else return _wordsWithSpaces;
+    if (!widget.addSpaces) {
+      return _words;
+    } else {
+      return _wordsWithSpaces;
+    }
   }
   set words (List<String> newWords){
     _words = newWords;
     _wordsWithSpaces.clear();
     for (var i = 0; i < _words.length; i++) {
       _wordsWithSpaces.add(_words[i]);
-      if (i < _words.length-1)
-        	_wordsWithSpaces.add(" ");
+      if (i < _words.length-1) {
+        _wordsWithSpaces.add(" ");
+      }
     }
   }
   
@@ -128,7 +132,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   void initState() {
     super.initState();
-    _textSelection = widget.initialSelection ?? TextSelection.collapsed(offset: -1);
+    _textSelection = widget.initialSelection ?? const TextSelection.collapsed(offset: -1);
     _scheduleTextLayoutUpdate();
   }
 
@@ -144,7 +148,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       || widget.addSpaces != oldWidget.addSpaces) {
       _textBoxRects.clear();
       _selectionRects.clear();
-      _textSelection = TextSelection.collapsed(offset: -1);
+      _textSelection = const TextSelection.collapsed(offset: -1);
       _caretRect = null;
       _scheduleTextLayoutUpdate();
       words = widget.words;
@@ -193,7 +197,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void _onDragCancel() {
     setState(() {
       _selectionBaseOffset = null;
-      _onUserSelectionChange(TextSelection.collapsed(offset: 0));
+      _onUserSelectionChange(const TextSelection.collapsed(offset: 0));
     });
   }
 
@@ -243,10 +247,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       );
 
       // skip spaces
-      if(word == " ");
-
-      // empty 
-      else if(charRects.length == 0 || widget.rubys[i] == ""){
+      if(word == " ") {
+         {}
+      } else if(charRects.isEmpty || widget.rubys[i] == ""){
         rubyPositions.add(Rect.zero);
         rubys.add(widget.rubys[i]);
         i += 1;
@@ -361,7 +364,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void doubleTap(PointerDownEvent event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
                   
-    TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+    TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
     var cnt = 0;
     for (var text in words) {
       if(cnt + text.length > tapTextPos.offset){
@@ -381,7 +384,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void tripleTap(PointerDownEvent event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
     
-    TextSelection sel = TextSelection(baseOffset: 0, extentOffset: 0);
+    TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
     var cntStart = 0, cntEnd = 0;
     for (int i = 0; i < words.length; i++) {
       
@@ -391,8 +394,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
         // update text selection
         if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-          if(i == words.length-1)
+          if(i == words.length-1) {
             cntEnd += words[i].length;
+          }
           
           sel = TextSelection(
             baseOffset: cntStart,
@@ -516,7 +520,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 child: Text(
                                   rubys[index],
                                   maxLines: 2,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                   ),
                                 ),

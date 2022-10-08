@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class ResponsiveInputFieldTile extends StatefulWidget {
-  ResponsiveInputFieldTile(
+  const ResponsiveInputFieldTile(
     {
       required this.enabled,
       required this.icon,
@@ -47,32 +47,33 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
       child: InkWell(
         onTap: () {
         },
-        child: Container(
+        child: SizedBox(
           height: tileHeight,
           width: width,
           child: Row(
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: (tileHeight*0.75),
                   child: TextField(
                     enabled: widget.enabled,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
                       labelText: widget.hintText,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       hintText: widget.hintText,
                     ),
                     onChanged: (value) {
-                      if(widget.onChanged != null)
+                      if(widget.onChanged != null) {
                         widget.onChanged!(value);
+                      }
                     },
                   )
                 ),
               ),
               SizedBox(width: width*0.05,),
               Center(
-                child: Container(
+                child: SizedBox(
                   height: tileHeight*0.75,
                   child: FittedBox(
                     child: IconButton(

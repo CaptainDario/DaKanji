@@ -44,16 +44,16 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       body: DaKanjiDrawer(
         currentScreen: Screens.about,
-        animationAtStart: !this.openedByDrawer,
+        animationAtStart: !openedByDrawer,
         child: SingleChildScrollView(
           primary: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image(image: AssetImage("assets/images/icons/banner.png"), width: 200,),
+              const Image(image: AssetImage("assets/images/icons/banner.png"), width: 200,),
               // show the about.md
               Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: MarkdownBody(
                   data: about,
                   styleSheet: MarkdownStyleSheet(
@@ -61,7 +61,7 @@ class AboutScreen extends StatelessWidget {
                       color: Theme.of(context).highlightColor,
                       //fontSize: 20,
                     ),
-                    p: TextStyle( 
+                    p: const TextStyle( 
                       //fontSize: 20,
                     )
                   ),
@@ -71,19 +71,20 @@ class AboutScreen extends StatelessWidget {
                       String mail = Uri(
                         scheme: 'mailto',  
                         path: url, 
-                        query: 'subject=DaKanji${VERSION}: &body=I am using DaKanji v.${VERSION} on ${Theme.of(context).platform.name}',
+                        query: 'subject=DaKanji$VERSION: &body=I am using DaKanji v.$VERSION on ${Theme.of(context).platform.name}',
                       ).toString();
                       launchUrlString(mail);
                     }
-                    else
+                    else {
                       launchUrlString(Uri.encodeFull(url ?? ""));
+                    }
                     
                   },
                 ),
               ),
               // text with link to open the "complete changelog"-screen
               Container(
-                padding: EdgeInsets.fromLTRB(16, 2, 16, 0),
+                padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
                 child: GestureDetector(
                   child: Text(
                     LocaleKeys.AboutScreen_show_changelog.tr(),
@@ -99,7 +100,7 @@ class AboutScreen extends StatelessWidget {
                 )
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: Row(
                   children: [
                     Expanded(
@@ -114,7 +115,7 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: Row(
                   children: [
                     Expanded(
@@ -124,7 +125,7 @@ class AboutScreen extends StatelessWidget {
                             context: context,
                             applicationName: APP_TITLE,
                             applicationVersion: VERSION,
-                            applicationIcon: Image(
+                            applicationIcon: const Image(
                               image: AssetImage("assets/images/icons/icon.png",),
                               width: 50,
                             ) 
@@ -137,7 +138,7 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 2),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
                 child: Row(
                   children: [
                     Expanded(

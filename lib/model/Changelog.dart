@@ -15,31 +15,34 @@ class Changelog{
   bool _initialized = false;
 
   String get changelog{
-    if(!_initialized)
+    if(!_initialized) {
       throw(Exception(
         "You are trying to use the object before initializing it.\n"
         "Try calling init() first."
       ));
+    }
 
     return _changelog;
   }
   
   String get newestChangelog{
-    if(!_initialized)
+    if(!_initialized) {
       throw(Exception(
         "You are trying to use the object before initializing it.\n"
         "Try calling init() first."
       ));
+    }
 
     return _newestChangelog;
   }
   
   String get wholeChangelog{
-    if(!_initialized)
+    if(!_initialized) {
       throw(Exception(
         "You are trying to use the object before initializing it.\n"
         "Try calling init() first."
       ));
+    }
 
     return _wholeChangelog;
   }
@@ -59,7 +62,7 @@ class Changelog{
     changelogList.removeRange(0, 3);
     _wholeChangelog = changelogList.join("\n");
     // newest changes
-    final matches = new RegExp(r"(##.*?##)", dotAll: true);
+    final matches = RegExp(r"(##.*?##)", dotAll: true);
     _newestChangelog = matches.firstMatch(_changelog)!.group(0).toString();
     _newestChangelog = _newestChangelog.substring(0, _newestChangelog.length - 2);
 

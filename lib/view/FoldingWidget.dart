@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 /// 
 /// A widget which can fold /unfold a widget to transition to a different widget.
 class FoldingWidget extends StatefulWidget {
-  FoldingWidget(
+  const FoldingWidget(
       this.outerWidget,
       this.innerWidget,
       this.foldingKey,
@@ -76,14 +76,14 @@ class FoldingWidgetState extends State<FoldingWidget>
       end: 1.0
     ).animate( CurvedAnimation(
       parent: _animationController,
-      curve: Interval(0.0, 0.25, curve: Curves.ease)
+      curve: const Interval(0.0, 0.25, curve: Curves.ease)
     ));
     _animation2 = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate( CurvedAnimation(
       parent: _animationController,
-      curve: Interval(0.25, 0.5, curve: Curves.ease)
+      curve: const Interval(0.25, 0.5, curve: Curves.ease)
     ));
     // horizontal fold
     _animation3 = Tween<double>(
@@ -91,24 +91,26 @@ class FoldingWidgetState extends State<FoldingWidget>
       end: 1.0,
     ).animate( CurvedAnimation(
       parent: _animationController,
-      curve: Interval(0.5, 0.75, curve: Curves.ease)
+      curve: const Interval(0.5, 0.75, curve: Curves.ease)
     ));
     _animation4 = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate( CurvedAnimation(
       parent: _animationController,
-      curve: Interval(0.75, 1.0, curve: Curves.ease)
+      curve: const Interval(0.75, 1.0, curve: Curves.ease)
     ));
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (widget.onClose != null)
+        if (widget.onClose != null) {
           widget.onClose!();
+        }
       }
       else if (status == AnimationStatus.dismissed) {
-        if (widget.onOpen != null)
+        if (widget.onOpen != null) {
           widget.onOpen!();
+        }
         // mark the folding widget as completely unfolded
         setState(() {
           _isUnfolded = true;
@@ -142,10 +144,11 @@ class FoldingWidgetState extends State<FoldingWidget>
         width: widget.width,
         height: widget.height,
         child: () {
-          if(!_isUnfolded)
+          if(!_isUnfolded) {
             return verticalFold(cellHeight, cellWidth, folds);
-          else
+          } else {
             return widget.innerWidget;
+          }
         } (),
       );
       }
@@ -197,7 +200,7 @@ class FoldingWidgetState extends State<FoldingWidget>
   Widget horizontalFold(double cellHeight, double cellWidth, int folds){
       
     // if the vertical folding did not finish
-    if(_animation2.value < 1.0)
+    if(_animation2.value < 1.0) {
       return ClipRect(
         child: Transform.translate(
           offset: Offset(0, -2*cellHeight),
@@ -208,8 +211,7 @@ class FoldingWidgetState extends State<FoldingWidget>
           ),
         ),
       );
-    // after the vertical folding fold the widget horizontally 
-    else
+    } else {
       return SizedBox(
         height: cellHeight,
         width: widget.width,
@@ -218,18 +220,19 @@ class FoldingWidgetState extends State<FoldingWidget>
             Positioned(
               left: 2*cellWidth,
               child: () { 
-                if(_animation4.value < 1.0)
+                if(_animation4.value < 1.0) {
                   return Container(
                     width: cellWidth,
                     height: cellHeight,
                     color: widget.foldingColor 
                   );
-                else
+                } else {
                   return Container(
                     width: cellWidth,
                     height: cellHeight,
                     color: widget.foldingColor
                   );
+                }
               } ()
             ),
             Positioned(
@@ -251,11 +254,12 @@ class FoldingWidgetState extends State<FoldingWidget>
           ]
         ),
       );
+    }
   }
 
   Widget innerWidget(double height, double width){
     return Transform(
-      transform: new Matrix4.identity()
+      transform: Matrix4.identity()
         ..setEntry(3, 2, 0.001)
         ..rotateY(-_animation4.value * pi),
       alignment: Alignment.centerRight,
@@ -270,7 +274,7 @@ class FoldingWidgetState extends State<FoldingWidget>
   Widget outerSliceHorizontal(double height, double width, 
     {bool leftCell = true}){
     return Transform(
-      transform: new Matrix4.identity()
+      transform: Matrix4.identity()
         ..setEntry(3, 2, 0.001)
         ..rotateY((leftCell ? -1 : 1) * _animation3.value * pi),
       alignment: leftCell 
@@ -290,7 +294,7 @@ class FoldingWidgetState extends State<FoldingWidget>
   Widget innerSliceHorizontal(double height, double width, 
     {bool leftCell = true}){
     return Transform(
-      transform: new Matrix4.identity()
+      transform: Matrix4.identity()
         ..setEntry(3, 2, 0.001)
         ..rotateY((leftCell ? -1 : 1) * _animation4.value * pi),
       alignment: leftCell 
@@ -298,13 +302,13 @@ class FoldingWidgetState extends State<FoldingWidget>
         : Alignment.centerLeft,
       child:  ()
       {
-        if(_animation4.value < 0.5 || leftCell)
+        if(_animation4.value < 0.5 || leftCell) {
           return Container(
             width: width,
             height: height,
             color: widget.foldingColor,
           );
-        else
+        } else {
           return SizedBox(
             width: width,
             height: height,
@@ -314,6 +318,7 @@ class FoldingWidgetState extends State<FoldingWidget>
               child: widget.outerWidget
             ),
           );
+        }
       } ()
     );
   }
@@ -324,7 +329,7 @@ class FoldingWidgetState extends State<FoldingWidget>
     return Opacity(
       opacity: _animation2.value < 1.0 ? 1.0 : 0.0,
       child: Transform(
-        transform: new Matrix4.identity()
+        transform: Matrix4.identity()
           ..setEntry(3, 2, 0.001)
           ..rotateX((bottomCard ? -1 : 1) * _animation2.value * pi),
         alignment: bottomCard
@@ -369,7 +374,7 @@ class FoldingWidgetState extends State<FoldingWidget>
     return Opacity(
       opacity: _animation1.value < 1.0 ? 1.0 : 0.0,
       child: Transform(
-        transform: new Matrix4.identity()
+        transform: Matrix4.identity()
           ..setEntry(3, 2, 0.001)
           ..rotateX((bottomCard ? -1 : 1) * _animation1.value * pi),
         alignment: bottomCard 
@@ -422,9 +427,10 @@ class FoldingWidgetState extends State<FoldingWidget>
 
 bool isInRange(double lower, double upper, double value){
 
-  if(value > lower && value < upper)
+  if(value > lower && value < upper) {
     return true;
-  else 
+  } else {
     return false;
+  }
 
 }

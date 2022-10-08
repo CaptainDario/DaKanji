@@ -26,16 +26,16 @@ class DrawingInterpreter with ChangeNotifier{
   bool wasInitialized = false;
 
   /// The path to the tf lite asset
-  String _TFLiteAssetPath = "tflite_models/CNN_single_char.tflite";
+  final String _TFLiteAssetPath = "tflite_models/CNN_single_char.tflite";
 
   /// The path to the mock tf lite asset (small size can be included in repo)
-  String _mockTFLiteAssetPath = "tflite_models/mock_CNN_single_char.tflite";
+  final String _mockTFLiteAssetPath = "tflite_models/mock_CNN_single_char.tflite";
 
   /// the actually used tf lite asset path
   String _usedTFLiteAssetPath = "";
   
   /// The path to the labels asset
-  String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
+  final String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
 
   /// The list of all labels the model can recognize.
   late List<String> _labels;
@@ -53,7 +53,7 @@ class DrawingInterpreter with ChangeNotifier{
   int width = 128;
 
   /// The [_noPredictions] most likely predictions will be shown to the user
-  int _noPredictions = 10;
+  final int _noPredictions = 10;
   
   /// the prediction the CNN made
   List<String> _predictions = List.generate(10, (index) => " ");
@@ -106,22 +106,23 @@ class DrawingInterpreter with ChangeNotifier{
       _input = List<List<double>>.generate(
         height, (i) => List.generate(width, (j) => 0.0)).
       reshape<double>([1, height, width, 1]).cast();
-      this._output =
+      _output =
         List<List<double>>.generate(1, (i) => 
         List<double>.generate(_labels.length, (j) => 0.0));
 
-      if (Platform.isAndroid)
+      if (Platform.isAndroid) {
         _interpreter = await _initInterpreterAndroid();
-      else if (Platform.isIOS) 
+      } else if (Platform.isIOS) {
         _interpreter = await _initInterpreterIOS();
-      else if(Platform.isWindows)
+      } else if(Platform.isWindows) {
         _interpreter = await _initInterpreterWindows();
-      else if(Platform.isLinux)
+      } else if(Platform.isLinux) {
         _interpreter = await _initInterpreterLinux();
-      else if(Platform.isMacOS)
+      } else if(Platform.isMacOS) {
         _interpreter = await _initInterpreterMac();
-      else
+      } else {
         throw PlatformException(code: "Platform not supported.");
+      }
       GetIt.I<Settings>().save();
 
       print(GetIt.I<Settings>().inferenceBackend);
@@ -143,7 +144,7 @@ class DrawingInterpreter with ChangeNotifier{
     _input = List<List<double>>.generate(
       height, (i) => List.generate(width, (j) => 0.0)).
       reshape<double>([1, height, width, 1]).cast();
-    this._output =
+    _output =
       List<List<double>>.generate(1, (i) => 
       List<double>.generate(_labels.length, (j) => 0.0));
 
@@ -180,11 +181,11 @@ class DrawingInterpreter with ChangeNotifier{
   /// returned ordered by how likely they are [likeliest, ..., unlikeliest].
   void runInference(Uint8List inputImage, {bool runInIsolate = true}) async {
     
-    if(!wasInitialized)
+    if(!wasInitialized) {
       throw Exception(
-        "You are trying to use the interpreter before it was initialized!\n" +
-        "Execute init() first!"
+        "You are trying to use the interpreter before it was initialized!\n" "Execute init() first!"
       );
+    }
 
     if(runInIsolate){
       _predictions = await _isolateUtils?.runInference(
@@ -254,18 +255,18 @@ class DrawingInterpreter with ChangeNotifier{
       // try NNAPI delegate
       try{
         interpreter = await _nnapiInterpreter();
-        interpreter.run(this._input, this._output);
+        interpreter.run(_input, _output);
       }
       // on exception try GPU delegate
       catch (e){ 
         try {
           interpreter = await _gpuInterpreterAndroid();
-          interpreter.run(this._input, this._output);
+          interpreter.run(_input, _output);
         }
         // on exception use CPU delegate
         catch (e){
           interpreter = await _cpuInterpreter();
-          interpreter.run(this._input, this._output);
+          interpreter.run(_input, _output);
         }
       }
     }
@@ -305,18 +306,18 @@ class DrawingInterpreter with ChangeNotifier{
       // try NNAPI delegate
       try{
         interpreter = await _coreMLInterpreterIOS();
-        interpreter.run(this._input, this._output);
+        interpreter.run(_input, _output);
       }
       // on exception try GPU delegate
       catch (e){ 
         try {
           interpreter = await _metalInterpreterIOS();
-          interpreter.run(this._input, this._output);
+          interpreter.run(_input, _output);
         }
         // on exception use CPU delegate
         catch (e){
           interpreter = await _cpuInterpreter();
-          interpreter.run(this._input, this._output);
+          interpreter.run(_input, _output);
         }
       }
     }

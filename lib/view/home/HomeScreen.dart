@@ -44,8 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
       // if the app is being tested for different startup situations
-      if(IS_TESTING_APP_STARTUP)
+      if(IS_TESTING_APP_STARTUP) {
         print("RUNNING IN 'APP STARTUP TESTING'-mode");
+      }
 
       // if the DrawScreen is being tested switch there immediately
       if(IS_TESTING_DRAWSCREEN){
@@ -59,9 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
         // show the confetti animations when the widget was build 
         WidgetsBinding.instance.addPostFrameCallback((_) {
           confettiAnimation_1.state.play();
-          Future.delayed(Duration(milliseconds: 750), () =>
+          Future.delayed(const Duration(milliseconds: 750), () =>
             confettiAnimation_2.state.play());
-          Future.delayed(Duration(milliseconds: 1250), () =>
+          Future.delayed(const Duration(milliseconds: 1250), () =>
             confettiAnimation_3.state.play());
           GetIt.I<UserData>().showChangelog = false;
         });
@@ -73,11 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
       
       else if(GetIt.I<UserData>().showRatePopup){
         // show a rating dialogue WITHOUT "do not show again"-option
-        if(appOpenedTimes < MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE)
+        if(appOpenedTimes < MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE) {
           showRatePopup(context, false);
-        // show a rating dialogue WITH "do not show again"-option
-        else
+        } else {
           showRatePopup(context, true);
+        }
 
         GetIt.I<UserData>().showRatePopup = false;
         GetIt.I<UserData>().save();

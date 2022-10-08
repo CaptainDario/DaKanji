@@ -32,11 +32,11 @@ class DrawingPainter extends CustomPainter {
   /// a double in the range [0 .. 1] that indicates how much of the strokes
   /// should be rendered
   DrawingPainter(Path path, bool darkMode, Size size, double progress) {
-    this._size = size;
-    this._path = path;
-    this._darkMode = darkMode;
-    this._recording = false;
-    this._deleteProgress = progress;
+    _size = size;
+    _path = path;
+    _darkMode = darkMode;
+    _recording = false;
+    _deleteProgress = progress;
   }
 
 
@@ -48,12 +48,12 @@ class DrawingPainter extends CustomPainter {
   /// if the returned image will be used for inference
   Future<ui.Image> getImageFromCanvas(bool inference) async {
     // record the drawn character on a new canvas
-    this._recording = inference;
+    _recording = inference;
     ui.PictureRecorder drawnImageRecorder = ui.PictureRecorder();
-    Canvas getImageCanvas = new ui.Canvas(drawnImageRecorder);
+    Canvas getImageCanvas = ui.Canvas(drawnImageRecorder);
     paint(getImageCanvas, _size);
     ui.Picture pic = drawnImageRecorder.endRecording();
-    this._recording = false;
+    _recording = false;
 
     // convert the recording to an image
     return pic.toImage(_size.width.floor(), _size.height.floor());
@@ -97,22 +97,23 @@ class DrawingPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // set the stroke color for creating an image and mode selection
-    if (this._darkMode || this._recording)
+    if (_darkMode || _recording) {
       paint.color = Colors.white;
-    else
+    } else {
       paint.color = Colors.black;
+    }
 
     // create the scale transformation matrix (paths are normalized [0..1])
-    var b = this._path.getBounds().isEmpty ?
-      ui.Rect.fromLTRB(0, 0, 1, 1) :
-      this._path.getBounds();
+    var b = _path.getBounds().isEmpty ?
+      const ui.Rect.fromLTRB(0, 0, 1, 1) :
+      _path.getBounds();
 
     Float64List scale = transformationMatrix(
       scaleX: _size.width, scaleY: _size.height
     );
 
     // if image is being recorded for inference
-    if(this._recording){
+    if(_recording){
       canvas.drawPath(
         _path
           // move to origin
@@ -140,20 +141,22 @@ class DrawingPainter extends CustomPainter {
           double percentage;
 
           // draw all paths except the last one at full length
-          if(metricsAmount > metricsCount+1)
+          if(metricsAmount > metricsCount+1) {
             percentage = metric.length;
-          else
+          } else {
             percentage = metric.length * _deleteProgress;
+          }
           Path extractPath = metric.extractPath(0.0, percentage);
           canvas.drawPath(extractPath.transform(scale), paint);
           metricsCount += 1;
         }
       }
       // otherwise just draw the whole path (improved drawing performance)
-      else
+      else {
         canvas.drawPath(
           _path.transform(scale), 
         paint);
+      }
     }
   }
 

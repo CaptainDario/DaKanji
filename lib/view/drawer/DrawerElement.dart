@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/globals.dart';
 /// Layout:
 ///   padding | icon | padding | title | padding
 class DrawerElement extends StatelessWidget {
-  DrawerElement(
+  const DrawerElement(
     {
       required this.leading,
       required this.title,
@@ -50,18 +50,18 @@ class DrawerElement extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          if(ModalRoute.of(context)!.settings.name != this.route){
+          if(ModalRoute.of(context)!.settings.name != route){
             Navigator.pushNamedAndRemoveUntil(
-              context, this.route,
+              context, route,
               (Route<dynamic> route) => false,
               arguments: NavigationArguments(true, "")
             );
           }
           else{
-            this.drawerController.reverse();
+            drawerController.reverse();
           }
         },
-        child: Container(
+        child: SizedBox(
           width: drawerWidth,
           height: tileHeight,
           child: Row(
@@ -76,7 +76,7 @@ class DrawerElement extends StatelessWidget {
                 ),
               ),
               SizedBox(width: drawerWidth*0.05,),
-              Container(
+              SizedBox(
                 width: drawerWidth*0.6,
                 height: tileHeight*0.5,
                 child: AutoSizeText(

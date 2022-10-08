@@ -101,9 +101,9 @@ class Strokes with ChangeNotifier{
       var p = _path.computeMetrics().take(_path.computeMetrics().length - 1);
       var newPath = Path();
       // copy the strokes to a new Path
-      p.forEach((element) {
+      for (var element in p) {
         newPath.addPath(element.extractPath(0, double.infinity), Offset.zero);
-      });
+      }
       _path = newPath;
 
       decrementStrokeCount();

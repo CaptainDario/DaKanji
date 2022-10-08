@@ -113,10 +113,11 @@ class SettingsDrawing {
 
     dictionaries = [inbuiltDictId] + List.from(webDictionaries);
 
-    if(Platform.isAndroid)
+    if(Platform.isAndroid) {
       dictionaries.addAll(androidDictionaries);
-    else if(Platform.isIOS)
+    } else if(Platform.isIOS) {
       dictionaries.addAll(iosDictionaries);
+    }
 
     selectedDictionary = dictionaries[0];
 
@@ -134,33 +135,44 @@ class SettingsDrawing {
 
   void initFromMap(Map<String, dynamic> map){
 
-    if(map['customURL'] != null)
+    if(map['customURL'] != null) {
       customURL                 = map['customURL'];
-    if(map['selectedDictionary'] != null)
+    }
+    if(map['selectedDictionary'] != null) {
       selectedDictionary        = map['selectedDictionary'];
-    if(map['invertShortLongPress'] != null)
+    }
+    if(map['invertShortLongPress'] != null) {
       invertShortLongPress      = map['invertShortLongPress'];
-    if(map['emptyCanvasAfterDoubleTap'] != null)
+    }
+    if(map['emptyCanvasAfterDoubleTap'] != null) {
       emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
-    if(map['useWebview'] != null)
+    }
+    if(map['useWebview'] != null) {
       useWebview                = map['useWebview'];
+    }
 
-    if(map['kbLongPressMod'] != null)
+    if(map['kbLongPressMod'] != null) {
       kbLongPressMod   = keyBindingStringToSet(map['kbLongPressMod']);
-    if(map['kbDoublePressMod'] != null)
+    }
+    if(map['kbDoublePressMod'] != null) {
       kbDoublePressMod = keyBindingStringToSet(map['kbDoublePressMod']);
+    }
 
-    if(map['kbClearCanvas'] != null)
+    if(map['kbClearCanvas'] != null) {
       kbClearCanvas    = keyBindingStringToSet(map['kbClearCanvas']);
-    if(map['kbUndoStroke'] != null)
+    }
+    if(map['kbUndoStroke'] != null) {
       kbUndoStroke     = keyBindingStringToSet(map['kbUndoStroke']);
-    if(map['kbWordBar'] != null)
+    }
+    if(map['kbWordBar'] != null) {
       kbWordBar        = keyBindingStringToSet(map['kbWordBar']);
-    if(map['kbWordBarDelChar'] != null)
+    }
+    if(map['kbWordBarDelChar'] != null) {
       kbWordBarDelChar = keyBindingStringToSet(map['kbWordBarDelChar']);
+    }
 
     kbPreds = List.generate(10, (i) => 
-      keyBindingStringToSet(map['kbPreds${i}'])
+      keyBindingStringToSet(map['kbPreds$i'])
     );
   }
 
@@ -188,7 +200,7 @@ class SettingsDrawing {
     };
 
     for (var i = 0; i < 10; i++) {
-      m['kbPreds${i}'] = kbPreds[i].map((e) => e.keyId).toList();
+      m['kbPreds$i'] = kbPreds[i].map((e) => e.keyId).toList();
     }
 
     return m;
@@ -206,10 +218,12 @@ class SettingsDrawing {
       int a = int.parse(keyBinding.toString());
       
       if(LogicalKeyboardKey.findKeyByKeyId(a) == null){
-        print("ID: ${a} not found");
+        print("ID: $a not found");
         bindings.add(LogicalKeyboardKey.add);
       }
-      else bindings.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
+      else {
+        bindings.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
+      }
     }
 
     return bindings;

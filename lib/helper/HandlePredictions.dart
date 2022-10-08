@@ -25,17 +25,19 @@ void handlePress(BuildContext context){
 
   // presses should be inverted
   if(GetIt.I<Settings>().invertShortLongPress){
-    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress)
+    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress) {
       openDictionary(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
-    else
+    } else {
       copy(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
+    }
   }
   // presses should NOT be inverted
   if(!GetIt.I<Settings>().invertShortLongPress){
-    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress)
+    if(!GetIt.I<DrawScreenState>().drawingLookup.longPress) {
       copy(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
-    else
+    } else {
       openDictionary(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
+    }
   }
 }
 
@@ -43,11 +45,11 @@ void handlePress(BuildContext context){
 /// Copies [char] to the system clipboard and show a snackbar using [context].
 void copy(BuildContext context, String char){
   if (char != " " && char != ""){
-    Clipboard.setData(new ClipboardData(text: char));
+    Clipboard.setData(ClipboardData(text: char));
     // display a snackbar for 1s 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         content: Text("copied " + char + " to clipboard"),
       )
     );
@@ -72,14 +74,14 @@ void openDictionary(BuildContext context, String char) async {
       }
       else{ 
         if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Portrait ||
-          GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Landscape)
+          GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.Landscape) {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (BuildContext context) => WebviewScreen()
+              builder: (BuildContext context) => const WebviewScreen()
             )
           );
-        else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
+        } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.LandscapeWithWebview){
             
           //print("webview is side by side");
         }
@@ -105,9 +107,9 @@ void openDictionary(BuildContext context, String char) async {
             }
           );
           bool? cra = await intent.canResolveActivity();
-          if(cra != null && cra)
+          if(cra != null && cra) {
             await intent.launch();
-          else{
+          } else{
             showDownloadDialogue(
               context,
               "No translator installed", 
@@ -131,8 +133,9 @@ void openDictionary(BuildContext context, String char) async {
               }
           );
           bool? cra = await intent.canResolveActivity();
-          if(cra != null && cra)
+          if(cra != null && cra) {
             await intent.launch();
+          }
         }
         catch (e){
           showDownloadDialogue(context,
@@ -159,9 +162,9 @@ void openDictionary(BuildContext context, String char) async {
               }
           );
           bool? cra = await intent.canResolveActivity();
-          if(cra != null && cra)
+          if(cra != null && cra) {
             await intent.launch();
-          else
+          } else {
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "akebi"
@@ -169,6 +172,7 @@ void openDictionary(BuildContext context, String char) async {
               LocaleKeys.General_download.tr(), 
               PLAYSTORE_BASE_URL + AKEBI_ID
             );
+          }
         }
       }
       // offline dictionary takoboto (android)
@@ -183,9 +187,9 @@ void openDictionary(BuildContext context, String char) async {
               }
           );
           bool? cra = await intent.canResolveActivity();
-          if(cra != null && cra)
+          if(cra != null && cra) {
             await intent.launch();
-          else{
+          } else{
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "takoboto"
@@ -205,9 +209,9 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[0]){
         print("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
-        if(await canLaunchUrlString(url)) 
+        if(await canLaunchUrlString(url)) {
           launchUrlString(url);
-        else {
+        } else {
           print("cannot launch " + url);
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
@@ -223,9 +227,9 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[1]){
         print("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
-        if(await canLaunchUrlString(url))
+        if(await canLaunchUrlString(url)) {
           launchUrlString(url);
-        else {
+        } else {
           print("cannot launch " + url);
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
@@ -241,9 +245,9 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[2]){
         print("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
-        if(await canLaunchUrlString(url)) 
+        if(await canLaunchUrlString(url)) {
           launchUrlString(url);
-        else {
+        } else {
           print("cannot launch " + url);
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
@@ -258,11 +262,11 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[3]){
         print("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
-        if(await canLaunchUrlString(url)) 
+        if(await canLaunchUrlString(url)) {
           launchUrlString(
             url,
           );
-        else {
+        } else {
           print("cannot launch" + url);
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
@@ -290,26 +294,28 @@ String openWithSelectedDictionary(String kanji) {
 
   // determine which URL should be used for finding the character
   if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[0])
+    GetIt.I<Settings>().settingsDrawing.dictionaries[0]) {
     url = GetIt.I<Settings>().settingsDrawing.jishoURL;
-  else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[1])
+  } else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[1]) {
     url = GetIt.I<Settings>().settingsDrawing.wadokuURL;
-  else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[2])
+  } else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[2]) {
     url = GetIt.I<Settings>().settingsDrawing.weblioURL;
-  else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[3])
+  } else if(GetIt.I<Settings>().selectedDictionary ==
+    GetIt.I<Settings>().settingsDrawing.dictionaries[3]) {
     url = GetIt.I<Settings>().customURL;
+  }
 
   if(url != ""){
     // check that the URL starts with protocol, otherwise launch() fails
-    if (!(url.startsWith("http://") || url.startsWith("https://")))
+    if (!(url.startsWith("http://") || url.startsWith("https://"))) {
       url = "https://" + url;
+    }
 
     // replace the placeholder with the actual character
     url = url.replaceFirst(
-      new RegExp(GetIt.I<Settings>().settingsDrawing.kanjiPlaceholder), kanji
+      RegExp(GetIt.I<Settings>().settingsDrawing.kanjiPlaceholder), kanji
     );
     url = Uri.encodeFull(url);
   }

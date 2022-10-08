@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
 
 
 class DrawScreenMultiCharSearch extends StatelessWidget {
-  DrawScreenMultiCharSearch(
+  const DrawScreenMultiCharSearch(
     this.canvasSize,
     this.runningInLandscape,
     this.includeHeroes,
@@ -37,7 +37,7 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
       value: GetIt.I<DrawScreenState>().kanjiBuffer,
       child: Consumer<KanjiBuffer>(
         builder: (context, kanjiBuffer, child){
-          Widget tpm_widget = MultiFocus(
+          Widget tpmWidget = MultiFocus(
             focusNodes: includeTutorial ?
               GetIt.I<Tutorials>().drawScreenTutorial.multiCharSearchSteps : null,
             child: Center(
@@ -47,14 +47,15 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
               )
             )
           );
-          if (includeHeroes)
-            tpm_widget = Hero(
+          if (includeHeroes) {
+            tpmWidget = Hero(
               tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
                 ? "Buffer" 
                 : kanjiBuffer.kanjiBuffer),
-              child: tpm_widget
+              child: tpmWidget
             );
-          return tpm_widget;
+          }
+          return tpmWidget;
         }
       ),
     );

@@ -32,8 +32,9 @@ class KanjiBuffer with ChangeNotifier{
 
   /// removes the last char from the current value and notifies listeners
   void removeLastChar(){
-    if(_value.length < 1)
+    if(_value.isEmpty) {
       return;
+    }
       
     _value = _value.substring(0, _value.length - 1);
     notifyListeners();

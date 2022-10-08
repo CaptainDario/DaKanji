@@ -14,7 +14,7 @@ import 'package:da_kanji_mobile/model/Changelog.dart';
 
 
 class WhatsNewDialogue extends StatelessWidget {
-  WhatsNewDialogue(
+  const WhatsNewDialogue(
     this.confettiAnimation_1,
     this.confettiAnimation_2,
     this.confettiAnimation_3,
@@ -39,18 +39,18 @@ class WhatsNewDialogue extends StatelessWidget {
         width:  MediaQuery.of(context).size.width * 4/5,
         decoration: BoxDecoration(
           color: Theme.of(context).dialogBackgroundColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(50),
               spreadRadius: 7.5,
               blurRadius: 10,
-              offset: Offset(0, 0), // changes position of shadow
+              offset: const Offset(0, 0), // changes position of shadow
             ),
           ],
         ),
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -58,7 +58,7 @@ class WhatsNewDialogue extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //header
-                  Container(
+                  SizedBox(
                     height: (innerDialogueHeight * 0.1).clamp(0.0, 40) ,
                     width:  innerDialogueWidth,
                     child: FittedBox(
@@ -71,7 +71,7 @@ class WhatsNewDialogue extends StatelessWidget {
                     ),
                   ),
                   // content
-                  Container(
+                  SizedBox(
                     height: innerDialogueHeight * 0.8,
                     width: innerDialogueWidth,
                     child: Scrollbar(
@@ -84,22 +84,23 @@ class WhatsNewDialogue extends StatelessWidget {
                         onTapLink:
                         (String text, String? url, String title) async {
                           if(url != null){
-                            if(await canLaunchUrlString(url)) 
+                            if(await canLaunchUrlString(url)) {
                               launchUrlString(url);
+                            }
                           }
                         },
                       ),
                     ),
                   ),
                   // buttons
-                  Container(
+                  SizedBox(
                     height: innerDialogueHeight * 0.1,
                     width: innerDialogueWidth,
                     child: Wrap(
                       alignment: WrapAlignment.spaceEvenly,
                       runAlignment: WrapAlignment.spaceEvenly,
                       children: [
-                        Container(
+                        SizedBox(
                           width: innerDialogueWidth*0.45,
                           child: ElevatedButton(
                             onPressed: () => Navigator.push(
@@ -109,17 +110,17 @@ class WhatsNewDialogue extends StatelessWidget {
                             child: Text(
                               LocaleKeys.General_complete_log.tr(),
                               maxLines: 1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 overflow: TextOverflow.ellipsis
                               ),
                             )
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        Container(
+                        const SizedBox(width: 5,),
+                        SizedBox(
                           width: innerDialogueWidth*0.45,
                           child: ElevatedButton(
-                            style: ButtonStyle(
+                            style: const ButtonStyle(
                             ),
                             onPressed: () async {
                               GetIt.I<Settings>().save();

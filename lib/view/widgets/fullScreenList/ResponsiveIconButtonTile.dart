@@ -7,7 +7,7 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 class ResponsiveIconButtonTile extends StatefulWidget {
-  ResponsiveIconButtonTile(
+  const ResponsiveIconButtonTile(
     {
       required this.text,
       required this.icon,
@@ -42,7 +42,7 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
       child: InkWell(
         onTap: () {
         },
-        child: Container(
+        child: SizedBox(
           height: tileHeight,
           width: width,
           child: Row(
@@ -61,7 +61,7 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
                 ),
               ),
               Center(
-                child: Container(
+                child: SizedBox(
                   height: tileHeight*0.75,
                   child: FittedBox(
                     child: IconButton(

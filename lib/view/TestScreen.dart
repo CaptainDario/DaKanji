@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class TestScreen extends StatefulWidget {
-  TestScreen();
+  const TestScreen();
 
   @override
   _TestScreenState createState() => _TestScreenState();
@@ -20,8 +20,8 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("TestScreen"),),
-      body: Center(child: Text("test"))
+      appBar: AppBar(title: const Text("TestScreen"),),
+      body: const Center(child: Text("test"))
     );
   }
 }

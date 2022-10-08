@@ -20,12 +20,12 @@ void showCustomURLPopup(BuildContext context){
           LocaleKeys.SettingsScreen_custom_url_format.tr(),
           //textScaleFactor: 2,
           maxLines: 1,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold
           ),
         ),
         Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Text(
@@ -39,5 +39,5 @@ void showCustomURLPopup(BuildContext context){
         ),
       ],
     ),
-  )..show();
+  ).show();
 }

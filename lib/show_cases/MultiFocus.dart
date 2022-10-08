@@ -24,9 +24,9 @@ class MultiFocus extends StatelessWidget {
 
     Widget wrapped = child;
 
-    if(focusNodes == null)
+    if(focusNodes == null) {
       return child;
-    else{
+    } else{
       for (int i = 0; i < focusNodes!.length; i++){
         wrapped = Focus(
           focusNode: focusNodes![i],

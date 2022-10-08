@@ -36,11 +36,11 @@ class DrawScreenUndoButton extends StatelessWidget {
           focusNode: includeTutorial ? 
             GetIt.I<Tutorials>().drawScreenTutorial.undoButtonSteps : null,
           child: Center(
-            child: Container(
+            child: SizedBox(
               width:  canvasSize * 0.1,
               child: FittedBox(
                 child: IconButton(
-                  icon: Icon(Icons.undo),
+                  icon: const Icon(Icons.undo),
                   iconSize: 100,
                   color: Theme.of(context).highlightColor,
                   onPressed: () => undo(strokes)

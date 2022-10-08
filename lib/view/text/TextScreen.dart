@@ -38,7 +38,7 @@ class TextScreen extends StatefulWidget {
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the output of the analyzer
-  Tuple2<List<String>, List<List<String>>> analyzedWords = Tuple2([], []);
+  Tuple2<List<String>, List<List<String>>> analyzedWords = const Tuple2([], []);
 
   /// the padding used between all widges
   final double padding = 8.0;
@@ -146,7 +146,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
           return AnimatedBuilder(
             animation: _controller,
             builder: (context, builder) {
-              return Container(
+              return SizedBox(
                 height: constraints.maxHeight,
                 width: constraints.maxWidth,
                 child: Padding(
@@ -160,7 +160,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                             popupAnimationController.reverse();
                           }
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: runningInPortrait ?
                             constraints.maxWidth - padding: 
                               (constraints.maxWidth/2-padding) 
@@ -175,7 +175,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 2*padding, padding, 2*padding, padding
                               ),
                               child: TextField(
-                                decoration: new InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -195,7 +195,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 ],
                                 controller: widget.inputController,
                                 maxLines: null,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ),
                                 onChanged: ((value) {
@@ -214,7 +214,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                       Positioned(
                         bottom: 0,
                         right: runningInPortrait ? null : 0,
-                        child: Container(
+                        child: SizedBox(
                           width: runningInPortrait ?
                             constraints.maxWidth - 2*padding: 
                             (constraints.maxWidth/2-padding) 
@@ -245,7 +245,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           (constraints.maxHeight/2-padding) 
                                           * (_animation.value+1.0) :
                                           constraints.maxHeight - 2*padding,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           height: 1.4
                                         ),
@@ -261,8 +261,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         },
                                         onTap: (String selection) {
                                           if(selection == "" &&
-                                            popupAnimationController.isCompleted)
+                                            popupAnimationController.isCompleted) {
                                             popupAnimationController.reverse(from: 1.0);
+                                          }
                                         },
                                       ),
                                     ),
@@ -315,12 +316,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           ),
                                           onPressed: () {
                                             // do not allow change while animation is running
-                                            if (_controller.isAnimating)
+                                            if (_controller.isAnimating) {
                                               return;
-                                            if(_controller.isCompleted)
+                                            }
+                                            if(_controller.isCompleted) {
                                               _controller.reverse();
-                                            else if(_controller.isDismissed)
+                                            } else if(_controller.isDismissed) {
                                               _controller.forward();
+                                            }
                       
                                             setState(() {
                                               fullScreen = !fullScreen;
@@ -333,9 +336,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       Material(
                                         color: Theme.of(context).cardColor,
                                         child: IconButton(
-                                          icon: Icon(Icons.translate),
+                                          icon: const Icon(Icons.translate),
                                           onPressed: () {
-                                            launchUrlString("https://www.deepl.com/translate#jp/en/${inputText}");
+                                            launchUrlString("https://www.deepl.com/translate#jp/en/$inputText");
                                             
                                           },
                                         ),
@@ -364,15 +367,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   // assure that the popup is not moved out of view
                                   if(popupPositionLeft + event.delta.dx > 0 &&
                                     popupPositionLeft + popupSizeWidth + 
-                                    2*padding + event.delta.dx < constraints.maxWidth)
+                                    2*padding + event.delta.dx < constraints.maxWidth) {
                                     popupPositionLeft += event.delta.dx;
+                                  }
                                                   
                                   // assure that the popup is not moved out of view
                                   if(popupPositionTop + event.delta.dy > 0 &&
                                     popupPositionTop + popupSizeHeight + 
-                                    2*padding + event.delta.dy < constraints.maxHeight)
-                                                  
+                                    2*padding + event.delta.dy < constraints.maxHeight) {
                                     popupPositionTop  += event.delta.dy;
+                                  }
                                 });
                               },
                               onResizedViaCorner: (event) {
@@ -380,14 +384,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   // don't allow resizing the popup over the 
                                   // window or smaller than the threshold 
                                   if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
-                                    popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth)
+                                    popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth) {
                                     popupSizeWidth += event.delta.dx;
+                                  }
                                                   
                                   // don't allow resizing the popup over the 
                                   // window or smaller than the threshold 
                                   if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
-                                    popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight)
+                                    popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight) {
                                     popupSizeHeight += event.delta.dy;
+                                  }
                                 });
                               },
                             ),

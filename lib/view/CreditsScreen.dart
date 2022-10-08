@@ -42,12 +42,14 @@ class _CreditsScreenState extends State<CreditsScreen> {
                     child: FutureBuilder<String>(
                       future: rootBundle.loadString("CREDITS.md"),
                       builder: (context, snapshot) {
-                        if(snapshot.hasData)
+                        if(snapshot.hasData) {
                           return Markdown(
                             data: snapshot.data!,
                             selectable: false,
                           );
-                        else return Container();
+                        } else {
+                          return Container();
+                        }
                       },
                     )
                   ),

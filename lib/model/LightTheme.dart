@@ -8,8 +8,8 @@ final ThemeData lightTheme = ThemeData(
   
   brightness: Brightness.light,
 
-  primarySwatch: createMaterialColor(Color.fromARGB(255, 26, 93, 71)),
+  primarySwatch: createMaterialColor(const Color.fromARGB(255, 26, 93, 71)),
 
-  highlightColor: Color.fromARGB(255, 194, 32, 44),
+  highlightColor: const Color.fromARGB(255, 194, 32, 44),
 
 );

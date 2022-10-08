@@ -30,30 +30,30 @@ void main() {
 
     GetIt.I<UserData>().showOnboarding = false;
 
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
 
     // #region 1 - check that the whats new dialog is shown and skip it
     int cnt = 0;
-    while(tester.widgetList(find.byType(WhatsNewDialogue)).toList().length == 0 &&
+    while(tester.widgetList(find.byType(WhatsNewDialogue)).toList().isEmpty &&
       cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
       print('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.General_whats_new.tr()), findsOneWidget);
     
-    Offset closeButton = await tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
+    Offset closeButton = tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
     await tester.tapAt(closeButton);
     print("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the drawscreen tutorial is shown
     cnt = 0;
-    while(tester.widgetList(find.byType(DrawingCanvas)).toList().length == 0 &&
+    while(tester.widgetList(find.byType(DrawingCanvas)).toList().isEmpty &&
       cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
       print('waiting for onboarding to show');
     }
     

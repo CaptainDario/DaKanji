@@ -44,7 +44,7 @@ class DrawScreenLandscapeWithWebview extends StatelessWidget {
             )
           ),
           Expanded(
-            child: this.webView!,
+            child: webView!,
           )
         ],
       );

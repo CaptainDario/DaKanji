@@ -25,7 +25,7 @@ void showDownloadDialogue(
         ),
         Center( 
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Wrap(
               children: [
                 ElevatedButton(
@@ -34,7 +34,7 @@ void showDownloadDialogue(
                   },
                   child: Text(text)
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -47,5 +47,5 @@ void showDownloadDialogue(
         )
       ]
     )
-  )..show();
+  ).show();
 }

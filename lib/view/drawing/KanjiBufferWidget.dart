@@ -25,7 +25,7 @@ class KanjiBufferWidget extends StatefulWidget {
   final double canvasSizePercentageToUse;
 
 
-  KanjiBufferWidget(this.canvasSize, this.canvasSizePercentageToUse);
+  const KanjiBufferWidget(this.canvasSize, this.canvasSizePercentageToUse);
 
   @override
   _KanjiBufferWidgetState createState() => _KanjiBufferWidgetState();
@@ -48,12 +48,12 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
   Animation<Alignment>? _springAnimation;
   
   // animation and controller for the delete-chars-rotation of the kanji buffer
-  int _rotationXDuration = 250;
+  final int _rotationXDuration = 250;
   late AnimationController _rotationXController;
   late Animation<double> _rotationXAnimation;
 
   // animation when character added to kanjibuffer
-  int _scaleInNewCharDuration = 250; 
+  final int _scaleInNewCharDuration = 250; 
   late AnimationController _scaleInNewCharController;
   late Animation<double> _scaleInNewCharAnimation;
 
@@ -116,10 +116,10 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
       duration: Duration(milliseconds: _scaleInNewCharDuration),
       vsync: this,
     );
-    _scaleInNewCharAnimation = new Tween(
+    _scaleInNewCharAnimation = Tween(
       begin: 0.1,
       end: 1.0,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: _scaleInNewCharController,
       curve: Curves.easeOut,
     ));
@@ -208,7 +208,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
           );
           // delete the last char if drag over the threshold
           if(_dragAlignment.x < -0.03 && !deletedWithSwipe &&
-            GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
+            GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
             
             leftSwipe();
           }
@@ -227,7 +227,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
         alignment: _dragAlignment,
         child: AnimatedBuilder(
             animation:  _rotationXAnimation,
-            child: Container(
+            child: SizedBox(
             width: widget.canvasSize * widget.canvasSizePercentageToUse,
             height: widget.canvasSize * 0.1,
             //color: Colors.pink,
@@ -243,9 +243,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color.fromARGB(255, 91, 91, 91),
+                    color: const Color.fromARGB(255, 91, 91, 91),
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(5))
+                  borderRadius: const BorderRadius.all(Radius.circular(5))
                 ),
                 child: AnimatedBuilder(
                   animation: _scaleInNewCharAnimation,
@@ -310,8 +310,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
   void leftSwipe(){
     // if the delete animation is already running delete the character
     // of the old animation
-    if(_scaleInNewCharController.status == AnimationStatus.reverse)
+    if(_scaleInNewCharController.status == AnimationStatus.reverse) {
       GetIt.I<DrawScreenState>().kanjiBuffer.removeLastChar();
+    }
 
     // run the animation in reverse and at the end delete the char
     _scaleInNewCharController.reverse();
@@ -328,7 +329,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
 
   void doubleTap(){
     // start the delete animation if there are characters in the buffer
-    if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length > 0){
+    if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
       _rotationXController.forward(from: 0.0);
 
       //delete the characters after the animation

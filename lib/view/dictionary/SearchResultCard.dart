@@ -8,7 +8,7 @@ import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' a
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
-  SearchResultCard(
+  const SearchResultCard(
     {
       required this.dictEntry,
       required this.resultIndex,
@@ -37,8 +37,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
-          if(widget.onPressed != null)
+          if(widget.onPressed != null) {
             widget.onPressed!(widget.dictEntry);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -54,7 +55,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       child: Text(
                         widget.dictEntry.kanjis.isEmpty ? 
                           "" : widget.dictEntry.readings.join(", "),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 10
                         ),
                       ),
@@ -65,7 +66,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                         widget.dictEntry.kanjis.isNotEmpty ? 
                           widget.dictEntry.kanjis : widget.dictEntry.readings
                       ).join(", "),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20
                       ),
                     ),
@@ -78,7 +79,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                           (int index) => Text(
                             "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings[index]}",
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10
                             ),
                           )
@@ -95,7 +96,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                 children: [
                   Text(
                     widget.dictEntry.partOfSpeech.first.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10
                     ),
                   )
