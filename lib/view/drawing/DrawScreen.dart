@@ -131,15 +131,12 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               DrawScreenClearButton(_canvasSize, widget.includeTutorial),
               _canvasSize,
               GetIt.I<DrawScreenState>().drawScreenLayout,
-              () {
-                return drawScreenIncludesWebview(t.item1) ?
-                  WebView(
-                    initialUrl: openWithSelectedDictionary(""),
-                    onWebViewCreated: (controller) => 
-                      landscapeWebViewController = controller
-                  ) : null;
-              } ()
-              
+              drawScreenIncludesWebview(t.item1) ?
+                WebView(
+                  initialUrl: openWithSelectedDictionary(""),
+                  onWebViewCreated: (controller) => 
+                    landscapeWebViewController = controller
+                ) : null
             );
           }
         ),
