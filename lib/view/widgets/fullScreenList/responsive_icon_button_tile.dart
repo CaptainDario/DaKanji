@@ -56,7 +56,7 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     maxLines: 2,
-                    group: settingsAutoSizeGroup
+                    group: globalSettingsAutoSizeGroup
                   )
                 ),
               ),

@@ -25,17 +25,17 @@ class AboutScreen extends StatelessWidget {
   final bool openedByDrawer;
 
   final String about = LocaleKeys.AboutScreen_about_text.tr(namedArgs : {
-    "GITHUB_ISSUES" : GITHUB_ISSUES,
-    "PRIVACY_POLICE" : PRIVACY_POLICE,
+    "GITHUB_ISSUES" : globalGithubIssues,
+    "PRIVACY_POLICE" : globalPrivacyPoliceUrl,
     "RATE_ON_MOBILE_STORE" : GetIt.I<PlatformDependentVariables>().appStoreLink,
     "DAAPPLAB_STORE_PAGE" : GetIt.I<PlatformDependentVariables>().daapplabStorePage,
-    "DISCORD_SERVER" : DISCORD_INVITE,
-    "PLAYSTORE_PAGE" : PLAYSTORE_PAGE,
-    "APPSTORE_PAGE" : APPSTORE_PAGE,
-    "MACSTORE_PAGE" : APPSTORE_PAGE,
-    "SNAPSTORE_PAGE" : SNAPSTORE_PAGE,
-    "MICROSOFT_STORE_PAGE" : MICROSOFT_STORE_PAGE,
-    "GITHUB_RELEASES_PAGE" : GITHUB_RELEASES_PAGE,
+    "DISCORD_SERVER" : globalDiscordInvite,
+    "PLAYSTORE_PAGE" : globalPlaystorePage,
+    "APPSTORE_PAGE" : globalAppStorePage,
+    "MACSTORE_PAGE" : globalAppStorePage,
+    "SNAPSTORE_PAGE" : globalSnapStorePage,
+    "MICROSOFT_STORE_PAGE" : globalMicrosoftStorePage,
+    "GITHUB_RELEASES_PAGE" : globalGithubReleasesPage,
   });
 
   AboutScreen(this.openedByDrawer, {Key? key}) : super(key: key);
@@ -72,7 +72,7 @@ class AboutScreen extends StatelessWidget {
                       String mail = Uri(
                         scheme: 'mailto',  
                         path: url, 
-                        query: 'subject=DaKanji$VERSION: &body=I am using DaKanji v.$VERSION on ${Theme.of(context).platform.name}',
+                        query: 'subject=DaKanji$globalVersion: &body=I am using DaKanji v.$globalVersion on ${Theme.of(context).platform.name}',
                       ).toString();
                       launchUrlString(mail);
                     }
@@ -124,8 +124,8 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           showAboutDialog(
                             context: context,
-                            applicationName: APP_TITLE,
-                            applicationVersion: VERSION,
+                            applicationName: globalAppTitle,
+                            applicationVersion: globalVersion,
                             applicationIcon: const Image(
                               image: AssetImage("assets/images/icons/icon.png",),
                               width: 50,

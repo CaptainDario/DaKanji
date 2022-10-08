@@ -28,7 +28,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("$APP_TITLE - ${LocaleKeys.AboutScreen_credits.tr()}"),
+        title: Text("$globalAppTitle - ${LocaleKeys.AboutScreen_credits.tr()}"),
       ),
       body: WillPopScope(
         onWillPop: () async {

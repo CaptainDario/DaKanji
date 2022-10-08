@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals.dart';
@@ -55,42 +56,42 @@ class UserData{
 
     _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;
     doNotShowRateAgain = prefs.getBool('doNotShowRateAgain') ?? false;
-    _versionUsed = prefs.getString('versionUsed') ?? VERSION;
+    _versionUsed = prefs.getString('versionUsed') ?? globalVersion;
     showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? false;
     showOnboarding = prefs.getBool('showOnboarding') ?? false;
     showRatePopup = prefs.getBool('showRatePopup') ?? false;
     showChangelog = prefs.getBool('showChangelog') ?? false;
 
     // TESTING
-    if(IS_TESTING_APP_STARTUP_ONBOARDING_NEW_FEATURES){
+    if(globalIsTestingAppStartupOnboardingNewFeatures){
       _versionUsed = "1.0.0+15";
-      VERSION = ONBOARDING_NEW_PAGES[0] + "+1";
+      globalVersion = globalgOnboardingNewPages[0] + "+1";
       _appOpenedTimes = 5;
     }
-    if(IS_TESTING_APP_STARTUP_DRAWSCREEN_NEW_FEATURES){
+    if(globalIsTestingAppStartupDrawscreenNewFeatures){
       _versionUsed = "1.0.0+15";
-      VERSION = DRAWING_SCREEN_NEW_FEATURES[0] + "+1";
+      globalVersion = globalDrawingScreenNewFeatures[0] + "+1";
       _appOpenedTimes = 5;
     }
 
-    print("The app was opened for the ${_appOpenedTimes.toString()} time");
+    debugPrint("The app was opened for the ${_appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-    print("used: $versionUsed now: $VERSION");
-    if(versionUsed != VERSION && appOpenedTimes > 1){
-      print("New version installed");
+    debugPrint("used: $versionUsed now: $globalVersion");
+    if(versionUsed != globalVersion && appOpenedTimes > 1){
+      debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
-      _versionUsed = VERSION;
+      _versionUsed = globalVersion;
 
-      String v = VERSION.replaceRange(VERSION.indexOf("+"), VERSION.length, "");
+      String v = globalVersion.replaceRange(globalVersion.indexOf("+"), globalVersion.length, "");
       // this version has new features for drawing screen => show tutorial
-      if(DRAWING_SCREEN_NEW_FEATURES.contains(v)){
+      if(globalDrawingScreenNewFeatures.contains(v)){
         showShowcaseDrawing = true;
       }
 
       // this version has new onboarding pages
-      if(ONBOARDING_NEW_PAGES.contains(v)){
+      if(globalgOnboardingNewPages.contains(v)){
         showOnboarding = true;
       }
     }
@@ -103,7 +104,7 @@ class UserData{
 
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % 10 == 0){
-      print("show rate dialogue");
+      debugPrint("show rate dialogue");
       showRatePopup = true;
     }
 

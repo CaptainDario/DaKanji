@@ -56,7 +56,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
     // DO NOT loop the onboarding dragging animation when the startup process
     // is being tested
-    if(!IS_TESTING_APP_STARTUP) _controller.repeat(reverse: true);
+    if(!globalIsTestingAppStartup) _controller.repeat(reverse: true);
     
     scaleAnimation = Tween(
       begin: 0.5,

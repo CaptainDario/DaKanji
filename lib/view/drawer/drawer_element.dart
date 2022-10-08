@@ -81,8 +81,8 @@ class DrawerElement extends StatelessWidget {
                 height: tileHeight*0.5,
                 child: AutoSizeText(
                   title,
-                  group: drawerAutoSizeGroup,
-                  minFontSize: GlobalMinFontSize,
+                  group: globalDrawerAutoSizeGroup,
+                  minFontSize: globalMinFontSize,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

@@ -114,7 +114,7 @@ void openDictionary(BuildContext context, String char) async {
               context,
               "No translator installed", 
               LocaleKeys.General_download.tr(),
-              PLAYSTORE_BASE_URL + GOOGLE_TRANSLATE_ID
+              globalPlaystoreBaseUrl + globalGoogleTranslateId
             );
           }
       }
@@ -124,7 +124,7 @@ void openDictionary(BuildContext context, String char) async {
         try{
           
           AndroidIntent intent = AndroidIntent(
-              package: AEDICT_ID,
+              package: globalAedictId,
               type: "text/plain",
               action: 'android.intent.action.SEND',
               category: 'android.intent.category.DEFAULT',
@@ -143,7 +143,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "aedict"
             }), 
             LocaleKeys.General_download.tr(), 
-            PLAYSTORE_BASE_URL + AEDICT_ID 
+            globalPlaystoreBaseUrl + globalAedictId 
           );
         }
       }
@@ -152,7 +152,7 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.androidDictionaries[2]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
-              package: AKEBI_ID,
+              package: globalAkebiId,
               componentName: 
                 'com.craxic.akebifree.activities.search.SearchActivity',
               type: "text/plain",
@@ -170,7 +170,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "akebi"
               }), 
               LocaleKeys.General_download.tr(), 
-              PLAYSTORE_BASE_URL + AKEBI_ID
+              globalPlaystoreBaseUrl + globalAkebiId
             );
           }
         }
@@ -180,7 +180,7 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().settingsDrawing.androidDictionaries[3]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
-              package: TAKOBOTO_ID,
+              package: globalTakobotoId,
               action: 'jp.takoboto.SEARCH',
               arguments: <String, dynamic>{
                 "android.intent.extra.PROCESS_TEXT": char,
@@ -195,7 +195,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "takoboto"
               }), 
               LocaleKeys.General_download.tr(), 
-              PLAYSTORE_BASE_URL + TAKOBOTO_ID
+              globalPlaystoreBaseUrl + globalTakobotoId
             );
           }
         }
@@ -207,79 +207,79 @@ void openDictionary(BuildContext context, String char) async {
       // dictionary shirabe (iOS)
       if(GetIt.I<Settings>().selectedDictionary ==
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[0]){
-        print("iOS shirabe");
+        debugPrint("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch " + url);
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Shirabe Jisho"
             }),
             LocaleKeys.General_download.tr(), 
-            APPSTORE_BASE_URL + SHIRABE_ID
+            globalAppStoreBaseUrl + globalShirabeId
           );
         }
       }
       // imiwa?
       else if(GetIt.I<Settings>().selectedDictionary ==
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[1]){
-        print("iOS imiwa?");
+        debugPrint("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch " + url);
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Imiwa?"
             }),
             LocaleKeys.General_download.tr(),
-            APPSTORE_BASE_URL + IMIWA_ID
+            globalAppStoreBaseUrl + globalImiwaId
           );
         }
       }
       // Japanese
       else if(GetIt.I<Settings>().selectedDictionary ==
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[2]){
-        print("iOS Japanese");
+        debugPrint("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch " + url);
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Japanese"
             }),
             LocaleKeys.General_download.tr(),
-            APPSTORE_BASE_URL + JAPANESE_ID
+            globalAppStoreBaseUrl + globalJapaneseId
           );
         }
       }
       else if(GetIt.I<Settings>().selectedDictionary ==
         GetIt.I<Settings>().settingsDrawing.iosDictionaries[3]){
-        print("iOS midori");
+        debugPrint("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
         if(await canLaunchUrlString(url)) {
           launchUrlString(
             url,
           );
         } else {
-          print("cannot launch" + url);
+          debugPrint("cannot launch" + url);
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Midori"
             }),
             LocaleKeys.General_download.tr(),
-            APPSTORE_BASE_URL + MIDORI_ID
+            globalAppStoreBaseUrl + globalMidoriId
           );
         }
       }
     }
     else if(Platform.isWindows){
-      print("There are no app dictionaries for windows available!");
+      debugPrint("There are no app dictionaries for windows available!");
     }
     
   }

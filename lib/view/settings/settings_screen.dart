@@ -83,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // Drawing header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_drawing_title.tr(),
-                        autoSizeGroup: settingsAutoSizeGroup
+                        autoSizeGroup: globalSettingsAutoSizeGroup
                       ),
                       // Dictionary Options
                       ResponsiveDropDownTile(
@@ -145,7 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
                             "Key bindings",
-                            group: settingsAutoSizeGroup,
+                            group: globalSettingsAutoSizeGroup,
                           ),
                         ),
                         children: [
@@ -234,7 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.Dictionary_title.tr(),
-                        autoSizeGroup: settingsAutoSizeGroup
+                        autoSizeGroup: globalSettingsAutoSizeGroup
                       ),
 
                       MultiSelectDialogField(
@@ -266,7 +266,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
-                        autoSizeGroup: settingsAutoSizeGroup
+                        autoSizeGroup: globalSettingsAutoSizeGroup
                       ),
                       // theme
                       ResponsiveDropDownTile(
@@ -341,7 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
                             LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
-                            group: settingsAutoSizeGroup,
+                            group: globalSettingsAutoSizeGroup,
                           ),
                         ),
                         children: [

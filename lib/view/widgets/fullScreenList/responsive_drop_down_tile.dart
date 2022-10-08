@@ -67,8 +67,8 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                     widget.text,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
-                    group: settingsAutoSizeGroup,
-                    minFontSize: GlobalMinFontSize,
+                    group: globalSettingsAutoSizeGroup,
+                    minFontSize: globalMinFontSize,
                   )
                 ),
               ),
@@ -84,10 +84,10 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                       child: AutoSizeText(
                         widget.translateItemTexts ? text.tr() : text, 
                         maxLines: 2,
-                        minFontSize: GlobalMinFontSize,
+                        minFontSize: globalMinFontSize,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
-                        group: settingsAutoSizeGroup,
+                        group: globalSettingsAutoSizeGroup,
                       ),
                     ),
                   );

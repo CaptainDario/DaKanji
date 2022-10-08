@@ -51,7 +51,7 @@ Future<void> main() async {
   
   runApp(
     EasyLocalization(
-      supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
+      supportedLocales: globalDaKanjiLocalizations.map((e) => Locale(e)).toList(),
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       useFallbackTranslations: true,
@@ -85,7 +85,7 @@ Future<void> init() async {
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   print(yaml['version']);
-  VERSION = yaml['version'];  
+  globalVersion = yaml['version'];  
 
   await copyDatabaseFilesFromAssets();
 
@@ -183,7 +183,7 @@ Future<void> initGetIt() async {
 /// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
   setWindowMinSize(const Size(480, 720));
-  setWindowTitle(APP_TITLE);
+  setWindowTitle(globalAppTitle);
   
   setWindowFrame(
     Rect.fromLTWH(
@@ -237,9 +237,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   steps: GetIt.I<Tutorials>().getSteps(),
                   autoSizeTexts: true,
                   onChanged: (int index){
-                    print("Tutorial step: $index");
+                    debugPrint("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
-                      print("DrawScreen tutorial done, saving...");
+                      debugPrint("DrawScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseDrawing = false;
                       GetIt.I<UserData>().save();
                     }
@@ -263,9 +263,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
         switch(settings.name){
           case "/home":
-            return switchScreen(HomeScreen());
+            return switchScreen(const HomeScreen());
           case "/onboarding":
-            return switchScreen(OnBoardingScreen());
+            return switchScreen(const OnBoardingScreen());
           case "/drawing":
             return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
           case "/dictionary":
@@ -277,14 +277,14 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/about":
             return switchScreen(AboutScreen(args.navigatedByDrawer));
           case "/changelog":
-            return switchScreen(ChangelogScreen());
+            return switchScreen(const ChangelogScreen());
           case "/testScreen":
             return switchScreen(const TestScreen());
         }
         throw UnsupportedError("Unknown route: ${settings.name}");
       },
 
-      title: APP_TITLE,
+      title: globalAppTitle,
 
       // themes
       theme: lightTheme,
@@ -292,7 +292,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       themeMode: GetIt.I<Settings>().selectedThemeMode(),
 
       //screens
-      home: HomeScreen(),
+      home: const HomeScreen(),
       //home: TestScreen()
 
     );

@@ -279,7 +279,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                           ],
                         ),
                         softWrap: false,
-                        minFontSize: GlobalMinFontSize,
+                        minFontSize: globalMinFontSize,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(

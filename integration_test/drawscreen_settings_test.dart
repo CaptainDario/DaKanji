@@ -26,7 +26,7 @@ void main() {
 
   testWidgets("DrawScreen settings test", (WidgetTester tester) async {
 
-    IS_TESTING_DRAWSCREEN = true;
+    globalIsTestingAppStartup = true;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();

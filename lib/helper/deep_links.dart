@@ -44,7 +44,7 @@ void handleLink(String? link){
 
   if(link == null) return;
 
-  String short = link.replaceFirst(APP_LINK, "");
+  String short = link.replaceFirst(globalAppLink, "");
 
   if(short.startsWith("jisho")){
     debugPrint("contains jisho");

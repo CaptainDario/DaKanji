@@ -23,24 +23,24 @@ class PlatformDependentVariables {
     _appStoreLink = ""; 
 
     if(Platform.isAndroid){
-      _appStoreLink = PLAYSTORE_PAGE;
-      _daapplabStorePage = DAAPPLAB_PLAYSTORE_PAGE;
+      _appStoreLink = globalPlaystorePage;
+      _daapplabStorePage = globalDaAppLabPlaystorePage;
     }
     else if(Platform.isIOS){
-      _appStoreLink = APPSTORE_PAGE;
-      _daapplabStorePage = DAAPPLAB_APPSTORE_PAGE;
+      _appStoreLink = globalAppStorePage;
+      _daapplabStorePage = globalDaAppLabAppStorepage;
     }
     else if(Platform.isWindows){
-      _appStoreLink = MICROSOFT_STORE_PAGE;
-      _daapplabStorePage = MICROSOFT_STORE_DAAPPLAB_PAGE;
+      _appStoreLink = globalMicrosoftStorePage;
+      _daapplabStorePage = globalMicrosoftStoreDaAppLabPage;
     }    
     else if(Platform.isLinux){
-      _appStoreLink = SNAPSTORE_PAGE;
-      _daapplabStorePage = SNAPSTORE_DAAPPLAB_PAGE;
+      _appStoreLink = globalSnapStorePage;
+      _daapplabStorePage = globalSnapStoreDaAppLabPage;
     }
     else if(Platform.isMacOS){
-      _appStoreLink = APPSTORE_PAGE;
-      _daapplabStorePage = DAAPPLAB_APPSTORE_PAGE;
+      _appStoreLink = globalAppStorePage;
+      _daapplabStorePage = globalDaAppLabAppStorepage;
     }
     else{
       _appStoreLink = "None";

@@ -49,12 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
       // if the app is being tested for different startup situations
-      if(IS_TESTING_APP_STARTUP) {
+      if(globalIsTestingAppStartup) {
         print("RUNNING IN 'APP STARTUP TESTING'-mode");
       }
 
       // if the DrawScreen is being tested switch there immediately
-      if(IS_TESTING_DRAWSCREEN){
+      if(globalIsTestingDrawscreen){
         print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
         Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
       }
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       else if(GetIt.I<UserData>().showRatePopup){
         // show a rating dialogue WITHOUT "do not show again"-option
-        if(appOpenedTimes < MIN_TIMES_OPENED_ASK_NOT_SHOW_RATE) {
+        if(appOpenedTimes < globalMinTimesOoenedToAsknotShowRate) {
           showRatePopup(context, false);
         } else {
           showRatePopup(context, true);
