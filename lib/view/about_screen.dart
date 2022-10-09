@@ -68,17 +68,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   onTapLink: (text, url, title) {
                     
-                    if(url == "daapplab@gmail.com"){
-                      String mail = Uri(
-                        scheme: 'mailto',  
-                        path: url, 
-                        query: 'subject=DaKanji$globalVersion: &body=I am using DaKanji v.$globalVersion on ${Theme.of(context).platform.name}',
-                      ).toString();
-                      launchUrlString(mail);
-                    }
-                    else {
-                      launchUrlString(Uri.encodeFull(url ?? ""));
-                    }
+                    launchUrlString(Uri.encodeFull(url ?? ""));
                     
                   },
                 ),

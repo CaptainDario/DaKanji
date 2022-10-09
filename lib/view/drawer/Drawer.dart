@@ -1,16 +1,24 @@
 import 'dart:math';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:feedback/feedback.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:cross_file/cross_file.dart';
+import 'package:universal_io/io.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer_element.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/provider/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/globals.dart';
+
 
 
 /// Da Kanji's drawer.
@@ -304,7 +312,40 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               selected: widget.currentScreen == Screens.about,
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
-                            ),                               
+                            ),
+                            DrawerElement(
+                              leading: Icons.feedback,
+                              title: "Feedback",
+                              route: "",
+                              selected: false,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                              onTap: () {
+                                BetterFeedback.of(context).show((UserFeedback feedback) async {
+                                  
+                                  final screenshotFilePath = await writeImageToStorage(feedback.screenshot);
+                                  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
+
+                                  Share.shareFiles(
+                                    [screenshotFilePath],
+                                    text: 
+                                    feedback.text + 
+"""support email: daapplab@gmail.com
+
+\n\n\nSystem / App info:
+I am using DaKanji v.$globalVersion on ${Theme.of(context).platform.name}.
+
+${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
+""",
+                                    subject: "DaKanji $globalVersion - feedback",
+                                    sharePositionOrigin: () {
+                                      RenderBox? box = context.findRenderObject() as RenderBox?;
+                                      return box!.localToGlobal(Offset.zero) & box.size;
+                                    } (),
+                                  );
+                                });
+                              },
+                            ),                           
                           ],
                         ),
                       )
@@ -319,3 +360,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   }
 }
 
+Future<String> writeImageToStorage(Uint8List feedbackScreenshot) async {
+  final Directory output = await getTemporaryDirectory();
+  final String screenshotFilePath = '${output.path}/feedback.png';
+  final File screenshotFile = File(screenshotFilePath);
+  await screenshotFile.writeAsBytes(feedbackScreenshot);
+  return screenshotFilePath;
+}

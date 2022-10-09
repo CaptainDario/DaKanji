@@ -15,7 +15,7 @@ dependencies:
   
   # all platforms supported
   database_builder:
-    path: ./plugins/DaKanji-Dictionary/database_builder
+    path: C:/Users/Dario/dev/DaKanji-Dictionary/database_builder
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
   platform: 3.1.0
@@ -36,7 +36,7 @@ dependencies:
   onboarding_overlay : 3.0.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
-
+  feedback: 2.5.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0
@@ -45,6 +45,13 @@ dependencies:
   kana_kit: 2.0.0
   multi_select_flutter: 4.1.2
   archive: 3.3.0
+  device_info_plus: 5.0.5
+  share_plus: 
+    git:
+      url: https://github.com/fluttercommunity/plus_plugins.git
+      path: packages/share_plus/share_plus
+      ref: 8e051b4
+  cross_file: 0.3.3+2
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS
@@ -54,7 +61,7 @@ dependencies:
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
   kagome_dart: 
-    path: ./plugins/kagome_dart
+    path: C:/Users/Dario/dev/kagome_dart
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms

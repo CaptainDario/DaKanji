@@ -38,6 +38,8 @@ class DrawerElement extends StatelessWidget {
   /// The AnimationController to control the drawer
   final AnimationController drawerController;
   /// Function which will be invoked when the user taps on this tile
+  /// If null tapping will result in navigating to `this.route`
+  /// Otherwise will execute the function
   final Function? onTap;
 
   
@@ -50,15 +52,20 @@ class DrawerElement extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          if(ModalRoute.of(context)!.settings.name != route){
-            Navigator.pushNamedAndRemoveUntil(
-              context, route,
-              (Route<dynamic> route) => false,
-              arguments: NavigationArguments(true, "")
-            );
+          if(onTap == null){
+            if(ModalRoute.of(context)!.settings.name != route){
+              Navigator.pushNamedAndRemoveUntil(
+                context, route,
+                (Route<dynamic> route) => false,
+                arguments: NavigationArguments(true, "")
+              );
+            }
+            else{
+              drawerController.reverse();
+            }
           }
           else{
-            drawerController.reverse();
+            onTap!();
           }
         },
         child: SizedBox(

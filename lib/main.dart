@@ -1,4 +1,3 @@
-import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +13,8 @@ import 'package:window_size/window_size.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:archive/archive_io.dart';
+import 'package:feedback/feedback.dart';
 
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
@@ -42,6 +43,7 @@ import 'package:da_kanji_mobile/view/about_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/codegen_loader.dart';
+import 'package:da_kanji_mobile/feedback_localization.dart';
 
 
 
@@ -59,7 +61,16 @@ Future<void> main() async {
       assetLoader: const CodegenLoader(),
       saveLocale: true,
       child: Phoenix(
-        child: const DaKanjiApp(),
+        child: BetterFeedback(
+          theme: FeedbackThemeData(
+            sheetIsDraggable: true
+          ),
+          localizationsDelegates: [
+            CustomFeedbackLocalizationsDelegate(),
+          ],
+          mode: FeedbackMode.navigate,
+          child: const DaKanjiApp(),
+        ),
       ),
     ),
   );
