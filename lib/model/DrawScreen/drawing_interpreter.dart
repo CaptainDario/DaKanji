@@ -251,7 +251,7 @@ class DrawingInterpreter with ChangeNotifier{
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
-    if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
+    if(!GetIt.I<Settings>().advanced.inferenceBackends.contains(selectedBackend)){
       // try NNAPI delegate
       try{
         interpreter = await _nnapiInterpreter();
@@ -271,13 +271,13 @@ class DrawingInterpreter with ChangeNotifier{
       }
     }
     // an inference backend was set -> load from settings
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[1]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[1]){
       interpreter = await _gpuInterpreterAndroid();
     }
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[2]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[2]){
       interpreter = await _nnapiInterpreter();
     }
     // if all fails return a CPU based interpreter
@@ -302,7 +302,7 @@ class DrawingInterpreter with ChangeNotifier{
 
     // if no inference backend was set -> automatically set one
     String selectedBackend = GetIt.I<Settings>().inferenceBackend;
-    if(!GetIt.I<Settings>().settingsAdvanced.inferenceBackends.contains(selectedBackend)){
+    if(!GetIt.I<Settings>().advanced.inferenceBackends.contains(selectedBackend)){
       // try NNAPI delegate
       try{
         interpreter = await _coreMLInterpreterIOS();
@@ -323,13 +323,13 @@ class DrawingInterpreter with ChangeNotifier{
     }
 
     // an inference backend was set -> load from settings
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[0]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[0]){
       interpreter = await _cpuInterpreter();
     }
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[3]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[3]){
       interpreter = await _metalInterpreterIOS();
     }
-    else if(selectedBackend == Settings().settingsAdvanced.inferenceBackends[4]){
+    else if(selectedBackend == Settings().advanced.inferenceBackends[4]){
       interpreter = await _coreMLInterpreterIOS();
     }
     // if all fails return a CPU based interpreter
@@ -372,7 +372,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath, 
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[2];
+    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[2];
     return i; 
   }
 
@@ -384,7 +384,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -401,7 +401,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -413,7 +413,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[1];
+    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -423,7 +423,7 @@ class DrawingInterpreter with ChangeNotifier{
       ..threads = Platform.numberOfProcessors - 1;
     Interpreter i = await Interpreter.fromAsset(
       _usedTFLiteAssetPath, options: options);
-    GetIt.I<Settings>().inferenceBackend = Settings().settingsAdvanced.inferenceBackends[0];
+    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[0];
     return i;
   }
 

@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:da_kanji_mobile/model/inference_backends.dart';
 
 
 /// Class to store all settings in the advanced settings 
-class SettingsAdvanced {
+class SettingsAdvanced with ChangeNotifier {
 
   /// The available backends for inference
   List<String> inferenceBackends= [

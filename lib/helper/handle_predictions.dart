@@ -24,7 +24,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 void handlePress(BuildContext context){
 
   // presses should be inverted
-  if(GetIt.I<Settings>().invertShortLongPress){
+  if(GetIt.I<Settings>().drawing.invertShortLongPress){
     if(!GetIt.I<DrawScreenState>().drawingLookup.longPress) {
       openDictionary(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
     } else {
@@ -32,7 +32,7 @@ void handlePress(BuildContext context){
     }
   }
   // presses should NOT be inverted
-  if(!GetIt.I<Settings>().invertShortLongPress){
+  if(!GetIt.I<Settings>().drawing.invertShortLongPress){
     if(!GetIt.I<DrawScreenState>().drawingLookup.longPress) {
       copy(context, GetIt.I<DrawScreenState>().drawingLookup.chars);
     } else {
@@ -65,11 +65,11 @@ void openDictionary(BuildContext context, String char) async {
   // only open a page when there is a prediction
   if (char != " " && char != "") {
     // url dict
-    if(GetIt.I<Settings>().settingsDrawing.webDictionaries.contains(
-      GetIt.I<Settings>().selectedDictionary)
+    if(GetIt.I<Settings>().drawing.webDictionaries.contains(
+      GetIt.I<Settings>().drawing.selectedDictionary)
     ){ 
       // use the default browser
-      if(!GetIt.I<Settings>().useWebview){
+      if(!GetIt.I<Settings>().drawing.useWebview){
         launchUrlString(openWithSelectedDictionary(char));
       }
       else{ 
@@ -88,8 +88,8 @@ void openDictionary(BuildContext context, String char) async {
       }
     }
     //
-    else if(GetIt.I<Settings>().selectedDictionary ==
-      GetIt.I<Settings>().settingsDrawing.inbuiltDictId){
+    else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+      GetIt.I<Settings>().drawing.inbuiltDictId){
       Navigator.pushNamedAndRemoveUntil(
         context, "/dictionary", (route) => false,
         arguments: NavigationArguments(false, char)
@@ -98,8 +98,8 @@ void openDictionary(BuildContext context, String char) async {
     // handle dictionary opening on ANDROID
     else if(Platform.isAndroid){
       // the prediction should be translated with system dialogue
-      if(GetIt.I<Settings>().selectedDictionary == 
-        GetIt.I<Settings>().settingsDrawing.androidDictionaries[0]){ 
+      if(GetIt.I<Settings>().drawing.selectedDictionary == 
+        GetIt.I<Settings>().drawing.androidDictionaries[0]){ 
           AndroidIntent intent = AndroidIntent(
             action: 'android.intent.action.TRANSLATE',
             arguments: <String, dynamic>{
@@ -119,8 +119,8 @@ void openDictionary(BuildContext context, String char) async {
           }
       }
       // offline dictionary aedict3 (android)
-      else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.androidDictionaries[1]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.androidDictionaries[1]){
         try{
           
           AndroidIntent intent = AndroidIntent(
@@ -148,8 +148,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // offline dictionary akebi (android)
-      else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.androidDictionaries[2]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.androidDictionaries[2]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: globalAkebiId,
@@ -176,8 +176,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // offline dictionary takoboto (android)
-      else if(GetIt.I<Settings>().selectedDictionary == 
-        GetIt.I<Settings>().settingsDrawing.androidDictionaries[3]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary == 
+        GetIt.I<Settings>().drawing.androidDictionaries[3]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
               package: globalTakobotoId,
@@ -205,8 +205,8 @@ void openDictionary(BuildContext context, String char) async {
     // shirabe jisho
     else if(Platform.isIOS){
       // dictionary shirabe (iOS)
-      if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.iosDictionaries[0]){
+      if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.iosDictionaries[0]){
         debugPrint("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=" + char);
         if(await canLaunchUrlString(url)) {
@@ -223,8 +223,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // imiwa?
-      else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.iosDictionaries[1]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.iosDictionaries[1]){
         debugPrint("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
         if(await canLaunchUrlString(url)) {
@@ -241,8 +241,8 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
       // Japanese
-      else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.iosDictionaries[2]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.iosDictionaries[2]){
         debugPrint("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/" + char);
         if(await canLaunchUrlString(url)) {
@@ -258,8 +258,8 @@ void openDictionary(BuildContext context, String char) async {
           );
         }
       }
-      else if(GetIt.I<Settings>().selectedDictionary ==
-        GetIt.I<Settings>().settingsDrawing.iosDictionaries[3]){
+      else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+        GetIt.I<Settings>().drawing.iosDictionaries[3]){
         debugPrint("iOS midori");
         final url = Uri.encodeFull("midori://search?text=" + char);
         if(await canLaunchUrlString(url)) {
@@ -293,18 +293,18 @@ String openWithSelectedDictionary(String kanji) {
   String url = "";
 
   // determine which URL should be used for finding the character
-  if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[0]) {
-    url = GetIt.I<Settings>().settingsDrawing.jishoURL;
-  } else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[1]) {
-    url = GetIt.I<Settings>().settingsDrawing.wadokuURL;
-  } else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[2]) {
-    url = GetIt.I<Settings>().settingsDrawing.weblioURL;
-  } else if(GetIt.I<Settings>().selectedDictionary ==
-    GetIt.I<Settings>().settingsDrawing.dictionaries[3]) {
-    url = GetIt.I<Settings>().customURL;
+  if(GetIt.I<Settings>().drawing.selectedDictionary ==
+    GetIt.I<Settings>().drawing.dictionaries[0]) {
+    url = GetIt.I<Settings>().drawing.jishoURL;
+  } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+    GetIt.I<Settings>().drawing.dictionaries[1]) {
+    url = GetIt.I<Settings>().drawing.wadokuURL;
+  } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+    GetIt.I<Settings>().drawing.dictionaries[2]) {
+    url = GetIt.I<Settings>().drawing.weblioURL;
+  } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
+    GetIt.I<Settings>().drawing.dictionaries[3]) {
+    url = GetIt.I<Settings>().drawing.customURL;
   }
 
   if(url != ""){
@@ -315,7 +315,7 @@ String openWithSelectedDictionary(String kanji) {
 
     // replace the placeholder with the actual character
     url = url.replaceFirst(
-      RegExp(GetIt.I<Settings>().settingsDrawing.kanjiPlaceholder), kanji
+      RegExp(GetIt.I<Settings>().drawing.kanjiPlaceholder), kanji
     );
     url = Uri.encodeFull(url);
   }

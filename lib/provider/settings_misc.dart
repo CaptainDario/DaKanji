@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/model/screens.dart';
 
 
 
 /// Class to store all settings in the miscellanelous settings 
-class SettingsMisc{
+class SettingsMisc with ChangeNotifier {
 
   /// the available options of themes
   List<String> themesLocaleKeys = [
@@ -21,6 +22,14 @@ class SettingsMisc{
     LocaleKeys.General_dark : ThemeMode.dark,
     LocaleKeys.General_system : ThemeMode.system
   };
+
+  /// The startup screen options 
+  List<String> startupScreenOptions = [
+    Screens.drawing.name,
+    Screens.dictionary.name,
+    Screens.text.name,
+  ];
+
   /// width of the current window
   int windowWidth = 480;
   /// height of the current window
@@ -34,6 +43,12 @@ class SettingsMisc{
   SettingsMisc (){
     selectedTheme = LocaleKeys.General_system;
   }
+
+
+  ThemeMode? selectedThemeMode() {
+    return themesDict[selectedTheme];
+  }
+
 
   void initFromMap(Map<String, dynamic> map){
 

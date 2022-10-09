@@ -19,7 +19,7 @@ class DrawScreenUndoButton extends StatelessWidget {
     {Key? key}
   ) : super(key: key) {
     Keybinder.bind(
-      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbUndoStroke),
+      Keybinding.from(GetIt.I<Settings>().drawing.kbUndoStroke),
       () => undo(GetIt.I<DrawScreenState>().strokes)
     );
   }

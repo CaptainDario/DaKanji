@@ -199,8 +199,8 @@ void desktopWindowSetup() {
     Rect.fromLTWH(
       0,
       0, 
-      GetIt.I<Settings>().settingsMisc.windowWidth.toDouble(), 
-      GetIt.I<Settings>().settingsMisc.windowHeight.toDouble()
+      GetIt.I<Settings>().misc.windowWidth.toDouble(), 
+      GetIt.I<Settings>().misc.windowHeight.toDouble()
     )
   );
 }
@@ -299,7 +299,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       // themes
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: GetIt.I<Settings>().selectedThemeMode(),
+      themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
 
       //screens
       home: const HomeScreen(),

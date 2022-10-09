@@ -88,23 +88,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // Dictionary Options
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_long_press_opens.tr(),
-                        value: settings.selectedDictionary,
-                        items: settings.settingsDrawing.dictionaries,
+                        value: settings.drawing.selectedDictionary,
+                        items: settings.drawing.dictionaries,
                         onTap: (newValue) {
-                          settings.selectedDictionary = newValue
-                            ?? settings.settingsDrawing.dictionaries[0];
+                          settings.drawing.selectedDictionary = newValue
+                            ?? settings.drawing.dictionaries[0];
                           settings.save();
                         },
                       ),
                       // custom URL input
                       ResponsiveInputFieldTile(
-                        text: settings.customURL,
-                        enabled: settings.selectedDictionary
-                          == settings.settingsDrawing.dictionaries[3],
+                        text: settings.drawing.customURL,
+                        enabled: settings.drawing.selectedDictionary
+                          == settings.drawing.dictionaries[3],
                         hintText: LocaleKeys.SettingsScreen_custom_url_hint.tr(),
                         icon: Icons.info_outline,
                         onChanged: (value) {
-                          settings.customURL = value;
+                          settings.drawing.customURL = value;
                           settings.save();
                         },
                         onButtonPressed: () => showCustomURLPopup(context),
@@ -113,27 +113,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // invert long/short press
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_invert_short_long_press.tr(),
-                        value: GetIt.I<Settings>().invertShortLongPress,
+                        value: GetIt.I<Settings>().drawing.invertShortLongPress,
                         onTileTapped: (bool? newValue){
-                          settings.invertShortLongPress = newValue ?? false;
+                          settings.drawing.invertShortLongPress = newValue ?? false;
                           settings.save();
                         }
                       ),
                       // double tap empties canvas
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr(),
-                        value: GetIt.I<Settings>().emptyCanvasAfterDoubleTap,
+                        value: GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap,
                         onTileTapped: (bool? newValue){
-                          settings.emptyCanvasAfterDoubleTap = newValue ?? false;
+                          settings.drawing.emptyCanvasAfterDoubleTap = newValue ?? false;
                           settings.save();
                         }
                       ),
                       if(Platform.isAndroid || Platform.isIOS)
                         ResponsiveCheckBoxTile(
                           text: LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr(),
-                          value: GetIt.I<Settings>().useWebview,
+                          value: GetIt.I<Settings>().drawing.useWebview,
                           onTileTapped: (value) {
-                            settings.useWebview = value;
+                            settings.drawing.useWebview = value;
                             settings.save();
                           },
                         ),
@@ -249,16 +249,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
 
-                      ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_dict_include_names_in_dict.tr(),
-                        value: GetIt.I<Settings>().emptyCanvasAfterDoubleTap,
-                        onTileTapped: (bool? newValue){
-                          settings.emptyCanvasAfterDoubleTap = newValue ?? false;
-                          settings.save();
-                        }
-                      ),
-
-
                       // #endregion
 
                       const Divider(),
@@ -271,12 +261,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // theme
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_theme.tr(), 
-                        value: settings.selectedTheme,
-                        items: settings.settingsMisc.themesLocaleKeys,
+                        value: settings.misc.selectedTheme,
+                        items: settings.misc.themesLocaleKeys,
                         translateItemTexts: true,
                         onTap: (value) {
-                          settings.selectedTheme = value ?? settings.settingsMisc.themesLocaleKeys[0];
-                          debugPrint(settings.selectedTheme);
+                          settings.misc.selectedTheme = value ?? settings.misc.themesLocaleKeys[0];
+                          debugPrint(settings.misc.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -284,14 +274,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
                         value: Screens.drawing.name,
-                        items: [
-                          Screens.drawing.name,
-                          Screens.dictionary.name,
-                          Screens.text.name,
-                        ],
+                        items: settings.misc.startupScreenOptions,
                         onTap: (newValue) {
-                          settings.selectedDictionary = newValue
-                            ?? settings.settingsDrawing.dictionaries[0];
+                          
                           settings.save();
                         },
                       ),
@@ -324,8 +309,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onButtonPressed: () async {
                             var info = await getWindowInfo();
 
-                            settings.settingsMisc.windowHeight = info.frame.height.toInt();
-                            settings.settingsMisc.windowWidth = info.frame.width.toInt();
+                            settings.misc.windowHeight = info.frame.height.toInt();
+                            settings.misc.windowWidth = info.frame.width.toInt();
 
                             settings.save();
                           },
@@ -358,7 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
                             value: settings.inferenceBackend, 
-                            items: settings.settingsAdvanced.inferenceBackends,
+                            items: settings.advanced.inferenceBackends,
                             onTap: (newValue) {
                               if(newValue != null){
                                 settings.inferenceBackend = newValue;

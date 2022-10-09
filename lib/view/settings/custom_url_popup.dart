@@ -31,7 +31,7 @@ void showCustomURLPopup(BuildContext context){
               Text(
                 LocaleKeys.SettingsScreen_custom_url_explanation.tr(
                   namedArgs: {'kanjiPlaceholder' : 
-                    GetIt.I<Settings>().settingsDrawing.kanjiPlaceholder}
+                    GetIt.I<Settings>().drawing.kanjiPlaceholder}
                 )
               ),
             ]

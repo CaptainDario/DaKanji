@@ -93,8 +93,8 @@ class _PredictionButtonState extends State<PredictionButton>
     Keybinder.remove(
       Keybinding.from(
         {
-          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod
+          ...GetIt.I<Settings>().drawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().drawing.kbLongPressMod
         }
       ),
       () => longPressed()
@@ -102,8 +102,8 @@ class _PredictionButtonState extends State<PredictionButton>
     Keybinder.remove(
       Keybinding.from(
         {
-          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
+          ...GetIt.I<Settings>().drawing.kbPreds[widget.nr],
+          ...GetIt.I<Settings>().drawing.kbDoublePressMod
         }
       ),
       () => doubleTap()
@@ -146,7 +146,7 @@ class _PredictionButtonState extends State<PredictionButton>
     if(widget.char == " ") return;
 
     controller.forward(from: 0.0);
-    if(GetIt.I<Settings>().emptyCanvasAfterDoubleTap) {
+    if(GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap) {
       GetIt.I<DrawScreenState>().strokes.playDeleteAllStrokesAnimation = true;
     } 
 

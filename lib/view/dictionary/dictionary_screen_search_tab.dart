@@ -139,8 +139,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
               padding: const EdgeInsets.all(24),
             ),
             onPressed: () {
-              GetIt.I<Settings>().selectedDictionary = 
-                GetIt.I<Settings>().settingsDrawing.inbuiltDictId;
+              GetIt.I<Settings>().drawing.selectedDictionary = 
+                GetIt.I<Settings>().drawing.inbuiltDictId;
               Navigator.pushNamed(context, "/drawing");
             },
             child: SizedBox(

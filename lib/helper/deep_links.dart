@@ -48,64 +48,64 @@ void handleLink(String? link){
 
   if(short.startsWith("jisho")){
     debugPrint("contains jisho");
-    GetIt.I<Settings>().selectedDictionary =
-      GetIt.I<Settings>().settingsDrawing.dictionaries[0];
+    GetIt.I<Settings>().drawing.selectedDictionary =
+      GetIt.I<Settings>().drawing.dictionaries[0];
   }
   else if(short.startsWith("wadoku")){
     debugPrint("contains wadoku");
-    GetIt.I<Settings>().selectedDictionary =
-      GetIt.I<Settings>().settingsDrawing.dictionaries[1];
+    GetIt.I<Settings>().drawing.selectedDictionary =
+      GetIt.I<Settings>().drawing.dictionaries[1];
   }
   else if(short.startsWith("weblio")){
     debugPrint("contains weblio");
-    GetIt.I<Settings>().selectedDictionary =
-      GetIt.I<Settings>().settingsDrawing.dictionaries[2];
+    GetIt.I<Settings>().drawing.selectedDictionary =
+      GetIt.I<Settings>().drawing.dictionaries[2];
   }
   else if(short.startsWith("URL")){
     debugPrint("contains custom URL");
-    GetIt.I<Settings>().selectedDictionary =
-      GetIt.I<Settings>().settingsDrawing.dictionaries[3];
+    GetIt.I<Settings>().drawing.selectedDictionary =
+      GetIt.I<Settings>().drawing.dictionaries[3];
     short = Uri.decodeFull(short.replaceFirst("URL/", ""));
     debugPrint("given custom url:" + short);
-    GetIt.I<Settings>().customURL = short;
+    GetIt.I<Settings>().drawing.customURL = short;
   }
   else if(Platform.isAndroid){
     if(short.startsWith("aedict")){
       debugPrint("contains aedict");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[5];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[5];
     }
     else if(short.startsWith("akebi")){
       debugPrint("contains akebi");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[6];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[6];
     }
     else if(short.startsWith("takoboto")){
       debugPrint("contains takoboto");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[7];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[7];
     }
   }
   else if(Platform.isIOS){
     if(short.startsWith("shirabe")){
       debugPrint("contains shirabe");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[4];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[4];
     }
     else if(short.startsWith("imiwa")){
       debugPrint("contains imiwa");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[5];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[5];
     }
     else if(short.startsWith("japanese")){
       debugPrint("contains japanese");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[6];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[6];
     }
     else if(short.startsWith("midori")){
       debugPrint("contains midori");
-      GetIt.I<Settings>().selectedDictionary =
-        GetIt.I<Settings>().settingsDrawing.dictionaries[7];
+      GetIt.I<Settings>().drawing.selectedDictionary =
+        GetIt.I<Settings>().drawing.dictionaries[7];
     }
   }
   else{

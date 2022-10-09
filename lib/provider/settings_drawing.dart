@@ -1,6 +1,3 @@
-
-
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -10,7 +7,7 @@ import 'package:universal_io/io.dart';
 
 
 /// Class to store all settings in the drawing settings 
-class SettingsDrawing {
+class SettingsDrawing with ChangeNotifier  {
 
   /// The placeholder in the URL's which will be replaced by the predicted kanji
   final String kanjiPlaceholder = "%X%";
@@ -47,7 +44,16 @@ class SettingsDrawing {
   ];
 
   /// A list with all available dictionary options.
-  late List<String> dictionaries;
+  late List<String> _dictionaries;
+
+  /// A list with all available dictionary options.
+  List<String> get dictionaries => _dictionaries;
+
+  /// A list with all available dictionary options.
+  set dictionaries(List<String> dictionaries) {
+    _dictionaries = dictionaries;
+    notifyListeners();
+  }
 
   /// Identifier for the inbuilt dictionary
   String inbuiltDictId = "inbuilt";

@@ -20,7 +20,7 @@ class DrawScreenClearButton extends StatelessWidget {
     {Key? key}
   ) : super(key: key){
     Keybinder.bind(
-      Keybinding.from(GetIt.I<Settings>().settingsDrawing.kbClearCanvas),
+      Keybinding.from(GetIt.I<Settings>().drawing.kbClearCanvas),
       () => clear(GetIt.I<DrawScreenState>().strokes)
     );
   }

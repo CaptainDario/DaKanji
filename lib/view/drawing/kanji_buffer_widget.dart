@@ -136,7 +136,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     Keybinder.bind(
       Keybinding.from(
         {
-          ...GetIt.I<Settings>().settingsDrawing.kbWordBarDelChar,
+          ...GetIt.I<Settings>().drawing.kbWordBarDelChar,
         }
       ),
       () => leftSwipe()
@@ -168,8 +168,8 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     Keybinder.bind(
       Keybinding.from(
         {
-          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod,
-          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
+          ...GetIt.I<Settings>().drawing.kbDoublePressMod,
+          ...GetIt.I<Settings>().drawing.kbWordBar,
         }
       ),
       () => doubleTap()
