@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as Jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
 
 import 'package:da_kanji_mobile/globals.dart';
 
@@ -18,7 +18,7 @@ class DictionaryScreenWordTab extends StatefulWidget {
   ) : super(key: key);
 
   /// the dict entry that should be shown 
-  final Jmdict.Entry? entry;
+  final _jmdict.Entry? entry;
 
 
   @override
