@@ -7,5 +7,6 @@ enum Screens{
   home,
   settings,
   onboarding,
-  webviewDict
+  webviewDict,
+  manual
 }

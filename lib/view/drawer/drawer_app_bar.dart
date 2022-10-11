@@ -82,6 +82,9 @@ class DrawerAppBar extends StatelessWidget {
                   case Screens.webviewDict:
                     title = LocaleKeys.WebviewScreen_title.tr();
                     break;
+                  case Screens.manual:
+                    title = "Test Manual";
+                    break;
                 }
                 return title;
               } (),

@@ -313,6 +313,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the manual screen
+                            DrawerElement(
+                              leading: Icons.help,
+                              title: "Manual",
+                              route: "/manual",
+                              selected: widget.currentScreen == Screens.manual,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                            ),
+                            // Drawer entry to send feedback
                             DrawerElement(
                               leading: Icons.feedback,
                               title: "Feedback",
@@ -326,17 +336,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   final screenshotFilePath = await writeImageToStorage(feedback.screenshot);
                                   Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
 
-                                  Share.shareFiles(
-                                    [screenshotFilePath],
-                                    text: 
-                                    feedback.text + 
-"""support email: daapplab@gmail.com
-
-\n\n\nSystem / App info:
+                                  String deviceInfo = """System / App info:
 I am using DaKanji v.$globalVersion on ${Theme.of(context).platform.name}.
 
 ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
-""",
+""";
+
+                                  Share.shareFiles(
+                                    [screenshotFilePath],
+                                    text: 
+                                    feedback.text + deviceInfo,
                                     subject: "DaKanji $globalVersion - feedback",
                                     sharePositionOrigin: () {
                                       RenderBox? box = context.findRenderObject() as RenderBox?;
