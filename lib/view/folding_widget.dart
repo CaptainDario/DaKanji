@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 
 
@@ -54,7 +55,7 @@ class FoldingWidget extends StatefulWidget {
 
 class FoldingWidgetState extends State<FoldingWidget> {
 
-  final int noAnims = 6;
+  final int noAnims = 7;
   /// List that contains all animations of this widget
   /// 
   /// A `FoldingWidget` is divided into a 3x3 grid, in this list there is one
@@ -111,141 +112,151 @@ class FoldingWidgetState extends State<FoldingWidget> {
       animation: widget.animationController,
       builder: (context, child) {
 
-        return (widget.animationController.value < (1 / noAnims) * 6 &&
-        widget.animationController.status == AnimationStatus.forward ||
-        widget.animationController.status == AnimationStatus.dismissed) ||
-        
-        widget.animationController.value < 1 &&
-        widget.animationController.status == AnimationStatus.reverse
-        ? 
-          widget.animationController.status != AnimationStatus.dismissed
-          ? Stack(
-            children: [
-              // 1, 1 -> 4
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 1,
-                y: 1,
-                rotationX: 0,
-                rotationXAlign: Alignment.center,
-                rotationY: 0,
-                rotationYAlign: Alignment.center,
-                widget: widget.unfoldedWidget,
-              ),
-              // 1, 0 -> 1
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 1,
-                y: 0,
-                rotationX: _animations[1].value,
-                rotationXAlign: Alignment.bottomCenter,
-                rotationY: 0,
-                rotationYAlign: Alignment.centerRight,
-                widget: widget.unfoldedWidget,
-              ),
-        
-              // 1, 2 -> 7
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 1,
-                y: 2,
-                rotationX: _animations[2].value,
-                rotationXAlign: Alignment.topCenter,
-                rotationY: 0,
-                rotationYAlign: Alignment.center,
-                widget: widget.unfoldedWidget,
-              ),
-        
-              // 0, 1 -> 3
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 0,
-                y: 1,
-                rotationX: 0,
-                rotationXAlign: Alignment.center,
-                rotationY: _animations[4].value,
-                rotationYAlign: Alignment.centerRight,
-                widget: widget.unfoldedWidget,
-              ),
-              // 0, 0 -> 0
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 0,
-                y: 0,
-                rotationX: _animations[0].value,
-                rotationXAlign: Alignment.bottomCenter,
-                rotationY: _animations[4].value,
-                rotationYAlign: Alignment.centerRight,
-                widget: widget.unfoldedWidget,
-              ),
-              // 0, 2 -> 6
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 0,
-                y: 2,
-                rotationX: _animations[1].value,
-                rotationXAlign: Alignment.topCenter,
-                rotationY: _animations[4].value,
-                rotationYAlign: Alignment.centerRight,
-                widget: widget.unfoldedWidget,
-              ),            
-              
-              // 2, 1 -> 5
-              FoldingWidgetSlice(
-                height: widget.unfoldedHeight,
-                width: widget.unfoldedWidth,
-                x: 2,
-                y: 1,
-                rotationX: 0,
-                rotationXAlign: Alignment.center,
-                rotationY: _animations[5].value,
-                rotationYAlign: Alignment.centerLeft,
-                widget: widget.unfoldedWidget,
-              ),
-              // 2, 0 -> 2
-              if(_animations[5].value == 0)
+        return AnimatedSwitcher(
+          duration: Duration(milliseconds: 1000 ~/ noAnims),
+          transitionBuilder: (child, animation) => Transform(
+            transform: Matrix4.rotationY((1 - animation.value) * pi),
+            alignment: Alignment.center,
+            //child: ScaleTransition(
+            //  scale: animation,
+              child: FadeTransition(
+                opacity: animation,
+                child: child
+              )
+            //),
+          ),
+          child: (widget.animationController.value < (1 / noAnims) * 6 &&
+          widget.animationController.status == AnimationStatus.forward ||
+          widget.animationController.status == AnimationStatus.dismissed) ||
+          
+          widget.animationController.value < 1 &&
+          widget.animationController.status == AnimationStatus.reverse
+          ? 
+            Stack(
+              children: [
+                // 1, 1 -> 4
                 FoldingWidgetSlice(
                   height: widget.unfoldedHeight,
                   width: widget.unfoldedWidth,
-                  x: 2,
+                  x: 1,
+                  y: 1,
+                  rotationX: 0,
+                  rotationXAlign: Alignment.center,
+                  rotationY: 0,
+                  rotationYAlign: Alignment.center,
+                  widget: widget.unfoldedWidget,
+                ),
+                // 1, 0 -> 1
+                FoldingWidgetSlice(
+                  height: widget.unfoldedHeight,
+                  width: widget.unfoldedWidth,
+                  x: 1,
                   y: 0,
-                  rotationX: _animations[2].value,
+                  rotationX: _animations[1].value,
                   rotationXAlign: Alignment.bottomCenter,
-                  rotationY: _animations[5].value,
-                  rotationYAlign: Alignment.centerLeft,
+                  rotationY: 0,
+                  rotationYAlign: Alignment.centerRight,
                   widget: widget.unfoldedWidget,
                 ),
-              // 2, 2 -> 8
-              if(_animations[5].value <= 0.5)
+          
+                // 1, 2 -> 7
+                FoldingWidgetSlice(
+                  height: widget.unfoldedHeight,
+                  width: widget.unfoldedWidth,
+                  x: 1,
+                  y: 2,
+                  rotationX: _animations[2].value,
+                  rotationXAlign: Alignment.topCenter,
+                  rotationY: 0,
+                  rotationYAlign: Alignment.center,
+                  widget: widget.unfoldedWidget,
+                ),
+          
+                // 0, 1 -> 3
+                FoldingWidgetSlice(
+                  height: widget.unfoldedHeight,
+                  width: widget.unfoldedWidth,
+                  x: 0,
+                  y: 1,
+                  rotationX: 0,
+                  rotationXAlign: Alignment.center,
+                  rotationY: _animations[4].value,
+                  rotationYAlign: Alignment.centerRight,
+                  widget: widget.unfoldedWidget,
+                ),
+                // 0, 0 -> 0
+                FoldingWidgetSlice(
+                  height: widget.unfoldedHeight,
+                  width: widget.unfoldedWidth,
+                  x: 0,
+                  y: 0,
+                  rotationX: _animations[0].value,
+                  rotationXAlign: Alignment.bottomCenter,
+                  rotationY: _animations[4].value,
+                  rotationYAlign: Alignment.centerRight,
+                  widget: widget.unfoldedWidget,
+                ),
+                // 0, 2 -> 6
+                FoldingWidgetSlice(
+                  height: widget.unfoldedHeight,
+                  width: widget.unfoldedWidth,
+                  x: 0,
+                  y: 2,
+                  rotationX: _animations[1].value,
+                  rotationXAlign: Alignment.topCenter,
+                  rotationY: _animations[4].value,
+                  rotationYAlign: Alignment.centerRight,
+                  widget: widget.unfoldedWidget,
+                ),            
+                
+                // 2, 1 -> 5
                 FoldingWidgetSlice(
                   height: widget.unfoldedHeight,
                   width: widget.unfoldedWidth,
                   x: 2,
-                  y: 2,
-                  rotationX: _animations[3].value,
-                  rotationXAlign: Alignment.topCenter,
+                  y: 1,
+                  rotationX: 0,
+                  rotationXAlign: Alignment.center,
                   rotationY: _animations[5].value,
                   rotationYAlign: Alignment.centerLeft,
                   widget: widget.unfoldedWidget,
                 ),
-            ],
-          )
-          : SizedBox(
-            width: widget.unfoldedWidth,
-            height: widget.unfoldedHeight,
-            child: widget.unfoldedWidget,
-          )
-          : Container(
-            color: Colors.green, 
-            width: 100,
-            child: Text("test")
-          );
+                // 2, 0 -> 2
+                if(_animations[5].value == 0)
+                  FoldingWidgetSlice(
+                    height: widget.unfoldedHeight,
+                    width: widget.unfoldedWidth,
+                    x: 2,
+                    y: 0,
+                    rotationX: _animations[2].value,
+                    rotationXAlign: Alignment.bottomCenter,
+                    rotationY: _animations[5].value,
+                    rotationYAlign: Alignment.centerLeft,
+                    widget: widget.unfoldedWidget,
+                  ),
+                // 2, 2 -> 8
+                if(_animations[5].value <= 0.5)
+                  FoldingWidgetSlice(
+                    height: widget.unfoldedHeight,
+                    width: widget.unfoldedWidth,
+                    x: 2,
+                    y: 2,
+                    rotationX: _animations[3].value,
+                    rotationXAlign: Alignment.topCenter,
+                    rotationY: _animations[5].value,
+                    rotationYAlign: Alignment.centerLeft,
+                    widget: widget.unfoldedWidget,
+                  ),
+              ],
+            )
+            : Center(
+              child: SizedBox(
+                width: widget.foldedWidth,
+                height: widget.foldedHeight,
+                child: widget.foldedWidget
+              ),
+            ),
+        );
       }
     );
   }
