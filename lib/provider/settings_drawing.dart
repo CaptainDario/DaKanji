@@ -1,27 +1,38 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
+import 'package:json_annotation/json_annotation.dart';
 import 'package:universal_io/io.dart';
+
+import 'package:da_kanji_mobile/model/DrawScreen/logical_keyboard_key_converter.dart';
+part 'settings_drawing.g.dart';
 
 
 
 /// Class to store all settings in the drawing settings 
+/// 
+/// To update the toJson code run `flutter pub run build_runner build`
+@JsonSerializable()
 class SettingsDrawing with ChangeNotifier  {
 
   /// The placeholder in the URL's which will be replaced by the predicted kanji
+  @JsonKey(ignore: true)
   final String kanjiPlaceholder = "%X%";
 
   /// The URL of the jisho website
+  @JsonKey(ignore: true)
   late String jishoURL;
 
   /// The URL of the weblio website
+  @JsonKey(ignore: true)
   late String wadokuURL;
 
   /// The URL of the weblio website
+  @JsonKey(ignore: true)
   late String weblioURL;
   
   /// A list with all web dictionaries
+  @JsonKey(ignore: true)
   List<String> webDictionaries = [
     "jisho (web)",
     "wadoku (web)",
@@ -29,6 +40,7 @@ class SettingsDrawing with ChangeNotifier  {
     "url"
   ];
 
+  @JsonKey(ignore: true)
   List<String> androidDictionaries = [
     "system (app)",
     "aedict (app)",
@@ -36,6 +48,7 @@ class SettingsDrawing with ChangeNotifier  {
     "takoboto (app)", 
   ];
 
+  @JsonKey(ignore: true)
   List<String> iosDictionaries = [
     "shirabe jisho (app)",
     "imiwa? (app)",
@@ -44,63 +57,104 @@ class SettingsDrawing with ChangeNotifier  {
   ];
 
   /// A list with all available dictionary options.
-  late List<String> _dictionaries;
-
-  /// A list with all available dictionary options.
-  List<String> get dictionaries => _dictionaries;
-
-  /// A list with all available dictionary options.
-  set dictionaries(List<String> dictionaries) {
-    _dictionaries = dictionaries;
-    notifyListeners();
-  }
+  @JsonKey(ignore: true)
+  late List<String> dictionaries;
 
   /// Identifier for the inbuilt dictionary
+  @JsonKey(ignore: true)
   String inbuiltDictId = "inbuilt";
 
   /// The custom URL a user can define on the settings page.
-  String customURL = "";
+  String _customURL = "";
+  /// The custom URL a user can define on the settings page.
+  String get customURL => _customURL;
+  /// The custom URL a user can define on the settings page.
+  set customURL(String customURL) {
+    _customURL = customURL;
+    notifyListeners();
+  }
 
   /// The string representation of the dictionary which will be used (long press)
-  late String selectedDictionary;
+  late String _selectedDictionary;
+  /// The string representation of the dictionary which will be used (long press)
+  String get selectedDictionary => _selectedDictionary;
+  /// The string representation of the dictionary which will be used (long press)
+  set selectedDictionary(String selectedDictionary) {
+    _selectedDictionary = selectedDictionary;
+    notifyListeners();
+  }
 
   /// Should the behavior of long and short press be inverted
-  bool invertShortLongPress = false;
+  bool _invertShortLongPress = false;
+  /// Should the behavior of long and short press be inverted
+  bool get invertShortLongPress => _invertShortLongPress;
+  /// Should the behavior of long and short press be inverted
+  set invertShortLongPress(bool invertShortLongPress) {
+    _invertShortLongPress = invertShortLongPress;
+    notifyListeners();
+  }
 
   /// Should the canvas be cleared when a prediction was copied to kanjibuffer
-  bool emptyCanvasAfterDoubleTap = true;
+  bool _emptyCanvasAfterDoubleTap = true;
+  /// Should the canvas be cleared when a prediction was copied to kanjibuffer
+  bool get emptyCanvasAfterDoubleTap => _emptyCanvasAfterDoubleTap;
+  /// Should the canvas be cleared when a prediction was copied to kanjibuffer
+  set emptyCanvasAfterDoubleTap(bool emptyCanvasAfterDoubleTap) {
+    _emptyCanvasAfterDoubleTap = emptyCanvasAfterDoubleTap;
+    notifyListeners();
+  }
 
   /// should the default app browser be used for opening predictions or a webview
-  bool useWebview = false;
+  bool _useWebview = false;
+  /// should the default app browser be used for opening predictions or a webview
+  bool get useWebview => _useWebview;
+  /// should the default app browser be used for opening predictions or a webview
+  set useWebview(bool useWebview) {
+    _useWebview = useWebview;
+    notifyListeners();
+  }
 
   // KEY BINDING (kb)
   /// default key binding for modifying a normal press to a long press
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbLongPressModDefault = {LogicalKeyboardKey.keyN};
   /// current key binding for modifying a normal press to a long press
+  @LogicalKeyboardKeyConverter()
   late Set<LogicalKeyboardKey> kbLongPressMod;
   /// default key binding for modifying a normal press to a double press
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbDoublePressModDefault = {LogicalKeyboardKey.keyM};
   /// current key binding for modifying a normal press to a double press
+  @LogicalKeyboardKeyConverter()
   late Set<LogicalKeyboardKey> kbDoublePressMod;
 
   /// default key binding for clearing the canvas
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbClearCanvasDefault = {LogicalKeyboardKey.keyD};
   /// key binding for clearing the canvas
+  @LogicalKeyboardKeyConverter()
   late Set<LogicalKeyboardKey> kbClearCanvas;
   /// default key binding for clearing the canvas
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbUndoStrokeDefault = {LogicalKeyboardKey.keyU};
   /// current key binding for clearing the canvas
+  @LogicalKeyboardKeyConverter()
   late Set<LogicalKeyboardKey> kbUndoStroke;
   /// default key binding for tapping the word bar
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbWordBarDefault = {LogicalKeyboardKey.keyW};
   /// current key binding for tapping the wordbar
+  @LogicalKeyboardKeyConverter()
   late Set<LogicalKeyboardKey> kbWordBar;
   /// default key binding forn1 deleting a character from the word bar
+  @JsonKey(ignore: true)
   final Set<LogicalKeyboardKey> kbWordBarDelCharDefault = {LogicalKeyboardKey.keyE};
   /// current key binding for deleting a character from the word bar
-  late Set<LogicalKeyboardKey> kbWordBarDelChar;
+  @LogicalKeyboardKeyConverter()
+  late Set<LogicalKeyboardKey> kbWordBarDelChar = kbWordBarDelCharDefault;
 
   /// default key binding for tapping the 0 .. 10 prediction button
+  @JsonKey(ignore: true)
   final List<Set<LogicalKeyboardKey>> kbPredsDefaults = [
     {LogicalKeyboardKey.digit1}, {LogicalKeyboardKey.digit2},
     {LogicalKeyboardKey.digit3}, {LogicalKeyboardKey.digit4},
@@ -109,7 +163,8 @@ class SettingsDrawing with ChangeNotifier  {
     {LogicalKeyboardKey.digit9}, {LogicalKeyboardKey.digit0},
   ];
   /// current key binding for tapping the 0 .. 10 prediction button
-  late List<Set<LogicalKeyboardKey>> kbPreds;
+  @LogicalKeyboardKeyConverter()
+  late List<Set<LogicalKeyboardKey>> kbPreds = kbPredsDefaults;
     
 
 
@@ -140,99 +195,10 @@ class SettingsDrawing with ChangeNotifier  {
     kbPreds       = kbPredsDefaults;
   }
 
-  void initFromMap(Map<String, dynamic> map){
+  /// Instantiates a new instance from a json map
+  factory SettingsDrawing.fromJson(Map<String, dynamic> json) 
+    => _$SettingsDrawingFromJson(json);
 
-    if(map['customURL'] != null) {
-      customURL                 = map['customURL'];
-    }
-    if(map['selectedDictionary'] != null) {
-      selectedDictionary        = map['selectedDictionary'];
-    }
-    if(map['invertShortLongPress'] != null) {
-      invertShortLongPress      = map['invertShortLongPress'];
-    }
-    if(map['emptyCanvasAfterDoubleTap'] != null) {
-      emptyCanvasAfterDoubleTap = map['emptyCanvasAfterDoubleTap'];
-    }
-    if(map['useWebview'] != null) {
-      useWebview                = map['useWebview'];
-    }
-
-    if(map['kbLongPressMod'] != null) {
-      kbLongPressMod   = keyBindingStringToSet(map['kbLongPressMod']);
-    }
-    if(map['kbDoublePressMod'] != null) {
-      kbDoublePressMod = keyBindingStringToSet(map['kbDoublePressMod']);
-    }
-
-    if(map['kbClearCanvas'] != null) {
-      kbClearCanvas    = keyBindingStringToSet(map['kbClearCanvas']);
-    }
-    if(map['kbUndoStroke'] != null) {
-      kbUndoStroke     = keyBindingStringToSet(map['kbUndoStroke']);
-    }
-    if(map['kbWordBar'] != null) {
-      kbWordBar        = keyBindingStringToSet(map['kbWordBar']);
-    }
-    if(map['kbWordBarDelChar'] != null) {
-      kbWordBarDelChar = keyBindingStringToSet(map['kbWordBarDelChar']);
-    }
-
-    kbPreds = List.generate(10, (i) => 
-      keyBindingStringToSet(map['kbPreds$i'])
-    );
-  }
-
-  void initFromJson(String jsonString) {
-    initFromMap(json.decode(jsonString));
-  }
-
-  Map<String, dynamic> toMap(){
-    var m = {
-
-      'customURL'                 : customURL,
-      'selectedDictionary'        : selectedDictionary,
-      'invertShortLongPress'      : invertShortLongPress,
-      'emptyCanvasAfterDoubleTap' : emptyCanvasAfterDoubleTap,
-      'useWebview'                : useWebview,
-
-      'kbLongPressMod'   : kbLongPressMod.map((e) => e.keyId).toList(),
-      'kbDoublePressMod' : kbDoublePressMod.map((e) => e.keyId).toList(),
-
-      'kbClearCanvas'    : kbClearCanvas.map((e) => e.keyId).toList(),
-      'kbUndoStroke'     : kbUndoStroke.map((e) => e.keyId).toList(),
-      'kbWordBar'        : kbWordBar.map((e) => e.keyId).toList(),
-      'kbWordBarDelChar' : kbWordBarDelChar.map((e) => e.keyId).toList(),
-
-    };
-
-    for (var i = 0; i < 10; i++) {
-      m['kbPreds$i'] = kbPreds[i].map((e) => e.keyId).toList();
-    }
-
-    return m;
-  }
-
-  String toJson() => json.encode(toMap());
-
-  /// converts a list of strings (values in list need to be strings!)
-  /// to a set of keybindings
-  Set<LogicalKeyboardKey> keyBindingStringToSet(List<dynamic> keyBindings) {
-
-    Set<LogicalKeyboardKey> bindings = {};
-
-    for (var keyBinding in keyBindings) {
-      int a = int.parse(keyBinding.toString());
-      
-      if(LogicalKeyboardKey.findKeyByKeyId(a) == null){
-        debugPrint("ID: $a not found");
-        bindings.add(LogicalKeyboardKey.add);
-      }
-      else {
-        bindings.add(LogicalKeyboardKey.findKeyByKeyId(a)!);
-      }
-    }
-
-    return bindings;
-  }
+  /// Create a JSON map from this object
+  Map<String, dynamic> toJson() => _$SettingsDrawingToJson(this);
 }

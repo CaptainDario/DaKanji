@@ -1,11 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+
 import 'package:universal_io/io.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:da_kanji_mobile/model/inference_backends.dart';
 
+part 'settings_advanced.g.dart';
 
-/// Class to store all settings in the advanced settings 
+
+
+/// Class to store all settings in the advanced settings
+/// 
+/// To update the toJson code run `flutter pub run build_runner build`
+@JsonSerializable()
 class SettingsAdvanced with ChangeNotifier {
 
   /// The available backends for inference
@@ -39,21 +46,9 @@ class SettingsAdvanced with ChangeNotifier {
     inferenceBackend = "";
   }
 
-  void initFromMap(Map<String, dynamic> map){
+  /// Instantiates a new instance from a json map
+  factory SettingsAdvanced.fromJson(Map<String, dynamic> json) => _$SettingsAdvancedFromJson(json);
 
-    inferenceBackend     = map['inferenceBackend'];
-    useThanosSnap        = map['useThanosSnap'];
-
-  }
-
-  void initFromJson(String jsonString) =>
-    initFromMap(json.decode(jsonString));
-  
-
-  Map<String, dynamic> toMap() => {
-    'inferenceBackend' : inferenceBackend,
-    'useThanosSnap'    : useThanosSnap,
-  };
-
-  String toJson() => json.encode(toMap());
+  /// Create a JSON map from this object
+  Map<String, dynamic> toJson() => _$SettingsAdvancedToJson(this);
 }

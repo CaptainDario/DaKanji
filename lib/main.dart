@@ -24,6 +24,7 @@ import 'package:da_kanji_mobile/model/settings_arguments.dart';
 import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/model/changelog.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/drawing_lookup.dart';
@@ -288,6 +289,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(AboutScreen(args.navigatedByDrawer));
           case "/changelog":
             return switchScreen(const ChangelogScreen());
+          case "/manual":
+            return switchScreen(ManualScreen(args.navigatedByDrawer));
           case "/testScreen":
             return switchScreen(const TestScreen());
         }

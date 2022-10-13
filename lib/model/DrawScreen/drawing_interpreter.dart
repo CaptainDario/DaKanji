@@ -125,7 +125,7 @@ class DrawingInterpreter with ChangeNotifier{
       }
       GetIt.I<Settings>().save();
 
-      debugPrint(GetIt.I<Settings>().inferenceBackend);
+      debugPrint(GetIt.I<Settings>().advanced.inferenceBackend);
 
       _isolateUtils = DrawingIsolateUtils();
       _isolateUtils?.start();
@@ -250,7 +250,7 @@ class DrawingInterpreter with ChangeNotifier{
     //AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
     // if no inference backend was set -> automatically set one
-    String selectedBackend = GetIt.I<Settings>().inferenceBackend;
+    String selectedBackend = GetIt.I<Settings>().advanced.inferenceBackend;
     if(!GetIt.I<Settings>().advanced.inferenceBackends.contains(selectedBackend)){
       // try NNAPI delegate
       try{
@@ -301,7 +301,7 @@ class DrawingInterpreter with ChangeNotifier{
     //IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
     // if no inference backend was set -> automatically set one
-    String selectedBackend = GetIt.I<Settings>().inferenceBackend;
+    String selectedBackend = GetIt.I<Settings>().advanced.inferenceBackend;
     if(!GetIt.I<Settings>().advanced.inferenceBackends.contains(selectedBackend)){
       // try NNAPI delegate
       try{
@@ -372,7 +372,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath, 
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[2];
+    GetIt.I<Settings>().advanced.inferenceBackend = Settings().advanced.inferenceBackends[2];
     return i; 
   }
 
@@ -384,7 +384,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: options
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
+    GetIt.I<Settings>().advanced.inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -401,7 +401,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
+    GetIt.I<Settings>().advanced.inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -413,7 +413,7 @@ class DrawingInterpreter with ChangeNotifier{
       _usedTFLiteAssetPath,
       options: interpreterOptions
     );
-    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[1];
+    GetIt.I<Settings>().advanced.inferenceBackend = Settings().advanced.inferenceBackends[1];
     return i;
   }
 
@@ -423,7 +423,7 @@ class DrawingInterpreter with ChangeNotifier{
       ..threads = Platform.numberOfProcessors - 1;
     Interpreter i = await Interpreter.fromAsset(
       _usedTFLiteAssetPath, options: options);
-    GetIt.I<Settings>().inferenceBackend = Settings().advanced.inferenceBackends[0];
+    GetIt.I<Settings>().advanced.inferenceBackend = Settings().advanced.inferenceBackends[0];
     return i;
   }
 

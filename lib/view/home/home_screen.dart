@@ -1,10 +1,11 @@
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/view/controllable_lottie_animation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/view/controllable_lottie_animation.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/view/home/rate_popup.dart';
 import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
 
@@ -91,7 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
         
       // otherwise open the default screen
       else{
-        Navigator.pushNamedAndRemoveUntil(context, "/dictionary", (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          "/${GetIt.I<Settings>().misc.selectedStartupScreen}", 
+          (route) => false);
       }
     });
   }

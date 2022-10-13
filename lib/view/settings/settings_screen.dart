@@ -11,7 +11,6 @@ import 'package:window_size/window_size.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/model/Dict/dict_languages.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_header_tile.dart';
@@ -34,7 +33,7 @@ class SettingsScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
 
-  const SettingsScreen(this.openedByDrawer, {Key? key}) : super(key: key);
+  const SettingsScreen(this.openedByDrawer, {super.key});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -240,12 +239,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       MultiSelectDialogField(
                         title: const Text("Select languages"),
                         buttonText: Text(LocaleKeys.SettingsScreen_dict_languages.tr()),
-                        items: DictLanguages.values.map(
-                          (e) => MultiSelectItem(e, e.name)
+                        initialValue: 
+                          GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+                        items: settings.dictionary.translationLanguages.map(
+                          (e) => MultiSelectItem(e, e)
                         ).toList(),
                         listType: MultiSelectListType.CHIP,
                         onConfirm: (values) {
-                          //_selectedAnimals = values;
+                          if(values.isNotEmpty){
+                            GetIt.I<Settings>().dictionary.selectedTranslationLanguages =
+                              values;
+                          }
+                          else{
+                            GetIt.I<Settings>().dictionary.selectedTranslationLanguages =
+                              [settings.dictionary.translationLanguages[0]];
+                          }
+                          GetIt.I<Settings>().save();
                         },
                       ),
 
@@ -271,16 +280,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Phoenix.rebirth(context);
                         },
                       ),
+                      // screen to show when app starts
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
-                        value: Screens.drawing.name,
-                        items: settings.misc.startupScreenOptions,
+                        value: settings.misc.selectedStartupScreen,
+                        items: settings.misc.startupScreens,
                         onTap: (newValue) {
-                          
-                          settings.save();
+                          if (newValue != null){
+                            settings.misc.selectedStartupScreen = newValue;
+                            settings.save();
+                          }
                         },
                       ),
-                      // language
+                      // app languages
                       ResponsiveDropDownTile(
                         text: LocaleKeys.General_language.tr(), 
                         value: context.locale.toString(),
@@ -333,20 +345,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           // thanos dissolve effect for drawing screen
                           ResponsiveCheckBoxTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_snap.tr(),
-                            value: settings.useThanosSnap,
+                            value: settings.advanced.useThanosSnap,
                             onTileTapped: (newValue) {
-                              settings.useThanosSnap = newValue;
+                              settings.advanced.useThanosSnap = newValue;
                               settings.save();
                             },
                           ),
                           // inference backend
                           ResponsiveDropDownTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
-                            value: settings.inferenceBackend, 
+                            value: settings.advanced.inferenceBackend, 
                             items: settings.advanced.inferenceBackends,
                             onTap: (newValue) {
                               if(newValue != null){
-                                settings.inferenceBackend = newValue;
+                                settings.advanced.inferenceBackend = newValue;
                                 settings.save();
                               }
                             },
