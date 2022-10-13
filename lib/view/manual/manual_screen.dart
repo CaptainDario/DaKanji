@@ -22,20 +22,24 @@ class ManualScreen extends StatefulWidget {
 class _ManualScreenState extends State<ManualScreen>
   with TickerProviderStateMixin{
 
+  /// controller for the folding animation of the folding widgets
   late AnimationController foldingAnimationController;
-
+  /// controller for moving the manual buttons to the center
   late AnimationController movingAnimationController;
-  
+  /// animation for moving the manual buttons to the center
   late Animation movingAnimation;
-
-  List<int> buttonIds = [0, 1, 2, 3];
-
+  /// list containing a ID for each button (used to order the buttons in stack)
+  late List<int> buttonIds;
+  /// the text that is shown on the ManualButtons
   List<String> buttonTexts = ["Dict 0", "Dict 1", "Dict 2", "Dict 3"];
-
+  /// the button that was pressed last
   int lastPressedManualbutton = 0;
 
   @override
   void initState() {
+    
+    buttonIds = List.generate(buttonTexts.length, (index) => index);
+
     for (var i = 0; i < buttonTexts.length; i++) {
       foldingAnimationController = AnimationController(
       vsync: this,
@@ -43,8 +47,6 @@ class _ManualScreenState extends State<ManualScreen>
     );
     }
     
-    
-
     movingAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100)
@@ -74,12 +76,12 @@ class _ManualScreenState extends State<ManualScreen>
       child: LayoutBuilder(
         builder: (context, constraints) {
           
+          /// the unfolded size of a ManualButton
           double unfoldedSize = min(constraints.maxWidth, constraints.maxHeight) * 0.9;
-
+          /// the folded size of a ManualButton
           double foldedSize = unfoldedSize / 3;
-
+          /// how many buttons can be placed in one row
           int noButtonsPerRow = constraints.maxWidth ~/ foldedSize;
-          
           /// the margin between the `ManualButton`s
           double margin = (constraints.maxWidth - (noButtonsPerRow*foldedSize)) 
             / (noButtonsPerRow+1);
