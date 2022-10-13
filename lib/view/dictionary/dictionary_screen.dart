@@ -164,6 +164,8 @@ class _DictionaryScreenState
                     child: Column(
                       children: [
                         TabBar(
+                          labelColor: Theme.of(context).highlightColor,
+                          indicatorColor: Theme.of(context).highlightColor,
                           controller: dictionaryTabController,
                           tabs: [
                             if(noTabs > 3) const Tab(text: "Search"),
