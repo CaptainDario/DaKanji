@@ -50,14 +50,11 @@ class _SearchResultCardState extends State<SearchResultCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // reading
-                    Hero(
-                      tag: "resultCard_${widget.resultIndex}",
-                      child: Text(
-                        widget.dictEntry.kanjis.isEmpty ? 
-                          "" : widget.dictEntry.readings.join(", "),
-                        style: const TextStyle(
-                          fontSize: 10
-                        ),
+                    Text(
+                      widget.dictEntry.kanjis.isEmpty ? 
+                        "" : widget.dictEntry.readings.join(", "),
+                      style: const TextStyle(
+                        fontSize: 10
                       ),
                     ),
                     // kanjis
