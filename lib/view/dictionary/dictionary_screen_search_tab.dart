@@ -162,19 +162,45 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
     String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
     String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
 
-    var query = GetIt.I<Box<_jmdict.Entry>>().query(
+    var query = GetIt.I<Box<_jmdict.Entry>>().getAll();
+    List<_jmdict.Entry> searchResults = query.where((_jmdict.Entry element) => 
+      element.readings.any((String value) => value.contains(queryText)) ||
+      element.kanjis.any((String value) => value.contains(queryText)) ||
+      element.readings.any((String value) => value.contains(hiraText)) ||
+      element.readings.any((String value) => value.contains(kataText))
+    ).toList();
+
+    //var query = GetIt.I<Box<_jmdict.Entry>>().query(
       // search the query as is
-      Entry_.readings.contains(queryText)
+    //  Entry_.readings.contains(queryText)
       // search the input if it 
-      .or(Entry_.kanjis.contains(queryText))
+    //  .or(Entry_.kanjis.contains(queryText))
       // search the query converted to hiragana
-      .or(Entry_.readings.contains(hiraText))
+    //  .or(Entry_.readings.contains(hiraText))
       // search the query converted to katakana
-      .or(Entry_.readings.contains(kataText))
-    ).build();
+    //  .or(Entry_.readings.contains(kataText))
+    //).build();
+    //List<_jmdict.Entry> searchResults = query.find();
+    //query.close();
+
+    /// SORT RESULT LIST
+    /// check if a kanji contains `queryText`
+    /// 
+    /// check if a reading contains `queryText`
+    /// 
+    /// check if a meaning contains `queryText`
+
+    /*
+    searchResults.sort(((a, b) {
+      int rank = 0;
+
+      for (String reading in a.readings) {
+        
+      }
     
-    List<_jmdict.Entry> searchResults = query.find();
-    query.close();
+      return rank;
+    }));
+    */
 
     return searchResults;
   }
