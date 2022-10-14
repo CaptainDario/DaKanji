@@ -43,7 +43,7 @@ dependencies:
   objectbox: 1.6.2
   objectbox_flutter_libs: any
   kana_kit: 2.0.0
-  multi_select_flutter: 4.1.2
+  reorderables: 0.5.0
   archive: 3.3.0
   device_info_plus: 5.0.5
   share_plus: 
@@ -88,7 +88,7 @@ msix_config:
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
   identity_name: 61015DaAppLab.DaKanji
-  logo_path: ./assets/images/icons/icon.png
+  logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
   execution-alias: DaKanji
   languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es pl-pl
@@ -113,7 +113,7 @@ flutter_icons:
   macos: true
   windows: true 
   remove_alpha_ios: true
-  image_path: "assets/images/icons/icon.png"
+  image_path: "assets/images/dakanji/icon.png"
 
 # The following section is specific to Flutter.
 flutter:
@@ -142,8 +142,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     # DaKanji icons/images...
-    - assets/images/icons/icon.png
-    - assets/images/icons/banner.png
+    - assets/images/dakanji/icon.png
+    - assets/images/dakanji/banner.png
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
     # onboarding graphics
@@ -153,11 +153,7 @@ flutter:
     - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
     # icons
-    - assets/fonts/icons/furigana_on.svg
-    - assets/fonts/icons/furigana_off.svg
-    - assets/fonts/icons/space_bar_on.svg
-    - assets/fonts/icons/space_bar_off.svg
-    - assets/fonts/icons/corner_resize.svg
+    - assets/icons/
     # tf lite models
     - assets/tflite_models/
     # dictionary

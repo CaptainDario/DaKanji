@@ -116,7 +116,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                   }
                 },
                 child: SvgPicture.asset(
-                  "assets/fonts/icons/corner_resize.svg",
+                  "assets/icons/corner_resize.svg",
                   color: Colors.grey,
                 ),
               ),

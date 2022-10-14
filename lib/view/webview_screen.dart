@@ -166,7 +166,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                           child: RotationTransition(
                             turns: _loadingAnimation,
                             child: const Image(
-                              image: AssetImage('assets/images/icons/icon.png'),
+                              image: AssetImage('assets/images/dakanji/icon.png'),
                               width: 150,
                             ),
                           ),

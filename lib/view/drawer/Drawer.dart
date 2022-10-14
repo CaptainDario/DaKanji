@@ -263,7 +263,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   child: Image(
                                     width: _drawerWidth * 0.6,
                                     //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                    image: const AssetImage("assets/images/icons/banner.png"),
+                                    image: const AssetImage("assets/images/dakanji/banner.png"),
                                   ),
                                 ),
                               ),

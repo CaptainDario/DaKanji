@@ -645,13 +645,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.6.6"
-  multi_select_flutter:
-    dependency: "direct main"
-    description:
-      name: multi_select_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.2"
   nested:
     dependency: transitive
     description:
@@ -820,6 +813,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  reorderables:
+    dependency: "direct main"
+    description:
+      name: reorderables
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   share_plus:
     dependency: "direct main"
     description:

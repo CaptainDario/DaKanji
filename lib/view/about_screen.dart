@@ -51,7 +51,7 @@ class AboutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Image(image: AssetImage("assets/images/icons/banner.png"), width: 200,),
+              const Image(image: AssetImage("assets/images/dakanji/banner.png"), width: 200,),
               // show the about.md
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
@@ -117,7 +117,7 @@ class AboutScreen extends StatelessWidget {
                             applicationName: globalAppTitle,
                             applicationVersion: globalVersion,
                             applicationIcon: const Image(
-                              image: AssetImage("assets/images/icons/icon.png",),
+                              image: AssetImage("assets/images/dakanji/icon.png",),
                               width: 50,
                             ) 
                           );

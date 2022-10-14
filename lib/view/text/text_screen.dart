@@ -283,8 +283,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         child: IconButton(
                                           icon: SvgPicture.asset(
                                             !addSpaces ?
-                                            "assets/fonts/icons/space_bar_off.svg" :
-                                            "assets/fonts/icons/space_bar_on.svg",
+                                            "assets/icons/space_bar_off.svg" :
+                                            "assets/icons/space_bar_on.svg",
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
@@ -301,8 +301,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           key: GlobalKey(),
                                           icon: SvgPicture.asset(
                                             showRubys ?
-                                            "assets/fonts/icons/furigana_off.svg" :
-                                            "assets/fonts/icons/furigana_on.svg",
+                                            "assets/icons/furigana_off.svg" :
+                                            "assets/icons/furigana_on.svg",
                                             color: Colors.white,
                                           ),
                                           onPressed: () {

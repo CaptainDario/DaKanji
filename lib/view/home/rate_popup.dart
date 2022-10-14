@@ -22,7 +22,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
     context: context,
     headerAnimationLoop: false,
     customHeader: Image.asset(
-      "assets/images/icons/icon.png"
+      "assets/images/dakanji/icon.png"
     ),
     body: Center(
       child: Column(

@@ -1,7 +1,8 @@
-<img src="./assets/images/icons/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
+<img src="./assets/images/dakanji/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
-    <a href='https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' height="50"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  height="50"/>
+    <a href='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'>
+      <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  height="50"/>
     </a>
    <tr/>
   <tr>

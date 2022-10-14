@@ -16,6 +16,8 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * Thanks [Adrian Jordanov](https://www.1001fonts.com/theater-font.html) for the font.
   * UI
     * Shout out to Nurellina! Without your help the app would not look and feel half as good as it does now
+* Sources:
+  * [flag-icons](https://github.com/lipis/flag-icons)
 * Modified Packages: [bitmap](https://github.com/renancaraujo/bitmap), [snappable](https://github.com/MarcinusX/snappable)
 * A big shout out to all testers!
   * Android
