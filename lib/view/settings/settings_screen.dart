@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reorderables/reorderables.dart';
 import 'dart:io';
 
 import 'package:universal_io/io.dart';
@@ -8,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:window_size/window_size.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
@@ -59,8 +61,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
 
+    
 
     return Scaffold(
       body: DaKanjiDrawer(
@@ -235,27 +237,78 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         LocaleKeys.Dictionary_title.tr(),
                         autoSizeGroup: globalSettingsAutoSizeGroup
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Align(
+                          alignment: Alignment.centerLeft, 
+                          child: AutoSizeText(
+                            "Show translations in",
+                            group: globalSettingsAutoSizeGroup,
+                          )
+                        ),
+                      ),
+                      ReorderableWrap(
+                        spacing: 8.0,
+                        runSpacing: 4.0,
+                        needsLongPressDraggable: false,
+                        padding: const EdgeInsets.all(0),
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        runAlignment: WrapAlignment.spaceEvenly,
+                        children: List.generate(
+                          settings.dictionary.translationLanguageCodes.length,
+                          (index) {
+                            String lang = GetIt.I<Settings>().dictionary.translationLanguageCodes[index];
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
+                                    settings.dictionary.selectedTranslationLanguages.add(lang);
+                                  }
+                                  else{
+                                    if(settings.dictionary.selectedTranslationLanguages.length <= 1){
+                                      return;
+                                    }
+                                    settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                  }
+                                  settings.save();
+                                });
+                              },
+                              child: Chip(
+                                backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
+                                  ? Theme.of(context).highlightColor
+                                  : null,
+                                label: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                      height: 10,
+                                      child: SvgPicture.asset(
+                                        settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                      )
+                                    ),
+                                    Text("   $lang"),
+                                  ],
+                                )
+                              ),
+                            );
+                          }
+                        ),
+                        onReorder: (int oldIndex, int newIndex) {
+                          setState(() {
+                            // update order of list with languages
+                            String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
+                            settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
 
-                      MultiSelectDialogField(
-                        title: const Text("Select languages"),
-                        buttonText: Text(LocaleKeys.SettingsScreen_dict_languages.tr()),
-                        initialValue: 
-                          GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
-                        items: settings.dictionary.translationLanguages.map(
-                          (e) => MultiSelectItem(e, e)
-                        ).toList(),
-                        listType: MultiSelectListType.CHIP,
-                        onConfirm: (values) {
-                          if(values.isNotEmpty){
-                            GetIt.I<Settings>().dictionary.selectedTranslationLanguages =
-                              values;
-                          }
-                          else{
-                            GetIt.I<Settings>().dictionary.selectedTranslationLanguages =
-                              [settings.dictionary.translationLanguages[0]];
-                          }
-                          GetIt.I<Settings>().save();
-                        },
+                            // update list of selected languages
+                            settings.dictionary.selectedTranslationLanguages =
+                              settings.dictionary.translationLanguageCodes.where((e) => 
+                                settings.dictionary.selectedTranslationLanguages.contains(e)
+                              ).toList();
+                              
+                            settings.save();
+                          });
+                        }
                       ),
 
                       // #endregion

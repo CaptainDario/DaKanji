@@ -13,29 +13,27 @@ part 'settings_dictionary.g.dart';
 class SettingsDictionary with ChangeNotifier {
 
   /// All languages that are available in the dictionary
-  List<String> translationLanguages = [
+  List<String> translationLanguageCodes = [
     "eng",
-    "dut",
-    "fre",
     "ger",
-    "hun",
+    "fre",
     "rus",
-    //"slv",
     "spa",
-    "swe"
+    "hun",
+    "slv",
+    "dut"
   ];
   /// All languages that are available in the dictionary
   @JsonKey(ignore: true)
-  Map<String, String> translationLanguagesToEmoji = {
+  Map<String, String> translationLanguagesToSvgPath = {
     "eng" : "assets/icons/eng.svg",
-    "dut" : "assets/icons/dut.svg",
-    "fre" : "assets/icons/fre.svg",
     "ger" : "assets/icons/ger.svg",
-    "hun" : "assets/icons/hun.svg",
+    "fre" : "assets/icons/fre.svg",
     "rus" : "assets/icons/rus.svg",
-    //"slv" : "assets/icons/slv.svg",
     "spa" : "assets/icons/spa.svg",
-    "swe" : "assets/icons/swe.svg"
+    "hun" : "assets/icons/hun.svg",
+    "slv" : "assets/icons/slv.svg",
+    "dut" : "assets/icons/dut.svg"
   };
   /// All languages that are selected to be shown in the dict UI
   List<String> _selectedTranslationLanguages = ["eng"];

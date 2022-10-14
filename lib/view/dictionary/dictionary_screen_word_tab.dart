@@ -1,6 +1,10 @@
+import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:database_builder/database_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -135,29 +139,67 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                         const SizedBox(
                           height: 20,
                         ),
-                        // meaning 
+                        // meanings
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ...List.generate(
-                              widget.entry!.meanings[0].meanings.length,
-                              (int index) => Row(
+                          // create the children in the same order as in the settings
+                          children: GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((lang) {
+                            
+                            // 
+                            List<LanguageMeanings> meanings = widget.entry!.meanings.where(
+                              (element) => element.language == lang
+                            ).toList();
+                            
+                            if(meanings.isNotEmpty){
+                              LanguageMeanings meaning = meanings.first;
+                              return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "${(index+1).toString()}. ",
-                                    style: meaningsStyle
+                                  const SizedBox(height: 20,),
+                                  SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: SvgPicture.asset(
+                                      GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
+                                    ),
                                   ),
-                                  Expanded(
-                                    child: SelectableText(
-                                      widget.entry!.meanings[0].meanings[index],
-                                      style: meaningsStyle
+                                  ...List.generate(
+                                    meaning.meanings.length,
+                                    (int j) => Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${(j+1).toString()}. ",
+                                          style: meaningsStyle
+                                        ),
+                                        Expanded(
+                                          child: SelectableText(
+                                            meaning.meanings[j],
+                                            style: meaningsStyle
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  )
+                                ]
+                              );
+                            }
+                            else{
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10, width: double.infinity,),
+                                  SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: SvgPicture.asset(
+                                      GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
                                     ),
                                   ),
                                 ],
-                              )
-                            )
-                          ],
+                              );
+                            }
+                          }).toList()
+                          
                         ),
                         const SizedBox(
                           height: 20,

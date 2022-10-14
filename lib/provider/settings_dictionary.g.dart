@@ -8,6 +8,10 @@ part of 'settings_dictionary.dart';
 
 SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
     SettingsDictionary()
+      ..translationLanguageCodes =
+          (json['translationLanguageCodes'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList()
       ..selectedTranslationLanguages =
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)
@@ -15,5 +19,6 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
+      'translationLanguageCodes': instance.translationLanguageCodes,
       'selectedTranslationLanguages': instance.selectedTranslationLanguages,
     };
