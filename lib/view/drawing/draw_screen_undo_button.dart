@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/provider/drawing/strokes.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 
 
 
@@ -17,12 +14,7 @@ class DrawScreenUndoButton extends StatelessWidget {
     this.canvasSize,
     this.includeTutorial,
     {Key? key}
-  ) : super(key: key) {
-    Keybinder.bind(
-      Keybinding.from(GetIt.I<Settings>().drawing.kbUndoStroke),
-      () => undo(GetIt.I<DrawScreenState>().strokes)
-    );
-  }
+  ) : super(key: key) {}
 
   /// the size of the DrawingCanvas
   final double canvasSize;

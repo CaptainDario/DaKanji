@@ -9,9 +9,10 @@ part of 'settings_dictionary.dart';
 SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
     SettingsDictionary()
       ..translationLanguageCodes =
-          (json['translationLanguageCodes'] as List<dynamic>)
-              .map((e) => e as String)
-              .toList()
+          (json['translationLanguageCodes'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              ['eng', 'ger', 'fre', 'rus', 'spa', 'hun', 'slv', 'dut']
       ..selectedTranslationLanguages =
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)

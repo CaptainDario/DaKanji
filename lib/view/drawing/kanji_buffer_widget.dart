@@ -6,12 +6,10 @@ import 'package:flutter/physics.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
-import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
 
 
 
@@ -131,49 +129,6 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
     // make sure all characters are show even if page changed
     _scaleInNewCharController.value = 1.0;
 
-    // add shortcuts
-    // delete one char
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().drawing.kbWordBarDelChar,
-        }
-      ),
-      () => leftSwipe()
-    );
-    // TODO: handle tap
-    // TODO: handle long press
-    /*
-    // long press
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
-          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
-        }
-      ),
-      () => doubleTap()
-    );
-    // tap
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().settingsDrawing.kbWordBar,
-        }
-      ),
-      () => tap()
-    );
-    */
-    // delete all chars
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().drawing.kbDoublePressMod,
-          ...GetIt.I<Settings>().drawing.kbWordBar,
-        }
-      ),
-      () => doubleTap()
-    );
   }
 
   @override

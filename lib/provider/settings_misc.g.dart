@@ -8,8 +8,8 @@ part of 'settings_misc.dart';
 
 SettingsMisc _$SettingsMiscFromJson(Map<String, dynamic> json) => SettingsMisc()
   ..selectedStartupScreen = json['selectedStartupScreen'] as String
-  ..windowWidth = json['windowWidth'] as int
-  ..windowHeight = json['windowHeight'] as int
+  ..windowWidth = json['windowWidth'] as int? ?? 480
+  ..windowHeight = json['windowHeight'] as int? ?? 480
   ..selectedTheme = json['selectedTheme'] as String;
 
 Map<String, dynamic> _$SettingsMiscToJson(SettingsMisc instance) =>

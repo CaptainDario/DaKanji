@@ -39,8 +39,12 @@ class SettingsMisc with ChangeNotifier {
     Screens.text.name,
   ];
 
-  /// string deonting the screen that should be loaded at app start
-  late String _selectedStartupScreen;
+
+  @JsonKey(ignore: true)
+  static const String d_selectedStartupScreen = "dictionary";
+  /// string denoting the screen that should be loaded at app start
+  @JsonKey(defaultValue: d_selectedStartupScreen)
+  late String _selectedStartupScreen = d_selectedStartupScreen;
   /// string deonting the screen that should be loaded at app start
   String get selectedStartupScreen => _selectedStartupScreen;
   /// string deonting the screen that should be loaded at app start
@@ -49,14 +53,30 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+
+  /// The default value for `windowWidth`
+  @JsonKey(ignore: true)
+  static const int d_windowWidth = 480;
   /// width of the current window
-  int windowWidth = 480;
+  @JsonKey(defaultValue: d_windowWidth)
+  int windowWidth = d_windowWidth;
+
+
+  /// The default value for `windowHeight`
+  @JsonKey(ignore: true)
+  static const int d_windowHeight = 720;
   /// height of the current window
+  @JsonKey(defaultValue: d_windowWidth)
   int windowHeight = 720;
 
+
+  /// The default value for `selectedTheme` 
+  @JsonKey(ignore: true)
+  static const String d_selectedTheme = LocaleKeys.General_system;
   /// The theme which the application will use.
   /// System will match the settings of the system.
-  late String _selectedTheme;
+  @JsonKey(defaultValue: d_selectedTheme)
+  late String _selectedTheme = d_selectedTheme;
   /// The theme which the application will use.
   /// System will match the settings of the system.
   String get selectedTheme => _selectedTheme;

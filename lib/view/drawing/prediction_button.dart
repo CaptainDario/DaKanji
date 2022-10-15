@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
@@ -89,25 +88,6 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void dispose() { 
     controller.dispose();
-
-    Keybinder.remove(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().drawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().drawing.kbLongPressMod
-        }
-      ),
-      () => longPressed()
-    );
-    Keybinder.remove(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().drawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().drawing.kbDoublePressMod
-        }
-      ),
-      () => doubleTap()
-    );
 
     super.dispose();
   }

@@ -1,5 +1,3 @@
-
-import 'package:da_kanji_mobile/model/settings_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/model/settings_arguments.dart';
+import 'package:da_kanji_mobile/provider/settings_drawing.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
@@ -315,7 +315,7 @@ String openWithSelectedDictionary(String kanji) {
 
     // replace the placeholder with the actual character
     url = url.replaceFirst(
-      RegExp(GetIt.I<Settings>().drawing.kanjiPlaceholder), kanji
+      RegExp(SettingsDrawing.kanjiPlaceholder), kanji
     );
     url = Uri.encodeFull(url);
   }

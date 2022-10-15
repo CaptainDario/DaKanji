@@ -16,34 +16,41 @@ part 'settings_advanced.g.dart';
 class SettingsAdvanced with ChangeNotifier {
 
   /// The available backends for inference
-  List<String> inferenceBackends= [
+  @JsonKey(ignore: true)
+  List<String> inferenceBackends = [
       InferenceBackends.cpu.name.toString(),
     ];
 
+  /// The default value for `inferenceBackend`
+  @JsonKey(ignore: true)
+  static const String d_inferenceBackend = "cpu";
   /// The inference backend used for the tf lite interpreter
-  late String inferenceBackend;
+  @JsonKey(defaultValue: d_inferenceBackend)
+  late String inferenceBackend = d_inferenceBackend;
 
+  /// The default value for `useThanosSnap`
+  @JsonKey(ignore: true)
+  static const bool d_useThanosSnap = false;
   /// use a thanos like snap effect to dissolve the drawing from the screen
-  bool useThanosSnap = false;
+  @JsonKey(defaultValue: d_useThanosSnap)
+  bool useThanosSnap = d_useThanosSnap;
 
   SettingsAdvanced(){
     if(Platform.isAndroid) {
       inferenceBackends.addAll([
-        InferenceBackends.gpu.toString(),
-        InferenceBackends.nnapi.toString(),
+        InferenceBackends.gpu.name.toString(),
+        InferenceBackends.nnapi.name.toString(),
       ]);
     } else if(Platform.isIOS) {
       inferenceBackends.addAll([
-        InferenceBackends.gpu.toString(),
-        InferenceBackends.coreML.toString(),
+        InferenceBackends.gpu.name.toString(),
+        InferenceBackends.coreML.name.toString(),
       ]);
     }
     //else if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
     //  inferenceBackends.addAll([
     //    InferenceBackends.XXNPACK.toString()
     //  ]);
-
-    inferenceBackend = "";
   }
 
   /// Instantiates a new instance from a json map

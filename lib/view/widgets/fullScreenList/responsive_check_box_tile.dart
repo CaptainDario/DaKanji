@@ -1,4 +1,5 @@
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/helper/color_conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -66,6 +67,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
               ),
               Checkbox(
                 value: widget.value,
+                fillColor: MaterialStateProperty.all(Theme.of(context).highlightColor),
                 onChanged: (value){
                   setState(() {
                     if(value != null) {
