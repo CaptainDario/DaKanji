@@ -114,7 +114,7 @@ void openDictionary(BuildContext context, String char) async {
               context,
               "No translator installed", 
               LocaleKeys.General_download.tr(),
-              globalPlaystoreBaseUrl + globalGoogleTranslateId
+              g_PlaystoreBaseUrl + g_GoogleTranslateId
             );
           }
       }
@@ -124,7 +124,7 @@ void openDictionary(BuildContext context, String char) async {
         try{
           
           AndroidIntent intent = AndroidIntent(
-              package: globalAedictId,
+              package: g_AedictId,
               type: "text/plain",
               action: 'android.intent.action.SEND',
               category: 'android.intent.category.DEFAULT',
@@ -143,7 +143,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "aedict"
             }), 
             LocaleKeys.General_download.tr(), 
-            globalPlaystoreBaseUrl + globalAedictId 
+            g_PlaystoreBaseUrl + g_AedictId 
           );
         }
       }
@@ -152,7 +152,7 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().drawing.androidDictionaries[2]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
-              package: globalAkebiId,
+              package: g_AkebiId,
               componentName: 
                 'com.craxic.akebifree.activities.search.SearchActivity',
               type: "text/plain",
@@ -170,7 +170,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "akebi"
               }), 
               LocaleKeys.General_download.tr(), 
-              globalPlaystoreBaseUrl + globalAkebiId
+              g_PlaystoreBaseUrl + g_AkebiId
             );
           }
         }
@@ -180,7 +180,7 @@ void openDictionary(BuildContext context, String char) async {
         GetIt.I<Settings>().drawing.androidDictionaries[3]){
         if(Platform.isAndroid){
           AndroidIntent intent = AndroidIntent(
-              package: globalTakobotoId,
+              package: g_TakobotoId,
               action: 'jp.takoboto.SEARCH',
               arguments: <String, dynamic>{
                 "android.intent.extra.PROCESS_TEXT": char,
@@ -195,7 +195,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "takoboto"
               }), 
               LocaleKeys.General_download.tr(), 
-              globalPlaystoreBaseUrl + globalTakobotoId
+              g_PlaystoreBaseUrl + g_TakobotoId
             );
           }
         }
@@ -218,7 +218,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Shirabe Jisho"
             }),
             LocaleKeys.General_download.tr(), 
-            globalAppStoreBaseUrl + globalShirabeId
+            g_AppStoreBaseUrl + g_ShirabeId
           );
         }
       }
@@ -236,7 +236,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Imiwa?"
             }),
             LocaleKeys.General_download.tr(),
-            globalAppStoreBaseUrl + globalImiwaId
+            g_AppStoreBaseUrl + g_ImiwaId
           );
         }
       }
@@ -254,7 +254,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Japanese"
             }),
             LocaleKeys.General_download.tr(),
-            globalAppStoreBaseUrl + globalJapaneseId
+            g_AppStoreBaseUrl + g_JapaneseId
           );
         }
       }
@@ -273,7 +273,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Midori"
             }),
             LocaleKeys.General_download.tr(),
-            globalAppStoreBaseUrl + globalMidoriId
+            g_AppStoreBaseUrl + g_MidoriId
           );
         }
       }

@@ -89,7 +89,7 @@ class DrawerAppBar extends StatelessWidget {
                 return title;
               } (),
               maxLines: 1,
-              minFontSize: globalMinFontSize,
+              minFontSize: g_MinFontSize,
             ),
           ),
         ),

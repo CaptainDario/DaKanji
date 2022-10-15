@@ -138,7 +138,9 @@ class _ManualScreenState extends State<ManualScreen>
                           child: Card(
                             child: Center(
                               child: SingleChildScrollView(
-                                child: Text("unfolded ${buttonTexts[id]}"),
+                                child: Image.network(
+                                  "https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3"
+                                ),
                               )
                             ),
                           )
@@ -164,7 +166,12 @@ class _ManualScreenState extends State<ManualScreen>
                                 movingAnimationController.reverse();
                               },
                               child: Center(
-                                child: Row(
+                                child: 
+                                Image.network(
+                                  "https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3"
+                                )
+                                /*
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.book),
@@ -172,6 +179,7 @@ class _ManualScreenState extends State<ManualScreen>
                                     Text("folded ${buttonTexts[id]}"),
                                   ],
                                 )
+                                */
                               ),
                             ),
                           ),

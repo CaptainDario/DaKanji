@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // Drawing header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_drawing_title.tr(),
-                        autoSizeGroup: globalSettingsAutoSizeGroup
+                        autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // Dictionary Options
                       ResponsiveDropDownTile(
@@ -235,7 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.Dictionary_title.tr(),
-                        autoSizeGroup: globalSettingsAutoSizeGroup
+                        autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
@@ -243,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
                             "Show translations in",
-                            group: globalSettingsAutoSizeGroup,
+                            group: g_SettingsAutoSizeGroup,
                           )
                         ),
                       ),
@@ -318,7 +318,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
-                        autoSizeGroup: globalSettingsAutoSizeGroup
+                        autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // theme
                       ResponsiveDropDownTile(
@@ -391,7 +391,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
                             LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
-                            group: globalSettingsAutoSizeGroup,
+                            group: g_SettingsAutoSizeGroup,
                           ),
                         ),
                         children: [

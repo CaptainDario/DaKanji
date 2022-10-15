@@ -60,7 +60,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     maxLines: 2,
-                    group: globalSettingsAutoSizeGroup
+                    group: g_SettingsAutoSizeGroup
                   )
                 ),
               ),

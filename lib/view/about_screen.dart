@@ -25,17 +25,17 @@ class AboutScreen extends StatelessWidget {
   final bool openedByDrawer;
 
   final String about = LocaleKeys.AboutScreen_about_text.tr(namedArgs : {
-    "GITHUB_ISSUES" : globalGithubIssues,
-    "PRIVACY_POLICE" : globalPrivacyPoliceUrl,
+    "GITHUB_ISSUES" : g_GithubIssues,
+    "PRIVACY_POLICE" : g_PrivacyPoliceUrl,
     "RATE_ON_MOBILE_STORE" : GetIt.I<PlatformDependentVariables>().appStoreLink,
     "DAAPPLAB_STORE_PAGE" : GetIt.I<PlatformDependentVariables>().daapplabStorePage,
-    "DISCORD_SERVER" : globalDiscordInvite,
-    "PLAYSTORE_PAGE" : globalPlaystorePage,
-    "APPSTORE_PAGE" : globalAppStorePage,
-    "MACSTORE_PAGE" : globalAppStorePage,
-    "SNAPSTORE_PAGE" : globalSnapStorePage,
-    "MICROSOFT_STORE_PAGE" : globalMicrosoftStorePage,
-    "GITHUB_RELEASES_PAGE" : globalGithubReleasesPage,
+    "DISCORD_SERVER" : g_DiscordInvite,
+    "PLAYSTORE_PAGE" : g_PlaystorePage,
+    "APPSTORE_PAGE" : g_AppStorePage,
+    "MACSTORE_PAGE" : g_AppStorePage,
+    "SNAPSTORE_PAGE" : g_SnapStorePage,
+    "MICROSOFT_STORE_PAGE" : g_MicrosoftStorePage,
+    "GITHUB_RELEASES_PAGE" : g_GithubReleasesPage,
   });
 
   AboutScreen(this.openedByDrawer, {Key? key}) : super(key: key);
@@ -114,8 +114,8 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           showAboutDialog(
                             context: context,
-                            applicationName: globalAppTitle,
-                            applicationVersion: globalVersion,
+                            applicationName: g_AppTitle,
+                            applicationVersion: g_Version,
                             applicationIcon: const Image(
                               image: AssetImage("assets/images/dakanji/icon.png",),
                               width: 50,

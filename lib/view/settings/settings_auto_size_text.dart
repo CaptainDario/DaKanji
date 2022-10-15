@@ -30,7 +30,7 @@ class _SettingsAutoSizeTextState extends State<SettingsAutoSizeText> {
   Widget build(BuildContext context) {
     return AutoSizeText(
       widget.text,
-      minFontSize: globalMinFontSize,
+      minFontSize: g_MinFontSize,
       overflow: TextOverflow.ellipsis,
       //group: globalSettingsAutoSizeGroup,
       maxLines: widget.maxLines,

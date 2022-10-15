@@ -336,7 +336,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
 
                                   String deviceInfo = """System / App info:
-I am using DaKanji v.$globalVersion on ${Theme.of(context).platform.name}.
+I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
 
 ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
 """;
@@ -345,7 +345,7 @@ ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
                                     [screenshotFilePath],
                                     text: 
                                     feedback.text + deviceInfo,
-                                    subject: "DaKanji $globalVersion - feedback",
+                                    subject: "DaKanji $g_Version - feedback",
                                     sharePositionOrigin: () {
                                       RenderBox? box = context.findRenderObject() as RenderBox?;
                                       return box!.localToGlobal(Offset.zero) & box.size;

@@ -15,8 +15,8 @@ void openReview() async {
     inAppReview.requestReview();
   } else {
     inAppReview.openStoreListing(
-      appStoreId: globalAppStoreId, 
-      microsoftStoreId: globalMicrosoftStoreId
+      appStoreId: g_AppStoreId, 
+      microsoftStoreId: g_MicrosoftStoreId
     );
   }
 

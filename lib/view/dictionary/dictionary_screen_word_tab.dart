@@ -212,7 +212,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                                 aspectRatio: 1,
                                 child: WebView(
                                   gestureRecognizers: gestureRecognizers,
-                                  initialUrl: "$globalGoogleImgSearchUrl${widget.entry!.kanjis[0]} ${widget.entry!.readings[0]}",
+                                  initialUrl: "$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]} ${widget.entry!.readings[0]}",
                                   
                                 ),
                               )
@@ -243,16 +243,16 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                       onSelected: (String selection) {
                         // Wiki
                         if(selection == menuItems[0]) {
-                          launchUrlString("$globalWikipediaJpUrl${widget.entry!.kanjis[0]}");
+                          launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
                         }
                         if(selection == menuItems[1]) {
-                          launchUrlString("$globalWikipediaEnUrl${widget.entry!.meanings[0].meanings[0]}");
+                          launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0].meanings[0]}");
                         }
                         if(selection == menuItems[2]) {
-                          launchUrlString("$globalDbpediaUrl${widget.entry!.meanings[0].meanings[0]}");
+                          launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0].meanings[0]}");
                         }
                         if(selection == menuItems[3]) {
-                          launchUrlString("$globalWiktionaryUrl${widget.entry!.kanjis[0]}");
+                          launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
                         }
                       },
                       itemBuilder: (context) => List.generate(

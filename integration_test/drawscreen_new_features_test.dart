@@ -23,8 +23,8 @@ void main() {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
 
-    globalIsTestingAppStartup = true;
-    globalIsTestingAppStartupDrawscreenNewFeatures = true;
+    g_IsTestingAppStartup = true;
+    g_IsTestingAppStartupDrawscreenNewFeatures = true;
 
     // create app instance and wait until it finished initializing
     await app.main();

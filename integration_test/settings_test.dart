@@ -20,7 +20,7 @@ void main() {
 
   testWidgets("DrawScreen test", (WidgetTester tester) async {
     // #region 0 - setup
-    globalIsTestingDrawscreen = true;
+    g_IsTestingDrawscreen = true;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();

@@ -54,7 +54,7 @@ Future<void> main() async {
   
   runApp(
     EasyLocalization(
-      supportedLocales: globalDaKanjiLocalizations.map((e) => Locale(e)).toList(),
+      supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       useFallbackTranslations: true,
@@ -97,7 +97,7 @@ Future<void> init() async {
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   debugPrint(yaml['version']);
-  globalVersion = yaml['version'];  
+  g_Version = yaml['version'];  
 
   await copyDatabaseFilesFromAssets();
 
@@ -194,7 +194,7 @@ Future<void> initGetIt() async {
 /// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
   setWindowMinSize(const Size(480, 720));
-  setWindowTitle(globalAppTitle);
+  setWindowTitle(g_AppTitle);
   
   setWindowFrame(
     Rect.fromLTWH(
@@ -297,7 +297,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
         throw UnsupportedError("Unknown route: ${settings.name}");
       },
 
-      title: globalAppTitle,
+      title: g_AppTitle,
 
       // themes
       theme: lightTheme,
