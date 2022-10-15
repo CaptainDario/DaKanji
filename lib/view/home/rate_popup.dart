@@ -24,6 +24,9 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
     customHeader: Image.asset(
       "assets/images/dakanji/icon.png"
     ),
+    onDismissCallback: (type) => 
+      Navigator.pushNamedAndRemoveUntil(
+        context, "/home", (Route<dynamic> route) => false),
     body: Center(
       child: Column(
         //crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,6 +43,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
               // close button
               ElevatedButton(
                 onPressed: () {
+                  Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
                     context, "/home", (Route<dynamic> route) => false);
                 },

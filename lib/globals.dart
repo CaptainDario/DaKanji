@@ -13,7 +13,7 @@ const String globalAppLink = r"dakanji://dakanji/";
 String globalVersion = "";
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
-const int globalMinTimesOoenedToAsknotShowRate = 51;
+const int globalMinTimesOpenedToAsknotShowRate = 51;
 /// all versions which implemented new features for the drawing screen
 // ignore: non_constant_identifier_names
 List<String> globalDrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];

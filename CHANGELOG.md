@@ -1,6 +1,22 @@
 
 # Da Kanji - changelog
 
+## v 3.0.0 - 仕上げ (19.7.2022)
+
+new Features:
+
+- Inbuilt dictionary
+- Provide with feedback menu
+
+Changes:
+
+- updated to Flutter 3 (stable Linux, Mac)
+
+Fixed:
+
+- After tap outside of rate dialog stuck with blank screen
+- Rate dialog "close"-button does not work
+
 ## v 2.1.0 - 仕上げ (19.7.2022)
 
 new Features:

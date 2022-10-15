@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       else if(GetIt.I<UserData>().showRatePopup){
         // show a rating dialogue WITHOUT "do not show again"-option
-        if(appOpenedTimes < globalMinTimesOoenedToAsknotShowRate) {
+        if(appOpenedTimes < globalMinTimesOpenedToAsknotShowRate) {
           showRatePopup(context, false);
         } else {
           showRatePopup(context, true);
