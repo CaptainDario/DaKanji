@@ -67,6 +67,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
     int cnt = 0, cntInc = 13;
     for (var element in document.findAllElements("path")) {
       element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
+      element.setAttribute("stroke-width", "2");
 
       cnt += cntInc;
       if(cnt > 360) cnt = 0;
@@ -76,6 +77,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
     cnt = 0;
     for (var element in document.findAllElements("text")) {
       element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
+      element.setAttribute("stroke-width", "0.5");
 
       cnt += cntInc;
       if(cnt > 360) cnt = 0;
