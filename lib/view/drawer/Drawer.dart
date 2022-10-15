@@ -8,7 +8,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:cross_file/cross_file.dart';
 import 'package:universal_io/io.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 

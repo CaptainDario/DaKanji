@@ -53,7 +53,7 @@ class _DictionaryScreenState
   late void Function() changeTab;
   /// Current search in the dictionary
   DictSearch search = DictSearch();
-  /// A
+  /// A list containing all kanjiVGs that match the selected dict entry
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
   List<Kanjidic2Entry> kanjidic2Entries = [];
@@ -69,6 +69,7 @@ class _DictionaryScreenState
 
     return DaKanjiDrawer(
       currentScreen: Screens.dictionary,
+      animationAtStart: !widget.openedByDrawer,
       child: ChangeNotifierProvider<DictSearch>.value(
         value: search,
         child: LayoutBuilder(
