@@ -42,10 +42,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
   );
 
   /// the text style to use for all partOfSpeech elements
-  TextStyle partOfSpeechStyle = const TextStyle(
-    fontSize: 12,
-    color: Colors.blueGrey
-  );
+  TextStyle? partOfSpeechStyle;
 
   /// the text style to use for all meaning elements
   TextStyle meaningsStyle = const TextStyle(
