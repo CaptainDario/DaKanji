@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/show_cases/tutorial.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
-class DrawScreenTutorial {
-
-  /// all header texts of the DrawScreen tutorial
-  late List<String> drawScreenTutorialTitles;
-  /// all body texts of the DrawScreen tutorial
-  late List<String> drawScreenTutorialBodies;
-  /// all indexes of the DrawScreen tutorial steps 
-  late List<int> drawScreenTutorialIndexes;
-  /// all FocusNode of the DrawScreen tutorial
-  late List<FocusNode> drawScreenTutorialFocusNodes;
-  /// all OnBoardingStep of the DrawScreen tutorial
-  late List<OnboardingStep> drawScreenTutorialSteps;
+class DrawScreenTutorial extends Tutorial {
 
   /// all tutorial steps which belong to ...
   /// ... the multiCharSearch
@@ -38,7 +27,7 @@ class DrawScreenTutorial {
 
   DrawScreenTutorial() {
     
-    drawScreenTutorialTitles = [
+    titles = [
       LocaleKeys.DrawScreen_tutorial_begin_title.tr(),
       "",
       "",
@@ -55,7 +44,7 @@ class DrawScreenTutorial {
       "",
     ];
   
-    drawScreenTutorialBodies = [
+    bodies = [
       LocaleKeys.DrawScreen_tutorial_begin_text.tr(),
       LocaleKeys.DrawScreen_tutorial_drawing.tr(),
       LocaleKeys.DrawScreen_tutorial_undo.tr(),
@@ -71,35 +60,22 @@ class DrawScreenTutorial {
       LocaleKeys.DrawScreen_tutorial_multi_search_double_tap.tr(),
       LocaleKeys.DrawScreen_tutorial_multi_search_swipe_left.tr(),
     ];
- 
-    drawScreenTutorialIndexes = List.generate(
-      drawScreenTutorialBodies.length, (index) => index);
 
-    drawScreenTutorialFocusNodes = 
-      List.generate(drawScreenTutorialIndexes.length, (index) => FocusNode());
-
-    drawScreenTutorialSteps = 
-      List.generate(drawScreenTutorialIndexes.length, (index) => 
-        OnboardingStep(
-          focusNode: drawScreenTutorialFocusNodes[index], 
-          titleText: drawScreenTutorialTitles[index],
-          bodyText: drawScreenTutorialBodies[index]
-        )
-      );
+    initTutorial();
   
-    /// init the tutorial steps
+    /// get the different parts of the tutorial
     multiCharSearchSteps = 
-      [drawScreenTutorialFocusNodes[8]] + drawScreenTutorialFocusNodes.sublist(10, 14);
+      [focusNodes![8]] + focusNodes!.sublist(10, 14);
 
-    predictionbuttonSteps = drawScreenTutorialFocusNodes.sublist(5, 8) + 
-      [drawScreenTutorialFocusNodes[9]];
+    predictionbuttonSteps = focusNodes!.sublist(5, 8) + 
+      [focusNodes![9]];
 
-    predictionButtonGridSteps = drawScreenTutorialFocusNodes[4];
+    predictionButtonGridSteps = focusNodes![4];
 
-    undoButtonSteps = drawScreenTutorialFocusNodes[2];
+    undoButtonSteps = focusNodes![2];
     
-    clearButtonSteps = drawScreenTutorialFocusNodes[3];
+    clearButtonSteps = focusNodes![3];
     
-    canvasSteps = drawScreenTutorialFocusNodes[1];
+    canvasSteps = focusNodes![1];
   }
 }

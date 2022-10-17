@@ -137,6 +137,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showShowcaseDrawing = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                      ),
 
                       const Divider(),
 
@@ -151,7 +161,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
-                            "Show translations in",
+                            "Show translations in (drag to reorder)",
                             group: g_SettingsAutoSizeGroup,
                           )
                         ),
