@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -138,96 +137,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
-                      // settings
-                      /*
-                      ExpansionTile(
-                        tilePadding: EdgeInsets.all(0),
-                        title: Align(
-                          alignment: Alignment.centerLeft,
-                          child: AutoSizeText(
-                            "Key bindings",
-                            group: globalSettingsAutoSizeGroup,
-                          ),
-                        ),
-                        children: [
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbLongPressMod,
-                            hintText: "Long Press modifier",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbLongPressModDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbLongPressMod = key;
-                              settings.save();
-                            },
-                          ),
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbDoublePressMod,
-                            hintText: "Double Press modifier",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbDoublePressModDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbDoublePressMod = key;
-                              settings.save();
-                            },
-                          ),
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbClearCanvas,
-                            hintText: "Clear canvas",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbClearCanvasDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbClearCanvas = key;
-                              settings.save();
-                            },
-                          ),
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbUndoStroke,
-                            hintText: "Undo last stroke",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbUndoStrokeDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbUndoStroke = key;
-                              settings.save();
-                            },
-                          ),
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbWordBar,
-                            hintText: "Press word bar",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbWordBarDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbWordBar = key;
-                              settings.save();
-                            },
-                          ),
-                          ResponsiveKeybindingInput(
-                            keyBinding: settings.settingsDrawing.kbWordBarDelChar,
-                            hintText: "Delete character from word bar",
-                            defaultKeyBinding:
-                              settings.settingsDrawing.kbWordBarDelCharDefault,
-                            onChanged: (key) {
-                              settings.settingsDrawing.kbWordBarDelChar = key;
-                              settings.save();
-                            },
-                          ),
-
-                          ...List.generate(
-                            settings.settingsDrawing.kbPreds.length,
-                            (i) => ResponsiveKeybindingInput(
-                              keyBinding: settings.settingsDrawing.kbPreds[i],
-                              hintText: "Press prediction ${i+1}",
-                              defaultKeyBinding:
-                                settings.settingsDrawing.kbPredsDefaults[i],
-                              onChanged: (key) {
-                                settings.settingsDrawing.kbPreds[i] = key;
-                                settings.save();
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      */
-                      // #endregion
 
                       const Divider(),
 
