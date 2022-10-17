@@ -113,8 +113,8 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
       "if X weren't to [do], when X doesn't [do]",
       "not be able to [do], can't [do]",
       "isn't [done] (by ...), will not be [done] (by ...)",
-      "doesn't/won't make (someone) [do]\ndoesn't/won't let (someone) [do]",
-      "isn't made/won't be made to [do] (by someone)"
+      "doesn't / won't make / let (someone) [do]",
+      "isn't made / won't be made to [do] (by someone)"
     ];
 
     super.initState();
@@ -285,58 +285,80 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                           ),
                         if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))
                           ExpansionTile(
+                            childrenPadding: EdgeInsets.all(16),
                             title: const Text("Conjugation"),
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: 
-                                    List.generate(conjugationTitles.length, (i) =>
-                                      [
-                                        Text(
-                                          conjugationTitles[i],
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        SizedBox(height: 8,),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  widget.entry!.kanjis[0]
-                                                )
-                                              )
-                                            ),
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  widget.entry!.kanjis[0]
-                                                )
-                                              )
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(conjugationExplanationsPositive[i])
-                                              )
-                                            ),
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(conjugationExplanationsNegative[i])
-                                              )
-                                            )
-                                          ],
-                                        )
-                                      ]
-                                    ).expand((i) => i).toList()
-                                  
+                            children: List.generate(conjugationTitles.length, (i) =>
+                              [
+                                // Grammar "name"
+                                SelectableText(
+                                  conjugationTitles[i],
+                                  style: TextStyle(fontSize: 20),
                                 ),
-                              )
-                            ],
+                                // Grammar "explanation"
+                                if(conjugationExplanationsNegative[i] != "")
+                                  SelectableText(
+                                    conjugationExplanationsNegative[i],
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                SizedBox(height: 8,),
+                                Row(
+                                  children: [
+                                    // positive conjugations
+                                    Expanded(
+                                      child: Center(
+                                        child: SelectableText.rich(
+                                          TextSpan(
+                                            children: [
+                                              // normal form
+                                              TextSpan(
+                                                text: widget.entry!.kanjis[0],
+                                                style: TextStyle(
+                                                  fontSize: 20
+                                                ),
+                                              ),
+                                              // polite form
+                                              TextSpan(
+                                                text: "、 " + widget.entry!.kanjis[0],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.grey
+                                                ),
+                                              ),
+                                            ]
+                                          )
+                                        )
+                                      )
+                                    ),
+                                    // negative conjugations
+                                    Expanded(
+                                      child: Center(
+                                        child: SelectableText.rich(
+                                          TextSpan(
+                                            children: [
+                                              // normal form
+                                              TextSpan(
+                                                text: widget.entry!.kanjis[0],
+                                                style: TextStyle(
+                                                  fontSize: 20
+                                                ),
+                                              ),
+                                              // polite form
+                                              TextSpan(
+                                                text: "、 " + widget.entry!.kanjis[0],
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.grey
+                                                ),
+                                              ),
+                                            ]
+                                          )
+                                        )
+                                      )
+                                    ),
+                                  ],
+                                ),
+                              ]
+                            ).expand((i) => i).toList()
                           ),
                         const ExpansionTile(
                           title: Text("Proverbs"),
