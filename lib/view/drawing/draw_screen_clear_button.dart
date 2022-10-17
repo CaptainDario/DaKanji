@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:keybinder/keybinder.dart';
 
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
