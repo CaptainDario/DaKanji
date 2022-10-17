@@ -62,9 +62,77 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
+  late final List<String> conjugationTitles;
+
+  late final List<String> conjugationExplanationsPositive;
+
+  late final List<String> conjugationExplanationsNegative;
+  
+
+  @override
+  void initState() {
+
+    conjugationTitles = [
+      "Present, (Future)",
+      "Past",
+      "て-form, Continuative",
+      "Progressive",
+      "Volitional",
+      "Imperative",
+      "Request",
+      "Provisional",
+      "Conditional",
+      "Potential",
+      "Passive, Respectful",
+      "Causative",
+      "Causative passive"
+    ];
+
+    conjugationExplanationsPositive = [
+      "[does]",
+      "[did]",
+      "",
+      "[doing], to be [doing]",
+      "let's [do]!, I/we will [do], I/we intend to [do]",
+      "[do] !",
+      "please [do]",
+      "if X [does], if X [is ~]",
+      "if X were to [do], when X [does]",
+      "be able to [do], can [do]",
+      "is [done] (by ...), will be [done] (by ...)",
+      "makes/will make (someone) [do]\nlets/will let (someone) [do]",
+      "is made/will be made to [do] (by someone)"
+    ];
+
+    conjugationExplanationsNegative = [
+      "will [do]",
+      "didn't [do]",
+      "",
+      "not [doing]",
+      "I will not [do], I do not intend to [do]",
+      "don't [do] !",
+      "please don't [do]",
+      "if X doesn't [do], if X [is not ~]",
+      "if X weren't to [do], when X doesn't [do]",
+      "not be able to [do], can't [do]",
+      "isn't [done] (by ...), will not be [done] (by ...)",
+      "doesn't/won't make (someone) [do]\ndoesn't/won't let (someone) [do]",
+      "isn't made/won't be made to [do] (by someone)"
+    ];
+
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+    if(partOfSpeechStyle == null){
+      partOfSpeechStyle = TextStyle(
+        fontSize: 12,
+        color: Theme.of(context).hintColor
+      );
+    }
 
     if(widget.entry == null){
       return Container();
@@ -218,7 +286,61 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                               )
                             ],
                           ),
-                        //},
+                        if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))
+                          ExpansionTile(
+                            title: const Text("Conjugation"),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: 
+                                    List.generate(conjugationTitles.length, (i) =>
+                                      [
+                                        Text(
+                                          conjugationTitles[i],
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        SizedBox(height: 8,),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  widget.entry!.kanjis[0]
+                                                )
+                                              )
+                                            ),
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  widget.entry!.kanjis[0]
+                                                )
+                                              )
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(conjugationExplanationsPositive[i])
+                                              )
+                                            ),
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(conjugationExplanationsNegative[i])
+                                              )
+                                            )
+                                          ],
+                                        )
+                                      ]
+                                    ).expand((i) => i).toList()
+                                  
+                                ),
+                              )
+                            ],
+                          ),
                         const ExpansionTile(
                           title: Text("Proverbs"),
                           children: [
