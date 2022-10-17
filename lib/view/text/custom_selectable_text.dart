@@ -318,6 +318,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return _renderParagraph!.getPositionForOffset(textOffset);
   }
 
+  // ignore: unused_element
   bool _isOffsetOverText(Offset localOffset) {
     final rects = _computeAllTextBoxRects();
     for (final rect in rects) {
