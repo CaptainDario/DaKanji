@@ -42,27 +42,6 @@ class _PredictionButtonState extends State<PredictionButton>
   @override
   void initState() { 
     super.initState();
-    //TODO: ADD SHORTCUTS
-    /*
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().settingsDrawing.kbLongPressMod,
-        }
-      ),
-      () => longPressed()
-    );
-    Keybinder.bind(
-      Keybinding.from(
-        {
-          ...GetIt.I<Settings>().settingsDrawing.kbPreds[widget.nr],
-          ...GetIt.I<Settings>().settingsDrawing.kbDoublePressMod
-        }
-      ),
-      () => doubleTap()
-    );
-    */
 
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
