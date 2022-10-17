@@ -33,7 +33,7 @@ dependencies:
   tuple: 2.0.0
   lottie: 1.2.1
   flutter_svg: 1.1.5
-  onboarding_overlay : 3.0.0
+  onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
   feedback: 2.5.0
