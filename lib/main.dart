@@ -254,6 +254,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                       GetIt.I<UserData>().showShowcaseDrawing = false;
                       GetIt.I<UserData>().save();
                     }
+                    else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
+                      debugPrint("DictionaryScreen tutorial done, saving...");
+                      GetIt.I<UserData>().showShowcaseDictionary = false;
+                      GetIt.I<UserData>().save();
+                    }
                   },
                   child: screen,
                 );
@@ -280,7 +285,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/drawing":
             return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
           case "/dictionary":
-            return switchScreen(DictionaryScreen(args.navigatedByDrawer, false, false, args.dictSearch));
+            return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, false, false));
           case "/settings":

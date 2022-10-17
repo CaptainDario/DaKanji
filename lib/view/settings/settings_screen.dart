@@ -219,6 +219,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         }
                       ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showShowcaseDictionary = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                      ),
+
+                      // #endregion
 
                       // #endregion
 
