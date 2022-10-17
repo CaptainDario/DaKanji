@@ -816,19 +816,17 @@ packages:
   share_plus:
     dependency: "direct main"
     description:
-      path: "packages/share_plus/share_plus"
-      ref: HEAD
-      resolved-ref: "7b6ac7ebc33e3bfd023030e61268cff0fa03d913"
-      url: "https://github.com/fluttercommunity/plus_plugins/"
-    source: git
-    version: "4.5.3"
+      name: share_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0"
   share_plus_linux:
     dependency: transitive
     description:
       name: share_plus_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   share_plus_macos:
     dependency: transitive
     description:
@@ -851,14 +849,12 @@ packages:
     source: hosted
     version: "3.1.0"
   share_plus_windows:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "packages/share_plus/share_plus_windows"
-      ref: HEAD
-      resolved-ref: "1a9720128d22d883c57fc5301cb4363743b7a1dc"
-      url: "https://github.com/fluttercommunity/plus_plugins.git"
-    source: git
-    version: "3.0.1"
+      name: share_plus_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   shared_preferences:
     dependency: "direct main"
     description:
