@@ -1,46 +1,59 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+
+import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals.dart';
 
+part 'user_data.g.dart';
 
 
+
+/// Class that stores preferences and information about the user
+/// 
+/// To update the toJson code run `flutter pub run build_runner build`
+@JsonSerializable()
 class UserData{
 
   /// How often was the app opened by the user.
-  late int _appOpenedTimes;
+  @JsonKey(defaultValue: 0)
+  int appOpenedTimes = 0;
 
   /// Did the user already chose to not see the rate dialogue again
-  late bool doNotShowRateAgain;
+  @JsonKey(defaultValue: false)
+  bool doNotShowRateAgain = false;
 
   /// The version of the app which was used last time
-  late String _versionUsed;
+  @JsonKey(defaultValue: "")
+  String versionUsed = "";
 
   /// should the showcase of the draw screen be shown
-  late bool showShowcaseDrawing;
+  @JsonKey(defaultValue: true)
+  bool showShowcaseDrawing = true;
+
+  /// should the showcase of the dictionary screen be shown
+  @JsonKey(defaultValue: true)
+  bool showShowcaseDictionary = true;
+
+  /// should the showcase of the text screen be shown
+  @JsonKey(defaultValue: true)
+  bool showShowcaseText = true;
 
   /// should the onboarding be shown
-  late bool showOnboarding;
+  @JsonKey(defaultValue: true)
+  bool showOnboarding = true;
 
   /// should the rate popup be shown
-  late bool showRatePopup;
+  @JsonKey(defaultValue: false)
+  bool showRatePopup = false;
 
   /// should the onboarding be shown
-  late bool showChangelog;
+  @JsonKey(defaultValue: false)
+  bool showChangelog = false;
 
 
-
-  int get appOpenedTimes{
-    return _appOpenedTimes;
-  }
-
-  //set versionUsed(String version) {
-  //  _versionUsed = version;
-  //}
-
-  String get versionUsed{
-    return _versionUsed;
-  }
 
   UserData();
 
@@ -52,29 +65,20 @@ class UserData{
   /// If the changelog was updated or this is the first time opening the app,
   /// show the onboarding screen
   Future<void> init () async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    _appOpenedTimes = (prefs.getInt('appOpenedTimes') ?? 0) + 1;
-    doNotShowRateAgain = prefs.getBool('doNotShowRateAgain') ?? false;
-    _versionUsed = prefs.getString('versionUsed') ?? g_Version;
-    showShowcaseDrawing = prefs.getBool('showShowcaseDrawing') ?? false;
-    showOnboarding = prefs.getBool('showOnboarding') ?? false;
-    showRatePopup = prefs.getBool('showRatePopup') ?? false;
-    showChangelog = prefs.getBool('showChangelog') ?? false;
 
     // TESTING
     if(g_IsTestingAppStartupOnboardingNewFeatures){
-      _versionUsed = "1.0.0+15";
+      versionUsed = "1.0.0+15";
       g_Version = g_OnboardingNewPages[0] + "+1";
-      _appOpenedTimes = 5;
+      appOpenedTimes = 5;
     }
     if(g_IsTestingAppStartupDrawscreenNewFeatures){
-      _versionUsed = "1.0.0+15";
+      versionUsed = "1.0.0+15";
       g_Version = g_DrawingScreenNewFeatures[0] + "+1";
-      _appOpenedTimes = 5;
+      appOpenedTimes = 5;
     }
 
-    debugPrint("The app was opened for the ${_appOpenedTimes.toString()} time");
+    debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
     debugPrint("used: $versionUsed now: $g_Version");
@@ -82,7 +86,7 @@ class UserData{
       debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
-      _versionUsed = g_Version;
+      versionUsed = g_Version;
 
       String v = g_Version.replaceRange(g_Version.indexOf("+"), g_Version.length, "");
       // this version has new features for drawing screen => show tutorial
@@ -116,17 +120,35 @@ class UserData{
     save();
   }
 
-  /// Saves the user data to disk.
-  void save () async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    /// Saves all settings to the SharedPreferences.
+  Future<void> save() async {
+    // obtain shared preferences
+    final prefs = await SharedPreferences.getInstance();
 
-    prefs.setInt('appOpenedTimes', _appOpenedTimes);
-    prefs.setBool('doNotShowRateAgain', doNotShowRateAgain);
-    prefs.setString('versionUsed', versionUsed);
-    prefs.setBool('showShowcaseDrawing', showShowcaseDrawing);
-    prefs.setBool('showOnboarding', showOnboarding);
-    prefs.setBool('showRatePopup', showRatePopup);
-    prefs.setBool('showChangelog', showChangelog);
+    // set value in shared preferences
+    prefs.setString('userData', json.encode(toJson()));
   }
+
+  /// Load all saved settings from SharedPreferences and returns a new `UserData`
+  /// instance.
+  Future<UserData> load() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    // drawing screen
+    String tmp = prefs.getString('userData') ?? "";
+    if(tmp != "") {
+      return UserData.fromJson(json.decode(tmp));
+    }
+    else {
+      return UserData();
+    }
+  }
+
+  /// Instantiates a new instance from a json map
+  factory UserData.fromJson(Map<String, dynamic> json) 
+    => _$UserDataFromJson(json);
+
+  /// Create a JSON map from this object
+  Map<String, dynamic> toJson() => _$UserDataToJson(this);
 
 }

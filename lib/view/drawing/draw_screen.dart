@@ -74,14 +74,15 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       GetIt.I<DrawingInterpreter>().init();
     }
 
+    // init tutorial
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
 
         onboarding.showWithSteps(
-          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes[0],
-          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes
+          GetIt.I<Tutorials>().drawScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().drawScreenTutorial.indexes!
         );
       }
     });

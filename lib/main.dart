@@ -156,7 +156,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
   await GetIt.I<Changelog>().init();
-  GetIt.I.registerSingleton<UserData>(UserData());
+  GetIt.I.registerSingleton<UserData>(await (UserData().load()));
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
@@ -249,7 +249,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   autoSizeTexts: true,
                   onChanged: (int index){
                     debugPrint("Tutorial step: $index");
-                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
+                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
                       debugPrint("DrawScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseDrawing = false;
                       GetIt.I<UserData>().save();
