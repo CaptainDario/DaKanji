@@ -91,30 +91,26 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                           },
                         ),
                       ),
-                      SizedBox(
-                        //height: widget.height * 0.1,
-                        //width: widget.height * 0.1,
-                        child: IconButton(
-                          onPressed: () async {
-                            if(searchInputController.text != ""){
-                              searchInputController.text = "";
-                              context.read<DictSearch>().currentSearch = "";
-                              context.read<DictSearch>().searchResults = [];
-                            }
-                            else{
-                              String data = (await Clipboard.getData('text/plain'))?.text ?? "";
-                              searchInputController.text = data;
-                              context.read<DictSearch>().currentSearch = data;
-                              context.read<DictSearch>().searchResults = searchInDict(data);
-                              
-                            }
-                            setState(() { });
-                          },
-                          icon: Icon(
-                            searchInputController.text == ""
-                              ? Icons.copy
-                              : Icons.clear
-                          ),
+                      IconButton(
+                        onPressed: () async {
+                          if(searchInputController.text != ""){
+                            searchInputController.text = "";
+                            context.read<DictSearch>().currentSearch = "";
+                            context.read<DictSearch>().searchResults = [];
+                          }
+                          else{
+                            String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+                            searchInputController.text = data;
+                            context.read<DictSearch>().currentSearch = data;
+                            context.read<DictSearch>().searchResults = searchInDict(data);
+                            
+                          }
+                          setState(() { });
+                        },
+                        icon: Icon(
+                          searchInputController.text == ""
+                            ? Icons.copy
+                            : Icons.clear
                         ),
                       )
                     ],
