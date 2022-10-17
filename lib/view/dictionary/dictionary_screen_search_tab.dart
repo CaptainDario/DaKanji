@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:kana_kit/kana_kit.dart';
@@ -56,13 +57,12 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            SizedBox(height: widget.height*0.025,),
-            SizedBox(
-              height: widget.height * 0.1,
-              width: widget.width,
-              child: Card(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(height: widget.height*0.025,),
+              Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -70,15 +70,21 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                       Expanded(
                         child: TextField(
                           controller: searchInputController,
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: 'Enter a search term',
+                          ),
+                          style: TextStyle(
+                            fontSize: 20
+                          ),
                           onChanged: (text) async {
                             // only search in dictionary if the query changed
                             if(lastInput == text) {
                               return;
                             }
 
-                            context.read<DictSearch>().currentSearch = text;
-                            
                             setState(() {
+                              context.read<DictSearch>().currentSearch = text;
                               context.read<DictSearch>().searchResults = searchInDict(text);
                               lastInput = text;
                             });
@@ -86,15 +92,28 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                         ),
                       ),
                       SizedBox(
-                        height: widget.height * 0.1,
-                        width: widget.height * 0.1,
-                        child: GestureDetector(
-                          onTap: () {
-                            searchInputController.clear();
-                            context.read<DictSearch>().searchResults = [];
+                        //height: widget.height * 0.1,
+                        //width: widget.height * 0.1,
+                        child: IconButton(
+                          onPressed: () async {
+                            if(searchInputController.text != ""){
+                              searchInputController.text = "";
+                              context.read<DictSearch>().currentSearch = "";
+                              context.read<DictSearch>().searchResults = [];
+                            }
+                            else{
+                              String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+                              searchInputController.text = data;
+                              context.read<DictSearch>().currentSearch = data;
+                              context.read<DictSearch>().searchResults = searchInDict(data);
+                              
+                            }
+                            setState(() { });
                           },
-                          child: const Icon(
-                            Icons.clear
+                          icon: Icon(
+                            searchInputController.text == ""
+                              ? Icons.copy
+                              : Icons.clear
                           ),
                         ),
                       )
@@ -102,33 +121,31 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: widget.height*0.025,),
-            SizedBox(
-              height: widget.height * 0.85,
-              width: widget.width,
-              child: ListView.builder(
-                itemCount: context.watch<DictSearch>().searchResults.length,
-                itemBuilder: ((context, index) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: SearchResultCard(
-                          dictEntry: context.watch<DictSearch>().searchResults[index],
-                          resultIndex: index,
-                          onPressed: (selection) {
-                            context.read<DictSearch>().selectedResult = 
-                              context.read<DictSearch>().searchResults[index];
-                          }
-                        )
+              SizedBox(height: widget.height*0.025,),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: context.watch<DictSearch>().searchResults.length,
+                  itemBuilder: ((context, index) {
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      child: SlideAnimation(
+                        child: FadeInAnimation(
+                          child: SearchResultCard(
+                            dictEntry: context.watch<DictSearch>().searchResults[index],
+                            resultIndex: index,
+                            onPressed: (selection) {
+                              context.read<DictSearch>().selectedResult = 
+                                context.read<DictSearch>().searchResults[index];
+                            }
+                          )
+                        ),
                       ),
-                    ),
-                  );
-                })
+                    );
+                  })
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Positioned(
           bottom: widget.height*0.02,
