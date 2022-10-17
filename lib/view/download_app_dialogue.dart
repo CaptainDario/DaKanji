@@ -14,7 +14,7 @@ void showDownloadDialogue(
 
   AwesomeDialog(
     context: context,
-    dialogType: DialogType.NO_HEADER,
+    dialogType: DialogType.noHeader,
     headerAnimationLoop: false,
     body: Column(
       children: [
