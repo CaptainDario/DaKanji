@@ -242,6 +242,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion
 
+                      const Divider(),
+
+                      // #region - Text header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.TextScreen_title.tr(),
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showShowcaseText = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                      ),
+
                       // #endregion
 
                       const Divider(),
@@ -285,16 +304,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
                           }
-                        },
-                      ),
-                      // reshow tutorial
-                      ResponsiveIconButtonTile(
-                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
-                        icon: Icons.replay_outlined,
-                        onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseDrawing = true;
-                          settings.save();
-                          Phoenix.rebirth(context);
                         },
                       ),
                       // windows size

@@ -3,14 +3,17 @@ import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:kagome_dart/kagome_dart.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/view/text/custom_text_popup.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:da_kanji_mobile/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/model/user_data.dart';
 
 
 
@@ -20,22 +23,19 @@ import 'package:url_launcher/url_launcher_string.dart';
 /// Those can than be copied / opened in dictionaries by buttons.
 class TextScreen extends StatefulWidget {
 
-  /// was this page opened by clicking on the tab in the drawer
-  final bool openedByDrawer;
-  /// should the hero widgets for animating to the webview be included
-  final bool includeHeroes;
-  /// should the focus nodes for the tutorial be included
-  final bool includeTutorial;
-  
-  final TextEditingController inputController = TextEditingController();
-
   TextScreen(
     this.openedByDrawer, 
-    this.includeHeroes, 
     this.includeTutorial, 
     {
       Key? key
     }) : super(key: key);
+
+  /// was this page opened by clicking on the tab in the drawer
+  final bool openedByDrawer;
+  /// should the focus nodes for the tutorial be included
+  final bool includeTutorial;
+  
+  final TextEditingController inputController = TextEditingController();
 
   @override
   _TextScreenState createState() => _TextScreenState();
@@ -117,18 +117,18 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       CurveTween(curve: Curves.easeInOut)
     );
 
-    // Show the tutorial when opening this screen for the first time
-    /*WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+    // init tutorial
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
+        GetIt.I<UserData>().showShowcaseText && widget.includeTutorial) {
 
         onboarding.showWithSteps(
-          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes[0],
-          GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes
+          GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().textScreenTutorial.indexes!
         );
       }
-    });*/
+    });
   }
 
   @override
