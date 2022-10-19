@@ -106,20 +106,41 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           const Text(
                             "Meanings:"
                           ),
-                          SelectableText(
-                            meanings.join(", ")
+                          Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              Flexible(
+                                child: SelectableText(
+                                  meanings.join(", ")
+                                ),
+                              ),
+                            ],
                           ),
                           const Text(
                             "On:"
                           ),
-                          SelectableText(
-                            onReadings.join(", ")
+                          Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              Flexible(
+                                child: SelectableText(
+                                  onReadings.join(", ")
+                                ),
+                              ),
+                            ],
                           ),
                           const Text(
                             "Kun:"
                           ),
-                          SelectableText(
-                            kunReadings.join(", ")
+                          Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              Flexible(
+                                child: SelectableText(
+                                  kunReadings.join(", ")
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
