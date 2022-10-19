@@ -64,7 +64,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
     for (var i = 0; i < widget.kanjidic2entry.meanings.length; i++) {
       // init meaning list with all meanings that match `targetLanguage`
-      if(widget.kanjidic2entry.meanings[i].language == widget.targetLanguage) {
+      if(widget.targetLanguages.any(
+        (l) => l.contains(widget.kanjidic2entry.meanings[i].language)
+      )) {
         meanings.add(widget.kanjidic2entry.meanings[i].meaning);
       }
     }
