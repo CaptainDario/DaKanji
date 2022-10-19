@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -92,6 +94,34 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                         ),
                       ),
                       IconButton(
+                        onPressed: () {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            dismissOnTouchOutside: true,
+                            body: RadicalSearchWidget(
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              width: MediaQuery.of(context).size.width * 0.85,
+                            ),
+                            btnOk: ElevatedButton(
+                              onPressed: (){},
+                              child: Text("Ok"),
+                            )
+                          ).show();
+                        },
+                        icon: Text(
+                          "部",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
+                          ),
+                        ),
+                        //icon: Icon(Icons.kayaking),
+                      ),
+                      IconButton(
                         onPressed: () async {
                           if(searchInputController.text != ""){
                             searchInputController.text = "";
@@ -110,7 +140,8 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                         icon: Icon(
                           searchInputController.text == ""
                             ? Icons.copy
-                            : Icons.clear
+                            : Icons.clear,
+                          size: 20,
                         ),
                       )
                     ],
