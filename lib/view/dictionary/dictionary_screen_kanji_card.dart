@@ -15,8 +15,11 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   const DictionaryScreenKanjiCard(
     this.kanjiVG,
     this.kanjidic2entry,
-    this.targetLanguage,
-    {Key? key}
+    this.targetLanguages,
+    {
+      this.alternatives,
+      Key? key
+    }
   ) : super(key: key);
 
   /// The kanji that should be shown in this card as a svg string
@@ -24,7 +27,9 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   /// List of all kanjidict entries 
   final Kanjidic2Entry kanjidic2entry;
   /// String denoting the target language
-  final String targetLanguage;
+  final List<String> targetLanguages;
+  /// Alternative versions of this kanji
+  final List<DictionaryScreenKanjiCard>? alternatives;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
@@ -136,7 +141,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       constrains.maxWidth - 16
                     ),
                   ]
-                )
+                ),
+                if(this.widget.alternatives != null && this.widget.alternatives != [])
+                  ExpansionTile(
+                    title: const Text("Alternate forms"),
+                    children: this.widget.alternatives!
+                  ),
               ],
             ),
           );

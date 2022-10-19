@@ -1,8 +1,10 @@
+import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/dictionary_screen_kanji_card.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -27,16 +29,37 @@ class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
-          ...List.generate(widget.kanjiVGs.length,
-            (int i) => 
-            DictionaryScreenKanjiCard(
-              widget.kanjiVGs[i],
-              widget.kanjidic2entries[i],
-              "en"
-            ),
+        children: () {
+
+          List<List<int>> idxs = [[0]];
+
+          for (int i = 1; i < widget.kanjiVGs.length; i++) {
+
+            // is this and the previous kanji the same
+            if(widget.kanjiVGs[i-1].character == widget.kanjiVGs[i].character){
+              idxs[idxs.length-1].add(i);
+            }
+            else{
+              idxs.add([ i]);
+            }
+          }
+          return List.generate(idxs.length, 
+          (i) => DictionaryScreenKanjiCard(
+            widget.kanjiVGs[idxs[i][0]],
+            widget.kanjidic2entries[idxs[i][0]],
+            GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+            alternatives: idxs[i].length > 1
+              ? List.generate(idxs[i].length-1, 
+                (j) => DictionaryScreenKanjiCard(
+                  widget.kanjiVGs[idxs[i][j+1]],
+                  widget.kanjidic2entries[idxs[i][j+1]],
+                  GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+                ) 
+              )
+              : null
           )
-        ],
+        );
+        } ()
       ),
     );
   }
