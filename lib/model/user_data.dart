@@ -66,6 +66,8 @@ class UserData{
   /// show the onboarding screen
   Future<void> init () async {
 
+    appOpenedTimes++;
+
     // TESTING
     if(g_IsTestingAppStartupOnboardingNewFeatures){
       versionUsed = "1.0.0+15";
@@ -102,8 +104,8 @@ class UserData{
 
     // this is the first start of the app
     if (appOpenedTimes == 1){
-      showShowcaseDrawing = true;
-      showOnboarding = true;
+      showChangelog = false;
+      versionUsed = g_Version;
     }
 
     // should a rate popup be shown

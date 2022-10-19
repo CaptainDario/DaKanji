@@ -29,7 +29,6 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
         context, "/home", (Route<dynamic> route) => false),
     body: Center(
       child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // ask for a rating text
           Text(
@@ -45,7 +44,8 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
-                    context, "/home", (Route<dynamic> route) => false);
+                    context, "/home", (Route<dynamic> route) => false
+                  );
                 },
                 child: Text(LocaleKeys.General_close.tr())
               ),
@@ -67,7 +67,8 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                     GetIt.I<UserData>().doNotShowRateAgain = true;
                     GetIt.I<UserData>().save();
                     Navigator.pushNamedAndRemoveUntil(
-                      context, "/home", (Route<dynamic> route) => false);
+                      context, "/home", (Route<dynamic> route) => false
+                    );
                   },
                   child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())
                 ),

@@ -6,7 +6,7 @@
 new Features:
 
 - Inbuilt dictionary
-- Provide with feedback menu
+- Provide feedback with feedback menu
 
 Changes:
 
@@ -16,6 +16,8 @@ Fixed:
 
 - After tap outside of rate dialog stuck with blank screen
 - Rate dialog "close"-button does not work
+
+-------------------------------------------------------------------------
 
 ## v 2.1.0 - 仕上げ (19.7.2022)
 

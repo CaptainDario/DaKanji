@@ -112,8 +112,9 @@ Future<void> init() async {
   }
 }
 
-/// Download the objectbox databases
-Future<void> downloadDatabases() async {
+/// Download the objectbox databases, TF Lite models, ... and store them
+/// on disk
+Future<void> downloadAssets() async {
   
   
   
@@ -156,7 +157,8 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
   await GetIt.I<Changelog>().init();
-  GetIt.I.registerSingleton<UserData>(await (UserData().load()));
+  UserData uD = await (UserData().load());
+  GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();

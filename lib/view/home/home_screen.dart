@@ -75,7 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       // 
       else if(GetIt.I<UserData>().showOnboarding){
-        Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+          context, "/onboarding", (route) => false
+          );
       }
       
       else if(GetIt.I<UserData>().showRatePopup){
