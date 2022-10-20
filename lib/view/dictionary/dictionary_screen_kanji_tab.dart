@@ -27,40 +27,42 @@ class DictionaryScreenKanjiTab extends StatefulWidget {
 class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: () {
+    return widget.kanjiVGs.isEmpty || widget.kanjidic2entries.isEmpty
+      ? SizedBox()
+      : SingleChildScrollView(
+        child: Column(
+          children: () {
 
-          List<List<int>> idxs = [[0]];
+            List<List<int>> idxs = [[0]];
 
-          for (int i = 1; i < widget.kanjiVGs.length; i++) {
+            for (int i = 1; i < widget.kanjiVGs.length; i++) {
 
-            // is this and the previous kanji the same
-            if(widget.kanjiVGs[i-1].character == widget.kanjiVGs[i].character){
-              idxs[idxs.length-1].add(i);
+              // is this and the previous kanji the same
+              if(widget.kanjiVGs[i-1].character == widget.kanjiVGs[i].character){
+                idxs[idxs.length-1].add(i);
+              }
+              else{
+                idxs.add([ i]);
+              }
             }
-            else{
-              idxs.add([ i]);
-            }
-          }
-          return List.generate(idxs.length, 
-          (i) => DictionaryScreenKanjiCard(
-            widget.kanjiVGs[idxs[i][0]],
-            widget.kanjidic2entries[idxs[i][0]],
-            GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
-            alternatives: idxs[i].length > 1
-              ? List.generate(idxs[i].length-1, 
-                (j) => DictionaryScreenKanjiCard(
-                  widget.kanjiVGs[idxs[i][j+1]],
-                  widget.kanjidic2entries[idxs[i][j+1]],
-                  GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
-                ) 
-              )
-              : null
-          )
-        );
-        } ()
-      ),
-    );
+            return List.generate(idxs.length, 
+            (i) => DictionaryScreenKanjiCard(
+              widget.kanjiVGs[idxs[i][0]],
+              widget.kanjidic2entries[idxs[i][0]],
+              GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+              alternatives: idxs[i].length > 1
+                ? List.generate(idxs[i].length-1, 
+                  (j) => DictionaryScreenKanjiCard(
+                    widget.kanjiVGs[idxs[i][j+1]],
+                    widget.kanjidic2entries[idxs[i][j+1]],
+                    GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+                  ) 
+                )
+                : null
+            )
+          );
+          } ()
+        ),
+      );
   }
 }
