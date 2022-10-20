@@ -3,6 +3,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
@@ -211,64 +212,61 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                         ),
                         // meanings
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           // create the children in the same order as in the settings
                           children: GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((lang) {
                             
-                            // 
+                            List<Widget> ret = [];
+
+                            // get the meaning of the selected language
                             List<LanguageMeanings> meanings = widget.entry!.meanings.where(
                               (element) => element.language == lang
                             ).toList();
                             
+                            ret.add(
+                              SizedBox(
+                                height: 10,
+                                width: 10,
+                                child: SvgPicture.asset(
+                                  GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
+                                ),
+                              ),
+                            );
                             if(meanings.isNotEmpty){
-                              LanguageMeanings meaning = meanings.first;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 20,),
-                                  SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: SvgPicture.asset(
-                                      GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-                                    ),
+
+                              ret.add(
+                                LayoutGrid(
+                                  gridFit: GridFit.loose,
+                                  columnSizes: [0.5.fr, 0.5.fr],
+                                  rowSizes: List.generate(
+                                    meanings.first.meanings.length, 
+                                    (index) => auto
                                   ),
-                                  ...List.generate(
-                                    meaning.meanings.length,
-                                    (int j) => Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                    meanings.first.meanings.length,
+                                    (int j) => Wrap(
                                       children: [
                                         Text(
                                           "${(j+1).toString()}. ",
                                           style: meaningsStyle
                                         ),
-                                        Expanded(
-                                          child: SelectableText(
-                                            meaning.meanings[j],
-                                            style: meaningsStyle
-                                          ),
+                                        SelectableText(
+                                          meanings.first.meanings[j],
+                                          style: meaningsStyle
                                         ),
                                       ],
                                     )
                                   )
-                                ]
+                                )
                               );
+
+                              ret.add(SizedBox(height: 10,));
+                                  
                             }
-                            else{
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10, width: double.infinity,),
-                                  SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: SvgPicture.asset(
-                                      GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }
-                          }).toList()
+
+                            return ret;
+                          }).expand((element) => element).toList(),
                           
                         ),
                         const SizedBox(
