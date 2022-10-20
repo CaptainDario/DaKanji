@@ -146,51 +146,56 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // word
-                        SelectableText(
-                          widget.entry!.kanjis.isNotEmpty ?
-                            widget.entry!.kanjis[0] : "",
-                          style: kanjiStyle
-                        ),
-                        // word reading
-                        Row(
-                          children: 
-                          [
-                            ...List.generate(
-                              widget.entry!.readings.length,
-                              (index_1) => SelectionArea(
-                                child: Row(
-                                  children:
-                                  [
-                                    ...List.generate(
-                                      widget.entry!.readings[index_1].length,
-                                      (index_2) => Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            right: BorderSide(
-                                              color: Colors.white,
-                                              width: 1.5,
-                                            ),
-                                          )
-                                        ),
-                                        child: Text (
-                                          widget.entry!.readings[index_1][index_2],
-                                          style: readingStyle
-                                        ),
-                                      ),
-                                    ),
-                                    SelectionContainer.disabled(
-                                      child: Text(
-                                        ", ",
-                                        style: readingStyle,
-                                      ),
-                                    )
-                                  ]
+                        // word written with kanji
+                        SelectionArea(
+                          child: Wrap(
+                            children: [
+                              ...List.generate(widget.entry!.kanjis.length, (i) =>
+                                Text(
+                                  widget.entry!.kanjis[i] +
+                                  (widget.entry!.kanjis.length-1 != i ? "、" : ""),
+                                  style: kanjiStyle
                                 ),
-                              )
-                            )
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
+                        // Readings
+                        SelectionArea(
+                          child: Wrap(
+                            children: [
+                              Row(
+                                children: List.generate( (widget.entry!.readings.length),
+                                  // Characters of word reading with  pitch accent
+                                  (index_1) => Row(
+                                    children:
+                                    [
+                                      ...List.generate(
+                                        widget.entry!.readings[index_1].length,
+                                        (index_2) => Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                              right: BorderSide(
+                                                color: Colors.white,
+                                                width: 1.5,
+                                              ),
+                                            )
+                                          ),
+                                          child: Text (
+                                            widget.entry!.readings[index_1][index_2] +
+                                            (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
+                                            style: readingStyle
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                  )
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        
                         const SizedBox(
                           height: 10,
                         ),
