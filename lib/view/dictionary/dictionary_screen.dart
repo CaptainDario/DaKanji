@@ -177,16 +177,21 @@ class _DictionaryScreenState
                     height: constraints.maxHeight,
                     child: Column(
                       children: [
-                        TabBar(
-                          labelColor: Theme.of(context).highlightColor,
-                          indicatorColor: Theme.of(context).highlightColor,
-                          controller: dictionaryTabController,
-                          tabs: [
-                            if(noTabs > 3) const Tab(text: "Search"),
-                            if(noTabs > 2) const Tab(text: "Word"),
-                            if(noTabs > 1) const Tab(text: "Kanji"),
-                            if(noTabs > 0) const Tab(text: "Example"),
-                          ],
+                        // disable the TabBar if there is no result selected
+                        IgnorePointer(
+                          ignoring: context.read<DictSearch>().selectedResult == null,
+                          child: TabBar(
+                            labelColor: Theme.of(context).highlightColor,
+                            unselectedLabelColor: Colors.grey,
+                            indicatorColor: Theme.of(context).highlightColor,
+                            controller: dictionaryTabController,
+                            tabs: [
+                              if(noTabs > 3) const Tab(text: "Search", ),
+                              if(noTabs > 2) const Tab(text: "Word"),
+                              if(noTabs > 1) const Tab(text: "Kanji"),
+                              if(noTabs > 0) const Tab(text: "Example"),
+                            ],
+                          ),
                         ),
                         Expanded(
                           child: LayoutBuilder(
