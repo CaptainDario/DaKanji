@@ -50,6 +50,7 @@ class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
               widget.kanjiVGs[idxs[i][0]],
               widget.kanjidic2entries[idxs[i][0]],
               GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+              // if there are alternative writings for this kanji
               alternatives: idxs[i].length > 1
                 ? List.generate(idxs[i].length-1, 
                   (j) => DictionaryScreenKanjiCard(

@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/helper/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/foundation.dart';
@@ -221,7 +222,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
 
                             // get the meaning of the selected language
                             List<LanguageMeanings> meanings = widget.entry!.meanings.where(
-                              (element) => element.language == lang
+                              (element) => languageISOToiso639_1[element.language]!.name == lang
                             ).toList();
                             
                             ret.add(

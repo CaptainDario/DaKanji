@@ -15,7 +15,7 @@ class SettingsDictionary with ChangeNotifier {
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(ignore: true)
   static const List<String> d_translationLanguageCodes = [
-    "eng", "ger", "fre", "rus", "spa", "hun", "slv", "dut"
+    "en", "de", "fr", "ru", "es", "hu", "sl", "nl",
   ];
   /// All languages that are available in the dictionary in the useres order
   @JsonKey(defaultValue: d_translationLanguageCodes)
@@ -24,24 +24,20 @@ class SettingsDictionary with ChangeNotifier {
 
   /// All languages that are available in the dictionary
   @JsonKey(ignore: true)
-  Map<String, String> translationLanguagesToSvgPath = {
-    "eng" : "assets/icons/eng.svg",
-    "ger" : "assets/icons/ger.svg",
-    "fre" : "assets/icons/fre.svg",
-    "rus" : "assets/icons/rus.svg",
-    "spa" : "assets/icons/spa.svg",
-    "hun" : "assets/icons/hun.svg",
-    "slv" : "assets/icons/slv.svg",
-    "dut" : "assets/icons/dut.svg"
-  };
+  Map<String, String> translationLanguagesToSvgPath = 
+    Map<String, String>.fromIterable(
+      (d_translationLanguageCodes),
+      key : (item) => item,
+      value : (item) => "assets/icons/$item.svg"
+    );
   
 
   /// The default value for `selectedTranslationLanguagesDefault` 
   @JsonKey(ignore: true)
-  static const List<String> d_selectedTranslationLanguages = ["eng"];
+  static const List<String> d_selectedTranslationLanguages = ["en"];
   /// All languages that are selected to be shown in the dict UI
   @JsonKey(defaultValue: d_selectedTranslationLanguages)
-  List<String> _selectedTranslationLanguages = d_selectedTranslationLanguages;
+  List<String> _selectedTranslationLanguages = ["en"];
   /// All languages that are selected to be shown in the dict UI
   List<String> get selectedTranslationLanguages => _selectedTranslationLanguages;
   /// All languages that are selected to be shown in the dict UI
