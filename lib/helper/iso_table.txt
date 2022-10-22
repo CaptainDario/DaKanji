@@ -1,0 +1,183 @@
+Abkhazian	ab	abk	abk	abk	also known as Abkhaz
+Afar	aa	aar	aar	aar	
+Afrikaans	af	afr	afr	afr	
+Akan	ak	aka	aka	aka + 2	macrolanguage, Twi is tw/twi, Fanti is fat
+Albanian	sq	sqi	alb	sqi + 4	macrolanguage, called "Albanian Phylozone" in 639-6
+Amharic	am	amh	amh	amh	
+Arabic	ar	ara	ara	ara + 29	macrolanguage, Standard Arabic is arb
+Aragonese	an	arg	arg	arg	
+Armenian	hy	hye	arm	hye	ISO 639-3 code hye is for Eastern Armenian, hyw is for Western Armenian, and xcl is for Classical Armenian
+Assamese	as	asm	asm	asm	
+Avaric	av	ava	ava	ava	also known as Avar
+Avestan	ae	ave	ave	ave	ancient
+Aymara	ay	aym	aym	aym + 2	macrolanguage
+Azerbaijani	az	aze	aze	aze + 2	macrolanguage, also known as Azeri
+Bambara	bm	bam	bam	bam	
+Bashkir	ba	bak	bak	bak	
+Basque	eu	eus	baq	eus	
+Belarusian	be	bel	bel	bel	
+Bengali	bn	ben	ben	ben	also known as Bangla
+Bislama	bi	bis	bis	bis	Language formed from English and Vanuatuan languages, with some French influence.
+Bosnian	bs	bos	bos	bos	
+Breton	br	bre	bre	bre	
+Bulgarian	bg	bul	bul	bul	
+Burmese	my	mya	bur	mya	also known as Myanmar
+Catalan, Valencian	ca	cat	cat	cat	
+Chamorro	ch	cha	cha	cha	
+Chechen	ce	che	che	che	
+Chichewa, Chewa, Nyanja	ny	nya	nya	nya	
+Chinese	zh	zho	chi	zho + 16	macrolanguage
+Church Slavonic, Old Slavonic, Old Church Slavonic	cu	chu	chu	chu	ancient, in use by the Eastern Orthodox Church
+Chuvash	cv	chv	chv	chv	
+Cornish	kw	cor	cor	cor	
+Corsican	co	cos	cos	cos	
+Cree	cr	cre	cre	cre + 6	macrolanguage
+Croatian	hr	hrv	hrv	hrv	
+Czech	cs	ces	cze	ces	
+Danish	da	dan	dan	dan	
+Divehi, Dhivehi, Maldivian	dv	div	div	div	
+Dutch, Flemish	nl	nld	dut	nld	Flemish is not to be confused with the closely related West Flemish which is referred to as Vlaams (Dutch for "Flemish") in ISO 639-3 and has the ISO 639-3 code vls
+Dzongkha	dz	dzo	dzo	dzo	
+English	en	eng	eng	eng	
+Esperanto	eo	epo	epo	epo	constructed, initially by L.L. Zamenhof in 1887
+Estonian	et	est	est	est + 2	macrolanguage
+Ewe	ee	ewe	ewe	ewe	
+Faroese	fo	fao	fao	fao	
+Fijian	fj	fij	fij	fij	
+Finnish	fi	fin	fin	fin	
+French	fr	fra	fre	fra	
+Western Frisian	fy	fry	fry	fry	also known as Frisian
+Fulah	ff	ful	ful	ful + 9	macrolanguage, also known as Fula
+Gaelic, Scottish Gaelic	gd	gla	gla	gla	
+Galician	gl	glg	glg	glg	
+Ganda	lg	lug	lug	lug	
+Georgian	ka	kat	geo	kat	
+German	de	deu	ger	deu	
+Greek, Modern (1453–)	el	ell	gre	ell	for Ancient Greek, use the ISO 639-3 code grc
+Kalaallisut, Greenlandic	kl	kal	kal	kal	
+Guarani	gn	grn	grn	grn + 5	macrolanguage
+Gujarati	gu	guj	guj	guj	
+Haitian, Haitian Creole	ht	hat	hat	hat	
+Hausa	ha	hau	hau	hau	
+Hebrew	he	heb	heb	heb	Modern Hebrew. Code changed in 1989 from original ISO 639:1988, iw.[1]
+Herero	hz	her	her	her	
+Hindi	hi	hin	hin	hin	
+Hiri Motu	ho	hmo	hmo	hmo	
+Hungarian	hu	hun	hun	hun	
+Icelandic	is	isl	ice	isl	
+Ido	io	ido	ido	ido	constructed by De Beaufront, 1907, as variation of Esperanto
+Igbo	ig	ibo	ibo	ibo	
+Indonesian	id	ind	ind	ind	covered by macrolanguage ms/msa. Changed in 1989 from original ISO 639:1988, in.[1]
+Interlingua (International Auxiliary Language Association)	ia	ina	ina	ina	constructed by the International Auxiliary Language Association
+Interlingue, Occidental	ie	ile	ile	ile	constructed by Edgar de Wahl, first published in 1922
+Inuktitut	iu	iku	iku	iku + 2	macrolanguage
+Inupiaq	ik	ipk	ipk	ipk + 2	macrolanguage
+Irish	ga	gle	gle	gle	
+Italian	it	ita	ita	ita	
+Japanese	ja	jpn	jpn	jpn	
+Javanese	jv	jav	jav	jav	
+Kannada	kn	kan	kan	kan	
+Kanuri	kr	kau	kau	kau + 3	macrolanguage
+Kashmiri	ks	kas	kas	kas	
+Kazakh	kk	kaz	kaz	kaz	
+Central Khmer	km	khm	khm	khm	also known as Khmer or Cambodian
+Kikuyu, Gikuyu	ki	kik	kik	kik	
+Kinyarwanda	rw	kin	kin	kin	
+Kirghiz, Kyrgyz	ky	kir	kir	kir	
+Komi	kv	kom	kom	kom + 2	macrolanguage
+Kongo	kg	kon	kon	kon + 3	macrolanguage
+Korean	ko	kor	kor	kor	
+Kuanyama, Kwanyama	kj	kua	kua	kua	
+Kurdish	ku	kur	kur	kur + 3	macrolanguage
+Lao	lo	lao	lao	lao	
+Latin	la	lat	lat	lat	ancient
+Latvian	lv	lav	lav	lav + 2	macrolanguage
+Limburgan, Limburger, Limburgish	li	lim	lim	lim	
+Lingala	ln	lin	lin	lin	
+Lithuanian	lt	lit	lit	lit	
+Luba-Katanga	lu	lub	lub	lub	also known as Luba-Shaba
+Luxembourgish, Letzeburgesch	lb	ltz	ltz	ltz	
+Macedonian	mk	mkd	mac	mkd	
+Malagasy	mg	mlg	mlg	mlg + 11	macrolanguage
+Malay	ms	msa	may	msa + 36	macrolanguage, Standard Malay is zsm, Indonesian is id/ind
+Malayalam	ml	mal	mal	mal	
+Maltese	mt	mlt	mlt	mlt	
+Manx	gv	glv	glv	glv	
+Maori	mi	mri	mao	mri	also known as Māori
+Marathi	mr	mar	mar	mar	also known as Marāṭhī
+Marshallese	mh	mah	mah	mah	
+Mongolian	mn	mon	mon	mon + 2	macrolanguage
+Nauru	na	nau	nau	nau	also known as Nauruan
+Navajo, Navaho	nv	nav	nav	nav	
+North Ndebele	nd	nde	nde	nde	also known as Northern Ndebele
+South Ndebele	nr	nbl	nbl	nbl	also known as Southern Ndebele
+Ndonga	ng	ndo	ndo	ndo	
+Nepali	ne	nep	nep	nep + 2	macrolanguage
+Norwegian	no	nor	nor	nor + 2	macrolanguage, Bokmål is nb/nob, Nynorsk is nn/nno
+Norwegian Bokmål	nb	nob	nob	nob	covered by macrolanguage no/nor
+Norwegian Nynorsk	nn	nno	nno	nno	covered by macrolanguage no/nor
+Sichuan Yi, Nuosu	ii	iii	iii	iii	standard form of the Yi languages
+Occitan	oc	oci	oci	oci	
+Ojibwa	oj	oji	oji	oji + 7	macrolanguage, also known as Ojibwe
+Oriya	or	ori	ori	ori + 2	macrolanguage, also known as Odia
+Oromo	om	orm	orm	orm + 4	macrolanguage
+Ossetian, Ossetic	os	oss	oss	oss	
+Pali	pi	pli	pli	pli	ancient, also known as Pāli
+Pashto, Pushto	ps	pus	pus	pus + 3	macrolanguage
+Persian	fa	fas	per	fas + 2	macrolanguage, also known as Farsi
+Polish	pl	pol	pol	pol	
+Portuguese	pt	por	por	por	
+Punjabi, Panjabi	pa	pan	pan	pan	
+Quechua	qu	que	que	que + 43	macrolanguage
+Romanian, Moldavian, Moldovan	ro	ron	rum	ron	the identifiers mo and mol for Moldavian are deprecated. They will not be assigned to different items, and recordings using these identifiers will not be invalid.
+Romansh	rm	roh	roh	roh	
+Rundi	rn	run	run	run	also known as Kirundi
+Russian	ru	rus	rus	rus	
+Northern Sami	se	sme	sme	sme	
+Samoan	sm	smo	smo	smo	
+Sango	sg	sag	sag	sag	
+Sanskrit	sa	san	san	san	ancient
+Sardinian	sc	srd	srd	srd + 4	macrolanguage
+Serbian	sr	srp	srp	srp	the ISO 639-2/T code srp deprecated the ISO 639-2/B code scc[2]
+Shona	sn	sna	sna	sna	
+Sindhi	sd	snd	snd	snd	
+Sinhala, Sinhalese	si	sin	sin	sin	
+Slovak	sk	slk	slo	slk	
+Slovenian	sl	slv	slv	slv	also known as Slovene
+Somali	so	som	som	som	
+Southern Sotho	st	sot	sot	sot	
+Spanish, Castilian	es	spa	spa	spa	
+Sundanese	su	sun	sun	sun	
+Swahili	sw	swa	swa	swa + 2	macrolanguage
+Swati	ss	ssw	ssw	ssw	also known as Swazi
+Swedish	sv	swe	swe	swe	
+Tagalog	tl	tgl	tgl	tgl	note: Filipino (Pilipino) has the code fil
+Tahitian	ty	tah	tah	tah	one of the Reo Mā`ohi (languages of French Polynesia)[3]
+Tajik	tg	tgk	tgk	tgk	
+Tamil	ta	tam	tam	tam	
+Tatar	tt	tat	tat	tat	
+Telugu	te	tel	tel	tel	
+Thai	th	tha	tha	tha	
+Tibetan	bo	bod	tib	bod	also known as Standard Tibetan
+Tigrinya	ti	tir	tir	tir	
+Tonga (Tonga Islands)	to	ton	ton	ton	also known as Tongan
+Tsonga	ts	tso	tso	tso	
+Tswana	tn	tsn	tsn	tsn	
+Turkish	tr	tur	tur	tur	
+Turkmen	tk	tuk	tuk	tuk	
+Twi	tw	twi	twi	twi	covered by macrolanguage ak/aka
+Uighur, Uyghur	ug	uig	uig	uig	
+Ukrainian	uk	ukr	ukr	ukr	
+Urdu	ur	urd	urd	urd	
+Uzbek	uz	uzb	uzb	uzb + 2	macrolanguage
+Venda	ve	ven	ven	ven	
+Vietnamese	vi	vie	vie	vie	
+Volapük	vo	vol	vol	vol	constructed
+Walloon	wa	wln	wln	wln	
+Welsh	cy	cym	wel	cym	
+Wolof	wo	wol	wol	wol	
+Xhosa	xh	xho	xho	xho	
+Yiddish	yi	yid	yid	yid + 2	macrolanguage. Changed in 1989 from original ISO 639:1988, ji.[1]
+Yoruba	yo	yor	yor	yor	
+Zhuang, Chuang	za	zha	zha	zha + 16	macrolanguage
+Zulu	zu	zul	zul	zul	
