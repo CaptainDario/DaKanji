@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:xml/xml.dart';
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_group_widget.dart';
-import 'package:xml/xml.dart';
+import 'package:da_kanji_mobile/provider/settings.dart';
+
 
 
 
@@ -42,7 +46,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   /// List containing all kun readings of this kanji
   final List<String> kunReadings = [];
   /// List containing all readings in the target language
-  final List<String> meanings = [];
+  final Map<String, List<String>> meanings = {};
   /// The stroke count information extracted from the KanjiVG data
   int strokeCount = -1;
 
@@ -67,7 +71,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       if(widget.targetLanguages.any(
         (l) => l.contains(widget.kanjidic2entry.meanings[i].language)
       )) {
-        meanings.add(widget.kanjidic2entry.meanings[i].meaning);
+        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
+          meanings[widget.kanjidic2entry.meanings[i].language] = [];
+        meanings[widget.kanjidic2entry.meanings[i].language]!.add(
+          widget.kanjidic2entry.meanings[i].meaning
+        );
       }
     }
 
@@ -105,19 +113,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Meanings:"
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(width: 10,),
-                              Flexible(
-                                child: SelectableText(
-                                  meanings.join(", ")
-                                ),
-                              ),
-                            ],
-                          ),
+                          Text(
+                            "Strokes: $strokeCount, "
+                            "Grade: ${widget.kanjidic2entry.grade}, " 
+                            "JLPT: N${widget.kanjidic2entry.jlpt}, "
+                            "Heisig: NONE, "
+                            "SKIP: NONE"),
                           const Text(
                             "On:"
                           ),
@@ -150,9 +151,23 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                   ],
                 ),
                 const SizedBox(height: 16,),
-                Text(
-                  "Strokes: $strokeCount, " "Grade: ${widget.kanjidic2entry.grade}, " "JLPT: N${widget.kanjidic2entry.jlpt}, " "Heisig: NONE, " "SKIP: NONE"
-                ),
+                ...meanings.entries.map((e) => 
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                        width: 10,
+                        child: SvgPicture.asset(
+                          GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[e.key]!
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Text(
+                        e.value.toString().replaceAll("[", "").replaceAll("]", "")
+                      )
+                    ],
+                  ),
+                ).toList(),
                 const SizedBox(height: 16,),
                 ExpansionTile(
                   title: const Text("Kanji groups"),
