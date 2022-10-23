@@ -15,7 +15,7 @@ dependencies:
   
   # all platforms supported
   database_builder:
-    path: C:/Users/Dario/dev/DaKanji-Dictionary/database_builder
+    path: ../DaKanji-Dictionary/database_builder
   liquid_swipe:
     path: ./plugins/liquid_swipe_flutter
   platform: 3.1.0
@@ -58,7 +58,7 @@ dependencies:
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
   kagome_dart: 
-    path: C:/Users/Dario/dev/kagome_dart
+    path: ../kagome_dart
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms
