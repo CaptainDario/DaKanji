@@ -236,7 +236,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
   }
 
   /// Sorts a list of Jmdict entries given a query text. The order is determined
-  /// by sorting follwing this procedure:
+  /// by those sorting criteria:
   /// 
   /// 1. Full > Match at the beginning > Match somwhere in the word
   ///    Those three categories are sorted individually and merged in the end
@@ -277,7 +277,7 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
     return matches.expand((element) => element).toList();
   }
 
-  /// Sorts a list of string `` based on `queryText`. The sorting procedure is
+  /// Sorts a list of string `` based on `queryText`. The sorting criteria are
   /// explained by `sortJmdictList`.
   ///
   /// Returns a Tuple with the structure:
