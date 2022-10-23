@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:da_kanji_mobile/helper/iso_table.dart';
 import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 import 'package:get_it/get_it.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
 import 'package:database_builder/objectbox.g.dart';
@@ -13,6 +15,7 @@ import 'package:database_builder/objectbox.g.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
+
 
 
 
@@ -133,7 +136,6 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
                             searchInputController.text = data;
                             context.read<DictSearch>().currentSearch = data;
                             context.read<DictSearch>().searchResults = searchInDict(data);
-                            
                           }
                           setState(() { });
                         },
@@ -206,14 +208,6 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
     String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
     String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
 
-    var query = GetIt.I<Box<_jmdict.Entry>>().getAll();
-    List<_jmdict.Entry> searchResults = query.where((_jmdict.Entry element) => 
-      element.readings.any((String value) => value.contains(queryText)) ||
-      element.kanjis.any((String value) => value.contains(queryText)) ||
-      element.readings.any((String value) => value.contains(hiraText)) ||
-      element.readings.any((String value) => value.contains(kataText))
-    ).toList();
-
     //var query = GetIt.I<Box<_jmdict.Entry>>().query(
       // search the query as is
     //  Entry_.readings.contains(queryText)
@@ -227,25 +221,88 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
     //List<_jmdict.Entry> searchResults = query.find();
     //query.close();
 
-    /// SORT RESULT LIST
-    /// check if a kanji contains `queryText`
-    /// 
-    /// check if a reading contains `queryText`
-    /// 
-    /// check if a meaning contains `queryText`
-
-    /*
-    searchResults.sort(((a, b) {
-      int rank = 0;
-
-      for (String reading in a.readings) {
-        
-      }
+    List<_jmdict.Entry> query = GetIt.I<Box<_jmdict.Entry>>().getMany(
+      List.generate(500000, (index) => index+1)
+    ).whereType<_jmdict.Entry>().toList();
     
-      return rank;
-    }));
-    */
+    List<_jmdict.Entry> searchResults = query.where((_jmdict.Entry element) => 
+      element.readings.any((String value) => value.contains(queryText)) ||
+      element.kanjis.any((String value) => value.contains(queryText)) ||
+      element.readings.any((String value) => value.contains(hiraText)) ||
+      element.readings.any((String value) => value.contains(kataText))
+    ).toList();
 
-    return searchResults;
+    // SORT
+    // first sort by frequency
+    //searchResults.sort((a, b) => a.)
+
+    
+
+    return sortJmdictList(searchResults, queryText);
+  }
+
+  List<_jmdict.Entry> sortJmdictList(List<_jmdict.Entry> entries, String queryText){
+
+    // list with three sub lists
+    // 0 - full matchs
+    // 1 - matchs starting at the word beginning
+    // 2 - other matches
+    List<List<_jmdict.Entry>> matches = [[], [], []];
+    String queryTextHira = GetIt.I<KanaKit>().toHiragana(queryText);
+
+    for (_jmdict.Entry entry in entries) {
+
+      // kanji
+      Tuple3 result = rankMatchs(entry.kanjis, queryText);
+      if(result.item1 != -1) matches[result.item1].add(entry);
+
+      // kana
+      result = rankMatchs(entry.readings, queryTextHira);
+      if(result.item1 != -1) matches[result.item1].add(entry);
+
+      // translation
+      var k = entry.meanings.where(
+        (e) => ["en"].contains(isoToiso639_1[e.language]!.name)
+      ).toList();
+      k = k;
+      //result = rankMatchs(
+      //  entry.meanings.map((e) => e.meanings).toList(), 
+      //  queryTextHira
+      //);
+      //if(result.item1 != -1) matches[result.item1].add(entry);
+      //print(" ");
+    }
+    return matches.expand((element) => element).toList();
+  }
+
+  ///
+  ///
+  /// Returns a Tuple with the structure:
+  ///   1 - if it was a full (0), start(1) or other(2) match
+  ///   2 - t
+  ///   3 - the index where the search matched
+  Tuple3<int, int, int> rankMatchs(List<String> k, String queryText) {   
+
+    int result = -1, lenDiff = -1;
+
+    // check if the word written in kanji contains the query
+    int matchIndex = k.indexWhere((element) => element.contains(queryText));
+    if(matchIndex != -1){
+      // check kanji for full match
+      if(k[matchIndex] == queryText){
+        result = 0;
+      }
+      // does the found dict entry start with the search term
+      else if(k[matchIndex].startsWith(queryText)){
+        result = 1;
+      }
+      // how many additional characters does this entry include
+      else {
+        lenDiff = k[matchIndex].length - queryText.length;
+        result = 2;
+      }
+    }
+
+    return Tuple3(result, lenDiff, matchIndex);
   }
 }
