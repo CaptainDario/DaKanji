@@ -53,7 +53,7 @@ def main():
             f.write("\n}\n\n")
 
             f.write(f"/// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an enum entry of `{iso}`\n{is_warning}")
-            f.write(f"const Map<String, {iso}> languageISOTo{iso} = const" + " {\n")
+            f.write(f"const Map<String, {iso}> isoTo{iso} = const" + " {\n")
             for i in content:
                 i_new = list(dict.fromkeys(i[1:5]))
                 for j in range(len(i_new)):
@@ -62,8 +62,8 @@ def main():
             f.write("\n};\n\n\n")
 
         # create a Map from ISO code to full language name
-        f.write(f"/// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an enum entry of `{iso}`\n")
-        f.write(f"const Map<Enum, String> isoToLanguage{iso} = const" + " {\n")
+        f.write(f"/// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an language string\n")
+        f.write(f"const Map<Enum, String> isoToLanguage = const" + " {\n")
         for c in content:
             f.write(f"\t{iso639_1}.{c[1]} : '{c[0]}', ")
             f.write(f"{iso639_2T}.{c[2]} : '{c[0]}', \n")

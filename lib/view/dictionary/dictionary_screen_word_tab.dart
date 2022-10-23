@@ -222,7 +222,7 @@ class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
 
                             // get the meaning of the selected language
                             List<LanguageMeanings> meanings = widget.entry!.meanings.where(
-                              (element) => languageISOToiso639_1[element.language]!.name == lang
+                              (element) => isoToiso639_1[element.language]!.name == lang
                             ).toList();
                             
                             ret.add(

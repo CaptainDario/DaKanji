@@ -26,7 +26,7 @@ enum iso639_1{
 /// 
 /// Note: ISO code `is` has been renamed to `is_` because it conflicts with dart's 
 /// keyword `is`
-const Map<String, iso639_1> languageISOToiso639_1 = const {
+const Map<String, iso639_1> isoToiso639_1 = const {
 	'ab' : iso639_1.ab,	'abk' : iso639_1.ab,
 	'aa' : iso639_1.aa,	'aar' : iso639_1.aa,
 	'af' : iso639_1.af,	'afr' : iso639_1.af,
@@ -235,7 +235,7 @@ enum iso639_2T{
 /// 
 /// Note: ISO code `is` has been renamed to `is_` because it conflicts with dart's 
 /// keyword `is`
-const Map<String, iso639_2T> languageISOToiso639_2T = const {
+const Map<String, iso639_2T> isoToiso639_2T = const {
 	'ab' : iso639_2T.abk,	'abk' : iso639_2T.abk,
 	'aa' : iso639_2T.aar,	'aar' : iso639_2T.aar,
 	'af' : iso639_2T.afr,	'afr' : iso639_2T.afr,
@@ -444,7 +444,7 @@ enum iso639_2B{
 /// 
 /// Note: ISO code `is` has been renamed to `is_` because it conflicts with dart's 
 /// keyword `is`
-const Map<String, iso639_2B> languageISOToiso639_2B = const {
+const Map<String, iso639_2B> isoToiso639_2B = const {
 	'ab' : iso639_2B.abk,	'abk' : iso639_2B.abk,
 	'aa' : iso639_2B.aar,	'aar' : iso639_2B.aar,
 	'af' : iso639_2B.afr,	'afr' : iso639_2B.afr,
@@ -653,7 +653,7 @@ enum iso639_3{
 /// 
 /// Note: ISO code `is` has been renamed to `is_` because it conflicts with dart's 
 /// keyword `is`
-const Map<String, iso639_3> languageISOToiso639_3 = const {
+const Map<String, iso639_3> isoToiso639_3 = const {
 	'ab' : iso639_3.abk,	'abk' : iso639_3.abk,
 	'aa' : iso639_3.aar,	'aar' : iso639_3.aar,
 	'af' : iso639_3.afr,	'afr' : iso639_3.afr,
@@ -841,8 +841,8 @@ const Map<String, iso639_3> languageISOToiso639_3 = const {
 };
 
 
-/// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an enum entry of `iso639_3`
-const Map<Enum, String> isoToLanguageiso639_3 = const {
+/// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an language string
+const Map<Enum, String> isoToLanguage = const {
 	iso639_1.ab : 'Abkhazian', iso639_2T.abk : 'Abkhazian', 
 	iso639_2B.abk : 'Abkhazian', iso639_3.abk : 'Abkhazian',
 
