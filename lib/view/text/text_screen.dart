@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:kagome_dart/kagome_dart.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
@@ -14,6 +14,7 @@ import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/view/text/custom_text_popup.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
+
 
 
 
@@ -85,13 +86,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the text that is currently in the input field
   String inputText = "";
 
-  /// callback that should be called when the current selection in the 
-  /// processed text widget changes
-  void _onSelectionChange(String textSelection) {
-    setState(() {
-      selectedText = textSelection;
-    });
-  }
 
   
   @override
@@ -240,8 +234,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                     child: Center(
                                       child: CustomSelectableText(
                                         words: analyzedWords.item1,
-                                        rubys: analyzedWords.item2.map(
-                                          (e) => (e.length == 9 ? e[7] : "")
+                                        rubys: analyzedWords.item2.where(
+                                          (e) => e.length > 5
+                                        ).map(
+                                          (e) => e.length == 17 ? e[9] : " "
                                         ).toList(),
                                         width: runningInPortrait ?
                                           constraints.maxWidth - padding: 
@@ -367,7 +363,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           child: ScaleTransition(
                             scale: popupAnimation,
                             child: CustomTextPopup(
-                              selectedText: selectedText,
+                              text: selectedText,
                               onMovedViaHeader: (event) {
                                 setState(() {
                                   // assure that the popup is not moved out of view
@@ -416,5 +412,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         }
       ),
     );
+  }
+
+  /// callback that should be called when the current selection in the 
+  /// processed text widget changes
+  void _onSelectionChange(String textSelection) {
+    setState(() {
+      selectedText = textSelection;
+    });
   }
 }
