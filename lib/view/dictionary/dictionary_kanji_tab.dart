@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/view/dictionary/dictionary_screen_kanji_card.dart';
+import 'package:da_kanji_mobile/view/dictionary/kanji_card.dart';
 import 'package:get_it/get_it.dart';
 
 
 
-class DictionaryScreenKanjiTab extends StatefulWidget {
-  const DictionaryScreenKanjiTab(
+class DictionaryKanjiTab extends StatefulWidget {
+  const DictionaryKanjiTab(
     this.kanjiVGs,
     this.kanjidic2entries,
     {Key? key}
@@ -21,10 +21,10 @@ class DictionaryScreenKanjiTab extends StatefulWidget {
   final List<Kanjidic2Entry> kanjidic2entries;
 
   @override
-  State<DictionaryScreenKanjiTab> createState() => _DictionaryScreenKanjiTabState();
+  State<DictionaryKanjiTab> createState() => _DictionaryKanjiTabState();
 }
 
-class _DictionaryScreenKanjiTabState extends State<DictionaryScreenKanjiTab> {
+class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   @override
   Widget build(BuildContext context) {
     return widget.kanjiVGs.isEmpty || widget.kanjidic2entries.isEmpty

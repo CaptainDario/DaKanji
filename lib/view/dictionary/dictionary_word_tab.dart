@@ -17,8 +17,8 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 
-class DictionaryScreenWordTab extends StatefulWidget {
-  const DictionaryScreenWordTab(
+class DictionaryWordTab extends StatefulWidget {
+  const DictionaryWordTab(
     this.entry,
     {Key? key}
   ) : super(key: key);
@@ -28,10 +28,10 @@ class DictionaryScreenWordTab extends StatefulWidget {
 
 
   @override
-  State<DictionaryScreenWordTab> createState() => _DictionaryScreenWordTabState();
+  State<DictionaryWordTab> createState() => _DictionaryWordTabState();
 }
 
-class _DictionaryScreenWordTabState extends State<DictionaryScreenWordTab> {
+class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the text style to use for all words
   TextStyle kanjiStyle = const TextStyle(

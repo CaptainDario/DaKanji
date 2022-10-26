@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 
 
-class DictionaryScreenExampleTab extends StatefulWidget {
+class DictionaryExampleTab extends StatefulWidget {
 
-  const DictionaryScreenExampleTab(
+  const DictionaryExampleTab(
     {
       Key? key
     }
   ) : super(key: key);
 
   @override
-  State<DictionaryScreenExampleTab> createState() => _DictionaryScreenExampleTabState();
+  State<DictionaryExampleTab> createState() => _DictionaryExampleTabState();
 }
 
-class _DictionaryScreenExampleTabState extends State<DictionaryScreenExampleTab> {
+class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   @override
   Widget build(BuildContext context) {
     return false

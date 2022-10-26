@@ -20,12 +20,15 @@ import 'package:da_kanji_mobile/provider/settings.dart';
 
 
 
-class DictionaryScreenSearchTab extends StatefulWidget {
-  const DictionaryScreenSearchTab(
+class DictionarySearchTab extends StatefulWidget {
+  const DictionarySearchTab(
     this.height,
     this.width,
     this.initialQuery,
-    {Key? key}
+    {
+      this.includeActionButton = true,
+      Key? key
+    }
   ) : super(key: key);
 
   
@@ -35,12 +38,14 @@ class DictionaryScreenSearchTab extends StatefulWidget {
   final double width;
   /// The query that should be initially searched
   final String initialQuery;
+  /// should the action button to open the drawing screen be included
+  final bool includeActionButton;
 
   @override
-  State<DictionaryScreenSearchTab> createState() => _DictionaryScreenSearchTabState();
+  State<DictionarySearchTab> createState() => _DictionarySearchTabState();
 }
 
-class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
+class _DictionarySearchTabState extends State<DictionarySearchTab> {
 
   /// the text that was last entered in the search field
   String lastInput = "";
@@ -177,28 +182,29 @@ class _DictionaryScreenSearchTabState extends State<DictionaryScreenSearchTab> {
             ],
           ),
         ),
-        Positioned(
-          bottom: widget.height*0.02,
-          right: widget.width*0.02,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(24),
-            ),
-            onPressed: () {
-              GetIt.I<Settings>().drawing.selectedDictionary = 
-                GetIt.I<Settings>().drawing.inbuiltDictId;
-              Navigator.pushNamed(context, "/drawing");
-            },
-            child: SizedBox(
-              width: widget.width*0.08,
-              height: widget.height*0.08,
-              child: const Icon(
-                Icons.brush
+        if(widget.includeActionButton) 
+          Positioned(
+            bottom: widget.height*0.02,
+            right: widget.width*0.02,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(24),
               ),
-            ),
+              onPressed: () {
+                GetIt.I<Settings>().drawing.selectedDictionary = 
+                  GetIt.I<Settings>().drawing.inbuiltDictId;
+                Navigator.pushNamed(context, "/drawing");
+              },
+              child: SizedBox(
+                width: widget.width*0.08,
+                height: widget.height*0.08,
+                child: const Icon(
+                  Icons.brush
+                ),
+              ),
+            )
           )
-        )
       ],
     );
   }
