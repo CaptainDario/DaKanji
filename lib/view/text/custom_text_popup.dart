@@ -1,32 +1,65 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:webview_cef/webview_cef.dart';
+
+import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
 
 
 
+/// A popup used for showing dictionary entries and translations. Given a
+/// text.
 class CustomTextPopup extends StatefulWidget {
   
   const CustomTextPopup(
     {
-      required this.selectedText,
+      required this.text,
       this.onMovedViaHeader,
       this.onResizedViaCorner,
       Key? key
     }) : super(key: key);
 
-  /// 
-  final String selectedText;
-  /// 
+  /// The text shown in this widget
+  final String text;
+  /// Callback that is executed when the popup was moved by dragging it at the 
+  /// header
   final Function(PointerMoveEvent)? onMovedViaHeader;
-
+  /// Callback that is executed when the popup is resized via its corner
   final Function(PointerMoveEvent)? onResizedViaCorner;
+  
 
   @override
   State<CustomTextPopup> createState() => _CustomTextPopupState();
 }
 
 class _CustomTextPopupState extends State<CustomTextPopup> {
+  
+  /// A list containing the names for all tabs in the popup
+  late List<String> tabNames;
+  /// The controller to manage the webview for DeepL
+  WebViewController webViewController = WebViewController();
 
-  bool moveButtonPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+
+    tabNames = ["Dictionary", "Deepl"];
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String url = "$g_deepLUrl";
+    await webViewController.initialize();
+    await webViewController.loadUrl(url);
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {});
+  }
 
 
   @override
@@ -44,7 +77,8 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                 )
               ]
             ),
-            child: Card(
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -58,12 +92,18 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                           widget.onMovedViaHeader!(event);
                         }
                       },
-                      child: const TabBar(
-                        tabs: [
-                          Text("Dictionary"),
-                          Text("Translation"),
-                        ],
-                        
+                      child: TabBar(
+                        onTap: (value) {
+                          if(value == 1){
+                            webViewController.loadUrl(Uri.encodeFull("$g_deepLUrl${widget.text}"));
+                          }
+                        },
+                        tabs: List.generate(tabNames.length, (index) =>
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(tabNames[index]),
+                          )
+                        ) 
                       ),
                     ),
                     Expanded(
@@ -72,26 +112,22 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                           ListView(
                             controller: ScrollController(),
                             children: [
-                              Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Imagine a Dict entries of\n\n${widget.selectedText}\n\nhere"
-                                  )
-                                ),
-                              ),
-                              Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Imagine a Dict entries of\n\n${widget.selectedText}\n\nhere"
-                                  ),
-                                ),
+                              Container(
+                                height: 400,
+                                width: 100,
+                                child: Dictionary(
+                                  key: Key(widget.text),
+                                  false, 
+                                  initialSearch: widget.text,
+                                  includeActionButton: false,
+                                )
                               )
                             ],
                           ),
                           Card(
-                            child: Text("Imagine a translation of\n\n${widget.selectedText}\n\nhere"),
+                            child: WebView(
+                              webViewController,
+                            )
                           )
                         ]
                       ),
