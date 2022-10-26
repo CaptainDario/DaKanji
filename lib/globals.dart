@@ -113,6 +113,8 @@ const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
 /// Link to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 
+const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en/";
+
 /// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup g_SettingsAutoSizeGroup = AutoSizeGroup();
 /// AutoSizeGroup for the drawer -> all list entries have same font size
