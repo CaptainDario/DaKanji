@@ -233,7 +233,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   /// Recalculates all rubys and the rubyPositions
-  /// and writes them to `widget.rubyss` and `widget.rubyPos`
+  /// and writes them to `widget.rubys` and `widget.rubyPos`
   void recalculateRubys(){
     rubyPositions.clear();
     rubys.clear();
@@ -248,8 +248,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
       // skip spaces
       if(word == " ") {
-         {}
-      } else if(charRects.isEmpty || widget.rubys[i] == ""){
+      
+      } 
+      else if(charRects.isEmpty || widget.rubys[i] == ""){
         rubyPositions.add(Rect.zero);
         rubys.add(widget.rubys[i]);
         i += 1;
@@ -274,6 +275,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         for (Rect rect in charRects) {
           rubyPositions.add(rect);
           double rectPercentag = rect.width / totalWidth;
+          if(rectPercentag.isNaN) rectPercentag = 0;
           String rubySplit = ruby.substring(
             (cumPercent * ruby.length).floor(),
             ((cumPercent + rectPercentag) * ruby.length).ceil(),
