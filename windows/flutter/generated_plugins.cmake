@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   objectbox_flutter_libs
   share_plus_windows
   url_launcher_windows
+  webview_cef
   window_size
 )
 
