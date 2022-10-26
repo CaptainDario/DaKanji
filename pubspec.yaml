@@ -68,6 +68,7 @@ dependencies:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
       ref: 03d957e
+  webview_cef: 0.0.7
 
   # utility 
   flutter_launcher_icons: 0.9.2  # android, iOS, Linux, MacOS, windows
