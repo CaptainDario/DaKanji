@@ -12,18 +12,20 @@ class CustomSelectableText extends StatefulWidget {
     Key? key,
     required this.words,
     required this.rubys,
+    this.wordColors,
+
     this.showRubys = false,
     this.addSpaces = false,
-    this.width,
-    this.height,
+    this.showColors = false,
+
     this.initialSelection,
-    this.style,
     this.selectionColor = Colors.blueAccent,
     this.caretColor = Colors.black,
     this.caretWidth = 1,
     this.allowSelection = true,
     this.paintTextBoxes = false,
     this.textBoxesColor = Colors.grey,
+    
     this.onSelectionChange,
     this.onTap,
     this.onDoubleTap,
@@ -34,18 +36,20 @@ class CustomSelectableText extends StatefulWidget {
   final List<String> words;
   /// a list matching the length of `words` containing all ruby texts to show
   final List<String> rubys;
+  /// a list matching `words` in length containing colors in which words
+  /// should be rendered
+  final List<Color?>? wordColors;
+
+
   /// should the rubys be shown or not
   final bool showRubys;
   /// should spaces be added to the text between words
   final bool addSpaces;
-  /// give this widget a fixed width
-  final double? width;
-  /// give this widget a fixed height
-  final double? height;
+  /// should the word be rendered in color
+  final bool showColors;
+
   /// the initial selection of this widget
   final TextSelection? initialSelection;
-  /// text text style used for the main text
-  final TextStyle? style;
   /// the color that should be used when selecting text
   final Color selectionColor;
   /// the color of the text selection caret
@@ -58,6 +62,7 @@ class CustomSelectableText extends StatefulWidget {
   final bool paintTextBoxes;
   /// the color of the boxss create by `paintTextBoxes`
   final Color textBoxesColor;
+
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current selection as parameter
   final void Function(String)? onSelectionChange;
@@ -116,7 +121,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     for (var i = 0; i < _words.length; i++) {
       _wordsWithSpaces.add(_words[i]);
       if (i < _words.length-1) {
-        _wordsWithSpaces.add(" ");
+        _wordsWithSpaces.add("█");
       }
     }
   }
@@ -247,7 +252,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       );
 
       // skip spaces
-      if(word == " ") {
+      if(word == "█") {
       
       } 
       else if(charRects.isEmpty || widget.rubys[i] == ""){
@@ -491,12 +496,35 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                           ),
                         ),
                       // the actual text
-                      Text(
-                        words.join(),
+                      RichText(
                         key: _textKey,
-                        style: TextStyle(
-                          fontSize: 20,
-                          height: widget.showRubys ? 2.0 : 1.4
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 20,
+                            height: widget.showRubys ? 2.0 : 1.4
+                          ),
+                          children: () {
+                            List<TextSpan> ret = [];
+                            int cnt = 0;
+                            for (var word in words) {
+                              ret.add(
+                                TextSpan(
+                                  text: word.replaceAll("█", " "),
+                                  style: TextStyle(
+                                    color: widget.showColors 
+                                    && widget.wordColors != null
+                                    && word != "█"
+                                      ? widget.wordColors![cnt]
+                                      : null
+                                  )
+                                )
+                              );
+                              if(word != "█"){
+                                cnt++;
+                              }
+                            }
+                            return ret;
+                          } ()
                         ),
                       ),
                       // the selection caret
@@ -548,12 +576,11 @@ class _SelectionPainter extends CustomPainter {
     required Color color,
     required List<Rect> rects,
     bool fill = true,
-  })  : _color = color,
+  })  : 
         _rects = rects,
         _fill = fill,
         _paint = Paint()..color = color;
 
-  final Color _color;
   final bool _fill;
   final List<Rect> _rects;
   final Paint _paint;

@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:kagome_dart/kagome_dart.dart';
-import 'package:tuple/tuple.dart';
+import 'package:kagome_dart/pos_unidic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:kana_kit/kana_kit.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/model/TextScreen/pos_colors.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/view/text/custom_text_popup.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
@@ -45,7 +46,8 @@ class TextScreen extends StatefulWidget {
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the output of the analyzer
-  Tuple2<List<String>, List<List<String>>> analyzedWords = const Tuple2([], []);
+  List<String> kagomeWords = const [];
+  List<List<String>> kagomePos = const[[]];
 
   /// the padding used between all widges
   final double padding = 8.0;
@@ -56,6 +58,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   bool showRubys = false;
   /// if the option for showing spaces between words is enabled
   bool addSpaces = false;
+
+  bool colorizePos = false;
 
   /// should this screen be shown in portrait or not
   bool runningInPortrait = false;
@@ -85,6 +89,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String selectedText = "";
   /// the text that is currently in the input field
   String inputText = "";
+
+
 
 
   
@@ -139,7 +145,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       animationAtStart: !widget.openedByDrawer,
       child: LayoutBuilder(
         builder: (context, constraints){
-
+      
           // set if the app should be layed out in portrait or landscape
           runningInPortrait = constraints.maxHeight > constraints.maxWidth;
             
@@ -191,6 +197,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   FilteringTextInputFormatter.deny(
                                     RegExp(r"\u000a"),
                                     replacementString: "\n"
+                                  ),
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"█"),
+                                    replacementString: ""
                                   )
                                 ],
                                 controller: widget.inputController,
@@ -201,8 +211,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 onChanged: ((value) {
                                   setState(() {
                                     inputText = value;
-                                    analyzedWords = 
-                                      GetIt.I<Kagome>().runAnalyzer(inputText, AnalyzeModes.normal);
+                                    processText(value);
                                   });
                                 }),
                               ),
@@ -233,33 +242,26 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   Expanded(
                                     child: Center(
                                       child: CustomSelectableText(
-                                        words: analyzedWords.item1,
-                                        rubys: analyzedWords.item2.where(
-                                          (e) => e.length > 5
-                                        ).map(
+                                        words: kagomeWords,
+                                        rubys: kagomePos.map(
                                           (e) => e.length == 17 ? e[9] : " "
                                         ).toList(),
-                                        width: runningInPortrait ?
-                                          constraints.maxWidth - padding: 
-                                          (constraints.maxWidth/2-padding) 
-                                          * (_animation.value+1.0),
-                                        height: runningInPortrait ?
-                                          (constraints.maxHeight/2-padding) 
-                                          * (_animation.value+1.0) :
-                                          constraints.maxHeight - 2*padding,
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          height: 1.4
+                                        wordColors: List.generate(
+                                          kagomeWords.length, 
+                                          (i) => posToColor[kagomePos[i][0]]
                                         ),
                                         showRubys: showRubys,
                                         addSpaces: addSpaces,
+                                        showColors: colorizePos,
                                         paintTextBoxes: false,
                                         selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                         onSelectionChange: (selection) {
                                           if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
                                             popupAnimationController.forward();
                                           }
-                                          _onSelectionChange(selection);
+                                          setState(() {
+                                            selectedText = selection;
+                                          });
                                         },
                                         onTap: (String selection) {
                                           if(selection == "" &&
@@ -308,6 +310,23 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           },
                                         ),
                                       ),
+                                      // button to open on DeepL website
+                                      Material(
+                                        color: Theme.of(context).cardColor,
+                                        child: IconButton(
+                                          icon: SvgPicture.asset(
+                                            colorizePos ?
+                                            "assets/icons/palette_off.svg" :
+                                            "assets/icons/palette_on.svg",
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              colorizePos = !colorizePos;
+                                            });
+                                          },
+                                        ),
+                                      ),
                                       // full screen toggle
                                       Material(
                                         color: Theme.of(context).cardColor,
@@ -330,17 +349,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             setState(() {
                                               fullScreen = !fullScreen;
                                             });
-                                            
-                                          },
-                                        ),
-                                      ),
-                                      // button to open on DeepL website
-                                      Material(
-                                        color: Theme.of(context).cardColor,
-                                        child: IconButton(
-                                          icon: const Icon(Icons.translate),
-                                          onPressed: () {
-                                            launchUrlString("https://www.deepl.com/translate#jp/en/$inputText");
                                             
                                           },
                                         ),
@@ -414,11 +422,33 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// callback that should be called when the current selection in the 
-  /// processed text widget changes
-  void _onSelectionChange(String textSelection) {
-    setState(() {
-      selectedText = textSelection;
-    });
+
+  void processText(String text){
+    
+    // analyze text with kagome
+    var analyzedWords = 
+      GetIt.I<Kagome>().runAnalyzer(
+        text, 
+        AnalyzeModes.normal
+      );
+    kagomeWords = analyzedWords.item1;
+    // remove POS for punctuation marks
+    kagomePos = analyzedWords.item2.where(
+      (e) => e.length > 5
+    ).toList();
+    // concatenate POS 1-4 if this is a regular word
+    for (var i = 0; i < kagomePos.length; i++) {
+      if(kagomePos[i].length < 17)
+        continue;
+      String l = kagomePos[i]
+        .sublist(0, 4)
+        .join("-")
+        .replaceAll("-*", "");
+      if(jpToPosUnidic[l] != null)
+        kagomePos[i][0] = l;
+      if(GetIt.I<KanaKit>().isKana(kagomeWords[i]))
+        kagomePos[i][9] = "";
+    }
   }
 }
+
