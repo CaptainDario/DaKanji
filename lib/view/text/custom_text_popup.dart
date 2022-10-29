@@ -116,7 +116,6 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                                 height: 400,
                                 width: 100,
                                 child: Dictionary(
-                                  key: Key(widget.text),
                                   false, 
                                   initialSearch: widget.text,
                                   includeActionButton: false,
