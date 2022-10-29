@@ -162,8 +162,10 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         ),
                       ),
                       SizedBox(width: 10,),
-                      Text(
-                        e.value.toString().replaceAll("[", "").replaceAll("]", "")
+                      Flexible(
+                        child: Text(
+                          e.value.toString().replaceAll("[", "").replaceAll("]", "")
+                        ),
                       )
                     ],
                   ),
