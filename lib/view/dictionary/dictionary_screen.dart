@@ -84,7 +84,6 @@ class _DictionaryScreenState
       animationAtStart: !widget.openedByDrawer,
       child: Dictionary(
         false,
-        hideInput: true,
       )
     );
   }

@@ -23,7 +23,6 @@ class Dictionary extends StatefulWidget {
     this.includeTutorial,
     {
       this.initialSearch = "",
-      this.hideInput = false,
       this.includeActionButton = true,
       Key? key
     }
@@ -33,9 +32,7 @@ class Dictionary extends StatefulWidget {
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
-  /// 
-  final bool hideInput;
-
+  /// should the action button for drawing a character be included
   final bool includeActionButton;
 
   @override
