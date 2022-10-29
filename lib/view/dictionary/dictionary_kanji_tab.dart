@@ -42,7 +42,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
                 idxs[idxs.length-1].add(i);
               }
               else{
-                idxs.add([ i]);
+                idxs.add([i]);
               }
             }
             return List.generate(idxs.length, 
