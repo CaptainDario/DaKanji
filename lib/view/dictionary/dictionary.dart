@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -57,10 +58,13 @@ class _DictionaryState
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
   List<Kanjidic2Entry> kanjidic2Entries = [];
+  /// Used to check if `widget.initialQuery` changed
+  String initialSearch = "";
+  
 
   @override
   void initState() {
-    search.currentSearch = widget.initialSearch;
+    
     super.initState();
 
     // init tutorial
@@ -79,19 +83,30 @@ class _DictionaryState
 
   @override
   Widget build(BuildContext context) {
-
+    
     return ChangeNotifierProvider<DictSearch>.value(
       value: search,
       child: LayoutBuilder(
         builder: ((context, constraints) {
+
+          // check if there is an initial query or if it was update
+          if(widget.initialSearch != initialSearch){
+            //searchInputController.text = widget.initialSearch;
+
+            context.read<DictSearch>().currentSearch = widget.initialSearch;
+            context.read<DictSearch>().searchResults = searchInDict(widget.initialSearch);
+
+            initialSearch = widget.initialSearch;
+          }
   
           // calculate how many tabs should be placed side by side
-          tabsSideBySide = min(4, (constraints.maxWidth / 500).floor()) + 1;
+          tabsSideBySide = min(4, (constraints.maxWidth / 500).floor() + 1);
           int newNoTabs = 5 - tabsSideBySide;
   
           // if the window size was changed and a different number of tabs 
           // should be shown 
           if(newNoTabs != noTabs){
+            print("tabsSideBySide $tabsSideBySide newNoTabs $newNoTabs");
             noTabs = newNoTabs;
             dictionaryTabController = TabController(length: noTabs, vsync: this);
   
@@ -106,9 +121,6 @@ class _DictionaryState
                 });
               }
             };
-  
-            context.read<DictSearch>().removeListener(changeTab);
-            context.read<DictSearch>().addListener(changeTab);
           }
   
           // if a search result was selected
@@ -116,7 +128,7 @@ class _DictionaryState
           if(context.watch<DictSearch>().selectedResult != null){
   
             List<String> kanjis = 
-              removeKana(context.watch<DictSearch>().selectedResult!.kanjis);
+              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis);
   
             kanjiVGs = List.generate(
               kanjis.length, (index) => 
@@ -143,6 +155,12 @@ class _DictionaryState
                     constraints.maxWidth / (tabsSideBySide),
                     context.watch<DictSearch>().currentSearch,
                     includeActionButton: widget.includeActionButton,
+                    onSearchResultPressed: (entry) {
+                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
+                        if(tabsSideBySide != 4)
+                          dictionaryTabController.animateTo(1);
+                      });
+                    },
                   ),
                 ),
               if(tabsSideBySide > 2)
@@ -203,6 +221,12 @@ class _DictionaryState
                                     constraints.maxWidth,
                                     context.watch<DictSearch>().currentSearch,
                                     includeActionButton: widget.includeActionButton,
+                                    onSearchResultPressed: (entry) {
+                                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                        if(tabsSideBySide != 4)
+                                          dictionaryTabController.animateTo(1);
+                                      });
+                                    },
                                   ),
                                 if(noTabs > 2)
                                   DictionaryWordTab(
@@ -231,3 +255,4 @@ class _DictionaryState
     );
   }
 }
+
