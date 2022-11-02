@@ -13,7 +13,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
     * Thanks [Adrian Jordanov](https://www.1001fonts.com/theater-font.html) for the font.
   * UI
-    * Shout out to Nurellina! Without your help the app would not look and feel half as good as it does now
+    * Shout out to Nurellina! Without your help the Drawing would not look as good as it does now
 * Data, image and other sources:
   * [flag-icons](https://github.com/lipis/flag-icons)
   * Databases:
