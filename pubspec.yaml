@@ -6,8 +6,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.1.0+31
 
 environment:
-  sdk: ">=2.18.0"
-  flutter: ">=3.0.9"
+  sdk: ">=2.18.2"
+  flutter: ">=3.3.5"
 
 dependencies:
   flutter:
@@ -125,6 +125,10 @@ flutter:
           weight: 400
         - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.otf
           style: italic
+    - family: Theater
+      fonts:
+        - asset: assets/fonts/theater/Theater_Bold.otf
+          weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
