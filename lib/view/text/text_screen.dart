@@ -247,7 +247,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           (e) => e.length == 17 ? e[9] : " "
                                         ).toList(),
                                         wordColors: List.generate(
-                                          kagomeWords.length, 
+                                          kagomeWords.length,
                                           (i) => posToColor[kagomePos[i][0]]
                                         ),
                                         showRubys: showRubys,
@@ -431,7 +431,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         text, 
         AnalyzeModes.normal
       );
-    kagomeWords = analyzedWords.item1;
+    kagomeWords = analyzedWords.item1.length == 1 && analyzedWords.item1[0] == ""
+      ? [] : analyzedWords.item1;
     // remove POS for punctuation marks
     kagomePos = analyzedWords.item2.where(
       (e) => e.length > 5
