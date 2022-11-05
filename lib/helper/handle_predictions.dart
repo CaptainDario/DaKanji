@@ -294,16 +294,16 @@ String openWithSelectedDictionary(String kanji) {
 
   // determine which URL should be used for finding the character
   if(GetIt.I<Settings>().drawing.selectedDictionary ==
-    GetIt.I<Settings>().drawing.dictionaries[0]) {
+    GetIt.I<Settings>().drawing.webDictionaries[0]) {
     url = GetIt.I<Settings>().drawing.jishoURL;
   } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
-    GetIt.I<Settings>().drawing.dictionaries[1]) {
+    GetIt.I<Settings>().drawing.webDictionaries[1]) {
     url = GetIt.I<Settings>().drawing.wadokuURL;
   } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
-    GetIt.I<Settings>().drawing.dictionaries[2]) {
+    GetIt.I<Settings>().drawing.webDictionaries[2]) {
     url = GetIt.I<Settings>().drawing.weblioURL;
   } else if(GetIt.I<Settings>().drawing.selectedDictionary ==
-    GetIt.I<Settings>().drawing.dictionaries[3]) {
+    GetIt.I<Settings>().drawing.webDictionaries[3]) {
     url = GetIt.I<Settings>().drawing.customURL;
   }
 
