@@ -145,6 +145,29 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       animationAtStart: !widget.openedByDrawer,
       child: LayoutBuilder(
         builder: (context, constraints){
+
+          // shrink the popup when making the windower smaller than the popup in ...
+          // ... Width
+          if(constraints.maxWidth < popupPositionLeft + popupSizeWidth + 2*padding){
+            if(popupPositionLeft > 0){
+              popupPositionLeft = constraints.maxWidth - popupSizeWidth - 4*padding;
+            }
+            else{
+              popupPositionLeft = 0;
+              popupSizeWidth = constraints.maxWidth - 4*padding;
+            }
+          }
+          // ... Height
+          if(constraints.maxHeight < popupPositionTop + popupSizeHeight + 2*padding){
+            if(popupPositionTop > 0){
+              popupPositionTop = constraints.maxHeight - popupSizeHeight - 4*padding;
+            }
+            else{
+              popupPositionTop = 0;
+              popupSizeHeight = constraints.maxHeight - 4*padding;
+            }
+          }
+            
       
           // set if the app should be layed out in portrait or landscape
           runningInPortrait = constraints.maxHeight > constraints.maxWidth;
