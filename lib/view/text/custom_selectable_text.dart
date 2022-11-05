@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 
 
@@ -131,6 +131,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// true if the dimensions have changed compared to the last frame
   /// false otherwise
   bool dimChanged = false;
+  /// Focus node of this widget
+  FocusNode focuseNode = FocusNode();
+  ///
+  late final Map<ShortcutActivator, VoidCallback> bindings;
 
 
 
@@ -139,6 +143,27 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     super.initState();
     _textSelection = widget.initialSelection ?? const TextSelection.collapsed(offset: -1);
     _scheduleTextLayoutUpdate();
+
+    bindings = {
+      LogicalKeySet.fromSet(
+        {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyC}
+      ) : () async => await Clipboard.setData(
+        ClipboardData(
+          text: words.join().substring(
+            _textSelection!.start,
+            _textSelection!.end
+            ).replaceAll("█", ""))),
+      LogicalKeySet.fromSet(
+        {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyA}
+      ) : () async => setState(() {
+        _textSelection = TextSelection(
+          baseOffset: 0, 
+          extentOffset: words.join().length
+        );
+        _updateSelectionDisplay();
+      }) 
+      
+    };
   }
 
   @override
@@ -212,7 +237,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
     int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
     widget.onSelectionChange?.call(
-      words.join().substring(start, end)
+      words.join().substring(start, end).replaceAll("█", "")
     );
   }
 
@@ -458,110 +483,128 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         );
         
       },
-      child: MouseRegion(
-        cursor: _cursor,
-        child: GestureDetector(
-          onPanStart: widget.allowSelection ? _onDragStart : null,
-          onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-          onPanEnd: widget.allowSelection ? _onDragEnd : null,
-          onPanCancel: widget.allowSelection ? _onDragCancel : null,
-          behavior: HitTestBehavior.translucent,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: SingleChildScrollView(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  if(lastBuildScreenDimX != constraints.maxWidth ||
-                    lastBuildScreenDimY != constraints.maxHeight){
-                    lastBuildScreenDimX = constraints.maxWidth;
-                    lastBuildScreenDimY = constraints.maxHeight;
-                    dimChanged = true;
-                  }
-                  return Stack(
-                    children: [
-                      // text selection
-                      CustomPaint(
-                        painter: _SelectionPainter(
-                          color: widget.selectionColor,
-                          rects: _selectionRects,
-                        ),
-                      ),
-                      // text boxes 
-                      if (widget.paintTextBoxes)
+      child: Focus(
+        focusNode: focuseNode,
+        canRequestFocus: true,
+        onKey: (node, event) {
+          KeyEventResult result = KeyEventResult.ignored;
+          // Activates all key bindings that match, returns handled if any handle it.
+          for (final ShortcutActivator activator in bindings.keys) {
+            if (activator.accepts(event, RawKeyboard.instance)) {
+              bindings[activator]!.call();
+              result = KeyEventResult.handled;
+            }
+          }
+          return result;
+        },
+        child: MouseRegion(
+          cursor: _cursor,
+          child: GestureDetector(
+            onPanStart: widget.allowSelection ? _onDragStart : null,
+            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+            onPanEnd: widget.allowSelection ? _onDragEnd : null,
+            onPanCancel: widget.allowSelection ? _onDragCancel : null,
+            onTap: () {
+              focuseNode.requestFocus();
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SingleChildScrollView(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    if(lastBuildScreenDimX != constraints.maxWidth ||
+                      lastBuildScreenDimY != constraints.maxHeight){
+                      lastBuildScreenDimX = constraints.maxWidth;
+                      lastBuildScreenDimY = constraints.maxHeight;
+                      dimChanged = true;
+                    }
+                    return Stack(
+                      children: [
+                        // text selection
                         CustomPaint(
                           painter: _SelectionPainter(
-                            color: widget.textBoxesColor,
-                            rects: _textBoxRects,
-                            fill: false,
+                            color: widget.selectionColor,
+                            rects: _selectionRects,
                           ),
                         ),
-                      // the actual text
-                      RichText(
-                        key: _textKey,
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 20,
-                            height: widget.showRubys ? 2.0 : 1.4
+                        // text boxes 
+                        if (widget.paintTextBoxes)
+                          CustomPaint(
+                            painter: _SelectionPainter(
+                              color: widget.textBoxesColor,
+                              rects: _textBoxRects,
+                              fill: false,
+                            ),
                           ),
-                          children: () {
-                            List<TextSpan> ret = [];
-                            int cnt = 0;
-                            for (var word in words) {
-                              ret.add(
-                                TextSpan(
-                                  text: word.replaceAll("█", " "),
-                                  style: TextStyle(
-                                    color: widget.showColors 
-                                    && widget.wordColors != null
-                                    && word != "█"
-                                      ? widget.wordColors![cnt]
-                                      : null
+                        // the actual text
+                        RichText(
+                          key: _textKey,
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontSize: 20,
+                              height: widget.showRubys ? 2.0 : 1.4
+                            ),
+                            children: () {
+                              List<TextSpan> ret = [];
+                              int cnt = 0;
+                              for (var word in words) {
+                                ret.add(
+                                  TextSpan(
+                                    text: word.replaceAll("█", " "),
+                                    style: TextStyle(
+                                      color: widget.showColors 
+                                      && widget.wordColors != null
+                                      && word != "█"
+                                        ? widget.wordColors![cnt]
+                                        : null
+                                    )
                                   )
-                                )
-                              );
-                              if(word != "█"){
-                                cnt++;
+                                );
+                                if(word != "█"){
+                                  cnt++;
+                                }
                               }
-                            }
-                            return ret;
-                          } ()
+                              return ret;
+                            } ()
+                          ),
                         ),
-                      ),
-                      // the selection caret
-                      CustomPaint(
-                        painter: _SelectionPainter(
-                          color: widget.caretColor,
-                          rects: _caretRect != null ? [_caretRect!] : const [],
+                        // the selection caret
+                        CustomPaint(
+                          painter: _SelectionPainter(
+                            color: widget.caretColor,
+                            rects: _caretRect != null ? [_caretRect!] : const [],
+                          ),
                         ),
-                      ),
-                      // ruby texts
-                      if(widget.showRubys)
-                        ...List.generate(rubyPositions.length, ((index) {
-                          return Positioned(
-                            width: rubyPositions[index].right - rubyPositions[index].left,
-                            top: rubyPositions[index].top -
-                              (rubyPositions[index].bottom - rubyPositions[index].top)/2,
-                            left: rubyPositions[index].left,
-                            height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                            child: Container(
-                              decoration: widget.paintTextBoxes ? BoxDecoration(
-                                border: Border.all(color: Colors.blueAccent)
-                              ) : null,
-                              child: Center(
-                                child: Text(
-                                  rubys[index],
-                                  maxLines: 2,
-                                  style: const TextStyle(
-                                    fontSize: 10,
+                        // ruby texts
+                        if(widget.showRubys)
+                          ...List.generate(rubyPositions.length, ((index) {
+                            return Positioned(
+                              width: rubyPositions[index].right - rubyPositions[index].left,
+                              top: rubyPositions[index].top -
+                                (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                              left: rubyPositions[index].left,
+                              height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
+                              child: Container(
+                                decoration: widget.paintTextBoxes ? BoxDecoration(
+                                  border: Border.all(color: Colors.blueAccent)
+                                ) : null,
+                                child: Center(
+                                  child: Text(
+                                    rubys[index],
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          );
-                        })),
-                    ],
-                  );
-                }
+                              )
+                            );
+                          })),
+                      ],
+                    );
+                  }
+                ),
               ),
             ),
           ),
