@@ -157,7 +157,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                         child: Align(
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
@@ -166,68 +166,73 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )
                         ),
                       ),
-                      ReorderableWrap(
-                        spacing: 8.0,
-                        runSpacing: 4.0,
-                        needsLongPressDraggable: false,
-                        padding: const EdgeInsets.all(0),
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        runAlignment: WrapAlignment.spaceEvenly,
-                        children: List.generate(
-                          settings.dictionary.translationLanguageCodes.length,
-                          (index) {
-                            String lang = GetIt.I<Settings>().dictionary.translationLanguageCodes[index];
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
-                                    settings.dictionary.selectedTranslationLanguages.add(lang);
-                                  }
-                                  else{
-                                    if(settings.dictionary.selectedTranslationLanguages.length <= 1){
-                                      return;
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReorderableWrap(
+                          spacing: 8.0,
+                          runSpacing: 4.0,
+                          needsLongPressDraggable: false,
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          alignment: WrapAlignment.start,
+                          
+                          runAlignment: WrapAlignment.start,
+                          children: List.generate(
+                            settings.dictionary.translationLanguageCodes.length,
+                            (index) {
+                              String lang = GetIt.I<Settings>().dictionary.translationLanguageCodes[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
+                                      settings.dictionary.selectedTranslationLanguages.add(lang);
                                     }
-                                    settings.dictionary.selectedTranslationLanguages.remove(lang);
-                                  }
-                                  settings.save();
-                                });
-                              },
-                              child: Chip(
-                                backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
-                                  ? Theme.of(context).highlightColor
-                                  : null,
-                                label: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                      height: 10,
-                                      child: SvgPicture.asset(
-                                        settings.dictionary.translationLanguagesToSvgPath[lang]!
-                                      )
-                                    ),
-                                    Text("   $lang"),
-                                  ],
-                                )
-                              ),
-                            );
+                                    else{
+                                      if(settings.dictionary.selectedTranslationLanguages.length <= 1){
+                                        return;
+                                      }
+                                      settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                    }
+                                    settings.save();
+                                  });
+                                },
+                                child: Chip(
+                                  backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
+                                    ? Theme.of(context).highlightColor
+                                    : null,
+                                  label: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                        height: 10,
+                                        child: SvgPicture.asset(
+                                          settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                        )
+                                      ),
+                                      Text("   $lang"),
+                                    ],
+                                  )
+                                ),
+                              );
+                            }
+                          ),
+                          onReorder: (int oldIndex, int newIndex) {
+                            setState(() {
+                              // update order of list with languages
+                              String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
+                              settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
+                      
+                              // update list of selected languages
+                              settings.dictionary.selectedTranslationLanguages =
+                                settings.dictionary.translationLanguageCodes.where((e) => 
+                                  settings.dictionary.selectedTranslationLanguages.contains(e)
+                                ).toList();
+                                
+                              settings.save();
+                            });
                           }
                         ),
-                        onReorder: (int oldIndex, int newIndex) {
-                          setState(() {
-                            // update order of list with languages
-                            String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
-                            settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
-
-                            // update list of selected languages
-                            settings.dictionary.selectedTranslationLanguages =
-                              settings.dictionary.translationLanguageCodes.where((e) => 
-                                settings.dictionary.selectedTranslationLanguages.contains(e)
-                              ).toList();
-                              
-                            settings.save();
-                          });
-                        }
                       ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
