@@ -1,9 +1,12 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/helper/color_conversion.dart';
+import 'package:da_kanji_mobile/model/TextScreen/pos_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/view/folding_widget.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 
 
@@ -31,16 +34,23 @@ class _ManualScreenState extends State<ManualScreen>
   /// list containing a ID for each button (used to order the buttons in stack)
   late List<int> buttonIds;
   /// the text that is shown on the ManualButtons
-  List<String> buttonTexts = ["Dict 0", "Dict 1", "Dict 2", "Dict 3"];
+  List<String> buttonTexts = ["Drawing", "Dictionary", "Text"];
+  /// the icons that are shown on the ManualButtons
+  List<IconData> buttonIcons = [
+    Icons.brush,
+    Icons.book,
+    Icons.abc
+  ];
+  
   /// the button that was pressed last
   int lastPressedManualbutton = 0;
 
   @override
   void initState() {
     
-    buttonIds = List.generate(buttonTexts.length, (index) => index);
+    buttonIds = List.generate(buttonIcons.length, (index) => index);
 
-    for (var i = 0; i < buttonTexts.length; i++) {
+    for (var i = 0; i < buttonIcons.length; i++) {
       foldingAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500)
@@ -70,6 +80,42 @@ class _ManualScreenState extends State<ManualScreen>
 
   @override
   Widget build(BuildContext context) {
+
+    String manualTextScreenText =
+    """The {COLOR} button allows for showing the part of speech information (POS) of words. The colors:<br/>
+      • pronoun: <a style="color:{PRONOUN_COLOR}">this is a <b>pronoun</b> example.</a><br/>
+      • adverb: <a style="color:{ADVERB_COLOR}">this is an adverb example.</a><br/>
+      • auxillary verb: <a style="color:{AUX_VERB_COLOR}">this is an auxillary verb example.</a><br/>
+      • particle: <a style="color:{PARTICLE_COLOR}">this is a particle example.</a><br/>
+      • verb: <a style="color:{VERB_COLOR}">this is an verb example.</a><br/>
+      • noun: <a style="color:{NOUN_COLOR}">this is an noun example.</a><br/>
+      • い-adjective: <a style="color:{I_ADJ_COLOR}">this is an い-adjective example.</a><br/>
+      • な-adjective: <a style="color:{NA_ADJ_COLOR}">this is an な-adjective example.</a><br/>
+      • interjection: <a style="color:{INTERJECTION_COLOR}">this is an interjection example.</a><br/>
+      • suffix: <a style="color:{SUFFIX_COLOR}">this is a suffix example.</a><br/>
+      • conjunction: <a style="color:{CONJUNCTION_COLOR}">this is an conjunction example.</a><br/>
+      """
+    .replaceAll("{PRONOUN_COLOR}", colorToHtmlString(pronounColor))
+    .replaceAll("{ADVERB_COLOR}", colorToHtmlString(adverbColor))
+    .replaceAll("{AUX_VERB_COLOR}", colorToHtmlString(auxVerbColor))
+    .replaceAll("{PARTICLE_COLOR}", colorToHtmlString(particleColor))
+    .replaceAll("{VERB_COLOR}", colorToHtmlString(verbColor))
+    .replaceAll("{NOUN_COLOR}", colorToHtmlString(nounColor))
+    .replaceAll("{I_ADJ_COLOR}", colorToHtmlString(iAdjectiveColor))
+    .replaceAll("{NA_ADJ_COLOR}", colorToHtmlString(naAdjectiveColor))
+    .replaceAll("{INTERJECTION_COLOR}", colorToHtmlString(interjectionColor))
+    .replaceAll("{SUFFIX_COLOR}", colorToHtmlString(suffixColor))
+    .replaceAll("{CONJUNCTION_COLOR}", colorToHtmlString(conjunctionColor));
+
+      //adverbColor.
+    List<Widget> manualTexts = [
+      Html(data: manualTextScreenText),
+      Html(data: manualTextScreenText),
+      Html(data: manualTextScreenText)
+    ];
+
+    
+
     return DaKanjiDrawer(
       currentScreen: Screens.manual,
       animationAtStart: !widget.openedByDrawer,
@@ -136,12 +182,29 @@ class _ManualScreenState extends State<ManualScreen>
                             );
                           },
                           child: Card(
-                            child: Center(
-                              child: SingleChildScrollView(
-                                child: Image.network(
-                                  "https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3"
-                                ),
-                              )
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          buttonIcons[id],
+                                          size: 50,
+                                        ),
+                                        Text(
+                                          buttonTexts[id],
+                                          style: TextStyle(
+                                            fontSize: 30
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    manualTexts[id]
+                                  ],
+                                )
+                              ),
                             ),
                           )
                         ),
@@ -155,7 +218,7 @@ class _ManualScreenState extends State<ManualScreen>
                                 (i) {
                                   lastPressedManualbutton = id;
                                   buttonIds = [];
-                                  for (var i = 0; i < buttonTexts.length; i++) {
+                                  for (var i = 0; i < buttonIcons.length; i++) {
                                     if(i != id) {
                                       buttonIds.add(i);
                                     }
@@ -166,20 +229,22 @@ class _ManualScreenState extends State<ManualScreen>
                                 movingAnimationController.reverse();
                               },
                               child: Center(
-                                child: 
-                                Image.network(
-                                  "https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3"
-                                )
-                                /*
-                                Row(
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.book),
-                                    const SizedBox(width: 10,),
-                                    Text("folded ${buttonTexts[id]}"),
+                                    Icon(
+                                      buttonIcons[id],
+                                      size: 100,
+                                    ),
+                                    SizedBox(height: 2,),
+                                    Text(
+                                      buttonTexts[id],
+                                      style: TextStyle(
+                                        fontSize: 16
+                                      ),
+                                    ),
                                   ],
                                 )
-                                */
                               ),
                             ),
                           ),
