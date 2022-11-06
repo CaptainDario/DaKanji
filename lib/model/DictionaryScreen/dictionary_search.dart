@@ -1,132 +1,170 @@
+import 'package:flutter/foundation.dart';
+import 'dart:async';
 
-
+import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
-import 'package:database_builder/objectbox.g.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_entry;
+import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 
-import 'package:da_kanji_mobile/helper/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/helper/iso_table.dart';
+
+
+
+bool isSearching = false;
+
+String currentSearch = "";
 
 
 /// Searches `queryText` in the database
-List<_jmdict.Entry> searchInDict(String queryText){
+Future<List<isar_entry.Entry>> searchInDict(String queryText) async {
+
+  currentSearch = queryText;
+  bool changed = false;
+  Future.delayed(Duration(milliseconds: 100)).then((value) {
+    if(currentSearch != queryText){
+      changed = true;
+      print("changed");
+    }
+    else{
+      print("not changed");
+    }
+  });
+  if(changed) return [];
+
+  List<isar_entry.Entry> searchResults = [];
 
   String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
   String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
 
-  // TODO: replace this super slow query with a faster implementation 
-  List<_jmdict.Entry> query = GetIt.I<Box<_jmdict.Entry>>().getMany(
-    List.generate(10000, (index) => index+1)
-  ).whereType<_jmdict.Entry>().toList();
-  //List<_jmdict.Entry> query = GetIt.I<Box<_jmdict.Entry>>().getAll();
-  List<_jmdict.Entry> searchResults = query.where((_jmdict.Entry element) {
-    //element.readings.any((String value) => value.contains(queryText)) ||
-    //element.kanjis.any((String value) => value.contains(queryText)) ||
-    //element.readings.any((String value) => value.contains(hiraText)) ||
-    //element.readings.any((String value) => value.contains(kataText)) ||
-    return element.meanings.where((meaning) => 
-      GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
-        isoToiso639_1[meaning.language]!.name
-      )
-    ).any((meaning) => 
-      meaning.meanings.any((m) => m.contains(queryText))
-    );
-  }).toList();
-  // -------------------------------------------------------------------------
+  Stopwatch s = new Stopwatch()..start();
+  
+  if(queryText != ""){
+    for (var mode in [5]) {
+        searchResults = await compute(
+          searchInIsolate,
+          Tuple3(
+            mode,
+            Tuple3(queryText, hiraText, kataText), 
+            GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map(
+              (lang) => isoToiso639_2B[lang]!.name
+            ).toList()
+          )
+        );
+    }
+    //print("len ${searchResults.length} time: ${s.elapsed}");
+  }
+  else{
+    searchResults = [];
+  }
+   //print("Whole search took ${s.elapsed}");
 
-  // SORT
-  // first sort by frequency
-  //searchResults.sort((a, b) => a.)
+  // sort and return
+  searchResults = sortJmdictList(
+    await searchResults, 
+    queryText, GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+  );
 
-  return sortJmdictList(searchResults, queryText, GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
+  isSearching = false;
+
+  return searchResults;
 }
 
 /// Sorts a list of Jmdict entries given a query text. The order is determined
 /// by those sorting criteria:
 /// 
-/// 1. Full > Match at the beginning > Match somwhere in the word
+/// 1. Full Match > Match at the beginning > Match somwhere in the word
 ///    Those three categories are sorted individually and merged in the end
-///   2.  sort inside each category based on 
-List<_jmdict.Entry> sortJmdictList(
-  List<_jmdict.Entry> entries, String queryText, List<String> languages){
+///   2.  sort inside each category based on <br/>
+List<isar_entry.Entry> sortJmdictList(
+  List<isar_entry.Entry> entries, 
+  String queryText,
+  List<String> languages)
+  {
 
   /// lists with three sub lists
-  /// 0 - full matchs ; 1 - matchs starting at the word beginning ; 2 - other matches
-  List<List<_jmdict.Entry>> matches = [[], [], []];
-  List<List<int>> indices = [[], [], []];
+  /// 0 - full matchs 
+  /// 1 - matchs starting at the word beginning 
+  /// 2 - other matches
+  List<List<isar_entry.Entry>> matches = [[], [], []];
+  List<List<int>> matchIndices = [[], [], []];
   String queryTextHira = GetIt.I<KanaKit>().toHiragana(queryText);
 
-  for (_jmdict.Entry entry in entries) {
+  // iterate over the entries and create a ranking for each 
+  for (isar_entry.Entry entry in entries) {
     // KANJI
-    Tuple3 result = rankMatchs(entry.kanjis, queryText);
+    Tuple3 result = rankMatches(entry.kanjis, queryText);
     
     // KANA
-    if(result.item1 == -1) result = rankMatchs(entry.readings, queryTextHira);
+    if(result.item1 == -1)
+      result = rankMatches(entry.readings, queryTextHira);
     
     // MEANING
     // filter all langauges that are not selected in the settings
     if(result.item1 == -1){
-      List<String> k = entry.meanings.where((e) => 
-        languages.contains(isoToiso639_1[e.language]!.name)
-      ).map((e) => e.meanings)
-      .expand((e) => e).toList();
-      result = rankMatchs(k, queryText);
+      List<String> k = entry.meanings.where((isar_entry.LanguageMeanings e) => 
+          languages.contains(isoToiso639_1[e.language]!.name)
+        ).map((isar_entry.LanguageMeanings e) => 
+          e.meanings!
+        ).expand((e) => e).toList();
+      result = rankMatches(k, queryText);
     }
 
     if(result.item1 != -1){
       matches[result.item1].add(entry);
-      indices[result.item1].add(result.item3);
+      matchIndices[result.item1].add(result.item3);
     }
   }
 
-  matches[0] = sortEntriesByInts(matches[0], indices[0]);
+  matches[0] = sortEntriesByInts(matches[0], matchIndices[0]);
+  matches[1] = sortEntriesByInts(matches[1], matchIndices[1]);
+  matches[2] = sortEntriesByInts(matches[2], matchIndices[2]);
   return matches.expand((element) => element).toList();
 }
 
-/// Sorts a list of string `` based on `queryText`. The sorting criteria are
+/// Sorts a `` based on `queryText`. The sorting criteria are
 /// explained by `sortJmdictList`.
 ///
-/// Returns a Tuple with the structure:
-///   1 - if it was a full (0), start(1) or other(2) match
-///   2 - how many characters are in the match but not in `queryText`
-///   3 - the index where the search matched
-Tuple3<int, int, int> rankMatchs(List<String> k, String queryText) {   
+/// Returns a Tuple with the structure: <br/>
+///   1 - if it was a full (0), start(1) or other(2) match <br/>
+///   2 - how many characters are in the match but not in `queryText` <br/>
+///   3 - the index where the search matched <br/>
+Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {   
 
   int result = -1, lenDiff = -1;
 
   // check if the word written in kanji contains the query
-  int matchIndex = k.indexWhere((element) => element.contains(queryText));
+  int matchIndex = matches.indexWhere((element) => element.contains(queryText));
   if(matchIndex != -1){
     // check kanji for full match
-    if(k[matchIndex] == queryText){
+    if(matches[matchIndex] == queryText){
       result = 0;
     }
     // does the found dict entry start with the search term
-    else if(k[matchIndex].startsWith(queryText)){
+    else if(matches[matchIndex].startsWith(queryText)){
       result = 1;
     }
     // how many additional characters does this entry include
     else {
       result = 2;
     }
-    lenDiff = k[matchIndex].length - queryText.length;
+    /// calculatt the difference in length between the query and the result
+    lenDiff = matches[matchIndex].length - queryText.length;
   }
 
   return Tuple3(result, lenDiff, matchIndex);
 }
 
 /// Sorts list `a` based on the values in `b` and returns it.
-/// Throws an exception if the list do not have the same length.
 /// 
-/// Note: the type of list b needs to support `<`, `==` and `>`
-List<_jmdict.Entry> sortEntriesByInts(List<_jmdict.Entry> a, List<int> b){
+/// Throws an exception if the lists do not have the same length.
+List<isar_entry.Entry> sortEntriesByInts(List<isar_entry.Entry> a, List<int> b){
 
   assert (a.length == b.length);
 
-  List<Tuple2<_jmdict.Entry, int>> combined = List.generate(b.length,
+  List<Tuple2<isar_entry.Entry, int>> combined = List.generate(b.length,
     (i) => Tuple2(a[i], b[i])
   );
   combined.sort(
@@ -135,3 +173,69 @@ List<_jmdict.Entry> sortEntriesByInts(List<_jmdict.Entry> a, List<int> b){
 
   return  combined.map((e) => e.item1).toList();
 }
+
+/// Searches in the dictionary matching the provided configuration `args` <br/>
+/// args.item1 - The mode for searching <br/>
+///              1 - search in `kanjis` using the query<br/>
+///              2 - search in `readings` using the query <br/>
+///              3 - search in `readings` using the query in hiragana <br/>
+///              4 - search in `readings` using the query katakana <br/>
+///              5 - search in `meanings` using the query <br/>
+/// 
+/// args.item2 - contains a Tuple3 
+///              1 - the query <br/>
+///              2 - the query converted to hiragana <br/>
+///              3 - the query converted to katakana<br/>
+/// 
+/// args.item3 - is a list containing all languages that should used for finding
+///              matches
+FutureOr<List<isar_entry.Entry>> searchInIsolate(
+  Tuple3<int, Tuple3<String, String, String>, List<String>> args) 
+  {
+
+  QueryBuilder<isar_entry.Entry, isar_entry.Entry, QAfterFilterCondition> query;
+
+  Isar isar = Isar.openSync(
+    [isar_kanji.KanjiSVGSchema, isar_entry.EntrySchema],
+  );
+
+  //print(args);
+  
+  if(args.item1 == 1){
+    query = isar.entrys.filter()
+      .kanjisElementContains(args.item2.item1);
+  }
+  else if(args.item1 == 2){
+    query = isar.entrys.filter()
+      .readingsElementContains(args.item2.item1).or()
+      .readingsElementContains(args.item2.item2).or()
+      .readingsElementContains(args.item2.item3);
+  }
+  else if(args.item1 == 3){
+    query = isar.entrys.filter()
+      .readingsElementStartsWith(args.item2.item2);
+  }
+  else if(args.item1 == 4){
+    query = isar.entrys.filter()
+      .readingsElementStartsWith(args.item2.item3);
+  }
+  else{
+    query = isar.entrys.filter()
+      .meaningsElement((meaning) => meaning
+        .anyOf(args.item3, (m, lang) => m
+          .languageEqualTo(lang)
+          .optional(args.item2.item1.length < 3, (m) => m
+            .meaningsElementStartsWith(args.item2.item1)
+          )
+          .optional(args.item2.item1.length >= 3, (m) => m
+            .meaningsElementContains(args.item2.item1)
+          )
+        )
+      );
+  }
+  
+  var ret = query.findAllSync();
+
+  return ret;
+}
+
