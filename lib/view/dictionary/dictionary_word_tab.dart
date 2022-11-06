@@ -59,12 +59,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
+  /// A list containing the titles of the conjugations
   late final List<String> conjugationTitles;
+  /// A list containing the explanations of the conjugation forms
+  late final List<String> conjugationExplanations;
 
-  late final List<String> conjugationExplanationsPositive;
-
-  late final List<String> conjugationExplanationsNegative;
-  
 
   @override
   void initState() {
@@ -85,23 +84,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       "Causative passive"
     ];
 
-    conjugationExplanationsPositive = [
-      "[does]",
-      "[did]",
-      "",
-      "[doing], to be [doing]",
-      "let's [do]!, I/we will [do], I/we intend to [do]",
-      "[do] !",
-      "please [do]",
-      "if X [does], if X [is ~]",
-      "if X were to [do], when X [does]",
-      "be able to [do], can [do]",
-      "is [done] (by ...), will be [done] (by ...)",
-      "makes/will make (someone) [do]\nlets/will let (someone) [do]",
-      "is made/will be made to [do] (by someone)"
-    ];
-
-    conjugationExplanationsNegative = [
+    conjugationExplanations = [
       "will [do]",
       "didn't [do]",
       "",
@@ -269,17 +252,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           ExpansionTile(
                             title: const Text("Images"),
                             children: [
-                              //AspectRatio(
-                               // aspectRatio: 1,
-                                //child: 
-                                EasyWebView(
-                                  //gestureRecognizers: gestureRecognizers,
-                                  src: Uri.encodeFull("$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]}"),
-                                  height: 720,
-                                  width: 480,
-                                  options: WebViewOptions()..browser,
-                                ),
-                              //)
+                              AspectRatio(
+                                aspectRatio: 1,
+                                child: EasyWebView(
+                                    src: Uri.encodeFull("$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]}")
+                                  )
+                              )
                             ],
                           ),
                         if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))
@@ -294,9 +272,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 // Grammar "explanation"
-                                if(conjugationExplanationsNegative[i] != "")
+                                if(conjugationExplanations[i] != "")
                                   SelectableText(
-                                    conjugationExplanationsNegative[i],
+                                    conjugationExplanations[i],
                                     style: TextStyle(fontSize: 14),
                                   ),
                                 SizedBox(height: 8,),

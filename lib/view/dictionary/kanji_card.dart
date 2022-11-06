@@ -115,16 +115,16 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Strokes: $strokeCount, "
-                            "Grade: ${widget.kanjidic2entry.grade}, " 
-                            "JLPT: N${widget.kanjidic2entry.jlpt}, "
-                            "Heisig: NONE, "
+                            "Strokes: $strokeCount\n"
+                            "Grade: ${widget.kanjidic2entry.grade}\n" 
+                            "JLPT: N${widget.kanjidic2entry.jlpt}\n"
+                            "Heisig: NONE\n"
                             "SKIP: NONE"),
-                          const Text(
-                            "On:"
-                          ),
                           Row(
                             children: [
+                              const Text(
+                                "On:"
+                              ),
                               SizedBox(width: 10,),
                               Flexible(
                                 child: SelectableText(
@@ -133,11 +133,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               ),
                             ],
                           ),
-                          const Text(
-                            "Kun:"
-                          ),
                           Row(
                             children: [
+                              const Text(
+                                "Kun:"
+                              ),
                               SizedBox(width: 10,),
                               Flexible(
                                 child: SelectableText(
@@ -151,9 +151,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     ),
                   ],
                 ),
+                // meanings / translations
                 const SizedBox(height: 16,),
                 ...meanings.entries.map((e) => 
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 10,

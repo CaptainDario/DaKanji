@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
@@ -50,7 +50,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
   late double _canvasSize;
   /// The controller of the webview which is used to show a dict in landscape
-  WebViewController? landscapeWebViewController;
+  //WebViewController? landscapeWebViewController;
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
@@ -63,9 +63,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
       if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-        landscapeWebViewController?.loadUrl(
-          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
-        );
+        setState(() {});
       }
     });
 
@@ -93,9 +91,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     super.dispose();
     GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
       if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview) {
-        landscapeWebViewController?.loadUrl(
-          openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
-        );
+        //landscapeWebViewController?.loadUrl(
+        //  openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+        //);
       }
     });
   }
@@ -139,12 +137,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               DrawScreenClearButton(_canvasSize, widget.includeTutorial),
               _canvasSize,
               GetIt.I<DrawScreenState>().drawScreenLayout,
-              drawScreenIncludesWebview(t.item1) ?
-                WebView(
-                  initialUrl: openWithSelectedDictionary(""),
-                  onWebViewCreated: (controller) => 
-                    landscapeWebViewController = controller
-                ) : null
+              drawScreenIncludesWebview(t.item1)
+                ? EasyWebView(
+                  src: openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars),
+                )
+                : null
             );
           }
         ),

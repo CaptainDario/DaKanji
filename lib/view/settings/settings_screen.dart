@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.save();
                         }
                       ),
-                      if(Platform.isAndroid || Platform.isIOS)
+                      if(g_webViewSupported)
                         ResponsiveCheckBoxTile(
                           text: LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr(),
                           value: GetIt.I<Settings>().drawing.useWebview,
