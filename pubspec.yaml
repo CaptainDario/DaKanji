@@ -40,8 +40,6 @@ dependencies:
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0
-  objectbox: 1.6.2
-  objectbox_flutter_libs: any
   kana_kit: 2.0.0
   reorderables: 0.5.0
   archive: 3.3.0
