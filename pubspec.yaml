@@ -53,7 +53,7 @@ dependencies:
   flutter_html: 3.0.0-alpha.6
 
   # do NOT support all target platforms
-  webview_flutter: 3.0.0          # android, iOS
+  easy_web_view: 1.6.0             # android, iOS, windows
   in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
   tflite_flutter:                 # android, iOS, Linux, MacOS, windows
     path: ./plugins/tflite_flutter_plugin
@@ -70,7 +70,6 @@ dependencies:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
       ref: 03d957e
-  webview_windows: 0.2.1
 
   # utility 
   flutter_launcher_icons: 0.9.2  # android, iOS, Linux, MacOS, windows
