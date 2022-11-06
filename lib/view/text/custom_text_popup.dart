@@ -1,9 +1,9 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:webview_cef/webview_cef.dart';
+import 'package:easy_web_view/easy_web_view.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
 
 
@@ -38,28 +38,19 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
   /// The controller to manage the webview for DeepL
-  WebViewController webViewController = WebViewController();
+  //WebViewController webViewController = WebViewController();
 
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
 
-    tabNames = ["Dictionary", "Deepl"];
+    tabNames = ["Dictionary"];
+    if(g_webViewSupported)
+      tabNames.add("Deepl");
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String url = "$g_deepLUrl";
-    await webViewController.initialize();
-    await webViewController.loadUrl(url);
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-    setState(() {});
-  }
+
 
 
   @override
@@ -93,11 +84,6 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                         }
                       },
                       child: TabBar(
-                        onTap: (value) {
-                          if(value == 1){
-                            webViewController.loadUrl(Uri.encodeFull("$g_deepLUrl${widget.text}"));
-                          }
-                        },
                         tabs: List.generate(tabNames.length, (index) =>
                           Padding(
                             padding: EdgeInsets.all(8.0),
@@ -123,11 +109,12 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                               )
                             ],
                           ),
-                          Card(
-                            child: WebView(
-                              webViewController,
+                          if(g_webViewSupported)
+                            Card(
+                              child: EasyWebView(
+                                src: Uri.encodeFull("$g_deepLUrl${widget.text}"),
+                              ),
                             )
-                          )
                         ]
                       ),
                     ),
