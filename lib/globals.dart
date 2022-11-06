@@ -27,6 +27,8 @@ const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", 
 /// variable that indicates if a webivew is available on this platform
 final bool g_webViewSupported =
   Platform.isWindows || Platform.isAndroid || Platform.isIOS || kIsWeb;
+/// browser user agent to fake a mobile device on desktop
+String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
 
 /// is the app running to test the drawscreen
 bool g_IsTestingDrawscreen = false;

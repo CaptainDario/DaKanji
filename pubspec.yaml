@@ -23,7 +23,7 @@ dependencies:
   url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
   image: 3.2.0
-  flutter_markdown: 0.6.9+1
+  flutter_markdown: 0.6.13
   get_it: 7.2.0
   provider: 6.0.3
   universal_io: 2.0.4
@@ -53,7 +53,9 @@ dependencies:
   flutter_html: 3.0.0-alpha.6
 
   # do NOT support all target platforms
-  easy_web_view: 1.6.0             # android, iOS, windows
+  easy_web_view:                  # android, iOS, windows
+    git:
+      url: https://github.com/CaptainDario/easy_web_view.git
   in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
   tflite_flutter:                 # android, iOS, Linux, MacOS, windows
     path: ./plugins/tflite_flutter_plugin

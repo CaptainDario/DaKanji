@@ -18,6 +18,7 @@ import 'package:feedback/feedback.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
+import 'package:webview_windows/webview_windows.dart';
 
 import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
@@ -48,6 +49,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
+  try{
+    await WebviewController.initializeEnvironment(
+      additionalArguments: mobileUserAgentArg
+    );
+  }
+  catch (e){
+
+  }
 
   await init();
 
@@ -92,7 +101,7 @@ Future<void> init() async {
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   debugPrint(yaml['version']);
-  g_Version = yaml['version'];  
+  g_Version = yaml['version'];
 
   await copyDatabaseFilesFromAssets();
 
