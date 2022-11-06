@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
-  objectbox_flutter_libs
   url_launcher_linux
   window_size
 )
