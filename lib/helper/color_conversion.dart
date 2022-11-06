@@ -21,3 +21,7 @@ MaterialColor createMaterialColor(Color color) {
   }
   return MaterialColor(color.value, swatch);
 }
+
+String colorToHtmlString(Color color){
+  return "rgb(${color.red}, ${color.green}, ${color.blue})";
+}
