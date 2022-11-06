@@ -1,6 +1,8 @@
 library my_prj.globals;
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:universal_io/io.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 /// the title of the app
@@ -20,9 +22,11 @@ List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
 // ignore: non_constant_identifier_names
 List<String> g_OnboardingNewPages = ["0.0.0", "2.0.0"];
-/// all languages which are supported in DaKanji
+/// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
-
+/// variable that indicates if a webivew is available on this platform
+final bool g_webViewSupported =
+  Platform.isWindows || Platform.isAndroid || Platform.isIOS || kIsWeb;
 
 /// is the app running to test the drawscreen
 bool g_IsTestingDrawscreen = false;
