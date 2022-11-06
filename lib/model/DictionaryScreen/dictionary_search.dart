@@ -5,8 +5,9 @@ import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_entry;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
+import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
 import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:da_kanji_mobile/helper/iso_table.dart';
@@ -19,11 +20,11 @@ String currentSearch = "";
 
 
 /// Searches `queryText` in the database
-Future<List<isar_entry.Entry>> searchInDict(String queryText) async {
+Future<List<isar_jm.Entry>> searchInDict(String queryText) async {
 
   currentSearch = queryText;
   bool changed = false;
-  Future.delayed(Duration(milliseconds: 100)).then((value) {
+  Future.delayed(Duration(milliseconds: 300)).then((value) {
     if(currentSearch != queryText){
       changed = true;
       print("changed");
@@ -34,7 +35,7 @@ Future<List<isar_entry.Entry>> searchInDict(String queryText) async {
   });
   if(changed) return [];
 
-  List<isar_entry.Entry> searchResults = [];
+  List<isar_jm.Entry> searchResults = [];
 
   String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
   String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
@@ -78,8 +79,8 @@ Future<List<isar_entry.Entry>> searchInDict(String queryText) async {
 /// 1. Full Match > Match at the beginning > Match somwhere in the word
 ///    Those three categories are sorted individually and merged in the end
 ///   2.  sort inside each category based on <br/>
-List<isar_entry.Entry> sortJmdictList(
-  List<isar_entry.Entry> entries, 
+List<isar_jm.Entry> sortJmdictList(
+  List<isar_jm.Entry> entries, 
   String queryText,
   List<String> languages)
   {
@@ -88,12 +89,12 @@ List<isar_entry.Entry> sortJmdictList(
   /// 0 - full matchs 
   /// 1 - matchs starting at the word beginning 
   /// 2 - other matches
-  List<List<isar_entry.Entry>> matches = [[], [], []];
+  List<List<isar_jm.Entry>> matches = [[], [], []];
   List<List<int>> matchIndices = [[], [], []];
   String queryTextHira = GetIt.I<KanaKit>().toHiragana(queryText);
 
   // iterate over the entries and create a ranking for each 
-  for (isar_entry.Entry entry in entries) {
+  for (isar_jm.Entry entry in entries) {
     // KANJI
     Tuple3 result = rankMatches(entry.kanjis, queryText);
     
@@ -104,9 +105,9 @@ List<isar_entry.Entry> sortJmdictList(
     // MEANING
     // filter all langauges that are not selected in the settings
     if(result.item1 == -1){
-      List<String> k = entry.meanings.where((isar_entry.LanguageMeanings e) => 
+      List<String> k = entry.meanings.where((isar_jm.LanguageMeanings e) => 
           languages.contains(isoToiso639_1[e.language]!.name)
-        ).map((isar_entry.LanguageMeanings e) => 
+        ).map((isar_jm.LanguageMeanings e) => 
           e.meanings!
         ).expand((e) => e).toList();
       result = rankMatches(k, queryText);
@@ -160,11 +161,11 @@ Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {
 /// Sorts list `a` based on the values in `b` and returns it.
 /// 
 /// Throws an exception if the lists do not have the same length.
-List<isar_entry.Entry> sortEntriesByInts(List<isar_entry.Entry> a, List<int> b){
+List<isar_jm.Entry> sortEntriesByInts(List<isar_jm.Entry> a, List<int> b){
 
   assert (a.length == b.length);
 
-  List<Tuple2<isar_entry.Entry, int>> combined = List.generate(b.length,
+  List<Tuple2<isar_jm.Entry, int>> combined = List.generate(b.length,
     (i) => Tuple2(a[i], b[i])
   );
   combined.sort(
@@ -189,14 +190,14 @@ List<isar_entry.Entry> sortEntriesByInts(List<isar_entry.Entry> a, List<int> b){
 /// 
 /// args.item3 - is a list containing all languages that should used for finding
 ///              matches
-FutureOr<List<isar_entry.Entry>> searchInIsolate(
+FutureOr<List<isar_jm.Entry>> searchInIsolate(
   Tuple3<int, Tuple3<String, String, String>, List<String>> args) 
   {
 
-  QueryBuilder<isar_entry.Entry, isar_entry.Entry, QAfterFilterCondition> query;
+  QueryBuilder<isar_jm.Entry, isar_jm.Entry, QAfterFilterCondition> query;
 
   Isar isar = Isar.openSync(
-    [isar_kanji.KanjiSVGSchema, isar_entry.EntrySchema],
+    [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
   );
 
   //print(args);

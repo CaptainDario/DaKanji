@@ -57,25 +57,25 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
     for (var i = 0; i < widget.kanjidic2entry.readings.length; i++) {
       // init on reading list
-      if(widget.kanjidic2entry.readings[i].r_type.contains("ja_on")) {
-        onReadings.add(widget.kanjidic2entry.readings[i].value);
+      if(widget.kanjidic2entry.readings[i].r_type!.contains("ja_on")) {
+        onReadings.add(widget.kanjidic2entry.readings[i].value!);
       }
 
       // init kun reading list
-      if(widget.kanjidic2entry.readings[i].r_type.contains("ja_kun")) {
-        kunReadings.add(widget.kanjidic2entry.readings[i].value);
+      if(widget.kanjidic2entry.readings[i].r_type!.contains("ja_kun")) {
+        kunReadings.add(widget.kanjidic2entry.readings[i].value!);
       }
     }
 
     for (var i = 0; i < widget.kanjidic2entry.meanings.length; i++) {
       // init meaning list with all meanings that match `targetLanguage`
       if(widget.targetLanguages.any(
-        (l) => l.contains(widget.kanjidic2entry.meanings[i].language)
+        (l) => l.contains(widget.kanjidic2entry.meanings[i].language!)
       )) {
         if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
-          meanings[widget.kanjidic2entry.meanings[i].language] = [];
+          meanings[widget.kanjidic2entry.meanings[i].language!] = [];
         meanings[widget.kanjidic2entry.meanings[i].language]!.add(
-          widget.kanjidic2entry.meanings[i].meaning
+          widget.kanjidic2entry.meanings[i].meaning!
         );
       }
     }

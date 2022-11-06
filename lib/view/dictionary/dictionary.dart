@@ -7,8 +7,8 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
+import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_conversion.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
@@ -42,9 +42,7 @@ class Dictionary extends StatefulWidget {
   _DictionaryState createState() => _DictionaryState();
 }
 
-class _DictionaryState
-  extends State<Dictionary>
-  with TickerProviderStateMixin {
+class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
 
   /// TabController to manage the different tabs in the dictionary
   late TabController dictionaryTabController;
@@ -114,7 +112,7 @@ class _DictionaryState
   
             changeTab = () {
               // only change the tab if the tab bar includes the search tab
-              if(noTabs != 4) return;
+              if(noTabs != 4 || tabsSideBySide > 1) return;
               
               // if a search result was selected change the tab
               if(context.read<DictSearch>().selectedResult != null) {
@@ -128,27 +126,9 @@ class _DictionaryState
           // if a search result was selected
           // search the kanjis from the selected word in KanjiVG
           if(context.watch<DictSearch>().selectedResult != null){
-  
-            List<String> kanjis = 
-              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis);
-  
-            kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
-              .characterMatches(kanjis.join("|"))
-              .findAllSync(); 
-            /*
-            kanjiVGs = List.generate(
-              kanjis.length, (index) => 
-                GetIt.I<Box<KanjiSVG>>().query(
-                  KanjiSVG_.character.equals(kanjis[index])
-                ).build().find()
-            ).expand((element) => element).toList();
-            */
-
-            kanjidic2Entries = List.generate(kanjiVGs.length, (index) =>
-              GetIt.I<Box<Kanjidic2Entry>>().query(
-                Kanjidic2Entry_.literal.equals(kanjiVGs[index].character)
-              ).build().find()
-            ).expand((element) => element).toList();
+            findMatchingEntries(
+              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis)
+            );
           }
     
           return Row(
@@ -163,10 +143,13 @@ class _DictionaryState
                     initialSearch: context.watch<DictSearch>().currentSearch,
                     includeActionButton: widget.includeActionButton,
                     onSearchResultPressed: (entry) {
-                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
-                        if(tabsSideBySide != 4)
-                          dictionaryTabController.animateTo(1);
-                      });
+                      // start a tab switching animation on the next frame
+                      // only if the search is not separated
+                      if(tabsSideBySide == 1)
+                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
+                          
+                            dictionaryTabController.animateTo(1);
+                        });
                     },
                   ),
                 ),
@@ -260,6 +243,27 @@ class _DictionaryState
         })
       ),
     );
+  }
+
+  void findMatchingEntries(List<String> kanjis){
+    
+    kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
+      .characterMatches(kanjis.join("|"))
+      .findAllSync(); 
+    
+    kanjiVGs = List.generate(
+      kanjis.length, (index) => 
+        GetIt.I<Isar>().kanjiSVGs.filter()
+          .characterEqualTo(kanjis[index])
+        .findAllSync()
+    ).expand((element) => element).toList();
+    
+
+    kanjidic2Entries = List.generate(kanjiVGs.length, (index) =>
+      GetIt.I<Isar>().kanjidic2Entrys.filter()
+        .literalEqualTo(kanjiVGs[index].character)
+      .findAllSync()
+    ).expand((element) => element).toList();
   }
 }
 

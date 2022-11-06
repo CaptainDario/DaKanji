@@ -1,18 +1,17 @@
-import 'package:da_kanji_mobile/helper/iso_table.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-
-import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
+import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/helper/iso_table.dart';
+import 'package:da_kanji_mobile/provider/settings.dart';
 
 
 
@@ -23,7 +22,7 @@ class DictionaryWordTab extends StatefulWidget {
   ) : super(key: key);
 
   /// the dict entry that should be shown 
-  final _isar.Entry? entry;
+  final isar_jm.Entry? entry;
 
 
   @override
@@ -216,7 +215,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             List<Widget> ret = [];
 
                             // get the meaning of the selected language
-                            List<_isar.LanguageMeanings> meanings = widget.entry!.meanings.where(
+                            List<isar_jm.LanguageMeanings> meanings = widget.entry!.meanings.where(
                               (element) => isoToiso639_1[element.language]!.name == lang
                             ).toList();
                             
@@ -266,18 +265,21 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         const SizedBox(
                           height: 20,
                         ),
-                        if (Platform.isAndroid || Platform.isIOS) 
+                        if(g_webViewSupported) 
                           ExpansionTile(
                             title: const Text("Images"),
                             children: [
-                              AspectRatio(
-                                aspectRatio: 1,
-                                child: WebView(
-                                  gestureRecognizers: gestureRecognizers,
-                                  initialUrl: "$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]} ${widget.entry!.readings[0]}",
-                                  
+                              //AspectRatio(
+                               // aspectRatio: 1,
+                                //child: 
+                                EasyWebView(
+                                  //gestureRecognizers: gestureRecognizers,
+                                  src: Uri.encodeFull("$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]}"),
+                                  height: 720,
+                                  width: 480,
+                                  options: WebViewOptions()..browser,
                                 ),
-                              )
+                              //)
                             ],
                           ),
                         if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))

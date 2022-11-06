@@ -12,12 +12,12 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:window_size/window_size.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:archive/archive_io.dart';
 import 'package:feedback/feedback.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_entry;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
+import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
 import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
@@ -51,7 +51,6 @@ Future<void> main() async {
 
   await init();
 
-  
   runApp(
     EasyLocalization(
       supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
@@ -177,24 +176,16 @@ Future<void> initGetIt() async {
   // package for converting between kana
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
-  // ObjectBox
-  Store store = openStore(
-    directory: (await path_provider.getApplicationDocumentsDirectory()).path + "/objectbox"
-  );
-  //GetIt.I.registerSingleton<Box<Entry>>(store.box<Entry>());
-  //GetIt.I.registerSingleton<Box<KanjiSVG>>(store.box<KanjiSVG>());
-  GetIt.I.registerSingleton<Box<Kanjidic2Entry>>(store.box<Kanjidic2Entry>());
-
   String path = (await path_provider.getApplicationDocumentsDirectory()).path + "/isar";
 
-  await compute(openIsarInIsolate, path).then((value) {
+  //compute(openIsarInIsolate, path).then((value) {
     GetIt.I.registerSingleton<Isar>(
       Isar.openSync(
-        [isar_kanji.KanjiSVGSchema, isar_entry.EntrySchema],
+        [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
         directory: path
       )
     );
-  });
+  //});
   
 
   // Drawer
@@ -220,7 +211,7 @@ void desktopWindowSetup() {
 /// from being blocked.
 void openIsarInIsolate(String directory) {
   Isar.openSync(
-    [isar_kanji.KanjiSVGSchema, isar_entry.EntrySchema],
+    [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema],
     directory: directory
   );
 }
