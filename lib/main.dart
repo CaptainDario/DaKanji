@@ -42,9 +42,7 @@ import 'package:da_kanji_mobile/feedback_localization.dart';
 
 Future<void> main() async {
   
-  runApp(
-    DaKanjiSplash()
-  );
+  runApp(DaKanjiSplash());
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
