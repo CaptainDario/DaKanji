@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xml/xml.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 
@@ -50,6 +51,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   final Map<String, List<String>> meanings = {};
   /// The stroke count information extracted from the KanjiVG data
   int strokeCount = -1;
+
+  TextStyle headerStyle = TextStyle(color:  Colors.grey);
 
   @override
   void initState() {
@@ -110,42 +113,23 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     
                     const SizedBox(width: 8,),
                     Expanded(
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr, auto, 1.fr],
+                        rowSizes: List.generate(7, (index) => auto),
                         children: [
-                          Text(
-                            "Strokes: $strokeCount\n"
-                            "Grade: ${widget.kanjidic2entry.grade}\n" 
-                            "JLPT: N${widget.kanjidic2entry.jlpt}\n"
-                            "Heisig: NONE\n"
-                            "SKIP: NONE"),
-                          Row(
-                            children: [
-                              const Text(
-                                "On:"
-                              ),
-                              SizedBox(width: 10,),
-                              Flexible(
-                                child: SelectableText(
-                                  onReadings.join(", ")
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Text(
-                                "Kun:"
-                              ),
-                              SizedBox(width: 10,),
-                              Flexible(
-                                child: SelectableText(
-                                  kunReadings.join(", ")
-                                ),
-                              ),
-                            ],
-                          ),
+                          Text("On: ", style: headerStyle),      SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                          Text("Kun: ", style: headerStyle),     SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                          SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
+                          Text("Strokes: ", style: headerStyle), Text("$strokeCount"),
+                          Text("Grade: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
+
+                          Text("JLPT: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
+                          Text("Heisig: ", style: headerStyle),  Text("NONE"),
+
+                          Text("SKIP: ", style: headerStyle),    Text("NONE"),
+                          Text("Freq.: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
+                          
+                          Text("Radicals: ", style: headerStyle)
                         ],
                       ),
                     ),
