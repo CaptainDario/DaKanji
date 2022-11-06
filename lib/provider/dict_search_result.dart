@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
 
 
 
@@ -12,17 +12,17 @@ class DictSearch with ChangeNotifier {
   String currentSearch = "";
 
   /// a list of all search results
-  List<_jmdict.Entry> searchResults = [];
+  List<_isar.Entry> searchResults = [];
 
   /// the selected search Result
-  _jmdict.Entry? _selectedResult;
+  _isar.Entry? _selectedResult;
 
-  set selectedResult (_jmdict.Entry? newEntry){
+  set selectedResult (_isar.Entry? newEntry){
     _selectedResult = newEntry;
     notifyListeners();
   }
 
-  _jmdict.Entry? get selectedResult {
+  _isar.Entry? get selectedResult {
     return _selectedResult;
   }
 

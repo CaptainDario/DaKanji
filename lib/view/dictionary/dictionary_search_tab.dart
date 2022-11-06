@@ -6,7 +6,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
 
 import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
@@ -20,8 +20,8 @@ class DictionarySearchTab extends StatefulWidget {
   const DictionarySearchTab(
     this.height,
     this.width,
-    this.initialSearch,
     {
+      this.initialSearch = "",
       this.includeActionButton = true,
       this.onSearchResultPressed,
       Key? key
@@ -38,7 +38,7 @@ class DictionarySearchTab extends StatefulWidget {
   /// should the action button to open the drawing screen be included
   final bool includeActionButton;
 
-  final Function(_jmdict.Entry selection)? onSearchResultPressed;
+  final Function(_isar.Entry selection)? onSearchResultPressed;
 
   @override
   State<DictionarySearchTab> createState() => _DictionarySearchTabState();
@@ -91,14 +91,15 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                               return;
                             }
 
-                            setState(() {
-                              context.read<DictSearch>().currentSearch = text;
-                              context.read<DictSearch>().searchResults = searchInDict(text);
-                              lastInput = text;
-                            });
+                            context.read<DictSearch>().currentSearch = text;
+                            context.read<DictSearch>().searchResults = await searchInDict(text);
+                            lastInput = text;
+
+                            setState(() {});
                           },
                         ),
                       ),
+                      // Radical search
                       IconButton(
                         onPressed: () {
                           AwesomeDialog(
@@ -127,6 +128,7 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                         ),
                         //icon: Icon(Icons.kayaking),
                       ),
+                      // Copy / clear button
                       IconButton(
                         onPressed: () async {
                           if(searchInputController.text != ""){
@@ -138,7 +140,7 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                             String data = (await Clipboard.getData('text/plain'))?.text ?? "";
                             searchInputController.text = data;
                             context.read<DictSearch>().currentSearch = data;
-                            context.read<DictSearch>().searchResults = searchInDict(data);
+                            context.read<DictSearch>().searchResults = await searchInDict(data);
                           }
                           setState(() { });
                         },

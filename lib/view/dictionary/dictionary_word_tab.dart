@@ -1,6 +1,5 @@
 import 'package:da_kanji_mobile/helper/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as _jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
 
 import 'package:da_kanji_mobile/globals.dart';
 
@@ -24,7 +23,7 @@ class DictionaryWordTab extends StatefulWidget {
   ) : super(key: key);
 
   /// the dict entry that should be shown 
-  final _jmdict.Entry? entry;
+  final _isar.Entry? entry;
 
 
   @override
@@ -165,36 +164,32 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         // Readings
                         SelectionArea(
                           child: Wrap(
-                            children: [
-                              Row(
-                                children: List.generate( (widget.entry!.readings.length),
-                                  // Characters of word reading with  pitch accent
-                                  (index_1) => Row(
-                                    children:
-                                    [
-                                      ...List.generate(
-                                        widget.entry!.readings[index_1].length,
-                                        (index_2) => Container(
-                                          decoration: const BoxDecoration(
-                                            border: Border(
-                                              right: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.5,
-                                              ),
-                                            )
+                            children: List.generate( (widget.entry!.readings.length),
+                              // Characters of word reading with  pitch accent
+                              (index_1) => Row(
+                                children:
+                                [
+                                  ...List.generate(
+                                    widget.entry!.readings[index_1].length,
+                                    (index_2) => Container(
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          right: BorderSide(
+                                            color: Colors.white,
+                                            width: 1.5,
                                           ),
-                                          child: Text (
-                                            widget.entry!.readings[index_1][index_2] +
-                                            (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
-                                            style: readingStyle
-                                          ),
-                                        ),
+                                        )
                                       ),
-                                    ]
-                                  )
-                                ),
-                              ),
-                            ],
+                                      child: Text (
+                                        widget.entry!.readings[index_1][index_2] +
+                                        (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
+                                        style: readingStyle
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              )
+                            ),
                           ),
                         ),
                         
@@ -221,7 +216,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             List<Widget> ret = [];
 
                             // get the meaning of the selected language
-                            List<LanguageMeanings> meanings = widget.entry!.meanings.where(
+                            List<_isar.LanguageMeanings> meanings = widget.entry!.meanings.where(
                               (element) => isoToiso639_1[element.language]!.name == lang
                             ).toList();
                             
@@ -239,26 +234,24 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               ret.add(
                                 LayoutGrid(
                                   gridFit: GridFit.loose,
-                                  columnSizes: [0.5.fr, 0.5.fr],
+                                  columnSizes: [auto, 0.425.fr, auto, 0.425.fr],
                                   rowSizes: List.generate(
-                                    meanings.first.meanings.length, 
+                                    meanings.first.meanings!.length, 
                                     (index) => auto
                                   ),
                                   children: List.generate(
-                                    meanings.first.meanings.length,
-                                    (int j) => Wrap(
-                                      children: [
-                                        Text(
-                                          "${(j+1).toString()}. ",
-                                          style: meaningsStyle
-                                        ),
-                                        SelectableText(
-                                          meanings.first.meanings[j],
-                                          style: meaningsStyle
-                                        ),
-                                      ],
-                                    )
-                                  )
+                                    meanings.first.meanings!.length,
+                                    (int j) => [
+                                      Text(
+                                        "${(j+1).toString()}. ",
+                                        style: meaningsStyle
+                                      ),
+                                      SelectableText(
+                                        meanings.first.meanings![j],
+                                        style: meaningsStyle
+                                      )
+                                    ],
+                                  ).expand((e) => e).toList()
                                 )
                               );
 
@@ -315,14 +308,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                             children: [
                                               // normal form
                                               TextSpan(
-                                                text: widget.entry!.kanjis[0],
+                                                text: widget.entry!.kanjis.isEmpty
+                                                  ? widget.entry!.readings[0]
+                                                  : widget.entry!.kanjis[0],
                                                 style: TextStyle(
                                                   fontSize: 20
                                                 ),
                                               ),
                                               // polite form
                                               TextSpan(
-                                                text: "、 " + widget.entry!.kanjis[0],
+                                                text: "、 " + (widget.entry!.kanjis.isEmpty
+                                                  ? widget.entry!.readings[0]
+                                                  : widget.entry!.kanjis[0]),
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   color: Colors.grey
@@ -341,14 +338,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                             children: [
                                               // normal form
                                               TextSpan(
-                                                text: widget.entry!.kanjis[0],
+                                                text: (widget.entry!.kanjis.isEmpty
+                                                  ? widget.entry!.readings[0]
+                                                  : widget.entry!.kanjis[0]),
                                                 style: TextStyle(
                                                   fontSize: 20
                                                 ),
                                               ),
                                               // polite form
                                               TextSpan(
-                                                text: "、 " + widget.entry!.kanjis[0],
+                                                text: "、 " + (widget.entry!.kanjis.isEmpty
+                                                  ? widget.entry!.readings[0]
+                                                  : widget.entry!.kanjis[0]),
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   color: Colors.grey
@@ -391,10 +392,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
                         }
                         if(selection == menuItems[1]) {
-                          launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0].meanings[0]}");
+                          launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
                         }
                         if(selection == menuItems[2]) {
-                          launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0].meanings[0]}");
+                          launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
                         }
                         if(selection == menuItems[3]) {
                           launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");

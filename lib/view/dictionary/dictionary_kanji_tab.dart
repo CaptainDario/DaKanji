@@ -1,7 +1,8 @@
-import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:flutter/material.dart';
 
+import 'package:da_kanji_mobile/provider/settings.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_card.dart';
 import 'package:get_it/get_it.dart';
@@ -16,7 +17,7 @@ class DictionaryKanjiTab extends StatefulWidget {
   ) : super(key: key);
 
   /// A list of KanjiVG entries that should be shown
-  final List<KanjiSVG> kanjiVGs;
+  final List<isar_kanji.KanjiSVG> kanjiVGs;
   /// A List of kanjidic2 entries thath should be shown
   final List<Kanjidic2Entry> kanjidic2entries;
 

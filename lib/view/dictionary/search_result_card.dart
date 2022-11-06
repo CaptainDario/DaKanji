@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_db/data_classes.dart' as jmdict;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
 
 
 
@@ -18,12 +18,12 @@ class SearchResultCard extends StatefulWidget {
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  final jmdict.Entry dictEntry;
+  final _isar.Entry dictEntry;
   /// 
   final int resultIndex;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
-  final Function(jmdict.Entry selection)? onPressed;
+  final Function(_isar.Entry selection)? onPressed;
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
@@ -45,7 +45,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+              // Japanese words + translations
               Expanded(
+                flex: 7,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,9 +74,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ...List.generate(
-                          min(widget.dictEntry.meanings[0].meanings.length, 3),
+                          min(widget.dictEntry.meanings[0].meanings!.length, 3),
                           (int index) => Text(
-                            "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings[index]}",
+                            "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings![index]}",
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               fontSize: 10
@@ -87,17 +89,22 @@ class _SearchResultCardState extends State<SearchResultCard> {
                 ),
               ),
               //part of speech information
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.dictEntry.partOfSpeech.first.toString(),
-                    style: const TextStyle(
-                      fontSize: 10
-                    ),
-                  )
-                ],
+              Expanded(
+                flex: 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      textAlign: TextAlign.end,
+                      widget.dictEntry.partOfSpeech.first.split("").join("\u200B").toString(),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        letterSpacing: 0
+                      ),
+                    )
+                  ],
+                ),
               )
             ],
           ),

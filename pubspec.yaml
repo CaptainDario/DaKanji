@@ -49,6 +49,8 @@ dependencies:
   share_plus: 5.0.0
   cross_file: 0.3.3+2
   json_annotation: 4.7.0
+  isar: 3.0.2
+  isar_flutter_libs: 3.0.2
 
   # do NOT support all target platforms
   webview_flutter: 3.0.0          # android, iOS

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xml/xml.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_group_widget.dart';
@@ -27,7 +28,7 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   ) : super(key: key);
 
   /// The kanji that should be shown in this card as a svg string
-  final KanjiSVG kanjiVG;
+  final isar_kanji.KanjiSVG kanjiVG;
   /// List of all kanjidict entries 
   final Kanjidic2Entry kanjidic2entry;
   /// String denoting the target language
