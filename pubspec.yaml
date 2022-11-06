@@ -50,7 +50,7 @@ dependencies:
   isar: 3.0.2
   isar_flutter_libs: 3.0.2
   async: 2.9.0
-  flutter_html: 3.0.0-alpha.6
+  simple_html_css: 4.0.0
 
   # do NOT support all target platforms
   easy_web_view:                  # android, iOS, windows
