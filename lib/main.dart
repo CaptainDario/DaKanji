@@ -127,24 +127,26 @@ Future<void> downloadAssets() async {
   
 }
 
+/// copies the zipped database from assets to the user's documents directory
+/// and unzips it, if it does not exist already
 Future<void> copyDatabaseFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-  final objectBoxDirectory = Directory(documentsDirectory.path + "/objectbox");
+  final databaseDirectory = Directory(documentsDirectory.path + "/isar");
   
-  if (!objectBoxDirectory.existsSync()) {
-    await objectBoxDirectory.create(recursive: true);
+  if (!databaseDirectory.existsSync()) {
+    await databaseDirectory.create(recursive: true);
   }
 
-  final dbFile = File(objectBoxDirectory.path + '/data.mdb');
+  final dbFile = File(databaseDirectory.path + '/data.mdb');
   if (!dbFile.existsSync()) {
     // Get pre-populated db file.
-    ByteData data = await rootBundle.load("assets/dict/data.zip");
+    ByteData data = await rootBundle.load("assets/dict/default.zip");
 
     final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
 
     // Copying source data into destination file.
-    extractArchiveToDisk(archive, objectBoxDirectory.path);
+    extractArchiveToDisk(archive, databaseDirectory.path);
   }
 }
 
