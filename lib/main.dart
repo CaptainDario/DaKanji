@@ -216,8 +216,6 @@ void desktopWindowSetup() {
   
   windowManager.setSize(Size(
     GetIt.I<Settings>().misc.windowWidth.toDouble(), 
-      GetIt.I<Settings>().misc.windowWidth.toDouble(), 
-    GetIt.I<Settings>().misc.windowWidth.toDouble(), 
     GetIt.I<Settings>().misc.windowHeight.toDouble()
   ));
 
