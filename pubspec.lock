@@ -405,13 +405,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_html:
-    dependency: "direct main"
-    description:
-      name: flutter_html
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0-alpha.6"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -600,6 +593,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.6"
+  html_unescape:
+    dependency: transitive
+    description:
+      name: html_unescape
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   http:
     dependency: transitive
     description:
@@ -829,13 +829,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  numerus:
-    dependency: transitive
-    description:
-      name: numerus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   objectbox:
     dependency: transitive
     description:
@@ -1060,6 +1053,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.5"
+  screen_retriever:
+    dependency: transitive
+    description:
+      name: screen_retriever
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   share_plus:
     dependency: "direct main"
     description:
@@ -1172,6 +1172,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  simple_html_css:
+    dependency: "direct main"
+    description:
+      name: simple_html_css
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1541,15 +1548,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.7.0"
-  window_size:
+  window_manager:
     dependency: "direct main"
     description:
-      path: "plugins/window_size"
-      ref: "03d957e"
-      resolved-ref: "03d957e8b5c99fc83cd4a781031b154ab3de8753"
-      url: "https://github.com/google/flutter-desktop-embedding.git"
-    source: git
-    version: "0.1.0"
+      name: window_manager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.7"
   xdg_directories:
     dependency: transitive
     description:

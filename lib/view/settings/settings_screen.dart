@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:reorderables/reorderables.dart';
 import 'dart:io';
 
 import 'package:universal_io/io.dart';
@@ -9,7 +6,10 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:window_size/window_size.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reorderables/reorderables.dart';
 
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
@@ -312,15 +312,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
                       // windows size
-                      if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+                      if(g_desktopPlatform)
                         ResponsiveIconButtonTile(
                           text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
                           icon: Icons.screenshot_monitor,
                           onButtonPressed: () async {
-                            var info = await getWindowInfo();
+                            var info = await windowManager.getSize();
 
-                            settings.misc.windowHeight = info.frame.height.toInt();
-                            settings.misc.windowWidth = info.frame.width.toInt();
+                            settings.misc.windowHeight = info.height.toInt();
+                            settings.misc.windowWidth = info.width.toInt();
 
                             settings.save();
                           },
