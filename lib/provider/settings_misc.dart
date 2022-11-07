@@ -76,7 +76,7 @@ class SettingsMisc with ChangeNotifier {
   /// The theme which the application will use.
   /// System will match the settings of the system.
   @JsonKey(defaultValue: d_selectedTheme)
-  late String _selectedTheme = d_selectedTheme;
+  String _selectedTheme = d_selectedTheme;
   /// The theme which the application will use.
   /// System will match the settings of the system.
   String get selectedTheme => _selectedTheme;
@@ -84,6 +84,30 @@ class SettingsMisc with ChangeNotifier {
   /// System will match the settings of the system.
   set selectedTheme(String selectedTheme) {
     _selectedTheme = selectedTheme;
+    notifyListeners();
+  }
+
+
+  /// should this window always be shown on top of other windows
+  @JsonKey(defaultValue: false)
+  bool _alwaysOnTop = false;
+  /// should this window always be shown on top of other windows
+  bool get alwaysOnTop => _alwaysOnTop;
+  /// should this window always be shown on top of other windows
+  set alwaysOnTop(bool alwaysOnTop) {
+    _alwaysOnTop = alwaysOnTop;
+    notifyListeners();
+  }
+
+
+  /// The window's opacity
+  @JsonKey(defaultValue: 1.0)
+  double _windowOpacity = 1.0;
+  /// The window's opacity
+  double get windowOpacity => _windowOpacity;
+  /// The window's opacity
+  set windowOpacity(double windowOpacity) {
+    _windowOpacity = windowOpacity;
     notifyListeners();
   }
 

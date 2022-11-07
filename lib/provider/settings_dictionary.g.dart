@@ -12,7 +12,7 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
           (json['translationLanguageCodes'] as List<dynamic>?)
                   ?.map((e) => e as String)
                   .toList() ??
-              ['eng', 'ger', 'fre', 'rus', 'spa', 'hun', 'slv', 'dut']
+              ['en', 'de', 'fr', 'ru', 'es', 'hu', 'sl', 'nl']
       ..selectedTranslationLanguages =
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)

@@ -325,6 +325,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
+                      // window always on top
+                      if(g_desktopPlatform)
+                        ResponsiveCheckBoxTile(
+                          value: settings.misc.alwaysOnTop,
+                          text: "Window always on top",
+                          onTileTapped: (checked) async {
+                            windowManager.setAlwaysOnTop(checked);
+                            settings.misc.alwaysOnTop = checked;
+                            settings.save();
+                          },
+                        ),
+                      // window opacity
+                      if(g_desktopPlatform)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: Text("Window opacity")
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Slider(
+                                value: settings.misc.windowOpacity,
+                                max: 1.0,
+                                min: 0.2,
+                                onChanged: (double value) {
+                                  windowManager.setOpacity(value);
+                                  settings.misc.windowOpacity = value;
+                                  settings.save();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       // #endregion
 
                       const Divider(),
