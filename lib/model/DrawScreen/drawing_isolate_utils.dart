@@ -7,7 +7,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// Manages separate Isolate instance for inference
 class DrawingIsolateUtils {
-  static const String debugName = "InferenceIsolate";
+  static const String debugName = "DrawingInferenceIsolate";
 
   late Isolate? _isolate;
   final ReceivePort _receivePort = ReceivePort();
