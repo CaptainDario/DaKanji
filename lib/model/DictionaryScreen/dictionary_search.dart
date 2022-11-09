@@ -22,18 +22,20 @@ String currentSearch = "";
 /// Searches `queryText` in the database
 Future<List<isar_jm.Entry>> searchInDict(String queryText) async {
 
-  currentSearch = queryText;
-  bool changed = false;
-  Future.delayed(Duration(milliseconds: 300)).then((value) {
-    if(currentSearch != queryText){
-      changed = true;
-      print("changed");
-    }
-    else{
-      print("not changed");
-    }
-  });
-  if(changed) return [];
+  if(isSearching){
+    currentSearch = queryText;
+    bool changed = false;
+    Future.delayed(Duration(milliseconds: 300)).then((value) {
+      if(currentSearch != queryText){
+        changed = true;
+        print("changed");
+      }
+      else{
+        print("not changed");
+      }
+    });
+    if(changed) return [];
+  }
 
   List<isar_jm.Entry> searchResults = [];
 
@@ -43,24 +45,27 @@ Future<List<isar_jm.Entry>> searchInDict(String queryText) async {
   Stopwatch s = new Stopwatch()..start();
   
   if(queryText != ""){
-    for (var mode in [5]) {
-        searchResults = await compute(
-          searchInIsolate,
-          Tuple3(
-            mode,
-            Tuple3(queryText, hiraText, kataText), 
-            GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map(
-              (lang) => isoToiso639_2B[lang]!.name
-            ).toList()
-          )
-        );
-    }
+    searchResults = await compute(
+      searchInIsolate,
+      Tuple3(
+        5,
+        Tuple3(
+          queryText, 
+          hiraText, 
+          kataText
+        ), 
+        GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map(
+          (lang) => isoToiso639_2B[lang]!.name
+        ).toList()
+      )
+    );
+    
     //print("len ${searchResults.length} time: ${s.elapsed}");
   }
   else{
     searchResults = [];
   }
-   //print("Whole search took ${s.elapsed}");
+  print("Whole search took ${s.elapsed}");
 
   // sort and return
   searchResults = sortJmdictList(
@@ -190,53 +195,40 @@ List<isar_jm.Entry> sortEntriesByInts(List<isar_jm.Entry> a, List<int> b){
 /// 
 /// args.item3 - is a list containing all languages that should used for finding
 ///              matches
-FutureOr<List<isar_jm.Entry>> searchInIsolate(
+//FutureOr<List<isar_jm.Entry>>
+List<isar_jm.Entry> searchInIsolate(
   Tuple3<int, Tuple3<String, String, String>, List<String>> args) 
   {
 
-  QueryBuilder<isar_jm.Entry, isar_jm.Entry, QAfterFilterCondition> query;
+  Query<isar_jm.Entry> query;
 
   Isar isar = Isar.openSync(
     [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
   );
-
-  //print(args);
   
-  if(args.item1 == 1){
-    query = isar.entrys.filter()
-      .kanjisElementContains(args.item2.item1);
-  }
-  else if(args.item1 == 2){
-    query = isar.entrys.filter()
-      .readingsElementContains(args.item2.item1).or()
-      .readingsElementContains(args.item2.item2).or()
-      .readingsElementContains(args.item2.item3);
-  }
-  else if(args.item1 == 3){
-    query = isar.entrys.filter()
-      .readingsElementStartsWith(args.item2.item2);
-  }
-  else if(args.item1 == 4){
-    query = isar.entrys.filter()
-      .readingsElementStartsWith(args.item2.item3);
-  }
-  else{
-    query = isar.entrys.filter()
-      .meaningsElement((meaning) => meaning
-        .anyOf(args.item3, (m, lang) => m
-          .languageEqualTo(lang)
-          .optional(args.item2.item1.length < 3, (m) => m
-            .meaningsElementStartsWith(args.item2.item1)
-          )
-          .optional(args.item2.item1.length >= 3, (m) => m
-            .meaningsElementContains(args.item2.item1)
-          )
+  query = isar.entrys.filter()
+  //  .kanjisElementContains(args.item2.item1)
+  //.or()
+    .readingsElementContains(args.item2.item1).or()
+    .readingsElementContains(args.item2.item2).or()
+    .readingsElementContains(args.item2.item3)
+  /*
+  .or()
+    .meaningsElement((meaning) => meaning
+      .anyOf(args.item3, (m, lang) => m
+        .languageEqualTo(lang)
+        .optional(args.item2.item1.length < 3, (m) => m
+          .meaningsElementStartsWith(args.item2.item1)
         )
-      );
-  }
+        .optional(args.item2.item1.length >= 3, (m) => m
+          .meaningsElementContains(args.item2.item1)
+        )
+      )
+    )
+  */
+  //.limit(20)
+  .build();
   
-  var ret = query.findAllSync();
-
-  return ret;
+  return query.findAllSync();
 }
 
