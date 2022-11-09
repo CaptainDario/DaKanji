@@ -1,15 +1,16 @@
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/search_isolate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
 
 import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 
@@ -37,7 +38,7 @@ class DictionarySearchTab extends StatefulWidget {
   final String initialSearch;
   /// should the action button to open the drawing screen be included
   final bool includeActionButton;
-
+  /// callback when on a search result was pressed
   final Function(_isar.Entry selection)? onSearchResultPressed;
 
   @override
@@ -52,7 +53,22 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
   TextEditingController searchInputController = TextEditingController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
+  ///
+  final GlobalKey<AnimatedListState> _searchResultsListKey = GlobalKey<AnimatedListState>();
 
+  final SearchIsolate searchIsolate = SearchIsolate(1, ["eng"]);
+
+  @override
+  void initState() {
+    searchIsolate.init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    //searchIsolate.kill();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +108,8 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                             }
 
                             context.read<DictSearch>().currentSearch = text;
-                            context.read<DictSearch>().searchResults = await searchInDict(text);
+                            context.read<DictSearch>().searchResults =
+                              await searchIsolate.query(text);
                             lastInput = text;
 
                             setState(() {});
@@ -140,7 +157,8 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                             String data = (await Clipboard.getData('text/plain'))?.text ?? "";
                             searchInputController.text = data;
                             context.read<DictSearch>().currentSearch = data;
-                            context.read<DictSearch>().searchResults = await searchInDict(data);
+                            context.read<DictSearch>().searchResults =
+                              await searchIsolate.query(data);
                           }
                           setState(() { });
                         },
@@ -157,27 +175,22 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
               ),
               SizedBox(height: widget.height*0.025,),
               Expanded(
-                child: ListView.builder(
+                child: 
+                ListView.builder(
                   itemCount: context.watch<DictSearch>().searchResults.length,
                   itemBuilder: ((context, index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      child: SlideAnimation(
-                        child: FadeInAnimation(
-                          child: SearchResultCard(
-                            dictEntry: context.watch<DictSearch>().searchResults[index],
-                            resultIndex: index,
-                            onPressed: (selection) {
-                              context.read<DictSearch>().selectedResult = selection;
-                              if(widget.onSearchResultPressed != null)
-                                widget.onSearchResultPressed!(selection);
-                            }
-                          )
-                        ),
-                      ),
+                    return SearchResultCard(
+                      dictEntry: context.watch<DictSearch>().searchResults[index],
+                      resultIndex: index,
+                      onPressed: (selection) {
+                        context.read<DictSearch>().selectedResult = selection;
+                        if(widget.onSearchResultPressed != null)
+                          widget.onSearchResultPressed!(selection);
+                      } 
                     );
                   })
                 ),
+                
               ),
             ],
           ),
