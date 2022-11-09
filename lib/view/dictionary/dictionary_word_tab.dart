@@ -10,7 +10,7 @@ import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart'
 import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/helper/iso_table.dart';
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings.dart';
 
 

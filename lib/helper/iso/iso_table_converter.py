@@ -15,7 +15,7 @@ def main():
 
     # read the iso table from wikipedia
     content = []
-    with open("iso_table.txt", mode="r", encoding="utf-8") as f:
+    with open("./lib/helper/iso/iso_table.txt", mode="r", encoding="utf-8") as f:
         for line in f.readlines():
             line = line.replace("\n", "")
             line = line.split("\t")
@@ -32,10 +32,11 @@ def main():
             
 
     # open a new dart file to write the processed data
-    with open("iso_table.dart", mode="w+", encoding="utf-8") as f:
+    with open("./lib/helper/iso/iso_table.dart", mode="w+", encoding="utf-8") as f:
 
         # credits
-        f.write("//Scraped from https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\n\n\n\n")
+        f.write("// based on iso_table.txt which was scraped from")
+        f.write("// https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\n\n\n\n")
 
         # iterate over the different language codes
         for cnt, iso in enumerate([iso639_1, iso639_2T, iso639_2B, iso639_3]):
