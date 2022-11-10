@@ -6,7 +6,8 @@ import 'conj.dart';
 /// Convenience class grouping together 
 /// 
 /// `pos`, `conj`, `neg`, `fml`, and `onum` form a unique key identifying
-/// a conjugation
+/// a conjugation. This can be used to lookup `stem`, `okuri`, `euphr` and
+/// ``
 class Conjo {
 
   /// A part-of-speech number.  These are defined in kwpos.csv and each number 
@@ -46,8 +47,22 @@ class Conjo {
     this.stem,
     this.okuri,
     {
-      this.euphr,
-      this.euphk
+      this.euphr = null,
+      this.euphk = null
     }
   );
+
+  @override
+  String toString() {
+    return 
+      'Pos: ${this.pos.name.toString()}, ' +
+      'Conj: ${this.conj.name}, ' +
+      'Neg: ${this.neg.toString()}, ' +
+      'Fml: ${this.fml.toString()}, ' +
+      'Onum: ${this.onum.toString()}, ' +
+      'Stem: ${this.stem.toString()}, ' +
+      'Okuri: ${this.okuri}, ' +
+      'Euphr: ${(this.euphr ?? "")}, ' +
+      'Euphk: ${(this.euphk ?? "")}, ';
+  }
 }
