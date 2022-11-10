@@ -10,7 +10,7 @@ import 'package:da_kanji_mobile/model/dark_theme.dart';
 import 'package:da_kanji_mobile/model/settings_arguments.dart';
 import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/view/home/home_screen.dart';
 import 'package:da_kanji_mobile/view/settings/settings_screen.dart';

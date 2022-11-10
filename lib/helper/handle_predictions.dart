@@ -8,9 +8,9 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/settings_arguments.dart';
-import 'package:da_kanji_mobile/provider/settings_drawing.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/view/download_app_dialogue.dart';

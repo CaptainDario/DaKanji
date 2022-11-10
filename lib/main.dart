@@ -28,7 +28,7 @@ import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/model/changelog.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/drawing_lookup.dart';
 import 'package:da_kanji_mobile/provider/drawing/strokes.dart';
 import 'package:da_kanji_mobile/provider/drawing/kanji_buffer.dart';

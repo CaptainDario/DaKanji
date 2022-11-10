@@ -10,7 +10,7 @@ import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_group_widget.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 

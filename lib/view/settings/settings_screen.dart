@@ -13,7 +13,7 @@ import 'package:reorderables/reorderables.dart';
 
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/view/settings/custom_url_popup.dart';

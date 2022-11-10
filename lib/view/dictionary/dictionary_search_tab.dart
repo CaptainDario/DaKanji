@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 
