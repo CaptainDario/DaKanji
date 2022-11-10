@@ -21,7 +21,7 @@ enum Conj {
 }
 
 /// A map from the id to the conjugation form enum
-const Map<int, Conj> idToConj = {
+const Map<int, Conj> conjIdToConjEnum = {
 	1 : Conj.Non_past,
 	2 : Conj.Past,
 	3 : Conj.Conjunctive,
@@ -38,7 +38,7 @@ const Map<int, Conj> idToConj = {
 };
 
 /// A map from the conjugation form enum to the id
-const Map<Conj, int> conjToId = {
+const Map<Conj, int> conjEnumToConjId = {
 	Conj.Non_past : 1,
 	Conj.Past : 2,
 	Conj.Conjunctive : 3,
@@ -55,7 +55,7 @@ const Map<Conj, int> conjToId = {
 };
 
 /// A map from the conjugation form enum to a string description
-const Map<Conj, String> conjToDescription = {
+const Map<Conj, String> conjEnumToConjDescription = {
 	Conj.Non_past : 'Non-past',
 	Conj.Past : 'Past (~ta)',
 	Conj.Conjunctive : 'Conjunctive (~te)',
