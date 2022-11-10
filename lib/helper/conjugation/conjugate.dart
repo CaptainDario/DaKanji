@@ -4,6 +4,8 @@
 /// The basic approach is as described in the README of jconj and the NOTE in
 /// this folder
 
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
+
 import 'conjos.dart';
 import 'conj.dart';
 import 'conjo.dart';
@@ -40,14 +42,16 @@ String conjugate(String baseVerb, Conjo conjugation){
     result = result.substring(0, baseVerb.length - conjugation.stem);
   }
 
-  // 3b. 
-  else if(conjugation.euphk != null){
-
+  // 3b. special case - 'euphk' is not null and the word is kanji
+  else if(conjugation.euphk != null && kanjiRegex.hasMatch(baseVerb)){
+    result = result.substring(0, baseVerb.length - (conjugation.stem+1));
+    result += conjugation.euphk!;
   }
 
-  // 3c. 
-  else if(conjugation.euphr != null){
-
+  // 3c. special case - 'euphr' is not null and the word is kana
+  else if(conjugation.euphr != null && kanaRegex.hasMatch(baseVerb)){
+    result = result.substring(0, baseVerb.length - (conjugation.stem+1));
+    result += conjugation.euphr!;
   }
 
   // 3d. Append `okuri` to the end of the conjugation
