@@ -13,8 +13,23 @@ def main():
 
         f.write("import 'pos.dart';\n\n\n\n")
 
-        f.write("/// A map from the id to the pos description\n")
-        f.write("const Map<int, Pos> conj = {\n")
+        f.write("/// An enum containing the pos tags to identify pos elements\n")
+        f.write("enum pos {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                f.write(f"\t{row[1].replace('-', '_')},\n")
+        
+        f.write("}\n\n")
+
+        f.write("/// A map from the pos-strings to the matching enum\n")
+        f.write("const Map<String, pos> posStringToPosEnum = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 
@@ -25,10 +40,57 @@ def main():
                     continue
 
                 r2 = row[2].replace("'", '"')
-                f.write(f"\t{row[0]} : Pos('{row[1]}', '{r2}'),\n")
+                f.write(f"\t'{row[1]}' : pos.{row[1].replace('-', '_')},\n")
         
-        f.write("};")
+        f.write("};\n\n")
 
+        f.write("/// A map from the pos-strings to the matching enum\n")
+        f.write("const Map<String, pos> posDescriptionToPosEnum = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r2 = row[2].replace("'", '"')
+                f.write(f"\t'{r2}' : pos.{row[1].replace('-', '_')},\n")
+        
+        f.write("};\n\n")
+
+        f.write("/// A map from a pos-enum to the pos-strings\n")
+        f.write("const Map<pos, String> posEnumToPosString = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r2 = row[2].replace("'", '"')
+                f.write(f"\tpos.{row[1].replace('-', '_')} : '{row[1]}',\n")
+        
+        f.write("};\n\n")
+
+        f.write("/// A map from a pos-enum to the pos-description\n")
+        f.write("const Map<pos, String> posEnumToPosDescription = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r2 = row[2].replace("'", '"')
+                f.write(f"\tpos.{row[1].replace('-', '_')} : '{r2}',\n")
+        
+        f.write("};\n\n")
 
 
 

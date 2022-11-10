@@ -1,4 +1,5 @@
 import csv
+import re
 
 
 
@@ -11,8 +12,8 @@ def main():
     with open(f"{base_path}{file_name}.dart", mode="w+", encoding="utf8") as f:
         f.write(source)
 
-        f.write("/// A map from the id to the conjugation form string\n")
-        f.write("const Map<int, String> conj = {\n")
+        f.write("/// Enum containing the conjugation forms\n")
+        f.write("enum Conj {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 
@@ -21,7 +22,58 @@ def main():
             for row in conj_reader:
                 if(row[0] == "id"):
                     continue
-                f.write(f"\t{row[0]} : '{row[1]}',\n")
+
+                r = re.sub(r" \(.*\)", "", row[1]).replace("-", "_")
+                f.write(f"\t{r},\n")
+        
+        f.write("}\n\n")
+
+        f.write("/// A map from the id to the conjugation form enum\n")
+        f.write("const Map<int, Conj> idToConj = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r = re.sub(r" \(.*\)", "", row[1]).replace("-", "_")
+                f.write(f"\t{row[0]} : Conj.{r},\n")
+        
+        f.write("};\n\n")
+
+
+        f.write("/// A map from the conjugation form enum to the id\n")
+        f.write("const Map<Conj, int> conjToId = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r = re.sub(r" \(.*\)", "", row[1]).replace("-", "_")
+                f.write(f"\tConj.{r} : {row[0]},\n")
+        
+        f.write("};\n\n")
+
+        f.write("/// A map from the conjugation form enum to a string description\n")
+        f.write("const Map<Conj, String> conjToDescription = {\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            for row in conj_reader:
+                if(row[0] == "id"):
+                    continue
+
+                r = re.sub(r" \(.*\)", "", row[1]).replace("-", "_")
+                f.write(f"\tConj.{r} : '{row[1]}',\n")
         
         f.write("};")
 

@@ -23,8 +23,8 @@ class ConjoNote {
   /// A disambiguating number (starting from 1) for rows containing variant
   /// okurigana for the same conjugation (e.g., ～なくて and ～ないで).
   final int onum;
-  /// A note for this `ConjoNote`
-  final int? note;
+  /// A note for this `ConjoNote` maps to `conotes`
+  final int note;
 
 
   const ConjoNote(
@@ -33,9 +33,7 @@ class ConjoNote {
     this.neg,
     this.fml,
     this.onum,
-    {
-     this.note
-    }
+    this.note
   ) : super();
 
   @override
@@ -45,7 +43,8 @@ class ConjoNote {
     this.conj == other.conj &&
     this.neg  == other.neg  &&
     this.fml  == other.fml  &&
-    this.onum == other.onum;
+    this.onum == other.onum &&
+    this.note == other.note;
   
 
   int get hasCode => 
@@ -54,7 +53,8 @@ class ConjoNote {
       this.conj,
       this.neg,
       this.fml,
-      this.onum
+      this.onum,
+      this.note
     ]);
   
 }

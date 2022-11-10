@@ -11,11 +11,10 @@ def main():
     with open(f"{base_path}{file_name}.dart", mode="w+", encoding="utf8") as f:
         f.write(source)
         f.write("import 'conjo_note.dart';\n\n\n\n")
-        f.write("/// \n")
+        f.write("// convenience vars  \n")
         f.write("const String f = 'f';\n")
-        f.write("/// \n")
         f.write("const String t = 't';\n\n")
-        f.write("/// \n")
+        f.write("/// list containing example `ConjoNote`s from the JMDict project \n")
         f.write("const List conjo_notes = [\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:

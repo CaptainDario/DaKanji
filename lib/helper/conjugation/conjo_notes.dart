@@ -5,12 +5,11 @@ import 'conjo_note.dart';
 
 
 
-/// 
+// convenience vars  
 const String f = 'f';
-/// 
 const String t = 't';
 
-/// 
+/// list containing example `ConjoNote`s from the JMDict project 
 const List conjo_notes = [
 	ConjoNote(2, 1, f, f, 1, 7),
 	ConjoNote(15, 1, t, f, 1, 3),

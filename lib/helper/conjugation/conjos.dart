@@ -6,8 +6,8 @@ import 'conjo.dart';
 
 
 // Convenience constants
-const String f = 'f';
-const String t = 't';
+const bool f = false;
+const bool t = true;
 
 /// 
 const List<Conjo> conjos = [

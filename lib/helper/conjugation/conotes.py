@@ -2,7 +2,7 @@ import csv
 
 
 
-source = "//based on conj.csv which was scraped from\n//https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data\n\n\n\n"
+source = "//based on conotes.csv which was scraped from\n//https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data\n\n\n\n"
 base_path = "./lib/helper/conjugation/"
 file_name = "conotes"
 
@@ -11,7 +11,7 @@ def main():
     with open(f"{base_path}{file_name}.dart", mode="w+", encoding="utf8") as f:
         f.write(source)
 
-        f.write("/// A map from the id to the conjugation form string\n")
+        f.write("/// A map from the id to a note regarding conjugation of a word\n")
         f.write("const Map<int, String> conotes = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='', encoding="utf8") as csvfile:
