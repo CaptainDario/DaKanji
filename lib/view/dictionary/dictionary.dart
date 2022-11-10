@@ -10,7 +10,7 @@ import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_
 import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
-import 'package:da_kanji_mobile/helper/japanese_text_conversion.dart';
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_search_tab.dart';
