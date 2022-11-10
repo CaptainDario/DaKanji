@@ -29,7 +29,7 @@ def main():
         f.write("}\n\n")
 
         f.write("/// A map from the id to the conjugation form enum\n")
-        f.write("const Map<int, Conj> idToConj = {\n")
+        f.write("const Map<int, Conj> conjIdToConjEnum = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 
@@ -46,7 +46,7 @@ def main():
 
 
         f.write("/// A map from the conjugation form enum to the id\n")
-        f.write("const Map<Conj, int> conjToId = {\n")
+        f.write("const Map<Conj, int> conjEnumToConjId = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 
@@ -62,7 +62,7 @@ def main():
         f.write("};\n\n")
 
         f.write("/// A map from the conjugation form enum to a string description\n")
-        f.write("const Map<Conj, String> conjToDescription = {\n")
+        f.write("const Map<Conj, String> conjEnumToConjDescription = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 

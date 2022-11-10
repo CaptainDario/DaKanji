@@ -11,13 +11,15 @@ def main():
     with open(f"{base_path}{file_name}.dart", mode="w+", encoding="utf8") as f:
         f.write(source)
 
-        f.write("import 'conjo.dart';\n\n\n\n")
+        f.write("import 'conjo.dart';\n")
+        f.write("import 'conj.dart';\n")
+        f.write("import 'kwpos.dart';\n\n\n\n")
 
         f.write("// Convenience constants\n")
-        f.write("const String f = 'f';\n")
-        f.write("const String t = 't';\n\n")
+        f.write("const bool f = false;\n")
+        f.write("const bool t = true;\n\n")
         f.write("/// \n")
-        f.write("const List<Conjo> conjos = [\n")
+        f.write("List<Conjo> conjos = [\n")
 
         with open(f"{base_path}{file_name}.csv", newline='', encoding="utf8") as csvfile:
 
@@ -27,7 +29,7 @@ def main():
                 if(row[0] == "pos"):
                     continue
 
-                entry = f"\tConjo({', '.join(row[:6])}, '{row[6]}'"
+                entry = f"\tConjo(posIdToPosEnum[{row[0]}]!, conjIdToConjEnum[{row[1]}]!, {', '.join(row[2:6])}, '{row[6]}'"
                 if(row[7] != ""):
                     entry += f", euphr: '{row[7]}'"
                 if(row[8] != ""):
