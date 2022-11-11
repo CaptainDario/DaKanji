@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/provider/settings_drawing.dart';
-import 'package:da_kanji_mobile/provider/settings_advanced.dart';
-import 'package:da_kanji_mobile/provider/settings_misc.dart';
-import 'package:da_kanji_mobile/provider/settings_dictionary.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_drawing.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_advanced.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_misc.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_dictionary.dart';
 
 
 

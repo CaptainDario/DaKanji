@@ -1,17 +1,15 @@
+import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
+import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
 
 
 
@@ -51,7 +49,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Examples (Massif)"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -59,47 +57,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
-  /// A list containing the titles of the conjugations
-  late final List<String> conjugationTitles;
-  /// A list containing the explanations of the conjugation forms
-  late final List<String> conjugationExplanations;
-
 
   @override
   void initState() {
-
-    conjugationTitles = [
-      "Present, (Future)",
-      "Past",
-      "て-form, Continuative",
-      "Progressive",
-      "Volitional",
-      "Imperative",
-      "Request",
-      "Provisional",
-      "Conditional",
-      "Potential",
-      "Passive, Respectful",
-      "Causative",
-      "Causative passive"
-    ];
-
-    conjugationExplanations = [
-      "will [do]",
-      "didn't [do]",
-      "",
-      "not [doing]",
-      "I will not [do], I do not intend to [do]",
-      "don't [do] !",
-      "please don't [do]",
-      "if X doesn't [do], if X [is not ~]",
-      "if X weren't to [do], when X doesn't [do]",
-      "not be able to [do], can't [do]",
-      "isn't [done] (by ...), will not be [done] (by ...)",
-      "doesn't / won't make / let (someone) [do]",
-      "isn't made / won't be made to [do] (by someone)"
-    ];
-
     super.initState();
   }
 
@@ -122,11 +82,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         child: Column(
           children: [
             Card(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // word written with kanji
@@ -189,61 +149,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           height: 20,
                         ),
                         // meanings
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          // create the children in the same order as in the settings
-                          children: GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((lang) {
-                            
-                            List<Widget> ret = [];
-
-                            // get the meaning of the selected language
-                            List<isar_jm.LanguageMeanings> meanings = widget.entry!.meanings.where(
-                              (element) => isoToiso639_1[element.language]!.name == lang
-                            ).toList();
-                            
-                            ret.add(
-                              SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: SvgPicture.asset(
-                                  GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-                                ),
-                              ),
-                            );
-                            if(meanings.isNotEmpty){
-
-                              ret.add(
-                                LayoutGrid(
-                                  gridFit: GridFit.loose,
-                                  columnSizes: [auto, 0.425.fr, auto, 0.425.fr],
-                                  rowSizes: List.generate(
-                                    meanings.first.meanings!.length, 
-                                    (index) => auto
-                                  ),
-                                  children: List.generate(
-                                    meanings.first.meanings!.length,
-                                    (int j) => [
-                                      Text(
-                                        "${(j+1).toString()}. ",
-                                        style: meaningsStyle
-                                      ),
-                                      SelectableText(
-                                        meanings.first.meanings![j],
-                                        style: meaningsStyle
-                                      )
-                                    ],
-                                  ).expand((e) => e).toList()
-                                )
-                              );
-
-                              ret.add(SizedBox(height: 10,));
-                                  
-                            }
-
-                            return ret;
-                          }).expand((element) => element).toList(),
-                          
+                        WordMeanings(
+                          entry: widget.entry!, 
+                          meaningsStyle: meaningsStyle
                         ),
                         const SizedBox(
                           height: 20,
@@ -260,138 +168,87 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             ],
                           ),
-                        if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))
-                          ExpansionTile(
-                            childrenPadding: EdgeInsets.all(16),
-                            title: const Text("Conjugation"),
-                            children: List.generate(conjugationTitles.length, (i) =>
-                              [
-                                // Grammar "name"
-                                SelectableText(
-                                  conjugationTitles[i],
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                // Grammar "explanation"
-                                if(conjugationExplanations[i] != "")
-                                  SelectableText(
-                                    conjugationExplanations[i],
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                SizedBox(height: 8,),
-                                Row(
-                                  children: [
-                                    // positive conjugations
-                                    Expanded(
-                                      child: Center(
-                                        child: SelectableText.rich(
-                                          TextSpan(
-                                            children: [
-                                              // normal form
-                                              TextSpan(
-                                                text: widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0],
-                                                style: TextStyle(
-                                                  fontSize: 20
-                                                ),
-                                              ),
-                                              // polite form
-                                              TextSpan(
-                                                text: "、 " + (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.grey
-                                                ),
-                                              ),
-                                            ]
-                                          )
-                                        )
-                                      )
-                                    ),
-                                    // negative conjugations
-                                    Expanded(
-                                      child: Center(
-                                        child: SelectableText.rich(
-                                          TextSpan(
-                                            children: [
-                                              // normal form
-                                              TextSpan(
-                                                text: (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20
-                                                ),
-                                              ),
-                                              // polite form
-                                              TextSpan(
-                                                text: "、 " + (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.grey
-                                                ),
-                                              ),
-                                            ]
-                                          )
-                                        )
-                                      )
-                                    ),
-                                  ],
-                                ),
-                              ]
-                            ).expand((i) => i).toList()
+                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                          widget.entry!.partOfSpeech[0].contains(" verb"))
+                          ConjugationExpansionTile(
+                            word: widget.entry!.kanjis.isEmpty
+                              ? widget.entry!.readings[0]
+                              : widget.entry!.kanjis[0],
+                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            conjugationTileType: ConjugationTileType.verb,
                           ),
-                        const ExpansionTile(
-                          title: Text("Proverbs"),
-                          children: [
-                            Text("This could be done by using kotowaza?")
-                          ],
-                        ),
-                        const ExpansionTile(
-                          title: Text("Synonyms"),
-                          children: [
-                            Text("This could be done by using wordnet jp?")
-                          ],
-                        )
+                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                          widget.entry!.partOfSpeech[0].contains("adjective"))
+                          ConjugationExpansionTile(
+                            word: widget.entry!.kanjis.isEmpty
+                              ? widget.entry!.readings[0]
+                              : widget.entry!.kanjis[0],
+                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            conjugationTileType: ConjugationTileType.adjective,
+                          ),
+                          
+                        //TODO - add proverbs @ DaKanji v3.x 
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Proverbs"),
+                            children: [
+                              Text("This could be done by using kotowaza?")
+                            ],
+                          ),
+                        //TODO - add synonyms @ DaKanji v3.x
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Synonyms"),
+                            children: [
+                              Text("This could be done by using wordnet jp?")
+                            ],
+                          ),
+                        //TODO - add antonyms @ DaKanji v3.x
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Antonyms"),
+                            children: [
+                              Text("This could be done by using NANI??")
+                            ],
+                          ),
                       ],
                     ),
-                  ),
-                  // more menu, to open this word in different web pages
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: PopupMenuButton(
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) {
-                        // Wiki
-                        if(selection == menuItems[0]) {
-                          launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
-                        }
-                        if(selection == menuItems[1]) {
-                          launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
-                        }
-                        if(selection == menuItems[2]) {
-                          launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
-                        }
-                        if(selection == menuItems[3]) {
-                          launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
-                        }
-                      },
-                      itemBuilder: (context) => List.generate(
-                        menuItems.length,
-                        (index) => 
-                          PopupMenuItem(
-                            value: menuItems[index],
-                            child: Text(menuItems[index])
-                          )
-                      ),
-                    )
-                  ),
-                ],
+                    // more menu, to open this word in different web pages
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: PopupMenuButton(
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (String selection) {
+                          // Wiki
+                          if(selection == menuItems[0]) {
+                            launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
+                          }
+                          if(selection == menuItems[1]) {
+                            launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
+                          }
+                          if(selection == menuItems[2]) {
+                            launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
+                          }
+                          if(selection == menuItems[3]) {
+                            launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
+                          }
+                          if(selection == menuItems[4]) {
+                            launchUrlString("$g_Massif${widget.entry!.kanjis[0]}");
+                          }
+                        },
+                        itemBuilder: (context) => List.generate(
+                          menuItems.length,
+                          (index) => 
+                            PopupMenuItem(
+                              value: menuItems[index],
+                              child: Text(menuItems[index])
+                            )
+                        ),
+                      )
+                    ),
+                  ],
+                ),
               )
             ),
           ],

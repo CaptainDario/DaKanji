@@ -7,7 +7,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate_utils.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 

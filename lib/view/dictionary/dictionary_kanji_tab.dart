@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 

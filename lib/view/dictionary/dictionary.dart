@@ -10,7 +10,7 @@ import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_
 import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
-import 'package:da_kanji_mobile/helper/japanese_text_conversion.dart';
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_search_tab.dart';
@@ -202,35 +202,38 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       Expanded(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            return TabBarView(
-                              controller: dictionaryTabController,
-                              children: [
-                                if(noTabs > 3) 
-                                  DictionarySearchTab(
-                                    constraints.maxHeight,
-                                    constraints.maxWidth,
-                                    initialSearch: context.watch<DictSearch>().currentSearch,
-                                    includeActionButton: widget.includeActionButton,
-                                    onSearchResultPressed: (entry) {
-                                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                        if(tabsSideBySide != 4)
-                                          dictionaryTabController.animateTo(1);
-                                      });
-                                    },
-                                  ),
-                                if(noTabs > 2)
-                                  DictionaryWordTab(
-                                    context.watch<DictSearch>().selectedResult
-                                  ),
-                                if(noTabs > 1) 
-                                  DictionaryKanjiTab(
-                                    kanjiVGs,
-                                    kanjidic2Entries
-                                  ),
-                                if(noTabs > 0) 
-                                  const DictionaryExampleTab(),
-                                
-                              ],
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TabBarView(
+                                controller: dictionaryTabController,
+                                children: [
+                                  if(noTabs > 3) 
+                                    DictionarySearchTab(
+                                      constraints.maxHeight,
+                                      constraints.maxWidth,
+                                      initialSearch: context.watch<DictSearch>().currentSearch,
+                                      includeActionButton: widget.includeActionButton,
+                                      onSearchResultPressed: (entry) {
+                                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                          if(tabsSideBySide != 4)
+                                            dictionaryTabController.animateTo(1);
+                                        });
+                                      },
+                                    ),
+                                  if(noTabs > 2)
+                                    DictionaryWordTab(
+                                      context.watch<DictSearch>().selectedResult
+                                    ),
+                                  if(noTabs > 1) 
+                                    DictionaryKanjiTab(
+                                      kanjiVGs,
+                                      kanjidic2Entries
+                                    ),
+                                  if(noTabs > 0) 
+                                    const DictionaryExampleTab(),
+                                  
+                                ],
+                              ),
                             );
                           }
                         ),

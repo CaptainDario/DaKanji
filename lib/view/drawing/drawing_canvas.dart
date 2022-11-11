@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/drawing/strokes.dart';
 import 'package:da_kanji_mobile/view/drawing/drawing_painter.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';

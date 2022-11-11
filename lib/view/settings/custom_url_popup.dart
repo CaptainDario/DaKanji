@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/provider/settings_drawing.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 

@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/view/controllable_lottie_animation.dart';
 import 'package:da_kanji_mobile/view/changelog_screen.dart';
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/changelog.dart';
 
 

@@ -118,6 +118,8 @@ const g_WikipediaEnUrl = "https://en.wikipedia.org/wiki/";
 const g_DbpediaUrl = "https://dbpedia.org/page/";
 /// Link to Wiktionary
 const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
+/// Link to search on Massif.la
+const g_Massif = "https://massif.la/ja/search?q=";
 /// Link to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 

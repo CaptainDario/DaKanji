@@ -23,17 +23,20 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
     return SizedBox(
       height: 150,
       child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.sentence
-            ),
-            Text(
-              widget.translations.join("\n")
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.sentence
+              ),
+              Text(
+                widget.translations.join("\n")
+              ),
+            ],
+          ),
         )
       ),
     );

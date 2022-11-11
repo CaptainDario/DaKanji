@@ -9,7 +9,7 @@ import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart'
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
-import 'package:da_kanji_mobile/provider/settings.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 
 
