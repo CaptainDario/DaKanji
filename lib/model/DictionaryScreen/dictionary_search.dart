@@ -19,65 +19,6 @@ bool isSearching = false;
 String currentSearch = "";
 
 
-/// Searches `queryText` in the database
-Future<List<isar_jm.Entry>> searchInDict(String queryText) async {
-
-  if(isSearching){
-    currentSearch = queryText;
-    bool changed = false;
-    Future.delayed(Duration(milliseconds: 300)).then((value) {
-      if(currentSearch != queryText){
-        changed = true;
-        print("changed");
-      }
-      else{
-        print("not changed");
-      }
-    });
-    if(changed) return [];
-  }
-
-  List<isar_jm.Entry> searchResults = [];
-
-  String hiraText = GetIt.I<KanaKit>().toHiragana(queryText);
-  String kataText = GetIt.I<KanaKit>().toKatakana(queryText);
-
-  Stopwatch s = new Stopwatch()..start();
-  
-  if(queryText != ""){
-    searchResults = await compute(
-      searchInIsolate,
-      Tuple3(
-        5,
-        Tuple3(
-          queryText, 
-          hiraText, 
-          kataText
-        ), 
-        GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map(
-          (lang) => isoToiso639_2B[lang]!.name
-        ).toList()
-      )
-    );
-    
-    //print("len ${searchResults.length} time: ${s.elapsed}");
-  }
-  else{
-    searchResults = [];
-  }
-  print("Whole search took ${s.elapsed}");
-
-  // sort and return
-  searchResults = sortJmdictList(
-    await searchResults, 
-    queryText, GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-  );
-
-  isSearching = false;
-
-  return searchResults;
-}
-
 /// Sorts a list of Jmdict entries given a query text. The order is determined
 /// by those sorting criteria:
 /// 
@@ -178,57 +119,5 @@ List<isar_jm.Entry> sortEntriesByInts(List<isar_jm.Entry> a, List<int> b){
   );
 
   return  combined.map((e) => e.item1).toList();
-}
-
-/// Searches in the dictionary matching the provided configuration `args` <br/>
-/// args.item1 - The mode for searching <br/>
-///              1 - search in `kanjis` using the query<br/>
-///              2 - search in `readings` using the query <br/>
-///              3 - search in `readings` using the query in hiragana <br/>
-///              4 - search in `readings` using the query katakana <br/>
-///              5 - search in `meanings` using the query <br/>
-/// 
-/// args.item2 - contains a Tuple3 
-///              1 - the query <br/>
-///              2 - the query converted to hiragana <br/>
-///              3 - the query converted to katakana<br/>
-/// 
-/// args.item3 - is a list containing all languages that should used for finding
-///              matches
-//FutureOr<List<isar_jm.Entry>>
-List<isar_jm.Entry> searchInIsolate(
-  Tuple3<int, Tuple3<String, String, String>, List<String>> args) 
-  {
-
-  Query<isar_jm.Entry> query;
-
-  Isar isar = Isar.openSync(
-    [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
-  );
-  
-  query = isar.entrys.filter()
-  //  .kanjisElementContains(args.item2.item1)
-  //.or()
-    .readingsElementContains(args.item2.item1).or()
-    .readingsElementContains(args.item2.item2).or()
-    .readingsElementContains(args.item2.item3)
-  /*
-  .or()
-    .meaningsElement((meaning) => meaning
-      .anyOf(args.item3, (m, lang) => m
-        .languageEqualTo(lang)
-        .optional(args.item2.item1.length < 3, (m) => m
-          .meaningsElementStartsWith(args.item2.item1)
-        )
-        .optional(args.item2.item1.length >= 3, (m) => m
-          .meaningsElementContains(args.item2.item1)
-        )
-      )
-    )
-  */
-  //.limit(20)
-  .build();
-  
-  return query.findAllSync();
 }
 
