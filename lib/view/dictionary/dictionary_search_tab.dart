@@ -190,7 +190,6 @@ class _DictionarySearchTabState extends State<DictionarySearchTab> {
                     );
                   })
                 ),
-                
               ),
             ],
           ),

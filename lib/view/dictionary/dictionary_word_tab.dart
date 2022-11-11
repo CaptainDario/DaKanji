@@ -1,3 +1,5 @@
+import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -59,47 +61,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
-  /// A list containing the titles of the conjugations
-  late final List<String> conjugationTitles;
-  /// A list containing the explanations of the conjugation forms
-  late final List<String> conjugationExplanations;
-
 
   @override
   void initState() {
-
-    conjugationTitles = [
-      "Present, (Future)",
-      "Past",
-      "て-form, Continuative",
-      "Progressive",
-      "Volitional",
-      "Imperative",
-      "Request",
-      "Provisional",
-      "Conditional",
-      "Potential",
-      "Passive, Respectful",
-      "Causative",
-      "Causative passive"
-    ];
-
-    conjugationExplanations = [
-      "will [do]",
-      "didn't [do]",
-      "",
-      "not [doing]",
-      "I will not [do], I do not intend to [do]",
-      "don't [do] !",
-      "please don't [do]",
-      "if X doesn't [do], if X [is not ~]",
-      "if X weren't to [do], when X doesn't [do]",
-      "not be able to [do], can't [do]",
-      "isn't [done] (by ...), will not be [done] (by ...)",
-      "doesn't / won't make / let (someone) [do]",
-      "isn't made / won't be made to [do] (by someone)"
-    ];
-
     super.initState();
   }
 
@@ -260,91 +224,25 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             ],
                           ),
-                        if (widget.entry!.partOfSpeech.any((element) => element.contains("verb")))
-                          ExpansionTile(
-                            childrenPadding: EdgeInsets.all(16),
-                            title: const Text("Conjugation"),
-                            children: List.generate(conjugationTitles.length, (i) =>
-                              [
-                                // Grammar "name"
-                                SelectableText(
-                                  conjugationTitles[i],
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                // Grammar "explanation"
-                                if(conjugationExplanations[i] != "")
-                                  SelectableText(
-                                    conjugationExplanations[i],
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                SizedBox(height: 8,),
-                                Row(
-                                  children: [
-                                    // positive conjugations
-                                    Expanded(
-                                      child: Center(
-                                        child: SelectableText.rich(
-                                          TextSpan(
-                                            children: [
-                                              // normal form
-                                              TextSpan(
-                                                text: widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0],
-                                                style: TextStyle(
-                                                  fontSize: 20
-                                                ),
-                                              ),
-                                              // polite form
-                                              TextSpan(
-                                                text: "、 " + (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.grey
-                                                ),
-                                              ),
-                                            ]
-                                          )
-                                        )
-                                      )
-                                    ),
-                                    // negative conjugations
-                                    Expanded(
-                                      child: Center(
-                                        child: SelectableText.rich(
-                                          TextSpan(
-                                            children: [
-                                              // normal form
-                                              TextSpan(
-                                                text: (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20
-                                                ),
-                                              ),
-                                              // polite form
-                                              TextSpan(
-                                                text: "、 " + (widget.entry!.kanjis.isEmpty
-                                                  ? widget.entry!.readings[0]
-                                                  : widget.entry!.kanjis[0]),
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.grey
-                                                ),
-                                              ),
-                                            ]
-                                          )
-                                        )
-                                      )
-                                    ),
-                                  ],
-                                ),
-                              ]
-                            ).expand((i) => i).toList()
+                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                          widget.entry!.partOfSpeech[0].contains(" verb"))
+                          ConjugationExpansionTile(
+                            word: widget.entry!.kanjis.isEmpty
+                              ? widget.entry!.readings[0]
+                              : widget.entry!.kanjis[0],
+                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            conjugationTileType: ConjugationTileType.verb,
                           ),
+                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                          widget.entry!.partOfSpeech[0].contains("adjective"))
+                          ConjugationExpansionTile(
+                            word: widget.entry!.kanjis.isEmpty
+                              ? widget.entry!.readings[0]
+                              : widget.entry!.kanjis[0],
+                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            conjugationTileType: ConjugationTileType.adjective,
+                          ),
+                          
                         const ExpansionTile(
                           title: Text("Proverbs"),
                           children: [
