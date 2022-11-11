@@ -42,7 +42,7 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
   final List<String> conjugationExplanations = [];
   /// Nested list that contains all conjugations of `widget.word`
   final List<List<String>> _conjos = [];
-  ///
+  /// Controller for handling the conjugation tabs
   late final TabController tabController;
 
 
