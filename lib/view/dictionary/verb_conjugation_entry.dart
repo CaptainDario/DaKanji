@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 
 
+enum ConjugationType {
+  masu, plain
+}
+
 /// Widget that shows one conjugation tense. Usually used in
 /// `VerbConjugationExpansionTile` 
 class VerbConjugationEntry extends StatefulWidget {
@@ -9,6 +13,7 @@ class VerbConjugationEntry extends StatefulWidget {
     {
       required this.title,
       required this.explanation,
+      required this.conjugationType,
       required this.dictFormPositive,
       required this.dictFormNegative,
       required this.masuFormPositive,
@@ -19,6 +24,8 @@ class VerbConjugationEntry extends StatefulWidget {
   final String title;
   /// The expalantion, or name of this tense
   final String explanation;
+  /// the type of conjugation which should be shown in this widget.
+  final ConjugationType conjugationType;
   /// The conjugation of this tense in "positive" dictionary form
   final String dictFormPositive;
   /// The conjugation of this tense in "negative" dictionary form
@@ -33,76 +40,73 @@ class VerbConjugationEntry extends StatefulWidget {
 }
 
 class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
+
+  /// style for negated conjugation
+  TextStyle negativeStyle = TextStyle(fontSize: 20, color: Colors.grey);
+  /// style for normal conjugation
+  TextStyle positiveStyle = TextStyle(fontSize: 20);
+
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       children: [
         // Grammar "name"
-        SelectableText(
+        Text(
           widget.title,
           style: TextStyle(fontSize: 20),
         ),
         // Grammar "explanation"
         if(widget.explanation != "")
-          SelectableText(
-            widget.explanation,
-            style: TextStyle(fontSize: 14),
+          Text.rich(
+            TextSpan(
+              children: widget.explanation.split(RegExp(" ")).map((e) => 
+                TextSpan(
+                  text: e + " ",
+                  style: TextStyle(
+                    color: RegExp(r"\[[N|n]ot.*?\]").hasMatch(e)
+                      ? Colors.grey
+                      : null
+                  )
+                )
+              ).toList() 
+            )
           ),
-        SizedBox(height: 8,),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // positive conjugations
-            Expanded(
-              child: Center(
-                child: SelectableText.rich(
-                  TextSpan(
-                    children: [
-                      // normal form
-                      TextSpan(
-                        text: widget.dictFormPositive,
-                        style: TextStyle(
-                          fontSize: 20
-                        ),
-                      ),
-                      // polite form
-                      TextSpan(
-                        text: "、 " + widget.dictFormNegative,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey
-                        ),
-                      ),
-                    ]
-                  )
-                )
-              )
-            ),
-            // negative conjugations
-            Expanded(
-              child: Center(
-                child: SelectableText.rich(
-                  TextSpan(
-                    children: [
-                      // normal form
-                      TextSpan(
-                        text: widget.masuFormPositive,
-                        style: TextStyle(
-                          fontSize: 20
-                        ),
-                      ),
-                      // polite form
-                      TextSpan(
-                        text: "、 " + widget.masuFormNegative,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey
-                        ),
-                      ),
-                    ]
-                  )
-                )
-              )
-            ),
+            if(widget.conjugationType == ConjugationType.plain)
+              Column(
+                children: 
+                  widget.dictFormPositive.split(" / ").map((e) => 
+                    SelectableText(e, style: positiveStyle)
+                  ).toList()
+                
+              ),
+            if(widget.conjugationType == ConjugationType.plain)
+              Column(
+                children: 
+                  widget.dictFormNegative.split(" / ").map((e) => 
+                    SelectableText(e, style: negativeStyle)
+                  ).toList()
+              ),
+            // masu conjugations
+            if(widget.conjugationType == ConjugationType.masu)
+              Column(
+                children: 
+                  widget.masuFormPositive.split(" / ").map((e) => 
+                    SelectableText(e, style: positiveStyle)
+                  ).toList()
+                
+              ),
+            if(widget.conjugationType == ConjugationType.masu)
+              Column(
+                children: 
+                  widget.masuFormNegative.split(" / ").map((e) => 
+                    SelectableText(e, style: negativeStyle)
+                  ).toList()
+              ),
           ],
         ),
       ],
