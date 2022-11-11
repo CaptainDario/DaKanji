@@ -1,19 +1,15 @@
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
+import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 
@@ -86,6 +82,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         child: Column(
           children: [
             Card(
+              margin: EdgeInsets.all(16),
               child: Stack(
                 children: [
                   Padding(
@@ -153,61 +150,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           height: 20,
                         ),
                         // meanings
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          // create the children in the same order as in the settings
-                          children: GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((lang) {
-                            
-                            List<Widget> ret = [];
-
-                            // get the meaning of the selected language
-                            List<isar_jm.LanguageMeanings> meanings = widget.entry!.meanings.where(
-                              (element) => isoToiso639_1[element.language]!.name == lang
-                            ).toList();
-                            
-                            ret.add(
-                              SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: SvgPicture.asset(
-                                  GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-                                ),
-                              ),
-                            );
-                            if(meanings.isNotEmpty){
-
-                              ret.add(
-                                LayoutGrid(
-                                  gridFit: GridFit.loose,
-                                  columnSizes: [auto, 0.425.fr, auto, 0.425.fr],
-                                  rowSizes: List.generate(
-                                    meanings.first.meanings!.length, 
-                                    (index) => auto
-                                  ),
-                                  children: List.generate(
-                                    meanings.first.meanings!.length,
-                                    (int j) => [
-                                      Text(
-                                        "${(j+1).toString()}. ",
-                                        style: meaningsStyle
-                                      ),
-                                      SelectableText(
-                                        meanings.first.meanings![j],
-                                        style: meaningsStyle
-                                      )
-                                    ],
-                                  ).expand((e) => e).toList()
-                                )
-                              );
-
-                              ret.add(SizedBox(height: 10,));
-                                  
-                            }
-
-                            return ret;
-                          }).expand((element) => element).toList(),
-                          
+                        WordMeanings(
+                          entry: widget.entry!, 
+                          meaningsStyle: meaningsStyle
                         ),
                         const SizedBox(
                           height: 20,
