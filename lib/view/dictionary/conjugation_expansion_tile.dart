@@ -33,7 +33,8 @@ class ConjugationExpansionTile extends StatefulWidget {
   State<ConjugationExpansionTile> createState() => _ConjugationExpansionTileState();
 }
 
-class _ConjugationExpansionTileState extends State<ConjugationExpansionTile> {
+class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
+  with SingleTickerProviderStateMixin {
 
   /// A list containing the titles of the conjugations
   final List<String> conjugationTitles = [];
@@ -41,9 +42,14 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile> {
   final List<String> conjugationExplanations = [];
   /// Nested list that contains all conjugations of `widget.word`
   final List<List<String>> _conjos = [];
+  ///
+  late final TabController tabController;
+
 
   @override
   void initState() {
+
+    tabController = TabController(length: 2, vsync: this);
 
     /// list containing all part of speech
     final List<Conj> _conjugations = [];
@@ -129,10 +135,10 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile> {
         conjosFromArgs(widget.pos, conj, false, false).map((conjo) => 
           conjugate(widget.word, conjo)
         ).toList().join(" / "),
-        conjosFromArgs(widget.pos, conj, false, true).map((conjo) => 
+        conjosFromArgs(widget.pos, conj, true, false).map((conjo) => 
           conjugate(widget.word, conjo)
         ).toList().join(" / "),
-        conjosFromArgs(widget.pos, conj, true, false).map((conjo) => 
+        conjosFromArgs(widget.pos, conj, false, true).map((conjo) => 
           conjugate(widget.word, conjo)
         ).toList().join(" / "),
         conjosFromArgs(widget.pos, conj, true, true).map((conjo) => 
@@ -148,18 +154,44 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
+      textColor: Theme.of(context).highlightColor,
       childrenPadding: EdgeInsets.all(16),
       title: const Text("Conjugation"),
-      children: List.generate(_conjos.length, (i) => 
-        VerbConjugationEntry(
-          title: conjugationTitles[i],
-          explanation: conjugationExplanations[i],
-          dictFormPositive: _conjos[i][0],
-          dictFormNegative: _conjos[i][1],
-          masuFormPositive: _conjos[i][2], 
-          masuFormNegative: _conjos[i][3]
+      children: [
+        TabBar(
+          labelColor: Theme.of(context).highlightColor,
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: Theme.of(context).highlightColor,
+          controller: tabController,
+          tabs: [Text("Plain"), Text("Masu")],
         ),
-      )
+        Container(
+          height: MediaQuery.of(context).size.height*0.5,
+          child: TabBarView(
+            controller: tabController,
+            children: [ConjugationType.plain, ConjugationType.masu].map((e) =>
+              SingleChildScrollView(
+                child: Column(
+                  children: List.generate(_conjos.length, (i) => 
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                      child: VerbConjugationEntry(
+                        title: conjugationTitles[i],
+                        explanation: conjugationExplanations[i],
+                        conjugationType: e,
+                        dictFormPositive: _conjos[i][0],
+                        dictFormNegative: _conjos[i][1],
+                        masuFormPositive: _conjos[i][2], 
+                        masuFormNegative: _conjos[i][3]
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ).toList(),
+          ),
+        )
+      ]
     );
   }
 }
