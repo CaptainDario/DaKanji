@@ -1,16 +1,15 @@
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
-import 'package:da_kanji_mobile/model/DictionaryScreen/search_isolate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/search_isolate.dart';
 import 'package:da_kanji_mobile/view/dictionary/radical_search_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_card.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
@@ -39,7 +38,7 @@ class DictionarySearchTab extends StatefulWidget {
   /// should the action button to open the drawing screen be included
   final bool includeActionButton;
   /// callback when on a search result was pressed
-  final Function(_isar.Entry selection)? onSearchResultPressed;
+  final Function(isar_jm.Entry selection)? onSearchResultPressed;
 
   @override
   State<DictionarySearchTab> createState() => _DictionarySearchTabState();
