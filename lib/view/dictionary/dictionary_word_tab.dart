@@ -57,9 +57,17 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
+  /// either `widget.entry.kanji[0]` if not null, otherwise `widget.entry.readings[0]`
+  late final readingOrKanji;
+
 
   @override
   void initState() {
+    
+    readingOrKanji = widget.entry!.kanjis.isEmpty
+      ? widget.entry!.readings[0]
+      : widget.entry!.kanjis[0];
+
     super.initState();
   }
 
@@ -163,7 +171,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               AspectRatio(
                                 aspectRatio: 1,
                                 child: EasyWebView(
-                                    src: Uri.encodeFull("$g_GoogleImgSearchUrl${widget.entry!.kanjis[0]}")
+                                    src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
                                   )
                               )
                             ],
@@ -171,18 +179,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
                           widget.entry!.partOfSpeech[0].contains(" verb"))
                           ConjugationExpansionTile(
-                            word: widget.entry!.kanjis.isEmpty
-                              ? widget.entry!.readings[0]
-                              : widget.entry!.kanjis[0],
+                            word: readingOrKanji,
                             pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
                             conjugationTileType: ConjugationTileType.verb,
                           ),
                         if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
                           widget.entry!.partOfSpeech[0].contains("adjective"))
                           ConjugationExpansionTile(
-                            word: widget.entry!.kanjis.isEmpty
-                              ? widget.entry!.readings[0]
-                              : widget.entry!.kanjis[0],
+                            word: readingOrKanji,
                             pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
                             conjugationTileType: ConjugationTileType.adjective,
                           ),
@@ -222,19 +226,19 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         onSelected: (String selection) {
                           // Wiki
                           if(selection == menuItems[0]) {
-                            launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
+                            launchUrlString("$g_WikipediaJpUrl${readingOrKanji}");
                           }
                           if(selection == menuItems[1]) {
-                            launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
+                            launchUrlString("$g_WikipediaEnUrl${readingOrKanji}");
                           }
                           if(selection == menuItems[2]) {
-                            launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
+                            launchUrlString("$g_DbpediaUrl${readingOrKanji}");
                           }
                           if(selection == menuItems[3]) {
-                            launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
+                            launchUrlString("$g_WiktionaryUrl${readingOrKanji}");
                           }
                           if(selection == menuItems[4]) {
-                            launchUrlString("$g_Massif${widget.entry!.kanjis[0]}");
+                            launchUrlString("$g_Massif${readingOrKanji}");
                           }
                         },
                         itemBuilder: (context) => List.generate(
