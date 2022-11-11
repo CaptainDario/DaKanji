@@ -74,7 +74,7 @@ def main():
         
         f.write("};\n\n")
 
-        f.write("/// A map from the Pos-strings to the matching enum\n")
+        f.write("/// A map from the Pos-descriptions to the matching enum\n")
         f.write("const Map<String, Pos> posDescriptionToPosEnum = {\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
@@ -86,7 +86,7 @@ def main():
                     continue
 
                 r2 = row[2].replace("'", '"')
-                f.write(f"\t'{r2}' : Pos.{row[1].replace('-', '_')},\n")
+                f.write(f"\t\"{row[2]}\" : Pos.{row[1].replace('-', '_')},\n")
         
         f.write("};\n\n")
 
