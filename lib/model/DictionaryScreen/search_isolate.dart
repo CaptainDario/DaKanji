@@ -141,6 +141,9 @@ Future<void> _readAndParseJsonService(SendPort p) async {
       .limit(1000)
       .findAllSync();
 
+      // sort the results
+      results = sortJmdictList(results, message, langs);
+
       // Send the result to the main isolate.
       p.send(results);
       print("len ${results.length} time: ${s.elapsed}");
