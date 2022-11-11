@@ -37,7 +37,7 @@ List<isar_jm.Entry> sortJmdictList(
   /// 2 - other matches
   List<List<isar_jm.Entry>> matches = [[], [], []];
   List<List<int>> matchIndices = [[], [], []];
-  String queryTextHira = GetIt.I<KanaKit>().toHiragana(queryText);
+  String queryTextHira = KanaKit().toHiragana(queryText);
 
   // iterate over the entries and create a ranking for each 
   for (isar_jm.Entry entry in entries) {
@@ -49,10 +49,11 @@ List<isar_jm.Entry> sortJmdictList(
       result = rankMatches(entry.readings, queryTextHira);
     
     // MEANING
-    // filter all langauges that are not selected in the settings
+    // filter all langauges that are selected in the settings and join them to 
+    // a list
     if(result.item1 == -1){
-      List<String> k = entry.meanings.where((isar_jm.LanguageMeanings e) => 
-          languages.contains(isoToiso639_1[e.language]!.name)
+      List<String> k = entry.meanings.where((isar_jm.LanguageMeanings e) =>
+          languages.contains(e.language)
         ).map((isar_jm.LanguageMeanings e) => 
           e.meanings!
         ).expand((e) => e).toList();
@@ -71,7 +72,7 @@ List<isar_jm.Entry> sortJmdictList(
   return matches.expand((element) => element).toList();
 }
 
-/// Sorts a `` based on `queryText`. The sorting criteria are
+/// Sorts a string list based on `queryText`. The sorting criteria are
 /// explained by `sortJmdictList`.
 ///
 /// Returns a Tuple with the structure: <br/>
@@ -82,7 +83,7 @@ Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {
 
   int result = -1, lenDiff = -1;
 
-  // check if the word written in kanji contains the query
+  // check if the word contains the query
   int matchIndex = matches.indexWhere((element) => element.contains(queryText));
   if(matchIndex != -1){
     // check kanji for full match
