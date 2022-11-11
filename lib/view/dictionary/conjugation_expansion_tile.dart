@@ -26,7 +26,7 @@ class ConjugationExpansionTile extends StatefulWidget {
   final String word;
   /// The part of speech of this verb
   final Pos pos;
-  ///
+  /// The type of word that should be conjugated
   final ConjugationTileType conjugationTileType;
 
   @override
