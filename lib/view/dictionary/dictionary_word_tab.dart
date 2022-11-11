@@ -49,7 +49,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Examples (Massif)"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -188,53 +188,70 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             conjugationTileType: ConjugationTileType.adjective,
                           ),
                           
-                        const ExpansionTile(
-                          title: Text("Proverbs"),
-                          children: [
-                            Text("This could be done by using kotowaza?")
-                          ],
-                        ),
-                        const ExpansionTile(
-                          title: Text("Synonyms"),
-                          children: [
-                            Text("This could be done by using wordnet jp?")
-                          ],
-                        )
+                        //TODO - add proverbs @ DaKanji v3.x 
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Proverbs"),
+                            children: [
+                              Text("This could be done by using kotowaza?")
+                            ],
+                          ),
+                        //TODO - add synonyms @ DaKanji v3.x
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Synonyms"),
+                            children: [
+                              Text("This could be done by using wordnet jp?")
+                            ],
+                          ),
+                        //TODO - add antonyms @ DaKanji v3.x
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Antonyms"),
+                            children: [
+                              Text("This could be done by using NANI??")
+                            ],
+                          ),
                       ],
                     ),
-                  ),
-                  // more menu, to open this word in different web pages
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: PopupMenuButton(
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) {
-                        // Wiki
-                        if(selection == menuItems[0]) {
-                          launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
-                        }
-                        if(selection == menuItems[1]) {
-                          launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
-                        }
-                        if(selection == menuItems[2]) {
-                          launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
-                        }
-                        if(selection == menuItems[3]) {
-                          launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
-                        }
-                      },
-                      itemBuilder: (context) => List.generate(
-                        menuItems.length,
+                    // more menu, to open this word in different web pages
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: PopupMenuButton(
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (String selection) {
+                          // Wiki
+                          if(selection == menuItems[0]) {
+                            launchUrlString("$g_WikipediaJpUrl${widget.entry!.kanjis[0]}");
+                          }
+                          if(selection == menuItems[1]) {
+                            launchUrlString("$g_WikipediaEnUrl${widget.entry!.meanings[0]}");
+                          }
+                          if(selection == menuItems[2]) {
+                            launchUrlString("$g_DbpediaUrl${widget.entry!.meanings[0]}");
+                          }
+                          if(selection == menuItems[3]) {
+                            launchUrlString("$g_WiktionaryUrl${widget.entry!.kanjis[0]}");
+                          }
+                          if(selection == menuItems[4]) {
+                            launchUrlString("$g_Massif${widget.entry!.kanjis[0]}");
+                          }
+                        },
+                        itemBuilder: (context) => List.generate(
+                          menuItems.length,
+                          (index) => 
                         (index) => 
-                          PopupMenuItem(
-                            value: menuItems[index],
-                            child: Text(menuItems[index])
-                          )
-                      ),
-                    )
-                  ),
-                ],
+                          (index) => 
+                            PopupMenuItem(
+                              value: menuItems[index],
+                              child: Text(menuItems[index])
+                            )
+                        ),
+                      )
+                    ),
+                  ],
+                ),
               )
             ),
           ],
