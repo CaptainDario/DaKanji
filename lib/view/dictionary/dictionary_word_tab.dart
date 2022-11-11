@@ -82,12 +82,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         child: Column(
           children: [
             Card(
-              margin: EdgeInsets.all(16),
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // word written with kanji
@@ -240,8 +239,6 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         },
                         itemBuilder: (context) => List.generate(
                           menuItems.length,
-                          (index) => 
-                        (index) => 
                           (index) => 
                             PopupMenuItem(
                               value: menuItems[index],

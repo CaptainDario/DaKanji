@@ -202,35 +202,38 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       Expanded(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            return TabBarView(
-                              controller: dictionaryTabController,
-                              children: [
-                                if(noTabs > 3) 
-                                  DictionarySearchTab(
-                                    constraints.maxHeight,
-                                    constraints.maxWidth,
-                                    initialSearch: context.watch<DictSearch>().currentSearch,
-                                    includeActionButton: widget.includeActionButton,
-                                    onSearchResultPressed: (entry) {
-                                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                        if(tabsSideBySide != 4)
-                                          dictionaryTabController.animateTo(1);
-                                      });
-                                    },
-                                  ),
-                                if(noTabs > 2)
-                                  DictionaryWordTab(
-                                    context.watch<DictSearch>().selectedResult
-                                  ),
-                                if(noTabs > 1) 
-                                  DictionaryKanjiTab(
-                                    kanjiVGs,
-                                    kanjidic2Entries
-                                  ),
-                                if(noTabs > 0) 
-                                  const DictionaryExampleTab(),
-                                
-                              ],
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TabBarView(
+                                controller: dictionaryTabController,
+                                children: [
+                                  if(noTabs > 3) 
+                                    DictionarySearchTab(
+                                      constraints.maxHeight,
+                                      constraints.maxWidth,
+                                      initialSearch: context.watch<DictSearch>().currentSearch,
+                                      includeActionButton: widget.includeActionButton,
+                                      onSearchResultPressed: (entry) {
+                                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                          if(tabsSideBySide != 4)
+                                            dictionaryTabController.animateTo(1);
+                                        });
+                                      },
+                                    ),
+                                  if(noTabs > 2)
+                                    DictionaryWordTab(
+                                      context.watch<DictSearch>().selectedResult
+                                    ),
+                                  if(noTabs > 1) 
+                                    DictionaryKanjiTab(
+                                      kanjiVGs,
+                                      kanjidic2Entries
+                                    ),
+                                  if(noTabs > 0) 
+                                    const DictionaryExampleTab(),
+                                  
+                                ],
+                              ),
                             );
                           }
                         ),
