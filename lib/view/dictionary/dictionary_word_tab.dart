@@ -132,12 +132,15 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                     widget.entry!.readings[index_1].length,
                                     (index_2) => Container(
                                       decoration: const BoxDecoration(
+                                        // TODO: pitch accent - @ DaKanji v3.3
+                                        /*
                                         border: Border(
                                           right: BorderSide(
                                             color: Colors.white,
                                             width: 1.5,
                                           ),
                                         )
+                                        */
                                       ),
                                       child: Text (
                                         widget.entry!.readings[index_1][index_2] +
@@ -191,7 +194,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             pos: conjugationPos,
                           ),
                           
-                        //TODO - add proverbs @ DaKanji v3.x 
+                        //TODO - add proverbs @ DaKanji v3.3
                         if(!kReleaseMode)
                           const ExpansionTile(
                             title: Text("Proverbs"),
@@ -199,7 +202,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               Text("This could be done by using kotowaza?")
                             ],
                           ),
-                        //TODO - add synonyms @ DaKanji v3.x
+                        //TODO - add synonyms @ DaKanji v3.3
                         if(!kReleaseMode)
                           const ExpansionTile(
                             title: Text("Synonyms"),
@@ -207,7 +210,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               Text("This could be done by using wordnet jp?")
                             ],
                           ),
-                        //TODO - add antonyms @ DaKanji v3.x
+                        //TODO - add antonyms @ DaKanji v3.3
                         if(!kReleaseMode)
                           const ExpansionTile(
                             title: Text("Antonyms"),
