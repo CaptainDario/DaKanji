@@ -1,6 +1,3 @@
-import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
-import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +6,11 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:easy_web_view/easy_web_view.dart';
 
+import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
+import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 
 
 
@@ -58,7 +59,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   };
 
   /// either `widget.entry.kanji[0]` if not null, otherwise `widget.entry.readings[0]`
-  late final readingOrKanji;
+  late final String readingOrKanji;
+  /// The pos that should be used for conjugating this word
+  Pos? conjugationPos;
 
 
   @override
@@ -67,6 +70,19 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     readingOrKanji = widget.entry!.kanjis.isEmpty
       ? widget.entry!.readings[0]
       : widget.entry!.kanjis[0];
+
+    // get the pos for conjugating this word
+    List<Pos?> tmp = widget.entry!.partOfSpeech
+      .map((e) => posDescriptionToPosEnum[e])
+      .where((e) => posUsed.contains(e))
+      .toList();
+    if(tmp.length > 1){
+      throw Exception("More than one Conjugation Pos for this word");
+    }
+    else if(tmp.length == 1){
+      conjugationPos = tmp.first!;
+    }
+    
 
     super.initState();
   }
@@ -176,18 +192,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             ],
                           ),
-                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                        if(conjugationPos != null &&
                           widget.entry!.partOfSpeech[0].contains(" verb"))
                           ConjugationExpansionTile(
                             word: readingOrKanji,
-                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            pos: conjugationPos!,
                             conjugationTileType: ConjugationTileType.verb,
                           ),
-                        if (posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]] != null &&
+                        if (conjugationPos != null &&
                           widget.entry!.partOfSpeech[0].contains("adjective"))
                           ConjugationExpansionTile(
                             word: readingOrKanji,
-                            pos: posDescriptionToPosEnum[widget.entry!.partOfSpeech[0]]!,
+                            pos: conjugationPos!,
                             conjugationTileType: ConjugationTileType.adjective,
                           ),
                           
