@@ -38,6 +38,41 @@ def main():
         
         f.write("];")
 
+        f.write("\n\n/// A list with all `Pos` elements for which a conjugation is available\n")
+        f.write("List<Pos> posUsed = [\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='', encoding="utf8") as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            included = []
+            for row in conj_reader:
+                if(row[0] == "pos"):
+                    continue
+                if(row[0] not in included):
+                    included.append(row[0])
+                    f.write(f"\tposIdToPosEnum[{row[0]}]!,\n")
+        
+        f.write("];")
+
+        f.write("\n\n/// A list with all Ids elements for which a conjugation is available\n")
+        f.write("List<int> posIdsUsed = [\n")
+
+        with open(f"{base_path}{file_name}.csv", newline='', encoding="utf8") as csvfile:
+
+            conj_reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+
+            included = []
+            for row in conj_reader:
+                if(row[0] == "pos"):
+                    continue
+                if(row[0] not in included):
+                    included.append(row[0])
+                    f.write(f"\t{row[0]},\n")
+        
+        f.write("];")
+
+
 
 
 
