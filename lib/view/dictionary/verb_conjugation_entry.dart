@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 enum ConjugationType {
-  masu, plain
+  polite, plain
 }
 
 /// Widget that shows one conjugation tense. Usually used in
@@ -14,10 +14,10 @@ class VerbConjugationEntry extends StatefulWidget {
       required this.title,
       required this.explanation,
       required this.conjugationType,
-      required this.dictFormPositive,
-      required this.dictFormNegative,
-      required this.masuFormPositive,
-      required this.masuFormNegative,
+      required this.plainFormPositive,
+      required this.plainFormNegative,
+      required this.politeFormPositive,
+      required this.politeFormNegative,
       super.key
     });
   /// The title, or name of this tense
@@ -26,14 +26,14 @@ class VerbConjugationEntry extends StatefulWidget {
   final String explanation;
   /// the type of conjugation which should be shown in this widget.
   final ConjugationType conjugationType;
-  /// The conjugation of this tense in "positive" dictionary form
-  final String dictFormPositive;
-  /// The conjugation of this tense in "negative" dictionary form
-  final String dictFormNegative;
+  /// The conjugation of this tense in "positive" plain form
+  final String plainFormPositive;
+  /// The conjugation of this tense in "negative" plain form
+  final String plainFormNegative;
   /// The conjugation of this tense in "positive" masu form
-  final String masuFormPositive;
+  final String politeFormPositive;
   /// The conjugation of this tense in "negative" masu form
-  final String masuFormNegative;
+  final String politeFormNegative;
 
   @override
   State<VerbConjugationEntry> createState() => _VerbConjugationEntryState();
@@ -49,7 +49,10 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
   @override
   Widget build(BuildContext context) {
     
-    return Column(
+    return widget.plainFormPositive == "" && widget.plainFormNegative == "" &&
+      widget.politeFormPositive == "" && widget.politeFormNegative == "" 
+    ? SizedBox()
+    : Column(
       children: [
         // Grammar "name"
         Text(
@@ -76,34 +79,38 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // positive conjugations
-            if(widget.conjugationType == ConjugationType.plain)
+            if(widget.conjugationType == ConjugationType.plain &&
+              widget.plainFormPositive != "")
               Column(
                 children: 
-                  widget.dictFormPositive.split(" / ").map((e) => 
+                  widget.plainFormPositive.split(" / ").map((e) => 
                     SelectableText(e, style: positiveStyle)
                   ).toList()
                 
               ),
-            if(widget.conjugationType == ConjugationType.plain)
+            if(widget.conjugationType == ConjugationType.plain &&
+              widget.plainFormNegative != "")
               Column(
                 children: 
-                  widget.dictFormNegative.split(" / ").map((e) => 
+                  widget.plainFormNegative.split(" / ").map((e) => 
                     SelectableText(e, style: negativeStyle)
                   ).toList()
               ),
             // masu conjugations
-            if(widget.conjugationType == ConjugationType.masu)
+            if(widget.conjugationType == ConjugationType.polite &&
+              widget.politeFormPositive != "")
               Column(
                 children: 
-                  widget.masuFormPositive.split(" / ").map((e) => 
+                  widget.politeFormPositive.split(" / ").map((e) => 
                     SelectableText(e, style: positiveStyle)
                   ).toList()
                 
               ),
-            if(widget.conjugationType == ConjugationType.masu)
+            if(widget.conjugationType == ConjugationType.polite &&
+              widget.politeFormNegative != "")
               Column(
                 children: 
-                  widget.masuFormNegative.split(" / ").map((e) => 
+                  widget.politeFormNegative.split(" / ").map((e) => 
                     SelectableText(e, style: negativeStyle)
                   ).toList()
               ),

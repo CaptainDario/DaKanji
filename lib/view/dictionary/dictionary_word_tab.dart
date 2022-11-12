@@ -61,7 +61,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// either `widget.entry.kanji[0]` if not null, otherwise `widget.entry.readings[0]`
   late final String readingOrKanji;
   /// The pos that should be used for conjugating this word
-  Pos? conjugationPos;
+  late final List<Pos> conjugationPos;
 
 
   @override
@@ -72,18 +72,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       : widget.entry!.kanjis[0];
 
     // get the pos for conjugating this word
-    List<Pos?> tmp = widget.entry!.partOfSpeech
-      .map((e) => posDescriptionToPosEnum[e])
+    conjugationPos = widget.entry!.partOfSpeech
+      .map((e) => posDescriptionToPosEnum[e]!)
       .where((e) => posUsed.contains(e))
       .toList();
-    if(tmp.length > 1){
-      throw Exception("More than one Conjugation Pos for this word");
-    }
-    else if(tmp.length == 1){
-      conjugationPos = tmp.first!;
-    }
     
-
     super.initState();
   }
 
@@ -192,19 +185,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             ],
                           ),
-                        if(conjugationPos != null &&
-                          widget.entry!.partOfSpeech[0].contains(" verb"))
+                        if(conjugationPos != null)
                           ConjugationExpansionTile(
                             word: readingOrKanji,
-                            pos: conjugationPos!,
-                            conjugationTileType: ConjugationTileType.verb,
-                          ),
-                        if (conjugationPos != null &&
-                          widget.entry!.partOfSpeech[0].contains("adjective"))
-                          ConjugationExpansionTile(
-                            word: readingOrKanji,
-                            pos: conjugationPos!,
-                            conjugationTileType: ConjugationTileType.adjective,
+                            pos: conjugationPos,
                           ),
                           
                         //TODO - add proverbs @ DaKanji v3.x 
