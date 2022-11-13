@@ -67,15 +67,17 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   void initState() {
     
-    readingOrKanji = widget.entry!.kanjis.isEmpty
-      ? widget.entry!.readings[0]
-      : widget.entry!.kanjis[0];
+    if(widget.entry != null){
+      readingOrKanji = widget.entry!.kanjis.isEmpty
+        ? widget.entry!.readings[0]
+        : widget.entry!.kanjis[0];
 
-    // get the pos for conjugating this word
-    conjugationPos = widget.entry!.partOfSpeech
-      .map((e) => posDescriptionToPosEnum[e]!)
-      .where((e) => posUsed.contains(e))
-      .toList();
+      // get the pos for conjugating this word
+      conjugationPos = widget.entry!.partOfSpeech
+        .map((e) => posDescriptionToPosEnum[e]!)
+        .where((e) => posUsed.contains(e))
+        .toList();
+    }
     
     super.initState();
   }
@@ -91,7 +93,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       );
     }
 
-    if(widget.entry == null){
+    if(widget.entry == null){ 
       return Container();
     }
     else {
@@ -166,7 +168,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           )
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         // meanings
                         WordMeanings(
@@ -174,7 +176,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           meaningsStyle: meaningsStyle
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         if(g_webViewSupported) 
                           ExpansionTile(
