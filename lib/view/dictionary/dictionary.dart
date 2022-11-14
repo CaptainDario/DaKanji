@@ -199,23 +199,26 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Expanded(
-                                  child: TabBarView(
-                                    controller: dictionaryTabController,
-                                    children: [
-                                      if(noTabs > 3)
-                                        context.read<DictSearch>().selectedResult != null
-                                        ?  DictionaryWordTab(
-                                            context.watch<DictSearch>().selectedResult
-                                          )
-                                        : SizedBox(),
-                                      if(noTabs > 2) 
-                                        DictionaryKanjiTab(
-                                          kanjiVGs,
-                                          kanjidic2Entries
-                                        ),
-                                      if(noTabs > 1) 
-                                        const DictionaryExampleTab(),
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TabBarView(
+                                      controller: dictionaryTabController,
+                                      children: [
+                                        if(noTabs > 3)
+                                          context.read<DictSearch>().selectedResult != null
+                                          ?  DictionaryWordTab(
+                                              context.watch<DictSearch>().selectedResult
+                                            )
+                                          : SizedBox(),
+                                        if(noTabs > 2) 
+                                          DictionaryKanjiTab(
+                                            kanjiVGs,
+                                            kanjidic2Entries
+                                          ),
+                                        if(noTabs > 1) 
+                                          const DictionaryExampleTab(),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
