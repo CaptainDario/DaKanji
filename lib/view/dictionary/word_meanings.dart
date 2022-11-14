@@ -1,15 +1,12 @@
-import 'dart:math';
-
-import 'package:da_kanji_mobile/view/dictionary/meanings_grid.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/view/dictionary/meanings_grid.dart';
 
 
 
@@ -44,17 +41,17 @@ class WordMeanings extends StatelessWidget {
           (element) => isoToiso639_1[element.language]!.name == lang
         ).toList();
         
-        ret.add(
-          SizedBox(
-            height: 10,
-            width: 10,
-            child: SvgPicture.asset(
-              GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-            ),
-          ),
-        );
+        
         if(meanings.isNotEmpty){
-
+          ret.add(
+            SizedBox(
+              height: 10,
+              width: 10,
+              child: SvgPicture.asset(
+                GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
+              ),
+            ),
+          );
           ret.add(
             Column(
               children: [
