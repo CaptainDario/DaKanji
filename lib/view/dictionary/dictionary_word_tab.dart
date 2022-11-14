@@ -68,17 +68,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   void initState() {
     
     if(widget.entry != null){
-      readingOrKanji = widget.entry!.kanjis.isEmpty
-        ? widget.entry!.readings[0]
-        : widget.entry!.kanjis[0];
+    readingOrKanji = widget.entry!.kanjis.isEmpty
+      ? widget.entry!.readings[0]
+      : widget.entry!.kanjis[0];
 
-      // get the pos for conjugating this word
-      conjugationPos = widget.entry!.partOfSpeech
-        .map((e) => posDescriptionToPosEnum[e]!)
-        .where((e) => posUsed.contains(e))
-        .toList();
-    }
+    // get the pos for conjugating this word
+    conjugationPos = widget.entry!.partOfSpeech
+      .map((e) => posDescriptionToPosEnum[e]!)
+      .where((e) => posUsed.contains(e))
+      .toList();
+
     
+    }
     super.initState();
   }
 
@@ -91,178 +92,173 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         fontSize: 12,
         color: Theme.of(context).hintColor
       );
-    }
+    }    
 
-    if(widget.entry == null){ 
-      return Container();
-    }
-    else {
-      return SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // word written with kanji
-                        SelectionArea(
-                          child: Wrap(
-                            children: [
-                              ...List.generate(widget.entry!.kanjis.length, (i) =>
-                                Text(
-                                  widget.entry!.kanjis[i] +
-                                  (widget.entry!.kanjis.length-1 != i ? "、" : ""),
-                                  style: kanjiStyle
-                                ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // word written with kanji
+                      SelectionArea(
+                        child: Wrap(
+                          children: [
+                            ...List.generate(widget.entry!.kanjis.length, (i) =>
+                              Text(
+                                widget.entry!.kanjis[i] +
+                                (widget.entry!.kanjis.length-1 != i ? "、" : ""),
+                                style: kanjiStyle
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        // Readings
-                        SelectionArea(
-                          child: Wrap(
-                            children: List.generate( (widget.entry!.readings.length),
-                              // Characters of word reading with  pitch accent
-                              (index_1) => Row(
-                                children:
-                                [
-                                  ...List.generate(
-                                    widget.entry!.readings[index_1].length,
-                                    (index_2) => Container(
-                                      decoration: const BoxDecoration(
-                                        // TODO: pitch accent - @ DaKanji v3.3
-                                        /*
-                                        border: Border(
-                                          right: BorderSide(
-                                            color: Colors.white,
-                                            width: 1.5,
-                                          ),
-                                        )
-                                        */
-                                      ),
-                                      child: Text (
-                                        widget.entry!.readings[index_1][index_2] +
-                                        (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
-                                        style: readingStyle
-                                      ),
+                      ),
+                      // Readings
+                      SelectionArea(
+                        child: Wrap(
+                          children: List.generate( (widget.entry!.readings.length),
+                            // Characters of word reading with  pitch accent
+                            (index_1) => Row(
+                              children:
+                              [
+                                ...List.generate(
+                                  widget.entry!.readings[index_1].length,
+                                  (index_2) => Container(
+                                    decoration: const BoxDecoration(
+                                      // TODO: pitch accent - @ DaKanji v3.3
+                                      /*
+                                      border: Border(
+                                        right: BorderSide(
+                                          color: Colors.white,
+                                          width: 1.5,
+                                        ),
+                                      )
+                                      */
+                                    ),
+                                    child: Text (
+                                      widget.entry!.readings[index_1][index_2] +
+                                      (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
+                                      style: readingStyle
                                     ),
                                   ),
-                                ]
-                              )
-                            ),
+                                ),
+                              ]
+                            )
                           ),
+                        ),
+                      ),
+                      
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // part of speech
+                      ...List.generate(widget.entry!.partOfSpeech.length, (index) =>
+                        Text(
+                          widget.entry!.partOfSpeech[index],
+                          style: partOfSpeechStyle,
+                        )
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      // meanings
+                      WordMeanings(
+                        entry: widget.entry!, 
+                        meaningsStyle: meaningsStyle
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      if(g_webViewSupported) 
+                        ExpansionTile(
+                          title: const Text("Images"),
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 1,
+                              child: EasyWebView(
+                                  src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
+                                )
+                            )
+                          ],
+                        ),
+                      if(conjugationPos != null)
+                        ConjugationExpansionTile(
+                          word: readingOrKanji,
+                          pos: conjugationPos,
                         ),
                         
-                        const SizedBox(
-                          height: 10,
+                      //TODO - add proverbs @ DaKanji v3.3
+                      if(!kReleaseMode)
+                        const ExpansionTile(
+                          title: Text("Proverbs"),
+                          children: [
+                            Text("This could be done by using kotowaza?")
+                          ],
                         ),
-                        // part of speech
-                        ...List.generate(widget.entry!.partOfSpeech.length, (index) =>
-                          Text(
-                            widget.entry!.partOfSpeech[index],
-                            style: partOfSpeechStyle,
+                      //TODO - add synonyms @ DaKanji v3.3
+                      if(!kReleaseMode)
+                        const ExpansionTile(
+                          title: Text("Synonyms"),
+                          children: [
+                            Text("This could be done by using wordnet jp?")
+                          ],
+                        ),
+                      //TODO - add antonyms @ DaKanji v3.3
+                      if(!kReleaseMode)
+                        const ExpansionTile(
+                          title: Text("Antonyms"),
+                          children: [
+                            Text("This could be done by using NANI??")
+                          ],
+                        ),
+                    ],
+                  ),
+                  // more menu, to open this word in different web pages
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: PopupMenuButton(
+                      icon: const Icon(Icons.more_vert),
+                      onSelected: (String selection) {
+                        // Wiki
+                        if(selection == menuItems[0]) {
+                          launchUrlString("$g_WikipediaJpUrl${readingOrKanji}");
+                        }
+                        if(selection == menuItems[1]) {
+                          launchUrlString("$g_WikipediaEnUrl${readingOrKanji}");
+                        }
+                        if(selection == menuItems[2]) {
+                          launchUrlString("$g_DbpediaUrl${readingOrKanji}");
+                        }
+                        if(selection == menuItems[3]) {
+                          launchUrlString("$g_WiktionaryUrl${readingOrKanji}");
+                        }
+                        if(selection == menuItems[4]) {
+                          launchUrlString("$g_Massif${readingOrKanji}");
+                        }
+                      },
+                      itemBuilder: (context) => List.generate(
+                        menuItems.length,
+                        (index) => 
+                          PopupMenuItem(
+                            value: menuItems[index],
+                            child: Text(menuItems[index])
                           )
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        // meanings
-                        WordMeanings(
-                          entry: widget.entry!, 
-                          meaningsStyle: meaningsStyle
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        if(g_webViewSupported) 
-                          ExpansionTile(
-                            title: const Text("Images"),
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 1,
-                                child: EasyWebView(
-                                    src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
-                                  )
-                              )
-                            ],
-                          ),
-                        if(conjugationPos != null)
-                          ConjugationExpansionTile(
-                            word: readingOrKanji,
-                            pos: conjugationPos,
-                          ),
-                          
-                        //TODO - add proverbs @ DaKanji v3.3
-                        if(!kReleaseMode)
-                          const ExpansionTile(
-                            title: Text("Proverbs"),
-                            children: [
-                              Text("This could be done by using kotowaza?")
-                            ],
-                          ),
-                        //TODO - add synonyms @ DaKanji v3.3
-                        if(!kReleaseMode)
-                          const ExpansionTile(
-                            title: Text("Synonyms"),
-                            children: [
-                              Text("This could be done by using wordnet jp?")
-                            ],
-                          ),
-                        //TODO - add antonyms @ DaKanji v3.3
-                        if(!kReleaseMode)
-                          const ExpansionTile(
-                            title: Text("Antonyms"),
-                            children: [
-                              Text("This could be done by using NANI??")
-                            ],
-                          ),
-                      ],
-                    ),
-                    // more menu, to open this word in different web pages
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: PopupMenuButton(
-                        icon: const Icon(Icons.more_vert),
-                        onSelected: (String selection) {
-                          // Wiki
-                          if(selection == menuItems[0]) {
-                            launchUrlString("$g_WikipediaJpUrl${readingOrKanji}");
-                          }
-                          if(selection == menuItems[1]) {
-                            launchUrlString("$g_WikipediaEnUrl${readingOrKanji}");
-                          }
-                          if(selection == menuItems[2]) {
-                            launchUrlString("$g_DbpediaUrl${readingOrKanji}");
-                          }
-                          if(selection == menuItems[3]) {
-                            launchUrlString("$g_WiktionaryUrl${readingOrKanji}");
-                          }
-                          if(selection == menuItems[4]) {
-                            launchUrlString("$g_Massif${readingOrKanji}");
-                          }
-                        },
-                        itemBuilder: (context) => List.generate(
-                          menuItems.length,
-                          (index) => 
-                            PopupMenuItem(
-                              value: menuItems[index],
-                              child: Text(menuItems[index])
-                            )
-                        ),
-                      )
-                    ),
-                  ],
-                ),
-              )
-            ),
-          ],
-        ),
-      );
-    }
+                      ),
+                    )
+                  ),
+                ],
+              ),
+            )
+          ),
+        ],
+      ),
+    );
   }
 }
