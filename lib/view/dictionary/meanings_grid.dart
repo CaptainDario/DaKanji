@@ -6,7 +6,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 
 /// `LayouGrid` structured to show a list of meanings with a count
-class MeaningsGrid extends StatelessWidget {
+class MeaningsGrid extends StatefulWidget {
   
   /// The style to be used for the text
   final TextStyle style;
@@ -28,32 +28,79 @@ class MeaningsGrid extends StatelessWidget {
   );
 
   @override
+  State<MeaningsGrid> createState() => _MeaningsGridState();
+}
+
+class _MeaningsGridState extends State<MeaningsGrid> {
+
+  /// if there are more than `widet.limit` meanings, should they be shown
+  bool showAllMeanings = false;
+
+  @override
   Widget build(BuildContext context) {
 
-    int offset = min(countOffset, meanings.length-1);
-
-    List<String> _meanings = meanings.sublist(
-      offset, 
-      limit == 0 ? null : min(countOffset+limit, meanings.length)
-    );
-
-    return LayoutGrid(
-      gridFit: GridFit.loose,
-      columnSizes: [auto, 0.425.fr, auto, 0.425.fr],
-      rowSizes: List.generate(_meanings.length~/2+1, (index) => auto),
-      children: List.generate(
-        (_meanings.length),
-        (int j) => [
-          Text(
-            "${(j+1+offset).toString()}. ",
-            style: style
-          ),
-          SelectableText(
-            meanings[j],
-            style: style
-          )
-        ],
-      ).expand((e) => e).toList()
+    /// the lenght of this meanings table (how many rows)
+    int tableLength = showAllMeanings ?
+      widget.meanings.length : 
+      min(widget.meanings.length, 5);
+    /// should the 'show more'-button be there
+    int hide = widget.meanings.length > 5 && !showAllMeanings ? 1 : 0;
+    
+    return AnimatedSize(
+      duration: Duration(milliseconds: 500),
+      alignment: Alignment.topCenter,
+      child: LayoutGrid(
+        gridFit: GridFit.loose,
+        columnGap: 10,
+        rowGap: 5,
+        columnSizes: [auto, 0.95.fr],
+        rowSizes: List.generate(tableLength + hide, (index) => auto),
+        children: () {
+          // one meaning row of the table 
+          List<Widget> ret = [];
+          for (int j = 0; j < tableLength; j++) {
+            ret.add(
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  "${(j+1).toString()}. ",
+                  style: TextStyle(
+                    color: Colors.grey
+                  )
+                ),
+              ),
+            );
+            ret.add(
+              SelectableText(
+                widget.meanings[j],
+                style: widget.style
+              )
+            );
+          }
+          // show more button
+          if(hide == 1)
+            ret.add(
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    showAllMeanings = !showAllMeanings;
+                  });
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      child: Icon(Icons.expand_more)
+                    ),
+                    SizedBox(width: 10,),
+                    Text("More...")
+                  ],
+                )
+              ).withGridPlacement(columnSpan: 2)
+            );
+          
+          return ret;
+        } ()
+      ),
     );
   }
 }

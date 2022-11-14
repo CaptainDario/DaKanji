@@ -45,7 +45,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the text style to use for all meaning elements
   TextStyle meaningsStyle = const TextStyle(
-    fontSize: 20
+    
   );
 
   /// the menu elements of the more-popup-menu
@@ -171,9 +171,6 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                       WordMeanings(
                         entry: widget.entry!, 
                         meaningsStyle: meaningsStyle
-                      ),
-                      const SizedBox(
-                        height: 30,
                       ),
                       if(g_webViewSupported) 
                         ExpansionTile(

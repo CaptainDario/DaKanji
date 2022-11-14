@@ -44,38 +44,36 @@ class WordMeanings extends StatelessWidget {
         
         if(meanings.isNotEmpty){
           ret.add(
-            SizedBox(
-              height: 10,
-              width: 10,
-              child: SvgPicture.asset(
-                GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
-              ),
+            Row(
+              children: [
+                SizedBox(
+                  height: 10,
+                  width: 10,
+                  child: SvgPicture.asset(
+                    GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Text(isoToiso639_1[lang]!.name)
+              ],
             ),
           );
           ret.add(
-            Column(
-              children: [
-                MeaningsGrid(
-                  meanings: meanings.first.meanings!,
-                  style: meaningsStyle,
-                  limit: 10,
-                ),
-                if(meanings.first.meanings!.length > 10)
-                  ExpansionTile(
-                    title: Text("More..."),
-                    children: [
-                      MeaningsGrid(
-                        meanings: meanings.first.meanings!,
-                        style: meaningsStyle,
-                        countOffset: 10,
-                      )
-                    ],
-                  )
-              ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12.0, 8.0, 8.0, 8.0),
+              child: Column(
+                children: [
+                  MeaningsGrid(
+                    meanings: meanings.first.meanings!,
+                    style: meaningsStyle,
+                    limit: 5,
+                  ),
+                ],
+              ),
             )
           );
 
-          ret.add(SizedBox(height: 10,));
+          ret.add(SizedBox(height: 20,));
               
         }
 
