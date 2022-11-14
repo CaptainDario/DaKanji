@@ -74,6 +74,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ...List.generate(
+                          // find first language that is in meanings and selected in settings
                           min(widget.dictEntry.meanings[0].meanings!.length, 3),
                           (int index) => Text(
                             "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings![index]}",
