@@ -1,8 +1,11 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xml/xml.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
@@ -51,8 +54,10 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   final Map<String, List<String>> meanings = {};
   /// The stroke count information extracted from the KanjiVG data
   int strokeCount = -1;
-
-  TextStyle headerStyle = TextStyle(color:  Colors.grey);
+  /// the menu elements of the more-popup-menu
+  List<String> menuItems = ["Kanji Map", "Japanese Graph"];
+  /// The textstyle used for the headers
+  TextStyle headerStyle = TextStyle(color: Colors.grey);
 
   @override
   void initState() {
@@ -97,82 +102,128 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
         builder: (context, constrains) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: [
-                Row(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Kanji preview
-                    KanjiVGWidget(
-                      widget.kanjiVG.svg,
-                      constrains.maxWidth * 0.5,
-                      constrains.maxWidth * 0.5,
-                      colorize: true,
+                    Row(
+                      children: [
+                        // Kanji preview
+                        GestureDetector(
+                          // on tap copy to clipboard and show snakbar
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(text: widget.kanjidic2entry.literal)
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 1),
+                                content: Text("copied " + widget.kanjidic2entry.literal + " to clipboard"),
+                              )
+                            );
+                          },
+                          child: KanjiVGWidget(
+                            widget.kanjiVG.svg,
+                            constrains.maxWidth * 0.5,
+                            constrains.maxWidth * 0.5,
+                            colorize: true,
+                          ),
+                        ),
+                        
+                        const SizedBox(width: 8,),
+                        Expanded(
+                          child: LayoutGrid(
+                            columnSizes: [auto, 1.fr, auto, 1.fr],
+                            rowSizes: List.generate(7, (index) => auto),
+                            children: [
+                              Text("On: ", style: headerStyle),       SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                              Text("Kun: ", style: headerStyle),      SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                              Text("Radicals: ", style: headerStyle), SelectableText("NONE").withGridPlacement(columnSpan: 3),
+                              
+                              SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
+
+                              Text("Strokes: ", style: headerStyle), Text("$strokeCount"),
+                              Text("Grade: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
+
+                              Text("JLPT: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
+                              Text("Heisig: ", style: headerStyle),  Text("NONE"),
+
+                              Text("SKIP: ", style: headerStyle),    Text("NONE"),
+                              Text("Freq.: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    
-                    const SizedBox(width: 8,),
-                    Expanded(
-                      child: LayoutGrid(
-                        columnSizes: [auto, 1.fr, auto, 1.fr],
-                        rowSizes: List.generate(7, (index) => auto),
+                    // meanings / translations
+                    const SizedBox(height: 16,),
+                    ...meanings.entries.map((e) => 
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("On: ", style: headerStyle),      SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                          Text("Kun: ", style: headerStyle),     SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                          SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
-                          Text("Strokes: ", style: headerStyle), Text("$strokeCount"),
-                          Text("Grade: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
-
-                          Text("JLPT: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
-                          Text("Heisig: ", style: headerStyle),  Text("NONE"),
-
-                          Text("SKIP: ", style: headerStyle),    Text("NONE"),
-                          Text("Freq.: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
-                          
-                          Text("Radicals: ", style: headerStyle)
+                          SizedBox(
+                            height: 10,
+                            width: 10,
+                            child: SvgPicture.asset(
+                              GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[e.key]!
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Flexible(
+                            child: Text(
+                              e.value.toString().replaceAll("[", "").replaceAll("]", "")
+                            ),
+                          )
                         ],
                       ),
+                    ).toList(),
+                    const SizedBox(height: 16,),
+                    ExpansionTile(
+                      title: const Text("Kanji groups"),
+                      children:
+                      [
+                        KanjiGroupWidget(
+                          widget.kanjiVG.svg,
+                          constrains.maxWidth - 16,
+                          constrains.maxWidth - 16
+                        ),
+                      ]
                     ),
+                    if(this.widget.alternatives != null && this.widget.alternatives != [])
+                      ExpansionTile(
+                        title: const Text("Alternate forms"),
+                        children: this.widget.alternatives!
+                      ),
                   ],
                 ),
-                // meanings / translations
-                const SizedBox(height: 16,),
-                ...meanings.entries.map((e) => 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                        width: 10,
-                        child: SvgPicture.asset(
-                          GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[e.key]!
-                        ),
+                // more menu, to open this kanji in different web pages
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: PopupMenuButton(
+                      splashRadius: 25,
+                      icon: const Icon(Icons.more_vert),
+                      onSelected: (String selection) {
+                        // Kanji Graph
+                        if(selection == menuItems[0]) {
+                          launchUrlString("$g_theKanjiMapUrl${widget.kanjidic2entry.literal}");
+                        }
+                        // Kanji Map
+                        if(selection == menuItems[1]) {
+                          launchUrlString("$g_japaneseGraphUrl${widget.kanjidic2entry.literal}");
+                        }
+                      },
+                      itemBuilder: (context) => List.generate(
+                        menuItems.length,
+                        (index) => 
+                          PopupMenuItem(
+                            value: menuItems[index],
+                            child: Text(menuItems[index])
+                          )
                       ),
-                      SizedBox(width: 10,),
-                      Flexible(
-                        child: Text(
-                          e.value.toString().replaceAll("[", "").replaceAll("]", "")
-                        ),
-                      )
-                    ],
-                  ),
-                ).toList(),
-                const SizedBox(height: 16,),
-                ExpansionTile(
-                  title: const Text("Kanji groups"),
-                  children:
-                  [
-                    KanjiGroupWidget(
-                      widget.kanjiVG.svg,
-                      constrains.maxWidth - 16,
-                      constrains.maxWidth - 16
-                    ),
-                  ]
-                ),
-                if(this.widget.alternatives != null && this.widget.alternatives != [])
-                  ExpansionTile(
-                    title: const Text("Alternate forms"),
-                    children: this.widget.alternatives!
+                    )
                   ),
               ],
             ),

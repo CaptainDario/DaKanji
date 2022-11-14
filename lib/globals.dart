@@ -122,8 +122,12 @@ const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
 const g_Massif = "https://massif.la/ja/search?q=";
 /// Link to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
-
+/// url to look up a word in deepL 
 const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en/";
+/// url to open a kanji in thekanjimap.com
+const g_theKanjiMapUrl = "https://thekanjimap.com/";
+/// url to open a kanji in japanesegraph.com
+const g_japaneseGraphUrl = "https://japanesegraph.com/";
 
 /// AutoSizeGroup for the settings screen -> all list entries have same font size
 AutoSizeGroup g_SettingsAutoSizeGroup = AutoSizeGroup();
