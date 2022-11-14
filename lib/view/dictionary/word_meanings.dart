@@ -54,7 +54,9 @@ class WordMeanings extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10,),
-                Text(isoToiso639_1[lang]!.name)
+                Text(
+                  isoToLanguage[isoToiso639_1[lang]]!
+                )
               ],
             ),
           );

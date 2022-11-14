@@ -59,27 +59,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   };
 
   /// either `widget.entry.kanji[0]` if not null, otherwise `widget.entry.readings[0]`
-  late final String readingOrKanji;
+  String? readingOrKanji;
   /// The pos that should be used for conjugating this word
-  late final List<Pos> conjugationPos;
+  List<Pos>? conjugationPos;
 
 
   @override
   void initState() {
     
-    if(widget.entry != null){
-    readingOrKanji = widget.entry!.kanjis.isEmpty
-      ? widget.entry!.readings[0]
-      : widget.entry!.kanjis[0];
-
-    // get the pos for conjugating this word
-    conjugationPos = widget.entry!.partOfSpeech
-      .map((e) => posDescriptionToPosEnum[e]!)
-      .where((e) => posUsed.contains(e))
-      .toList();
-
-    
-    }
     super.initState();
   }
 
@@ -93,6 +80,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         color: Theme.of(context).hintColor
       );
     }    
+
+    if(widget.entry != null){
+      readingOrKanji = widget.entry!.kanjis.isEmpty
+        ? widget.entry!.readings[0]
+        : widget.entry!.kanjis[0];
+
+      // get the pos for conjugating this word
+      conjugationPos = widget.entry!.partOfSpeech
+        .map((e) => posDescriptionToPosEnum[e]!)
+        .where((e) => posUsed.contains(e))
+        .toList();
+    }
 
     return SingleChildScrollView(
       child: Column(
@@ -186,8 +185,8 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         ),
                       if(conjugationPos != null)
                         ConjugationExpansionTile(
-                          word: readingOrKanji,
-                          pos: conjugationPos,
+                          word: readingOrKanji!,
+                          pos: conjugationPos!,
                         ),
                         
                       //TODO - add proverbs @ DaKanji v3.3
