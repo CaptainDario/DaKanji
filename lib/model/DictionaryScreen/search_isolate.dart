@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:isolate';
-
 import 'package:async/async.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:isar/isar.dart';
+import 'package:tuple/tuple.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
 import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
 import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
-
-
+import 'package:kana_kit/kana_kit.dart';
 
 
 
@@ -26,12 +26,17 @@ class SearchIsolate {
   Isolate? isolate;
   /// The queue for the results of the search isolate
   StreamQueue? events;
-  /// The search mode used for this isolate
+  /// The search mode used for this isolate (1 - kanji; 2 - reading; 3 meaning)
   int mode;
   /// In which languages meanings should be searched
   List<String> languages;
   /// A name fot this isolate 
   String? debugName;
+  /// The search currentyl running in this isolate
+  Future<dynamic>? _currentSearch;
+  /// Buffers the last entered search term when a search is running. A query
+  /// using this search will be executed once the current query finished.
+  String? _queryBuffer;
 
   SearchIsolate(
     this.mode, 
@@ -93,9 +98,18 @@ class SearchIsolate {
   Future<List<isar_jm.Entry>> query(String query) async {
     _checkInitialized();
 
-    isolateSendPort!.send(query);
+    List<isar_jm.Entry> result = [];
 
-    List<isar_jm.Entry> result = await events!.next;
+    if(query != ""){
+
+      isolateSendPort!.send(query);
+      result = await events!.next;
+    }
+    else{
+      result = [];
+    }
+
+
     return result;
   }
 }
@@ -105,7 +119,6 @@ class SearchIsolate {
 // The entrypoint that runs on the spawned isolate. Receives queries from
 // the main isolate, searches in ISAR, and sends the result back to the main isolate.
 Future<void> _readAndParseJsonService(SendPort p) async {
-  print('Spawned isolate started.');
 
   // Send a SendPort to the main isolate so that it can send messages
   final commandPort = ReceivePort();
@@ -121,27 +134,72 @@ Future<void> _readAndParseJsonService(SendPort p) async {
     [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
   );
 
+  KanaKit kanaKit = KanaKit();
+
+  debugPrint('Spawned isolate started, args: mode - ${mode}, langs - ${langs}');
+
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
     if (message is String) {
       Stopwatch s = Stopwatch()..start();
-      print("message = " + message.toString());
-      List<isar_jm.Entry> results = isar.entrys.filter()
-        .meaningsElement((meaning) => meaning
-          .anyOf(langs, (m, lang) => m
-            .languageEqualTo(lang)
-            .optional(message.length < 3, (m) => m
-              .meaningsElementStartsWith(message)
-            )
-            .optional(message.length >= 3, (m) => m
-              .meaningsElementContains(message)
+      debugPrint("message = " + message);
+
+      String messageKata = kanaKit.toKatakana(message);
+      String messageHira = kanaKit.toHiragana(message);
+
+      bool kataOnly  = kanaKit.isKatakana(messageKata);
+      bool hiraOnly  = kanaKit.isHiragana(messageHira);
+
+      QueryBuilder<isar_jm.Entry, isar_jm.Entry, QAfterFilterCondition> q;
+
+      // search over kanji
+      if(mode == 1){
+        q = isar.entrys.filter()
+          .optional(message.length == 1, (t) => 
+            t.kanjisElementStartsWith(message)
+          ).or()
+          .optional(message.length > 1, (t) => 
+            t.kanjisElementContains(message)
+          );
+      }
+      else if(mode == 2){
+        q = isar.entrys.filter()
+          .optional(kataOnly, (q) => 
+            q.optional(messageKata.length == 1, (t) => 
+              t.readingsElementStartsWith(messageKata)
+            ).or()
+            .optional(messageKata.length > 1, (t) => 
+              t.readingsElementContains(messageKata)
             )
           )
-        )
-      .limit(1000)
-      .findAllSync();
+          .or()
+          .optional(hiraOnly, (q) => 
+            q.optional(messageHira.length == 1, (t) => 
+              t.readingsElementStartsWith(messageHira)
+            ).or()
+            .optional(messageHira.length > 1, (t) => 
+              t.readingsElementContains(messageHira)
+            )
+          )
+          .or()
+          .readingsElementContains(message);
+      }
+      else {
+        q = isar.entrys.filter()
+          .meaningsElement((meaning) => 
+            meaning.anyOf(langs, (m, lang) => m
+              .languageEqualTo(lang)
+              .optional(message.length < 3, (m) => m
+                .meaningsElementStartsWith(message)
+              )
+              .optional(message.length >= 3, (m) => m
+                .meaningsElementContains(message)
+              )
+            )
+          );
+      }
 
-      // sort the results
+      List<isar_jm.Entry> results = q.limit(1000).findAllSync();
       results = sortJmdictList(results, message, langs);
 
       // Send the result to the main isolate.
