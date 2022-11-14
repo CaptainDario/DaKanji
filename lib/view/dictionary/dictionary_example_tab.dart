@@ -18,20 +18,17 @@ class DictionaryExampleTab extends StatefulWidget {
 class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   @override
   Widget build(BuildContext context) {
-    return false
-      ? SizedBox()
-      : LayoutBuilder(
-        builder: (context, constraints) {
-          return AnimatedList(
-            initialItemCount: 40,
-            itemBuilder: (context, no, animation) {
-              return ExampleSentenceCard(
-                "Example: ${no.toString()}", 
-                ["translation: ${no.toString()}"]
-              );
-            }
-          );
-        }
-      );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedList(
+          initialItemCount: 40,
+          itemBuilder: (context, no, animation) {
+            return ExampleSentenceCard(
+              null
+            );
+          }
+        );
+      }
+    );
   }
 }
