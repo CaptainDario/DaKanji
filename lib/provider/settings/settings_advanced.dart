@@ -26,14 +26,28 @@ class SettingsAdvanced with ChangeNotifier {
   static const String d_inferenceBackend = "cpu";
   /// The inference backend used for the tf lite interpreter
   @JsonKey(defaultValue: d_inferenceBackend)
-  late String inferenceBackend = d_inferenceBackend;
+  late String _inferenceBackend = d_inferenceBackend;
+  /// The inference backend used for the tf lite interpreter
+  String get inferenceBackend => _inferenceBackend;
+  /// The inference backend used for the tf lite interpreter
+  set inferenceBackend(String inferenceBackend) {
+    _inferenceBackend = inferenceBackend;
+    notifyListeners();
+  }
 
   /// The default value for `useThanosSnap`
   @JsonKey(ignore: true)
   static const bool d_useThanosSnap = false;
   /// use a thanos like snap effect to dissolve the drawing from the screen
   @JsonKey(defaultValue: d_useThanosSnap)
-  bool useThanosSnap = d_useThanosSnap;
+  bool _useThanosSnap = d_useThanosSnap;
+  /// use a thanos like snap effect to dissolve the drawing from the screen
+  bool get useThanosSnap => _useThanosSnap;
+  /// use a thanos like snap effect to dissolve the drawing from the screen
+  set useThanosSnap(bool useThanosSnap) {
+    _useThanosSnap = useThanosSnap;
+    notifyListeners();
+  }
 
   SettingsAdvanced(){
     if(Platform.isAndroid) {
