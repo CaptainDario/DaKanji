@@ -224,6 +224,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                     right: 0,
                     top: 0,
                     child: PopupMenuButton(
+                      splashRadius: 25,
                       icon: const Icon(Icons.more_vert),
                       onSelected: (String selection) {
                         // Wiki
