@@ -115,8 +115,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_links: 4481ed4d71f384b0c3ae5016f4633aa73d32ff67
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
-  flutter_inappwebview: 62e949df616a9f6e1b0366326381f208c7fcad37
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
   mecab_dart: 5082f14a3f6a9d0cf0b22a26a9ac2bfec2326064
