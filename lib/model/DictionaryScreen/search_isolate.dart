@@ -3,6 +3,8 @@ import 'dart:isolate';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:get_it/get_it.dart';
+import 'package:kagome_dart/kagome_dart.dart';
 import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
@@ -14,8 +16,9 @@ import 'package:kana_kit/kana_kit.dart';
 
 class SearchIsolate {
 
-  /// Has the isolate been initialized
-  bool initialized = false;
+  /// In which languages meanings should be searched
+  List<String> languages;
+
   /// The receive port of the main isolate
   ReceivePort? receivePort;
   /// The send port of the main isolate
@@ -26,35 +29,36 @@ class SearchIsolate {
   Isolate? isolate;
   /// The queue for the results of the search isolate
   StreamQueue? events;
-  /// The search mode used for this isolate (1 - kanji; 2 - reading; 3 meaning)
-  int mode;
-  /// In which languages meanings should be searched
-  List<String> languages;
   /// A name fot this isolate 
   String? debugName;
-  /// The search currentyl running in this isolate
-  Future<dynamic>? _currentSearch;
-  /// Buffers the last entered search term when a search is running. A query
-  /// using this search will be executed once the current query finished.
-  String? _queryBuffer;
+
+  /// Has the isolate been initialized
+  bool _initialized = false;
+
 
   SearchIsolate(
-    this.mode, 
-    this.languages, 
+    this.languages,
     {
-      this.debugName
+      this.debugName,
+      int no_processes = 2
     }
   );
 
   /// Initializes the isolate.
   /// 
   /// Warning: this needs to be called before any other function
-  void init() async {
+  /// Note: `noIsolates` needs to be larger than 0
+  void init(int isolateNo, int noIsolates) async {
+
+    if(noIsolates < 1){
+      throw Exception("`noIsolates` needs to be larger than 0");
+    }
+
     receivePort = ReceivePort();
     sendPort = receivePort!.sendPort;
 
     isolate = await Isolate.spawn(
-      _readAndParseJsonService, 
+      _searchInIsar, 
       receivePort!.sendPort,
       debugName: debugName
     );
@@ -70,9 +74,10 @@ class SearchIsolate {
 
     // init isolate
     isolateSendPort!.send(languages);
-    isolateSendPort!.send(mode);
+    isolateSendPort!.send(isolateNo);
+    isolateSendPort!.send(noIsolates);
 
-    initialized = true;
+    _initialized = true;
   }
 
   /// Kills the isolate, this should be called before discarding this object.
@@ -81,13 +86,13 @@ class SearchIsolate {
 
     receivePort!.sendPort.send(null);
 
-    initialized = false;
+    _initialized = false;
   }
 
   /// convenience function to check if `init()` was called.
   /// Throws an Exxception if it was not initialized.
   void _checkInitialized() {
-    if(!initialized) throw Exception("The isolate needs to be ");
+    if(!_initialized) throw Exception("The isolate needs to be ");
   }
 
   // Spawns an isolate and asynchronously sends a list of filenames for it to
@@ -101,6 +106,9 @@ class SearchIsolate {
     List<isar_jm.Entry> result = [];
 
     if(query != ""){
+      String queryHira = query, queryKata = query;
+      
+      //query = deconjugate(query);
 
       isolateSendPort!.send(query);
       result = await events!.next;
@@ -118,7 +126,7 @@ class SearchIsolate {
 
 // The entrypoint that runs on the spawned isolate. Receives queries from
 // the main isolate, searches in ISAR, and sends the result back to the main isolate.
-Future<void> _readAndParseJsonService(SendPort p) async {
+Future<void> _searchInIsar(SendPort p) async {
 
   // Send a SendPort to the main isolate so that it can send messages
   final commandPort = ReceivePort();
@@ -127,16 +135,22 @@ Future<void> _readAndParseJsonService(SendPort p) async {
   // convert the receive port to a queue to get the init arguments
   var events = StreamQueue<dynamic>(commandPort);
   List<String> langs = await events.next;
-  int mode = await events.next;
+  int isolateNo  = await events.next;
+  int noIsolates = await events.next;
 
   // open isar
   Isar isar = Isar.openSync(
     [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
   );
 
+  int noEntries = isar.entrys.countSync();
+  int idRangeStart = isolateNo * (noEntries/noIsolates).floor();
+  int idRangeEnd   = (isolateNo+1) * (noEntries/noIsolates).floor();
+
   KanaKit kanaKit = KanaKit();
 
-  debugPrint('Spawned isolate started, args: mode - ${mode}, langs - ${langs}');
+  debugPrint('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
+
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
@@ -151,53 +165,60 @@ Future<void> _readAndParseJsonService(SendPort p) async {
       bool hiraOnly  = kanaKit.isHiragana(messageHira);
 
       QueryBuilder<isar_jm.Entry, isar_jm.Entry, QAfterFilterCondition> q;
+      
+      q = isar.entrys.where().
+
+      // limit this process to one chunk of size (entries.length / num_processes)
+        idBetween(idRangeStart, idRangeEnd)
+
+      .filter()
 
       // search over kanji
-      if(mode == 1){
-        q = isar.entrys.filter()
-          .optional(message.length == 1, (t) => 
-            t.kanjisElementStartsWith(message)
-          ).or()
-          .optional(message.length > 1, (t) => 
-            t.kanjisElementContains(message)
-          );
-      }
-      else if(mode == 2){
-        q = isar.entrys.filter()
-          .optional(kataOnly, (q) => 
-            q.optional(messageKata.length == 1, (t) => 
-              t.readingsElementStartsWith(messageKata)
-            ).or()
-            .optional(messageKata.length > 1, (t) => 
-              t.readingsElementContains(messageKata)
-            )
+        .optional(message.length == 1, (t) => 
+          t.kanjisElementStartsWith(message)
+        ).or()
+        .optional(message.length > 1, (t) => 
+          t.kanjisElementContains(message)
+        )
+
+      .or()
+
+      // search over readings
+      .optional(kataOnly, (q) => 
+        q.optional(messageKata.length == 1, (t) => 
+          t.readingsElementStartsWith(messageKata)
+        ).or()
+        .optional(messageKata.length > 1, (t) => 
+          t.readingsElementContains(messageKata)
+        )
+      )
+      .or()
+      .optional(hiraOnly, (q) => 
+        q.optional(messageHira.length == 1, (t) => 
+          t.readingsElementStartsWith(messageHira)
+        ).or()
+        .optional(messageHira.length > 1, (t) => 
+          t.readingsElementContains(messageHira)
+        )
+      )
+      .or()
+      .readingsElementContains(message)
+
+      .or()
+      
+      // search over meanings
+      .meaningsElement((meaning) => 
+        meaning.anyOf(langs, (m, lang) => m
+          .languageEqualTo(lang)
+          .optional(message.length < 3, (m) => m
+            .meaningsElementStartsWith(message)
           )
-          .or()
-          .optional(hiraOnly, (q) => 
-            q.optional(messageHira.length == 1, (t) => 
-              t.readingsElementStartsWith(messageHira)
-            ).or()
-            .optional(messageHira.length > 1, (t) => 
-              t.readingsElementContains(messageHira)
-            )
+          .optional(message.length >= 3, (m) => m
+            .meaningsElementContains(message)
           )
-          .or()
-          .readingsElementContains(message);
-      }
-      else {
-        q = isar.entrys.filter()
-          .meaningsElement((meaning) => 
-            meaning.anyOf(langs, (m, lang) => m
-              .languageEqualTo(lang)
-              .optional(message.length < 3, (m) => m
-                .meaningsElementStartsWith(message)
-              )
-              .optional(message.length >= 3, (m) => m
-                .meaningsElementContains(message)
-              )
-            )
-          );
-      }
+        )
+      );
+      
 
       List<isar_jm.Entry> results = q.limit(1000).findAllSync();
       results = sortJmdictList(results, message, langs);
@@ -318,4 +339,32 @@ List<isar_jm.Entry> sortEntriesByInts(List<isar_jm.Entry> a, List<int> b){
   );
 
   return  combined.map((e) => e.item1).toList();
+}
+
+
+/// Deconjugates the given `text` if it is a conjugate verb / adj / nouns
+String deconjugate(String text){
+
+  String ret = "";
+
+  if(GetIt.I<KanaKit>().isJapanese(text)){
+    var t = GetIt.I<Kagome>().runAnalyzer(text, AnalyzeModes.normal);
+    
+    for (int i = 0; i < t.item2.length; i++) {
+      // deflect verbs / adjectives / nouns if they are conjugated
+      if((t.item2[i][0] == "動詞" || t.item2[i][0] == "形容詞" ||
+        t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞") 
+        && t.item2[i][7] != t.item1[i]){
+        t.item1[i] = t.item2[i][7];
+        // ... and remove the conjugated ending
+        if(t.item1.length > i+1 && t.item2[i+1][0] == "助動詞"){
+          t.item1[i+1] = "";
+        }
+      }
+    }
+
+    ret = t.item1.join() ;
+  }
+
+  return ret;
 }
