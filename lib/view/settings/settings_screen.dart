@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -183,14 +184,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               String lang = GetIt.I<Settings>().dictionary.translationLanguageCodes[index];
                               return GestureDetector(
                                 onTap: () {
+                                  if(lang == iso639_1.en.name)
+                                    return;
+
                                   setState(() {
                                     if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
                                       settings.dictionary.selectedTranslationLanguages.add(lang);
                                     }
                                     else{
-                                      if(settings.dictionary.selectedTranslationLanguages.length <= 1){
-                                        return;
-                                      }
                                       settings.dictionary.selectedTranslationLanguages.remove(lang);
                                     }
                                     settings.save();
