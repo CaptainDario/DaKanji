@@ -1,8 +1,9 @@
-import 'dart:math';
-
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
+import 'package:get_it/get_it.dart';
 
 
 
@@ -75,14 +76,33 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       children: [
                         ...List.generate(
                           // find first language that is in meanings and selected in settings
-                          min(widget.dictEntry.meanings[0].meanings!.length, 3),
-                          (int index) => Text(
-                            "${(index+1).toString()}. ${widget.dictEntry.meanings[0].meanings![index]}",
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 10
-                            ),
-                          )
+                          3,
+                          (int index) {
+
+                            // get the index of the first selected language
+                            int idx = -1;
+                            outerloop:
+                            for (var l in GetIt.I<Settings>().dictionary.selectedTranslationLanguages) {
+                              int cnt = 0;
+                              for (var m in widget.dictEntry.meanings) {
+                                if(isoToiso639_1[m.language]!.name == l){
+                                  idx = cnt;
+                                  break outerloop;
+                                }
+                                cnt += 1;
+                              }
+                            }
+
+                            return Text(
+                              widget.dictEntry.meanings[idx].meanings!.length > index
+                                ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings![index]}"
+                                : "",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 10
+                              ),
+                            );
+                          }
                         )
                       ],
                     )
