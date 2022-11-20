@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/view/dictionary/search_field_widget.dart';
+import 'package:da_kanji_mobile/view/dictionary/dictionary_search_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
