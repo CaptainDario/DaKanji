@@ -47,8 +47,8 @@ dependencies:
   share_plus: 5.0.0
   cross_file: 0.3.3+2
   json_annotation: 4.7.0
-  isar: 3.0.2
-  isar_flutter_libs: 3.0.2
+  isar: any # included in dakanji dictionary
+  isar_flutter_libs: any # included in dakanji dictionary
   async: 2.9.0
   simple_html_css: 4.0.0
   animations: 2.0.7
@@ -85,11 +85,6 @@ msix_config:
   execution-alias: DaKanji
   languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es pl-pl
   
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -98,7 +93,7 @@ dev_dependencies:
   msix: 3.6.6
   json_serializable: 6.5.0
   build_runner: 2.2.1
-  isar_generator: 3.0.2
+  isar_generator: any # included in dakanji dictionary
   
 flutter_icons:
   android: "launcher_icon"
