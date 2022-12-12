@@ -1,4 +1,6 @@
 PODS:
+  - audio_session (0.0.1):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -6,49 +8,81 @@ PODS:
     - Flutter
   - flutter_native_splash (0.0.1):
     - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - in_app_review (0.2.0):
     - Flutter
   - integration_test (0.0.1):
     - Flutter
+  - isar_flutter_libs (1.0.0):
+    - Flutter
+  - just_audio (0.0.1):
+    - Flutter
+  - path_provider_ios (0.0.1):
+    - Flutter
+  - permission_handler_apple (9.0.4):
+    - Flutter
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - TensorFlowLiteC (2.7.0):
-    - TensorFlowLiteC/Core (= 2.7.0)
-  - TensorFlowLiteC/Core (2.7.0)
-  - TensorFlowLiteC/CoreML (2.7.0):
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
+  - TensorFlowLiteC (2.10.0):
+    - TensorFlowLiteC/Core (= 2.10.0)
+  - TensorFlowLiteC/Core (2.10.0)
+  - TensorFlowLiteC/CoreML (2.10.0):
     - TensorFlowLiteC/Core
-  - TensorFlowLiteC/Metal (2.7.0):
+  - TensorFlowLiteC/Metal (2.10.0):
     - TensorFlowLiteC/Core
   - tflite_flutter (0.1.0):
     - Flutter
-    - TensorFlowLiteC
-    - TensorFlowLiteC/CoreML
-    - TensorFlowLiteC/Metal
+    - TensorFlowLiteC (~> 2.10.0)
+    - TensorFlowLiteC/CoreML (~> 2.10.0)
+    - TensorFlowLiteC/Metal (~> 2.10.0)
   - uni_links (0.0.1):
     - Flutter
-  - url_launcher (0.0.1):
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_appavailability (from `.symlinks/plugins/flutter_appavailability/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
+    - FMDB
     - TensorFlowLiteC
 
 EXTERNAL SOURCES:
+  audio_session:
+    :path: ".symlinks/plugins/audio_session/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
@@ -61,31 +95,57 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/in_app_review/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
+  isar_flutter_libs:
+    :path: ".symlinks/plugins/isar_flutter_libs/ios"
+  just_audio:
+    :path: ".symlinks/plugins/just_audio/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   tflite_flutter:
     :path: ".symlinks/plugins/tflite_flutter/ios"
   uni_links:
     :path: ".symlinks/plugins/uni_links/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
+  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_appavailability: ebf8f85abea44436d1262fcde8a4e64b2534b01a
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  TensorFlowLiteC: 50d75ed3640c15dcfbaf88ca4326297b445e00a1
-  tflite_flutter: ef3dac28f616a06a5ae60f3b1acaf8283c02d329
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  TensorFlowLiteC: edf19548f50a1552e43dbd6906f5618a478bd038
+  tflite_flutter: 0caec6cb799848a8bbbad92668e6cc5e1d55aea8
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
-  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
-  webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
+  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
 COCOAPODS: 1.11.3
