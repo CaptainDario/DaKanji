@@ -267,7 +267,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       child: CustomSelectableText(
                                         words: kagomeWords,
                                         rubys: kagomePos.map(
-                                          (e) => e.length == 17 ? e[9] : " "
+                                          (e) => e.length == 17 ? e[6] : " "
                                         ).toList(),
                                         wordColors: List.generate(
                                           kagomeWords.length,
@@ -483,7 +483,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
       // if the word does not use kanji, remove the reading (furigana)
       if(GetIt.I<KanaKit>().isKana(kagomeWords[i]))
-        kagomePos[i][9] = "";
+        kagomePos[i][6] = "";
     }
   }
 }
