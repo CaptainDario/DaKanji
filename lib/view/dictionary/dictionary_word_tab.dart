@@ -225,19 +225,19 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                       onSelected: (String selection) {
                         // Wiki
                         if(selection == menuItems[0]) {
-                          launchUrlString("$g_WikipediaJpUrl${readingOrKanji}");
+                          launchUrlString(Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}"));
                         }
                         if(selection == menuItems[1]) {
-                          launchUrlString("$g_WikipediaEnUrl${readingOrKanji}");
+                          launchUrlString(Uri.encodeFull("$g_WikipediaEnUrl${readingOrKanji}"));
                         }
                         if(selection == menuItems[2]) {
-                          launchUrlString("$g_DbpediaUrl${readingOrKanji}");
+                          launchUrlString(Uri.encodeFull("$g_DbpediaUrl${readingOrKanji}"));
                         }
                         if(selection == menuItems[3]) {
-                          launchUrlString("$g_WiktionaryUrl${readingOrKanji}");
+                          launchUrlString(Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}"));
                         }
                         if(selection == menuItems[4]) {
-                          launchUrlString("$g_Massif${readingOrKanji}");
+                          launchUrlString(Uri.encodeFull("$g_Massif${readingOrKanji}"));
                         }
                       },
                       itemBuilder: (context) => List.generate(
