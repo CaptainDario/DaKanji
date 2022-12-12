@@ -446,6 +446,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   }
 
 
+  /// Processes the given `text`.
+  /// Analyzes the text with kagome, removes POS elements of punctuation marks,
+  /// converts unidic POS to enum and removes readings for words that do not use
+  /// kanji.
+  /// 
+  /// CAUTION: This method has SIDE-EFFECTS and outputs the processed text to the
+  /// variable `kagomePos` and `kagomeWords`
   void processText(String text){
     
     // analyze text with kagome
@@ -460,16 +467,21 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     kagomePos = analyzedWords.item2.where(
       (e) => e.length > 5
     ).toList();
-    // concatenate POS 1-4 if this is a regular word
+    
     for (var i = 0; i < kagomePos.length; i++) {
+      // skip elements that are not words
       if(kagomePos[i].length < 17)
         continue;
+      
+      // convert the kagome pos to an enum element
       String l = kagomePos[i]
         .sublist(0, 4)
         .join("-")
         .replaceAll("-*", "");
       if(jpToPosUnidic[l] != null)
         kagomePos[i][0] = l;
+
+      // if the word does not use kanji, remove the reading (furigana)
       if(GetIt.I<KanaKit>().isKana(kagomeWords[i]))
         kagomePos[i][9] = "";
     }
