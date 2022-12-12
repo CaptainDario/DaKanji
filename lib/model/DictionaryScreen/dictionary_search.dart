@@ -2,8 +2,6 @@ import 'package:async/async.dart';
 
 import 'search_isolate.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
-
 
 
 /// Class that spawns a number of isolates to search efficiently in the dictionary
@@ -30,19 +28,20 @@ class DictionarySearch {
     _initialized = true;
   }
 
-  Future<List<isar_jm.Entry>> query (String queryText) async {
+  /// 
+  Future<List> query (String queryText) async {
     _checkInitialized();
 
-    FutureGroup<List<isar_jm.Entry>> searchGroup = FutureGroup();
+    FutureGroup<List> searchGroup = FutureGroup();
 
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(queryText));
     }
     searchGroup.close();
 
-    print((await searchGroup.future).length);
-    
-    return [];//searchGroup.future;
+    final result = (await searchGroup.future).expand((x) => x).toList();
+
+    return result;
   }
 
   /// terminates all isolates and cleans memory
@@ -56,7 +55,7 @@ class DictionarySearch {
   /// convenience function to check if `init()` was called.
   /// Throws an Exxception if it was not initialized.
   void _checkInitialized() {
-    if(!_initialized) throw Exception("The isolate needs to be ");
+    if(!_initialized) throw Exception("The isolate needs to be initilized");
   }
 
 }

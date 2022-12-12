@@ -15,9 +15,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:archive/archive_io.dart';
 import 'package:feedback/feedback.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
-import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
-import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
+import 'package:database_builder/database_builder.dart';
 import 'package:webview_windows/webview_windows.dart';
 
 import 'package:da_kanji_mobile/dakanji_splash.dart';
@@ -50,7 +48,8 @@ Future<void> main() async {
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
   // init window Manager
-  await windowManager.ensureInitialized();
+  if(g_desktopPlatform)
+    await windowManager.ensureInitialized();
 
   try{
     await WebviewController.initializeEnvironment(
@@ -132,6 +131,7 @@ Future<void> downloadAssets() async {
 Future<void> copyDatabaseFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+  debugPrint("documents directory: ${documentsDirectory.toString()}");
   final databaseDirectory = Directory(documentsDirectory.path + "/isar");
   
   if (!databaseDirectory.existsSync()) {
@@ -195,7 +195,7 @@ Future<void> initGetIt() async {
   //compute(openIsarInIsolate, path).then((value) {
     GetIt.I.registerSingleton<Isar>(
       Isar.openSync(
-        [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
         directory: path
       )
     );
@@ -229,7 +229,7 @@ void desktopWindowSetup() {
 /// from being blocked.
 void openIsarInIsolate(String directory) {
   Isar.openSync(
-    [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema],
+    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema],
     directory: directory
   );
 }

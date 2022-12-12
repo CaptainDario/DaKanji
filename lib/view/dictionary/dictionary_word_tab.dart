@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
+import 'package:database_builder/database_builder.dart';
 import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
@@ -21,7 +21,7 @@ class DictionaryWordTab extends StatefulWidget {
   ) : super(key: key);
 
   /// the dict entry that should be shown 
-  final isar_jm.Entry? entry;
+  final JMdict? entry;
 
 
   @override

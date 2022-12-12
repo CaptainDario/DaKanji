@@ -7,9 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kagome_dart/kagome_dart.dart';
 import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
-import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
-import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
+import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
 
@@ -92,7 +90,7 @@ class SearchIsolate {
   /// convenience function to check if `init()` was called.
   /// Throws an Exxception if it was not initialized.
   void _checkInitialized() {
-    if(!_initialized) throw Exception("The isolate needs to be ");
+    if(!_initialized) throw Exception("The isolate needs to be initialized first.");
   }
 
   // Spawns an isolate and asynchronously sends a list of filenames for it to
@@ -100,10 +98,10 @@ class SearchIsolate {
   // before sending the next.
   //
   // Returns a stream that emits the JSON-decoded contents of each file.
-  Future<List<isar_jm.Entry>> query(String query) async {
+  Future<List> query(String query) async {
     _checkInitialized();
 
-    List<isar_jm.Entry> result = [];
+    List result = [];
 
     if(query != ""){
       String queryHira = query, queryKata = query;
@@ -116,7 +114,6 @@ class SearchIsolate {
     else{
       result = [];
     }
-
 
     return result;
   }
@@ -140,10 +137,10 @@ Future<void> _searchInIsar(SendPort p) async {
 
   // open isar
   Isar isar = Isar.openSync(
-    [isar_kanji.KanjiSVGSchema, isar_jm.EntrySchema, isar_kanjidic.Kanjidic2EntrySchema],
+    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
   );
 
-  int noEntries = isar.entrys.countSync();
+  int noEntries = isar.jmdict.countSync();
   int idRangeStart = isolateNo * (noEntries/noIsolates).floor();
   int idRangeEnd   = (isolateNo+1) * (noEntries/noIsolates).floor();
 
@@ -164,9 +161,8 @@ Future<void> _searchInIsar(SendPort p) async {
       bool kataOnly  = kanaKit.isKatakana(messageKata);
       bool hiraOnly  = kanaKit.isHiragana(messageHira);
 
-      QueryBuilder<isar_jm.Entry, isar_jm.Entry, QAfterFilterCondition> q;
-      
-      q = isar.entrys.where().
+      QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = 
+      isar.jmdict.where().
 
       // limit this process to one chunk of size (entries.length / num_processes)
         idBetween(idRangeStart, idRangeEnd)
@@ -220,7 +216,7 @@ Future<void> _searchInIsar(SendPort p) async {
       );
       
 
-      List<isar_jm.Entry> results = q.limit(1000).findAllSync();
+      List<JMdict> results = q.limit(1000).findAllSync();
       results = sortJmdictList(results, message, langs);
 
       // Send the result to the main isolate.
@@ -244,8 +240,8 @@ Future<void> _searchInIsar(SendPort p) async {
 /// 1. Full Match > Match at the beginning > Match somwhere in the word
 ///    Those three categories are sorted individually and merged in the end
 ///   2.  sort inside each category based on <br/>
-List<isar_jm.Entry> sortJmdictList(
-  List<isar_jm.Entry> entries, 
+List<JMdict> sortJmdictList(
+  List<JMdict> entries, 
   String queryText,
   List<String> languages)
   {
@@ -254,12 +250,12 @@ List<isar_jm.Entry> sortJmdictList(
   /// 0 - full matchs 
   /// 1 - matchs starting at the word beginning 
   /// 2 - other matches
-  List<List<isar_jm.Entry>> matches = [[], [], []];
+  List<List<JMdict>> matches = [[], [], []];
   List<List<int>> matchIndices = [[], [], []];
   String queryTextHira = KanaKit().toHiragana(queryText);
 
   // iterate over the entries and create a ranking for each 
-  for (isar_jm.Entry entry in entries) {
+  for (JMdict entry in entries) {
     // KANJI
     Tuple3 result = rankMatches(entry.kanjis, queryText);
     
@@ -271,9 +267,9 @@ List<isar_jm.Entry> sortJmdictList(
     // filter all langauges that are selected in the settings and join them to 
     // a list
     if(result.item1 == -1){
-      List<String> k = entry.meanings.where((isar_jm.LanguageMeanings e) =>
+      List<String> k = entry.meanings.where((LanguageMeanings e) =>
           languages.contains(e.language)
-        ).map((isar_jm.LanguageMeanings e) => 
+        ).map((LanguageMeanings e) => 
           e.meanings!
         ).expand((e) => e).toList();
       result = rankMatches(k, queryText);
@@ -288,6 +284,7 @@ List<isar_jm.Entry> sortJmdictList(
   matches[0] = sortEntriesByInts(matches[0], matchIndices[0]);
   matches[1] = sortEntriesByInts(matches[1], matchIndices[1]);
   matches[2] = sortEntriesByInts(matches[2], matchIndices[2]);
+
   return matches.expand((element) => element).toList();
 }
 
@@ -327,11 +324,11 @@ Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {
 /// Sorts list `a` based on the values in `b` and returns it.
 /// 
 /// Throws an exception if the lists do not have the same length.
-List<isar_jm.Entry> sortEntriesByInts(List<isar_jm.Entry> a, List<int> b){
+List<JMdict> sortEntriesByInts(List<JMdict> a, List<int> b){
 
   assert (a.length == b.length);
 
-  List<Tuple2<isar_jm.Entry, int>> combined = List.generate(b.length,
+  List<Tuple2<JMdict, int>> combined = List.generate(b.length,
     (i) => Tuple2(a[i], b[i])
   );
   combined.sort(

@@ -14,7 +14,6 @@ import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
-import 'package:da_kanji_mobile/view/dictionary/dictionary_search_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
+import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'search_result_card.dart';
@@ -12,7 +12,7 @@ import 'search_result_card.dart';
 /// Needs a `Provider<Dictsearch>` above it in the widget tree
 class SearchResultList extends StatefulWidget {
 
-  final void Function(isar_jm.Entry selection)? onSearchResultPressed;
+  final void Function(JMdict selection)? onSearchResultPressed;
 
   const SearchResultList(
     {

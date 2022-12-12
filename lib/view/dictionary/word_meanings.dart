@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as isar_jm;
+import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/view/dictionary/meanings_grid.dart';
 class WordMeanings extends StatelessWidget {
   
   /// The entry of which the meanings should be shown
-  final isar_jm.Entry entry;
+  final JMdict entry;
   /// The style to aply to the meanings
   final TextStyle meaningsStyle;
 
@@ -37,7 +37,7 @@ class WordMeanings extends StatelessWidget {
         List<Widget> ret = [];
 
         // get the meaning of the selected language
-        List<isar_jm.LanguageMeanings> meanings = entry.meanings.where(
+        List<LanguageMeanings> meanings = entry.meanings.where(
           (element) => isoToiso639_1[element.language]!.name == lang
         ).toList();
         

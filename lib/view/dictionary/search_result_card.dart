@@ -2,7 +2,7 @@ import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/src/jm_enam_and_dict_to_Isar/data_classes.dart' as _isar;
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 
@@ -19,12 +19,12 @@ class SearchResultCard extends StatefulWidget {
   ) : super(key: key);
 
   /// The reading that should be displayed in this card
-  final _isar.Entry dictEntry;
+  final JMdict dictEntry;
   /// 
   final int resultIndex;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
-  final Function(_isar.Entry selection)? onPressed;
+  final Function(JMdict selection)? onPressed;
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
