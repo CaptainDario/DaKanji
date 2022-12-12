@@ -136,15 +136,16 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
           ).toList()
         ),
         Container(
-          height: MediaQuery.of(context).size.height*0.5,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: TabBarView(
             controller: tabController,
             children: List.generate(tabTitles.length, (i) =>
               SingleChildScrollView(
+                clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: List.generate(_conjos[(i/2).floor()].length, (j) => 
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: VerbConjugationEntry(
                         title: conjugationTitles[(i/2).floor()][j],
                         explanation: conjugationExplanations[(i/2).floor()][j],

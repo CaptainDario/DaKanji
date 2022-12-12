@@ -75,44 +75,56 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
               ).toList() 
             )
           ),
+        SizedBox(height: 4,),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // positive conjugations
+            // plain conjugations
             if(widget.conjugationType == ConjugationType.plain &&
               widget.plainFormPositive != "")
-              Column(
-                children: 
-                  widget.plainFormPositive.split(" / ").map((e) => 
-                    SelectableText(e, style: positiveStyle)
-                  ).toList()
-                
-              ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SelectableText(
+                      widget.plainFormPositive, 
+                      style: positiveStyle,
+                    ),
+                  )
+                ),    
             if(widget.conjugationType == ConjugationType.plain &&
               widget.plainFormNegative != "")
-              Column(
-                children: 
-                  widget.plainFormNegative.split(" / ").map((e) => 
-                    SelectableText(e, style: negativeStyle)
-                  ).toList()
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: SelectableText(
+                    widget.plainFormNegative,
+                    style: negativeStyle,
+                  ),
+                )
               ),
+
             // masu conjugations
             if(widget.conjugationType == ConjugationType.polite &&
               widget.politeFormPositive != "")
-              Column(
-                children: 
-                  widget.politeFormPositive.split(" / ").map((e) => 
-                    SelectableText(e, style: positiveStyle)
-                  ).toList()
-                
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SelectableText(
+                    widget.politeFormPositive,
+                    style: positiveStyle,
+                  ),
+                ),
               ),
             if(widget.conjugationType == ConjugationType.polite &&
               widget.politeFormNegative != "")
-              Column(
-                children: 
-                  widget.politeFormNegative.split(" / ").map((e) => 
-                    SelectableText(e, style: negativeStyle)
-                  ).toList()
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SelectableText(
+                    widget.politeFormNegative,
+                    style: negativeStyle,
+                    
+                  ),
+                ),
               ),
           ],
         ),
