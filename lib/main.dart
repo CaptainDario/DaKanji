@@ -192,14 +192,12 @@ Future<void> initGetIt() async {
 
   String path = (await path_provider.getApplicationDocumentsDirectory()).path + "/isar";
 
-  //compute(openIsarInIsolate, path).then((value) {
-    GetIt.I.registerSingleton<Isar>(
-      Isar.openSync(
-        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
-        directory: path
-      )
-    );
-  //});
+  GetIt.I.registerSingleton<Isar>(
+    Isar.openSync(
+      [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
+      directory: path
+    )
+  );
   
 
   // Drawer
