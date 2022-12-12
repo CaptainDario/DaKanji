@@ -56,7 +56,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 2 - (g_webViewSupported ? 0 : 1),
       child: Stack(
         children: [
           Container(
