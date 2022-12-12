@@ -19,9 +19,9 @@ TensorFlow Lite plugin for Flutter apps.
   s.platform = :ios, '8.0'
   
   #s.ios.vendored_frameworks = 'TensorFlowLiteC.framework'
-  s.dependency 'TensorFlowLiteC'
-  s.dependency 'TensorFlowLiteC/Metal'
-  s.dependency 'TensorFlowLiteC/CoreML'
+  s.dependency 'TensorFlowLiteC', '~> 2.11.0'
+  s.dependency 'TensorFlowLiteC/Metal', '~> 2.11.0'
+  s.dependency 'TensorFlowLiteC/CoreML', '~> 2.11.0'
 
   s.ios.deployment_target = '9.0'
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
