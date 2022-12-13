@@ -56,8 +56,9 @@ CNN_single_char.tflite
 blobs/*
 !blobs/.gitkeep
 
-# ignore the dictionary files
-assets/dict
+# ignore the dictionary files but keep the folder
+assets/dict/*
+!assets/dict/.gitkeep
 
 # plugins to ignore
 # ignore custom tf lite flutter repo
