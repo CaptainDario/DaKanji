@@ -52,8 +52,9 @@ CNN_single_char.tflite
 # ignore LoC counter
 .VSCodeCounter/
 
-# force add tf lite desktop binaries
-blobs/**
+# binaries in blob folder
+blobs/*
+!blobs/.gitkeep
 
 # ignore the dictionary files
 assets/dict
