@@ -16,13 +16,13 @@ class ManualDictionary extends StatelessWidget {
       • adverb: <a style="color:{ADVERB_COLOR}">this is an adverb example.</a><br/>
       • auxillary verb: <a style="color:{AUX_VERB_COLOR}">this is an auxillary verb example.</a><br/>
       • particle: <a style="color:{PARTICLE_COLOR}">this is a particle example.</a><br/>
-      • verb: <a style="color:{VERB_COLOR}">this is an verb example.</a><br/>
-      • noun: <a style="color:{NOUN_COLOR}">this is an noun example.</a><br/>
+      • verb: <a style="color:{VERB_COLOR}">this is a verb example.</a><br/>
+      • noun: <a style="color:{NOUN_COLOR}">this is a noun example.</a><br/>
       • い-adjective: <a style="color:{I_ADJ_COLOR}">this is an い-adjective example.</a><br/>
-      • な-adjective: <a style="color:{NA_ADJ_COLOR}">this is an な-adjective example.</a><br/>
+      • な-adjective: <a style="color:{NA_ADJ_COLOR}">this is a な-adjective example.</a><br/>
       • interjection: <a style="color:{INTERJECTION_COLOR}">this is an interjection example.</a><br/>
       • suffix: <a style="color:{SUFFIX_COLOR}">this is a suffix example.</a><br/>
-      • conjunction: <a style="color:{CONJUNCTION_COLOR}">this is an conjunction example.</a><br/>
+      • conjunction: <a style="color:{CONJUNCTION_COLOR}">this is a conjunction example.</a><br/>
       """
     .replaceAll("{PRONOUN_COLOR}", colorToHtmlString(pronounColor))
     .replaceAll("{ADVERB_COLOR}", colorToHtmlString(adverbColor))
@@ -39,7 +39,27 @@ class ManualDictionary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: HTML.toTextSpan(context, manualTextScreenText),
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "The"
+          ),
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: Icon(Icons.abc)
+          ),
+          TextSpan(
+            text: ""
+          ),
+          HTML.toTextSpan(
+            context, 
+            manualTextScreenText,
+            defaultTextStyle: TextStyle(
+              color: Theme.of(context).textTheme.bodyText1!.color
+            )
+          )
+        ]
+      ) ,
     );
   }
 }
