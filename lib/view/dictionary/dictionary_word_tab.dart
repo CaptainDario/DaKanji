@@ -93,169 +93,171 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .toList();
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // word written with kanji
-                      SelectionArea(
-                        child: Wrap(
-                          children: [
-                            ...List.generate(widget.entry!.kanjis.length, (i) =>
-                              Text(
-                                widget.entry!.kanjis[i] +
-                                (widget.entry!.kanjis.length-1 != i ? "、" : ""),
-                                style: kanjiStyle
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Readings
-                      SelectionArea(
-                        child: Wrap(
-                          children: List.generate( (widget.entry!.readings.length),
-                            // Characters of word reading with  pitch accent
-                            (index_1) => Row(
-                              children:
-                              [
-                                ...List.generate(
-                                  widget.entry!.readings[index_1].length,
-                                  (index_2) => Container(
-                                    decoration: const BoxDecoration(
-                                      // TODO: pitch accent - @ DaKanji v3.3
-                                      /*
-                                      border: Border(
-                                        right: BorderSide(
-                                          color: Colors.white,
-                                          width: 1.5,
-                                        ),
-                                      )
-                                      */
-                                    ),
-                                    child: Text (
-                                      widget.entry!.readings[index_1][index_2] +
-                                      (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
-                                      style: readingStyle
-                                    ),
-                                  ),
+    return widget.entry == null
+      ? SizedBox()
+      : SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // word written with kanji
+                        SelectionArea(
+                          child: Wrap(
+                            children: [
+                              ...List.generate(widget.entry!.kanjis.length, (i) =>
+                                Text(
+                                  widget.entry!.kanjis[i] +
+                                  (widget.entry!.kanjis.length-1 != i ? "、" : ""),
+                                  style: kanjiStyle
                                 ),
-                              ]
-                            )
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // part of speech
-                      ...List.generate(widget.entry!.partOfSpeech.length, (index) =>
-                        Text(
-                          widget.entry!.partOfSpeech[index],
-                          style: partOfSpeechStyle,
-                        )
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      // meanings
-                      WordMeanings(
-                        entry: widget.entry!, 
-                        meaningsStyle: meaningsStyle
-                      ),
-                      if(g_webViewSupported) 
-                        ExpansionTile(
-                          title: const Text("Images"),
-                          children: [
-                            AspectRatio(
-                              aspectRatio: 1,
-                              child: EasyWebView(
-                                  src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
-                                )
-                            )
-                          ],
-                        ),
-                      if(conjugationPos != null)
-                        ConjugationExpansionTile(
-                          word: readingOrKanji!,
-                          pos: conjugationPos!,
+                        // Readings
+                        SelectionArea(
+                          child: Wrap(
+                            children: List.generate( (widget.entry!.readings.length),
+                              // Characters of word reading with  pitch accent
+                              (index_1) => Row(
+                                children:
+                                [
+                                  ...List.generate(
+                                    widget.entry!.readings[index_1].length,
+                                    (index_2) => Container(
+                                      decoration: const BoxDecoration(
+                                        // TODO: pitch accent - @ DaKanji v3.3
+                                        /*
+                                        border: Border(
+                                          right: BorderSide(
+                                            color: Colors.white,
+                                            width: 1.5,
+                                          ),
+                                        )
+                                        */
+                                      ),
+                                      child: Text (
+                                        widget.entry!.readings[index_1][index_2] +
+                                        (widget.entry!.readings[index_1].length-1 == index_2 ? "、" : ""),
+                                        style: readingStyle
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              )
+                            ),
+                          ),
                         ),
                         
-                      //TODO - add proverbs @ DaKanji v3.3
-                      if(!kReleaseMode)
-                        const ExpansionTile(
-                          title: Text("Proverbs"),
-                          children: [
-                            Text("This could be done by using kotowaza?")
-                          ],
+                        const SizedBox(
+                          height: 10,
                         ),
-                      //TODO - add synonyms @ DaKanji v3.3
-                      if(!kReleaseMode)
-                        const ExpansionTile(
-                          title: Text("Synonyms"),
-                          children: [
-                            Text("This could be done by using wordnet jp?")
-                          ],
-                        ),
-                      //TODO - add antonyms @ DaKanji v3.3
-                      if(!kReleaseMode)
-                        const ExpansionTile(
-                          title: Text("Antonyms"),
-                          children: [
-                            Text("This could be done by using NANI??")
-                          ],
-                        ),
-                    ],
-                  ),
-                  // more menu, to open this word in different web pages
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: PopupMenuButton(
-                      splashRadius: 25,
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) {
-                        // Wiki
-                        if(selection == menuItems[0]) {
-                          launchUrlString(Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}"));
-                        }
-                        if(selection == menuItems[1]) {
-                          launchUrlString(Uri.encodeFull("$g_WikipediaEnUrl${readingOrKanji}"));
-                        }
-                        if(selection == menuItems[2]) {
-                          launchUrlString(Uri.encodeFull("$g_DbpediaUrl${readingOrKanji}"));
-                        }
-                        if(selection == menuItems[3]) {
-                          launchUrlString(Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}"));
-                        }
-                        if(selection == menuItems[4]) {
-                          launchUrlString(Uri.encodeFull("$g_Massif${readingOrKanji}"));
-                        }
-                      },
-                      itemBuilder: (context) => List.generate(
-                        menuItems.length,
-                        (index) => 
-                          PopupMenuItem(
-                            value: menuItems[index],
-                            child: Text(menuItems[index])
+                        // part of speech
+                        ...List.generate(widget.entry!.partOfSpeech.length, (index) =>
+                          Text(
+                            widget.entry!.partOfSpeech[index],
+                            style: partOfSpeechStyle,
                           )
-                      ),
-                    )
-                  ),
-                ],
-              ),
-            )
-          ),
-        ],
-      ),
-    );
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        // meanings
+                        WordMeanings(
+                          entry: widget.entry!, 
+                          meaningsStyle: meaningsStyle
+                        ),
+                        if(g_webViewSupported) 
+                          ExpansionTile(
+                            title: const Text("Images"),
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 1,
+                                child: EasyWebView(
+                                    src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
+                                  )
+                              )
+                            ],
+                          ),
+                        if(conjugationPos != null)
+                          ConjugationExpansionTile(
+                            word: readingOrKanji!,
+                            pos: conjugationPos!,
+                          ),
+                          
+                        //TODO - add proverbs @ DaKanji v3.3
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Proverbs"),
+                            children: [
+                              Text("This could be done by using kotowaza?")
+                            ],
+                          ),
+                        //TODO - add synonyms @ DaKanji v3.3
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Synonyms"),
+                            children: [
+                              Text("This could be done by using wordnet jp?")
+                            ],
+                          ),
+                        //TODO - add antonyms @ DaKanji v3.3
+                        if(!kReleaseMode)
+                          const ExpansionTile(
+                            title: Text("Antonyms"),
+                            children: [
+                              Text("This could be done by using NANI??")
+                            ],
+                          ),
+                      ],
+                    ),
+                    // more menu, to open this word in different web pages
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: PopupMenuButton(
+                        splashRadius: 25,
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (String selection) {
+                          // Wiki
+                          if(selection == menuItems[0]) {
+                            launchUrlString(Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}"));
+                          }
+                          if(selection == menuItems[1]) {
+                            launchUrlString(Uri.encodeFull("$g_WikipediaEnUrl${readingOrKanji}"));
+                          }
+                          if(selection == menuItems[2]) {
+                            launchUrlString(Uri.encodeFull("$g_DbpediaUrl${readingOrKanji}"));
+                          }
+                          if(selection == menuItems[3]) {
+                            launchUrlString(Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}"));
+                          }
+                          if(selection == menuItems[4]) {
+                            launchUrlString(Uri.encodeFull("$g_Massif${readingOrKanji}"));
+                          }
+                        },
+                        itemBuilder: (context) => List.generate(
+                          menuItems.length,
+                          (index) => 
+                            PopupMenuItem(
+                              value: menuItems[index],
+                              child: Text(menuItems[index])
+                            )
+                        ),
+                      )
+                    ),
+                  ],
+                ),
+              )
+            ),
+          ],
+        ),
+      );
   }
 }
