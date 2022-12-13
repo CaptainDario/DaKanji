@@ -222,12 +222,3 @@ void desktopWindowSetup() {
   windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
   windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
 }
-
-/// Opens the ISAR dictionary database in an isolate to prevent the UI-isolate
-/// from being blocked.
-void openIsarInIsolate(String directory) {
-  Isar.openSync(
-    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema],
-    directory: directory
-  );
-}
