@@ -152,25 +152,36 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       children: [
                         if(tabsSideBySide > 1)
                           Expanded(
-                            child: Container(color: Colors.green), 
-                            /*DictionaryWordTab(
-                              context.watch<DictSearch>().selectedResult
-                            ),*/
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: DictionaryWordTab(
+                                context.watch<DictSearch>().selectedResult
+                              ),
+                            ),
                           ),
                         if(tabsSideBySide > 2)
                           Expanded(
-                            child: Container(color: Colors.orange)/*DictionaryKanjiTab(
-                              kanjiVGs,
-                              kanjidic2Entries
-                            ),*/
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DictionaryKanjiTab(
+                                kanjiVGs,
+                                kanjidic2Entries
+                              ),
+                            ),
                           ),
                         if(tabsSideBySide > 3)
                           Expanded(
-                            child: Container(color: Colors.purple)//DictionaryExampleTab()
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DictionaryExampleTab(),
+                            )
                           ),
                         if(tabsSideBySide >= 4)
                           Expanded(
-                            child: Container(color: Colors.blue) 
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(color: Colors.blue),
+                            ) 
                               //DictionarySearchTab(
                               //  onSearchResultPressed: (entry) {
                               //  },
