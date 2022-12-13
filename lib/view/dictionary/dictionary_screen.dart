@@ -20,7 +20,6 @@ class DictionaryScreen extends StatefulWidget {
     this.includeTutorial,
     this.initialSearch,
     {
-      this.hideInput = false,
       Key? key
     }
   ) : super(key: key);
@@ -31,8 +30,6 @@ class DictionaryScreen extends StatefulWidget {
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
-  /// 
-  final bool hideInput;
 
   @override
   _DictionaryScreenState createState() => _DictionaryScreenState();
