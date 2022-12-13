@@ -8,13 +8,16 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
   * Modified Packages
     * [bitmap](https://github.com/renancaraujo/bitmap)
     * [snappable](https://github.com/MarcinusX/snappable)
+  * Libraries, packages, frameworks
+    * [Flutter / dart](https://github.com/flutter/flutter)
+    * [Tensorflow (Lite)](https://github.com/tensorflow/tensorflow)
+    * [Kagome](https://github.com/Kagami/kagome)
 * Design
   * icon / banner
     * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
-    * Thanks [Adrian Jordanov](https://www.1001fonts.com/theater-font.html) for the font.
   * UI
     * Shout out to Nurellina! Without your help the Drawing would not look as good as it does now
-* Data, image and other sources:
+* Data, images and other resources:
   * [flag-icons](https://github.com/lipis/flag-icons)
   * Databases:
     * [KanjiVG](https://kanjivg.tagaini.net/)
@@ -22,12 +25,17 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * [JMDict](https://www.edrdg.org/enamdict/enamdict_doc.html)
     * [ENAMDICT](https://www.edrdg.org/enamdict/enamdict_doc.html)
     * [UniDic](https://clrd.ninjal.ac.jp/unidic/)
+    * [Tatoeba](https://tatoeba.org/en/)
+    * [Wordnet](https://bond-lab.github.io/wnja/eng/index.html)
+    * [Jconj](https://github.com/yamagoya/jconj)
+    * [ja_pitch_accent](https://github.com/kishimoto-tsuneyo/ja_pitch_accent)
+  * Thanks Adrian Jordanov for the [font](https://www.1001fonts.com/theater-font.html).
 
 * A big shout out to all current and past testers!
   * Android
     * pa9eup, tsumugii_12, Francesco S.
   * iOS
-    * ゆうか 田村村, Nurellina
+    * ゆうか 田村村, モフん, Nurellina
   * Windows:
     * michalpatryk, pa9eup
   * Linux:
@@ -40,4 +48,4 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
   * Spanish
     * Francesco S.
 
-If I forgot to mention a project or person, please let me know I will add you.
+If I forgot to mention a project, person, etc. please let me know I will add you.
