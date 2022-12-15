@@ -37,8 +37,6 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
   
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
-  /// The controller to manage the webview for DeepL
-  //WebViewController webViewController = WebViewController();
 
 
   @override
@@ -49,9 +47,6 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
     if(g_webViewSupported)
       tabNames.add("Deepl");
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
