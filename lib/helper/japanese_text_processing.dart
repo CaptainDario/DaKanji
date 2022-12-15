@@ -1,3 +1,9 @@
+import 'package:get_it/get_it.dart';
+import 'package:kana_kit/kana_kit.dart';
+import 'package:kagome_dart/kagome_dart.dart';
+
+
+
 /// String that can be used for Regex that matches any Kana character
 String kanaRegexString = "([\u3040-\u309f]|[\u3040-\u30ff])";
 /// Regex that matches any Kana character
@@ -33,4 +39,31 @@ List<String> removeAllButKanji(List<String> words) {
   }
   
   return uniqueKanji;
+}
+
+/// Deconjugates the given `text` if it is a conjugate verb / adj / nouns
+String deconjugate(String text){
+
+  String ret = "";
+
+  if(GetIt.I<KanaKit>().isJapanese(text)){
+    var t = GetIt.I<Kagome>().runAnalyzer(text, AnalyzeModes.normal);
+    
+    for (int i = 0; i < t.item2.length; i++) {
+      // deflect verbs / adjectives / nouns if they are conjugated
+      if((t.item2[i][0] == "動詞" || t.item2[i][0] == "形容詞" ||
+        t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞") 
+        && t.item2[i][7] != t.item1[i]){
+        t.item1[i] = t.item2[i][7];
+        // ... and remove the conjugated ending
+        if(t.item1.length > i+1 && t.item2[i+1][0] == "助動詞"){
+          t.item1[i+1] = "";
+        }
+      }
+    }
+
+    ret = t.item1.join() ;
+  }
+
+  return ret;
 }

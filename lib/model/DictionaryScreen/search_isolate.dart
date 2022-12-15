@@ -3,12 +3,12 @@ import 'dart:isolate';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:kagome_dart/kagome_dart.dart';
 import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
+
+import 'package:da_kanji_mobile/model/DictionaryScreen/diciontary_search_util.dart';
 
 
 
@@ -215,13 +215,11 @@ Future<void> _searchInIsar(SendPort p) async {
         )
       );
       
-
-      List<JMdict> results = q.limit(1000).findAllSync();
-      results = sortJmdictList(results, message, langs);
-
+      List<JMdict> searchResults = q.limit(1000).findAllSync();
+      
       // Send the result to the main isolate.
-      p.send(results);
-      print("len ${results.length} time: ${s.elapsed}");
+      p.send(searchResults);
+      debugPrint("len ${searchResults.length} time: ${s.elapsed}");
     }
     else if (message == null) {
       // Exit if the main isolate sends a null message, indicating there are no
@@ -232,136 +230,4 @@ Future<void> _searchInIsar(SendPort p) async {
 
   print('Spawned isolate finished.');
   Isolate.exit();
-}
-
-/// Sorts a list of Jmdict entries given a query text. The order is determined
-/// by those sorting criteria:
-/// 
-/// 1. Full Match > Match at the beginning > Match somwhere in the word
-///    Those three categories are sorted individually and merged in the end
-///   2.  sort inside each category based on <br/>
-List<JMdict> sortJmdictList(
-  List<JMdict> entries, 
-  String queryText,
-  List<String> languages)
-  {
-
-  /// lists with three sub lists
-  /// 0 - full matchs 
-  /// 1 - matchs starting at the word beginning 
-  /// 2 - other matches
-  List<List<JMdict>> matches = [[], [], []];
-  List<List<int>> matchIndices = [[], [], []];
-  String queryTextHira = KanaKit().toHiragana(queryText);
-
-  // iterate over the entries and create a ranking for each 
-  for (JMdict entry in entries) {
-    // KANJI
-    Tuple3 result = rankMatches(entry.kanjis, queryText);
-    
-    // KANA
-    if(result.item1 == -1)
-      result = rankMatches(entry.readings, queryTextHira);
-    
-    // MEANING
-    // filter all langauges that are selected in the settings and join them to 
-    // a list
-    if(result.item1 == -1){
-      List<String> k = entry.meanings.where((LanguageMeanings e) =>
-          languages.contains(e.language)
-        ).map((LanguageMeanings e) => 
-          e.meanings!
-        ).expand((e) => e).toList();
-      result = rankMatches(k, queryText);
-    }
-
-    if(result.item1 != -1){
-      matches[result.item1].add(entry);
-      matchIndices[result.item1].add(result.item3);
-    }
-  }
-
-  matches[0] = sortEntriesByInts(matches[0], matchIndices[0]);
-  matches[1] = sortEntriesByInts(matches[1], matchIndices[1]);
-  matches[2] = sortEntriesByInts(matches[2], matchIndices[2]);
-
-  return matches.expand((element) => element).toList();
-}
-
-/// Sorts a string list based on `queryText`. The sorting criteria are
-/// explained by `sortJmdictList`.
-///
-/// Returns a Tuple with the structure: <br/>
-///   1 - if it was a full (0), start(1) or other(2) match <br/>
-///   2 - how many characters are in the match but not in `queryText` <br/>
-///   3 - the index where the search matched <br/>
-Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {   
-
-  int result = -1, lenDiff = -1;
-
-  // check if the word contains the query
-  int matchIndex = matches.indexWhere((element) => element.contains(queryText));
-  if(matchIndex != -1){
-    // check kanji for full match
-    if(matches[matchIndex] == queryText){
-      result = 0;
-    }
-    // does the found dict entry start with the search term
-    else if(matches[matchIndex].startsWith(queryText)){
-      result = 1;
-    }
-    // how many additional characters does this entry include
-    else {
-      result = 2;
-    }
-    /// calculatt the difference in length between the query and the result
-    lenDiff = matches[matchIndex].length - queryText.length;
-  }
-
-  return Tuple3(result, lenDiff, matchIndex);
-}
-
-/// Sorts list `a` based on the values in `b` and returns it.
-/// 
-/// Throws an exception if the lists do not have the same length.
-List<JMdict> sortEntriesByInts(List<JMdict> a, List<int> b){
-
-  assert (a.length == b.length);
-
-  List<Tuple2<JMdict, int>> combined = List.generate(b.length,
-    (i) => Tuple2(a[i], b[i])
-  );
-  combined.sort(
-    (_a, _b) => _a.item2 - _b.item2
-  );
-
-  return  combined.map((e) => e.item1).toList();
-}
-
-
-/// Deconjugates the given `text` if it is a conjugate verb / adj / nouns
-String deconjugate(String text){
-
-  String ret = "";
-
-  if(GetIt.I<KanaKit>().isJapanese(text)){
-    var t = GetIt.I<Kagome>().runAnalyzer(text, AnalyzeModes.normal);
-    
-    for (int i = 0; i < t.item2.length; i++) {
-      // deflect verbs / adjectives / nouns if they are conjugated
-      if((t.item2[i][0] == "動詞" || t.item2[i][0] == "形容詞" ||
-        t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞") 
-        && t.item2[i][7] != t.item1[i]){
-        t.item1[i] = t.item2[i][7];
-        // ... and remove the conjugated ending
-        if(t.item1.length > i+1 && t.item2[i+1][0] == "助動詞"){
-          t.item1[i+1] = "";
-        }
-      }
-    }
-
-    ret = t.item1.join() ;
-  }
-
-  return ret;
 }
