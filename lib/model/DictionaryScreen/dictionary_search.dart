@@ -1,5 +1,7 @@
 import 'package:async/async.dart';
+import 'package:database_builder/database_builder.dart';
 
+import 'diciontary_search_util.dart';
 import 'search_isolate.dart';
 
 
@@ -16,7 +18,9 @@ class DictionarySearch {
   /// Has this object been initialized
   bool _initialized = false;
 
+
   DictionarySearch(this.noIsolates, this.languages);
+
 
   /// Needs to be called before using this object
   void init () async {
@@ -28,7 +32,7 @@ class DictionarySearch {
     _initialized = true;
   }
 
-  /// 
+  /// Queries the database and sorts the results using multiple isolates.
   Future<List> query (String queryText) async {
     _checkInitialized();
 
@@ -39,9 +43,13 @@ class DictionarySearch {
     }
     searchGroup.close();
 
-    final result = (await searchGroup.future).expand((x) => x).toList();
+    // wait for all isolates to finish and merge the results to one list
+    final search_result =
+      List<JMdict>.from((await searchGroup.future).expand((e) => e));
 
-    return result;
+    final sort_result = sortJmdictList(search_result, queryText, this.languages);
+
+    return sort_result.expand((element) => element).toList();
   }
 
   /// terminates all isolates and cleans memory
