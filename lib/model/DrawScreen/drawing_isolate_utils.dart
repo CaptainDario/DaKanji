@@ -39,11 +39,12 @@ class DrawingIsolateUtils {
 
     await for (final DrawingIsolateData isolateData in port) {
 
-      DrawingInterpreter classifier = DrawingInterpreter();
+      DrawingInterpreter classifier = DrawingInterpreter("DrawScreen");
       classifier.initIsolate(
-        Interpreter.fromAddress(isolateData.interpreterAddress),
+        isolateData.interpreterAddress,
         isolateData.labels
       );
+      
       classifier.runInference(isolateData.image, runInIsolate: false);
       isolateData.responsePort!.send(classifier.predictions);
       
