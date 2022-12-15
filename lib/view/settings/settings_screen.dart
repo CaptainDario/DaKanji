@@ -385,18 +385,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               settings.save();
                             },
                           ),
-                          // inference backend
-                          ResponsiveDropDownTile(
-                            text: LocaleKeys.SettingsScreen_advanced_settings_drawing_inference_backend.tr(), 
-                            value: settings.advanced.inferenceBackend, 
-                            items: settings.advanced.inferenceBackends,
-                            onTap: (newValue) {
-                              if(newValue != null){
-                                settings.advanced.inferenceBackend = newValue;
-                                settings.save();
-                              }
-                            },
-                          )
                         ],
                       ),
                       // #endregion
