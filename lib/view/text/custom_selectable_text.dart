@@ -582,19 +582,21 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                             return Positioned(
                               width: rubyPositions[index].right - rubyPositions[index].left,
                               top: rubyPositions[index].top -
-                                (rubyPositions[index].bottom - rubyPositions[index].top)/2,
+                                (rubyPositions[index].bottom - rubyPositions[index].top)/1.75,
                               left: rubyPositions[index].left,
                               height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                              child: Container(
-                                decoration: widget.paintTextBoxes ? BoxDecoration(
-                                  border: Border.all(color: Colors.blueAccent)
-                                ) : null,
-                                child: Center(
-                                  child: Text(
-                                    rubys[index],
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      fontSize: 10,
+                              child: FittedBox(
+                                child: Container(
+                                  decoration: widget.paintTextBoxes ? BoxDecoration(
+                                    border: Border.all(color: Colors.blueAccent)
+                                  ) : null,
+                                  child: Center(
+                                    child: Text(
+                                      rubys[index],
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
                                     ),
                                   ),
                                 ),
