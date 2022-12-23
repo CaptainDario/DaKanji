@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:async/async.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
@@ -93,11 +93,7 @@ class SearchIsolate {
     if(!_initialized) throw Exception("The isolate needs to be initialized first.");
   }
 
-  // Spawns an isolate and asynchronously sends a list of filenames for it to
-  // read and decode. Waits for the response containing the decoded JSON
-  // before sending the next.
-  //
-  // Returns a stream that emits the JSON-decoded contents of each file.
+  /// Queries the dictionay inside an isolate
   Future<List> query(String query) async {
     _checkInitialized();
 
