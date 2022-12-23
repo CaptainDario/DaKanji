@@ -30,18 +30,18 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - TensorFlowLiteC (2.10.0):
-    - TensorFlowLiteC/Core (= 2.10.0)
-  - TensorFlowLiteC/Core (2.10.0)
-  - TensorFlowLiteC/CoreML (2.10.0):
+  - TensorFlowLiteC (2.11.0):
+    - TensorFlowLiteC/Core (= 2.11.0)
+  - TensorFlowLiteC/Core (2.11.0)
+  - TensorFlowLiteC/CoreML (2.11.0):
     - TensorFlowLiteC/Core
-  - TensorFlowLiteC/Metal (2.10.0):
+  - TensorFlowLiteC/Metal (2.11.0):
     - TensorFlowLiteC/Core
   - tflite_flutter (0.1.0):
     - Flutter
-    - TensorFlowLiteC (~> 2.10.0)
-    - TensorFlowLiteC/CoreML (~> 2.10.0)
-    - TensorFlowLiteC/Metal (~> 2.10.0)
+    - TensorFlowLiteC (~> 2.11.0)
+    - TensorFlowLiteC/CoreML (~> 2.11.0)
+    - TensorFlowLiteC/Metal (~> 2.11.0)
   - uni_links (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
@@ -138,8 +138,8 @@ SPEC CHECKSUMS:
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  TensorFlowLiteC: edf19548f50a1552e43dbd6906f5618a478bd038
-  tflite_flutter: 0caec6cb799848a8bbbad92668e6cc5e1d55aea8
+  TensorFlowLiteC: 8a8cb6fa20ad74dff29b5e490d02c36a14d48148
+  tflite_flutter: ad523096defbbd420af0dedbd4bfc853f8a48c00
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
