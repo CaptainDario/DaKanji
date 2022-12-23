@@ -206,14 +206,16 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       splashRadius: 25,
                       icon: const Icon(Icons.more_vert),
                       onSelected: (String selection) {
+                        String url = "";
                         // Kanji Graph
                         if(selection == menuItems[0]) {
-                          launchUrlString("$g_theKanjiMapUrl${widget.kanjidic2entry.literal}");
+                          url = "$g_theKanjiMapUrl${widget.kanjidic2entry.literal}";
                         }
                         // Kanji Map
-                        if(selection == menuItems[1]) {
-                          launchUrlString("$g_japaneseGraphUrl${widget.kanjidic2entry.literal}");
+                        else if(selection == menuItems[1]) {
+                          url = "$g_japaneseGraphUrl${widget.kanjidic2entry.literal}";
                         }
+                        launchUrlString(Uri.encodeFull(url));
                       },
                       itemBuilder: (context) => List.generate(
                         menuItems.length,
