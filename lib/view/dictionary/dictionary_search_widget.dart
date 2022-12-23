@@ -2,6 +2,7 @@ import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 
 import 'package:provider/provider.dart';
@@ -36,8 +37,6 @@ class DictionarySearchWidget extends StatefulWidget {
 class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   with SingleTickerProviderStateMixin{
 
-  final DictionarySearch dictionarySearch = DictionarySearch(2, ["eng"]);
-
   /// the text that was last entered in the search field
   String lastInput = "";
   /// the TextEditingController of the search field
@@ -53,7 +52,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   @override
   void initState() {
-    dictionarySearch.init();
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -128,7 +126,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
                       context.read<DictSearch>().currentSearch = text;
                       context.read<DictSearch>().searchResults =
-                        await dictionarySearch.query(text);
+                        await GetIt.I<DictionarySearch>().query(text);
                       lastInput = text;
 
                       setState(() {});
@@ -150,7 +148,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       searchInputController.text = data;
                       context.read<DictSearch>().currentSearch = data;
                       context.read<DictSearch>().searchResults =
-                        await dictionarySearch.query(data);
+                        await GetIt.I<DictionarySearch>().query(data);
                     }
                     expanded = true;
                     setState(() { });

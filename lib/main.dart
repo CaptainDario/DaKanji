@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -174,7 +175,7 @@ Future<void> initGetIt() async {
   await GetIt.I<Settings>().save();
   
   // inference services
-  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
+  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter("DrawScreen"));
 
   // draw screen services 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
@@ -190,15 +191,16 @@ Future<void> initGetIt() async {
   // package for converting between kana
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
+  // ISAR / database services
   String path = (await path_provider.getApplicationDocumentsDirectory()).path + "/isar";
-
   GetIt.I.registerSingleton<Isar>(
     Isar.openSync(
       [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
       directory: path
     )
   );
-  
+  GetIt.I.registerSingleton<DictionarySearch>(DictionarySearch(2, ["eng"]));
+  GetIt.I<DictionarySearch>().init();
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
