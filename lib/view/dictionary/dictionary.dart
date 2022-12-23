@@ -44,12 +44,8 @@ class Dictionary extends StatefulWidget {
 
 class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
 
-  /// TabController to manage the different tabs in the dictionary
-  late TabController dictionaryTabController;
   /// How many tabs should be shown side by side in the window 
   int tabsSideBySide = -1;
-  /// Number of tabs in the Dictionaries TabBar
-  int noTabs = -1;
   /// Function that is executed when the tab was changed
   late void Function() changeTab;
   /// Current search in the dictionary
@@ -100,32 +96,11 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
-          int newNoTabs = 5 - tabsSideBySide;
-  
-          // if the window size was changed and a different number of tabs 
-          // should be shown 
-          if(newNoTabs != noTabs){
-            print("tabsSideBySide $tabsSideBySide newNoTabs $newNoTabs");
-            noTabs = newNoTabs;
-            dictionaryTabController = TabController(length: noTabs-1, vsync: this);
-  
-            changeTab = () {
-              // only change the tab if the tab bar includes the search tab
-              if(noTabs != 4 || tabsSideBySide > 1) return;
-              
-              // if a search result was selected change the tab
-              if(context.read<DictSearch>().selectedResult != null) {
-                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {         
-                  dictionaryTabController.animateTo(1);
-                });
-              }
-            };
-          }
   
           // if a search result was selected
           // search the kanjis from the selected word in KanjiVG
           if(context.watch<DictSearch>().selectedResult != null){
-            findMatchingEntries(
+            findMatchingKanjiEntries(
               removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis)
             );
           }
@@ -135,21 +110,34 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
               Column(
                 children: [
                   // create an invisble widget with the same size as the searchbar
-                  Visibility(
-                    maintainSize: true,
-                    visible: false,
-                    maintainAnimation: true,
-                    maintainState: true,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: TextField(),
+                  if(tabsSideBySide <= 2)
+                    Visibility(
+                      maintainSize: true,
+                      visible: false,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: TextField(),
+                        ),
                       ),
                     ),
-                  ),
                   Expanded(
                     child: Row(
                       children: [
+                        // search
+                        if(tabsSideBySide > 2)
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DictionarySearchWidget(
+                                initialSearch: context.watch<DictSearch>().currentSearch,
+                                expandedHeight: constraints.maxHeight - 24,
+                              ),
+                            ),
+                          ),
+                        // word 
                         if(tabsSideBySide > 1)
                           Expanded(
                             child: Padding(
@@ -159,7 +147,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                        if(tabsSideBySide > 2)
+                        // kanji
+                        if(tabsSideBySide > 3)
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -169,69 +158,60 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                        if(tabsSideBySide > 3)
+                        // examples
+                        if(tabsSideBySide >= 4)
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DictionaryExampleTab(),
                             )
                           ),
-                        if(tabsSideBySide >= 4)
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(color: Colors.blue),
-                            ) 
-                              //DictionarySearchTab(
-                              //  onSearchResultPressed: (entry) {
-                              //  },
-                              //),
-                          ),
-                          
-                        // 
+                      
+      
                         if(tabsSideBySide < 4)
-                          Expanded(
-                            child: Column(
-                              children: [
-                                // disable the TabBar if there is no result selected
-                                IgnorePointer(
-                                  ignoring: context.read<DictSearch>().selectedResult == null,
-                                  child: TabBar(
-                                    labelColor: Theme.of(context).highlightColor,
-                                    unselectedLabelColor: Colors.grey,
-                                    indicatorColor: Theme.of(context).highlightColor,
-                                    controller: dictionaryTabController,
-                                    tabs: [
-                                      if(noTabs > 3) const Tab(text: "Word"),
-                                      if(noTabs > 2) const Tab(text: "Kanji"),
-                                      if(noTabs > 1) const Tab(text: "Example"),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TabBarView(
-                                      controller: dictionaryTabController,
-                                      children: [
-                                        if(noTabs > 3)
-                                          context.read<DictSearch>().selectedResult != null
-                                          ?  DictionaryWordTab(
-                                              context.watch<DictSearch>().selectedResult
-                                            )
-                                          : SizedBox(),
-                                        if(noTabs > 2) 
-                                          DictionaryKanjiTab(
-                                            kanjiVGs,
-                                            kanjidic2Entries
-                                          ),
-                                        if(noTabs > 1) 
-                                          const DictionaryExampleTab(),
+                          DefaultTabController(
+                            length: 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide),
+                            child: Expanded(
+                              child: Column(
+                                children: [
+                                  // disable the TabBar if there is no result selected
+                                  IgnorePointer(
+                                    ignoring: context.read<DictSearch>().selectedResult == null,
+                                    child: TabBar(
+                                      labelColor: Theme.of(context).highlightColor,
+                                      unselectedLabelColor: Colors.grey,
+                                      indicatorColor: Theme.of(context).highlightColor,
+                                      tabs: [
+                                        if(tabsSideBySide < 2) const Tab(text: "Word"),
+                                        if(tabsSideBySide < 4) const Tab(text: "Kanji"),
+                                        if(tabsSideBySide < 4) const Tab(text: "Example"),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TabBarView(
+                                        children: [
+                                          if(tabsSideBySide < 2)
+                                            context.read<DictSearch>().selectedResult != null
+                                            ?  DictionaryWordTab(
+                                                context.watch<DictSearch>().selectedResult
+                                              )
+                                            : SizedBox(),
+                                          if(tabsSideBySide < 4) 
+                                            DictionaryKanjiTab(
+                                              kanjiVGs,
+                                              kanjidic2Entries
+                                            ),
+                                          if(tabsSideBySide < 4) 
+                                            const DictionaryExampleTab(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                       ],
@@ -239,20 +219,19 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-              /// the actual search bar (rendered on top of the fake)
-              Positioned(
-                width: constraints.maxWidth / tabsSideBySide,
-                left: tabsSideBySide > 1
-                  ? (constraints.maxWidth / 2) - (constraints.maxWidth / tabsSideBySide / 2) 
-                  : 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DictionarySearchWidget(
-                    initialSearch: context.watch<DictSearch>().currentSearch,
-                    expandedHeight: constraints.maxHeight - 24,
+              // the actual search bar (rendered on top of the fake)
+              if(tabsSideBySide <= 2)
+                Positioned(
+                  width: constraints.maxWidth,
+                  left: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DictionarySearchWidget(
+                      initialSearch: context.watch<DictSearch>().currentSearch,
+                      expandedHeight: constraints.maxHeight - 24,
+                    ),
                   ),
                 ),
-              ),
             ],
           );
         })
@@ -260,7 +239,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
     );
   }
 
-  void findMatchingEntries(List<String> kanjis){
+  ///
+  void findMatchingKanjiEntries(List<String> kanjis){
     
     kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
       .characterMatches(kanjis.join("|"))
