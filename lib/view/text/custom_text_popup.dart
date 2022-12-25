@@ -79,6 +79,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                         }
                       },
                       child: TabBar(
+                        mouseCursor: SystemMouseCursors.move,
                         tabs: List.generate(tabNames.length, (index) =>
                           Padding(
                             padding: EdgeInsets.all(8.0),
@@ -90,19 +91,12 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                     Expanded(
                       child: TabBarView(
                         children: [
-                          ListView(
-                            controller: ScrollController(),
-                            children: [
-                              Container(
-                                height: 400,
-                                width: 100,
-                                child: Dictionary(
-                                  false, 
-                                  initialSearch: widget.text,
-                                  includeActionButton: false,
-                                )
-                              )
-                            ],
+                          Dictionary(
+                            key: Key(widget.text),
+                            false, 
+                            initialSearch: widget.text,
+                            includeActionButton: false,
+                            isExpanded: true,
                           ),
                           if(g_webViewSupported)
                             Card(
@@ -113,7 +107,6 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                         ]
                       ),
                     ),
-                    
                   ],
                 ),
               ),

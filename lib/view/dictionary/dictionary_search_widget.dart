@@ -1,13 +1,11 @@
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
-import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:get_it/get_it.dart';
-
-
 import 'package:provider/provider.dart';
 
-import 'package:da_kanji_mobile/model/DictionaryScreen/search_isolate.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 
 
@@ -21,11 +19,17 @@ class DictionarySearchWidget extends StatefulWidget {
   final String initialSearch;
   /// The height the widget should take when expanded
   final double expandedHeight;
+  /// Is the search expanded when instantiating this widget
+  final bool isExpanded; 
+  /// Can the search results be collapsed
+  final bool canCollapse;
 
   const DictionarySearchWidget(
     {
       this.initialSearch = "",
       required this.expandedHeight,
+      this.isExpanded = false,
+      this.canCollapse = true,
       super.key
     }
   );
@@ -49,10 +53,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   GlobalKey searchTextInputKey = GlobalKey();
   /// The height of the input searchfield
   double searchBarInputHeight = 0;
+  
 
   @override
   void initState() {
     super.initState();
+
+    if(widget.isExpanded)
+      expanded = true;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       RenderBox r = searchTextInputKey.currentContext!.findRenderObject()! as RenderBox;
@@ -62,7 +70,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   @override
   void dispose() {
-    //searchIsolate.kill();
     super.dispose();
   }
 
@@ -73,6 +80,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(widget.initialSearch != initialSearch){
       searchInputController.text = widget.initialSearch;
       initialSearch = widget.initialSearch;
+      updateSearchResults(initialSearch);
     }
 
     return Card(
@@ -90,18 +98,23 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             child: Row(
               key: searchTextInputKey,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                  child: IconButton(
-                    splashRadius: 20,
-                    icon: Icon(expanded ? Icons.arrow_back : Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        expanded = !expanded;
-                      });
-                    },
+                
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                    child: IconButton(
+                      splashRadius: 20,
+                      icon: Icon(expanded && widget.canCollapse
+                        ? Icons.arrow_back
+                        : Icons.search),
+                      onPressed: () {
+                        if(!widget.canCollapse) return;
+
+                        setState(() {
+                          expanded = !expanded;
+                        });
+                      },
+                    ),
                   ),
-                ),
                 // text input
                 Expanded(
                   child: TextField(
@@ -119,16 +132,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       });
                     },
                     onChanged: (text) async {
-                      // only search in dictionary if the query changed
-                      if(lastInput == text) {
-                        return;
-                      }
-
-                      context.read<DictSearch>().currentSearch = text;
-                      context.read<DictSearch>().searchResults =
-                        await GetIt.I<DictionarySearch>().query(text);
-                      lastInput = text;
-
+                      await updateSearchResults(text);
                       setState(() {});
                     },
                   ),
@@ -182,14 +186,29 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
               : 0,
             child: SearchResultList(
               onSearchResultPressed: (entry) {
-                setState(() {
-                  expanded = false;
-                });
+                if(widget.canCollapse)
+                  setState(() {
+                    expanded = false;
+                  });
               },
             ),
           )
         ],
       )
     );
+  }
+
+  /// Searches in the dictionary and updates all search results and variables
+  /// setState() needs to be called to update the ui.
+  Future<void> updateSearchResults(String text) async {
+    // only search in dictionary if the query changed
+    if(lastInput == text) {
+      return;
+    }
+
+    context.read<DictSearch>().currentSearch = text;
+    context.read<DictSearch>().searchResults =
+      await GetIt.I<DictionarySearch>().query(text);
+    lastInput = text;
   }
 }

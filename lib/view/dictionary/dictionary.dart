@@ -22,21 +22,24 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 
 class Dictionary extends StatefulWidget {
 
-  const Dictionary(
-    this.includeTutorial,
-    {
-      this.initialSearch = "",
-      this.includeActionButton = true,
-      Key? key
-    }
-  ) : super(key: key);
-
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
   /// should the action button for drawing a character be included
   final bool includeActionButton;
+  /// Is the search expanded when instantiating this widget
+  final bool isExpanded; 
+
+  const Dictionary(
+    this.includeTutorial,
+    {
+      this.initialSearch = "",
+      this.includeActionButton = true,
+      this.isExpanded = false,
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   _DictionaryState createState() => _DictionaryState();
@@ -86,10 +89,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
 
           // check if there is an initial query or if it was update
           if(widget.initialSearch != initialSearch){
-            //searchInputController.text = widget.initialSearch;
-
             context.read<DictSearch>().currentSearch = widget.initialSearch;
-            //context.read<DictSearch>().searchResults = searchInDict(widget.initialSearch);
 
             initialSearch = widget.initialSearch;
           }
@@ -133,7 +133,9 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               padding: const EdgeInsets.all(8.0),
                               child: DictionarySearchWidget(
                                 initialSearch: context.watch<DictSearch>().currentSearch,
-                                expandedHeight: constraints.maxHeight - 24,
+                                expandedHeight: constraints.maxHeight - 25,
+                                isExpanded: true,
+                                canCollapse: false,
                               ),
                             ),
                           ),
@@ -167,7 +169,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             )
                           ),
                       
-      
+                        // tab bar
                         if(tabsSideBySide < 4)
                           DefaultTabController(
                             length: 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide),
@@ -229,6 +231,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                     child: DictionarySearchWidget(
                       initialSearch: context.watch<DictSearch>().currentSearch,
                       expandedHeight: constraints.maxHeight - 24,
+                      isExpanded: widget.isExpanded,
                     ),
                   ),
                 ),
@@ -239,7 +242,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
     );
   }
 
-  ///
+  /// Searches in KanjiVG and KanjiDic the matching entries to all Kanji in the
+  /// selected search result
   void findMatchingKanjiEntries(List<String> kanjis){
     
     kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
