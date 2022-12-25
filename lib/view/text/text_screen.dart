@@ -74,9 +74,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the distance to the top window border of the popup
   double popupPositionTop = 0.0;
   /// the width of the popup
-  double popupSizeWidth = 300;
+  late double popupSizeWidth = popupSizeWidthMin;
   /// the height of the popup
-  double popupSizeHeight = 200;
+  late double popupSizeHeight = popupSizeHeightMin;
   /// the minimal width the popup can be
   double popupSizeWidthMin = 300;
   /// the minimal height the popup can be
