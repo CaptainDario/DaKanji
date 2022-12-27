@@ -106,13 +106,7 @@ class DrawingInterpreter extends BaseInterpreter with ChangeNotifier{
     interpreter = Interpreter.fromAddress(interpreterAdress);
     _labels = labels;
 
-    // allocate memory for inference in / output
-    input = List<List<double>>.generate(
-      height, (i) => List.generate(width, (j) => 0.0)).
-      reshape<double>([1, height, width, 1]).cast();
-    output =
-      List<List<double>>.generate(1, (i) => 
-      List<double>.generate(_labels.length, (j) => 0.0));
+    allocateInputOutput();
 
     wasInitialized = true;
   }
@@ -214,7 +208,5 @@ class DrawingInterpreter extends BaseInterpreter with ChangeNotifier{
 
     notifyListeners();
   }
-
-
 
 }
