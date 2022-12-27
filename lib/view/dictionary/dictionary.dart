@@ -17,6 +17,7 @@ import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:tuple/tuple.dart';
 
 
 
@@ -100,9 +101,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
           // if a search result was selected
           // search the kanjis from the selected word in KanjiVG
           if(context.watch<DictSearch>().selectedResult != null){
-            findMatchingKanjiEntries(
-              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis)
-            );
+            List<String> kanjis =
+              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis);
+            kanjiVGs = findMatchingKanjiSVG(kanjis);
+            kanjidic2Entries = findMatchingKanjiDic2(kanjis);
           }
     
           return Stack(
@@ -242,28 +244,20 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
     );
   }
 
-  /// Searches in KanjiVG and KanjiDic the matching entries to all Kanji in the
-  /// selected search result
-  void findMatchingKanjiEntries(List<String> kanjis){
-
-    // TODO change to where search to prevent UI jank
-    kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
-      .characterMatches(kanjis.join("|"))
-      .findAllSync(); 
+  /// Searches in KanjiVG the matching entries to `kanjis` and returns them
+  List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
     
-    kanjiVGs = List.generate(
-      kanjis.length, (index) => 
-        GetIt.I<Isar>().kanjiSVGs.filter()
-          .characterEqualTo(kanjis[index])
-        .findAllSync()
-    ).expand((element) => element).toList();
-    
+    return GetIt.I<Isar>().kanjiSVGs.where()
+      .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
+    ).findAllSync().toList();
+  }
 
-    kanjidic2Entries = List.generate(kanjiVGs.length, (index) =>
-      GetIt.I<Isar>().kanjidic2s.filter()
-        .characterEqualTo(kanjiVGs[index].character)
-      .findAllSync()
-    ).expand((element) => element).toList();
+  /// Searches in KanjiVG the matching entries to `kanjis` and returns them
+  List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
+    
+    return GetIt.I<Isar>().kanjidic2s.where()
+      .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
+    ).findAllSync().toList();
   }
 }
 

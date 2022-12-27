@@ -38,7 +38,7 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   /// String denoting the target language
   final List<String> targetLanguages;
   /// Alternative versions of this kanji
-  final List<DictionaryScreenKanjiCard>? alternatives;
+  final List<KanjiSVG>? alternatives;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
@@ -140,7 +140,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             children: [
                               Text("On: ", style: headerStyle),       SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
                               Text("Kun: ", style: headerStyle),      SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                              Text("Radicals: ", style: headerStyle), SelectableText("NONE").withGridPlacement(columnSpan: 3),
+                              Text("Radicals: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")).withGridPlacement(columnSpan: 3),
                               
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
 
@@ -193,8 +193,22 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     ),
                     if(this.widget.alternatives != null && this.widget.alternatives != [])
                       ExpansionTile(
-                        title: const Text("Alternate forms"),
-                        children: this.widget.alternatives!
+                        title: Text("Alternatives"),
+                        children: [
+                          Wrap(
+                            children: widget.alternatives!.map((alternative) => 
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: KanjiVGWidget(
+                                  alternative.svg,
+                                  constrains.maxWidth * 0.4,
+                                  constrains.maxWidth * 0.4,
+                                  colorize: true,
+                                ),
+                              ),
+                            ).toList()
+                          ),
+                        ]
                       ),
                   ],
                 ),
