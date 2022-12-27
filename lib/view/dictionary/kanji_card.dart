@@ -34,7 +34,7 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   /// The kanji that should be shown in this card as a svg string
   final isar_kanji.KanjiSVG kanjiVG;
   /// List of all kanjidict entries 
-  final Kanjidic2Entry kanjidic2entry;
+  final Kanjidic2 kanjidic2entry;
   /// String denoting the target language
   final List<String> targetLanguages;
   /// Alternative versions of this kanji
@@ -65,12 +65,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
     for (var i = 0; i < widget.kanjidic2entry.readings.length; i++) {
       // init on reading list
-      if(widget.kanjidic2entry.readings[i].r_type!.contains("ja_on")) {
+      if(widget.kanjidic2entry.readings[i].rType!.contains("ja_on")) {
         onReadings.add(widget.kanjidic2entry.readings[i].value!);
       }
 
       // init kun reading list
-      if(widget.kanjidic2entry.readings[i].r_type!.contains("ja_kun")) {
+      if(widget.kanjidic2entry.readings[i].rType!.contains("ja_kun")) {
         kunReadings.add(widget.kanjidic2entry.readings[i].value!);
       }
     }
@@ -115,12 +115,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           // on tap copy to clipboard and show snakbar
                           onTap: () {
                             Clipboard.setData(
-                              ClipboardData(text: widget.kanjidic2entry.literal)
+                              ClipboardData(text: widget.kanjidic2entry.character)
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: const Duration(seconds: 1),
-                                content: Text("copied " + widget.kanjidic2entry.literal + " to clipboard"),
+                                content: Text("copied " + widget.kanjidic2entry.character + " to clipboard"),
                               )
                             );
                           },
@@ -209,11 +209,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         String url = "";
                         // Kanji Graph
                         if(selection == menuItems[0]) {
-                          url = "$g_theKanjiMapUrl${widget.kanjidic2entry.literal}";
+                          url = "$g_theKanjiMapUrl${widget.kanjidic2entry.character}";
                         }
                         // Kanji Map
                         else if(selection == menuItems[1]) {
-                          url = "$g_japaneseGraphUrl${widget.kanjidic2entry.literal}";
+                          url = "$g_japaneseGraphUrl${widget.kanjidic2entry.character}";
                         }
                         launchUrlString(Uri.encodeFull(url));
                       },

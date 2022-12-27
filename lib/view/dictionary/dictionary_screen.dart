@@ -52,7 +52,7 @@ class _DictionaryScreenState
   /// A list containing all kanjiVGs that match the selected dict entry
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
-  List<Kanjidic2Entry> kanjidic2Entries = [];
+  List<Kanjidic2> kanjidic2Entries = [];
 
   @override
   void initState() {

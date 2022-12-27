@@ -19,7 +19,7 @@ class DictionaryKanjiTab extends StatefulWidget {
   /// A list of KanjiVG entries that should be shown
   final List<isar_kanji.KanjiSVG> kanjiVGs;
   /// A List of kanjidic2 entries thath should be shown
-  final List<Kanjidic2Entry> kanjidic2entries;
+  final List<Kanjidic2> kanjidic2entries;
 
   @override
   State<DictionaryKanjiTab> createState() => _DictionaryKanjiTabState();

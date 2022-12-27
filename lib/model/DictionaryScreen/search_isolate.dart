@@ -133,7 +133,7 @@ Future<void> _searchInIsar(SendPort p) async {
 
   // open isar
   Isar isar = Isar.openSync(
-    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2EntrySchema],
+    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
   );
 
   int noEntries = isar.jmdict.countSync();

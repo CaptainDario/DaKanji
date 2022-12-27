@@ -56,7 +56,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   /// A list containing all kanjiVGs that match the selected dict entry
   List<isar_kanji.KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
-  List<Kanjidic2Entry> kanjidic2Entries = [];
+  List<Kanjidic2> kanjidic2Entries = [];
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
 
@@ -245,7 +245,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   /// Searches in KanjiVG and KanjiDic the matching entries to all Kanji in the
   /// selected search result
   void findMatchingKanjiEntries(List<String> kanjis){
-    
+
+    // TODO change to where search to prevent UI jank
     kanjiVGs = GetIt.I<Isar>().kanjiSVGs.filter()
       .characterMatches(kanjis.join("|"))
       .findAllSync(); 
@@ -259,8 +260,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
     
 
     kanjidic2Entries = List.generate(kanjiVGs.length, (index) =>
-      GetIt.I<Isar>().kanjidic2Entrys.filter()
-        .literalEqualTo(kanjiVGs[index].character)
+      GetIt.I<Isar>().kanjidic2s.filter()
+        .characterEqualTo(kanjiVGs[index].character)
       .findAllSync()
     ).expand((element) => element).toList();
   }
