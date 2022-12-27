@@ -1,7 +1,7 @@
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
 
-import 'diciontary_search_util.dart';
+import 'dictionary_search_util.dart';
 import 'search_isolate.dart';
 
 

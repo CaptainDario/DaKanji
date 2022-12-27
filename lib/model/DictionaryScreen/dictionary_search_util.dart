@@ -1,6 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:isar/isar.dart';
 
 
 
@@ -65,26 +67,38 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
 Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {   
 
   int result = -1, lenDiff = -1;
+  
+  // create a list of queries (convert query to hiragana and katakana)
+  List<String> queries = [
+    queryText,
+    GetIt.I<KanaKit>().toHiragana(queryText),
+    GetIt.I<KanaKit>().toKatakana(queryText),
+  ];
 
-  // check if the word contains the query
-  int matchIndex = matches.indexWhere((element) => element.contains(queryText));
+  // check where the entry contains the query
+  int matchIndex = matches.indexWhere(
+    (element) => queries.any(
+      (q) => element.contains(q)
+    )
+  );
+
+  // check for full match
   if(matchIndex != -1){
-    // check kanji for full match
-    if(matches[matchIndex] == queryText){
+    if(queries.contains(matches[matchIndex])){
       result = 0;
     }
     // does the found dict entry start with the search term
-    else if(matches[matchIndex].startsWith(queryText)){
+    else if(matches[matchIndex].startsWith(queries.join("|"))){
       result = 1;
     }
-    // how many additional characters does this entry include
+    // the query matches somwhere in the entry
     else {
       result = 2;
     }
-    /// calculatt the difference in length between the query and the result
+    /// calculate the difference in length between the query and the result
     lenDiff = matches[matchIndex].length - queryText.length;
   }
-
+  
   return Tuple3(result, lenDiff, matchIndex);
 }
 
@@ -109,4 +123,20 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b){
   );
 
   return combined.map((e) => e.item1).toList();
+}
+
+/// Searches in KanjiVG the matching entries to `kanjis` and returns them
+List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
+  
+  return GetIt.I<Isar>().kanjiSVGs.where()
+    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
+  ).findAllSync().toList();
+}
+
+/// Searches in KanjiVG the matching entries to `kanjis` and returns them
+List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
+  
+  return GetIt.I<Isar>().kanjidic2s.where()
+    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
+  ).findAllSync().toList();
 }

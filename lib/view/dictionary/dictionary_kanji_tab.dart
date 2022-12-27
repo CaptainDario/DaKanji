@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_card.dart';
 import 'package:get_it/get_it.dart';

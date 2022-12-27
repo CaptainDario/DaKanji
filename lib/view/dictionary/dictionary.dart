@@ -3,12 +3,9 @@ import 'package:da_kanji_mobile/view/dictionary/dictionary_search_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
-import 'package:database_builder/src/kanjidic2_to_Isar/data_classes.dart' as isar_kanjidic;
 
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
@@ -17,7 +14,7 @@ import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:tuple/tuple.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 
 
 
@@ -55,7 +52,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   /// Current search in the dictionary
   DictSearch search = DictSearch();
   /// A list containing all kanjiVGs that match the selected dict entry
-  List<isar_kanji.KanjiSVG> kanjiVGs = [];
+  List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
   List<Kanjidic2> kanjidic2Entries = [];
   /// Used to check if `widget.initialQuery` changed
@@ -242,22 +239,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
         })
       ),
     );
-  }
-
-  /// Searches in KanjiVG the matching entries to `kanjis` and returns them
-  List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
-    
-    return GetIt.I<Isar>().kanjiSVGs.where()
-      .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-    ).findAllSync().toList();
-  }
-
-  /// Searches in KanjiVG the matching entries to `kanjis` and returns them
-  List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
-    
-    return GetIt.I<Isar>().kanjidic2s.where()
-      .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-    ).findAllSync().toList();
   }
 }
 
