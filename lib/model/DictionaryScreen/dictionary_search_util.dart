@@ -113,12 +113,13 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b){
   List<Tuple2<JMdict, int>> combined = List.generate(b.length,
     (i) => Tuple2(a[i], b[i])
   );
+
   combined.sort(
     (_a, _b) {
-      if(_a.item1.frequency != _b.item1.frequency)
-        return -_a.item1.frequency.compareTo(_b.item1.frequency);
-      else
+      if(_a.item2 != _b.item2)
         return _a.item2.compareTo(_b.item2);
+      else
+        return -_a.item1.frequency.compareTo(_b.item1.frequency);
     }
   );
 
