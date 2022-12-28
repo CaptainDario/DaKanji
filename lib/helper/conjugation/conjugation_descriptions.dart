@@ -1,7 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-
 import 'package:da_kanji_mobile/helper/conjugation/conj.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 

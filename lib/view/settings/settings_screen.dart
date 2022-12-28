@@ -1,8 +1,6 @@
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
-import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';

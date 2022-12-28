@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:get_it/get_it.dart';
 import 'package:image/image.dart' as image;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate_utils.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/TFLite/base_interpreter.dart';
 
 
