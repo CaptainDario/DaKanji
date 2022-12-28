@@ -332,19 +332,12 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               onTap: () {
                                 BetterFeedback.of(context).show((UserFeedback feedback) async {
                                   
-                                  final screenshotFilePath = await writeImageToStorage(feedback.screenshot);
-                                  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
+                                  final screenshotFilePath = await writeImageToTmpStorage(feedback.screenshot);
+                                  final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context));
 
-                                  String deviceInfo = """System / App info:
-I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
-
-${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
-""";
-
-                                  Share.shareFiles(
-                                    [screenshotFilePath],
-                                    text: 
-                                    feedback.text + deviceInfo,
+                                  Share.shareXFiles(
+                                    [XFile(screenshotFilePath), XFile(textFilePath)],
+                                    text: feedback.text,
                                     subject: "DaKanji $g_Version - feedback",
                                     sharePositionOrigin: () {
                                       RenderBox? box = context.findRenderObject() as RenderBox?;
@@ -368,10 +361,35 @@ ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
   }
 }
 
-Future<String> writeImageToStorage(Uint8List feedbackScreenshot) async {
+/// Saves the given Uint8List to the temporary directory of the device and 
+/// returns the path to the file
+Future<String> writeImageToTmpStorage(Uint8List image) async {
   final Directory output = await getTemporaryDirectory();
   final String screenshotFilePath = '${output.path}/feedback.png';
   final File screenshotFile = File(screenshotFilePath);
-  await screenshotFile.writeAsBytes(feedbackScreenshot);
+  await screenshotFile.writeAsBytes(image);
   return screenshotFilePath;
+}
+
+/// Saves the given String to the temporary directory of the device and 
+/// returns the path to the file
+Future<String> writeTextToTmpStorage(String text) async {
+  final Directory output = await getTemporaryDirectory();
+  final String textFilePath = '${output.path}/feedback.txt';
+  final File screenshotFile = File(textFilePath);
+  await screenshotFile.writeAsString(text);
+  return textFilePath;
+}
+
+/// Returns a String containing details about the system the app is running on
+Future<String> getDeviceInfoText(BuildContext context) async {
+  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
+
+  String deviceInfo = """System / App info:
+    I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
+
+    ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
+    """;
+
+  return deviceInfo;
 }
