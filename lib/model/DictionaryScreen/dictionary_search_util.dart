@@ -21,16 +21,16 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
   /// 2 - other matches
   List<List<JMdict>> matches = [[], [], []];
   List<List<int>> matchIndices = [[], [], []];
-  String queryTextHira = KanaKit().toHiragana(queryText);
+  String queryTextRomaji = KanaKit().toRomaji(queryText);
 
   // iterate over the entries and create a ranking for each 
   for (JMdict entry in entries) {
     // KANJI matched
     Tuple3 ranked = rankMatches(entry.kanjis, queryText);
     
-    // KANA macthed
+    // READING matched
     if(ranked.item1 == -1)
-      ranked = rankMatches(entry.readings, queryTextHira);
+      ranked = rankMatches(entry.romaji, queryTextRomaji);
     
     // MEANING matched
     if(ranked.item1 == -1){
@@ -67,28 +67,19 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
 Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {   
 
   int result = -1, lenDiff = -1;
-  
-  // create a list of queries (convert query to hiragana and katakana)
-  List<String> queries = [
-    queryText,
-    GetIt.I<KanaKit>().toHiragana(queryText),
-    GetIt.I<KanaKit>().toKatakana(queryText),
-  ];
 
   // check where the entry contains the query
   int matchIndex = matches.indexWhere(
-    (element) => queries.any(
-      (q) => element.contains(q)
-    )
+    (element) => element.contains(queryText)
   );
 
   // check for full match
   if(matchIndex != -1){
-    if(queries.contains(matches[matchIndex])){
+    if(queryText == matches[matchIndex]){
       result = 0;
     }
     // does the found dict entry start with the search term
-    else if(matches[matchIndex].startsWith(queries.join("|"))){
+    else if(matches[matchIndex].startsWith(queryText)){
       result = 1;
     }
     // the query matches somwhere in the entry
