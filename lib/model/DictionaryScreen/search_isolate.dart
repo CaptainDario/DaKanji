@@ -8,7 +8,7 @@ import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
-import 'package:da_kanji_mobile/model/DictionaryScreen/diciontary_search_util.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 
 
 
@@ -144,74 +144,19 @@ Future<void> _searchInIsar(SendPort p) async {
 
   debugPrint('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
 
+  String messageRomaji;
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
     if (message is String) {
       Stopwatch s = Stopwatch()..start();
-      debugPrint("message = " + message);
 
-      String messageKata = kanaKit.toKatakana(message);
-      String messageHira = kanaKit.toHiragana(message);
-
-      bool kataOnly  = kanaKit.isKatakana(messageKata);
-      bool hiraOnly  = kanaKit.isHiragana(messageHira);
-
-      QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = 
-      isar.jmdict.where().
-
-      // limit this process to one chunk of size (entries.length / num_processes)
-        idBetween(idRangeStart, idRangeEnd)
-
-      .filter()
-
-      // search over kanji
-        .optional(message.length == 1, (t) => 
-          t.kanjisElementStartsWith(message)
-        ).or()
-        .optional(message.length > 1, (t) => 
-          t.kanjisElementContains(message)
-        )
-
-      .or()
-
-      // search over readings
-      .optional(kataOnly, (q) => 
-        q.optional(messageKata.length == 1, (t) => 
-          t.readingsElementStartsWith(messageKata)
-        ).or()
-        .optional(messageKata.length > 1, (t) => 
-          t.readingsElementContains(messageKata)
-        )
-      )
-      .or()
-      .optional(hiraOnly, (q) => 
-        q.optional(messageHira.length == 1, (t) => 
-          t.readingsElementStartsWith(messageHira)
-        ).or()
-        .optional(messageHira.length > 1, (t) => 
-          t.readingsElementContains(messageHira)
-        )
-      )
-      .or()
-      .readingsElementContains(message)
-
-      .or()
+      messageRomaji = kanaKit.toRomaji(message);
+      print("messageRomaji" + messageRomaji);
       
-      // search over meanings
-      .meaningsElement((meaning) => 
-        meaning.anyOf(langs, (m, lang) => m
-          .languageEqualTo(lang)
-          .optional(message.length < 3, (m) => m
-            .meaningsElementStartsWith(message)
-          )
-          .optional(message.length >= 3, (m) => m
-            .meaningsElementContains(message)
-          )
-        )
-      );
-      
-      List<JMdict> searchResults = q.limit(1000).findAllSync();
+      List<JMdict> searchResults = 
+        buildJMDictQuery(isar, idRangeStart, idRangeEnd, message, messageRomaji, langs)
+        .limit(1000).findAllSync();
       
       // Send the result to the main isolate.
       p.send(searchResults);

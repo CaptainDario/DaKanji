@@ -140,3 +140,45 @@ List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
   ).findAllSync().toList();
 }
+
+///  Builds a search query for the JMDict database in ISAR
+QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
+  Isar isar, int idRangeStart, int idRangeEnd,
+  String message, String messageRomaji, List<String> langs
+)
+{
+  QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
+
+        // limit this process to one chunk of size (entries.length / num_processes)
+        .idBetween(idRangeStart, idRangeEnd)
+
+      .filter()
+
+        // search over kanji
+        .optional(message.length == 1, (t) => 
+          t.kanjisElementStartsWith(message)
+        ).or()
+        .optional(message.length > 1, (t) => 
+          t.kanjisElementContains(message)
+        )
+
+      // search over readings (user entered query)
+      .or()
+        .romajiElementContains(messageRomaji)
+
+      // search over meanings
+      .or()
+        .meaningsElement((meaning) => 
+          meaning.anyOf(langs, (m, lang) => m
+            .languageEqualTo(lang)
+            .optional(message.length < 3, (m) => m
+              .meaningsElementStartsWith(message)
+            )
+            .optional(message.length >= 3, (m) => m
+              .meaningsElementContains(message)
+            )
+          )
+        );
+
+  return q;
+}
