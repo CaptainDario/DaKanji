@@ -119,6 +119,9 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b){
 
 /// Searches in KanjiVG the matching entries to `kanjis` and returns them
 List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
+
+  if(kanjis.isEmpty)
+    return [];
   
   return GetIt.I<Isar>().kanjiSVGs.where()
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
@@ -128,6 +131,9 @@ List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
 /// Searches in KanjiVG the matching entries to `kanjis` and returns them
 List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
   
+  if(kanjis.isEmpty)
+    return [];
+    
   return GetIt.I<Isar>().kanjidic2s.where()
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
   ).findAllSync().toList();
