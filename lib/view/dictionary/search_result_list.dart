@@ -12,6 +12,8 @@ import 'search_result_card.dart';
 /// Needs a `Provider<Dictsearch>` above it in the widget tree
 class SearchResultList extends StatefulWidget {
 
+  /// Callback that is executed when the user pressed on a search result.
+  /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
 
   const SearchResultList(
