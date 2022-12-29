@@ -56,7 +56,8 @@ String deconjugate(String text){
       if((t.item2[i][0] == "動詞" || t.item2[i][0] == "形容詞" ||
         t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞") 
         // and it is not already in dict form
-        && t.item2[i][7] != t.item1[i]){
+        && t.item2[i][7] != t.item1[i])
+      {
         // use dictionary form
         ret += t.item2[i][11];
         

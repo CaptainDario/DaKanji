@@ -213,16 +213,19 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(lastInput == text || text == "") {
       return;
     }
-    String deconjugated = text;
-    // deconjugate the input if possible
-    if(allowDeconjugation){
-      deconjugated = deconjugate(
-        GetIt.I<KanaKit>().isJapanese(text)
-          ? text
-          : GetIt.I<KanaKit>().toHiragana(text)
-      );
-      if(deconjugated != "" && GetIt.I<KanaKit>().isJapanese(deconjugated))
-        deconjugated = GetIt.I<KanaKit>().toRomaji(deconjugated);
+    KanaKit k = GetIt.I<KanaKit>();
+    String deconjugated = "";
+    // try to deconjugate the input if allowed
+    // convertable to hiragana (or is already japanese)
+    // does not have spaces
+    if(allowDeconjugation &&
+      (k.isJapanese(text) || k.isJapanese(k.toHiragana(text))) &&
+      !text.contains(" ")
+      )
+    {
+      deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(text));
+      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text))
+        deconjugated = k.toRomaji(deconjugated);
     }
 
     // if the search query was changed show a snackbar and give the option to
@@ -252,7 +255,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         )
       );
     }
+    else{
+      deconjugated = text;
+    }
 
+    print(deconjugated);
     // update search variables and search
     context.read<DictSearch>().currentSearch = deconjugated;
     context.read<DictSearch>().searchResults =
