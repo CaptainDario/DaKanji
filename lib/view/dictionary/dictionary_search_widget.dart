@@ -1,7 +1,9 @@
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
@@ -80,7 +82,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(widget.initialSearch != initialSearch){
       searchInputController.text = widget.initialSearch;
       initialSearch = widget.initialSearch;
-      updateSearchResults(initialSearch);
+      updateSearchResults(initialSearch, true);
     }
 
     return Card(
@@ -132,7 +134,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       });
                     },
                     onChanged: (text) async {
-                      await updateSearchResults(text);
+                      await updateSearchResults(text, true);
                       setState(() {});
                     },
                   ),
@@ -150,9 +152,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
                       data = data.replaceAll("\n", " ");
                       searchInputController.text = data;
-                      context.read<DictSearch>().currentSearch = data;
-                      context.read<DictSearch>().searchResults =
-                        await GetIt.I<DictionarySearch>().query(data);
+                      await updateSearchResults(data, true);
                     }
                     expanded = true;
                     setState(() { });
@@ -200,15 +200,55 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
-  Future<void> updateSearchResults(String text) async {
-    // only search in dictionary if the query changed
-    if(lastInput == text) {
+  Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
+    // only search in dictionary if the query changed and is not empty
+    if(lastInput == text || text == "") {
       return;
     }
+    String deconjugated = text;
+    // deconjugate the input if possible
+    if(allowDeconjugation){
+      deconjugated = deconjugate(
+        GetIt.I<KanaKit>().isJapanese(text)
+          ? text
+          : GetIt.I<KanaKit>().toHiragana(text)
+      );
+      if(deconjugated != "" && GetIt.I<KanaKit>().isJapanese(deconjugated))
+        deconjugated = GetIt.I<KanaKit>().toRomaji(deconjugated);
+    }
 
-    context.read<DictSearch>().currentSearch = text;
+    // if the search query was changed show a snackbar and give the option to
+    // use the original search
+    if(deconjugated != "" && deconjugated != text){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Searched: $deconjugated"),
+              InkWell(
+                onTap: () async {
+                  await updateSearchResults(text, false);
+                  setState(() {});
+                },
+                child: Text(
+                  "Search $text instead",
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor
+                  ),                
+                ),
+              )
+            ],
+          )
+        )
+      );
+    }
+
+    // update search variables and search
+    context.read<DictSearch>().currentSearch = deconjugated;
     context.read<DictSearch>().searchResults =
-      await GetIt.I<DictionarySearch>().query(text);
-    lastInput = text;
+      await GetIt.I<DictionarySearch>().query(deconjugated);
+    lastInput = deconjugated;
   }
 }

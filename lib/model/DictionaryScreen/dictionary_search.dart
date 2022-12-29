@@ -1,4 +1,5 @@
 import 'package:async/async.dart';
+
 import 'package:database_builder/database_builder.dart';
 
 import 'dictionary_search_util.dart';
@@ -32,7 +33,9 @@ class DictionarySearch {
     _initialized = true;
   }
 
-  /// Queries the database and sorts the results using multiple isolates.
+  /// Queries the database and sorts the results using multiple isolates. 
+  /// If `allowDeconjugation` is set to true the input is deconjugate if it is
+  /// recognized as verb / adjective or noun with copula 
   Future<List> query (String queryText) async {
     _checkInitialized();
 

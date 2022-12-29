@@ -99,10 +99,6 @@ class SearchIsolate {
     List result = [];
 
     if(query != ""){
-      String queryHira = query, queryKata = query;
-      
-      //query = deconjugate(query);
-
       isolateSendPort!.send(query);
       result = await events!.next;
     }
@@ -151,7 +147,6 @@ Future<void> _searchInIsar(SendPort p) async {
       Stopwatch s = Stopwatch()..start();
 
       messageRomaji = kanaKit.toRomaji(message);
-      print("messageRomaji" + messageRomaji);
       
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, message, messageRomaji, langs)

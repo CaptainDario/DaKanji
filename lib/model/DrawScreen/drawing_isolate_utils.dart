@@ -3,7 +3,9 @@ import 'dart:typed_data';
 
 import 'drawing_isolate_data.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+
+
+
 
 /// Manages separate Isolate instance for inference
 class DrawingIsolateUtils {
