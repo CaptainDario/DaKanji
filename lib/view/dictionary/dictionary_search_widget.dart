@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,6 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
@@ -185,7 +186,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
               ? widget.expandedHeight - searchBarInputHeight
               : 0,
             child: SearchResultList(
-              onSearchResultPressed: (entry) {
+              onSearchResultPressed: (entry) async {
+                List<String> kanjis =
+                  removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
+                context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
+                context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
+                print(context.read<DictSearch>().kanjiVGs);
+
+                // collapse the search bar
                 if(widget.canCollapse)
                   setState(() {
                     expanded = false;

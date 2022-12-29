@@ -16,14 +16,17 @@ class DictSearch with ChangeNotifier {
 
   /// the selected search Result
   JMdict? _selectedResult;
-
   set selectedResult (JMdict? newEntry){
     _selectedResult = newEntry;
     notifyListeners();
   }
-
   JMdict? get selectedResult {
     return _selectedResult;
   }
 
+  /// the KanjiVG entries matching `selectedResult`
+  List<KanjiSVG> kanjiVGs = [];
+
+  /// the KanjiDic entries matching `selectedResult`
+  List<Kanjidic2> kanjiDic2s = [];
 }

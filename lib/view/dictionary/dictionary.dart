@@ -1,14 +1,12 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/view/dictionary/dictionary_search_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/view/dictionary/dictionary_search_widget.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
-import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_word_tab.dart';
@@ -50,10 +48,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   late void Function() changeTab;
   /// Current search in the dictionary
   DictSearch search = DictSearch();
-  /// A list containing all kanjiVGs that match the selected dict entry
-  List<KanjiSVG> kanjiVGs = [];
-  /// A List of kanjidic2 entries thath should be shown
-  List<Kanjidic2> kanjidic2Entries = [];
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
 
@@ -97,10 +91,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
           // if a search result was selected
           // search the kanjis from the selected word in KanjiVG
           if(context.watch<DictSearch>().selectedResult != null){
-            List<String> kanjis =
-              removeAllButKanji(context.watch<DictSearch>().selectedResult!.kanjis);
-            kanjiVGs = findMatchingKanjiSVG(kanjis);
-            kanjidic2Entries = findMatchingKanjiDic2(kanjis);
+            
           }
     
           return Stack(
@@ -153,8 +144,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DictionaryKanjiTab(
-                                kanjiVGs,
-                                kanjidic2Entries
+                                context.read<DictSearch>().kanjiVGs!,
+                                context.read<DictSearch>().kanjiDic2s!
                               ),
                             ),
                           ),
@@ -201,8 +192,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                             : SizedBox(),
                                           if(tabsSideBySide < 4) 
                                             DictionaryKanjiTab(
-                                              kanjiVGs,
-                                              kanjidic2Entries
+                                              context.read<DictSearch>().kanjiVGs,
+                                              context.read<DictSearch>().kanjiDic2s
                                             ),
                                           if(tabsSideBySide < 4) 
                                             const DictionaryExampleTab(),
