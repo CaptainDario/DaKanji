@@ -33,14 +33,12 @@ class DictionarySearch {
     _initialized = true;
   }
 
-  /// Queries the database and sorts the results using multiple isolates. 
-  /// If `allowDeconjugation` is set to true the input is deconjugate if it is
-  /// recognized as verb / adjective or noun with copula 
+  /// Queries the database and sorts the results using multiple isolates.
   Future<List> query (String queryText) async {
     _checkInitialized();
 
+    // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
-
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(queryText));
     }
@@ -53,6 +51,7 @@ class DictionarySearch {
     final sort_result = sortJmdictList(search_result, queryText, this.languages);
 
     return sort_result.expand((element) => element).toList();
+    
   }
 
   /// terminates all isolates and cleans memory
