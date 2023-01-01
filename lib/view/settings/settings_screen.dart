@@ -235,7 +235,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         ),
                       ),
-                      //
+                      // Do not deconjugate inputs to the dictionary
+                      /*
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
                         value: false,
@@ -243,6 +244,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                         },
                       ),
+                      */
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
