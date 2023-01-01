@@ -163,6 +163,6 @@ Future<void> _searchInIsar(SendPort p) async {
     }
   }
 
-  print('Spawned isolate finished.');
+  debugPrint('Spawned isolate finished.');
   Isolate.exit();
 }

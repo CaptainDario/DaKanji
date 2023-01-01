@@ -83,7 +83,7 @@ void openDictionary(BuildContext context, String char) async {
           );
         } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview){
             
-          //print("webview is side by side");
+          //debugPrint("webview is side by side");
         }
       }
     }

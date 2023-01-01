@@ -191,7 +191,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
                 context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
                 context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
-                print(context.read<DictSearch>().kanjiVGs);
 
                 // collapse the search bar
                 if(widget.canCollapse)
@@ -259,7 +258,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       deconjugated = text;
     }
 
-    print(deconjugated);
     // update search variables and search
     context.read<DictSearch>().currentSearch = deconjugated;
     context.read<DictSearch>().searchResults =
