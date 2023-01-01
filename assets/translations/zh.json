@@ -141,6 +141,7 @@
     "draw_long_press_opens": "\u957f\u6309\u6253\u5f00",
     "draw_title": "\u7ed8\u56fe",
     "misc_default_screen": "\u542f\u52a8\u5e94\u7528\u7a0b\u5e8f\u65f6\u7684\u521d\u59cb\u5c4f\u5e55",
+    "misc_language": "\u8bed\u8a00 (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "\u4fdd\u5b58\u5f53\u524d\u7a97\u53e3\u5c3a\u5bf8",
     "misc_theme": "\u4e3b\u9898 (@:SettingsScreen.restarts_app)",
     "misc_title": "\u6742\u9879",

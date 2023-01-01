@@ -141,6 +141,7 @@
     "draw_long_press_opens": "Langes dr\u00fccken \u00f6ffnet",
     "draw_title": "Zeichnen",
     "misc_default_screen": "Startbildschirm beim \u00f6ffnen der App",
+    "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Speicher die momentanige Fenster gr\u00f6\u00dfe",
     "misc_theme": "Thema (@:SettingsScreen.restarts_app)",
     "misc_title": "Verschiedenes",

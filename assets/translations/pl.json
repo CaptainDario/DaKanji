@@ -141,6 +141,7 @@
     "draw_long_press_opens": "D\u0142ugie klikni\u0119cie otwiera",
     "draw_title": "Obraz",
     "misc_default_screen": "Ekran pocz\u0105tkowy przy uruchamianiu aplikacji",
+    "misc_language": "j\u0119zyk (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Zapisz bie\u017c\u0105cy rozmiar okna",
     "misc_theme": "Motyw(@:SettingsScreen.restarts_app)",
     "misc_title": "Inne",

@@ -133,6 +133,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_draw_long_press_opens = 'SettingsScreen.draw_long_press_opens';
   static const SettingsScreen_draw_title = 'SettingsScreen.draw_title';
   static const SettingsScreen_misc_default_screen = 'SettingsScreen.misc_default_screen';
+  static const SettingsScreen_misc_language = 'SettingsScreen.misc_language';
   static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
   static const SettingsScreen_misc_theme = 'SettingsScreen.misc_theme';
   static const SettingsScreen_misc_title = 'SettingsScreen.misc_title';

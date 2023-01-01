@@ -141,6 +141,7 @@
     "draw_long_press_opens": "La pressione prolungata apre",
     "draw_title": "Disegno",
     "misc_default_screen": "Schermata iniziale all'avvio dell'applicazione",
+    "misc_language": "lingua (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Salva la dimensione attuale della finestra",
     "misc_theme": "tema (@:SettingsScreen.restarts_app)",
     "misc_title": "Varie",

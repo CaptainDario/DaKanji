@@ -769,6 +769,17 @@
       "es": "Guardar el tamaño actual de la ventana",
       "pl": "Zapisz bieżący rozmiar okna"
     },
+    "misc_language": {
+      "en": "language (@:SettingsScreen.restarts_app)",
+      "de": "Sprache (@:SettingsScreen.restarts_app)",
+      "ru": "язык (@:SettingsScreen.restarts_app)",
+      "ja": "言語 (@:SettingsScreen.restarts_app)",
+      "zh": "语言 (@:SettingsScreen.restarts_app)",
+      "it": "lingua (@:SettingsScreen.restarts_app)",
+      "fr": "langue (@:SettingsScreen.restarts_app)",
+      "es": "idioma (@:SettingsScreen.restarts_app)",
+      "pl": "język (@:SettingsScreen.restarts_app)"
+    },
     "misc_default_screen": {
       "en": "Initial screen when starting the app",
       "de": "Startbildschirm beim öffnen der App",

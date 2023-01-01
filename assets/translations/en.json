@@ -141,6 +141,7 @@
     "draw_long_press_opens": "Long press opens",
     "draw_title": "Drawing",
     "misc_default_screen": "Initial screen when starting the app",
+    "misc_language": "language (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Save current window size",
     "misc_theme": "theme (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscellaneous",

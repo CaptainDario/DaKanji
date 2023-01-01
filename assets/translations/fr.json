@@ -141,6 +141,7 @@
     "draw_long_press_opens": "Une pression longue ouvre",
     "draw_title": "Dessin",
     "misc_default_screen": "\u00c9cran initial au d\u00e9marrage de l'application",
+    "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",
     "misc_theme": "th\u00e8me (@:SettingsScreen.restarts_app)",
     "misc_title": "Divers",

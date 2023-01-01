@@ -314,12 +314,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // app languages
                       ResponsiveDropDownTile(
-                        text: LocaleKeys.General_language.tr(), 
+                        text: LocaleKeys.SettingsScreen_misc_language.tr(), 
                         value: context.locale.toString(),
                         items: context.supportedLocales.map((e) => e.toString()).toList(),
                         onTap: (newValue) {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
+                            Phoenix.rebirth(context);
                           }
                         },
                       ),

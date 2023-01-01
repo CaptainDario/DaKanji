@@ -141,6 +141,7 @@
     "draw_long_press_opens": "Pulsaci\u00f3n larga abre",
     "draw_title": "Dibujar",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicaci\u00f3n",
+    "misc_language": "idioma (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Guardar el tama\u00f1o actual de la ventana",
     "misc_theme": "tema (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscel\u00e1neo",
