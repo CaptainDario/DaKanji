@@ -47,7 +47,7 @@ void main() {
     await tester.tap(find.text(LocaleKeys.SettingsScreen_title.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    Offset pos = tester.getCenter(find.text(LocaleKeys.SettingsScreen_theme.tr()));
+    Offset pos = tester.getCenter(find.text(LocaleKeys.SettingsScreen_misc_theme.tr()));
     await tester.tapAt(Offset(pos.dx*3, pos.dy));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -67,7 +67,7 @@ void main() {
     await tester.tap(find.text(LocaleKeys.SettingsScreen_title.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    pos = tester.getCenter(find.text(LocaleKeys.SettingsScreen_theme.tr()));
+    pos = tester.getCenter(find.text(LocaleKeys.SettingsScreen_misc_theme.tr()));
     await tester.tapAt(Offset(pos.dx*3, pos.dy));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));

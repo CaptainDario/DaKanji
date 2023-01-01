@@ -35,7 +35,7 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/provider/drawer_listener.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/codegen_loader.dart';
+import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/feedback_localization.dart';
 
 
@@ -43,6 +43,9 @@ import 'package:da_kanji_mobile/feedback_localization.dart';
 Future<void> main() async {
   
   runApp(DaKanjiSplash());
+
+  // delete settings
+  //await clearPreferences();
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +81,9 @@ Future<void> main() async {
             sheetIsDraggable: true
           ),
           localizationsDelegates: [
-            CustomFeedbackLocalizationsDelegate(),
+            CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+              const Locale('en'): CustomFeedbackLocalizations()
+            },
           ],
           mode: FeedbackMode.navigate,
           child: const DaKanjiApp(),
@@ -95,7 +100,6 @@ Future<void> main() async {
 /// This function initializes:
 /// * used version, CHANGELOG and about
 /// * loads the settings
-/// * initializes tensorflow lite and reads the labels from file 
 Future<void> init() async {
   
   // NOTE: uncomment to clear the SharedPreferences

@@ -64,7 +64,7 @@ class WhatsNewDialogue extends StatelessWidget {
                     child: FittedBox(
                       child: Center(
                         child: Text(
-                          LocaleKeys.General_whats_new.tr(),
+                          LocaleKeys.HomeScreen_whats_new.tr(),
                           textScaleFactor: 2,
                         ),
                       ),
@@ -108,7 +108,7 @@ class WhatsNewDialogue extends StatelessWidget {
                               MaterialPageRoute(builder: (context) => const ChangelogScreen()),
                             ),
                             child: Text(
-                              LocaleKeys.General_complete_log.tr(),
+                              LocaleKeys.HomeScreen_complete_log.tr(),
                               maxLines: 1,
                               style: const TextStyle(
                                 overflow: TextOverflow.ellipsis

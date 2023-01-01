@@ -1,11 +1,13 @@
-import 'package:da_kanji_mobile/helper/conjugation/conj.dart';
-import 'package:da_kanji_mobile/helper/conjugation/conjugate.dart';
-import 'package:da_kanji_mobile/helper/conjugation/conjugation_descriptions.dart';
 import 'package:flutter/material.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/view/dictionary/verb_conjugation_entry.dart';
-
+import 'package:da_kanji_mobile/helper/conjugation/conj.dart';
+import 'package:da_kanji_mobile/helper/conjugation/conjugate.dart';
+import 'package:da_kanji_mobile/helper/conjugation/conjugation_descriptions.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -67,25 +69,25 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
       }
 
       if(posEnumToPosDescription[widget.pos[i]]!.contains(" verb")){
-        conjugationTitles.add(verbConjugationTitles);
-        conjugationExplanations.add(verbConjugationMeanings);
-        _conjugations.add(verbConjugationTypes);
-        tabTitles.add("Verb - plain");
-        tabTitles.add("Verb - polite");
+        conjugationTitles.add(verbConjugations.map((e) => e.item1).toList());
+        conjugationExplanations.add(verbConjugations.map((e) => e.item2).toList());
+        _conjugations.add(verbConjugations.map((e) => e.item3).toList());
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_verb.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_plain.tr()}");
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_verb.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_polite.tr()}");
       }
       else if(posEnumToPosDescription[widget.pos[i]]!.contains("adjective")){
-        conjugationTitles.add(adjectiveConjugationTitles);
-        conjugationExplanations.add(adjectiveConjugationMeanings);
-        _conjugations.add(adjectiveConjugationTypes);
-        tabTitles.add("Adjective - plain");
-        tabTitles.add("Adjective - polite");
+        conjugationTitles.add(adjectiveConjugations.map((e) => e.item1).toList());
+        conjugationExplanations.add(adjectiveConjugations.map((e) => e.item2).toList());
+        _conjugations.add(adjectiveConjugations.map((e) => e.item3).toList());
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_adjective.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_plain.tr()}");
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_adjective.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_polite.tr()}");
       }
       else if (widget.pos.contains(Pos.cop)){
-        conjugationTitles.add(adjectiveConjugationTitles);
-        conjugationExplanations.add(adjectiveConjugationMeanings);
-        _conjugations.add(adjectiveConjugationTypes);
-        tabTitles.add("Copula - plain");
-        tabTitles.add("Copula - polite");
+        conjugationTitles.add(adjectiveConjugations.map((e) => e.item1).toList());
+        conjugationExplanations.add(adjectiveConjugations.map((e) => e.item2).toList());
+        _conjugations.add(adjectiveConjugations.map((e) => e.item3).toList());
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_copula.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_plain.tr()}");
+        tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_copula.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_polite.tr()}");
       }
     }
 
@@ -124,7 +126,7 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
     return ExpansionTile(
       textColor: Theme.of(context).highlightColor,
       childrenPadding: EdgeInsets.all(16),
-      title: const Text("Conjugation"),
+      title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
       children: [
         TabBar(
           labelColor: Theme.of(context).highlightColor,

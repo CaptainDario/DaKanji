@@ -279,7 +279,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the text dictionary screen
                             DrawerElement(
                               leading: Icons.book,
-                              title: LocaleKeys.Dictionary_title.tr(),
+                              title: LocaleKeys.DictionaryScreen_title.tr(),
                               route: "/dictionary",
                               selected: widget.currentScreen == Screens.dictionary,
                               drawerWidth: _drawerWidth,
@@ -315,7 +315,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the manual screen
                             DrawerElement(
                               leading: Icons.help,
-                              title: "Manual",
+                              title: LocaleKeys.ManualScreen_title.tr(),
                               route: "/manual",
                               selected: widget.currentScreen == Screens.manual,
                               drawerWidth: _drawerWidth,
@@ -324,7 +324,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to send feedback
                             DrawerElement(
                               leading: Icons.feedback,
-                              title: "Feedback",
+                              title: LocaleKeys.FeedbackScreen_title.tr(),
                               route: "",
                               selected: false,
                               drawerWidth: _drawerWidth,

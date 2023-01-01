@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_web_view/easy_web_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -43,7 +45,7 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
   void initState() {
     super.initState();
 
-    tabNames = ["Dictionary"];
+    tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
     if(g_webViewSupported)
       tabNames.add("Deepl");
   }

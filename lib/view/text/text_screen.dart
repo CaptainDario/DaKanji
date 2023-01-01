@@ -7,7 +7,9 @@ import 'package:kagome_dart/pos_unidic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/model/TextScreen/pos_colors.dart';
@@ -204,13 +206,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 2*padding, padding, 2*padding, padding
                               ),
                               child: TextField(
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
-                                  hintText: "Add localization here",
+                                  hintText: LocaleKeys.TextScreen_input_text_here.tr(),
                                 ),
                                 inputFormatters: [
                                   FilteringTextInputFormatter.deny(

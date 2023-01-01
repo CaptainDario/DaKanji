@@ -1,28 +1,31 @@
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:feedback/feedback.dart';
 
 
 
-
-import 'package:flutter/cupertino.dart';class CustomFeedbackLocalizations implements FeedbackLocalizations {
+class CustomFeedbackLocalizations implements FeedbackLocalizations {
   
   @override
-  final draw = "draw";
+  late final draw = LocaleKeys.FeedbackScreen_draw.tr();
 
   @override
-  final feedbackDescriptionText = "Please describe your matter as detailed as possible. After pressing submit you can share your annotated screenshot and text (email contact: daapplab@gmail.com)";
+  late final feedbackDescriptionText = LocaleKeys.FeedbackScreen_feedback_description_text.tr();
 
   @override
-  final navigate = "navigate";
+  late final navigate = LocaleKeys.FeedbackScreen_navigate.tr();
 
   @override
-  final submitButtonText = "submit";
+  late final submitButtonText = LocaleKeys.FeedbackScreen_submit.tr();
 
 }
 
 class CustomFeedbackLocalizationsDelegate extends GlobalFeedbackLocalizationsDelegate {
 
   @override
-  final supportedLocales = <Locale, FeedbackLocalizations>{
+  var supportedLocales = <Locale, FeedbackLocalizations>{
     // remember to change the locale identifier
     // as well as that defaultLocale (defaults to en) should ALWAYS be
     // present here or overridden

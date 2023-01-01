@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       else{
         Navigator.pushNamedAndRemoveUntil(
           context, 
-          "/${GetIt.I<Settings>().misc.selectedStartupScreen}", 
+          "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
           (route) => false);
       }
     });

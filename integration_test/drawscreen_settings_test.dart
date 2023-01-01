@@ -78,7 +78,7 @@ void main() {
     await tester.tap(find.text(LocaleKeys.SettingsScreen_title.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    await tester.tap(find.text(LocaleKeys.SettingsScreen_invert_short_long_press.tr()));
+    await tester.tap(find.text(LocaleKeys.SettingsScreen_draw_invert_short_long_press.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -106,7 +106,7 @@ void main() {
     await tester.tap(find.text(LocaleKeys.SettingsScreen_title.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    await tester.tap(find.text(LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr()));
+    await tester.tap(find.text(LocaleKeys.SettingsScreen_draw_double_tap_empty_canvas.tr()));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle(const Duration(seconds: 1));

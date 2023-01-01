@@ -33,22 +33,27 @@ class SettingsMisc with ChangeNotifier {
 
   /// The startup screen options 
   @JsonKey(ignore: true)
-  List<String> startupScreens = [
-    Screens.drawing.name,
-    Screens.dictionary.name,
-    Screens.text.name,
+  List<String> startupScreensLocales = [
+    LocaleKeys.DrawScreen_title,
+    LocaleKeys.DictionaryScreen_title,
+    LocaleKeys.TextScreen_title,
+  ];
+  @JsonKey(ignore: true)
+  List<Screens> startupScreens = [
+    Screens.drawing,
+    Screens.dictionary,
+    Screens.text,
   ];
 
-
   @JsonKey(ignore: true)
-  static const String d_selectedStartupScreen = "dictionary";
+  static const int d_selectedStartupScreen = 1;
   /// string denoting the screen that should be loaded at app start
   @JsonKey(defaultValue: d_selectedStartupScreen)
-  late String _selectedStartupScreen = d_selectedStartupScreen;
+  late int _selectedStartupScreen = d_selectedStartupScreen;
   /// string deonting the screen that should be loaded at app start
-  String get selectedStartupScreen => _selectedStartupScreen;
+  int get selectedStartupScreen => _selectedStartupScreen;
   /// string deonting the screen that should be loaded at app start
-  set selectedStartupScreen(String selectedStartupScreen) {
+  set selectedStartupScreen(int selectedStartupScreen) {
     _selectedStartupScreen = selectedStartupScreen;
     notifyListeners();
   }
@@ -114,7 +119,7 @@ class SettingsMisc with ChangeNotifier {
 
   SettingsMisc (){
     selectedTheme = LocaleKeys.General_system;
-    selectedStartupScreen = startupScreens[0];
+    selectedStartupScreen = 1;
   }
 
   ThemeMode? selectedThemeMode() {

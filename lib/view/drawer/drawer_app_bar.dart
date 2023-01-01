@@ -67,7 +67,7 @@ class DrawerAppBar extends StatelessWidget {
                     title = LocaleKeys.DrawScreen_title.tr();
                     break;
                   case Screens.dictionary:
-                    title = LocaleKeys.Dictionary_title.tr();
+                    title = LocaleKeys.DictionaryScreen_title.tr();
                     break;
                   case Screens.text:
                     title = LocaleKeys.TextScreen_title.tr();

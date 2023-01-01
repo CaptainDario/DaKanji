@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_web_view/easy_web_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -50,7 +52,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Examples (Massif)"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -178,7 +180,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           ),
                           if(g_webViewSupported) 
                             ExpansionTile(
-                              title: const Text("Images"),
+                              title: Text(LocaleKeys.DictionaryScreen_word_images.tr()),
                               children: [
                                 AspectRatio(
                                   aspectRatio: 1,
@@ -196,24 +198,24 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             
                           //TODO - add proverbs @ DaKanji v3.3
                           if(!kReleaseMode)
-                            const ExpansionTile(
-                              title: Text("Proverbs"),
+                            ExpansionTile(
+                              title: Text(LocaleKeys.DictionaryScreen_word_proverbs.tr()),
                               children: [
                                 Text("This could be done by using kotowaza?")
                               ],
                             ),
                           //TODO - add synonyms @ DaKanji v3.3
                           if(!kReleaseMode)
-                            const ExpansionTile(
-                              title: Text("Synonyms"),
+                            ExpansionTile(
+                              title: Text(LocaleKeys.DictionaryScreen_word_synonyms.tr()),
                               children: [
                                 Text("This could be done by using wordnet jp?")
                               ],
                             ),
                           //TODO - add antonyms @ DaKanji v3.3
                           if(!kReleaseMode)
-                            const ExpansionTile(
-                              title: Text("Antonyms"),
+                            ExpansionTile(
+                              title: Text(LocaleKeys.DictionaryScreen_word_antonyms.tr()),
                               children: [
                                 Text("This could be done by using NANI??")
                               ],

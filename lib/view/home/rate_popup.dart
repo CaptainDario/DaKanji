@@ -55,7 +55,7 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
                 onPressed: () async {
                   openReview(); 
                 },
-                child: Text(LocaleKeys.General_rate_this_app.tr())
+                child: Text(LocaleKeys.HomeScreen_rate_this_app.tr())
               ),
               const SizedBox(width: 5,),
               // do not ask again button

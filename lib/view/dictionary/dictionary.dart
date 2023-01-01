@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_search_widget.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
@@ -144,8 +146,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DictionaryKanjiTab(
-                                context.read<DictSearch>().kanjiVGs!,
-                                context.read<DictSearch>().kanjiDic2s!
+                                context.read<DictSearch>().kanjiVGs,
+                                context.read<DictSearch>().kanjiDic2s
                               ),
                             ),
                           ),
@@ -173,9 +175,12 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                       unselectedLabelColor: Colors.grey,
                                       indicatorColor: Theme.of(context).highlightColor,
                                       tabs: [
-                                        if(tabsSideBySide < 2) const Tab(text: "Word"),
-                                        if(tabsSideBySide < 4) const Tab(text: "Kanji"),
-                                        if(tabsSideBySide < 4) const Tab(text: "Example"),
+                                        if(tabsSideBySide < 2) 
+                                          Tab(text: LocaleKeys.DictionaryScreen_word_tab.tr()),
+                                        if(tabsSideBySide < 4) 
+                                          Tab(text: LocaleKeys.DictionaryScreen_kanji_tab.tr()),
+                                        if(tabsSideBySide < 4) 
+                                          Tab(text: LocaleKeys.DictionaryScreen_example_tab.tr()),
                                       ],
                                     ),
                                   ),

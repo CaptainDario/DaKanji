@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
@@ -9,12 +8,13 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xml/xml.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:database_builder/src/kanjiVG_to_Isar/data_classes.dart' as isar_kanji;
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
-
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -32,7 +32,7 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   ) : super(key: key);
 
   /// The kanji that should be shown in this card as a svg string
-  final isar_kanji.KanjiSVG kanjiVG;
+  final KanjiSVG kanjiVG;
   /// List of all kanjidict entries 
   final Kanjidic2 kanjidic2entry;
   /// String denoting the target language
@@ -136,22 +136,23 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         Expanded(
                           child: LayoutGrid(
                             columnSizes: [auto, 1.fr, auto, 1.fr],
+                            columnGap: 0.1,
                             rowSizes: List.generate(7, (index) => auto),
                             children: [
-                              Text("On: ", style: headerStyle),       SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                              Text("Kun: ", style: headerStyle),      SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                              Text("Radicals: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")).withGridPlacement(columnSpan: 3),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),       SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_kun_reading.tr()}: ", style: headerStyle),      SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")).withGridPlacement(columnSpan: 3),
                               
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
 
-                              Text("Strokes: ", style: headerStyle), Text("$strokeCount"),
-                              Text("Grade: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("$strokeCount"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
 
-                              Text("JLPT: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
-                              Text("Heisig: ", style: headerStyle),  Text("NONE"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_heisig.tr()}: ", style: headerStyle),  Text("NONE"),
 
-                              Text("SKIP: ", style: headerStyle),    Text("NONE"),
-                              Text("Freq.: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_skip.tr()}: ", style: headerStyle),    Text("NONE"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
                             ],
                           ),
                         ),
@@ -181,7 +182,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     ).toList(),
                     const SizedBox(height: 16,),
                     ExpansionTile(
-                      title: const Text("Kanji groups"),
+                      title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
                       children:
                       [
                         KanjiGroupWidget(

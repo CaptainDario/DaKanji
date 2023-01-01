@@ -17,7 +17,7 @@ void showCustomURLPopup(BuildContext context){
     body: Column(
       children: [
         Text(
-          LocaleKeys.SettingsScreen_custom_url_format.tr(),
+          LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
           //textScaleFactor: 2,
           maxLines: 1,
           style: const TextStyle(

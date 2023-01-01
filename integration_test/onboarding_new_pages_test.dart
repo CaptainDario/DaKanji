@@ -39,7 +39,7 @@ void main() {
       debugPrint('waiting for app to boot');
     }
     
-    expect(find.text(LocaleKeys.General_whats_new.tr()), findsOneWidget);
+    expect(find.text(LocaleKeys.HomeScreen_whats_new.tr()), findsOneWidget);
     
     Offset closeButton = tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
     await tester.tapAt(closeButton);

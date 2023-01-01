@@ -79,14 +79,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: <Widget>[
                       
                       // #region - Drawing
+
                       // Drawing header
                       ResponsiveHeaderTile(
-                        LocaleKeys.SettingsScreen_drawing_title.tr(),
+                        LocaleKeys.SettingsScreen_draw_title.tr(),
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // Dictionary Options
                       ResponsiveDropDownTile(
-                        text: LocaleKeys.SettingsScreen_long_press_opens.tr(),
+                        text: LocaleKeys.SettingsScreen_draw_long_press_opens.tr(),
                         value: settings.drawing.selectedDictionary,
                         items: settings.drawing.dictionaries,
                         onTap: (newValue) {
@@ -100,7 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: settings.drawing.customURL,
                         enabled: settings.drawing.selectedDictionary
                           == settings.drawing.dictionaries[3],
-                        hintText: LocaleKeys.SettingsScreen_custom_url_hint.tr(),
+                        hintText: LocaleKeys.SettingsScreen_draw_custom_url_hint.tr(),
                         icon: Icons.info_outline,
                         onChanged: (value) {
                           settings.drawing.customURL = value;
@@ -111,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // invert long/short press
                       ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_invert_short_long_press.tr(),
+                        text: LocaleKeys.SettingsScreen_draw_invert_short_long_press.tr(),
                         value: GetIt.I<Settings>().drawing.invertShortLongPress,
                         onTileTapped: (bool? newValue){
                           settings.drawing.invertShortLongPress = newValue ?? false;
@@ -120,7 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // double tap empties canvas
                       ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_empty_canvas_after_double_tap.tr(),
+                        text: LocaleKeys.SettingsScreen_draw_double_tap_empty_canvas.tr(),
                         value: GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap,
                         onTileTapped: (bool? newValue){
                           settings.drawing.emptyCanvasAfterDoubleTap = newValue ?? false;
@@ -129,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       if(g_webViewSupported)
                         ResponsiveCheckBoxTile(
-                          text: LocaleKeys.SettingsScreen_use_default_browser_for_online_dictionaries.tr(),
+                          text: LocaleKeys.SettingsScreen_draw_browser_for_online_dict.tr(),
                           value: GetIt.I<Settings>().drawing.useWebview,
                           onTileTapped: (value) {
                             settings.drawing.useWebview = value;
@@ -146,13 +147,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Phoenix.rebirth(context);
                         },
                       ),
+                      // #endregion
 
                       const Divider(),
 
                       // #region - Dict header
 
                       ResponsiveHeaderTile(
-                        LocaleKeys.Dictionary_title.tr(),
+                        LocaleKeys.DictionaryScreen_title.tr(),
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       Padding(
@@ -160,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
-                            "Show translations in (drag to reorder)",
+                            LocaleKeys.SettingsScreen_dict_languages.tr(),
                             group: g_SettingsAutoSizeGroup,
                           )
                         ),
@@ -233,6 +235,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         ),
                       ),
+                      //
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+                        value: false,
+                        onTileTapped: (value) {
+
+                        },
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -271,12 +281,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
-                        LocaleKeys.SettingsScreen_miscellaneous_title.tr(),
+                        LocaleKeys.SettingsScreen_misc_title.tr(),
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // theme
                       ResponsiveDropDownTile(
-                        text: LocaleKeys.SettingsScreen_theme.tr(), 
+                        text: LocaleKeys.SettingsScreen_misc_theme.tr(), 
                         value: settings.misc.selectedTheme,
                         items: settings.misc.themesLocaleKeys,
                         translateItemTexts: true,
@@ -290,11 +300,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // screen to show when app starts
                       ResponsiveDropDownTile(
                         text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
-                        value: settings.misc.selectedStartupScreen,
-                        items: settings.misc.startupScreens,
+                        value: settings.misc.startupScreensLocales[settings.misc.selectedStartupScreen].tr(),
+                        items: settings.misc.startupScreensLocales.map((e) => e.tr()).toList(),
                         onTap: (newValue) {
                           if (newValue != null){
-                            settings.misc.selectedStartupScreen = newValue;
+                            int i = settings.misc.startupScreensLocales.map(
+                              (e) => e.tr()
+                            ).toList().indexOf(newValue);
+                            settings.misc.selectedStartupScreen = i;
                             settings.save();
                           }
                         },
@@ -328,7 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if(g_desktopPlatform)
                         ResponsiveCheckBoxTile(
                           value: settings.misc.alwaysOnTop,
-                          text: "Window always on top",
+                          text: LocaleKeys.SettingsScreen_misc_window_on_top.tr(),
                           onTileTapped: (checked) async {
                             windowManager.setAlwaysOnTop(checked);
                             settings.misc.alwaysOnTop = checked;
@@ -342,7 +355,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Expanded(
                               flex: 5,
-                              child: Text("Window opacity")
+                              child: Text(
+                                LocaleKeys.SettingsScreen_misc_window_opacity.tr()
+                              )
                             ),
                             Expanded(
                               flex: 4,
