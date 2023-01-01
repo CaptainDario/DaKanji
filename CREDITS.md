@@ -47,5 +47,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * michalpatryk
   * Spanish
     * Francesco S.
+  * Japanese
+    * ゆうか 田村村
 
 If I forgot to mention a project, person, etc. please let me know I will add you.
