@@ -60,7 +60,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   bool showRubys = false;
   /// if the option for showing spaces between words is enabled
   bool addSpaces = false;
-
+  /// if the text should be colorized matching part of speech elements
   bool colorizePos = false;
 
   /// should this screen be shown in portrait or not
@@ -205,40 +205,44 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               padding: EdgeInsets.fromLTRB(
                                 2*padding, padding, 2*padding, padding
                               ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  hintText: LocaleKeys.TextScreen_input_text_here.tr(),
-                                ),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r"\u000d"),
-                                    //replacementString: "\r"
+                              child: Focus(
+                                focusNode: widget.includeTutorial ?
+                                  GetIt.I<Tutorials>().textScreenTutorial.textInputSteps : null,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    hintText: LocaleKeys.TextScreen_input_text_here.tr(),
                                   ),
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r"\u000a"),
-                                    replacementString: "\n"
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r"\u000d"),
+                                      //replacementString: "\r"
+                                    ),
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r"\u000a"),
+                                      replacementString: "\n"
+                                    ),
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r"█"),
+                                      replacementString: ""
+                                    )
+                                  ],
+                                  controller: widget.inputController,
+                                  maxLines: null,
+                                  style: const TextStyle(
+                                    fontSize: 20,
                                   ),
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r"█"),
-                                    replacementString: ""
-                                  )
-                                ],
-                                controller: widget.inputController,
-                                maxLines: null,
-                                style: const TextStyle(
-                                  fontSize: 20,
+                                  onChanged: ((value) {
+                                    setState(() {
+                                      inputText = value;
+                                      processText(value);
+                                    });
+                                  }),
                                 ),
-                                onChanged: ((value) {
-                                  setState(() {
-                                    inputText = value;
-                                    processText(value);
-                                  });
-                                }),
                               ),
                             ),
                           ),
@@ -265,35 +269,39 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               child: Column(
                                 children: [
                                   Expanded(
-                                    child: Center(
-                                      child: CustomSelectableText(
-                                        words: kagomeWords,
-                                        rubys: kagomePos.map(
-                                          (e) => e.length == 17 ? e[6] : " "
-                                        ).toList(),
-                                        wordColors: List.generate(
-                                          kagomeWords.length,
-                                          (i) => posToColor[kagomePos[i][0]]
+                                    child: Focus(
+                                      focusNode: widget.includeTutorial ?
+                                        GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps : null,
+                                      child: Center(
+                                        child: CustomSelectableText(
+                                          words: kagomeWords,
+                                          rubys: kagomePos.map(
+                                            (e) => e.length == 17 ? e[6] : " "
+                                          ).toList(),
+                                          wordColors: List.generate(
+                                            kagomeWords.length,
+                                            (i) => posToColor[kagomePos[i][0]]
+                                          ),
+                                          showRubys: showRubys,
+                                          addSpaces: addSpaces,
+                                          showColors: colorizePos,
+                                          paintTextBoxes: false,
+                                          selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
+                                          onSelectionChange: (selection) {
+                                            if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
+                                              popupAnimationController.forward();
+                                            }
+                                            setState(() {
+                                              selectedText = selection;
+                                            });
+                                          },
+                                          onTap: (String selection) {
+                                            if(selection == "" &&
+                                              popupAnimationController.isCompleted) {
+                                              popupAnimationController.reverse(from: 1.0);
+                                            }
+                                          },
                                         ),
-                                        showRubys: showRubys,
-                                        addSpaces: addSpaces,
-                                        showColors: colorizePos,
-                                        paintTextBoxes: false,
-                                        selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
-                                        onSelectionChange: (selection) {
-                                          if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
-                                            popupAnimationController.forward();
-                                          }
-                                          setState(() {
-                                            selectedText = selection;
-                                          });
-                                        },
-                                        onTap: (String selection) {
-                                          if(selection == "" &&
-                                            popupAnimationController.isCompleted) {
-                                            popupAnimationController.reverse(from: 1.0);
-                                          }
-                                        },
                                       ),
                                     ),
                                   ),
@@ -301,81 +309,97 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       // spaces toggle
-                                      Material(
-                                        color: Theme.of(context).cardColor,
-                                        child: IconButton(
-                                          icon: SvgPicture.asset(
-                                            !addSpaces ?
-                                            "assets/icons/space_bar_off.svg" :
-                                            "assets/icons/space_bar_on.svg",
-                                            color: Colors.white,
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                        child: Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: SvgPicture.asset(
+                                              !addSpaces ?
+                                              "assets/icons/space_bar_off.svg" :
+                                              "assets/icons/space_bar_on.svg",
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                addSpaces = !addSpaces;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              addSpaces = !addSpaces;
-                                            });
-                                          },
                                         ),
                                       ),
                                       // furigana toggle
-                                      Material(
-                                        color: Theme.of(context).cardColor,
-                                        child: IconButton(
-                                          key: GlobalKey(),
-                                          icon: SvgPicture.asset(
-                                            showRubys ?
-                                            "assets/icons/furigana_off.svg" :
-                                            "assets/icons/furigana_on.svg",
-                                            color: Colors.white,
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                        child: Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            key: GlobalKey(),
+                                            icon: SvgPicture.asset(
+                                              showRubys ?
+                                              "assets/icons/furigana_off.svg" :
+                                              "assets/icons/furigana_on.svg",
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                showRubys = !showRubys;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              showRubys = !showRubys;
-                                            });
-                                          },
                                         ),
                                       ),
-                                      // button to open on DeepL website
-                                      Material(
-                                        color: Theme.of(context).cardColor,
-                                        child: IconButton(
-                                          icon: SvgPicture.asset(
-                                            colorizePos ?
-                                            "assets/icons/palette_off.svg" :
-                                            "assets/icons/palette_on.svg",
-                                            color: Colors.white,
+                                      // button to colorize words matching POS
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                        child: Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: SvgPicture.asset(
+                                              colorizePos ?
+                                              "assets/icons/palette_off.svg" :
+                                              "assets/icons/palette_on.svg",
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                colorizePos = !colorizePos;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              colorizePos = !colorizePos;
-                                            });
-                                          },
                                         ),
                                       ),
                                       // full screen toggle
-                                      Material(
-                                        color: Theme.of(context).cardColor,
-                                        child: IconButton(
-                                          icon: Icon(!fullScreen ? 
-                                            Icons.open_in_full : 
-                                            Icons.close_fullscreen
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                        child: Material(
+                                          color: Theme.of(context).cardColor,
+                                          child: IconButton(
+                                            icon: Icon(!fullScreen ? 
+                                              Icons.open_in_full : 
+                                              Icons.close_fullscreen
+                                            ),
+                                            onPressed: () {
+                                              // do not allow change while animation is running
+                                              if (_controller.isAnimating) {
+                                                return;
+                                              }
+                                              if(_controller.isCompleted) {
+                                                _controller.reverse();
+                                              } else if(_controller.isDismissed) {
+                                                _controller.forward();
+                                              }
+                                                            
+                                              setState(() {
+                                                fullScreen = !fullScreen;
+                                              });
+                                              
+                                            },
                                           ),
-                                          onPressed: () {
-                                            // do not allow change while animation is running
-                                            if (_controller.isAnimating) {
-                                              return;
-                                            }
-                                            if(_controller.isCompleted) {
-                                              _controller.reverse();
-                                            } else if(_controller.isDismissed) {
-                                              _controller.forward();
-                                            }
-                      
-                                            setState(() {
-                                              fullScreen = !fullScreen;
-                                            });
-                                            
-                                          },
                                         ),
                                       ),
                                     ],

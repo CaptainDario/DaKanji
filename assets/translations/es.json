@@ -169,7 +169,15 @@
   },
   "TextScreen": {
     "input_text_here": "Introduzca aqu\u00ed el texto...",
-    "title": "Texto"
+    "title": "Texto",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido al tratamiento de textos!",
+    "tutorial_colors_text": "Este bot\u00f3n muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
+    "tutorial_fullscreen_text": "Este bot\u00f3n cambia el texto procesado a pantalla completa.",
+    "tutorial_furigana_text": "Este bot\u00f3n a\u00f1ade furigana al texto.",
+    "tutorial_processed_text_text": "El texto procesado se mostrar\u00e1 aqu\u00ed. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+    "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
+    "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
   },
   "WebviewScreen": {
     "loading": "Buscando",

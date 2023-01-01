@@ -169,7 +169,15 @@
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
-    "title": "Text"
+    "title": "Text",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen bei der Textverarbeitung!",
+    "tutorial_colors_text": "Diese Schaltfl\u00e4che zeigt die W\u00f6rter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
+    "tutorial_fullscreen_text": "Mit dieser Schaltfl\u00e4che wird der bearbeitete Text als Vollbild angezeigt.",
+    "tutorial_furigana_text": "Diese Schaltfl\u00e4che f\u00fcgt Furigana \u00fcber dem Text ein.",
+    "tutorial_processed_text_text": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im W\u00f6rterbuch nachzuschlagen.",
+    "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
+    "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text wird mit verschiedenen Tools bearbeitet."
   },
   "WebviewScreen": {
     "loading": "Suche",

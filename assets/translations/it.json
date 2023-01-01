@@ -169,7 +169,15 @@
   },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
-    "title": "Testo"
+    "title": "Testo",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nell'elaborazione del testo!",
+    "tutorial_colors_text": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori \u00e8 riportato nel manuale).",
+    "tutorial_fullscreen_text": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
+    "tutorial_furigana_text": "Questo pulsante aggiunge i furigana al testo.",
+    "tutorial_processed_text_text": "Il testo elaborato viene visualizzato qui. \u00c8 possibile selezionare parti del testo per cercarle nel dizionario.",
+    "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
+    "tutorial_text_input_text": "Qui \u00e8 possibile scrivere o incollare qualsiasi testo. Il testo verr\u00e0 elaborato con diversi strumenti."
   },
   "WebviewScreen": {
     "loading": "Ricerca",

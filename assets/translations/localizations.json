@@ -967,6 +967,94 @@
       "fr": "Entrez le texte ici...",
       "es": "Introduzca aquí el texto...",
       "pl": "Wprowadź tekst tutaj..."
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the text processing!",
+      "de": "Willkommen bei der Textverarbeitung!",
+      "ru": "Добро пожаловать в обработку текста!",
+      "ja": "テキスト処理にようこそ!",
+      "zh": "欢迎来到文本处理!",
+      "it": "Benvenuti nell'elaborazione del testo!",
+      "fr": "Bienvenue dans le traitement de texte !",
+      "es": "¡Bienvenido al tratamiento de textos!",
+      "pl": "Zapraszamy na obróbkę tekstu!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします。",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_text_input_text": {
+      "en": "Here you can write or paste any text. This text will be processed with different tools.",
+      "de": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text wird mit verschiedenen Tools bearbeitet.",
+      "ru": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов.",
+      "ja": "ここでは、任意のテキストを書き込んだり、貼り付けたりすることができます。このテキストは、さまざまなツールで処理されます。",
+      "zh": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。",
+      "it": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti.",
+      "fr": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils.",
+      "es": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas.",
+      "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+    },
+    "tutorial_processed_text_text": {
+      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+      "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
+      "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
+      "ja": "処理されたテキストはここに表示されます。テキストの一部を選択して、辞書で調べることができます。",
+      "zh": "处理后的文本将显示在这里。你可以选择文本的部分内容，在字典中进行查询。",
+      "it": "Il testo elaborato viene visualizzato qui. È possibile selezionare parti del testo per cercarle nel dizionario.",
+      "fr": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
+      "es": "El texto procesado se mostrará aquí. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+      "pl": "Przetworzony tekst zostanie pokazany tutaj. Możesz zaznaczyć fragmenty tekstu, aby wyszukać je w słowniku."
+    },
+    "tutorial_spaces_text": {
+      "en": "With this button spaces are added to the text.",
+      "de": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
+      "ru": "С помощью этой кнопки в текст добавляются пробелы.",
+      "ja": "このボタンを押すと、テキストにスペースが追加されます。",
+      "zh": "有了这个按钮，就可以在文本中添加空格。",
+      "it": "Con questo pulsante vengono aggiunti spazi al testo.",
+      "fr": "Ce bouton permet d'ajouter des espaces au texte.",
+      "es": "Con este botón se añaden espacios al texto.",
+      "pl": "Za pomocą tego przycisku do tekstu dodawane są spacje."
+    },
+    "tutorial_furigana_text": {
+      "en": "This button adds furigana to the text.",
+      "de": "Diese Schaltfläche fügt Furigana über dem Text ein.",
+      "ru": "Эта кнопка добавляет фуригану в текст.",
+      "ja": "テキストにふりがなをつけるボタンです。",
+      "zh": "这个按钮可以在文本中添加假名。",
+      "it": "Questo pulsante aggiunge i furigana al testo.",
+      "fr": "Ce bouton ajoute des furigana au texte.",
+      "es": "Este botón añade furigana al texto.",
+      "pl": "Ten przycisk dodaje furiganę do tekstu."
+    },
+    "tutorial_colors_text": {
+      "en": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+      "de": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
+      "ru": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
+      "ja": "このボタンは、テキストの単語をさまざまな色で表示します（色の意味は、マニュアルで確認できます）。",
+      "zh": "这个按钮用不同的颜色显示文字的字样（颜色的含义可以在手册中看到）。",
+      "it": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
+      "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
+      "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
+      "pl": "Ten przycisk pokazuje słowa tekstu w różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
+    },
+    "tutorial_fullscreen_text": {
+      "en": "This button switches the processed text to full screen.",
+      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
+      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
+      "ja": "処理中のテキストをフルスクリーンに切り替えるボタンです。",
+      "zh": "这个按钮将处理后的文本切换到全屏。",
+      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
+      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
+      "es": "Este botón cambia el texto procesado a pantalla completa.",
+      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
     }
   },
   "DictionaryScreen": {

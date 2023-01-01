@@ -169,7 +169,15 @@
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
-    "title": "Text"
+    "title": "Text",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the text processing!",
+    "tutorial_colors_text": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+    "tutorial_fullscreen_text": "This button switches the processed text to full screen.",
+    "tutorial_furigana_text": "This button adds furigana to the text.",
+    "tutorial_processed_text_text": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+    "tutorial_spaces_text": "With this button spaces are added to the text.",
+    "tutorial_text_input_text": "Here you can write or paste any text. This text will be processed with different tools."
   },
   "WebviewScreen": {
     "loading": "Searching",

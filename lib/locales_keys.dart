@@ -160,6 +160,14 @@ abstract class  LocaleKeys {
   static const Stores = 'Stores';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';
   static const TextScreen_title = 'TextScreen.title';
+  static const TextScreen_tutorial_begin_text = 'TextScreen.tutorial_begin_text';
+  static const TextScreen_tutorial_begin_title = 'TextScreen.tutorial_begin_title';
+  static const TextScreen_tutorial_colors_text = 'TextScreen.tutorial_colors_text';
+  static const TextScreen_tutorial_fullscreen_text = 'TextScreen.tutorial_fullscreen_text';
+  static const TextScreen_tutorial_furigana_text = 'TextScreen.tutorial_furigana_text';
+  static const TextScreen_tutorial_processed_text_text = 'TextScreen.tutorial_processed_text_text';
+  static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
+  static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';

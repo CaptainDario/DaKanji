@@ -138,7 +138,15 @@ class CodegenLoader extends AssetLoader{
   },
   "TextScreen": {
     "input_text_here": "在这里输入文字...",
-    "title": "文本"
+    "title": "文本",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到文本处理!",
+    "tutorial_colors_text": "这个按钮用不同的颜色显示文字的字样（颜色的含义可以在手册中看到）。",
+    "tutorial_fullscreen_text": "这个按钮将处理后的文本切换到全屏。",
+    "tutorial_furigana_text": "这个按钮可以在文本中添加假名。",
+    "tutorial_processed_text_text": "处理后的文本将显示在这里。你可以选择文本的部分内容，在字典中进行查询。",
+    "tutorial_spaces_text": "有了这个按钮，就可以在文本中添加空格。",
+    "tutorial_text_input_text": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。"
   },
   "WebviewScreen": {
     "loading": "搜索",
@@ -1114,6 +1122,94 @@ static const Map<String,dynamic> localizations = {
       "fr": "Entrez le texte ici...",
       "es": "Introduzca aquí el texto...",
       "pl": "Wprowadź tekst tutaj..."
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the text processing!",
+      "de": "Willkommen bei der Textverarbeitung!",
+      "ru": "Добро пожаловать в обработку текста!",
+      "ja": "テキスト処理にようこそ!",
+      "zh": "欢迎来到文本处理!",
+      "it": "Benvenuti nell'elaborazione del testo!",
+      "fr": "Bienvenue dans le traitement de texte !",
+      "es": "¡Bienvenido al tratamiento de textos!",
+      "pl": "Zapraszamy na obróbkę tekstu!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします。",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_text_input_text": {
+      "en": "Here you can write or paste any text. This text will be processed with different tools.",
+      "de": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text wird mit verschiedenen Tools bearbeitet.",
+      "ru": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов.",
+      "ja": "ここでは、任意のテキストを書き込んだり、貼り付けたりすることができます。このテキストは、さまざまなツールで処理されます。",
+      "zh": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。",
+      "it": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti.",
+      "fr": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils.",
+      "es": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas.",
+      "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+    },
+    "tutorial_processed_text_text": {
+      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+      "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
+      "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
+      "ja": "処理されたテキストはここに表示されます。テキストの一部を選択して、辞書で調べることができます。",
+      "zh": "处理后的文本将显示在这里。你可以选择文本的部分内容，在字典中进行查询。",
+      "it": "Il testo elaborato viene visualizzato qui. È possibile selezionare parti del testo per cercarle nel dizionario.",
+      "fr": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
+      "es": "El texto procesado se mostrará aquí. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+      "pl": "Przetworzony tekst zostanie pokazany tutaj. Możesz zaznaczyć fragmenty tekstu, aby wyszukać je w słowniku."
+    },
+    "tutorial_spaces_text": {
+      "en": "With this button spaces are added to the text.",
+      "de": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
+      "ru": "С помощью этой кнопки в текст добавляются пробелы.",
+      "ja": "このボタンを押すと、テキストにスペースが追加されます。",
+      "zh": "有了这个按钮，就可以在文本中添加空格。",
+      "it": "Con questo pulsante vengono aggiunti spazi al testo.",
+      "fr": "Ce bouton permet d'ajouter des espaces au texte.",
+      "es": "Con este botón se añaden espacios al texto.",
+      "pl": "Za pomocą tego przycisku do tekstu dodawane są spacje."
+    },
+    "tutorial_furigana_text": {
+      "en": "This button adds furigana to the text.",
+      "de": "Diese Schaltfläche fügt Furigana über dem Text ein.",
+      "ru": "Эта кнопка добавляет фуригану в текст.",
+      "ja": "テキストにふりがなをつけるボタンです。",
+      "zh": "这个按钮可以在文本中添加假名。",
+      "it": "Questo pulsante aggiunge i furigana al testo.",
+      "fr": "Ce bouton ajoute des furigana au texte.",
+      "es": "Este botón añade furigana al texto.",
+      "pl": "Ten przycisk dodaje furiganę do tekstu."
+    },
+    "tutorial_colors_text": {
+      "en": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+      "de": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
+      "ru": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
+      "ja": "このボタンは、テキストの単語をさまざまな色で表示します（色の意味は、マニュアルで確認できます）。",
+      "zh": "这个按钮用不同的颜色显示文字的字样（颜色的含义可以在手册中看到）。",
+      "it": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
+      "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
+      "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
+      "pl": "Ten przycisk pokazuje słowa tekstu w różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
+    },
+    "tutorial_fullscreen_text": {
+      "en": "This button switches the processed text to full screen.",
+      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
+      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
+      "ja": "処理中のテキストをフルスクリーンに切り替えるボタンです。",
+      "zh": "这个按钮将处理后的文本切换到全屏。",
+      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
+      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
+      "es": "Este botón cambia el texto procesado a pantalla completa.",
+      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
     }
   },
   "DictionaryScreen": {
@@ -1609,7 +1705,15 @@ static const Map<String,dynamic> ja = {
   },
   "TextScreen": {
     "input_text_here": "ここにテキストを入力...",
-    "title": "テキスト"
+    "title": "テキスト",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします。",
+    "tutorial_begin_title": "テキスト処理にようこそ!",
+    "tutorial_colors_text": "このボタンは、テキストの単語をさまざまな色で表示します（色の意味は、マニュアルで確認できます）。",
+    "tutorial_fullscreen_text": "処理中のテキストをフルスクリーンに切り替えるボタンです。",
+    "tutorial_furigana_text": "テキストにふりがなをつけるボタンです。",
+    "tutorial_processed_text_text": "処理されたテキストはここに表示されます。テキストの一部を選択して、辞書で調べることができます。",
+    "tutorial_spaces_text": "このボタンを押すと、テキストにスペースが追加されます。",
+    "tutorial_text_input_text": "ここでは、任意のテキストを書き込んだり、貼り付けたりすることができます。このテキストは、さまざまなツールで処理されます。"
   },
   "WebviewScreen": {
     "loading": "検索中",
@@ -1780,7 +1884,15 @@ static const Map<String,dynamic> de = {
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
-    "title": "Text"
+    "title": "Text",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen bei der Textverarbeitung!",
+    "tutorial_colors_text": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
+    "tutorial_fullscreen_text": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
+    "tutorial_furigana_text": "Diese Schaltfläche fügt Furigana über dem Text ein.",
+    "tutorial_processed_text_text": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
+    "tutorial_spaces_text": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
+    "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text wird mit verschiedenen Tools bearbeitet."
   },
   "WebviewScreen": {
     "loading": "Suche",
@@ -1911,7 +2023,15 @@ static const Map<String,dynamic> ru = {
   },
   "TextScreen": {
     "input_text_here": "Введите текст здесь...",
-    "title": "Текст"
+    "title": "Текст",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать в обработку текста!",
+    "tutorial_colors_text": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
+    "tutorial_fullscreen_text": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
+    "tutorial_furigana_text": "Эта кнопка добавляет фуригану в текст.",
+    "tutorial_processed_text_text": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
+    "tutorial_spaces_text": "С помощью этой кнопки в текст добавляются пробелы.",
+    "tutorial_text_input_text": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов."
   },
   "WebviewScreen": {
     "loading": "Поиск",
@@ -2044,7 +2164,15 @@ static const Map<String,dynamic> pl = {
   },
   "TextScreen": {
     "input_text_here": "Wprowadź tekst tutaj...",
-    "title": "Tekst"
+    "title": "Tekst",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Zapraszamy na obróbkę tekstu!",
+    "tutorial_colors_text": "Ten przycisk pokazuje słowa tekstu w różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji).",
+    "tutorial_fullscreen_text": "Ten przycisk przełącza przetwarzany tekst na pełny ekran.",
+    "tutorial_furigana_text": "Ten przycisk dodaje furiganę do tekstu.",
+    "tutorial_processed_text_text": "Przetworzony tekst zostanie pokazany tutaj. Możesz zaznaczyć fragmenty tekstu, aby wyszukać je w słowniku.",
+    "tutorial_spaces_text": "Za pomocą tego przycisku do tekstu dodawane są spacje.",
+    "tutorial_text_input_text": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
   },
   "WebviewScreen": {
     "loading": "Ładowanie",
@@ -2215,7 +2343,15 @@ static const Map<String,dynamic> en = {
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
-    "title": "Text"
+    "title": "Text",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the text processing!",
+    "tutorial_colors_text": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+    "tutorial_fullscreen_text": "This button switches the processed text to full screen.",
+    "tutorial_furigana_text": "This button adds furigana to the text.",
+    "tutorial_processed_text_text": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+    "tutorial_spaces_text": "With this button spaces are added to the text.",
+    "tutorial_text_input_text": "Here you can write or paste any text. This text will be processed with different tools."
   },
   "WebviewScreen": {
     "loading": "Searching",
@@ -2348,7 +2484,15 @@ static const Map<String,dynamic> it = {
   },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
-    "title": "Testo"
+    "title": "Testo",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nell'elaborazione del testo!",
+    "tutorial_colors_text": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
+    "tutorial_fullscreen_text": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
+    "tutorial_furigana_text": "Questo pulsante aggiunge i furigana al testo.",
+    "tutorial_processed_text_text": "Il testo elaborato viene visualizzato qui. È possibile selezionare parti del testo per cercarle nel dizionario.",
+    "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
+    "tutorial_text_input_text": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti."
   },
   "WebviewScreen": {
     "loading": "Ricerca",
@@ -2481,7 +2625,15 @@ static const Map<String,dynamic> fr = {
   },
   "TextScreen": {
     "input_text_here": "Entrez le texte ici...",
-    "title": "Texte"
+    "title": "Texte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans le traitement de texte !",
+    "tutorial_colors_text": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
+    "tutorial_fullscreen_text": "Ce bouton permet de faire passer le texte traité en plein écran.",
+    "tutorial_furigana_text": "Ce bouton ajoute des furigana au texte.",
+    "tutorial_processed_text_text": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
+    "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
+    "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
   "WebviewScreen": {
     "loading": "Recherche",
@@ -2614,7 +2766,15 @@ static const Map<String,dynamic> es = {
   },
   "TextScreen": {
     "input_text_here": "Introduzca aquí el texto...",
-    "title": "Texto"
+    "title": "Texto",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido al tratamiento de textos!",
+    "tutorial_colors_text": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
+    "tutorial_fullscreen_text": "Este botón cambia el texto procesado a pantalla completa.",
+    "tutorial_furigana_text": "Este botón añade furigana al texto.",
+    "tutorial_processed_text_text": "El texto procesado se mostrará aquí. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+    "tutorial_spaces_text": "Con este botón se añaden espacios al texto.",
+    "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
   },
   "WebviewScreen": {
     "loading": "Buscando",

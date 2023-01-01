@@ -169,7 +169,15 @@
   },
   "TextScreen": {
     "input_text_here": "Wprowad\u017a tekst tutaj...",
-    "title": "Tekst"
+    "title": "Tekst",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Zapraszamy na obr\u00f3bk\u0119 tekstu!",
+    "tutorial_colors_text": "Ten przycisk pokazuje s\u0142owa tekstu w r\u00f3\u017cnych kolorach (znaczenia kolor\u00f3w mo\u017cna zobaczy\u0107 w instrukcji).",
+    "tutorial_fullscreen_text": "Ten przycisk prze\u0142\u0105cza przetwarzany tekst na pe\u0142ny ekran.",
+    "tutorial_furigana_text": "Ten przycisk dodaje furigan\u0119 do tekstu.",
+    "tutorial_processed_text_text": "Przetworzony tekst zostanie pokazany tutaj. Mo\u017cesz zaznaczy\u0107 fragmenty tekstu, aby wyszuka\u0107 je w s\u0142owniku.",
+    "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
+    "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
   },
   "WebviewScreen": {
     "loading": "\u0141adowanie",
