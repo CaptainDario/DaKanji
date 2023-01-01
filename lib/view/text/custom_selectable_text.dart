@@ -452,6 +452,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
     return Listener(
       onPointerDown: (event) {
+
+        // assure that words are in the text fields
+        if(words.length == 0) return;
     
         tapped++;
     
