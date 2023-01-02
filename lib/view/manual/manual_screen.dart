@@ -33,7 +33,7 @@ class _ManualScreenState extends State<ManualScreen>
   List<IconData> buttonIcons = [
     //Icons.brush,
     //Icons.book,
-    Icons.abc
+    Icons.text_snippet
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;

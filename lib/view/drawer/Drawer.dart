@@ -287,7 +287,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             ),
                             // Drawer entry to go to the text processing screen
                             DrawerElement(
-                              leading: Icons.abc_outlined,
+                              leading: Icons.text_snippet,
                               title: LocaleKeys.TextScreen_title.tr(),
                               route: "/text",
                               selected: widget.currentScreen == Screens.text,
@@ -300,7 +300,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 leading: IconData(
                                   0x6f22, fontFamily: "NotoSans"
                                 ),
-                                leadingAlignment: Alignment(-0.1, -0.5),
+                                leadingAlignment: Alignment(-0.1, -0.6),
                                 title: LocaleKeys.KanjiScreen_title.tr(),
                                 route: "/kanji",
                                 selected: widget.currentScreen == Screens.kanji,
