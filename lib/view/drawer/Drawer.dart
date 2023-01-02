@@ -297,7 +297,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the kanji screen
                             if(kDebugMode)
                               DrawerElement(
-                                leading: Icons.accessible,
+                                leading: IconData(
+                                  0x6f22, fontFamily: "NotoSans"
+                                ),
+                                leadingAlignment: Alignment(-0.1, -0.5),
                                 title: LocaleKeys.KanjiScreen_title.tr(),
                                 route: "/kanji",
                                 selected: widget.currentScreen == Screens.kanji,

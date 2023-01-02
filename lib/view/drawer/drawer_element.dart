@@ -15,6 +15,7 @@ class DrawerElement extends StatelessWidget {
   const DrawerElement(
     {
       required this.leading,
+      this.leadingAlignment = Alignment.center,
       required this.title,
       required this.route,
       required this.selected,
@@ -27,6 +28,8 @@ class DrawerElement extends StatelessWidget {
 
   /// The leading icon of this tile
   final IconData leading;
+  /// The alignment of the leading icon, default to center
+  final Alignment leadingAlignment;
   /// The title of this tile
   final String title;
   /// The route to which will be navigated once the user taps on this tile
@@ -76,10 +79,15 @@ class DrawerElement extends StatelessWidget {
             children: [
               SizedBox(width: drawerWidth*0.1,),
               Center(
-                child: Icon(
-                  leading,
-                  color: selected ? Theme.of(context).highlightColor : null,
-                  size: tileHeight*0.5,
+                child: Container(
+                  child: Align(
+                    alignment: leadingAlignment,
+                    child: Icon(
+                      leading,
+                      color: selected ? Theme.of(context).highlightColor : null,
+                      size: tileHeight*0.5,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(width: drawerWidth*0.05,),
