@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 class TextScreenTutorial extends Tutorial {
 
-  /// all tutorial steps that beolng to the TextScreen
+  // All tutorial steps that belong to the TextScreen
   late FocusNode textInputSteps;
   late FocusNode processedTextSteps;
   late FocusNode spacesButtonSteps;
@@ -36,6 +36,7 @@ class TextScreenTutorial extends Tutorial {
       LocaleKeys.TextScreen_tutorial_colors_text.tr(),
       LocaleKeys.TextScreen_tutorial_fullscreen_text.tr(),
     ];
+    
     initTutorial();
 
     /// get the different parts of the tutorial
