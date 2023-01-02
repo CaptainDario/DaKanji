@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -13,7 +12,6 @@ import 'package:da_kanji_mobile/view/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_kanji_tab.dart';
 import 'package:da_kanji_mobile/view/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
 
 
 
@@ -53,24 +51,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
 
-  @override
-  void initState() {
-    
-    super.initState();
-
-    // init tutorial
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDictionary && widget.includeTutorial) {
-
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!
-        );
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,31 +113,40 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                         // word 
                         if(tabsSideBySide > 1)
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(8),
-                              child: DictionaryWordTab(
-                                context.watch<DictSearch>().selectedResult
+                            child: Focus(
+                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: DictionaryWordTab(
+                                  context.watch<DictSearch>().selectedResult
+                                ),
                               ),
                             ),
                           ),
                         // kanji
                         if(tabsSideBySide > 3)
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DictionaryKanjiTab(
-                                context.read<DictSearch>().kanjiVGs,
-                                context.read<DictSearch>().kanjiDic2s
+                            child: Focus(
+                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DictionaryKanjiTab(
+                                  context.read<DictSearch>().kanjiVGs,
+                                  context.read<DictSearch>().kanjiDic2s
+                                ),
                               ),
                             ),
                           ),
                         // examples
                         if(tabsSideBySide >= 4)
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DictionaryExampleTab(),
-                            )
+                            child: Focus(
+                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DictionaryExampleTab(),
+                              ),
+                            ),
                           ),
                       
                         // tab bar
@@ -176,11 +165,26 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                       indicatorColor: Theme.of(context).highlightColor,
                                       tabs: [
                                         if(tabsSideBySide < 2) 
-                                          Tab(text: LocaleKeys.DictionaryScreen_word_tab.tr()),
+                                          Focus(
+                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
+                                            child: Tab(
+                                              text: LocaleKeys.DictionaryScreen_word_tab.tr()
+                                              ),
+                                          ),
                                         if(tabsSideBySide < 4) 
-                                          Tab(text: LocaleKeys.DictionaryScreen_kanji_tab.tr()),
+                                          Focus(
+                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
+                                            child: Tab(
+                                              text: LocaleKeys.DictionaryScreen_kanji_tab.tr()
+                                              ),
+                                          ),
                                         if(tabsSideBySide < 4) 
-                                          Tab(text: LocaleKeys.DictionaryScreen_example_tab.tr()),
+                                          Focus(
+                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
+                                            child: Tab(
+                                              text: LocaleKeys.DictionaryScreen_example_tab.tr()
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   ),

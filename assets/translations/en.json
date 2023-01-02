@@ -24,6 +24,14 @@
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
     "title": "Dictionary",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the dictionary!",
+    "tutorial_examples_tab": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
+    "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
+    "tutorial_search_input_clear_text": "This button clears the input or copies the text from your clipboard.",
+    "tutorial_search_input_draw_text": "This button opens a screen in which use can draw a Kanji to look them up quickly.",
+    "tutorial_search_input_text": "This is the search input field, just tap on it to input any word you would like to search.",
+    "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
     "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
@@ -114,6 +122,12 @@
     "complete_log": "complete log",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "dict": "The COLOR button allows for showing the part of speech information (POS) of words. The colors:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",

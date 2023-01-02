@@ -38,6 +38,14 @@ class CodegenLoader extends AssetLoader{
     "kanji_strokes": "中风",
     "kanji_tab": "汉字",
     "title": "词典",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎使用字典!",
+    "tutorial_examples_tab": "最后，例子标签向你展示了一些使用所选单词的例句。",
+    "tutorial_kanji_tab": "汉字标签包括关于单词中使用的汉字的信息。这包括笔画的数量和顺序以及含义。",
+    "tutorial_search_input_clear_text": "这个按钮可以清除输入或从剪贴板上复制文本。",
+    "tutorial_search_input_draw_text": "这个按钮可以打开一个屏幕，使用时可以画出一个汉字来快速查询。",
+    "tutorial_search_input_text": "这是搜索输入字段，只要点击它就可以输入你想搜索的任何单词。",
+    "tutorial_word_tab": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
     "word_antonyms": "反义词",
     "word_conjugation": "共轭法",
     "word_images": "图片",
@@ -91,6 +99,12 @@ class CodegenLoader extends AssetLoader{
     "complete_log": "完整日志",
     "rate_this_app": "速率",
     "whats_new": "最新信息"
+  },
+  "KanjiScreen": {
+    "title": "汉字"
+  },
+  "KuzushijiScreen": {
+    "title": "库兹吉"
   },
   "ManualScreen": {
     "title": "手册"
@@ -1576,6 +1590,120 @@ static const Map<String,dynamic> localizations = {
       "fr": "Exemple",
       "es": "Ejemplo",
       "pl": "Przykład"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the dictionary!",
+      "de": "Willkommen zum Wörterbuch!",
+      "ru": "Добро пожаловать в словарь!",
+      "ja": "ようこそ辞書へ",
+      "zh": "欢迎使用字典!",
+      "it": "Benvenuti nel dizionario!",
+      "fr": "Bienvenue dans le dictionnaire !",
+      "es": "¡Bienvenido al diccionario!",
+      "pl": "Witamy w słowniku!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします。",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_search_input_text": {
+      "en": "This is the search input field, just tap on it to input any word you would like to search.",
+      "de": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
+      "ru": "Это поле ввода поиска, просто нажмите на него, чтобы ввести любое слово, которое вы хотите найти.",
+      "ja": "検索入力欄です。タップして検索したい単語を入力してください。",
+      "zh": "这是搜索输入字段，只要点击它就可以输入你想搜索的任何单词。",
+      "it": "Questo è il campo di inserimento della ricerca, basta toccarlo per inserire la parola che si desidera cercare.",
+      "fr": "Il s'agit du champ de saisie de la recherche. Il suffit de taper dessus pour saisir le mot que vous souhaitez rechercher.",
+      "es": "Este es el campo de entrada de búsqueda, simplemente pulse sobre él para introducir cualquier palabra que desee buscar.",
+      "pl": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać."
+    },
+    "tutorial_search_input_clear_text": {
+      "en": "This button clears the input or copies the text from your clipboard.",
+      "de": "Diese Schaltfläche löscht die Eingabe oder kopiert den Text aus der Zwischenablage.",
+      "ru": "Эта кнопка очищает вводимый текст или копирует его из буфера обмена.",
+      "ja": "入力をクリアしたり、クリップボードからテキストをコピーするボタンです。",
+      "zh": "这个按钮可以清除输入或从剪贴板上复制文本。",
+      "it": "Questo pulsante cancella l'input o copia il testo dagli appunti.",
+      "fr": "Ce bouton efface la saisie ou copie le texte depuis le presse-papiers.",
+      "es": "Este botón borra la entrada o copia el texto del portapapeles.",
+      "pl": "Ten przycisk czyści dane wejściowe lub kopiuje tekst ze schowka."
+    },
+    "tutorial_search_input_draw_text": {
+      "en": "This button opens a screen in which use can draw a Kanji to look them up quickly.",
+      "de": "Diese Schaltfläche öffnet einen Bildschirm, in dem du ein Kanji zeichnen kannst, um es nachzuschlagen.",
+      "ru": "Эта кнопка открывает экран, на котором можно нарисовать кандзи для их быстрого поиска.",
+      "ja": "このボタンを押すと、漢字を描いてすぐに調べられる画面が表示されます。",
+      "zh": "这个按钮可以打开一个屏幕，使用时可以画出一个汉字来快速查询。",
+      "it": "Questo pulsante apre una schermata in cui è possibile disegnare un Kanji per consultarlo rapidamente.",
+      "fr": "Ce bouton ouvre un écran dans lequel l'utilisateur peut dessiner un Kanji pour le rechercher rapidement.",
+      "es": "Este botón abre una pantalla en la que puedes dibujar un Kanji para buscarlo rápidamente.",
+      "pl": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać."
+    },
+    "tutorial_word_tab": {
+      "en": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
+      "de": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprache der Übersetzungen kann in den Einstellungen gewählt werden.",
+      "ru": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
+      "ja": "このタブには、選択した検索結果について、活用や訳語などさまざまな情報が表示されます。翻訳文の言語は設定で選択できます。",
+      "zh": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
+      "it": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
+      "fr": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
+      "es": "Esta pestaña incluye diversa información sobre el resultado de búsqueda seleccionado, como la conjugación y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
+      "pl": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach."
+    },
+    "tutorial_kanji_tab": {
+      "en": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
+      "de": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
+      "ru": "Вкладка Kanji-tab содержит информацию о кандзи, используемых в слове. Сюда входит количество и порядок штрихов, а также значения.",
+      "ja": "漢字タブには、その単語で使われている漢字の情報が含まれています。画数、画数順、意味などが含まれます。",
+      "zh": "汉字标签包括关于单词中使用的汉字的信息。这包括笔画的数量和顺序以及含义。",
+      "it": "La scheda Kanji contiene informazioni sui Kanji utilizzati nella parola. Include il numero e l'ordine dei tratti e il significato.",
+      "fr": "L'onglet Kanji comprend des informations sur les Kanjis utilisés dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
+      "es": "La pestaña Kanji incluye información sobre los Kanjis utilizados en la palabra. Incluye el número y el orden de los trazos y los significados.",
+      "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia."
+    },
+    "tutorial_examples_tab": {
+      "en": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
+      "de": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
+      "ru": "Наконец, на вкладке \"Примеры\" показаны примеры предложений, в которых используется выбранное слово.",
+      "ja": "最後に、例文タブでは、選択した単語を使った例文がいくつか表示されます。",
+      "zh": "最后，例子标签向你展示了一些使用所选单词的例句。",
+      "it": "Infine, le schede degli esempi mostrano alcune frasi di esempio che utilizzano la parola selezionata.",
+      "fr": "Enfin, l'onglet \"Exemples\" vous montre des exemples de phrases qui utilisent le mot sélectionné.",
+      "es": "Por último, la pestaña de ejemplos le muestra algunas frases de ejemplo que utilizan la palabra seleccionada.",
+      "pl": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa."
+    }
+  },
+  "KanjiScreen": {
+    "title": {
+      "en": "Kanji",
+      "de": "Kanji",
+      "ru": "Кандзи",
+      "ja": "漢字",
+      "zh": "汉字",
+      "it": "Kanji",
+      "fr": "Kanji",
+      "es": "Kanji",
+      "pl": "Kanji"
+    }
+  },
+  "KuzushijiScreen": {
+    "title": {
+      "en": "Kuzushiji",
+      "de": "Kuzushiji",
+      "ru": "Кудзусидзи",
+      "ja": "くずし字",
+      "zh": "库兹吉",
+      "it": "Kuzushiji",
+      "fr": "Kuzushiji",
+      "es": "Kuzushiji",
+      "pl": "Kuzushiji"
     }
   }
 };
@@ -1605,6 +1733,14 @@ static const Map<String,dynamic> ja = {
     "kanji_strokes": "画数",
     "kanji_tab": "漢字",
     "title": "辞書",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします。",
+    "tutorial_begin_title": "ようこそ辞書へ",
+    "tutorial_examples_tab": "最後に、例文タブでは、選択した単語を使った例文がいくつか表示されます。",
+    "tutorial_kanji_tab": "漢字タブには、その単語で使われている漢字の情報が含まれています。画数、画数順、意味などが含まれます。",
+    "tutorial_search_input_clear_text": "入力をクリアしたり、クリップボードからテキストをコピーするボタンです。",
+    "tutorial_search_input_draw_text": "このボタンを押すと、漢字を描いてすぐに調べられる画面が表示されます。",
+    "tutorial_search_input_text": "検索入力欄です。タップして検索したい単語を入力してください。",
+    "tutorial_word_tab": "このタブには、選択した検索結果について、活用や訳語などさまざまな情報が表示されます。翻訳文の言語は設定で選択できます。",
     "word_antonyms": "反意語",
     "word_conjugation": "共役",
     "word_images": "画像",
@@ -1658,6 +1794,12 @@ static const Map<String,dynamic> ja = {
     "complete_log": "かんぜんログ",
     "rate_this_app": "レート",
     "whats_new": "更新情報"
+  },
+  "KanjiScreen": {
+    "title": "漢字"
+  },
+  "KuzushijiScreen": {
+    "title": "くずし字"
   },
   "ManualScreen": {
     "title": "マニュアル"
@@ -1746,6 +1888,14 @@ static const Map<String,dynamic> de = {
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
     "title": "Wörterbuch",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen zum Wörterbuch!",
+    "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
+    "tutorial_kanji_tab": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
+    "tutorial_search_input_clear_text": "Diese Schaltfläche löscht die Eingabe oder kopiert den Text aus der Zwischenablage.",
+    "tutorial_search_input_draw_text": "Diese Schaltfläche öffnet einen Bildschirm, in dem du ein Kanji zeichnen kannst, um es nachzuschlagen.",
+    "tutorial_search_input_text": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
+    "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprache der Übersetzungen kann in den Einstellungen gewählt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -1837,6 +1987,12 @@ static const Map<String,dynamic> de = {
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
+  },
   "ManualScreen": {
     "dict": "Die Schaltfläche FARBE ermöglicht die Anzeige der Wortartinformationen (POS) von Wörtern. Die Farben:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
     "title": "Handbuch"
@@ -1923,6 +2079,14 @@ static const Map<String,dynamic> ru = {
     "kanji_strokes": "Инсульты",
     "kanji_tab": "Кандзи",
     "title": "Словарь",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать в словарь!",
+    "tutorial_examples_tab": "Наконец, на вкладке \"Примеры\" показаны примеры предложений, в которых используется выбранное слово.",
+    "tutorial_kanji_tab": "Вкладка Kanji-tab содержит информацию о кандзи, используемых в слове. Сюда входит количество и порядок штрихов, а также значения.",
+    "tutorial_search_input_clear_text": "Эта кнопка очищает вводимый текст или копирует его из буфера обмена.",
+    "tutorial_search_input_draw_text": "Эта кнопка открывает экран, на котором можно нарисовать кандзи для их быстрого поиска.",
+    "tutorial_search_input_text": "Это поле ввода поиска, просто нажмите на него, чтобы ввести любое слово, которое вы хотите найти.",
+    "tutorial_word_tab": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
     "word_antonyms": "Антонимы",
     "word_conjugation": "Спряжение",
     "word_images": "Изображения",
@@ -1976,6 +2140,12 @@ static const Map<String,dynamic> ru = {
     "complete_log": "полный журнал",
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
+  },
+  "KanjiScreen": {
+    "title": "Кандзи"
+  },
+  "KuzushijiScreen": {
+    "title": "Кудзусидзи"
   },
   "ManualScreen": {
     "title": "Руководство"
@@ -2064,6 +2234,14 @@ static const Map<String,dynamic> pl = {
     "kanji_strokes": "Udary",
     "kanji_tab": "Kanji",
     "title": "Słownik",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy w słowniku!",
+    "tutorial_examples_tab": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa.",
+    "tutorial_kanji_tab": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia.",
+    "tutorial_search_input_clear_text": "Ten przycisk czyści dane wejściowe lub kopiuje tekst ze schowka.",
+    "tutorial_search_input_draw_text": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać.",
+    "tutorial_search_input_text": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać.",
+    "tutorial_word_tab": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach.",
     "word_antonyms": "Antonimy",
     "word_conjugation": "Koniugacja",
     "word_images": "Zdjęcia",
@@ -2117,6 +2295,12 @@ static const Map<String,dynamic> pl = {
     "complete_log": "pełny rejestr",
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "title": "Ręcznie"
@@ -2205,6 +2389,14 @@ static const Map<String,dynamic> en = {
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
     "title": "Dictionary",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the dictionary!",
+    "tutorial_examples_tab": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
+    "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
+    "tutorial_search_input_clear_text": "This button clears the input or copies the text from your clipboard.",
+    "tutorial_search_input_draw_text": "This button opens a screen in which use can draw a Kanji to look them up quickly.",
+    "tutorial_search_input_text": "This is the search input field, just tap on it to input any word you would like to search.",
+    "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
     "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
@@ -2296,6 +2488,12 @@ static const Map<String,dynamic> en = {
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
+  },
   "ManualScreen": {
     "dict": "The COLOR button allows for showing the part of speech information (POS) of words. The colors:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
     "title": "Manual"
@@ -2384,6 +2582,14 @@ static const Map<String,dynamic> it = {
     "kanji_strokes": "Ictus",
     "kanji_tab": "Kanji",
     "title": "Dizionario",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nel dizionario!",
+    "tutorial_examples_tab": "Infine, le schede degli esempi mostrano alcune frasi di esempio che utilizzano la parola selezionata.",
+    "tutorial_kanji_tab": "La scheda Kanji contiene informazioni sui Kanji utilizzati nella parola. Include il numero e l'ordine dei tratti e il significato.",
+    "tutorial_search_input_clear_text": "Questo pulsante cancella l'input o copia il testo dagli appunti.",
+    "tutorial_search_input_draw_text": "Questo pulsante apre una schermata in cui è possibile disegnare un Kanji per consultarlo rapidamente.",
+    "tutorial_search_input_text": "Questo è il campo di inserimento della ricerca, basta toccarlo per inserire la parola che si desidera cercare.",
+    "tutorial_word_tab": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
     "word_antonyms": "Anonimi",
     "word_conjugation": "Coniugazione",
     "word_images": "Immagini",
@@ -2437,6 +2643,12 @@ static const Map<String,dynamic> it = {
     "complete_log": "registro completo",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "title": "Manuale"
@@ -2525,6 +2737,14 @@ static const Map<String,dynamic> fr = {
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
     "title": "Dictionnaire",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans le dictionnaire !",
+    "tutorial_examples_tab": "Enfin, l'onglet \"Exemples\" vous montre des exemples de phrases qui utilisent le mot sélectionné.",
+    "tutorial_kanji_tab": "L'onglet Kanji comprend des informations sur les Kanjis utilisés dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
+    "tutorial_search_input_clear_text": "Ce bouton efface la saisie ou copie le texte depuis le presse-papiers.",
+    "tutorial_search_input_draw_text": "Ce bouton ouvre un écran dans lequel l'utilisateur peut dessiner un Kanji pour le rechercher rapidement.",
+    "tutorial_search_input_text": "Il s'agit du champ de saisie de la recherche. Il suffit de taper dessus pour saisir le mot que vous souhaitez rechercher.",
+    "tutorial_word_tab": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
     "word_antonyms": "Antonymes",
     "word_conjugation": "Conjugaison",
     "word_images": "Images",
@@ -2578,6 +2798,12 @@ static const Map<String,dynamic> fr = {
     "complete_log": "journal complet",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "title": "Manuel"
@@ -2666,6 +2892,14 @@ static const Map<String,dynamic> es = {
     "kanji_strokes": "Trazos",
     "kanji_tab": "Kanji",
     "title": "Diccionario",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido al diccionario!",
+    "tutorial_examples_tab": "Por último, la pestaña de ejemplos le muestra algunas frases de ejemplo que utilizan la palabra seleccionada.",
+    "tutorial_kanji_tab": "La pestaña Kanji incluye información sobre los Kanjis utilizados en la palabra. Incluye el número y el orden de los trazos y los significados.",
+    "tutorial_search_input_clear_text": "Este botón borra la entrada o copia el texto del portapapeles.",
+    "tutorial_search_input_draw_text": "Este botón abre una pantalla en la que puedes dibujar un Kanji para buscarlo rápidamente.",
+    "tutorial_search_input_text": "Este es el campo de entrada de búsqueda, simplemente pulse sobre él para introducir cualquier palabra que desee buscar.",
+    "tutorial_word_tab": "Esta pestaña incluye diversa información sobre el resultado de búsqueda seleccionado, como la conjugación y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
     "word_antonyms": "Antónimos",
     "word_conjugation": "Conjugación",
     "word_images": "Imágenes",
@@ -2719,6 +2953,12 @@ static const Map<String,dynamic> es = {
     "complete_log": "registro completo",
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "title": "Manual"

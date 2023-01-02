@@ -24,6 +24,14 @@
     "kanji_strokes": "Udary",
     "kanji_tab": "Kanji",
     "title": "S\u0142ownik",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy w s\u0142owniku!",
+    "tutorial_examples_tab": "Na koniec w zak\u0142adkach przyk\u0142ady pokazane s\u0105 przyk\u0142adowe zdania, w kt\u00f3rych u\u017cyto wybranego s\u0142owa.",
+    "tutorial_kanji_tab": "Zak\u0142adka Kanji zawiera informacje o Kanji u\u017cytych w s\u0142owie. Obejmuje to liczb\u0119 i kolejno\u015b\u0107 uderze\u0144 oraz znaczenia.",
+    "tutorial_search_input_clear_text": "Ten przycisk czy\u015bci dane wej\u015bciowe lub kopiuje tekst ze schowka.",
+    "tutorial_search_input_draw_text": "Ten przycisk otwiera ekran, na kt\u00f3rym mo\u017cna narysowa\u0107 kanji, aby szybko je wyszuka\u0107.",
+    "tutorial_search_input_text": "To jest pole wyszukiwania, wystarczy dotkn\u0105\u0107 go, aby wprowadzi\u0107 dowolne s\u0142owo, kt\u00f3re chcesz wyszuka\u0107.",
+    "tutorial_word_tab": "Ta zak\u0142adka zawiera r\u00f3\u017cne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i t\u0142umaczenia. J\u0119zyk t\u0142umacze\u0144 mo\u017cna wybra\u0107 w ustawieniach.",
     "word_antonyms": "Antonimy",
     "word_conj_adj_causative": "",
     "word_conj_adj_causative_m": "",
@@ -114,6 +122,12 @@
     "complete_log": "pe\u0142ny rejestr",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "dict": "",

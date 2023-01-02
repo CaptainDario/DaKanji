@@ -24,6 +24,14 @@
     "kanji_strokes": "Trazos",
     "kanji_tab": "Kanji",
     "title": "Diccionario",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido al diccionario!",
+    "tutorial_examples_tab": "Por \u00faltimo, la pesta\u00f1a de ejemplos le muestra algunas frases de ejemplo que utilizan la palabra seleccionada.",
+    "tutorial_kanji_tab": "La pesta\u00f1a Kanji incluye informaci\u00f3n sobre los Kanjis utilizados en la palabra. Incluye el n\u00famero y el orden de los trazos y los significados.",
+    "tutorial_search_input_clear_text": "Este bot\u00f3n borra la entrada o copia el texto del portapapeles.",
+    "tutorial_search_input_draw_text": "Este bot\u00f3n abre una pantalla en la que puedes dibujar un Kanji para buscarlo r\u00e1pidamente.",
+    "tutorial_search_input_text": "Este es el campo de entrada de b\u00fasqueda, simplemente pulse sobre \u00e9l para introducir cualquier palabra que desee buscar.",
+    "tutorial_word_tab": "Esta pesta\u00f1a incluye diversa informaci\u00f3n sobre el resultado de b\u00fasqueda seleccionado, como la conjugaci\u00f3n y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
     "word_antonyms": "Ant\u00f3nimos",
     "word_conj_adj_causative": "",
     "word_conj_adj_causative_m": "",
@@ -114,6 +122,12 @@
     "complete_log": "registro completo",
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "dict": "",

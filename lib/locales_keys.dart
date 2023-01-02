@@ -23,6 +23,14 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_kanji_strokes = 'DictionaryScreen.kanji_strokes';
   static const DictionaryScreen_kanji_tab = 'DictionaryScreen.kanji_tab';
   static const DictionaryScreen_title = 'DictionaryScreen.title';
+  static const DictionaryScreen_tutorial_begin_text = 'DictionaryScreen.tutorial_begin_text';
+  static const DictionaryScreen_tutorial_begin_title = 'DictionaryScreen.tutorial_begin_title';
+  static const DictionaryScreen_tutorial_examples_tab = 'DictionaryScreen.tutorial_examples_tab';
+  static const DictionaryScreen_tutorial_kanji_tab = 'DictionaryScreen.tutorial_kanji_tab';
+  static const DictionaryScreen_tutorial_search_input_clear_text = 'DictionaryScreen.tutorial_search_input_clear_text';
+  static const DictionaryScreen_tutorial_search_input_draw_text = 'DictionaryScreen.tutorial_search_input_draw_text';
+  static const DictionaryScreen_tutorial_search_input_text = 'DictionaryScreen.tutorial_search_input_text';
+  static const DictionaryScreen_tutorial_word_tab = 'DictionaryScreen.tutorial_word_tab';
   static const DictionaryScreen_word_antonyms = 'DictionaryScreen.word_antonyms';
   static const DictionaryScreen_word_conj_adj_causative = 'DictionaryScreen.word_conj_adj_causative';
   static const DictionaryScreen_word_conj_adj_causative_m = 'DictionaryScreen.word_conj_adj_causative_m';
@@ -110,6 +118,10 @@ abstract class  LocaleKeys {
   static const HomeScreen_rate_this_app = 'HomeScreen.rate_this_app';
   static const HomeScreen_whats_new = 'HomeScreen.whats_new';
   static const HomeScreen = 'HomeScreen';
+  static const KanjiScreen_title = 'KanjiScreen.title';
+  static const KanjiScreen = 'KanjiScreen';
+  static const KuzushijiScreen_title = 'KuzushijiScreen.title';
+  static const KuzushijiScreen = 'KuzushijiScreen';
   static const ManualScreen_dict = 'ManualScreen.dict';
   static const ManualScreen_title = 'ManualScreen.title';
   static const ManualScreen = 'ManualScreen';

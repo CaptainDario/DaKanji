@@ -24,6 +24,14 @@
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
     "title": "W\u00f6rterbuch",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen zum W\u00f6rterbuch!",
+    "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispiels\u00e4tze, in denen das ausgew\u00e4hlte Wort verwendet wird.",
+    "tutorial_kanji_tab": "Der Kanji-Tab enth\u00e4lt Informationen \u00fcber die im Wort verwendeten Kanjis. Dazu geh\u00f6ren Anzahl und Reihenfolge der Striche und die Bedeutung.",
+    "tutorial_search_input_clear_text": "Diese Schaltfl\u00e4che l\u00f6scht die Eingabe oder kopiert den Text aus der Zwischenablage.",
+    "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du ein Kanji zeichnen kannst, um es nachzuschlagen.",
+    "tutorial_search_input_text": "Dies ist das Eingabefeld f\u00fcr die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen m\u00f6chtest.",
+    "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprache der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -114,6 +122,12 @@
     "complete_log": "vollst\u00e4ndiges Log",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "dict": "Die Schaltfl\u00e4che FARBE erm\u00f6glicht die Anzeige der Wortartinformationen (POS) von W\u00f6rtern. Die Farben:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",

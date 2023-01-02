@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:get_it/get_it.dart';
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/view/dictionary/kanji_card.dart';
-import 'package:get_it/get_it.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 
@@ -76,7 +76,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     init();
 
     return widget.kanjiVGs.isEmpty || widget.kanjidic2entries.isEmpty
-      ? SizedBox()
+      ? Container()
       : SingleChildScrollView(
         child: Column(
           children: () {

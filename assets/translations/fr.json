@@ -24,6 +24,14 @@
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
     "title": "Dictionnaire",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue dans le dictionnaire !",
+    "tutorial_examples_tab": "Enfin, l'onglet \"Exemples\" vous montre des exemples de phrases qui utilisent le mot s\u00e9lectionn\u00e9.",
+    "tutorial_kanji_tab": "L'onglet Kanji comprend des informations sur les Kanjis utilis\u00e9s dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
+    "tutorial_search_input_clear_text": "Ce bouton efface la saisie ou copie le texte depuis le presse-papiers.",
+    "tutorial_search_input_draw_text": "Ce bouton ouvre un \u00e9cran dans lequel l'utilisateur peut dessiner un Kanji pour le rechercher rapidement.",
+    "tutorial_search_input_text": "Il s'agit du champ de saisie de la recherche. Il suffit de taper dessus pour saisir le mot que vous souhaitez rechercher.",
+    "tutorial_word_tab": "Cet onglet comprend diverses informations sur le r\u00e9sultat de recherche s\u00e9lectionn\u00e9, telles que la conjugaison et les traductions. La langue des traductions peut \u00eatre choisie dans les param\u00e8tres.",
     "word_antonyms": "Antonymes",
     "word_conj_adj_causative": "",
     "word_conj_adj_causative_m": "",
@@ -114,6 +122,12 @@
     "complete_log": "journal complet",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
+  },
+  "KanjiScreen": {
+    "title": "Kanji"
+  },
+  "KuzushijiScreen": {
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
     "dict": "",

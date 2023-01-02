@@ -96,7 +96,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     }
 
     return widget.entry == null
-      ? SizedBox()
+      ? Container()
       : Align(
         alignment: Alignment.topCenter,
         child: SingleChildScrollView(

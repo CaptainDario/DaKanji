@@ -15,6 +15,13 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 
 class DictionaryScreen extends StatefulWidget {
 
+  /// was this page opened by clicking on the tab in the drawer
+  final bool openedByDrawer;
+  /// should the focus nodes for the tutorial be included
+  final bool includeTutorial;
+  /// the term that should be searched when this screen was opened
+  final String initialSearch;
+
   const DictionaryScreen(
     this.openedByDrawer,
     this.includeTutorial,
@@ -23,13 +30,6 @@ class DictionaryScreen extends StatefulWidget {
       Key? key
     }
   ) : super(key: key);
-
-  /// was this page opened by clicking on the tab in the drawer
-  final bool openedByDrawer;
-  /// should the focus nodes for the tutorial be included
-  final bool includeTutorial;
-  /// the term that should be searched when this screen was opened
-  final String initialSearch;
 
   @override
   _DictionaryScreenState createState() => _DictionaryScreenState();
@@ -80,7 +80,7 @@ class _DictionaryScreenState
       currentScreen: Screens.dictionary,
       animationAtStart: !widget.openedByDrawer,
       child: Dictionary(
-        false,
+        widget.includeTutorial,
       )
     );
   }

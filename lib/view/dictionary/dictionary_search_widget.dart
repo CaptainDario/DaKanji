@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
+import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
@@ -86,122 +87,131 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       updateSearchResults(initialSearch, true);
     }
 
-    return Card(
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: BorderDirectional(
-                bottom: BorderSide(
-                  color: expanded ? Colors.grey : Colors.transparent,
-                  style: BorderStyle.solid
+    return Focus(
+      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
+      child: Card(
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: BorderDirectional(
+                  bottom: BorderSide(
+                    color: expanded ? Colors.grey : Colors.transparent,
+                    style: BorderStyle.solid
+                  )
                 )
-              )
-            ),
-            child: Row(
-              key: searchTextInputKey,
-              children: [
-                
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                    child: IconButton(
-                      splashRadius: 20,
-                      icon: Icon(expanded && widget.canCollapse
-                        ? Icons.arrow_back
-                        : Icons.search),
-                      onPressed: () {
-                        if(!widget.canCollapse) return;
-
+              ),
+              child: Row(
+                key: searchTextInputKey,
+                children: [
+                  
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                      child: IconButton(
+                        splashRadius: 20,
+                        icon: Icon(expanded && widget.canCollapse
+                          ? Icons.arrow_back
+                          : Icons.search),
+                        onPressed: () {
+                          if(!widget.canCollapse) return;
+    
+                          setState(() {
+                            expanded = !expanded;
+                          });
+                        },
+                      ),
+                    ),
+                  // text input
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none
+                      ),
+                      controller: searchInputController,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
+                      onTap: () {
                         setState(() {
-                          expanded = !expanded;
+                          expanded = true;
                         });
+                      },
+                      onChanged: (text) async {
+                        await updateSearchResults(text, true);
+                        setState(() {});
                       },
                     ),
                   ),
-                // text input
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none
-                    ),
-                    controller: searchInputController,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 20
-                    ),
-                    onTap: () {
-                      setState(() {
+                  // Copy / clear button
+                  Focus(
+                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
+                    child: IconButton(
+                      splashRadius: 20,
+                      onPressed: () async {
+                        if(searchInputController.text != ""){
+                          searchInputController.text = "";
+                          context.read<DictSearch>().currentSearch = "";
+                          context.read<DictSearch>().searchResults = [];
+                        }
+                        else{
+                          String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+                          data = data.replaceAll("\n", " ");
+                          searchInputController.text = data;
+                          await updateSearchResults(data, true);
+                        }
                         expanded = true;
-                      });
-                    },
-                    onChanged: (text) async {
-                      await updateSearchResults(text, true);
-                      setState(() {});
-                    },
+                        setState(() { });
+                      },
+                      icon: Icon(
+                        searchInputController.text == ""
+                          ? Icons.copy
+                          : Icons.clear,
+                        size: 20,
+                      ),
+                    ),
                   ),
-                ),
-                // Copy / clear button
-                IconButton(
-                  splashRadius: 20,
-                  onPressed: () async {
-                    if(searchInputController.text != ""){
-                      searchInputController.text = "";
-                      context.read<DictSearch>().currentSearch = "";
-                      context.read<DictSearch>().searchResults = [];
-                    }
-                    else{
-                      String data = (await Clipboard.getData('text/plain'))?.text ?? "";
-                      data = data.replaceAll("\n", " ");
-                      searchInputController.text = data;
-                      await updateSearchResults(data, true);
-                    }
-                    expanded = true;
-                    setState(() { });
-                  },
-                  icon: Icon(
-                    searchInputController.text == ""
-                      ? Icons.copy
-                      : Icons.clear,
-                    size: 20,
-                  ),
-                ),
-                // drawing screen button
-                IconButton(
-                  splashRadius: 20,
-                  icon: Icon(Icons.brush),
-                  onPressed: () {
+                  // drawing screen button
+                  Focus(
+                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                    child: IconButton(
+                      splashRadius: 20,
+                      icon: Icon(Icons.brush),
+                      onPressed: () {
+                        setState(() {
+                          expanded = true;
+                        });
+                        
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+              height: expanded 
+                ? widget.expandedHeight - searchBarInputHeight
+                : 0,
+              child: SearchResultList(
+                onSearchResultPressed: (entry) async {
+                  List<String> kanjis =
+                    removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
+                  context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
+                  context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
+    
+                  // collapse the search bar
+                  if(widget.canCollapse)
                     setState(() {
-                      expanded = true;
+                      expanded = false;
                     });
-                    
-                  },
-                )
-              ],
-            ),
-          ),
-          AnimatedContainer(
-            duration: Duration(milliseconds: 400),
-            curve: Curves.easeInOut,
-            height: expanded 
-              ? widget.expandedHeight - searchBarInputHeight
-              : 0,
-            child: SearchResultList(
-              onSearchResultPressed: (entry) async {
-                List<String> kanjis =
-                  removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
-                context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
-                context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
-
-                // collapse the search bar
-                if(widget.canCollapse)
-                  setState(() {
-                    expanded = false;
-                  });
-              },
-            ),
-          )
-        ],
-      )
+                },
+              ),
+            )
+          ],
+        )
+      ),
     );
   }
 
