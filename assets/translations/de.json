@@ -131,7 +131,7 @@
   },
   "ManualScreen": {
     "text_pos_adverb": "Adverb: <a style=\"color:{ADVERB_COLOR}\">Dies ist ein <b>Adverb</b> Beispiel.</a>",
-    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
+    "text_pos_aux_verb": "Hilfsverb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
     "text_pos_conjunction": "Konjunktion: <a style=\"color:{CONJUNCTION_COLOR}\">Dies ist ein <b>Konjunktion</b> Beispiel.</a>",
     "text_pos_i_adj": "\u3044-Adjektiv: <a style=\"color:{I_ADJ_COLOR}\">Dies ist ein <b>\u3044-Adjektiv</b> Beispiel.</a>",
     "text_pos_interjection": "Interjektion: <a style=\"color:{INTERJECTION_COLOR}\">Dies ist ein <b>Interjektion</b> Beispiel.</a>",
@@ -141,6 +141,7 @@
     "text_pos_particle": "Partikel: <a style=\"color:{PARTICLE_COLOR}\">Dies ist ein <b>Teilchen</b> Beispiel.</a>",
     "text_pos_pronoun": "Pronomen: <a style=\"color:{PRONOUN_COLOR}\">Dies ist ein <b>Pronomen</b> Beispiel.</a>",
     "text_pos_suffix": "Suffix: <a style=\"color:{SUFFIX_COLOR}\">Dies ist ein <b>Suffix</b> Beispiel.</a>",
+    "text_pos_title": "Part of Speech (POS)",
     "text_pos_verb": "Verb: <a style=\"color:{VERB_COLOR}\">Dies ist ein <b>Verb</b> Beispiel.</a>",
     "title": "Handbuch"
   },

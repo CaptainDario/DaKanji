@@ -940,6 +940,10 @@
       "es": "Manual",
       "pl": "Ręcznie"
     },
+    "text_pos_title": {
+      "en": "Part of Speech (POS)",
+      "de": "Part of Speech (POS)"
+    },
     "text_pos_intro": {
       "en": "The meaning of the Part of Speech (POS) colors are:",
       "de": "Die Bedeutung der Part of Speech (POS) Farben sind:"
@@ -954,7 +958,7 @@
     },
     "text_pos_aux_verb": {
       "en": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
-      "de": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>"
+      "de": "Hilfsverb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>"
     },
     "text_pos_particle": {
       "en": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",

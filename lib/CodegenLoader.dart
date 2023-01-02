@@ -1109,6 +1109,10 @@ static const Map<String,dynamic> localizations = {
       "es": "Manual",
       "pl": "Ręcznie"
     },
+    "text_pos_title": {
+      "en": "Part of Speech (POS)",
+      "de": "Part of Speech (POS)"
+    },
     "text_pos_intro": {
       "en": "The meaning of the Part of Speech (POS) colors are:",
       "de": "Die Bedeutung der Part of Speech (POS) Farben sind:"
@@ -1123,7 +1127,7 @@ static const Map<String,dynamic> localizations = {
     },
     "text_pos_aux_verb": {
       "en": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
-      "de": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>"
+      "de": "Hilfsverb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>"
     },
     "text_pos_particle": {
       "en": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
@@ -2039,7 +2043,7 @@ static const Map<String,dynamic> de = {
   },
   "ManualScreen": {
     "text_pos_adverb": "Adverb: <a style=\"color:{ADVERB_COLOR}\">Dies ist ein <b>Adverb</b> Beispiel.</a>",
-    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
+    "text_pos_aux_verb": "Hilfsverb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
     "text_pos_conjunction": "Konjunktion: <a style=\"color:{CONJUNCTION_COLOR}\">Dies ist ein <b>Konjunktion</b> Beispiel.</a>",
     "text_pos_i_adj": "い-Adjektiv: <a style=\"color:{I_ADJ_COLOR}\">Dies ist ein <b>い-Adjektiv</b> Beispiel.</a>",
     "text_pos_interjection": "Interjektion: <a style=\"color:{INTERJECTION_COLOR}\">Dies ist ein <b>Interjektion</b> Beispiel.</a>",
@@ -2049,6 +2053,7 @@ static const Map<String,dynamic> de = {
     "text_pos_particle": "Partikel: <a style=\"color:{PARTICLE_COLOR}\">Dies ist ein <b>Teilchen</b> Beispiel.</a>",
     "text_pos_pronoun": "Pronomen: <a style=\"color:{PRONOUN_COLOR}\">Dies ist ein <b>Pronomen</b> Beispiel.</a>",
     "text_pos_suffix": "Suffix: <a style=\"color:{SUFFIX_COLOR}\">Dies ist ein <b>Suffix</b> Beispiel.</a>",
+    "text_pos_title": "Part of Speech (POS)",
     "text_pos_verb": "Verb: <a style=\"color:{VERB_COLOR}\">Dies ist ein <b>Verb</b> Beispiel.</a>",
     "title": "Handbuch"
   },
@@ -2561,6 +2566,7 @@ static const Map<String,dynamic> en = {
     "text_pos_particle": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
     "text_pos_pronoun": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
     "text_pos_suffix": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
+    "text_pos_title": "Part of Speech (POS)",
     "text_pos_verb": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
     "title": "Manual"
   },

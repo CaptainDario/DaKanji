@@ -141,6 +141,7 @@
     "text_pos_particle": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
     "text_pos_pronoun": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
     "text_pos_suffix": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
+    "text_pos_title": "Part of Speech (POS)",
     "text_pos_verb": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
     "title": "Manual"
   },

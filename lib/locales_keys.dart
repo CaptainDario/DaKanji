@@ -133,6 +133,7 @@ abstract class  LocaleKeys {
   static const ManualScreen_text_pos_particle = 'ManualScreen.text_pos_particle';
   static const ManualScreen_text_pos_pronoun = 'ManualScreen.text_pos_pronoun';
   static const ManualScreen_text_pos_suffix = 'ManualScreen.text_pos_suffix';
+  static const ManualScreen_text_pos_title = 'ManualScreen.text_pos_title';
   static const ManualScreen_text_pos_verb = 'ManualScreen.text_pos_verb';
   static const ManualScreen_title = 'ManualScreen.title';
   static const ManualScreen = 'ManualScreen';

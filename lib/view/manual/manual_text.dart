@@ -9,11 +9,13 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
+/// The manual for the TextScreen
 class ManualText extends StatelessWidget {
   ManualText({super.key});
 
   final String manualTextScreenText =
-    """${LocaleKeys.ManualScreen_text_pos_intro.tr()} <br>
+    """<h2>${LocaleKeys.ManualScreen_text_pos_title.tr()}</h2>
+    ${LocaleKeys.ManualScreen_text_pos_intro.tr()} <br>
       • ${LocaleKeys.ManualScreen_text_pos_pronoun.tr()} <br>
       • ${LocaleKeys.ManualScreen_text_pos_adverb.tr()} <br>
       • ${LocaleKeys.ManualScreen_text_pos_aux_verb.tr()} <br>

@@ -4,6 +4,7 @@ import 'package:simple_html_css/simple_html_css.dart';
 
 
 
+/// The manual for the DictionaryScreen
 class ManualDictionary extends StatelessWidget {
   ManualDictionary({super.key});
 
