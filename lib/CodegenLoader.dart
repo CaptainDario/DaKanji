@@ -1109,9 +1109,53 @@ static const Map<String,dynamic> localizations = {
       "es": "Manual",
       "pl": "Ręcznie"
     },
-    "dict": {
-      "en": "The COLOR button allows for showing the part of speech information (POS) of words. The colors:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
-      "de": "Die Schaltfläche FARBE ermöglicht die Anzeige der Wortartinformationen (POS) von Wörtern. Die Farben:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}"
+    "text_pos_intro": {
+      "en": "The meaning of the Part of Speech (POS) colors are:",
+      "de": "Die Bedeutung der Part of Speech (POS) Farben sind:"
+    },
+    "text_pos_pronoun": {
+      "en": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
+      "de": "Pronomen: <a style=\"color:{PRONOUN_COLOR}\">Dies ist ein <b>Pronomen</b> Beispiel.</a>"
+    },
+    "text_pos_adverb": {
+      "en": "adverb: <a style=\"color:{ADVERB_COLOR}\">this is an <b>adverb</b> example.</a>",
+      "de": "Adverb: <a style=\"color:{ADVERB_COLOR}\">Dies ist ein <b>Adverb</b> Beispiel.</a>"
+    },
+    "text_pos_aux_verb": {
+      "en": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
+      "de": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>"
+    },
+    "text_pos_particle": {
+      "en": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
+      "de": "Partikel: <a style=\"color:{PARTICLE_COLOR}\">Dies ist ein <b>Teilchen</b> Beispiel.</a>"
+    },
+    "text_pos_verb": {
+      "en": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
+      "de": "Verb: <a style=\"color:{VERB_COLOR}\">Dies ist ein <b>Verb</b> Beispiel.</a>"
+    },
+    "text_pos_noun": {
+      "en": "noun: <a style=\"color:{NOUN_COLOR}\">this is a <b>noun</b> example.</a>",
+      "de": "Substantiv: <a style=\"color:{NOUN_COLOR}\">Dies ist ein <b>Nomen</b> Beispiel.</a>"
+    },
+    "text_pos_i_adj": {
+      "en": "い-adjective: <a style=\"color:{I_ADJ_COLOR}\">this is an <b>い-adjective</b> example.</a>",
+      "de": "い-Adjektiv: <a style=\"color:{I_ADJ_COLOR}\">Dies ist ein <b>い-Adjektiv</b> Beispiel.</a>"
+    },
+    "text_pos_na_adj": {
+      "en": "な-adjective: <a style=\"color:{NA_ADJ_COLOR}\">this is a <b>な-adjective</b> example.</a>",
+      "de": "な-Adjektiv: <a style=\"color:{NA_ADJ_COLOR}\">Dies ist ein <b>な-Adjektiv</b> Beispiel.</a>"
+    },
+    "text_pos_interjection": {
+      "en": "interjection: <a style=\"color:{INTERJECTION_COLOR}\">this is an <b>interjection</b> example.</a>",
+      "de": "Interjektion: <a style=\"color:{INTERJECTION_COLOR}\">Dies ist ein <b>Interjektion</b> Beispiel.</a>"
+    },
+    "text_pos_suffix": {
+      "en": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
+      "de": "Suffix: <a style=\"color:{SUFFIX_COLOR}\">Dies ist ein <b>Suffix</b> Beispiel.</a>"
+    },
+    "text_pos_conjunction": {
+      "en": "conjunction: <a style=\"color:{CONJUNCTION_COLOR}\">this is a <b>conjunction</b> example.</a>",
+      "de": "Konjunktion: <a style=\"color:{CONJUNCTION_COLOR}\">Dies ist ein <b>Konjunktion</b> Beispiel.</a>"
     }
   },
   "TextScreen": {
@@ -1204,7 +1248,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ten przycisk dodaje furiganę do tekstu."
     },
     "tutorial_colors_text": {
-      "en": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+      "en": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
       "de": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
       "ru": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
       "ja": "このボタンは、テキストの単語をさまざまな色で表示します（色の意味は、マニュアルで確認できます）。",
@@ -1994,7 +2038,18 @@ static const Map<String,dynamic> de = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "dict": "Die Schaltfläche FARBE ermöglicht die Anzeige der Wortartinformationen (POS) von Wörtern. Die Farben:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
+    "text_pos_adverb": "Adverb: <a style=\"color:{ADVERB_COLOR}\">Dies ist ein <b>Adverb</b> Beispiel.</a>",
+    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
+    "text_pos_conjunction": "Konjunktion: <a style=\"color:{CONJUNCTION_COLOR}\">Dies ist ein <b>Konjunktion</b> Beispiel.</a>",
+    "text_pos_i_adj": "い-Adjektiv: <a style=\"color:{I_ADJ_COLOR}\">Dies ist ein <b>い-Adjektiv</b> Beispiel.</a>",
+    "text_pos_interjection": "Interjektion: <a style=\"color:{INTERJECTION_COLOR}\">Dies ist ein <b>Interjektion</b> Beispiel.</a>",
+    "text_pos_intro": "Die Bedeutung der Part of Speech (POS) Farben sind:",
+    "text_pos_na_adj": "な-Adjektiv: <a style=\"color:{NA_ADJ_COLOR}\">Dies ist ein <b>な-Adjektiv</b> Beispiel.</a>",
+    "text_pos_noun": "Substantiv: <a style=\"color:{NOUN_COLOR}\">Dies ist ein <b>Nomen</b> Beispiel.</a>",
+    "text_pos_particle": "Partikel: <a style=\"color:{PARTICLE_COLOR}\">Dies ist ein <b>Teilchen</b> Beispiel.</a>",
+    "text_pos_pronoun": "Pronomen: <a style=\"color:{PRONOUN_COLOR}\">Dies ist ein <b>Pronomen</b> Beispiel.</a>",
+    "text_pos_suffix": "Suffix: <a style=\"color:{SUFFIX_COLOR}\">Dies ist ein <b>Suffix</b> Beispiel.</a>",
+    "text_pos_verb": "Verb: <a style=\"color:{VERB_COLOR}\">Dies ist ein <b>Verb</b> Beispiel.</a>",
     "title": "Handbuch"
   },
   "OnBoarding": {
@@ -2495,7 +2550,18 @@ static const Map<String,dynamic> en = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "dict": "The COLOR button allows for showing the part of speech information (POS) of words. The colors:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
+    "text_pos_adverb": "adverb: <a style=\"color:{ADVERB_COLOR}\">this is an <b>adverb</b> example.</a>",
+    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
+    "text_pos_conjunction": "conjunction: <a style=\"color:{CONJUNCTION_COLOR}\">this is a <b>conjunction</b> example.</a>",
+    "text_pos_i_adj": "い-adjective: <a style=\"color:{I_ADJ_COLOR}\">this is an <b>い-adjective</b> example.</a>",
+    "text_pos_interjection": "interjection: <a style=\"color:{INTERJECTION_COLOR}\">this is an <b>interjection</b> example.</a>",
+    "text_pos_intro": "The meaning of the Part of Speech (POS) colors are:",
+    "text_pos_na_adj": "な-adjective: <a style=\"color:{NA_ADJ_COLOR}\">this is a <b>な-adjective</b> example.</a>",
+    "text_pos_noun": "noun: <a style=\"color:{NOUN_COLOR}\">this is a <b>noun</b> example.</a>",
+    "text_pos_particle": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
+    "text_pos_pronoun": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
+    "text_pos_suffix": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
+    "text_pos_verb": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -2544,7 +2610,7 @@ static const Map<String,dynamic> en = {
     "title": "Text",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the text processing!",
-    "tutorial_colors_text": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+    "tutorial_colors_text": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
     "tutorial_fullscreen_text": "This button switches the processed text to full screen.",
     "tutorial_furigana_text": "This button adds furigana to the text.",
     "tutorial_processed_text_text": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",

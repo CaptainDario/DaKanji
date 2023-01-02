@@ -130,7 +130,18 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "dict": "The COLOR button allows for showing the part of speech information (POS) of words. The colors:\n{PRONOUN_COLOR}\n{ADVERB_COLOR}",
+    "text_pos_adverb": "adverb: <a style=\"color:{ADVERB_COLOR}\">this is an <b>adverb</b> example.</a>",
+    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
+    "text_pos_conjunction": "conjunction: <a style=\"color:{CONJUNCTION_COLOR}\">this is a <b>conjunction</b> example.</a>",
+    "text_pos_i_adj": "\u3044-adjective: <a style=\"color:{I_ADJ_COLOR}\">this is an <b>\u3044-adjective</b> example.</a>",
+    "text_pos_interjection": "interjection: <a style=\"color:{INTERJECTION_COLOR}\">this is an <b>interjection</b> example.</a>",
+    "text_pos_intro": "The meaning of the Part of Speech (POS) colors are:",
+    "text_pos_na_adj": "\u306a-adjective: <a style=\"color:{NA_ADJ_COLOR}\">this is a <b>\u306a-adjective</b> example.</a>",
+    "text_pos_noun": "noun: <a style=\"color:{NOUN_COLOR}\">this is a <b>noun</b> example.</a>",
+    "text_pos_particle": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
+    "text_pos_pronoun": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
+    "text_pos_suffix": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
+    "text_pos_verb": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -186,7 +197,7 @@
     "title": "Text",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the text processing!",
-    "tutorial_colors_text": "This button shows the words of the text in different colors (the meanings of the colors can be seen in the manual).",
+    "tutorial_colors_text": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
     "tutorial_fullscreen_text": "This button switches the processed text to full screen.",
     "tutorial_furigana_text": "This button adds furigana to the text.",
     "tutorial_processed_text_text": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",

@@ -130,7 +130,18 @@
     "title": "\u5e93\u5179\u5409"
   },
   "ManualScreen": {
-    "dict": "",
+    "text_pos_adverb": "",
+    "text_pos_aux_verb": "",
+    "text_pos_conjunction": "",
+    "text_pos_i_adj": "",
+    "text_pos_interjection": "",
+    "text_pos_intro": "",
+    "text_pos_na_adj": "",
+    "text_pos_noun": "",
+    "text_pos_particle": "",
+    "text_pos_pronoun": "",
+    "text_pos_suffix": "",
+    "text_pos_verb": "",
     "title": "\u624b\u518c"
   },
   "OnBoarding": {

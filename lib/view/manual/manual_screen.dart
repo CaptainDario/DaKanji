@@ -1,4 +1,5 @@
 import 'package:da_kanji_mobile/view/manual/manual_button.dart';
+import 'package:da_kanji_mobile/view/manual/manual_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
@@ -23,11 +24,15 @@ class _ManualScreenState extends State<ManualScreen>
   with TickerProviderStateMixin{
 
   /// the text that is shown on the ManualButtons
-  List<String> buttonTexts = ["Drawing", "Dictionary", "Text"];
+  List<String> buttonTexts = [
+    //"Drawing",
+    //"Dictionary", 
+    "Text"
+  ];
   /// the icons that are shown on the ManualButtons
   List<IconData> buttonIcons = [
-    Icons.brush,
-    Icons.book,
+    //Icons.brush,
+    //Icons.book,
     Icons.abc
   ];
   /// The size of the manual buttons
@@ -43,9 +48,9 @@ class _ManualScreenState extends State<ManualScreen>
   Widget build(BuildContext context) {
 
     List<Widget> manualTexts = [
-      ManualDictionary(),
-      ManualDictionary(),
-      ManualDictionary()
+      //ManualDictionary(),
+      //ManualDictionary(),
+      ManualText()
     ];
 
     
