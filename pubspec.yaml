@@ -148,6 +148,8 @@ flutter:
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
     - assets/animations/
+    # brush
+    - assets/images/brush.png
     # icons
     - assets/icons/
     # tf lite models

@@ -72,6 +72,9 @@ class DrawerAppBar extends StatelessWidget {
                   case Screens.text:
                     title = LocaleKeys.TextScreen_title.tr();
                     break;
+                  case Screens.kanji:
+                    title = LocaleKeys.KanjiScreen_title.tr();
+                    break;
                   case Screens.home:
                     throw Exception("HomeScreen should not be navigated to via drawer");
                   case Screens.settings:

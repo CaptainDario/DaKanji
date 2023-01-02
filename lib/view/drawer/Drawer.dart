@@ -294,6 +294,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the kanji screen
+                            if(kDebugMode)
+                              DrawerElement(
+                                leading: Icons.accessible,
+                                title: LocaleKeys.KanjiScreen_title.tr(),
+                                route: "/kanji",
+                                selected: widget.currentScreen == Screens.kanji,
+                                drawerWidth: _drawerWidth,
+                                drawerController: _drawerController,
+                              ),
                             // Drawer entry to go to the settings screen
                             DrawerElement(
                               leading: Icons.settings_applications,

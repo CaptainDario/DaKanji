@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
@@ -112,6 +113,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, true));
+          case "/kanji":
+          return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
