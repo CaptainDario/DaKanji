@@ -4,6 +4,7 @@ enum Screens{
   drawing,
   dictionary,
   text,
+  kanji,
   home,
   settings,
   onboarding,
