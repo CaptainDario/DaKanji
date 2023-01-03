@@ -58,6 +58,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
   TextStyle headerStyle = TextStyle(color: Colors.grey);
+  /// Kanji groups Regex
+  RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke[Numbers|Paths].*a).*?>');
 
   @override
   void initState() {
@@ -181,20 +183,21 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       ),
                     ).toList(),
                     const SizedBox(height: 16,),
-                    ExpansionTile(
-                      title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
-                      children:
-                      [
-                        KanjiGroupWidget(
-                          widget.kanjiVG.svg,
-                          constrains.maxWidth - 16,
-                          constrains.maxWidth - 16
-                        ),
-                      ]
-                    ),
+                    if((kanjiGroupsRe.allMatches(widget.kanjiVG.svg)).length > 1)
+                      ExpansionTile(
+                        title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
+                        children:
+                        [
+                          KanjiGroupWidget(
+                            widget.kanjiVG.svg,
+                            constrains.maxWidth - 16,
+                            constrains.maxWidth - 16
+                          ),
+                        ]
+                      ),
                     if(this.widget.alternatives != null && this.widget.alternatives != [])
                       ExpansionTile(
-                        title: Text("Alternatives"),
+                        title: Text(LocaleKeys.DictionaryScreen_kanji_alternatives.tr()),
                         children: [
                           Wrap(
                             children: widget.alternatives!.map((alternative) => 
@@ -214,34 +217,34 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                   ],
                 ),
                 // more menu, to open this kanji in different web pages
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: PopupMenuButton(
-                      splashRadius: 25,
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) {
-                        String url = "";
-                        // Kanji Graph
-                        if(selection == menuItems[0]) {
-                          url = "$g_theKanjiMapUrl${widget.kanjidic2entry.character}";
-                        }
-                        // Kanji Map
-                        else if(selection == menuItems[1]) {
-                          url = "$g_japaneseGraphUrl${widget.kanjidic2entry.character}";
-                        }
-                        launchUrlString(Uri.encodeFull(url));
-                      },
-                      itemBuilder: (context) => List.generate(
-                        menuItems.length,
-                        (index) => 
-                          PopupMenuItem(
-                            value: menuItems[index],
-                            child: Text(menuItems[index])
-                          )
-                      ),
-                    )
-                  ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: PopupMenuButton(
+                    splashRadius: 25,
+                    icon: const Icon(Icons.more_vert),
+                    onSelected: (String selection) {
+                      String url = "";
+                      // Kanji Graph
+                      if(selection == menuItems[0]) {
+                        url = "$g_theKanjiMapUrl${widget.kanjidic2entry.character}";
+                      }
+                      // Kanji Map
+                      else if(selection == menuItems[1]) {
+                        url = "$g_japaneseGraphUrl${widget.kanjidic2entry.character}";
+                      }
+                      launchUrlString(Uri.encodeFull(url));
+                    },
+                    itemBuilder: (context) => List.generate(
+                      menuItems.length,
+                      (index) => 
+                        PopupMenuItem(
+                          value: menuItems[index],
+                          child: Text(menuItems[index])
+                        )
+                    ),
+                  )
+                ),
               ],
             ),
           );
