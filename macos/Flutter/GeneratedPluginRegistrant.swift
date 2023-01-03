@@ -12,7 +12,7 @@ import isar_flutter_libs
 import just_audio
 import path_provider_macos
 import screen_retriever
-import share_plus_macos
+import share_plus
 import shared_preferences_macos
 import sqflite
 import url_launcher_macos
