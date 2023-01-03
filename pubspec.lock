@@ -1245,9 +1245,11 @@ packages:
   tflite_flutter:
     dependency: "direct main"
     description:
-      path: "plugins/tflite_flutter_plugin"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ada0cb85f763bacadaa4b41c159350c32f87ed3b
+      url: "https://github.com/CaptainDario/tflite_flutter_plugin"
+    source: git
     version: "0.9.0"
   time:
     dependency: transitive

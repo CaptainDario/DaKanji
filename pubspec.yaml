@@ -63,7 +63,8 @@ dependencies:
       url: https://github.com/CaptainDario/easy_web_view.git
   in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
   tflite_flutter:                 # android, iOS, Linux, MacOS, windows
-    path: ./plugins/tflite_flutter_plugin
+    git:
+      url: https://github.com/CaptainDario/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
   kagome_dart: 
