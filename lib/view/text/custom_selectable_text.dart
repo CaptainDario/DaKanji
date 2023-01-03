@@ -20,6 +20,7 @@ class CustomSelectableText extends StatefulWidget {
 
     this.initialSelection,
     this.selectionColor = Colors.blueAccent,
+    this.textColor = Colors.black,
     this.caretColor = Colors.black,
     this.caretWidth = 1,
     this.allowSelection = true,
@@ -45,13 +46,15 @@ class CustomSelectableText extends StatefulWidget {
   final bool showRubys;
   /// should spaces be added to the text between words
   final bool addSpaces;
-  /// should the word be rendered in color
+  /// should the text be rendered in colors matching the POS
   final bool showColors;
 
   /// the initial selection of this widget
   final TextSelection? initialSelection;
   /// the color that should be used when selecting text
   final Color selectionColor;
+  /// The color in which the text should be rendered
+  final Color textColor;
   /// the color of the text selection caret
   final Color caretColor;
   /// the width of the text selection caret
@@ -546,7 +549,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                           text: TextSpan(
                             style: TextStyle(
                               fontSize: 20,
-                              height: widget.showRubys ? 2.0 : 1.4
+                              height: widget.showRubys ? 2.0 : 1.4,
                             ),
                             children: () {
                               List<TextSpan> ret = [];
@@ -560,7 +563,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                       && widget.wordColors != null
                                       && word != "█"
                                         ? widget.wordColors![cnt]
-                                        : null
+                                        : widget.textColor
                                     )
                                   )
                                 );
@@ -597,8 +600,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                     child: Text(
                                       rubys[index],
                                       maxLines: 1,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 10,
+                                        color: widget.textColor
                                       ),
                                     ),
                                   ),

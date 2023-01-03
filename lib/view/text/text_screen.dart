@@ -286,6 +286,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           addSpaces: addSpaces,
                                           showColors: colorizePos,
                                           paintTextBoxes: false,
+                                          textColor: Theme.of(context).brightness == Brightness.light
+                                            ? Colors.black
+                                            : Colors.white,
                                           selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
                                           onSelectionChange: (selection) {
                                             if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
@@ -319,7 +322,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               !addSpaces ?
                                               "assets/icons/space_bar_off.svg" :
                                               "assets/icons/space_bar_on.svg",
-                                              color: Colors.white,
+                                              color: Theme.of(context).brightness == Brightness.light
+                                              ? Colors.black
+                                              : Colors.white,
                                             ),
                                             onPressed: () {
                                               setState(() {
@@ -341,7 +346,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               showRubys ?
                                               "assets/icons/furigana_off.svg" :
                                               "assets/icons/furigana_on.svg",
-                                              color: Colors.white,
+                                              color: Theme.of(context).brightness == Brightness.light
+                                              ? Colors.black
+                                              : Colors.white,
                                             ),
                                             onPressed: () {
                                               setState(() {
@@ -362,7 +369,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               colorizePos ?
                                               "assets/icons/palette_off.svg" :
                                               "assets/icons/palette_on.svg",
-                                              color: Colors.white,
+                                              color: Theme.of(context).brightness == Brightness.light
+                                              ? Colors.black
+                                              : Colors.white,
                                             ),
                                             onPressed: () {
                                               setState(() {
@@ -381,7 +390,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           child: IconButton(
                                             icon: Icon(!fullScreen ? 
                                               Icons.open_in_full : 
-                                              Icons.close_fullscreen
+                                              Icons.close_fullscreen,
+                                              color: Theme.of(context).brightness == Brightness.light
+                                              ? Colors.black
+                                              : Colors.white,
                                             ),
                                             onPressed: () {
                                               // do not allow change while animation is running
