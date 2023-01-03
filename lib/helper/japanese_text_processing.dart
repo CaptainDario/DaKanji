@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:kagome_dart/kagome_dart.dart';
@@ -54,15 +53,21 @@ String deconjugate(String text){
     for (int i = 0; i < t.item2.length; i++) {
       // if the input is a verb / adjective / noun
       if((t.item2[i][0] == "動詞" || t.item2[i][0] == "形容詞" ||
-        t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞") 
-        // and it is not already in dict form
-        && t.item2[i][7] != t.item1[i])
+        t.item2[i][0] == "形状詞" || t.item2[i][0] == "名詞")
+        // and the next pos is a conjugation
+        && t.item2.length > i+1 && t.item2[i+1][0].contains("助動詞")
+        )
       {
-        // use dictionary form
-        ret += t.item2[i][11];
+        // convert to dictionary form...
+        // ... kanji if the user entered kanji
+        if(!GetIt.I<KanaKit>().isKana(text))
+          ret += t.item2[i][10];
+        // kana otherwise
+        else
+          ret += t.item2[i][6];
         
         i++;
-        while(t.item2.length > i && t.item2[i][0] == "助動詞"){
+        while(t.item2.length > i && t.item2[i][0].contains("助動詞")){
           i++;
         }
       }
@@ -72,6 +77,5 @@ String deconjugate(String text){
     }
   }
 
-  debugPrint(ret);
   return ret;
 }
