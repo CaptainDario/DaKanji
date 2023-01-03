@@ -6,7 +6,18 @@
 new Features:
 
 - Inbuilt dictionary
-- Provide feedback with feedback menu
+  - Search with kanji, kana or romaji
+  - Multi language support: english, german, french, spanish, ...
+  - Conjugation of verbs, adjectives, copula
+  - Detailed informations of Kanjis
+  - Example sentences
+- Text processing screen
+  - Add furigana to any text
+  - Look up unknown words using the inbuilt dictionary
+  - Colorize words based on their Part of Speech
+  - Translate using DeepL
+- Easy way of providing feedback
+- Simple manual for advanced features
 
 Changes:
 
@@ -16,6 +27,7 @@ Fixed:
 
 - After tap outside of rate dialog stuck with blank screen
 - Rate dialog "close"-button does not work
+- TF Lite not working on some SoCs
 
 -------------------------------------------------------------------------
 
