@@ -23,6 +23,7 @@ import 'package:da_kanji_mobile/view/text/text_screen.dart';
 import 'package:da_kanji_mobile/view/about_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/view/kuzushiji/kuzushiji_screen.dart';
 
 
 
@@ -114,7 +115,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, true));
           case "/kanji":
-          return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
+            return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
+          case "/kuzushiji":
+            return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":

@@ -129,6 +129,10 @@ flutter:
       fonts:
         - asset: assets/fonts/theater/Theater_Bold.otf
           weight: 900
+    - family: kouzan
+      fonts:
+        - asset: assets/fonts/kouzan/KouzanGyousho.otf
+          weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

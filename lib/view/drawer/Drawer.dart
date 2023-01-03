@@ -300,10 +300,25 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 leading: IconData(
                                   0x6f22, fontFamily: "NotoSans"
                                 ),
-                                leadingAlignment: Alignment(-0.1, -0.6),
+                                leadingAlignment: Alignment(-0.1, -0.65),
                                 title: LocaleKeys.KanjiScreen_title.tr(),
                                 route: "/kanji",
                                 selected: widget.currentScreen == Screens.kanji,
+                                drawerWidth: _drawerWidth,
+                                drawerController: _drawerController,
+                              ),
+                            // Drawer entry to go to the kuzushiji screen
+                            if(kDebugMode)
+                              DrawerElement(
+                                leading: IconData(
+                                  0x5d29,
+                                  fontFamily: "kouzan"
+                                ),
+                                leadingSize: 0.7,
+                                leadingAlignment: Alignment(-1000, 0),
+                                title: LocaleKeys.KuzushijiScreen_title.tr(),
+                                route: "/kuzushiji",
+                                selected: widget.currentScreen == Screens.kuzushiji,
                                 drawerWidth: _drawerWidth,
                                 drawerController: _drawerController,
                               ),

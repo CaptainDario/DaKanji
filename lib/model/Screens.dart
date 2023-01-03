@@ -5,6 +5,7 @@ enum Screens{
   dictionary,
   text,
   kanji,
+  kuzushiji,
   home,
   settings,
   onboarding,

@@ -29,7 +29,8 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * [Wordnet](https://bond-lab.github.io/wnja/eng/index.html)
     * [Jconj](https://github.com/yamagoya/jconj)
     * [ja_pitch_accent](https://github.com/kishimoto-tsuneyo/ja_pitch_accent)
-  * Thanks Adrian Jordanov for the [font](https://www.1001fonts.com/theater-font.html).
+  * Thanks Adrian Jordanov for the [font THEATER](https://www.1001fonts.com/theater-font.html)
+  * Thanks 青柳衡山 (Aoyagi Kouzan) for the [font Kouzan Gyoushou](https://www.freejapanesefont.com/kouzan-semi-cursive-brush-font/).
 
 * A big shout out to all current and past testers!
   * Android
