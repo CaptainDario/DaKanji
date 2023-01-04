@@ -57,6 +57,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   GlobalKey searchTextInputKey = GlobalKey();
   /// The height of the input searchfield
   double searchBarInputHeight = 0;
+  /// The FoucsNode of the search input field
+  FocusNode searchTextFieldFocusNode = FocusNode();
   
 
   @override
@@ -104,26 +106,27 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
               child: Row(
                 key: searchTextInputKey,
                 children: [
-                  
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                      child: IconButton(
-                        splashRadius: 20,
-                        icon: Icon(expanded && widget.canCollapse
-                          ? Icons.arrow_back
-                          : Icons.search),
-                        onPressed: () {
-                          if(!widget.canCollapse) return;
-    
-                          setState(() {
-                            expanded = !expanded;
-                          });
-                        },
-                      ),
+                  // magnifying glass icon button
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                    child: IconButton(
+                      splashRadius: 20,
+                      icon: Icon(expanded && widget.canCollapse
+                        ? Icons.arrow_back
+                        : Icons.search),
+                      onPressed: () {
+                        if(!widget.canCollapse) return;
+  
+                        setState(() {
+                          expanded = !expanded;
+                        });
+                      },
                     ),
+                  ),
                   // text input
                   Expanded(
                     child: TextField(
+                      focusNode: searchTextFieldFocusNode,
                       decoration: InputDecoration(
                         border: InputBorder.none
                       ),
@@ -153,6 +156,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           searchInputController.text = "";
                           context.read<DictSearch>().currentSearch = "";
                           context.read<DictSearch>().searchResults = [];
+                          searchTextFieldFocusNode.requestFocus();
                         }
                         else{
                           String data = (await Clipboard.getData('text/plain'))?.text ?? "";
