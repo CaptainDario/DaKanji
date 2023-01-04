@@ -196,7 +196,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               pos: conjugationPos!,
                             ),
                             
-                          //TODO - add proverbs @ DaKanji v3.3
+                          //TODO - add proverbs @ DaKanji v3.4
                           if(!kReleaseMode)
                             ExpansionTile(
                               title: Text(LocaleKeys.DictionaryScreen_word_proverbs.tr()),
@@ -204,7 +204,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 Text("This could be done by using kotowaza?")
                               ],
                             ),
-                          //TODO - add synonyms @ DaKanji v3.3
+                          //TODO - add synonyms @ DaKanji v3.4
                           if(!kReleaseMode)
                             ExpansionTile(
                               title: Text(LocaleKeys.DictionaryScreen_word_synonyms.tr()),
@@ -212,7 +212,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 Text("This could be done by using wordnet jp?")
                               ],
                             ),
-                          //TODO - add antonyms @ DaKanji v3.3
+                          //TODO - add antonyms @ DaKanji v3.4
                           if(!kReleaseMode)
                             ExpansionTile(
                               title: Text(LocaleKeys.DictionaryScreen_word_antonyms.tr()),

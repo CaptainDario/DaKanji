@@ -196,6 +196,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 : 0,
               child: SearchResultList(
                 onSearchResultPressed: (entry) async {
+                  context.read<DictSearch>().selectedResult = entry;
                   List<String> kanjis =
                     removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
                   context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);

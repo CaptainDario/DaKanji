@@ -37,9 +37,8 @@ class _SearchResultListState extends State<SearchResultList> {
           dictEntry: context.watch<DictSearch>().searchResults[index],
           resultIndex: index,
           onPressed: (selection) {
-            context.read<DictSearch>().selectedResult = selection;
             if(widget.onSearchResultPressed != null)
-              widget.onSearchResultPressed!(selection);
+                widget.onSearchResultPressed!(selection);
           } 
         );
       })

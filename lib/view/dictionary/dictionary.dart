@@ -194,15 +194,13 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                       child: TabBarView(
                                         children: [
                                           if(tabsSideBySide < 2)
-                                            context.read<DictSearch>().selectedResult != null
-                                            ?  DictionaryWordTab(
-                                                context.watch<DictSearch>().selectedResult
-                                              )
-                                            : SizedBox(),
+                                            DictionaryWordTab(
+                                              context.watch<DictSearch>().selectedResult
+                                            ),
                                           if(tabsSideBySide < 4) 
                                             DictionaryKanjiTab(
-                                              context.read<DictSearch>().kanjiVGs,
-                                              context.read<DictSearch>().kanjiDic2s
+                                              context.watch<DictSearch>().kanjiVGs,
+                                              context.watch<DictSearch>().kanjiDic2s
                                             ),
                                           if(tabsSideBySide < 4) 
                                             const DictionaryExampleTab(),
