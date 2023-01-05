@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +18,8 @@ import 'package:feedback/feedback.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:webview_windows/webview_windows.dart';
 
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
@@ -37,6 +38,7 @@ import 'package:da_kanji_mobile/provider/drawer_listener.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/feedback_localization.dart';
+import 'package:da_kanji_mobile/provider/isars.dart';
 
 
 
@@ -197,12 +199,16 @@ Future<void> initGetIt() async {
 
   // ISAR / database services
   String path = (await path_provider.getApplicationDocumentsDirectory()).path + "/isar";
-  GetIt.I.registerSingleton<Isar>(
-    Isar.openSync(
-      [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-      directory: path
+  GetIt.I.registerSingleton<Isars>(
+    Isars(
+      dictionary: Isar.openSync(
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
+        directory: path
+      ),
+      searchHistory: Isar.openSync(name: "searchHistory", [SearchHistorySchema])
     )
   );
+
   GetIt.I.registerSingleton<DictionarySearch>(DictionarySearch(2, ["eng"]));
   GetIt.I<DictionarySearch>().init();
 

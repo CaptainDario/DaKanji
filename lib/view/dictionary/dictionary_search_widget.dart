@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
@@ -199,13 +202,25 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 ? widget.expandedHeight - searchBarInputHeight
                 : 0,
               child: SearchResultList(
+                searchResults: context.watch<DictSearch>().searchResults,
                 onSearchResultPressed: (entry) async {
+                  // update search variables
                   context.read<DictSearch>().selectedResult = entry;
                   List<String> kanjis =
                     removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
                   context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
                   context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
-    
+        
+                  // store new search in search history
+                  var isar = GetIt.I<Isars>().searchHistory;
+                  await isar.writeTxn(() async {
+                    await isar.searchHistorys.put(SearchHistory()
+                      ..dateSearched = DateTime.now()
+                      ..dictEntryId  = entry.id
+                      ..schema       = DatabaseType.JMDict
+                    );
+                  });
+
                   // collapse the search bar
                   if(widget.canCollapse)
                     setState(() {
