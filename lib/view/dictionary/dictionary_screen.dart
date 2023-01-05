@@ -81,6 +81,8 @@ class _DictionaryScreenState
       animationAtStart: !widget.openedByDrawer,
       child: Dictionary(
         widget.includeTutorial,
+        initialSearch: widget.initialSearch,
+        isExpanded: widget.initialSearch != "",
       )
     );
   }

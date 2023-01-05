@@ -87,7 +87,7 @@ void openDictionary(BuildContext context, String char) async {
         }
       }
     }
-    //
+    // inbuilt dictionary
     else if(GetIt.I<Settings>().drawing.selectedDictionary ==
       GetIt.I<Settings>().drawing.inbuiltDictId){
       Navigator.pushNamedAndRemoveUntil(
@@ -258,6 +258,7 @@ void openDictionary(BuildContext context, String char) async {
           );
         }
       }
+      // midori
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[3]){
         debugPrint("iOS midori");

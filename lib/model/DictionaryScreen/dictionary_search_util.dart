@@ -4,6 +4,8 @@ import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:isar/isar.dart';
 
+import 'package:da_kanji_mobile/provider/isars.dart';
+
 
 
 /// Sorts a list of Jmdict entries given a query text. The order is determined
@@ -123,7 +125,7 @@ List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
   if(kanjis.isEmpty)
     return [];
   
-  return GetIt.I<Isar>().kanjiSVGs.where()
+  return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
   ).findAllSync().toList();
 }
@@ -134,7 +136,7 @@ List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
   if(kanjis.isEmpty)
     return [];
     
-  return GetIt.I<Isar>().kanjidic2s.where()
+  return GetIt.I<Isars>().dictionary.kanjidic2s.where()
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
   ).findAllSync().toList();
 }

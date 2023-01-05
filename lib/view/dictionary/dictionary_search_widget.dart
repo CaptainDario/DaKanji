@@ -1,3 +1,5 @@
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -71,9 +73,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(widget.isExpanded)
       expanded = true;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       RenderBox r = searchTextInputKey.currentContext!.findRenderObject()! as RenderBox;
       searchBarInputHeight = r.size.height;
+
+      // check if there is an initial query or if it was update
+      if(widget.initialSearch != initialSearch){
+        searchInputController.text = widget.initialSearch;
+        initialSearch = widget.initialSearch;
+        await updateSearchResults(initialSearch, true);
+        setState(() {});
+      }
     });
   }
 
@@ -84,13 +94,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   @override
   Widget build(BuildContext context) {
-
-    // check if there is an initial query or if it was update
-    if(widget.initialSearch != initialSearch){
-      searchInputController.text = widget.initialSearch;
-      initialSearch = widget.initialSearch;
-      updateSearchResults(initialSearch, true);
-    }
 
     return Focus(
       focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
@@ -188,7 +191,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         setState(() {
                           expanded = true;
                         });
-                        
+                        GetIt.I<Settings>().drawing.selectedDictionary =
+                          GetIt.I<Settings>().drawing.inbuiltDictId;
+                        Navigator.pushNamedAndRemoveUntil(
+                          context, 
+                          "/drawing",
+                          (route) => true
+                        );
                       },
                     ),
                   )

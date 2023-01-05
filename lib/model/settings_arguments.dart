@@ -10,6 +10,9 @@ class NavigationArguments{
   final String dictSearch;
   
 
-  NavigationArguments(this.navigatedByDrawer, this.dictSearch);
+  NavigationArguments(
+    this.navigatedByDrawer,
+    this.dictSearch
+  );
 
 }

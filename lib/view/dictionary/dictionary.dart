@@ -59,22 +59,9 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
       value: search,
       child: LayoutBuilder(
         builder: ((context, constraints) {
-
-          // check if there is an initial query or if it was update
-          if(widget.initialSearch != initialSearch){
-            context.read<DictSearch>().currentSearch = widget.initialSearch;
-
-            initialSearch = widget.initialSearch;
-          }
   
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
-  
-          // if a search result was selected
-          // search the kanjis from the selected word in KanjiVG
-          if(context.watch<DictSearch>().selectedResult != null){
-            
-          }
     
           return Stack(
             children: [
@@ -103,7 +90,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DictionarySearchWidget(
-                                initialSearch: context.watch<DictSearch>().currentSearch,
+                                initialSearch: widget.initialSearch,
                                 expandedHeight: constraints.maxHeight - 25,
                                 isExpanded: true,
                                 canCollapse: false,
@@ -225,7 +212,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DictionarySearchWidget(
-                      initialSearch: context.watch<DictSearch>().currentSearch,
+                      initialSearch: widget.initialSearch,
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
                     ),
