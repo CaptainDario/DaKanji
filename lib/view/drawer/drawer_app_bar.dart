@@ -78,6 +78,9 @@ class DrawerAppBar extends StatelessWidget {
                   case Screens.kuzushiji:
                     title = LocaleKeys.KuzushijiScreen_title.tr();
                     break;
+                  case Screens.word_lists:
+                    title = LocaleKeys.WordListsScreen_title.tr();
+                    break;
                   case Screens.manual:
                     title = LocaleKeys.ManualScreen_title.tr();
                     break;

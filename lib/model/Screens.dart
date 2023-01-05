@@ -6,6 +6,7 @@ enum Screens{
   text,
   kanji,
   kuzushiji,
+  word_lists,
   home,
   settings,
   onboarding,

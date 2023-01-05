@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/view/word_lists/word_lists_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -118,6 +119,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
+          case "/word_lists":
+            return switchScreen(WordListsScreen(args.navigatedByDrawer, true));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
