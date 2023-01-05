@@ -136,12 +136,16 @@ class UserData{
   Future<UserData> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
-    // drawing screen
-    String tmp = prefs.getString('userData') ?? "";
-    if(tmp != "") {
-      return UserData.fromJson(json.decode(tmp));
+    try {
+      String tmp = prefs.getString('userData') ?? "";
+      if(tmp != "") {
+        return UserData.fromJson(json.decode(tmp));
+      }
+      else {
+        return UserData();
+      }
     }
-    else {
+    on Exception {
       return UserData();
     }
   }

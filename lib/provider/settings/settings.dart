@@ -63,29 +63,45 @@ class Settings with ChangeNotifier {
   Future<void> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
-    // drawing screen
-    String tmp = prefs.getString('settingsDrawing') ?? "";
-    if(tmp != "") {_drawing = SettingsDrawing.fromJson(json.decode(tmp));}
-    else {_drawing = SettingsDrawing();}
-    _drawing.addListener(() => notifyListeners());
+    try{
+      String tmp = prefs.getString('settingsDrawing') ?? "";
+      if(tmp != "") {_drawing = SettingsDrawing.fromJson(json.decode(tmp));}
+      else {_drawing = SettingsDrawing();}
+      _drawing.addListener(() => notifyListeners());
+    }
+    on Exception {
+      SettingsDrawing();
+    }
     
+    try{
+      String tmp = prefs.getString('settingsMisc') ?? "";
+      if(tmp != "") {_misc = SettingsMisc.fromJson(json.decode(tmp));}
+      else {_misc = SettingsMisc();}
+      _misc.addListener(() => notifyListeners());
+    }
+    on Exception {
+      SettingsDrawing();
+    }
 
-    tmp = prefs.getString('settingsMisc') ?? "";
-    if(tmp != "") {_misc = SettingsMisc.fromJson(json.decode(tmp));}
-    else {_misc = SettingsMisc();}
-    _misc.addListener(() => notifyListeners());
+    try{
+      String tmp = prefs.getString('settingsAdvanced') ?? "";
+      if(tmp != "") {_advanced = SettingsAdvanced.fromJson(json.decode(tmp));}
+      else {_advanced = SettingsAdvanced();}
+      _advanced.addListener(() => notifyListeners());
+    }
+    on Exception {
+      SettingsDrawing();
+    }
 
-
-    tmp = prefs.getString('settingsAdvanced') ?? "";
-    if(tmp != "") {_advanced = SettingsAdvanced.fromJson(json.decode(tmp));}
-    else {_advanced = SettingsAdvanced();}
-    _advanced.addListener(() => notifyListeners());
-
-
-    tmp = prefs.getString('settingsDictionary') ?? "";
-    if(tmp != "") {_dictionary = SettingsDictionary.fromJson(json.decode(tmp));}
-    else {_dictionary = SettingsDictionary();}
-    _dictionary.addListener(() => notifyListeners());
+    try{
+      String tmp = prefs.getString('settingsDictionary') ?? "";
+      if(tmp != "") {_dictionary = SettingsDictionary.fromJson(json.decode(tmp));}
+      else {_dictionary = SettingsDictionary();}
+      _dictionary.addListener(() => notifyListeners());
+    }
+    on Exception {
+      SettingsDrawing();
+    }
   }
 }
 
