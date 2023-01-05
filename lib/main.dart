@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -209,7 +210,14 @@ Future<void> initGetIt() async {
     )
   );
 
-  GetIt.I.registerSingleton<DictionarySearch>(DictionarySearch(2, ["eng"]));
+  GetIt.I.registerSingleton<DictionarySearch>(
+    DictionarySearch(
+      2,
+      GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
+        isoToiso639_1[e]!.name
+      ).toList()
+    )
+  );
   GetIt.I<DictionarySearch>().init();
 
   // Drawer
