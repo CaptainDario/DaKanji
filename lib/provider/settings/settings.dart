@@ -80,7 +80,7 @@ class Settings with ChangeNotifier {
       _misc.addListener(() => notifyListeners());
     }
     on Exception {
-      SettingsDrawing();
+      SettingsMisc();
     }
 
     try{
@@ -90,7 +90,7 @@ class Settings with ChangeNotifier {
       _advanced.addListener(() => notifyListeners());
     }
     on Exception {
-      SettingsDrawing();
+      SettingsAdvanced();
     }
 
     try{
@@ -100,7 +100,7 @@ class Settings with ChangeNotifier {
       _dictionary.addListener(() => notifyListeners());
     }
     on Exception {
-      SettingsDrawing();
+      SettingsDictionary();
     }
   }
 }
