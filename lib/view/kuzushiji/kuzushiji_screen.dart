@@ -5,7 +5,7 @@ import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
 
 
 
-/// The screen for all kanji related functionalities
+/// The screen for all kuzushiji related functionalities
 class KuzushijiScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
