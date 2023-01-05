@@ -73,13 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
           GetIt.I<UserData>().showChangelog = false;
         });
       }
-      // 
       else if(GetIt.I<UserData>().showOnboarding){
         Navigator.pushNamedAndRemoveUntil(
           context, "/onboarding", (route) => false
           );
       }
-      
       else if(GetIt.I<UserData>().showRatePopup){
         // show a rating dialogue WITHOUT "do not show again"-option
         if(appOpenedTimes < g_MinTimesOpenedToAsknotShowRate) {
