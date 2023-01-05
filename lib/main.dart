@@ -214,7 +214,7 @@ Future<void> initGetIt() async {
     DictionarySearch(
       2,
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
-        isoToiso639_1[e]!.name
+        isoToiso639_2B[e]!.name
       ).toList()
     )
   );

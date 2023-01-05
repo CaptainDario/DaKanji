@@ -3,6 +3,7 @@ import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:isar/isar.dart';
+import 'package:quiver/strings.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 
@@ -28,20 +29,21 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
   // iterate over the entries and create a ranking for each 
   for (JMdict entry in entries) {
     // KANJI matched
-    Tuple3 ranked = rankMatches(entry.kanjis, queryText);
+    Tuple3 ranked = rankMatches([entry.kanjis], queryText);
     
     // READING matched
     if(ranked.item1 == -1)
-      ranked = rankMatches(entry.romaji, queryTextRomaji);
+      ranked = rankMatches([entry.romaji], queryTextRomaji);
     
     // MEANING matched
     if(ranked.item1 == -1){
       // filter all langauges that are selected in the settings and join them to a list
-      List<String> k = entry.meanings.where((LanguageMeanings e) =>
+      List<List<String>> k = entry.meanings.where((LanguageMeanings e) =>
           languages.contains(e.language)
         ).map((LanguageMeanings e) => 
           e.meanings!
-        ).expand((e) => e).toList();
+        )//.expand((e) => e)
+        .toList();
       ranked = rankMatches(k, queryText);
     }
     // the query was found in this entry
@@ -66,22 +68,27 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
 ///   1 - if it was a full (0), start(1) or other(2) match <br/>
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
-Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {   
+Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText) {   
 
-  int result = -1, lenDiff = -1;
-
-  // check where the entry contains the query
-  int matchIndex = matches.indexWhere(
-    (element) => element.contains(queryText)
-  );
+  int result = -1, lenDiff = -1; List<int> matchIndeces = [-1, -1];
+  
+  // convert query and matches to lower case; find where the query matched
+  queryText = queryText.toLowerCase();
+  for (var i = 0; i < matches.length; i++) {
+    for (var j = 0; j < matches[i].length; j++) {
+      matches[i][j] = matches[i][j].toLowerCase();
+      if(matches[i][j].contains(queryText))
+        matchIndeces = [i, j];
+    }
+  }  
 
   // check for full match
-  if(matchIndex != -1){
-    if(queryText == matches[matchIndex]){
+  if(matchIndeces[0] != -1 && matchIndeces[1] != -1){
+    if(queryText == matches[matchIndeces[0]][matchIndeces[1]]){
       result = 0;
     }
     // does the found dict entry start with the search term
-    else if(matches[matchIndex].startsWith(queryText)){
+    else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(queryText)){
       result = 1;
     }
     // the query matches somwhere in the entry
@@ -89,10 +96,10 @@ Tuple3<int, int, int> rankMatches(List<String> matches, String queryText) {
       result = 2;
     }
     /// calculate the difference in length between the query and the result
-    lenDiff = matches[matchIndex].length - queryText.length;
+    lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - queryText.length;
   }
   
-  return Tuple3(result, lenDiff, matchIndex);
+  return Tuple3(result, lenDiff, matchIndeces[1]);
 }
 
 /// Sorts the list `a` of `JMdict` based on (1. is more important than 2., ...)
@@ -172,10 +179,10 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
           meaning.anyOf(langs, (m, lang) => m
             .languageEqualTo(lang)
             .optional(message.length < 3, (m) => m
-              .meaningsElementStartsWith(message)
+              .meaningsElementStartsWith(message, caseSensitive: false)
             )
             .optional(message.length >= 3, (m) => m
-              .meaningsElementContains(message)
+              .meaningsElementContains(message, caseSensitive: false)
             )
           )
         );
