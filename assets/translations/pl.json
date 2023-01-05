@@ -164,7 +164,7 @@
     "draw_dictionary_system_translator": "T\u0142umacz systemowy",
     "draw_double_tap_empty_canvas": "Wyczy\u015b\u0107 p\u0142\u00f3tno podw\u00f3jnym klikni\u0119ciem",
     "draw_invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
-    "draw_long_press_opens": "D\u0142ugie klikni\u0119cie otwiera",
+    "draw_long_press_opens": "Wyb\u00f3r s\u0142ownika",
     "draw_title": "Obraz",
     "misc_default_screen": "Ekran pocz\u0105tkowy przy uruchamianiu aplikacji",
     "misc_language": "j\u0119zyk (@:SettingsScreen.restarts_app)",
@@ -208,5 +208,8 @@
   "WebviewScreen": {
     "loading": "\u0141adowanie",
     "title": "Webview"
+  },
+  "WordListsScreen": {
+    "title": "Listy s\u0142owne"
   }
 }

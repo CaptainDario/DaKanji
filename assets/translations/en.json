@@ -164,7 +164,7 @@
     "draw_dictionary_system_translator": "OS integrated translator",
     "draw_double_tap_empty_canvas": "Empty canvas after double tap",
     "draw_invert_short_long_press": "Invert long/short press",
-    "draw_long_press_opens": "Long press opens",
+    "draw_long_press_opens": "Dictionary selection",
     "draw_title": "Drawing",
     "misc_default_screen": "Initial screen when starting the app",
     "misc_language": "language (@:SettingsScreen.restarts_app)",
@@ -208,5 +208,8 @@
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"
+  },
+  "WordListsScreen": {
+    "title": "Word lists"
   }
 }

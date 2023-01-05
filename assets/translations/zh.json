@@ -164,7 +164,7 @@
     "draw_dictionary_system_translator": "\u64cd\u4f5c\u7cfb\u7edf\u96c6\u6210\u7ffb\u8bd1\u5668",
     "draw_double_tap_empty_canvas": "\u53cc\u51fb\u540e\u7a7a\u51fa\u753b\u5e03",
     "draw_invert_short_long_press": "\u5012\u7f6e\u957f/\u77ed\u6309",
-    "draw_long_press_opens": "\u957f\u6309\u6253\u5f00",
+    "draw_long_press_opens": "\u8bcd\u5178\u9009\u62e9",
     "draw_title": "\u7ed8\u56fe",
     "misc_default_screen": "\u542f\u52a8\u5e94\u7528\u7a0b\u5e8f\u65f6\u7684\u521d\u59cb\u5c4f\u5e55",
     "misc_language": "\u8bed\u8a00 (@:SettingsScreen.restarts_app)",
@@ -208,5 +208,8 @@
   "WebviewScreen": {
     "loading": "\u641c\u7d22",
     "title": "\u7f51\u9875\u6d4f\u89c8"
+  },
+  "WordListsScreen": {
+    "title": "\u8bcd\u8868"
   }
 }

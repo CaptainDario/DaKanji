@@ -164,7 +164,7 @@
     "draw_dictionary_system_translator": "Traduttore integrato nel sistema operativo",
     "draw_double_tap_empty_canvas": "Tela vuota dopo il doppio tocco",
     "draw_invert_short_long_press": "Invertire la pressione lunga/corta",
-    "draw_long_press_opens": "La pressione prolungata apre",
+    "draw_long_press_opens": "Selezione del dizionario",
     "draw_title": "Disegno",
     "misc_default_screen": "Schermata iniziale all'avvio dell'applicazione",
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
@@ -208,5 +208,8 @@
   "WebviewScreen": {
     "loading": "Ricerca",
     "title": "Vista sul web"
+  },
+  "WordListsScreen": {
+    "title": "Elenchi di parole"
   }
 }
