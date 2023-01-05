@@ -97,19 +97,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
                       // custom URL input
-                      ResponsiveInputFieldTile(
-                        text: settings.drawing.customURL,
-                        enabled: settings.drawing.selectedDictionary
-                          == settings.drawing.dictionaries[3],
-                        hintText: LocaleKeys.SettingsScreen_draw_custom_url_hint.tr(),
-                        icon: Icons.info_outline,
-                        onChanged: (value) {
-                          settings.drawing.customURL = value;
-                          settings.save();
-                        },
-                        onButtonPressed: () => showCustomURLPopup(context),
-                        
-                      ),
+                      if(settings.drawing.selectedDictionary == settings.drawing.webDictionaries[3])
+                        ResponsiveInputFieldTile(
+                          text: settings.drawing.customURL,
+                          enabled: true,
+                          hintText: LocaleKeys.SettingsScreen_draw_custom_url_hint.tr(),
+                          icon: Icons.info_outline,
+                          onChanged: (value) {
+                            settings.drawing.customURL = value;
+                            settings.save();
+                          },
+                          onButtonPressed: () => showCustomURLPopup(context),
+                        ),
                       // invert long/short press
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_draw_invert_short_long_press.tr(),
