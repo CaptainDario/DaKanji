@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_web_view/easy_web_view.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
@@ -184,9 +184,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               children: [
                                 AspectRatio(
                                   aspectRatio: 1,
-                                  child: EasyWebView(
-                                      src: Uri.encodeFull("$g_GoogleImgSearchUrl${readingOrKanji}")
+                                  child: InAppWebView(
+                                    initialUrlRequest: URLRequest(
+                                      url: WebUri("$g_GoogleImgSearchUrl${readingOrKanji}")
                                     )
+                                  )
                                 )
                               ],
                             ),

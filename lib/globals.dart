@@ -26,7 +26,7 @@ List<String> g_OnboardingNewPages = ["0.0.0", "2.0.0"];
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform
 final bool g_webViewSupported =
-  Platform.isWindows || Platform.isAndroid || Platform.isIOS || kIsWeb;
+  Platform.isAndroid || Platform.isIOS || kIsWeb;
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 /// browser user agent to fake a mobile device on desktop

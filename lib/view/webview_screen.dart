@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 import 'package:flutter/material.dart';
 
-import 'package:easy_web_view/easy_web_view.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 
 
@@ -120,9 +120,13 @@ class _WebviewScreenState extends State<WebviewScreen>
                     (_rotationAnimation.value - 1) * (pi/2))
                   ),
                 alignment: Alignment.centerLeft,
-                child: EasyWebView(
-                  src: openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars),
-                  onLoaded: (controller) {
+                child: InAppWebView(
+                  initialUrlRequest: URLRequest(
+                    url: WebUri(
+                      openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+                    )
+                  ),
+                  onLoadStop: (controller, uri) {
                     _controller.forward(from: 0.0);
                   }
                 )

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_web_view/easy_web_view.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
@@ -138,8 +138,14 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
               _canvasSize,
               GetIt.I<DrawScreenState>().drawScreenLayout,
               drawScreenIncludesWebview(t.item1)
-                ? EasyWebView(
-                  src: openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars),
+                ? InAppWebView(
+                  initialUrlRequest: URLRequest(
+                    url: WebUri(
+                      openWithSelectedDictionary(
+                        GetIt.I<DrawScreenState>().drawingLookup.chars
+                      ),
+                    )
+                  )
                 )
                 : null
             );

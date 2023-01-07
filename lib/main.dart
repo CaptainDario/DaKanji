@@ -17,7 +17,6 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:archive/archive_io.dart';
 import 'package:feedback/feedback.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:webview_windows/webview_windows.dart';
 
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
@@ -57,15 +56,6 @@ Future<void> main() async {
   // init window Manager
   if(g_desktopPlatform)
     await windowManager.ensureInitialized();
-
-  try{
-    await WebviewController.initializeEnvironment(
-      additionalArguments: mobileUserAgentArg
-    );
-  }
-  catch (e){
-
-  }
 
   await init();
 

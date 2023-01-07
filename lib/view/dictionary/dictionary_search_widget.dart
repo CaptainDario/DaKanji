@@ -1,5 +1,3 @@
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +6,7 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
@@ -82,14 +81,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, true);
-        setState(() {});
+        if(mounted)
+          setState(() {});
       }
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

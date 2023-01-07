@@ -3,7 +3,6 @@ import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:isar/isar.dart';
-import 'package:quiver/strings.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 

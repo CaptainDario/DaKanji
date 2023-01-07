@@ -40,7 +40,7 @@ dependencies:
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0
-  # TODO use pub version (https://github.com/jeroen-meijer/kana_kit/pull/19)
+  # TODO use pub version (https://github.com/jeroen-meijer/kana_kit/)
   kana_kit:
     git:
       url: https://github.com/Moseco/kana_kit
@@ -57,12 +57,10 @@ dependencies:
   simple_html_css: 4.0.0
   animations: 2.0.7
 
-  # do NOT support all target platforms
-  easy_web_view:                  # android, iOS, windows
-    git:
-      url: https://github.com/CaptainDario/easy_web_view.git
-  in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
-  tflite_flutter:                 # android, iOS, Linux, MacOS, windows
+  # TODO : use non beta version for release
+  flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
+  in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
+  tflite_flutter:                       # android, iOS, Linux, MacOS, windows
     git:
       url: https://github.com/CaptainDario/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS

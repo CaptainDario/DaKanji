@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:easy_web_view/easy_web_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -102,8 +102,12 @@ class _CustomTextPopupState extends State<CustomTextPopup> {
                           ),
                           if(g_webViewSupported)
                             Card(
-                              child: EasyWebView(
-                                src: Uri.encodeFull("$g_deepLUrl${widget.text}"),
+                              child: InAppWebView(
+                                initialUrlRequest: (
+                                  URLRequest(
+                                    url: WebUri("$g_deepLUrl${widget.text}")  
+                                  )
+                                ),
                               ),
                             )
                         ]
