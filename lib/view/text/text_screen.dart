@@ -289,20 +289,21 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           textColor: Theme.of(context).brightness == Brightness.light
                                             ? Colors.black
                                             : Colors.white,
-                                          selectionColor: Theme.of(context).colorScheme.primary.withOpacity(0.40),
+                                          selectionColor: Theme.of(context).highlightColor,
                                           onSelectionChange: (selection) {
                                             if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
                                               popupAnimationController.forward();
+                                            }
+                                            if(selection == "" &&
+                                              popupAnimationController.isCompleted) {
+                                              popupAnimationController.reverse(from: 1.0);
                                             }
                                             setState(() {
                                               selectedText = selection;
                                             });
                                           },
                                           onTap: (String selection) {
-                                            if(selection == "" &&
-                                              popupAnimationController.isCompleted) {
-                                              popupAnimationController.reverse(from: 1.0);
-                                            }
+                                            
                                           },
                                         ),
                                       ),
