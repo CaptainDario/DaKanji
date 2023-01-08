@@ -276,7 +276,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         child: CustomSelectableText(
                                           words: kagomeWords,
                                           rubys: kagomePos.map(
-                                            (e) => e.length == 17 ? e[6] : " "
+                                            (e) => e.length == 17
+                                              ? e[6]
+                                              : " "
                                           ).toList(),
                                           wordColors: List.generate(
                                             kagomeWords.length,
@@ -520,10 +522,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       if(jpToPosUnidic[l] != null)
         kagomePos[i][0] = l;
 
-      // if the word does not use kanji, remove the reading (furigana)
-      if(GetIt.I<KanaKit>().isKana(kagomeWords[i]))
+      // if the word is not Japanese, remove the reading (furigana)
+      if(!GetIt.I<KanaKit>().isJapanese(kagomeWords[i]))
         kagomePos[i][6] = "";
     }
+    print("processed");
   }
 }
 
