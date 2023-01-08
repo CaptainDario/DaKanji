@@ -164,13 +164,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
             if(popupPositionTop > 0){
               popupPositionTop = constraints.maxHeight - popupSizeHeight - 4*padding;
             }
-            else{
+            else {
               popupPositionTop = 0;
               popupSizeHeight = constraints.maxHeight - 4*padding;
             }
           }
-            
-      
+
           // set if the app should be layed out in portrait or landscape
           runningInPortrait = constraints.maxHeight > constraints.maxWidth;
             
@@ -206,8 +205,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 2*padding, padding, 2*padding, padding
                               ),
                               child: Focus(
-                                focusNode: widget.includeTutorial ?
-                                  GetIt.I<Tutorials>().textScreenTutorial.textInputSteps : null,
+                                focusNode: widget.includeTutorial
+                                  ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
+                                  : null,
                                 child: TextField(
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -270,8 +270,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 children: [
                                   Expanded(
                                     child: Focus(
-                                      focusNode: widget.includeTutorial ?
-                                        GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps : null,
+                                      focusNode: widget.includeTutorial
+                                        ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
+                                        : null,
                                       child: Center(
                                         child: CustomSelectableText(
                                           words: kagomeWords,
@@ -474,7 +475,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      
                     ]
                   ),
                 ),
@@ -522,8 +522,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       if(jpToPosUnidic[l] != null)
         kagomePos[i][0] = l;
 
-      // if the word is not Japanese, remove the reading (furigana)
-      if(!GetIt.I<KanaKit>().isJapanese(kagomeWords[i]))
+      // if the (part of) word is not Japanese or the word is kana only
+      // remove the reading (furigana)
+      if(
+        !GetIt.I<KanaKit>().isJapanese(kagomeWords[i]) ||
+        GetIt.I<KanaKit>().isKana(kagomeWords[i])
+      )
         kagomePos[i][6] = "";
     }
     print("processed");
