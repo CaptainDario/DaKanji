@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 
-
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
   const CustomSelectableText({
@@ -90,8 +89,14 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   final _selectionRects = <Rect>[];
   /// the current text selection
   TextSelection? _textSelection;
-  /// the current selection base offset
+  /// the current selection base offset (start of selection)
   int? _selectionBaseOffset;
+  /// the current selection extent offset (end of selection)
+  int? _selectionExtentOffset;
+  /// is the left text selection handles selected
+  bool _leftHandleSelected = false;
+  /// is the right text selection handles selected
+  bool _rightHandleSelected = false;
   /// the selection caret rect
   Rect? _caretRect;
   /// the cursor to use when hovering over text
@@ -136,7 +141,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   bool dimChanged = false;
   /// Focus node of this widget
   FocusNode focuseNode = FocusNode();
-  ///
+  /// Shortcut bindings
   late final Map<ShortcutActivator, VoidCallback> bindings;
 
 
@@ -147,6 +152,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     _textSelection = widget.initialSelection ?? const TextSelection.collapsed(offset: -1);
     _scheduleTextLayoutUpdate();
 
+    /// allow copying the text
     bindings = {
       LogicalKeySet.fromSet(
         {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyC}
@@ -200,7 +206,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     });
   }
 
+  /// User started dragging on the text
   void _onDragStart(DragStartDetails details) {
+    if(_leftHandleSelected || _rightHandleSelected) return;
+
     setState(() {
       _selectionBaseOffset = _getTextPositionAtOffset(details.localPosition).offset;
       _onUserSelectionChange(TextSelection.collapsed(
@@ -209,27 +218,39 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     });
   }
 
+  /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
+    if(_leftHandleSelected)
+      _selectionBaseOffset = _getTextPositionAtOffset(details.localPosition).offset;
+    else  
+      _selectionExtentOffset = _getTextPositionAtOffset(details.localPosition).offset;
+
     setState(() {
-      final selectionExtentOffset = _getTextPositionAtOffset(details.localPosition).offset;
+      
       final textSelection = TextSelection(
         baseOffset: _selectionBaseOffset != null ? _selectionBaseOffset! : 0,
-        extentOffset: selectionExtentOffset,
+        extentOffset: _selectionExtentOffset != null ? _selectionExtentOffset! : 0,
       );
 
       _onUserSelectionChange(textSelection);
     });
   }
 
+  /// User ended a drag
   void _onDragEnd(DragEndDetails details) {
+    if(_leftHandleSelected || _rightHandleSelected) return;
+
     setState(() {
-      _selectionBaseOffset = null;
+      //_selectionBaseOffset = null;
     });
   }
 
+  /// An existing drag was cancelled
   void _onDragCancel() {
+    if(_leftHandleSelected || _rightHandleSelected) return;
+
     setState(() {
-      _selectionBaseOffset = null;
+      //_selectionBaseOffset = null;
       _onUserSelectionChange(const TextSelection.collapsed(offset: 0));
     });
   }
@@ -397,7 +418,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   }
 
-  void doubleTap(PointerDownEvent event){
+  /// method that selects the current word based on PoS
+  void selectWord(PointerDownEvent event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
                   
     TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
@@ -417,7 +439,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     _onUserSelectionChange(sel);
   }
 
-  void tripleTap(PointerDownEvent event){
+  void selectParagraph(PointerDownEvent event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
     
     TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
@@ -476,11 +498,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
               if(widget.onTap != null) widget.onTap!(currentText);
             }
             else if (tapped == 2){
-              doubleTap(event);
+              selectWord(event);
               if(widget.onDoubleTap != null) widget.onDoubleTap!(currentText);
             }
             else if (tapped >= 3){
-              tripleTap(event);
+              selectParagraph(event);
               if(widget.onTripleTap != null) widget.onTripleTap!(currentText);
             }
             
@@ -610,6 +632,46 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               )
                             );
                           })),
+                        // the text selection handles (left)
+                        if(_selectionRects.isNotEmpty)
+                          Positioned(
+                            left: _selectionRects.first.left - 10,
+                            top: _selectionRects.first.top-10,
+                            child: Listener(
+                              onPointerDown: (event) => _leftHandleSelected = true,
+                              onPointerUp: (event) => _leftHandleSelected = false,
+                              child: Container(
+                                height: 20,
+                                width:  20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1000000)
+                                  ),
+                                  color: widget.selectionColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        // the text selection handles (right)
+                        if(_selectionRects.isNotEmpty)
+                          Positioned(
+                            left: _selectionRects.last.right - 10,
+                            top: _selectionRects.last.bottom-10,
+                            child: Listener(
+                              onPointerDown: (event) => _rightHandleSelected = true,
+                              onPointerUp: (event) => _rightHandleSelected = false,
+                              child: Container(
+                                height: 20,
+                                width:  20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1000000)
+                                  ),
+                                  color: widget.selectionColor,
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     );
                   }
@@ -623,23 +685,34 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 }
 
+/// Custom paint to draw rectangles, it is used to draw the text selection,
+/// boxes and the cursor rect
 class _SelectionPainter extends CustomPainter {
-  _SelectionPainter({
-    required Color color,
-    required List<Rect> rects,
-    bool fill = true,
-  })  : 
-        _rects = rects,
-        _fill = fill,
-        _paint = Paint()..color = color;
-
+  /// Should the rectangles be filled
   final bool _fill;
+  /// The list of rectangles that should be drawn
   final List<Rect> _rects;
+  /// The color with which the rectanlges should be painted
   final Paint _paint;
+
+
+  _SelectionPainter(
+    {
+      required Color color,
+      required List<Rect> rects,
+      bool fill = true,
+    }
+  ) : 
+    _rects = rects,
+    _fill = fill,
+    _paint = Paint()..color = color;
+
 
   @override
   void paint(Canvas canvas, Size size) {
+
     _paint.style = _fill ? PaintingStyle.fill : PaintingStyle.stroke;
+    
     for (final rect in _rects) {
       canvas.drawRect(rect, _paint);
     }
@@ -649,4 +722,5 @@ class _SelectionPainter extends CustomPainter {
   bool shouldRepaint(_SelectionPainter other) {
     return true;
   }
+
 }
