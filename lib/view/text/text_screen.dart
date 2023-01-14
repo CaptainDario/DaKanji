@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,7 +40,7 @@ class TextScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   
-  final TextEditingController inputController = TextEditingController();
+  final TextEditingController inputController = TextEditingController()..text = g_SampleText;
 
   @override
   _TextScreenState createState() => _TextScreenState();
@@ -301,12 +302,26 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               popupAnimationController.isCompleted) {
                                               popupAnimationController.reverse(from: 1.0);
                                             }
-                                            setState(() {
-                                              selectedText = selection;
-                                            });
                                           },
-                                          onTap: (String selection) {
-                                            
+                                          onLongPress: (selection) {
+                                            int cnt = 0; String word = "";
+                                            for (int i = 0; i < kagomeWords.length; i++) {
+                                              cnt += kagomeWords[i].length;
+                                              if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
+                                                word = kagomePos[i][0];
+                                                break;
+                                              }
+                                            }
+                                            setState(() {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    word
+                                                  ),
+                                                  duration: Duration(milliseconds: 5000),
+                                                )
+                                              );
+                                            });
                                           },
                                         ),
                                       ),

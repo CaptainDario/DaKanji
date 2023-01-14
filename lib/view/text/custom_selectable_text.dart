@@ -28,6 +28,7 @@ class CustomSelectableText extends StatefulWidget {
     
     this.onSelectionChange,
     this.onTap,
+    this.onLongPress,
     this.onDoubleTap,
     this.onTripleTap
   }) : super(key: key);
@@ -67,13 +68,15 @@ class CustomSelectableText extends StatefulWidget {
 
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current selection as parameter
-  final void Function(String)? onSelectionChange;
+  final void Function(TextSelection)? onSelectionChange;
   /// callback that is executed when a single tap is executed on the text
-  final void Function(String)? onTap;
+  final void Function(TextSelection)? onTap;
+  /// callbach that is executed when a long press is executed on the text
+  final void Function(TextSelection)? onLongPress;
   /// callback that is executed when a double tap is executed on the text
-  final void Function(String)? onDoubleTap;
+  final void Function(TextSelection)? onDoubleTap;
   /// callback that is executed when a triple tap is executed on the text
-  final void Function(String)? onTripleTap;
+  final void Function(TextSelection)? onTripleTap;
 
   @override
   _CustomSelectableTextState createState() => _CustomSelectableTextState();
@@ -88,11 +91,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// list with selection rects
   final _selectionRects = <Rect>[];
   /// the current text selection
-  TextSelection? _textSelection;
-  /// the current selection base offset (start of selection)
-  int? _selectionBaseOffset;
-  /// the current selection extent offset (end of selection)
-  int? _selectionExtentOffset;
+  TextSelection _textSelection = TextSelection(baseOffset: 0, extentOffset: 0);
   /// is the left text selection handles selected
   bool _leftHandleSelected = false;
   /// is the right text selection handles selected
@@ -103,10 +102,31 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   final MouseCursor _cursor = SystemMouseCursors.text;
   /// list containg all positions for the ruby texts
   List<Rect> rubyPositions = []; 
+
   /// the timer to check for multi taps on the text
   Timer? multiTapTimer;
   /// how many times was tapped on this widget
   num tapped = 0;
+  /// Is the pointer for detecing taps currently down
+  bool isTapped = false;
+
+  /// matches full and half width punctuations
+  static const String punctuations = "。|？|！|\\.|\\!|\\?";
+  /// matches japanese ending parantheses
+  static const String japaneseParantheses = "』|」";
+
+  static const String anyWhiteSpace = "\\s|　";
+  /// Regex that matches a sentence
+  RegExp sentenceRegex = RegExp(
+    "(?:[^$anyWhiteSpace])+?(?:(?!($punctuations)$japaneseParantheses)$punctuations|\\n|\$)",
+    multiLine: true
+  );
+  /// Regex that matches a paragraph
+  RegExp paragraphRegex = RegExp(
+    "(?:[^$anyWhiteSpace])+?(?:\\n|\$)",
+    multiLine: true
+  );
+
   /// the current split of ruby texts, this is used because when a text breaks
   /// lines in a word the rubys need to be split
   List<String> rubys = [];
@@ -134,7 +154,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     }
   }
   
+  /// The screen X dimension during the last build
   double lastBuildScreenDimX = 0.0;
+  /// The screen Y dimension during the last build
   double lastBuildScreenDimY = 0.0;
   /// true if the dimensions have changed compared to the last frame
   /// false otherwise
@@ -159,8 +181,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       ) : () async => await Clipboard.setData(
         ClipboardData(
           text: words.join().substring(
-            _textSelection!.start,
-            _textSelection!.end
+            _textSelection.start,
+            _textSelection.end
             ).replaceAll("█", ""))),
       LogicalKeySet.fromSet(
         {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyA}
@@ -211,58 +233,40 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     if(_leftHandleSelected || _rightHandleSelected) return;
 
     setState(() {
-      _selectionBaseOffset = _getTextPositionAtOffset(details.localPosition).offset;
-      _onUserSelectionChange(TextSelection.collapsed(
-        offset: _selectionBaseOffset != null ? _selectionBaseOffset! : 0
-      ));
+      int offset = _getTextPositionAtOffset(details.localPosition).offset;
+      _textSelection = TextSelection.collapsed(offset: offset);
+      _onUserSelectionChange(_textSelection);
     });
   }
 
   /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
     if(_leftHandleSelected)
-      _selectionBaseOffset = _getTextPositionAtOffset(details.localPosition).offset;
+      _textSelection = TextSelection(
+        baseOffset:   _getTextPositionAtOffset(details.localPosition).offset,
+        extentOffset: _textSelection.extentOffset 
+      );
     else  
-      _selectionExtentOffset = _getTextPositionAtOffset(details.localPosition).offset;
-
-    setState(() {
-      
-      final textSelection = TextSelection(
-        baseOffset: _selectionBaseOffset != null ? _selectionBaseOffset! : 0,
-        extentOffset: _selectionExtentOffset != null ? _selectionExtentOffset! : 0,
+      _textSelection = TextSelection(
+        baseOffset:   _textSelection.baseOffset,
+        extentOffset: _getTextPositionAtOffset(details.localPosition).offset,
       );
 
-      _onUserSelectionChange(textSelection);
+    setState(() {
+      _onUserSelectionChange(_textSelection);
     });
   }
 
   /// User ended a drag
   void _onDragEnd(DragEndDetails details) {
     if(_leftHandleSelected || _rightHandleSelected) return;
-
-    setState(() {
-      //_selectionBaseOffset = null;
-    });
-  }
-
-  /// An existing drag was cancelled
-  void _onDragCancel() {
-    if(_leftHandleSelected || _rightHandleSelected) return;
-
-    setState(() {
-      //_selectionBaseOffset = null;
-      _onUserSelectionChange(const TextSelection.collapsed(offset: 0));
-    });
+    setState(() {});
   }
 
   void _onUserSelectionChange(TextSelection textSelection) {
     _textSelection = textSelection;
     _updateSelectionDisplay();
-    int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
-    int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
-    widget.onSelectionChange?.call(
-      words.join().substring(start, end).replaceAll("█", "")
-    );
+    widget.onSelectionChange?.call(_textSelection);
   }
 
   void _updateSelectionDisplay() {
@@ -271,9 +275,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       _selectionRects
         ..clear()
         ..addAll(selectionRects);
-      _caretRect = _textSelection != null ? 
-        _computeCursorRectForTextOffset(_textSelection!.extentOffset) : 
-        null;
+      _caretRect = _computeCursorRectForTextOffset(_textSelection.extentOffset);
     });
   }
 
@@ -414,19 +416,14 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return textBoxes.map((box) => box.toRect()).toList();
   }
 
-  void tap(PointerDownEvent event){
-
-  }
-
-  /// method that selects the current word based on PoS
+  /// Selects the word (PoS) where `event` happend
   void selectWord(PointerDownEvent event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
-                  
-    TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
+
     var cnt = 0;
     for (var text in words) {
       if(cnt + text.length > tapTextPos.offset){
-        sel = TextSelection(
+        _textSelection = TextSelection(
           baseOffset: cnt,
           extentOffset: cnt + text.length
         );
@@ -436,40 +433,40 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       cnt += text.length;
     }
     
-    _onUserSelectionChange(sel);
+    _onUserSelectionChange(_textSelection);
   }
 
-  void selectParagraph(PointerDownEvent event){
-    TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
-    
-    TextSelection sel = const TextSelection(baseOffset: 0, extentOffset: 0);
-    var cntStart = 0, cntEnd = 0;
-    for (int i = 0; i < words.length; i++) {
-      
-      // end of paragraph  or  end of text
-      if(["\n\n", "\n\t", "\n\r\n\r", "\n", "\t"].contains(words[i]) ||
-        i == words.length-1){
+  /// Selects the sentance in which the position the user tapped is located
+  void selectSentence(PointerDownEvent event){
+    int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
 
-        // update text selection
-        if(cntStart <= tapTextPos.offset && tapTextPos.offset <= cntEnd){
-          if(i == words.length-1) {
-            cntEnd += words[i].length;
-          }
-          
-          sel = TextSelection(
-            baseOffset: cntStart,
-            extentOffset: cntEnd
-          );
-          break;
-        }
-
-        cntStart = cntEnd;
-
+    for (var match in sentenceRegex.allMatches(words.join(""))) {
+      if (match.start <= tapTextPos && tapTextPos <= match.end) {
+        _textSelection = TextSelection(
+          baseOffset: match.start, 
+          extentOffset: match.end
+        );
+        break;
       }
-      cntEnd += words[i].length;
     }
+    _onUserSelectionChange(_textSelection);
+  }
+
+  /// Selects the paragraph that contains the word where `event` happend
+  void selectParagraph(PointerDownEvent event){
+    int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
     
-    _onUserSelectionChange(sel);
+    for (var match in paragraphRegex.allMatches(words.join(""))) {
+      if (match.start <= tapTextPos && tapTextPos <= match.end) {
+        _textSelection = TextSelection(
+          baseOffset: match.start, 
+          extentOffset: match.end
+        );
+        print("paragraph");
+        break;
+      }
+    }
+    _onUserSelectionChange(_textSelection);
   }
 
   @override
@@ -477,11 +474,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
     return Listener(
       onPointerDown: (event) {
+        // assure that words are in the text fields AND 
+        if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
 
-        // assure that words are in the text fields
-        if(words.length == 0) return;
-    
-        tapped++;
+        tapped++; isTapped = true;
     
         if (multiTapTimer != null) {
           multiTapTimer!.cancel();
@@ -490,27 +486,27 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         multiTapTimer = Timer(
           const Duration(milliseconds: 200),
           () {
-            int start = min(_textSelection!.baseOffset, _textSelection!.extentOffset);
-            int end = max(_textSelection!.baseOffset, _textSelection!.extentOffset);
-            String currentText = words.join().substring(start, end);
-            if (tapped == 1){
-              tap(event);
-              if(widget.onTap != null) widget.onTap!(currentText);
+            if (tapped == 1 && !isTapped){
+              selectWord(event);
+              if(widget.onTap != null) widget.onTap!(_textSelection);
+            }
+            else if (tapped == 1 && isTapped){
+              selectWord(event);
+              if(widget.onLongPress != null) widget.onLongPress!(_textSelection);
             }
             else if (tapped == 2){
-              selectWord(event);
-              if(widget.onDoubleTap != null) widget.onDoubleTap!(currentText);
+              selectSentence(event);
+              if(widget.onDoubleTap != null) widget.onDoubleTap!(_textSelection);
             }
             else if (tapped >= 3){
               selectParagraph(event);
-              if(widget.onTripleTap != null) widget.onTripleTap!(currentText);
+              if(widget.onTripleTap != null) widget.onTripleTap!(_textSelection);
             }
-            
             tapped = 0;
           }
         );
-        
       },
+      onPointerUp: (event) => isTapped = false,
       child: Focus(
         focusNode: focuseNode,
         canRequestFocus: true,
@@ -531,7 +527,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
             onPanStart: widget.allowSelection ? _onDragStart : null,
             onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
             onPanEnd: widget.allowSelection ? _onDragEnd : null,
-            onPanCancel: widget.allowSelection ? _onDragCancel : null,
             onTap: () {
               focuseNode.requestFocus();
             },
@@ -636,7 +631,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         if(_selectionRects.isNotEmpty)
                           Positioned(
                             left: _selectionRects.first.left - 10,
-                            top: _selectionRects.first.top-10,
+                            top: _selectionRects.first.top - 10,
                             child: Listener(
                               onPointerDown: (event) => _leftHandleSelected = true,
                               onPointerUp: (event) => _leftHandleSelected = false,

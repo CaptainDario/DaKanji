@@ -137,7 +137,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                       widget.entry!.readings[index_1].length,
                                       (index_2) => Container(
                                         decoration: const BoxDecoration(
-                                          // TODO: pitch accent - @ DaKanji v3.3
+                                          // TODO: pitch accent - @ DaKanji v3.4
                                           /*
                                           border: Border(
                                             right: BorderSide(
