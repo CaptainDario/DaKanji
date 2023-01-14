@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -278,9 +280,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         child: CustomSelectableText(
                                           words: kagomeWords,
                                           rubys: kagomePos.map(
-                                            (e) => e.length == 17
-                                              ? e[6]
-                                              : " "
+                                            (e) => e.length == 17 ? e[6] : " "
                                           ).toList(),
                                           wordColors: List.generate(
                                             kagomeWords.length,
@@ -294,35 +294,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             ? Colors.black
                                             : Colors.white,
                                           selectionColor: Theme.of(context).highlightColor,
-                                          onSelectionChange: (selection) {
-                                            if(selection != "" && popupAnimationController.status != AnimationStatus.forward){
-                                              popupAnimationController.forward();
-                                            }
-                                            if(selection == "" &&
-                                              popupAnimationController.isCompleted) {
-                                              popupAnimationController.reverse(from: 1.0);
-                                            }
-                                          },
-                                          onLongPress: (selection) {
-                                            int cnt = 0; String word = "";
-                                            for (int i = 0; i < kagomeWords.length; i++) {
-                                              cnt += kagomeWords[i].length;
-                                              if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
-                                                word = kagomePos[i][0];
-                                                break;
-                                              }
-                                            }
-                                            setState(() {
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    word
-                                                  ),
-                                                  duration: Duration(milliseconds: 5000),
-                                                )
-                                              );
-                                            });
-                                          },
+                                          onSelectionChange: onCustomSelectableTextChange,
+                                          onLongPress: onCustomSelectableTextLongPressed,
                                         ),
                                       ),
                                     ),
@@ -414,22 +387,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               ? Colors.black
                                               : Colors.white,
                                             ),
-                                            onPressed: () {
-                                              // do not allow change while animation is running
-                                              if (_controller.isAnimating) {
-                                                return;
-                                              }
-                                              if(_controller.isCompleted) {
-                                                _controller.reverse();
-                                              } else if(_controller.isDismissed) {
-                                                _controller.forward();
-                                              }
-                                                            
-                                              setState(() {
-                                                fullScreen = !fullScreen;
-                                              });
-                                              
-                                            },
+                                            onPressed: onFullScreenButtonPress,
                                           ),
                                         ),
                                       ),
@@ -501,6 +459,68 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     );
   }
 
+  /// Callback that is called when the text selection of the CustomSelectableText
+  /// changes
+  void onCustomSelectableTextChange(TextSelection selection){
+    // open the dict popup when text is slected and it is not opening
+    if(selection != "" &&
+      popupAnimationController.status != AnimationStatus.forward)
+    {
+      popupAnimationController.forward();
+    }
+    // close the dict popup when there is no selection
+    if(selection == "" &&
+      popupAnimationController.isCompleted)
+    {
+      popupAnimationController.reverse(from: 1.0);
+    }
+    // get the part that the user selected
+    int start = min(selection.baseOffset, selection.extentOffset);
+    int end   = max(selection.baseOffset, selection.extentOffset);
+    String word = kagomeWords.join().substring(
+      start, end);
+    setState(() {
+      selectedText = word;
+    });
+  }
+
+  /// Callback when the user long presses the a word in the text
+  void onCustomSelectableTextLongPressed(TextSelection selection){
+
+    int cnt = 0; String word = "";
+    for (int i = 0; i < kagomeWords.length; i++) {
+      cnt += kagomeWords[i].length;
+      if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
+        word = kagomePos[i][0];
+        break;
+      }
+    }
+    setState(() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(word),
+          duration: Duration(milliseconds: 5000),
+        )
+      );
+    });
+  }
+
+  /// Callback when the user presses the full screen button
+  void onFullScreenButtonPress() {
+    // do not allow change while animation is running
+    if (_controller.isAnimating) {
+      return;
+    }
+    if(_controller.isCompleted) {
+      _controller.reverse();
+    } else if(_controller.isDismissed) {
+      _controller.forward();
+    }
+                  
+    setState(() {
+      fullScreen = !fullScreen;
+    });
+  }
 
   /// Processes the given `text`.
   /// Analyzes the text with kagome, removes POS elements of punctuation marks,
