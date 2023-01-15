@@ -118,7 +118,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                   children: [
                     Text(
                       textAlign: TextAlign.end,
-                      widget.dictEntry.partOfSpeech.first.split("").join("\u200B").toString(),
+                      widget.dictEntry.partOfSpeech.first.split(" ").join(" \u200B").toString(),
                       style: const TextStyle(
                         fontSize: 10,
                         letterSpacing: 0
