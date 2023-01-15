@@ -116,14 +116,6 @@ Future<void> init() async {
   }
 }
 
-/// Download the objectbox databases, TF Lite models, ... and store them
-/// on disk
-Future<void> downloadAssets() async {
-  
-  
-  
-}
-
 /// copies the zipped database from assets to the user's documents directory
 /// and unzips it, if it does not exist already
 Future<void> copyDatabaseFilesFromAssets() async {
@@ -139,7 +131,7 @@ Future<void> copyDatabaseFilesFromAssets() async {
   final dbFile = File(databaseDirectory.path + '/data.mdb');
   if (!dbFile.existsSync()) {
     // Get pre-populated db file.
-    ByteData data = await rootBundle.load("assets/dict/default.zip");
+    ByteData data = await rootBundle.load("assets/dict/dictionary.zip");
 
     final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
 
@@ -194,9 +186,14 @@ Future<void> initGetIt() async {
     Isars(
       dictionary: Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-        directory: path
+        directory: path,
+        name: "dictionary"
       ),
-      searchHistory: Isar.openSync(name: "searchHistory", [SearchHistorySchema])
+      searchHistory: Isar.openSync(
+        [SearchHistorySchema],
+        directory: path,
+        name: "searchHistory", 
+      )
     )
   );
 
@@ -205,7 +202,9 @@ Future<void> initGetIt() async {
       2,
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
         isoToiso639_2B[e]!.name
-      ).toList()
+      ).toList(),
+      GetIt.I<Isars>().dictionary.directory!,
+      GetIt.I<Isars>().dictionary.name
     )
   );
   GetIt.I<DictionarySearch>().init();

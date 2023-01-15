@@ -18,16 +18,21 @@ class DictionarySearch {
   List<SearchIsolate> _searchIsolates = [];
   /// Has this object been initialized
   bool _initialized = false;
+  /// The directory of the ISAR file of the dictionary
+  String directory;
+  /// The name of the ISAR file of the dictionary
+  String name;
 
 
-  DictionarySearch(this.noIsolates, this.languages);
+  DictionarySearch(this.noIsolates, this.languages, this.directory, this.name);
 
 
   /// Needs to be called before using this object
   void init () async {
     
     for (var i = 0; i < noIsolates; i++) {
-      _searchIsolates.add(SearchIsolate(languages)..init(i, noIsolates));
+      _searchIsolates.add(SearchIsolate(languages, directory, name)
+        ..init(i, noIsolates));
     }
 
     _initialized = true;

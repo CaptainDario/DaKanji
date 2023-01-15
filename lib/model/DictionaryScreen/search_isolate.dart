@@ -29,12 +29,18 @@ class SearchIsolate {
   /// A name fot this isolate 
   String? debugName;
 
+  /// The directory of the ISAR file of the dictionary
+  String directory;
+  /// The name of the ISAR file of the dictionary
+  String name;
   /// Has the isolate been initialized
   bool _initialized = false;
 
 
   SearchIsolate(
     this.languages,
+    this.directory,
+    this.name,
     {
       this.debugName,
       int no_processes = 2
@@ -73,6 +79,8 @@ class SearchIsolate {
     isolateSendPort!.send(languages);
     isolateSendPort!.send(isolateNo);
     isolateSendPort!.send(noIsolates);
+    isolateSendPort!.send(directory);
+    isolateSendPort!.send(name);
 
     _initialized = true;
   }
@@ -126,9 +134,14 @@ Future<void> _searchInIsar(SendPort p) async {
   int isolateNo  = await events.next;
   int noIsolates = await events.next;
 
+  String directory = await events.next;
+  String name = await events.next;
+
   // open isar
   Isar isar = Isar.openSync(
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
+    directory: directory,
+    name: name
   );
 
   int noEntries = isar.jmdict.countSync();
@@ -157,8 +170,7 @@ Future<void> _searchInIsar(SendPort p) async {
       debugPrint("len ${searchResults.length} time: ${s.elapsed}");
     }
     else if (message == null) {
-      // Exit if the main isolate sends a null message, indicating there are no
-      // more files to read and parse.
+      // Exit if the main isolate sends a null message
       break;
     }
   }
