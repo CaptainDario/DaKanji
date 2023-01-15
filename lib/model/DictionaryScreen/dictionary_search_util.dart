@@ -22,7 +22,11 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
   /// 1 - matchs starting at the word beginning 
   /// 2 - other matches
   List<List<JMdict>> matches = [[], [], []];
+  /// where in the meanings of this entry did the search match
   List<List<int>> matchIndices = [[], [], []];
+  /// how many characters are the query and the matched result apart
+  List<List<int>> lenDifferences = [[], [], []];
+  /// the query converted to Romaji
   String queryTextRomaji = KanaKit().toRomaji(queryText);
 
   // iterate over the entries and create a ranking for each 
@@ -41,21 +45,21 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
           languages.contains(e.language)
         ).map((LanguageMeanings e) => 
           e.meanings!
-        )//.expand((e) => e)
-        .toList();
+        ).toList();
       ranked = rankMatches(k, queryText);
     }
     // the query was found in this entry
     if(ranked.item1 != -1){
       matches[ranked.item1].add(entry);
       matchIndices[ranked.item1].add(ranked.item3);
+      lenDifferences[ranked.item1].add(ranked.item2);
     }
   }
 
   // sort the results
-  matches[0] = sortEntries(matches[0], matchIndices[0]);
-  matches[1] = sortEntries(matches[1], matchIndices[1]);
-  matches[2] = sortEntries(matches[2], matchIndices[2]);
+  matches[0] = sortEntries(matches[0], matchIndices[0], lenDifferences[0]);
+  matches[1] = sortEntries(matches[1], matchIndices[1], lenDifferences[1]);
+  matches[2] = sortEntries(matches[2], matchIndices[2], lenDifferences[2]);
 
   return matches;
 }
@@ -76,13 +80,15 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText) 
   for (var i = 0; i < matches.length; i++) {
     for (var j = 0; j < matches[i].length; j++) {
       matches[i][j] = matches[i][j].toLowerCase();
-      if(matches[i][j].contains(queryText))
+      if(matches[i][j].contains(queryText)){
         matchIndeces = [i, j];
+        break;
+      }
     }
   }  
 
-  // check for full match
   if(matchIndeces[0] != -1 && matchIndeces[1] != -1){
+    // check for full match
     if(queryText == matches[matchIndeces[0]][matchIndeces[1]]){
       result = 0;
     }
@@ -102,23 +108,36 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText) 
 }
 
 /// Sorts the list `a` of `JMdict` based on (1. is more important than 2., ...)
-///   1. the frequency of the entries. <br/>
-///   2. the int in `b` and returns it. <br/> 
-/// Throws an exception if the lists do not have the same length.
-List<JMdict> sortEntries(List<JMdict> a, List<int> b){
+///   1. the int in `b`. <br/>
+///   2. the difference in length in `c`
+///   2. the frequency of the entries. <br/> 
+/// and returns it
+/// 
+/// Caution: Throws an exception if the lists do not have the same length.
+List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
 
   assert (a.length == b.length);
 
-  List<Tuple2<JMdict, int>> combined = List.generate(b.length,
-    (i) => Tuple2(a[i], b[i])
+  List<Tuple3<JMdict, int, int>> combined = List.generate(b.length,
+    (i) => Tuple3(a[i], b[i], c[i])
   );
 
   combined.sort(
     (_a, _b) {
-      if(_a.item2 != _b.item2)
+      // sort by index of entry match
+      if(_a.item2 != _b.item2){
         return _a.item2.compareTo(_b.item2);
-      else
-        return -_a.item1.frequency.compareTo(_b.item1.frequency);
+      }
+      else{
+        // sort by difference in length
+        if(_a.item3 != _b.item3){
+          return _a.item3.compareTo(_b.item3);
+        }
+        // sort by frequency
+        else {
+          return -_a.item1.frequency.compareTo(_b.item1.frequency);
+        }
+      }
     }
   );
 
@@ -155,36 +174,36 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
 {
   QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
 
-        // limit this process to one chunk of size (entries.length / num_processes)
-        .idBetween(idRangeStart, idRangeEnd)
+    // limit this process to one chunk of size (entries.length / num_processes)
+    .idBetween(idRangeStart, idRangeEnd)
 
-      .filter()
+  .filter()
 
-        // search over kanji
-        .optional(message.length == 1, (t) => 
-          t.kanjisElementStartsWith(message)
-        ).or()
-        .optional(message.length > 1, (t) => 
-          t.kanjisElementContains(message)
+    // search over kanji
+    .optional(message.length == 1, (t) => 
+      t.kanjisElementStartsWith(message)
+    ).or()
+    .optional(message.length > 1, (t) => 
+      t.kanjisElementContains(message)
+    )
+
+  // search over readings (user entered query)
+  .or()
+    .romajiElementContains(messageRomaji)
+
+  // search over meanings
+  .or()
+    .meaningsElement((meaning) => 
+      meaning.anyOf(langs, (m, lang) => m
+        .languageEqualTo(lang)
+        .optional(message.length < 3, (m) => m
+          .meaningsElementStartsWith(message, caseSensitive: false)
         )
-
-      // search over readings (user entered query)
-      .or()
-        .romajiElementContains(messageRomaji)
-
-      // search over meanings
-      .or()
-        .meaningsElement((meaning) => 
-          meaning.anyOf(langs, (m, lang) => m
-            .languageEqualTo(lang)
-            .optional(message.length < 3, (m) => m
-              .meaningsElementStartsWith(message, caseSensitive: false)
-            )
-            .optional(message.length >= 3, (m) => m
-              .meaningsElementContains(message, caseSensitive: false)
-            )
-          )
-        );
+        .optional(message.length >= 3, (m) => m
+          .meaningsElementContains(message, caseSensitive: false)
+        )
+      )
+    );
 
   return q;
 }
