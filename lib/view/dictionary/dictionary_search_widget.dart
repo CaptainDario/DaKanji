@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:isar/isar.dart';
 
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
@@ -49,8 +50,6 @@ class DictionarySearchWidget extends StatefulWidget {
 class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   with SingleTickerProviderStateMixin{
 
-  /// the text that was last entered in the search field
-  String lastInput = "";
   /// the TextEditingController of the search field
   TextEditingController searchInputController = TextEditingController();
   /// Used to check if `widget.initialQuery` changed
@@ -63,11 +62,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   double searchBarInputHeight = 0;
   /// The FoucsNode of the search input field
   FocusNode searchTextFieldFocusNode = FocusNode();
+
+  late List<JMdict?> searchHistory;
   
 
   @override
   void initState() {
     super.initState();
+    updateSearchHistoryIds();
 
     if(widget.isExpanded)
       expanded = true;
@@ -85,6 +87,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           setState(() {});
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
+    updateSearchHistoryIds();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -152,22 +160,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
                     child: IconButton(
                       splashRadius: 20,
-                      onPressed: () async {
-                        if(searchInputController.text != ""){
-                          searchInputController.text = "";
-                          context.read<DictSearch>().currentSearch = "";
-                          context.read<DictSearch>().searchResults = [];
-                          searchTextFieldFocusNode.requestFocus();
-                        }
-                        else{
-                          String data = (await Clipboard.getData('text/plain'))?.text ?? "";
-                          data = data.replaceAll("\n", " ");
-                          searchInputController.text = data;
-                          await updateSearchResults(data, true);
-                        }
-                        expanded = true;
-                        setState(() { });
-                      },
+                      onPressed: onClipboardButtonPressed,
                       icon: Icon(
                         searchInputController.text == ""
                           ? Icons.copy
@@ -205,33 +198,18 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
               height: expanded 
                 ? widget.expandedHeight - searchBarInputHeight
                 : 0,
-              child: SearchResultList(
-                searchResults: context.watch<DictSearch>().searchResults,
-                onSearchResultPressed: (entry) async {
-                  // update search variables
-                  context.read<DictSearch>().selectedResult = entry;
-                  List<String> kanjis =
-                    removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
-                  context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
-                  context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
-        
-                  // store new search in search history
-                  var isar = GetIt.I<Isars>().searchHistory;
-                  await isar.writeTxn(() async {
-                    await isar.searchHistorys.put(SearchHistory()
-                      ..dateSearched = DateTime.now()
-                      ..dictEntryId  = entry.id
-                      ..schema       = DatabaseType.JMDict
-                    );
-                  });
-
-                  // collapse the search bar
-                  if(widget.canCollapse)
-                    setState(() {
-                      expanded = false;
-                    });
-                },
-              ),
+              child: context.read<DictSearch>().currentSearch != ""
+                // search results if the user entered text
+                ? SearchResultList(
+                  searchResults: context.watch<DictSearch>().searchResults,
+                  onSearchResultPressed: onSearchResultPressed,
+                )
+                // otherwise the search history
+                : SearchResultList(
+                  searchResults: searchHistory,
+                  onSearchResultPressed: onSearchResultPressed,
+                  reversed: true,
+                )
             )
           ],
         )
@@ -239,13 +217,70 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     );
   }
 
+  /// updates the search history
+  void updateSearchHistoryIds(){
+    List<int> ids = GetIt.I<Isars>().searchHistory.searchHistorys.where()
+      .sortByDateSearched()
+      .dictEntryIdProperty()
+      .findAllSync();
+    searchHistory = GetIt.I<Isars>().dictionary.jmdict.getAllSync(ids);
+  }
+
+  /// callback that is executed when the user presses on a search result
+  void onSearchResultPressed(JMdict entry) async {
+    // update search variables
+    context.read<DictSearch>().selectedResult = entry;
+    List<String> kanjis =
+      removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
+    context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
+    context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
+
+    // store new search in search history
+    var isar = GetIt.I<Isars>().searchHistory;
+    await isar.writeTxn(() async {
+      await isar.searchHistorys.put(SearchHistory()
+        ..dateSearched = DateTime.now()
+        ..dictEntryId  = entry.id
+        ..schema       = DatabaseType.JMDict
+      );
+    });
+    searchHistory.add(entry);
+
+    // collapse the search bar
+    if(widget.canCollapse)
+      setState(() {
+        expanded = false;
+      });
+  }
+
+  /// callback when the copy/paste from clipboard button is pressed
+  void onClipboardButtonPressed() async {
+    if(searchInputController.text != ""){
+      searchInputController.text = "";
+      context.read<DictSearch>().currentSearch = "";
+      context.read<DictSearch>().searchResults = [];
+      searchTextFieldFocusNode.requestFocus();
+    }
+    else{
+      String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+      data = data.replaceAll("\n", " ");
+      searchInputController.text = data;
+      await updateSearchResults(data, true);
+    }
+    expanded = true;
+    setState(() { });
+  }
+
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
-    // only search in dictionary if the query changed and is not empty
-    if(lastInput == text || text == "") {
+    // only search in dictionary if the query is not empty
+    if(text == ""){
+      context.read<DictSearch>().currentSearch = "";
+      context.read<DictSearch>().searchResults = [];
       return;
     }
+
     KanaKit k = GetIt.I<KanaKit>();
     String deconjugated = "";
     // try to deconjugate the input if allowed
@@ -305,6 +340,5 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     context.read<DictSearch>().currentSearch = deconjugated;
     context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().query(deconjugated);
-    lastInput = deconjugated;
   }
 }
