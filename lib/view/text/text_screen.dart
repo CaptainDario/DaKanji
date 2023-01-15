@@ -42,7 +42,7 @@ class TextScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   
-  final TextEditingController inputController = TextEditingController()..text = g_SampleText;
+  final TextEditingController inputController = TextEditingController();
 
   @override
   _TextScreenState createState() => _TextScreenState();
@@ -534,13 +534,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   void processText(String text){
     
     // analyze text with kagome
-    var analyzedWords = 
-      GetIt.I<Kagome>().runAnalyzer(
-        text, 
-        AnalyzeModes.normal
-      );
+    var analyzedWords = GetIt.I<Kagome>().runAnalyzer(text, AnalyzeModes.normal);
     kagomeWords = analyzedWords.item1.length == 1 && analyzedWords.item1[0] == ""
-      ? [] : analyzedWords.item1;
+      ? []
+      : analyzedWords.item1;
     // remove POS for punctuation marks
     kagomePos = analyzedWords.item2.where(
       (e) => e.length > 5
@@ -567,7 +564,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       )
         kagomePos[i][9] = "";
     }
-    print("processed");
   }
 }
 
