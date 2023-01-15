@@ -270,17 +270,26 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Searched: $deconjugated"),
-              InkWell(
-                onTap: () async {
-                  await updateSearchResults(text, false);
-                  setState(() {});
-                },
+              Expanded(
                 child: Text(
-                  "Search $text instead",
-                  style: TextStyle(
-                    color: Theme.of(context).highlightColor
-                  ),                
+                  "Searched: $deconjugated",
+                  overflow: TextOverflow.ellipsis
+                ),
+              ),
+              SizedBox(width: 20,),
+              Expanded(
+                child: InkWell(
+                  onTap: () async {
+                    await updateSearchResults(text, false);
+                    setState(() {});
+                  },
+                  child: Text(
+                    "Search for: $text",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor
+                    ),                
+                  ),
                 ),
               )
             ],
