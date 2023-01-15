@@ -29,7 +29,7 @@
     "tutorial_examples_tab": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
     "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
     "tutorial_search_input_clear_text": "This button clears the input or copies the text from your clipboard.",
-    "tutorial_search_input_draw_text": "This button opens a screen in which use can draw a Kanji to look them up quickly.",
+    "tutorial_search_input_draw_text": "This button opens a screen in which you can draw Kanjis to look them up quickly.",
     "tutorial_search_input_text": "This is the search input field, just tap on it to input any word you would like to search.",
     "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
     "word_antonyms": "Antonyms",
@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "Please describe your matter as detailed as possible. After pressing \"submit\" you can share your annotated screenshot and text (email contact: daapplab@gmail.com).",
+    "feedback_description_text": "What's wrong? Annotate the view above and then press \"submit\".",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -201,9 +201,13 @@
     "tutorial_colors_text": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
     "tutorial_fullscreen_text": "This button switches the processed text to full screen.",
     "tutorial_furigana_text": "This button adds furigana to the text.",
+    "tutorial_processed_text_double_tap": "A double tap will select a sentence.",
+    "tutorial_processed_text_long_press": "A long press will select a word and show the Part of Speech information.",
+    "tutorial_processed_text_tap": "A single tap will select a word.",
     "tutorial_processed_text_text": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+    "tutorial_processed_text_triple_tap": "A triple tap will select a paragraph.",
     "tutorial_spaces_text": "With this button spaces are added to the text.",
-    "tutorial_text_input_text": "Here you can write or paste any text. This text will be processed with different tools."
+    "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
   },
   "WebviewScreen": {
     "loading": "Searching",

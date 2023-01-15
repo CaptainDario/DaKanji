@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "dibujar",
-    "feedback_description_text": "Por favor, describe tu asunto lo m\u00e1s detalladamente posible. Despu\u00e9s de pulsar \"enviar\" puede compartir su captura de pantalla anotada y el texto (contacto de correo electr\u00f3nico: daapplab@gmail.com).",
+    "feedback_description_text": "\u00bfQu\u00e9 ocurre (escriba su texto a continuaci\u00f3n)?",
     "navigate": "navegue por",
     "submit": "enviar",
     "title": "Comentarios"
@@ -201,7 +201,11 @@
     "tutorial_colors_text": "Este bot\u00f3n muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
     "tutorial_fullscreen_text": "Este bot\u00f3n cambia el texto procesado a pantalla completa.",
     "tutorial_furigana_text": "Este bot\u00f3n a\u00f1ade furigana al texto.",
+    "tutorial_processed_text_double_tap": "Un doble toque seleccionar\u00e1 una frase.",
+    "tutorial_processed_text_long_press": "Una pulsaci\u00f3n larga seleccionar\u00e1 una palabra y mostrar\u00e1 la informaci\u00f3n de la parte de la oraci\u00f3n.",
+    "tutorial_processed_text_tap": "Un solo toque seleccionar\u00e1 una palabra.",
     "tutorial_processed_text_text": "El texto procesado se mostrar\u00e1 aqu\u00ed. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+    "tutorial_processed_text_triple_tap": "Un triple toque seleccionar\u00e1 un p\u00e1rrafo.",
     "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
   },

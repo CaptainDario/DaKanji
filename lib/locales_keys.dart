@@ -189,7 +189,11 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_colors_text = 'TextScreen.tutorial_colors_text';
   static const TextScreen_tutorial_fullscreen_text = 'TextScreen.tutorial_fullscreen_text';
   static const TextScreen_tutorial_furigana_text = 'TextScreen.tutorial_furigana_text';
+  static const TextScreen_tutorial_processed_text_double_tap = 'TextScreen.tutorial_processed_text_double_tap';
+  static const TextScreen_tutorial_processed_text_long_press = 'TextScreen.tutorial_processed_text_long_press';
+  static const TextScreen_tutorial_processed_text_tap = 'TextScreen.tutorial_processed_text_tap';
   static const TextScreen_tutorial_processed_text_text = 'TextScreen.tutorial_processed_text_text';
+  static const TextScreen_tutorial_processed_text_triple_tap = 'TextScreen.tutorial_processed_text_triple_tap';
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';

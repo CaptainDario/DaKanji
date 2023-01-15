@@ -29,7 +29,7 @@
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispiels\u00e4tze, in denen das ausgew\u00e4hlte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enth\u00e4lt Informationen \u00fcber die im Wort verwendeten Kanjis. Dazu geh\u00f6ren Anzahl und Reihenfolge der Striche und die Bedeutung.",
     "tutorial_search_input_clear_text": "Diese Schaltfl\u00e4che l\u00f6scht die Eingabe oder kopiert den Text aus der Zwischenablage.",
-    "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du ein Kanji zeichnen kannst, um es nachzuschlagen.",
+    "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du Kanjia zeichnen kannst, um sie nachzuschlagen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld f\u00fcr die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen m\u00f6chtest.",
     "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprache der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
     "word_antonyms": "Antonyme",
@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Bitte beschreiben Sie Ihr Anliegen so detailliert wie m\u00f6glich. Nachdem Sie auf \"Absenden\" geklickt haben, k\u00f6nnen Sie Ihren kommentierten Screenshot und Text teilen (E-Mail-Kontakt: daapplab@gmail.com).",
+    "feedback_description_text": "Was stimmt nicht (schreibe deine Antwort unten)?",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -201,9 +201,13 @@
     "tutorial_colors_text": "Diese Schaltfl\u00e4che zeigt die W\u00f6rter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
     "tutorial_fullscreen_text": "Mit dieser Schaltfl\u00e4che wird der bearbeitete Text als Vollbild angezeigt.",
     "tutorial_furigana_text": "Diese Schaltfl\u00e4che f\u00fcgt Furigana \u00fcber dem Text ein.",
+    "tutorial_processed_text_double_tap": "Durch doppeltes Antippen wird ein Satz ausgew\u00e4hlt.",
+    "tutorial_processed_text_long_press": "Durch langes Dr\u00fccken wird ein Wort ausgew\u00e4hlt und die Wortartinformation angezeigt.",
+    "tutorial_processed_text_tap": "Durch einmaliges Antippen wird ein Wort ausgew\u00e4hlt.",
     "tutorial_processed_text_text": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im W\u00f6rterbuch nachzuschlagen.",
+    "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgew\u00e4hlt.",
     "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
-    "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text wird mit verschiedenen Tools bearbeitet."
+    "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text kann mit verschiedenen Tools bearbeitet."
   },
   "WebviewScreen": {
     "loading": "Suche",

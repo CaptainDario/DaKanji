@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Si prega di descrivere il problema nel modo pi\u00f9 dettagliato possibile. Dopo aver premuto \"Invia\", \u00e8 possibile condividere la schermata e il testo annotati (contatto e-mail: daapplab@gmail.com).",
+    "feedback_description_text": "Cosa c'\u00e8 che non va (scrivere il testo qui sotto)?",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -201,7 +201,11 @@
     "tutorial_colors_text": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori \u00e8 riportato nel manuale).",
     "tutorial_fullscreen_text": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
     "tutorial_furigana_text": "Questo pulsante aggiunge i furigana al testo.",
+    "tutorial_processed_text_double_tap": "Con un doppio tocco si seleziona una frase.",
+    "tutorial_processed_text_long_press": "Premendo a lungo si seleziona una parola e si visualizzano le informazioni sulla parte del discorso.",
+    "tutorial_processed_text_tap": "Con un solo tocco si seleziona una parola.",
     "tutorial_processed_text_text": "Il testo elaborato viene visualizzato qui. \u00c8 possibile selezionare parti del testo per cercarle nel dizionario.",
+    "tutorial_processed_text_triple_tap": "Un triplo tocco selezioner\u00e0 un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui \u00e8 possibile scrivere o incollare qualsiasi testo. Il testo verr\u00e0 elaborato con diversi strumenti."
   },

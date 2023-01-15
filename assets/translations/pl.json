@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysowa\u0107",
-    "feedback_description_text": "Prosz\u0119 opisa\u0107 swoj\u0105 spraw\u0119 tak szczeg\u00f3\u0142owo, jak to mo\u017cliwe. Po naci\u015bni\u0119ciu \"wy\u015blij\" mo\u017cesz udost\u0119pni\u0107 sw\u00f3j zrzut ekranu z adnotacjami oraz tekst (kontakt mailowy: daapplab@gmail.com).",
+    "feedback_description_text": "Co jest nie tak (wpisz sw\u00f3j tekst poni\u017cej)?",
     "navigate": "porusza\u0107 si\u0119 po stronie",
     "submit": "wy\u015blij",
     "title": "Informacja zwrotna"
@@ -201,7 +201,11 @@
     "tutorial_colors_text": "Ten przycisk pokazuje s\u0142owa tekstu w r\u00f3\u017cnych kolorach (znaczenia kolor\u00f3w mo\u017cna zobaczy\u0107 w instrukcji).",
     "tutorial_fullscreen_text": "Ten przycisk prze\u0142\u0105cza przetwarzany tekst na pe\u0142ny ekran.",
     "tutorial_furigana_text": "Ten przycisk dodaje furigan\u0119 do tekstu.",
+    "tutorial_processed_text_double_tap": "Podw\u00f3jne stukni\u0119cie powoduje wybranie zdania.",
+    "tutorial_processed_text_long_press": "D\u0142ugie naci\u015bni\u0119cie zaznaczy s\u0142owo i poka\u017ce informacj\u0119 o cz\u0119\u015bci mowy.",
+    "tutorial_processed_text_tap": "Pojedyncze stukni\u0119cie powoduje wyb\u00f3r s\u0142owa.",
     "tutorial_processed_text_text": "Przetworzony tekst zostanie pokazany tutaj. Mo\u017cesz zaznaczy\u0107 fragmenty tekstu, aby wyszuka\u0107 je w s\u0142owniku.",
+    "tutorial_processed_text_triple_tap": "Potr\u00f3jne stukni\u0119cie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
   },
