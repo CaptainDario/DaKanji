@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -96,6 +95,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   bool _leftHandleSelected = false;
   /// is the right text selection handles selected
   bool _rightHandleSelected = false;
+  /// is the user currently dragging the on the text to select it
+  bool _isDragging = false;
   /// the selection caret rect
   Rect? _caretRect;
   /// the cursor to use when hovering over text
@@ -231,6 +232,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// User started dragging on the text
   void _onDragStart(DragStartDetails details) {
     if(_leftHandleSelected || _rightHandleSelected) return;
+    _isDragging = true;
 
     setState(() {
       int offset = _getTextPositionAtOffset(details.localPosition).offset;
@@ -252,6 +254,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         extentOffset: _getTextPositionAtOffset(details.localPosition).offset,
       );
 
+    print("dragging");
+
     setState(() {
       _onUserSelectionChange(_textSelection);
     });
@@ -260,6 +264,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// User ended a drag
   void _onDragEnd(DragEndDetails details) {
     if(_leftHandleSelected || _rightHandleSelected) return;
+    _isDragging = false;
     setState(() {});
   }
 
@@ -486,6 +491,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         multiTapTimer = Timer(
           const Duration(milliseconds: 200),
           () {
+            if(_isDragging)return;
+            
             if (tapped == 1 && !isTapped){
               selectWord(event);
               if(widget.onTap != null) widget.onTap!(_textSelection);
