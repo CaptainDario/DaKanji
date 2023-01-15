@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +10,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/show_cases/multi_focus.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
@@ -272,8 +271,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               child: Column(
                                 children: [
                                   Expanded(
-                                    child: Focus(
-                                      focusNode: widget.includeTutorial
+                                    child: MultiFocus(
+                                      focusNodes: widget.includeTutorial
                                         ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
                                         : null,
                                       child: Center(

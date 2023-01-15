@@ -11,7 +11,7 @@ class TextScreenTutorial extends Tutorial {
 
   // All tutorial steps that belong to the TextScreen
   late FocusNode textInputSteps;
-  late FocusNode processedTextSteps;
+  late List<FocusNode> processedTextSteps;
   late FocusNode spacesButtonSteps;
   late FocusNode furiganaSteps;
   late FocusNode colorButtonSteps;
@@ -26,11 +26,19 @@ class TextScreenTutorial extends Tutorial {
       "",
       "",
       "",
+      "",
+      "",
+      "",
+      "",
     ];
     bodies = [
       LocaleKeys.TextScreen_tutorial_begin_text.tr(),
       LocaleKeys.TextScreen_tutorial_text_input_text.tr(),
       LocaleKeys.TextScreen_tutorial_processed_text_text.tr(),
+      LocaleKeys.TextScreen_tutorial_processed_text_tap.tr(),
+      LocaleKeys.TextScreen_tutorial_processed_text_long_press.tr(),
+      LocaleKeys.TextScreen_tutorial_processed_text_double_tap.tr(),
+      LocaleKeys.TextScreen_tutorial_processed_text_triple_tap.tr(),
       LocaleKeys.TextScreen_tutorial_spaces_text.tr(),
       LocaleKeys.TextScreen_tutorial_furigana_text.tr(),
       LocaleKeys.TextScreen_tutorial_colors_text.tr(),
@@ -41,11 +49,11 @@ class TextScreenTutorial extends Tutorial {
 
     /// get the different parts of the tutorial
     textInputSteps = focusNodes![1];
-    processedTextSteps = focusNodes![2];
-    spacesButtonSteps = focusNodes![3];
-    furiganaSteps = focusNodes![4];
-    colorButtonSteps = focusNodes![5];
-    fullscreenSteps = focusNodes![6];
+    processedTextSteps = focusNodes!.sublist(2, 7);
+    spacesButtonSteps = focusNodes![7];
+    furiganaSteps = focusNodes![8];
+    colorButtonSteps = focusNodes![9];
+    fullscreenSteps = focusNodes![10];
   } 
 
 }
