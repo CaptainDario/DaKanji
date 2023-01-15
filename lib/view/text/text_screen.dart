@@ -279,8 +279,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       child: Center(
                                         child: CustomSelectableText(
                                           words: kagomeWords,
-                                          rubys: kagomePos.map(
-                                            (e) => e.length == 17 ? e[6] : " "
+                                          rubys: kagomePos.map((e) => 
+                                            e.length == 17 
+                                              ? GetIt.I<KanaKit>().toHiragana(e[9])
+                                              : " "
                                           ).toList(),
                                           wordColors: List.generate(
                                             kagomeWords.length,
@@ -563,7 +565,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         !GetIt.I<KanaKit>().isJapanese(kagomeWords[i]) ||
         GetIt.I<KanaKit>().isKana(kagomeWords[i])
       )
-        kagomePos[i][6] = "";
+        kagomePos[i][9] = "";
     }
     print("processed");
   }
