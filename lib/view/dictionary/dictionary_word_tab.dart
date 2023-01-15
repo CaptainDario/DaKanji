@@ -68,21 +68,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   @override
   void initState() {
-    
+    initData();
     super.initState();
   }
 
-
   @override
-  Widget build(BuildContext context) {
+  void didUpdateWidget(covariant DictionaryWordTab oldWidget) {
+    initData();
+    super.didUpdateWidget(oldWidget);
+  }
 
-    if(partOfSpeechStyle == null){
-      partOfSpeechStyle = TextStyle(
-        fontSize: 12,
-        color: Theme.of(context).hintColor
-      );
-    }    
-
+  /// parses and initializes all data elements of this widget
+  void initData(){
     if(widget.entry != null){
       readingOrKanji = widget.entry!.kanjis.isEmpty
         ? widget.entry!.readings[0]
@@ -94,6 +91,13 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .where((e) => posUsed.contains(e))
         .toList();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    if(partOfSpeechStyle == null)
+      partOfSpeechStyle = TextStyle(fontSize: 12, color: Theme.of(context).hintColor);
 
     return widget.entry == null
       ? Container()

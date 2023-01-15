@@ -56,10 +56,13 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didUpdateWidget(covariant ConjugationExpansionTile oldWidget) {
+    initConjugations();
+    super.didUpdateWidget(oldWidget);
+  }
 
-    if(conjugatedWord != widget.word)
-      initConjugations();
+  @override
+  Widget build(BuildContext context) {
 
     return ExpansionTile(
       textColor: Theme.of(context).highlightColor,

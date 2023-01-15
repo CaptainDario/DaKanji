@@ -42,7 +42,6 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
   void initState() {
 
     kanjiVGStringList = kanjiVGToGraph(widget.kanjiVG, graph);
-
     builder
       ..siblingSeparation = (10)
       ..levelSeparation = (15)
@@ -50,6 +49,18 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
       ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant KanjiGroupWidget oldWidget) {
+    kanjiVGStringList = kanjiVGToGraph(widget.kanjiVG, graph);
+    builder
+      ..siblingSeparation = (10)
+      ..levelSeparation = (15)
+      ..subtreeSeparation = (30)
+      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
+      
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

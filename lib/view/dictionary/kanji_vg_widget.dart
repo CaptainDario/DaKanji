@@ -37,8 +37,13 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
   void initState() {
     
     colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
-
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant KanjiVGWidget oldWidget) {
+    colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

@@ -47,11 +47,11 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
 class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
   /// List containing all on readings of this kanji
-  final List<String> onReadings = [];
+  List<String> onReadings = [];
   /// List containing all kun readings of this kanji
-  final List<String> kunReadings = [];
+  List<String> kunReadings = [];
   /// List containing all readings in the target language
-  final Map<String, List<String>> meanings = {};
+  Map<String, List<String>> meanings = {};
   /// The stroke count information extracted from the KanjiVG data
   int strokeCount = -1;
   /// the menu elements of the more-popup-menu
@@ -64,6 +64,20 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   @override
   void initState() {
     super.initState();
+    initData();
+  }
+
+  @override
+  void didUpdateWidget(covariant DictionaryScreenKanjiCard oldWidget) {
+    
+    initData();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  /// parses and initializes all data elements of this widget
+  void initData(){
+
+    onReadings = []; kunReadings = []; meanings = {};
 
     for (var i = 0; i < widget.kanjidic2entry.readings.length; i++) {
       // init on reading list
@@ -93,8 +107,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
     // get stroke count from kanjiVG
     final document = XmlDocument.parse(widget.kanjiVG.svg);
     strokeCount = document.root.findAllElements('text').map(
-        (e) => int.parse(e.children.first.text)
-      ).toList().reduce(max);
+      (e) => int.parse(e.children.first.text)
+    ).toList().reduce(max);
   }
 
   @override
@@ -252,4 +266,6 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       )
     );
   }
+
+
 }
