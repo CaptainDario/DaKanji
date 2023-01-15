@@ -12,6 +12,8 @@ class SearchResultList extends StatefulWidget {
 
   /// The search results that should be shown in the list
   final List searchResults;
+  /// should the searchResults be shown in reverse
+  final bool reversed;
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
@@ -20,6 +22,7 @@ class SearchResultList extends StatefulWidget {
     {
       required this.searchResults,
       this.onSearchResultPressed,
+      this.reversed = false,
       super.key
     }
   );
@@ -34,9 +37,11 @@ class _SearchResultListState extends State<SearchResultList> {
     return ListView.builder(
       itemCount: widget.searchResults.length,
       itemBuilder: ((context, index) {
+        // determine index based on 
+        int i = widget.reversed ? widget.searchResults.length-index-1 : index;
         return SearchResultCard(
-          dictEntry: widget.searchResults[index],
-          resultIndex: index,
+          dictEntry: widget.searchResults[i],
+          resultIndex: i,
           onPressed: (selection) {
             if(widget.onSearchResultPressed != null)
                 widget.onSearchResultPressed!(selection);
