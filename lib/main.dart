@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 import 'package:isar/isar.dart';
-import 'package:kagome_dart/kagome_dart.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
@@ -94,9 +94,6 @@ Future<void> main() async {
 /// * used version, CHANGELOG and about
 /// * loads the settings
 Future<void> init() async {
-  
-  // NOTE: uncomment to clear the SharedPreferences
-  //await clearPreferences();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
@@ -173,9 +170,6 @@ Future<void> initGetIt() async {
 
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
-  
-  // Kagome
-  GetIt.I.registerSingleton<Kagome>(Kagome());
 
   // package for converting between kana
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
@@ -211,6 +205,10 @@ Future<void> initGetIt() async {
 
   // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
+
+  // Mecab
+  GetIt.I.registerSingleton<Mecab>(Mecab());
+  await GetIt.I<Mecab>().init("assets/ipadic", true);
 }
 
 /// Setup the DaKanji window on desktop platforms

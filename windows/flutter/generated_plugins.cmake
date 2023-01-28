@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
+  mecab_dart
   screen_retriever
   share_plus
   url_launcher_windows

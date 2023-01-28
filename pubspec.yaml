@@ -65,8 +65,11 @@ dependencies:
       url: https://github.com/CaptainDario/tflite_flutter_plugin
   flutter_appavailability:        # android, iOS
     path: ./plugins/flutter_appavailability
-  kagome_dart: 
-    path: ../kagome_dart
+  mecab_dart:
+    git:
+      url: https://github.com/CaptainDario/mecab_dart
+  #kagome_dart: 
+  #  path: ../kagome_dart
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms
@@ -163,3 +166,5 @@ flutter:
     - CHANGELOG.md
     - pubspec.yaml
     - CREDITS.md
+    # mecab
+    - assets/ipadic/
