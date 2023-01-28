@@ -144,9 +144,10 @@ Future<void> _searchInIsar(SendPort p) async {
     name: name
   );
 
-  int noEntries = isar.jmdict.countSync();
-  int idRangeStart = isolateNo * (noEntries/noIsolates).floor();
-  int idRangeEnd   = (isolateNo+1) * (noEntries/noIsolates).floor();
+  List<int> ids = isar.jmdict.where().idProperty().findAllSync();
+  int noEntries = ids.length-1;
+  int idRangeStart = (ids[(noEntries/noIsolates*isolateNo).floor()]).floor();
+  int idRangeEnd   = (ids[(noEntries/noIsolates*(isolateNo+1)).floor()]).floor();
 
   KanaKit kanaKit = KanaKit();
 
