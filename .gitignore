@@ -60,6 +60,9 @@ blobs/*
 assets/dict/*
 !assets/dict/.gitkeep
 
+# ignore mecab files
+assets/ipadic
+
 # plugins to ignore
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
