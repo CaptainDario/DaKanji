@@ -67,41 +67,41 @@ class Settings with ChangeNotifier {
       String tmp = prefs.getString('settingsDrawing') ?? "";
       if(tmp != "") {_drawing = SettingsDrawing.fromJson(json.decode(tmp));}
       else {_drawing = SettingsDrawing();}
-      _drawing.addListener(() => notifyListeners());
     }
-    on Exception {
-      SettingsDrawing();
+    catch (e) {
+      _drawing = SettingsDrawing();
     }
+    _drawing.addListener(() => notifyListeners());
     
     try{
       String tmp = prefs.getString('settingsMisc') ?? "";
       if(tmp != "") {_misc = SettingsMisc.fromJson(json.decode(tmp));}
       else {_misc = SettingsMisc();}
-      _misc.addListener(() => notifyListeners());
     }
-    on Exception {
-      SettingsMisc();
+    catch (e) {
+      _misc = SettingsMisc();
     }
+    _misc.addListener(() => notifyListeners());
 
     try{
       String tmp = prefs.getString('settingsAdvanced') ?? "";
       if(tmp != "") {_advanced = SettingsAdvanced.fromJson(json.decode(tmp));}
       else {_advanced = SettingsAdvanced();}
-      _advanced.addListener(() => notifyListeners());
     }
-    on Exception {
-      SettingsAdvanced();
+    catch (e) {
+      _advanced = SettingsAdvanced();
     }
+    _advanced.addListener(() => notifyListeners());
 
     try{
       String tmp = prefs.getString('settingsDictionary') ?? "";
       if(tmp != "") {_dictionary = SettingsDictionary.fromJson(json.decode(tmp));}
       else {_dictionary = SettingsDictionary();}
-      _dictionary.addListener(() => notifyListeners());
     }
-    on Exception {
-      SettingsDictionary();
+    catch (e) {
+      _dictionary = SettingsDictionary();
     }
+    _dictionary.addListener(() => notifyListeners());
   }
 }
 
