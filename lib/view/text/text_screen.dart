@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:kagome_dart/kagome_dart.dart';
-import 'package:kagome_dart/pos_unidic.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
@@ -51,7 +50,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the output of the analyzer
   List<String> kagomeWords = const [];
-  List<List<String>> kagomePos = const[[]];
+  List<TokenNode> kagomePos = const[];
 
   /// the padding used between all widges
   final double padding = 8.0;
@@ -278,14 +277,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       child: Center(
                                         child: CustomSelectableText(
                                           words: kagomeWords,
-                                          rubys: kagomePos.map((e) => 
-                                            e.length == 17 
-                                              ? GetIt.I<KanaKit>().toHiragana(e[9])
+                                          rubys: kagomePos.map((TokenNode e) => 
+                                            e.features.length == 9 
+                                              ? GetIt.I<KanaKit>().toHiragana(e.features[7])
                                               : " "
                                           ).toList(),
                                           wordColors: List.generate(
                                             kagomeWords.length,
-                                            (i) => posToColor[kagomePos[i][0]]
+                                            (i) => posToColor[kagomePos[i].features[0]]
                                           ),
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
@@ -344,6 +343,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               : Colors.white,
                                             ),
                                             onPressed: () {
+                                              print(kagomePos);
                                               setState(() {
                                                 showRubys = !showRubys;
                                               });
@@ -492,7 +492,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     for (int i = 0; i < kagomeWords.length; i++) {
       cnt += kagomeWords[i].length;
       if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
-        word = kagomePos[i][0];
+        word = kagomePos[i].features[0];
         break;
       }
     }
@@ -524,7 +524,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   }
 
   /// Processes the given `text`.
-  /// Analyzes the text with kagome, removes POS elements of punctuation marks,
+  /// Analyzes the text with mecab, removes POS elements of punctuation marks,
   /// converts unidic POS to enum and removes readings for words that do not use
   /// kanji.
   /// 
@@ -533,35 +533,23 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   void processText(String text){
     
     // analyze text with kagome
-    var analyzedWords = GetIt.I<Kagome>().runAnalyzer(text, AnalyzeModes.normal);
-    kagomeWords = analyzedWords.item1.length == 1 && analyzedWords.item1[0] == ""
+    var analyzedWords = GetIt.I<Mecab>().parse(text);
+    // assure that there are pos and merge pos into a list
+    kagomeWords = analyzedWords.length == 1 && analyzedWords[0].surface == ""
       ? []
-      : analyzedWords.item1;
-    // remove POS for punctuation marks
-    kagomePos = analyzedWords.item2.where(
-      (e) => e.length > 5
-    ).toList();
+      : analyzedWords.map((e) => e.surface).toList();
+    kagomeWords.removeLast(); // remove EOS symbol
     
     for (var i = 0; i < kagomePos.length; i++) {
-      // skip elements that are not words
-      if(kagomePos[i].length < 17)
-        continue;
-      
-      // convert the kagome pos to an enum element
-      String l = kagomePos[i]
-        .sublist(0, 4)
-        .join("-")
-        .replaceAll("-*", "");
-      if(jpToPosUnidic[l] != null)
-        kagomePos[i][0] = l;
-
-      // if the (part of) word is not Japanese or the word is kana only
-      // remove the reading (furigana)
-      if(
-        !GetIt.I<KanaKit>().isJapanese(kagomeWords[i]) ||
-        GetIt.I<KanaKit>().isKana(kagomeWords[i])
+      // remove furigana from:
+      //   non Japanese words
+      //   kana only words
+      //   punctuation
+      if(!GetIt.I<KanaKit>().isJapanese(kagomeWords[i]) ||
+        GetIt.I<KanaKit>().isKana(kagomeWords[i]) ||
+        kagomePos[i].features[7] == kagomePos[i].surface
       )
-        kagomePos[i][9] = "";
+        kagomePos[i].features[7] = "";
     }
   }
 }

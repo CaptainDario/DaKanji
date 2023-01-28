@@ -19,7 +19,7 @@ PODS:
     - Flutter
   - isar_flutter_libs (1.0.0):
     - Flutter
-  - kagome_dart (1.0.0):
+  - mecab_dart (0.0.1):
     - Flutter
   - OrderedSet (5.0.0)
   - path_provider_ios (0.0.1):
@@ -54,7 +54,7 @@ DEPENDENCIES:
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
-  - kagome_dart (from `.symlinks/plugins/kagome_dart/ios`)
+  - mecab_dart (from `.symlinks/plugins/mecab_dart/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
@@ -84,8 +84,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   isar_flutter_libs:
     :path: ".symlinks/plugins/isar_flutter_libs/ios"
-  kagome_dart:
-    :path: ".symlinks/plugins/kagome_dart/ios"
+  mecab_dart:
+    :path: ".symlinks/plugins/mecab_dart/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   share_plus:
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
-  kagome_dart: c7671dcff3f464d6d5bb9d86240a463424f23ae4
+  mecab_dart: 7491d01a31ed6c39b99c7c1c086d5c84a839e593
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
