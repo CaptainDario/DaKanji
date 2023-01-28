@@ -48,7 +48,7 @@ String deconjugate(String text){
   String ret = "";
 
   if(GetIt.I<KanaKit>().isJapanese(text)){
-    List<TokenNode> nodes = GetIt.I<Mecab>().parse(text);
+    List<TokenNode> nodes = GetIt.I<Mecab>().parse(text)..removeLast();
     
     for (int i = 0; i < nodes.length; i++) {
       // if the input is a verb / adjective / noun
@@ -58,14 +58,10 @@ String deconjugate(String text){
         && nodes.length > i+1 && nodes[i+1].features[0].contains("助動詞")
         )
       {
-        // convert to dictionary form...
-        // ... kanji if the user entered kanji
-        if(!GetIt.I<KanaKit>().isKana(text))
-          ret += nodes[i].features[10];
-        // kana otherwise
-        else
-          ret += nodes[i].features[6];
+        // convert to dictionary form
+        ret += nodes[i].features[6];
         
+        // ignore all conjugation terminations
         i++;
         while(nodes.length > i && nodes[i].features[0].contains("助動詞")){
           i++;

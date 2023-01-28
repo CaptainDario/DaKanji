@@ -28,7 +28,6 @@ class ManualText extends StatelessWidget {
       • ${LocaleKeys.ManualScreen_text_pos_suffix.tr()} <br>
       • ${LocaleKeys.ManualScreen_text_pos_conjunction.tr()} <br>
       """
-    .replaceAll("{PRONOUN_COLOR}", colorToHtmlString(pronounColor))
     .replaceAll("{ADVERB_COLOR}", colorToHtmlString(adverbColor))
     .replaceAll("{AUX_VERB_COLOR}", colorToHtmlString(auxVerbColor))
     .replaceAll("{PARTICLE_COLOR}", colorToHtmlString(particleColor))

@@ -48,9 +48,12 @@ class TextScreen extends StatefulWidget {
 
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
-  /// the output of the analyzer
-  List<String> kagomeWords = const [];
-  List<TokenNode> kagomePos = const[];
+  /// the output surfaces of mecab
+  List<String> mecabSurfaces = const [];
+  /// the output part of speech elements of mecab
+  List<String> mecabPOS = const [];
+  /// the output readings of mecab
+  List<String> mecabReadings = const [];
 
   /// the padding used between all widges
   final double padding = 8.0;
@@ -276,15 +279,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         : null,
                                       child: Center(
                                         child: CustomSelectableText(
-                                          words: kagomeWords,
-                                          rubys: kagomePos.map((TokenNode e) => 
-                                            e.features.length == 9 
-                                              ? GetIt.I<KanaKit>().toHiragana(e.features[7])
-                                              : " "
-                                          ).toList(),
+                                          words: mecabSurfaces,
+                                          rubys: mecabReadings,
                                           wordColors: List.generate(
-                                            kagomeWords.length,
-                                            (i) => posToColor[kagomePos[i].features[0]]
+                                            mecabPOS.length, (i) => posToColor(mecabPOS[i])
                                           ),
                                           showRubys: showRubys,
                                           addSpaces: addSpaces,
@@ -343,7 +341,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               : Colors.white,
                                             ),
                                             onPressed: () {
-                                              print(kagomePos);
                                               setState(() {
                                                 showRubys = !showRubys;
                                               });
@@ -478,8 +475,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     // get the part that the user selected
     int start = min(selection.baseOffset, selection.extentOffset);
     int end   = max(selection.baseOffset, selection.extentOffset);
-    String word = kagomeWords.join().substring(
-      start, end);
+    String word = mecabSurfaces
+      .join(addSpaces ? " " : "")
+      .substring(start, end);
     setState(() {
       selectedText = word;
     });
@@ -487,16 +485,20 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// Callback when the user long presses the a word in the text
   void onCustomSelectableTextLongPressed(TextSelection selection){
+    // remove current snackbar if any
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
     int cnt = 0; String word = "";
-    for (int i = 0; i < kagomeWords.length; i++) {
-      cnt += kagomeWords[i].length;
+    for (int i = 0; i < mecabSurfaces.length; i++) {
+      cnt += (mecabSurfaces[i]+ (addSpaces ? " " : "")).length;
       if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
-        word = kagomePos[i].features[0];
+        word = mecabPOS[i];
         break;
       }
     }
     setState(() {
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(word),
@@ -523,33 +525,31 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     });
   }
 
-  /// Processes the given `text`.
-  /// Analyzes the text with mecab, removes POS elements of punctuation marks,
-  /// converts unidic POS to enum and removes readings for words that do not use
-  /// kanji.
-  /// 
-  /// CAUTION: This method has SIDE-EFFECTS and outputs the processed text to the
-  /// variable `kagomePos` and `kagomeWords`
+  /// Processes the given `text` with mecab. Outputs the processing result to 
+  /// mecabPOS, mecabSurfaces and mecabReadings
   void processText(String text){
     
     // analyze text with kagome
-    var analyzedWords = GetIt.I<Mecab>().parse(text);
-    // assure that there are pos and merge pos into a list
-    kagomeWords = analyzedWords.length == 1 && analyzedWords[0].surface == ""
-      ? []
-      : analyzedWords.map((e) => e.surface).toList();
-    kagomeWords.removeLast(); // remove EOS symbol
+    List<TokenNode> _analyzedText = GetIt.I<Mecab>().parse(text);
+    // remove EOS symbol
+    _analyzedText.removeLast(); 
+    mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
+
     
-    for (var i = 0; i < kagomePos.length; i++) {
-      // remove furigana from:
-      //   non Japanese words
-      //   kana only words
-      //   punctuation
-      if(!GetIt.I<KanaKit>().isJapanese(kagomeWords[i]) ||
-        GetIt.I<KanaKit>().isKana(kagomeWords[i]) ||
-        kagomePos[i].features[7] == kagomePos[i].surface
+    for (var i = 0; i < _analyzedText.length; i++) {
+      // remove furigana when: non Japanese, kana only, reading == word
+      if(!GetIt.I<KanaKit>().isJapanese(_analyzedText[i].surface) ||
+        GetIt.I<KanaKit>().isKana(_analyzedText[i].surface) ||
+        _analyzedText[i].features[7] == _analyzedText[i].surface
       )
-        kagomePos[i].features[7] = "";
+      {
+        mecabReadings.add(" ");
+      }
+      else{
+        mecabReadings.add(GetIt.I<KanaKit>().toHiragana(_analyzedText[i].features[7]));
+      }
+      mecabPOS.add(_analyzedText[i].features.sublist(0, 4).join("-"));
+      mecabSurfaces.add(_analyzedText[i].surface);
     }
   }
 }
