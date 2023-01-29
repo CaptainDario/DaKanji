@@ -52,7 +52,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -240,17 +240,20 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             if(selection == menuItems[0]) {
                               launchUrlString(Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}"));
                             }
-                            if(selection == menuItems[1]) {
+                            else if(selection == menuItems[1]) {
                               launchUrlString(Uri.encodeFull("$g_WikipediaEnUrl${readingOrKanji}"));
                             }
-                            if(selection == menuItems[2]) {
+                            else if(selection == menuItems[2]) {
                               launchUrlString(Uri.encodeFull("$g_DbpediaUrl${readingOrKanji}"));
                             }
-                            if(selection == menuItems[3]) {
+                            else if(selection == menuItems[3]) {
                               launchUrlString(Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}"));
                             }
-                            if(selection == menuItems[4]) {
+                            else if(selection == menuItems[4]) {
                               launchUrlString(Uri.encodeFull("$g_Massif${readingOrKanji}"));
+                            }
+                            else if(selection == menuItems[5]) {
+                              launchUrlString(Uri.encodeFull("$g_forvo${readingOrKanji}"));
                             }
                           },
                           itemBuilder: (context) => List.generate(

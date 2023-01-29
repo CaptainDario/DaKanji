@@ -110,17 +110,19 @@ const g_MidoriId = "id385231773";
 const g_PrivacyPoliceUrl = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
 
 /// LINKS
-/// Link to japanese wikipedia
+/// URL to japanese wikipedia
 const g_WikipediaJpUrl = "https://ja.wikipedia.org/wiki/";
-/// Link to english wikipedia
+/// URL to english wikipedia
 const g_WikipediaEnUrl = "https://en.wikipedia.org/wiki/";
-/// Link to DBPedia
+/// URL to DBPedia
 const g_DbpediaUrl = "https://dbpedia.org/page/";
-/// Link to Wiktionary
+/// URL to Wiktionary
 const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
-/// Link to search on Massif.la
+/// URL to search on Massif.la
 const g_Massif = "https://massif.la/ja/search?q=";
-/// Link to search for an images on google image search
+/// URL to search on forvo.com
+const g_forvo = "https://forvo.com/word/";
+/// URL to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 /// url to look up a word in deepL 
 const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en/";
