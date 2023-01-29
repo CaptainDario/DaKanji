@@ -113,26 +113,23 @@ Future<void> init() async {
 
 /// copies the zipped database from assets to the user's documents directory
 /// and unzips it, if it does not exist already
-Future<void> copyDatabaseFilesFromAssets() async {
+Future<void> copyDictionaryFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
   debugPrint("documents directory: ${documentsDirectory.toString()}");
   final databaseDirectory = Directory(documentsDirectory.path + "/DaKanji" + "/isar/");
-  
-  if (!databaseDirectory.existsSync()) {
-    await databaseDirectory.create(recursive: true);
-  }
 
+  // if the file already exists delete it
   final dbFile = File(databaseDirectory.path + '/dictionary.isar');
   if (dbFile.existsSync()) {
     dbFile.deleteSync();
-    debugPrint("Deleted all ISAR");
+    debugPrint("Deleted dictionary ISAR");
   }
+
   // Get pre-populated db file and copy it to the documents directory
   ByteData data = await rootBundle.load("assets/dict/dictionary.zip");
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
   extractArchiveToDisk(archive, databaseDirectory.path);
-  
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -176,8 +173,8 @@ Future<void> initGetIt() async {
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = documentsDir + "/DaKanji/" + "isar/";
-  if(uD.newVersionUsed || !Directory(documentsDir).existsSync())
-    await copyDatabaseFilesFromAssets();
+  if(uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
+    await copyDictionaryFilesFromAssets();
 
   GetIt.I.registerSingleton<Isars>(
     Isars(
