@@ -1,6 +1,9 @@
+import 'package:da_kanji_mobile/model/settings_arguments.dart';
+import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
@@ -174,6 +177,46 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               style: partOfSpeechStyle,
                             )
                           ),
+                          // field
+                          if(widget.entry!.field.length > 0)
+                            Text(
+                              "Field: ${widget.entry!.field.join(", ")}",
+                              style: partOfSpeechStyle,
+                            ),
+                          // dialects
+                          if(widget.entry!.dialect.length > 0)
+                            Text(
+                              "Dialect: ${widget.entry!.dialect.join(", ")}",
+                              style: partOfSpeechStyle
+                            ),
+                          // xref
+                          if(widget.entry!.xref.length > 0)
+                            Text.rich(
+                              TextSpan(
+                                text: "See also: ",
+                                children: GetIt.I<Isars>().dictionary.jmdict
+                                  .getAllSync(widget.entry!.xref)
+                                .map((e) => TextSpan(
+                                    text: (e!.kanjis.length > 0 ? e.kanjis.first : e.readings.first) + "、",
+                                    mouseCursor: SystemMouseCursors.click,
+                                    recognizer: TapGestureRecognizer()..onTap = 
+                                      () => Navigator.pushNamedAndRemoveUntil(
+                                        context, 
+                                        "/dictionary",
+                                        (route) => true,
+                                        arguments: NavigationArguments(false, e.kanjis.length > 0 ? e.kanjis.first : e.readings.first)
+                                      ),
+                                  )
+                                ).toList()
+                              ),
+                              style: partOfSpeechStyle,
+                            ),
+                          // rinf
+                          if(widget.entry!.re_inf.length > 0)
+                            Text(
+                              "Reading: ${widget.entry!.re_inf.join(", ")}",
+                              style: partOfSpeechStyle,
+                            ),
                           const SizedBox(
                             height: 30,
                           ),
