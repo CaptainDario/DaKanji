@@ -62,7 +62,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   double searchBarInputHeight = 0;
   /// The FoucsNode of the search input field
   FocusNode searchTextFieldFocusNode = FocusNode();
-
+  /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
   
 
@@ -223,7 +223,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       .sortByDateSearched()
       .dictEntryIdProperty()
       .findAllSync();
-    searchHistory = GetIt.I<Isars>().dictionary.jmdict.getAllSync(ids);
+    searchHistory = GetIt.I<Isars>().dictionary.jmdict.getAllSync(ids).toList();
   }
 
   /// callback that is executed when the user presses on a search result
