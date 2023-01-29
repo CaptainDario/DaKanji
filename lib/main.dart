@@ -100,8 +100,6 @@ Future<void> init() async {
   debugPrint(yaml['version']);
   g_Version = yaml['version'];
 
-  await copyDatabaseFilesFromAssets();
-
   await initGetIt();
 
   if(Platform.isAndroid || Platform.isIOS){
@@ -119,22 +117,22 @@ Future<void> copyDatabaseFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
   debugPrint("documents directory: ${documentsDirectory.toString()}");
-  final databaseDirectory = Directory(documentsDirectory.path + "/isar");
+  final databaseDirectory = Directory(documentsDirectory.path + "/DaKanji" + "/isar/");
   
   if (!databaseDirectory.existsSync()) {
     await databaseDirectory.create(recursive: true);
   }
 
-  final dbFile = File(databaseDirectory.path + '/data.mdb');
-  if (!dbFile.existsSync()) {
-    // Get pre-populated db file.
-    ByteData data = await rootBundle.load("assets/dict/dictionary.zip");
-
-    final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
-
-    // Copying source data into destination file.
-    extractArchiveToDisk(archive, databaseDirectory.path);
+  final dbFile = File(databaseDirectory.path + '/dictionary.isar');
+  if (dbFile.existsSync()) {
+    dbFile.deleteSync();
+    debugPrint("Deleted all ISAR");
   }
+  // Get pre-populated db file and copy it to the documents directory
+  ByteData data = await rootBundle.load("assets/dict/dictionary.zip");
+  final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
+  extractArchiveToDisk(archive, databaseDirectory.path);
+  
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -175,17 +173,22 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
   // ISAR / database services
-  String path = (await path_provider.getApplicationDocumentsDirectory()).path + "/isar";
+  String documentsDir =
+    (await path_provider.getApplicationDocumentsDirectory()).path;
+  String isarPath = documentsDir + "/DaKanji/" + "isar/";
+  if(uD.newVersionUsed || !Directory(documentsDir).existsSync())
+    await copyDatabaseFilesFromAssets();
+
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-        directory: path,
+        directory: isarPath,
         name: "dictionary"
       ),
       searchHistory: Isar.openSync(
         [SearchHistorySchema],
-        directory: path,
+        directory: isarPath,
         name: "searchHistory", 
       )
     )
@@ -208,7 +211,11 @@ Future<void> initGetIt() async {
 
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
-  await GetIt.I<Mecab>().init("assets/ipadic", true);
+  await GetIt.I<Mecab>().init(
+    "assets/ipadic",
+    true,
+    dicDir: documentsDir + "/DaKanji/ipadic/"
+  );
 }
 
 /// Setup the DaKanji window on desktop platforms

@@ -53,6 +53,10 @@ class UserData{
   @JsonKey(defaultValue: false)
   bool showChangelog = false;
 
+  /// Does the user use a new version for the first time
+  @JsonKey(ignore: true)
+  bool newVersionUsed = false;
+
 
 
   UserData();
@@ -85,7 +89,7 @@ class UserData{
     // a different version than last time is being used (test with version = 0.0.0)
     debugPrint("used: $versionUsed now: $g_Version");
     if(versionUsed != g_Version && appOpenedTimes > 1){
-      debugPrint("New version installed");
+      newVersionUsed = true; debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
       versionUsed = g_Version;
@@ -114,7 +118,7 @@ class UserData{
       showRatePopup = true;
     }
 
-    // debugging onboarding, changelog, rate popup
+    // DEBUGGING: onboarding, changelog, rate popup
     //showOnboarding = false;
     //showChangelog = true;
     //showRatePopup = true;

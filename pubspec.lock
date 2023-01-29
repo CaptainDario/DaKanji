@@ -652,7 +652,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8ec325f10b7aa32f6c8e3bb250bbcdbc44253df1"
+      resolved-ref: "516c1e1659e67a3e216dbb319cee75a087d99549"
       url: "https://github.com/CaptainDario/mecab_dart"
     source: git
     version: "0.1.3"
