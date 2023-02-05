@@ -143,23 +143,23 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
           runningInPortrait = constraints.maxHeight > constraints.maxWidth ? true : false;
 
-          return TextAnalysisStack(
-            textToAnalyze: selectedText,
-            poupAnimationController: popupAnimationController,
-            padding: 8.0,
-            constraints: constraints,
-            children: [
-              // Text input
-              Focus(
-                onFocusChange: (value) {
-                  if(value && popupAnimationController.isCompleted){
-                    popupAnimationController.reverse();
-                  }
-                },
-                child: AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, builder) {
-                    return SizedBox(
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (context, builder) {
+              return TextAnalysisStack(
+                textToAnalyze: selectedText,
+                poupAnimationController: popupAnimationController,
+                padding: 8.0,
+                constraints: constraints,
+                children: [
+                  // Text input
+                  Focus(
+                    onFocusChange: (value) {
+                      if(value && popupAnimationController.isCompleted){
+                        popupAnimationController.reverse();
+                      }
+                    },
+                    child: SizedBox(
                       width: runningInPortrait
                         ? constraints.maxWidth - padding
                         : (constraints.maxWidth/2-padding) * (1-_animation.value),
@@ -209,114 +209,114 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                    );
-                  }
-                ),
-              ),
-              // processed text
-              Positioned(
-                bottom: 0,
-                right: runningInPortrait ? null : 0,
-                child: SizedBox(
-                  width: runningInPortrait
-                    ? constraints.maxWidth - 2*padding
-                    : (constraints.maxWidth/2-padding) * (_animation.value+1.0),
-                  height: runningInPortrait
-                    ? (constraints.maxHeight/2-padding) * (_animation.value+1.0)
-                    : constraints.maxHeight - 2*padding,
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        2*padding, 2*padding, 2*padding, padding/2
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: MultiFocus(
-                              focusNodes: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
-                                : null,
-                              child: Center(
-                                child: CustomSelectableText(
-                                  words: mecabSurfaces,
-                                  rubys: mecabReadings,
-                                  wordColors: List.generate(
-                                    mecabPOS.length, (i) => posToColor(mecabPOS[i])
-                                  ),
-                                  showRubys: showRubys,
-                                  addSpaces: addSpaces,
-                                  showColors: colorizePos,
-                                  paintTextBoxes: false,
-                                  textColor: Theme.of(context).brightness == Brightness.light
-                                    ? Colors.black
-                                    : Colors.white,
-                                  selectionColor: Theme.of(context).highlightColor,
-                                  onSelectionChange: onCustomSelectableTextChange,
-                                  onLongPress: onCustomSelectableTextLongPressed,
-                                ),
-                              ),
-                            ),
+                    )
+                  ),
+                  // processed text
+                  Positioned(
+                    bottom: 0,
+                    right: runningInPortrait ? null : 0,
+                    child: SizedBox(
+                      width: runningInPortrait
+                        ? constraints.maxWidth - 2*padding
+                        : (constraints.maxWidth/2-padding) * (_animation.value+1.0),
+                      height: runningInPortrait
+                        ? (constraints.maxHeight/2-padding) * (_animation.value+1.0)
+                        : constraints.maxHeight - 2*padding,
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            2*padding, 2*padding, 2*padding, padding/2
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          child: Column(
                             children: [
-                              // spaces toggle
-                              Focus(
-                                focusNode: widget.includeTutorial ?
-                                  GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                child: AnalysisOptionButton(
-                                  addSpaces,
-                                  svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                  onPressed: (() => 
-                                    setState(() {addSpaces = !addSpaces;})
+                              Expanded(
+                                child: MultiFocus(
+                                  focusNodes: widget.includeTutorial
+                                    ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
+                                    : null,
+                                  child: Center(
+                                    child: CustomSelectableText(
+                                      words: mecabSurfaces,
+                                      rubys: mecabReadings,
+                                      wordColors: List.generate(
+                                        mecabPOS.length, (i) => posToColor(mecabPOS[i])
+                                      ),
+                                      showRubys: showRubys,
+                                      addSpaces: addSpaces,
+                                      showColors: colorizePos,
+                                      paintTextBoxes: false,
+                                      textColor: Theme.of(context).brightness == Brightness.light
+                                        ? Colors.black
+                                        : Colors.white,
+                                      selectionColor: Theme.of(context).highlightColor,
+                                      onSelectionChange: onCustomSelectableTextChange,
+                                      onLongPress: onCustomSelectableTextLongPressed,
+                                    ),
                                   ),
                                 ),
                               ),
-                              // furigana toggle
-                              Focus(
-                                focusNode: widget.includeTutorial ?
-                                  GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                child: AnalysisOptionButton(
-                                  showRubys,
-                                  svgAssetPattern: "assets/icons/furigana_*.svg",
-                                  onPressed: (() => 
-                                    setState(() {showRubys = !showRubys;})
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // spaces toggle
+                                  Focus(
+                                    focusNode: widget.includeTutorial ?
+                                      GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                    child: AnalysisOptionButton(
+                                      addSpaces,
+                                      svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                      onPressed: (() => 
+                                        setState(() {addSpaces = !addSpaces;})
+                                      ),
+                                    ),
                                   ),
-                                )
-                              ),
-                              // button to colorize words matching POS
-                              Focus(
-                                focusNode: widget.includeTutorial ?
-                                  GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                child: AnalysisOptionButton(
-                                  colorizePos,
-                                  svgAssetPattern: "assets/icons/palette_*.svg",
-                                  onPressed: (() => 
-                                    setState(() {colorizePos = !colorizePos;})
+                                  // furigana toggle
+                                  Focus(
+                                    focusNode: widget.includeTutorial ?
+                                      GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                    child: AnalysisOptionButton(
+                                      showRubys,
+                                      svgAssetPattern: "assets/icons/furigana_*.svg",
+                                      onPressed: (() => 
+                                        setState(() {showRubys = !showRubys;})
+                                      ),
+                                    )
                                   ),
-                                )
-                              ),
-                              // full screen toggle
-                              Focus(
-                                focusNode: widget.includeTutorial ?
-                                  GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                child: AnalysisOptionButton(
-                                  fullScreen,
-                                  onIcon: Icons.fullscreen,
-                                  offIcon: Icons.fullscreen_exit,
-                                  onPressed: onFullScreenButtonPress
-                                )
-                              ),
+                                  // button to colorize words matching POS
+                                  Focus(
+                                    focusNode: widget.includeTutorial ?
+                                      GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                    child: AnalysisOptionButton(
+                                      colorizePos,
+                                      svgAssetPattern: "assets/icons/palette_*.svg",
+                                      onPressed: (() => 
+                                        setState(() {colorizePos = !colorizePos;})
+                                      ),
+                                    )
+                                  ),
+                                  // full screen toggle
+                                  Focus(
+                                    focusNode: widget.includeTutorial ?
+                                      GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                    child: AnalysisOptionButton(
+                                      fullScreen,
+                                      onIcon: Icons.fullscreen,
+                                      offIcon: Icons.fullscreen_exit,
+                                      onPressed: onFullScreenButtonPress
+                                    )
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              
-            ]
+                  
+                ]
+              );
+            }
           );
         }
       )
