@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helper/color_conversion.dart';
-import 'dakanji_colors.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -9,9 +9,9 @@ final ThemeData darkTheme = ThemeData(
   
   brightness: Brightness.dark,
 
-  primarySwatch: createMaterialColor(dakanji_green),
+  primarySwatch: createMaterialColor(g_Dakanji_green),
 
-  highlightColor: dakanji_red,
+  highlightColor: g_Dakanji_red,
 
   buttonTheme: const ButtonThemeData(
     buttonColor: Color.fromARGB(255, 0, 197, 207),
