@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:mecab_dart/mecab_dart.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,6 +14,7 @@ import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
+import 'package:da_kanji_mobile/view/text/text_analysis_popup.dart';
 import 'package:da_kanji_mobile/view/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
@@ -365,7 +365,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                         child: Listener(
                           child: ScaleTransition(
                             scale: popupAnimation,
-                            child: CustomTextPopup(
+                            child: TextAnalysisPopup(
                               text: selectedText,
                               onMovedViaHeader: (event) {
                                 setState(() {
