@@ -112,8 +112,10 @@ class CodegenLoader extends AssetLoader{
   "OnBoarding": {
     "Onboarding_1_text": "只要画出来，\"DaKanji \"就会显示出你需要的字符。",
     "Onboarding_1_title": "你不知道一个汉字吗？",
-    "Onboarding_2_text": "通过 \"DaKanji\"，你可以使用网络和应用程序的字典快速查询单词。",
-    "Onboarding_2_title": "查询字符和单词"
+    "Onboarding_2_text": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
+    "Onboarding_2_title": "查询字符和单词",
+    "Onboarding_3_text": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
+    "Onboarding_3_title": "不知道如何读懂一个句子？"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
@@ -142,13 +144,6 @@ class CodegenLoader extends AssetLoader{
     "title": "设置"
   },
   "Stores": {
-    "long_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n\n你是否曾经试图阅读一篇日语文章，但不知道如何阅读一些汉字？\"DaKanji \"在这里帮助你。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!写字和造词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名的脱机字符\n* 使用网络和应用程序的字典来翻译字符或单词",
-    "mockup_1_1": "不知道一个汉字？就画出来吧!",
-    "mockup_1_2": "甚至笔画顺序也不重要。",
-    "mockup_2": "搜索词",
-    "mockup_3": "使用字典进行翻译",
-    "short_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n只需通过绘画就能找到字符并进行翻译。",
-    "shortest_description": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!"
   },
   "TextScreen": {
     "input_text_here": "在这里输入文字...",
@@ -179,77 +174,47 @@ static const Map<String,dynamic> localizations = {
     "shortest_description": {
       "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst.",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!",
       "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
-      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!",
-      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
     },
     "short_description": {
       "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
       "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\nНаходите иероглифы и переводите их, просто рисуя.",
       "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n漢字を書くだけで、漢字を探し、翻訳することができます。",
-      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n只需通过绘画就能找到字符并进行翻译。",
-      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\nTrouvez des caractères et traduisez-les simplement en les dessinant.",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
     },
     "long_description": {
       "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
       "de": "Du lernst Japanisch? Dann musst du DaKanji ausprobieren.\r\n\r\nHast du schon mal versucht, einen japanischen Text zu lesen, aber kanntest ein Kanji nicht?\r\nDaKanji kann dir dabei helfen. Zeichne ein Kanji und die App wandelt es in einen digitales Zeichen um. Nicht einmal die Strichfolge ist wichtig! Male Zeichen und kombiniere sie zu Wörtern, die du dann übersetzen kannst und all das komplett offline.\r\n\r\nFunktionen:\r\n* Erkennt mehr als 6500 Kanji und alle Kana komplett offline\r\n* Benutze web und App Wörterbücher, um Zeichen und Wörter nachzuschlagen",
-      "ru": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? \"DaKanji\" поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
       "ja": "日本語を勉強しているあなた！「DaKanji」を試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。手書きの漢字をデジタルに変換してくれます。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します。\n* ウェブやアプリの辞書を利用して、漢字や単語を翻訳することができます。",
-      "zh": "你正在学习日语？那么你需要尝试一下 \"DaKanji\"!\n\n你是否曾经试图阅读一篇日语文章，但不知道如何阅读一些汉字？\"DaKanji \"在这里帮助你。画一个汉字，这个应用程序将把它转换成一个数字字符。你甚至不需要知道笔画的顺序!写字和造词，然后翻译它们，所有这些都是完全离线的。\n\n特点概述。\n* 识别6500个汉字和所有假名的脱机字符\n* 使用网络和应用程序的字典来翻译字符或单词",
-      "it": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
-      "fr": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\n\nAvez-vous déjà essayé de lire un texte japonais sans savoir comment lire certains Kanji ? \"DaKanji\" est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est complètement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
     },
     "mockup_1_1": {
       "en": "Don't know a Kanji? Just draw it!",
       "de": "Du kennst das Kanji nicht? Mal' es einfach!",
-      "ru": "Не знаете кандзи? Просто нарисуйте его!",
       "ja": "漢字がわからない？まずは書いてみましょう！",
-      "zh": "不知道一个汉字？就画出来吧!",
-      "it": "Non conosci un Kanji? Basta disegnarlo!",
-      "fr": "Vous ne connaissez pas un Kanji ? Il suffit de le dessiner !",
       "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
       "pl": "Nie znasz Kanji? Po prostu je namaluj!"
     },
     "mockup_1_2": {
       "en": "Even the stroke order doesn't matter.",
       "de": "Selbst die Strichfolge ist unwichtig.",
-      "ru": "Даже порядок штрихов не имеет значения.",
       "ja": "書き順を知らなくても大丈夫！",
-      "zh": "甚至笔画顺序也不重要。",
-      "it": "Anche l'ordine dei tratti non ha importanza.",
-      "fr": "Même l'ordre des coups n'a pas d'importance.",
       "es": "Ni siquiera importa el orden de los trazos.",
       "pl": "Kolejność malowania znaków nie ma znaczenia."
     },
     "mockup_2": {
       "en": "Search words",
       "de": "Suche Wörter",
-      "ru": "Поисковые слова",
-      "ja": "単語を検索",
-      "zh": "搜索词",
-      "it": "Parole di ricerca",
-      "fr": "Mots à rechercher",
       "es": "Busca palabras",
       "pl": "Wyszukuj słowa"
     },
     "mockup_3": {
       "en": "Translate with dictionaries",
       "de": "Übersetze mit Wörterbüchern",
-      "ru": "Переводите с помощью словарей",
-      "ja": "辞書を使って翻訳する",
-      "zh": "使用字典进行翻译",
-      "it": "Tradurre con i dizionari",
-      "fr": "Traduire avec des dictionnaires",
       "es": "Traduce con diccionarios",
       "pl": "Tłumacz za pomocą słownika"
     },
@@ -746,15 +711,37 @@ static const Map<String,dynamic> localizations = {
       "pl": "Podejrzyj znaki i wyrazy"
     },
     "Onboarding_2_text": {
-      "en": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
+      "en": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
       "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
-      "ru": "С помощью \"DaKanji\" вы можете быстро искать слова, используя веб-словари и словари приложений.",
-      "ja": "「DaKanji」は、Webやアプリの辞書を使って素早く単語を調べることができます",
-      "zh": "通过 \"DaKanji\"，你可以使用网络和应用程序的字典快速查询单词。",
-      "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
-      "fr": "Avec \"DaKanji\", vous pouvez rechercher rapidement des mots en utilisant les dictionnaires du web et des applications.",
-      "es": "Con DaKanji puedes buscar rápidamente palabras usando la web y diccionarios.",
-      "pl": "Z DaKanji możesz szybko podglądnąć słówka używając internetu oraz słowników"
+      "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
+      "ja": "大漢字」は、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
+      "zh": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
+      "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
+      "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
+      "es": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
+      "pl": "Dzięki \"DaKanji\" możesz szybko wyszukiwać słowa korzystając z wbudowanego słownika lub z Internetu."
+    },
+    "Onboarding_3_title": {
+      "en": "Do not know how to read a sentence?",
+      "de": "Du weißt nicht wie man einen  Satz liest?",
+      "ru": "Не умеете читать предложения?",
+      "ja": "文章の読み方がわからない？",
+      "zh": "不知道如何读懂一个句子？",
+      "it": "Non sapete leggere una frase?",
+      "fr": "Vous ne savez pas comment lire une phrase ?",
+      "es": "¿No sabe leer una frase?",
+      "pl": "Nie wiesz, jak czytać zdania?"
+    },
+    "Onboarding_3_text": {
+      "en": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
+      "de": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
+      "ru": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
+      "ja": "大漢字のテキスト分析ツールを使って、ふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
+      "zh": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
+      "it": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
+      "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
+      "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
+      "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne lub przetłumacz całe zdanie."
     }
   },
   "SettingsScreen": {
@@ -1276,7 +1263,7 @@ static const Map<String,dynamic> localizations = {
       "ja": "トリプルタップすると、段落が選択されます。",
       "zh": "点击三下将选择一个段落。",
       "it": "Un triplo tocco selezionerà un paragrafo.",
-      "fr": "Une triple tape permet de sélectionner un paragraphe.",
+      "fr": "Un triple tapotement permet de sélectionner un paragraphe.",
       "es": "Un triple toque seleccionará un párrafo.",
       "pl": "Potrójne stuknięcie powoduje zaznaczenie akapitu."
     },
@@ -1919,8 +1906,10 @@ static const Map<String,dynamic> ja = {
   "OnBoarding": {
     "Onboarding_1_text": "漢字を書くだけで「DaKanji」があなたの知りたい文字を表示します",
     "Onboarding_1_title": "漢字がわかりませんか？",
-    "Onboarding_2_text": "「DaKanji」は、Webやアプリの辞書を使って素早く単語を調べることができます",
-    "Onboarding_2_title": "漢字や単語を調べる"
+    "Onboarding_2_text": "大漢字」は、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
+    "Onboarding_2_title": "漢字や単語を調べる",
+    "Onboarding_3_text": "大漢字のテキスト分析ツールを使って、ふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
+    "Onboarding_3_title": "文章の読み方がわからない？"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "推論バックエンド（再起動されます）",
@@ -1952,8 +1941,6 @@ static const Map<String,dynamic> ja = {
     "long_description": "日本語を勉強しているあなた！「DaKanji」を試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。手書きの漢字をデジタルに変換してくれます。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します。\n* ウェブやアプリの辞書を利用して、漢字や単語を翻訳することができます。",
     "mockup_1_1": "漢字がわからない？まずは書いてみましょう！",
     "mockup_1_2": "書き順を知らなくても大丈夫！",
-    "mockup_2": "単語を検索",
-    "mockup_3": "辞書を使って翻訳する",
     "short_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n漢字を書くだけで、漢字を探し、翻訳することができます。",
     "shortest_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！"
   },
@@ -2132,7 +2119,9 @@ static const Map<String,dynamic> de = {
     "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
     "Onboarding_1_title": "Du kennst ein Kanji nicht?",
     "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
-    "Onboarding_2_title": "Schlage Zeichen und Wörter nach"
+    "Onboarding_2_title": "Schlage Zeichen und Wörter nach",
+    "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
+    "Onboarding_3_title": "Du weißt nicht wie man einen  Satz liest?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
@@ -2291,8 +2280,10 @@ static const Map<String,dynamic> ru = {
   "OnBoarding": {
     "Onboarding_1_text": "Просто нарисуйте его, и \"DaKanji\" покажет нужный вам иероглиф.",
     "Onboarding_1_title": "Вы не знаете ни одного кандзи?",
-    "Onboarding_2_text": "С помощью \"DaKanji\" вы можете быстро искать слова, используя веб-словари и словари приложений.",
-    "Onboarding_2_title": "Поиск символов и слов"
+    "Onboarding_2_text": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
+    "Onboarding_2_title": "Поиск символов и слов",
+    "Onboarding_3_text": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
+    "Onboarding_3_title": "Не умеете читать предложения?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
@@ -2321,13 +2312,6 @@ static const Map<String,dynamic> ru = {
     "title": "Настройки"
   },
   "Stores": {
-    "long_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\n\nВы когда-нибудь пытались прочитать японский текст, но не знали, как прочитать некоторые кандзи? \"DaKanji\" поможет вам. Нарисуйте кандзи, и приложение преобразует его в цифровой символ. Вам даже не нужно знать порядок штрихов! Пишите иероглифы и стройте слова, чтобы затем перевести их, и все это совершенно автономно.\n\nОбзор функций:\n* Распознает 6500 кандзи и все кана в автономном режиме.\n* Использование веб-словарей и словарей приложений для перевода символов или слов",
-    "mockup_1_1": "Не знаете кандзи? Просто нарисуйте его!",
-    "mockup_1_2": "Даже порядок штрихов не имеет значения.",
-    "mockup_2": "Поисковые слова",
-    "mockup_3": "Переводите с помощью словарей",
-    "short_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!\nНаходите иероглифы и переводите их, просто рисуя.",
-    "shortest_description": "Вы изучаете японский язык? Тогда вам нужно попробовать \"DaKanji\"!"
   },
   "TextScreen": {
     "input_text_here": "Введите текст здесь...",
@@ -2453,8 +2437,10 @@ static const Map<String,dynamic> pl = {
   "OnBoarding": {
     "Onboarding_1_text": "Po prostu go narysuj i DaKanji pokaże Ci znak którego potrzebujesz",
     "Onboarding_1_title": "Nie znasz Kanji?",
-    "Onboarding_2_text": "Z DaKanji możesz szybko podglądnąć słówka używając internetu oraz słowników",
-    "Onboarding_2_title": "Podejrzyj znaki i wyrazy"
+    "Onboarding_2_text": "Dzięki \"DaKanji\" możesz szybko wyszukiwać słowa korzystając z wbudowanego słownika lub z Internetu.",
+    "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
+    "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne lub przetłumacz całe zdanie.",
+    "Onboarding_3_title": "Nie wiesz, jak czytać zdania?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
@@ -2665,8 +2651,10 @@ static const Map<String,dynamic> en = {
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
-    "Onboarding_2_title": "Lookup characters and words"
+    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
+    "Onboarding_2_title": "Lookup characters and words",
+    "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
+    "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
@@ -2827,8 +2815,10 @@ static const Map<String,dynamic> it = {
   "OnBoarding": {
     "Onboarding_1_text": "Basta disegnarlo e \"DaKanji\" mostrerà il carattere desiderato.",
     "Onboarding_1_title": "Non conosci un kanji?",
-    "Onboarding_2_text": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando dizionari web e app.",
-    "Onboarding_2_title": "Ricerca di caratteri e parole"
+    "Onboarding_2_text": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
+    "Onboarding_2_title": "Ricerca di caratteri e parole",
+    "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
+    "Onboarding_3_title": "Non sapete leggere una frase?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
@@ -2857,13 +2847,6 @@ static const Map<String,dynamic> it = {
     "title": "Impostazioni"
   },
   "Stores": {
-    "long_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" è qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertirà in un carattere digitale. Non è nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
-    "mockup_1_1": "Non conosci un Kanji? Basta disegnarlo!",
-    "mockup_1_2": "Anche l'ordine dei tratti non ha importanza.",
-    "mockup_2": "Parole di ricerca",
-    "mockup_3": "Tradurre con i dizionari",
-    "short_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-    "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
   },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
@@ -2989,8 +2972,10 @@ static const Map<String,dynamic> fr = {
   "OnBoarding": {
     "Onboarding_1_text": "Il suffit de le dessiner et \"DaKanji\" affichera le caractère dont vous avez besoin.",
     "Onboarding_1_title": "Vous ne connaissez pas un Kanji ?",
-    "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rechercher rapidement des mots en utilisant les dictionnaires du web et des applications.",
-    "Onboarding_2_title": "Recherche de caractères et de mots"
+    "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
+    "Onboarding_2_title": "Recherche de caractères et de mots",
+    "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
+    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
@@ -3019,13 +3004,6 @@ static const Map<String,dynamic> fr = {
     "title": "Paramètres"
   },
   "Stores": {
-    "long_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\n\nAvez-vous déjà essayé de lire un texte japonais sans savoir comment lire certains Kanji ? \"DaKanji\" est là pour vous aider. Dessinez un Kanji et l'application le convertira en un caractère numérique. Vous n'avez même pas besoin de connaître l'ordre des traits ! Écrivez des caractères et construisez des mots pour ensuite les traduire, et tout cela est complètement hors ligne.\n\nAperçu des fonctionnalités :\n* Reconnaît 6500 Kanji et tous les Kana hors ligne.\n* Utilisez les dictionnaires du Web et des applications pour traduire des caractères ou des mots.",
-    "mockup_1_1": "Vous ne connaissez pas un Kanji ? Il suffit de le dessiner !",
-    "mockup_1_2": "Même l'ordre des coups n'a pas d'importance.",
-    "mockup_2": "Mots à rechercher",
-    "mockup_3": "Traduire avec des dictionnaires",
-    "short_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !\nTrouvez des caractères et traduisez-les simplement en les dessinant.",
-    "shortest_description": "Vous apprenez le japonais ? Alors vous devez essayer \"DaKanji\" !"
   },
   "TextScreen": {
     "input_text_here": "Entrez le texte ici...",
@@ -3039,7 +3017,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_processed_text_long_press": "Une pression longue permet de sélectionner un mot et d'afficher les informations sur la partie du discours.",
     "tutorial_processed_text_tap": "Une simple pression permet de sélectionner un mot.",
     "tutorial_processed_text_text": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
-    "tutorial_processed_text_triple_tap": "Une triple tape permet de sélectionner un paragraphe.",
+    "tutorial_processed_text_triple_tap": "Un triple tapotement permet de sélectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
@@ -3151,8 +3129,10 @@ static const Map<String,dynamic> es = {
   "OnBoarding": {
     "Onboarding_1_text": "Solo dibújalo y DaKanji te mostrará el caracter que necesitas.",
     "Onboarding_1_title": "No sabes un Kanji?",
-    "Onboarding_2_text": "Con DaKanji puedes buscar rápidamente palabras usando la web y diccionarios.",
-    "Onboarding_2_title": "Busca caracteres y palabras"
+    "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
+    "Onboarding_2_title": "Busca caracteres y palabras",
+    "Onboarding_3_text": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
+    "Onboarding_3_title": "¿No sabe leer una frase?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",

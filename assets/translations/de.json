@@ -149,7 +149,9 @@
     "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
     "Onboarding_1_title": "Du kennst ein Kanji nicht?",
     "Onboarding_2_text": "Mit DaKanji kannst du schnell W\u00f6rter in Web- und App-W\u00f6rterb\u00fcchern nachschlagen",
-    "Onboarding_2_title": "Schlage Zeichen und W\u00f6rter nach"
+    "Onboarding_2_title": "Schlage Zeichen und W\u00f6rter nach",
+    "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzuf\u00fcgen oder den ganzen Satz zu \u00fcbersetzen.",
+    "Onboarding_3_title": "Du wei\u00dft nicht wie man einen  Satz liest?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",

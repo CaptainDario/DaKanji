@@ -148,8 +148,10 @@
   "OnBoarding": {
     "Onboarding_1_text": "Solo dib\u00fajalo y DaKanji te mostrar\u00e1 el caracter que necesitas.",
     "Onboarding_1_title": "No sabes un Kanji?",
-    "Onboarding_2_text": "Con DaKanji puedes buscar r\u00e1pidamente palabras usando la web y diccionarios.",
-    "Onboarding_2_title": "Busca caracteres y palabras"
+    "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras r\u00e1pidamente utilizando el diccionario incorporado o en Internet.",
+    "Onboarding_2_title": "Busca caracteres y palabras",
+    "Onboarding_3_text": "Utiliza las herramientas de an\u00e1lisis de texto de DaKanji para a\u00f1adir furiganas, espacios y mucho m\u00e1s, o traduce la frase entera.",
+    "Onboarding_3_title": "\u00bfNo sabe leer una frase?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",

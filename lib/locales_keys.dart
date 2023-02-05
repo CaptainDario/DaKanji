@@ -141,6 +141,8 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_1_title = 'OnBoarding.Onboarding_1_title';
   static const OnBoarding_Onboarding_2_text = 'OnBoarding.Onboarding_2_text';
   static const OnBoarding_Onboarding_2_title = 'OnBoarding.Onboarding_2_title';
+  static const OnBoarding_Onboarding_3_text = 'OnBoarding.Onboarding_3_text';
+  static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';

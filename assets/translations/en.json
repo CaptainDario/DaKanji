@@ -148,8 +148,10 @@
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using web and app dictionaries.",
-    "Onboarding_2_title": "Lookup characters and words"
+    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
+    "Onboarding_2_title": "Lookup characters and words",
+    "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
+    "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inference backend (requires restart)",

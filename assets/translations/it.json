@@ -148,8 +148,10 @@
   "OnBoarding": {
     "Onboarding_1_text": "Basta disegnarlo e \"DaKanji\" mostrer\u00e0 il carattere desiderato.",
     "Onboarding_1_title": "Non conosci un kanji?",
-    "Onboarding_2_text": "Con \"DaKanji\" \u00e8 possibile cercare rapidamente le parole utilizzando dizionari web e app.",
-    "Onboarding_2_title": "Ricerca di caratteri e parole"
+    "Onboarding_2_text": "Con \"DaKanji\" \u00e8 possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
+    "Onboarding_2_title": "Ricerca di caratteri e parole",
+    "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
+    "Onboarding_3_title": "Non sapete leggere una frase?"
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
@@ -178,20 +180,20 @@
     "title": "Impostazioni"
   },
   "Stores": {
-    "long_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\n\nAvete mai provato a leggere un testo giapponese ma non sapete come leggere alcuni Kanji? \"DaKanji\" \u00e8 qui per aiutarvi. Disegnate un Kanji e l'applicazione lo convertir\u00e0 in un carattere digitale. Non \u00e8 nemmeno necessario conoscere l'ordine dei tratti! Scrivete i caratteri e costruite le parole per poi tradurle, il tutto completamente offline.\n\nPanoramica delle funzioni:\n* Riconoscimento di 6500 Kanji e di tutti i Kana offline\n* Utilizza i dizionari del web e delle app per tradurre caratteri o parole",
+    "long_description": "",
     "mockup_10": "",
-    "mockup_1_1": "Non conosci un Kanji? Basta disegnarlo!",
-    "mockup_1_2": "Anche l'ordine dei tratti non ha importanza.",
-    "mockup_2": "Parole di ricerca",
-    "mockup_3": "Tradurre con i dizionari",
+    "mockup_1_1": "",
+    "mockup_1_2": "",
+    "mockup_2": "",
+    "mockup_3": "",
     "mockup_4": "",
     "mockup_5": "",
     "mockup_6": "",
     "mockup_7": "",
     "mockup_8": "",
     "mockup_9": "",
-    "short_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!\nTrovate i caratteri e traduceteli semplicemente disegnando.",
-    "shortest_description": "State imparando il giapponese? Allora dovete provare \"DaKanji\"!"
+    "short_description": "",
+    "shortest_description": ""
   },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",

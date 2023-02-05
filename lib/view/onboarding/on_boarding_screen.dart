@@ -1,14 +1,15 @@
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
-
-import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
-import 'package:da_kanji_mobile/view/onboarding/on_boarding_page.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+
+import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
+import 'package:da_kanji_mobile/view/onboarding/on_boarding_page.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/model/dakanji_colors.dart';
 
 
 
@@ -33,10 +34,10 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen>
   with TickerProviderStateMixin {
 
-  // total number of onboarding pages (excluding the final drawing screen)
-  int totalPages = 2;
+  /// total number of onboarding pages (excluding the final drawing screen)
+  int totalPages = 3;
     
-  // the size of the blob to indicate that the page can be turned by swiping
+  /// the size of the blob to indicate that the page can be turned by swiping
   double blobSize = 75.0;
 
   double buttonHeight = 50.0;
@@ -81,9 +82,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   Widget build(BuildContext context) {
     
     List<Color> pageColors = [
-      Theme.of(context).highlightColor,
+      dakanji_red,
       Theme.of(context).primaryColor,
-      Colors.transparent
+      dakanji_green
     ];
 
     return Scaffold(
@@ -113,6 +114,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 pageColors[1],
                 LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
                 LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
+                liquidController
+              ),
+              OnBoardingPage(
+                3, totalPages,
+                pageColors[2],
+                LocaleKeys.OnBoarding_Onboarding_3_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
                 liquidController
               ),
               const DrawScreen(false, false, false),
