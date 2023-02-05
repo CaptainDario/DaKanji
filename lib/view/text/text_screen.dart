@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/view/text/text_analysis_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +15,6 @@ import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'package:da_kanji_mobile/view/text/text_analysis_popup.dart';
 import 'package:da_kanji_mobile/view/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
@@ -70,27 +70,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// should this screen be shown in portrait or not
   bool runningInPortrait = false;
 
+  /// the animation controller for scaling in the popup window
+  late AnimationController popupAnimationController;
+  /// the animation for scaling in the popup window
+  late final Animation<double> popupAnimation;
   /// the animation controller for animating maximizing the processed text widget
   late final AnimationController _controller;
   /// the animation for animating maximizing the processed text widget
   late Animation _animation;
 
-  /// the distance to the left window border of the popup
-  double popupPositionLeft = 0.0;
-  /// the distance to the top window border of the popup
-  double popupPositionTop = 0.0;
-  /// the width of the popup
-  late double popupSizeWidth = popupSizeWidthMin;
-  /// the height of the popup
-  late double popupSizeHeight = popupSizeHeightMin;
-  /// the minimal width the popup can be
-  double popupSizeWidthMin = 300;
-  /// the minimal height the popup can be
-  double popupSizeHeightMin = 200;
-  /// the animation controller for scaling in the popup window
-  late AnimationController popupAnimationController;
-  /// the animation for scaling in the popup window
-  late final Animation<double> popupAnimation;
+
   /// the currently selected text
   String selectedText = "";
   /// the text that is currently in the input field
@@ -150,269 +139,187 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       currentScreen: Screens.text,
       animationAtStart: !widget.openedByDrawer,
       child: LayoutBuilder(
-        builder: (context, constraints){
+        builder: (context, constraints) {
 
-          // shrink the popup when making the windower smaller than the popup in ...
-          // ... Width
-          if(constraints.maxWidth < popupPositionLeft + popupSizeWidth + 2*padding){
-            if(popupPositionLeft > 0){
-              popupPositionLeft = constraints.maxWidth - popupSizeWidth - 4*padding;
-            }
-            else{
-              popupPositionLeft = 0;
-              popupSizeWidth = constraints.maxWidth - 4*padding;
-            }
-          }
-          // ... Height
-          if(constraints.maxHeight < popupPositionTop + popupSizeHeight + 2*padding){
-            if(popupPositionTop > 0){
-              popupPositionTop = constraints.maxHeight - popupSizeHeight - 4*padding;
-            }
-            else {
-              popupPositionTop = 0;
-              popupSizeHeight = constraints.maxHeight - 4*padding;
-            }
-          }
+          runningInPortrait = constraints.maxHeight > constraints.maxWidth ? true : false;
 
-          // set if the app should be layed out in portrait or landscape
-          runningInPortrait = constraints.maxHeight > constraints.maxWidth;
-            
-          return AnimatedBuilder(
-            animation: _controller,
-            builder: (context, builder) {
-              return SizedBox(
-                height: constraints.maxHeight,
-                width: constraints.maxWidth,
-                child: Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Stack(
-                    children: [
-                      // Text input
-                      Focus(
-                        onFocusChange: (value) {
-                          if(value && popupAnimationController.isCompleted){
-                            popupAnimationController.reverse();
-                          }
-                        },
-                        child: SizedBox(
-                          width: runningInPortrait ?
-                            constraints.maxWidth - padding: 
-                              (constraints.maxWidth/2-padding) 
-                              * (1-_animation.value),
-                            height: runningInPortrait ?
-                              (constraints.maxHeight/2-padding) 
-                              * (1-_animation.value) :
-                              constraints.maxHeight - padding,
-                          child: Card(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                2*padding, padding, 2*padding, padding
+          return TextAnalysisStack(
+            textToAnalyze: selectedText,
+            poupAnimationController: popupAnimationController,
+            padding: 8.0,
+            constraints: constraints,
+            children: [
+              // Text input
+              Focus(
+                onFocusChange: (value) {
+                  if(value && popupAnimationController.isCompleted){
+                    popupAnimationController.reverse();
+                  }
+                },
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, builder) {
+                    return SizedBox(
+                      width: runningInPortrait
+                        ? constraints.maxWidth - padding
+                        : (constraints.maxWidth/2-padding) * (1-_animation.value),
+                      height: runningInPortrait
+                        ? (constraints.maxHeight/2-padding) * (1-_animation.value)
+                        : constraints.maxHeight - padding,
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            2*padding, padding, 2*padding, padding
+                          ),
+                          child: Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
+                              : null,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                hintText: LocaleKeys.TextScreen_input_text_here.tr(),
                               ),
-                              child: Focus(
-                                focusNode: widget.includeTutorial
-                                  ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
-                                  : null,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintText: LocaleKeys.TextScreen_input_text_here.tr(),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                  RegExp(r"\u000d"),
+                                  //replacementString: "\r"
+                                ),
+                                FilteringTextInputFormatter.deny(
+                                  RegExp(r"\u000a"),
+                                  replacementString: "\n"
+                                ),
+                              ],
+                              controller: widget.inputController,
+                              maxLines: null,
+                              style: const TextStyle(
+                                fontSize: 20,
+                              ),
+                              onChanged: ((value) {
+                                setState(() {
+                                  inputText = value;
+                                  processText(value);
+                                });
+                              }),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                ),
+              ),
+              // processed text
+              Positioned(
+                bottom: 0,
+                right: runningInPortrait ? null : 0,
+                child: SizedBox(
+                  width: runningInPortrait
+                    ? constraints.maxWidth - 2*padding
+                    : (constraints.maxWidth/2-padding) * (_animation.value+1.0),
+                  height: runningInPortrait
+                    ? (constraints.maxHeight/2-padding) * (_animation.value+1.0)
+                    : constraints.maxHeight - 2*padding,
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        2*padding, 2*padding, 2*padding, padding/2
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: MultiFocus(
+                              focusNodes: widget.includeTutorial
+                                ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
+                                : null,
+                              child: Center(
+                                child: CustomSelectableText(
+                                  words: mecabSurfaces,
+                                  rubys: mecabReadings,
+                                  wordColors: List.generate(
+                                    mecabPOS.length, (i) => posToColor(mecabPOS[i])
                                   ),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.deny(
-                                      RegExp(r"\u000d"),
-                                      //replacementString: "\r"
-                                    ),
-                                    FilteringTextInputFormatter.deny(
-                                      RegExp(r"\u000a"),
-                                      replacementString: "\n"
-                                    ),
-                                    FilteringTextInputFormatter.deny(
-                                      RegExp(r"█"),
-                                      replacementString: ""
-                                    )
-                                  ],
-                                  controller: widget.inputController,
-                                  maxLines: null,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                  onChanged: ((value) {
-                                    setState(() {
-                                      inputText = value;
-                                      processText(value);
-                                    });
-                                  }),
+                                  showRubys: showRubys,
+                                  addSpaces: addSpaces,
+                                  showColors: colorizePos,
+                                  paintTextBoxes: false,
+                                  textColor: Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                                  selectionColor: Theme.of(context).highlightColor,
+                                  onSelectionChange: onCustomSelectableTextChange,
+                                  onLongPress: onCustomSelectableTextLongPressed,
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      // processed text
-                      Positioned(
-                        bottom: 0,
-                        right: runningInPortrait ? null : 0,
-                        child: SizedBox(
-                          width: runningInPortrait ?
-                            constraints.maxWidth - 2*padding: 
-                            (constraints.maxWidth/2-padding) 
-                            * (_animation.value+1.0),
-                          height: runningInPortrait ?
-                            (constraints.maxHeight/2-padding) 
-                            * (_animation.value+1.0) :
-                            constraints.maxHeight - 2*padding,
-                          child: Card(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                2*padding, 2*padding, 2*padding, padding/2
-                              ),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: MultiFocus(
-                                      focusNodes: widget.includeTutorial
-                                        ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
-                                        : null,
-                                      child: Center(
-                                        child: CustomSelectableText(
-                                          words: mecabSurfaces,
-                                          rubys: mecabReadings,
-                                          wordColors: List.generate(
-                                            mecabPOS.length, (i) => posToColor(mecabPOS[i])
-                                          ),
-                                          showRubys: showRubys,
-                                          addSpaces: addSpaces,
-                                          showColors: colorizePos,
-                                          paintTextBoxes: false,
-                                          textColor: Theme.of(context).brightness == Brightness.light
-                                            ? Colors.black
-                                            : Colors.white,
-                                          selectionColor: Theme.of(context).highlightColor,
-                                          onSelectionChange: onCustomSelectableTextChange,
-                                          onLongPress: onCustomSelectableTextLongPressed,
-                                        ),
-                                      ),
-                                    ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              // spaces toggle
+                              Focus(
+                                focusNode: widget.includeTutorial ?
+                                  GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                child: AnalysisOptionButton(
+                                  addSpaces,
+                                  svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                  onPressed: (() => 
+                                    setState(() {addSpaces = !addSpaces;})
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      // spaces toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          addSpaces,
-                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {addSpaces = !addSpaces;})
-                                          ),
-                                        ),
-                                      ),
-                                      // furigana toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                        child: AnalysisOptionButton(
-                                          showRubys,
-                                          svgAssetPattern: "assets/icons/furigana_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {showRubys = !showRubys;})
-                                          ),
-                                        )
-                                      ),
-                                      // button to colorize words matching POS
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          colorizePos,
-                                          svgAssetPattern: "assets/icons/palette_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {colorizePos = !colorizePos;})
-                                          ),
-                                        )
-                                      ),
-                                      // full screen toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                        child: AnalysisOptionButton(
-                                          fullScreen,
-                                          onIcon: Icons.fullscreen,
-                                          offIcon: Icons.fullscreen_exit,
-                                          onPressed: onFullScreenButtonPress
-                                        )
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                              // furigana toggle
+                              Focus(
+                                focusNode: widget.includeTutorial ?
+                                  GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                child: AnalysisOptionButton(
+                                  showRubys,
+                                  svgAssetPattern: "assets/icons/furigana_*.svg",
+                                  onPressed: (() => 
+                                    setState(() {showRubys = !showRubys;})
+                                  ),
+                                )
+                              ),
+                              // button to colorize words matching POS
+                              Focus(
+                                focusNode: widget.includeTutorial ?
+                                  GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                child: AnalysisOptionButton(
+                                  colorizePos,
+                                  svgAssetPattern: "assets/icons/palette_*.svg",
+                                  onPressed: (() => 
+                                    setState(() {colorizePos = !colorizePos;})
+                                  ),
+                                )
+                              ),
+                              // full screen toggle
+                              Focus(
+                                focusNode: widget.includeTutorial ?
+                                  GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                child: AnalysisOptionButton(
+                                  fullScreen,
+                                  onIcon: Icons.fullscreen,
+                                  offIcon: Icons.fullscreen_exit,
+                                  onPressed: onFullScreenButtonPress
+                                )
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                      /// Popup window to show text selection in dict / DeepL
-                      Positioned(
-                        width: popupSizeWidth,
-                        height: popupSizeHeight,
-                        left: popupPositionLeft,
-                        top: popupPositionTop,
-                        child: Listener(
-                          child: ScaleTransition(
-                            scale: popupAnimation,
-                            child: TextAnalysisPopup(
-                              text: selectedText,
-                              onMovedViaHeader: (event) {
-                                setState(() {
-                                  // assure that the popup is not moved out of view
-                                  if(popupPositionLeft + event.delta.dx > 0 &&
-                                    popupPositionLeft + popupSizeWidth + 
-                                    2*padding + event.delta.dx < constraints.maxWidth) {
-                                    popupPositionLeft += event.delta.dx;
-                                  }
-                                                  
-                                  // assure that the popup is not moved out of view
-                                  if(popupPositionTop + event.delta.dy > 0 &&
-                                    popupPositionTop + popupSizeHeight + 
-                                    2*padding + event.delta.dy < constraints.maxHeight) {
-                                    popupPositionTop  += event.delta.dy;
-                                  }
-                                });
-                              },
-                              onResizedViaCorner: (event) {
-                                setState(() {
-                                  // don't allow resizing the popup over the 
-                                  // window or smaller than the threshold 
-                                  if(popupSizeWidth + event.delta.dx > popupSizeWidthMin &&
-                                    popupSizeWidth + event.delta.dx + 2*padding < constraints.maxWidth) {
-                                    popupSizeWidth += event.delta.dx;
-                                  }
-                                                  
-                                  // don't allow resizing the popup over the 
-                                  // window or smaller than the threshold 
-                                  if(popupSizeHeight + event.delta.dy > popupSizeHeightMin &&
-                                    popupSizeHeight + event.delta.dy + 2*padding < constraints.maxHeight) {
-                                    popupSizeHeight += event.delta.dy;
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]
+                    ),
                   ),
                 ),
-              );
-            }
+              ),
+              
+            ]
           );
         }
-      ),
+      )
     );
   }
 
