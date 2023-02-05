@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
+import 'package:da_kanji_mobile/locales_keys.dart';
+
 
 
 /// Color for showing suffixs
@@ -80,59 +84,60 @@ Color? posToColor(String pos){
   else if(pos.startsWith("その他"))
     c = interjectionColor;
   else{
-    //debugPrint("$pos is an unknown POS");
+    debugPrint("$pos is an unknown POS");
   }
   return c;
 }
 
-/// Converts a ipadic style part of speech string to a unique color
-Color? posToTranslation(String pos){
-  Color? c;
+/// Converts a ipadic style part of speech string to a general part of speech
+/// in different localizations
+String? posToTranslation(String pos){
+  String? localizedPos;
 
   // suffix
   if(pos.contains("-接尾"))
-    c = suffixColor; 
+    localizedPos = LocaleKeys.TextScreen_pos_suffix.tr(); 
   // na adj
   else if(pos.startsWith("名詞-形容動詞語幹")) 
-    c = naAdjectiveColor;
+    localizedPos = LocaleKeys.TextScreen_pos_na_adj.tr();
   // noun
   else if(pos.startsWith("名詞"))      
-    c = nounColor;
+    localizedPos = LocaleKeys.TextScreen_pos_noun.tr();
   // prefix
   else if(pos.startsWith("接頭詞")) 
-    c = prefixColor;
+    localizedPos = LocaleKeys.TextScreen_pos_prefix.tr();
   // verb
   else if(pos.startsWith("動詞")) 
-    c = verbColor;
+    localizedPos = LocaleKeys.TextScreen_pos_verb.tr();
   // i adj
   else if(pos.startsWith("形容詞")) 
-    c = iAdjectiveColor;
+    localizedPos = LocaleKeys.TextScreen_pos_i_adjective.tr();
   // adverbs
   else if(pos.startsWith("副詞")) 
-    c = adverbColor;
+    localizedPos = LocaleKeys.TextScreen_pos_adverb.tr();
   // adnominals
   else if(pos.startsWith("連体詞")) 
-    c = adnominalColor;
+    localizedPos = LocaleKeys.TextScreen_pos_adnominal.tr();
   // Conjunctions
   else if(pos.startsWith("接続詞")) 
-    c = conjunctionColor;
+    localizedPos = LocaleKeys.TextScreen_pos_conjunction.tr();
   // Particles
   else if(pos.startsWith("助詞")) 
-    c = particleColor;
+    localizedPos = LocaleKeys.TextScreen_pos_particle.tr();
   // aux verb
   else if(pos.startsWith("助動詞")) 
-    c = auxVerbColor;
+    localizedPos = LocaleKeys.TextScreen_pos_auxillary_verb.tr();
   // Exclamations
   else if(pos.startsWith("感動詞")) 
-    c = exclamationColor;
+    localizedPos = LocaleKeys.TextScreen_pos_exclamation.tr();
   // Filler
   else if(pos.startsWith("フィラ")) 
-    c = fillerColor;
+    localizedPos = LocaleKeys.TextScreen_pos_filler.tr();
   // Other Parts of Speech (interjection)
   else if(pos.startsWith("その他"))
-    c = interjectionColor;
+    localizedPos = LocaleKeys.TextScreen_pos_interjection.tr();
   else{
-    //debugPrint("$pos is an unknown POS");
+    debugPrint("$pos is an unknown POS");
   }
-  return c;
+  return localizedPos;
 }

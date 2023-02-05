@@ -2,7 +2,7 @@
   "Stores": {
     "shortest_description": {
       "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
-      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst.",
+      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!",
       "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
@@ -1139,6 +1139,62 @@
       "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
       "es": "Este botón cambia el texto procesado a pantalla completa.",
       "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
+    },
+    "pos_suffix": {
+      "en": "suffix",
+      "de": "Suffix"
+    },
+    "pos_na_adj": {
+      "en": "na-adjective",
+      "de": "na-Adjektiv"
+    },
+    "pos_noun": {
+      "en": "noun",
+      "de": "Substantiv"
+    },
+    "pos_prefix": {
+      "en": "prefix",
+      "de": "Präfix"
+    },
+    "pos_verb": {
+      "en": "verb",
+      "de": "Verb"
+    },
+    "pos_i-adjective": {
+      "en": "i-adjective",
+      "de": "i-Adjektiv"
+    },
+    "pos_adverb": {
+      "en": "adverb",
+      "de": "Adverb"
+    },
+    "pos_adnominal": {
+      "en": "adnominal",
+      "de": "Adnominal"
+    },
+    "pos_conjunction": {
+      "en": "conjunction",
+      "de": "Konjunktion"
+    },
+    "pos_particle": {
+      "en": "particle",
+      "de": "Partikel"
+    },
+    "pos_auxillary_verb": {
+      "en": "auxillary verb",
+      "de": "Hilfsverb"
+    },
+    "pos_exclamation": {
+      "en": "exclamation",
+      "de": "Ausruf"
+    },
+    "pos_filler": {
+      "en": "filler",
+      "de": "Füller"
+    },
+    "pos_interjection": {
+      "en": "interjection",
+      "de": "Zwischenruf"
     }
   },
   "DictionaryScreen": {

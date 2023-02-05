@@ -173,7 +173,7 @@ static const Map<String,dynamic> localizations = {
   "Stores": {
     "shortest_description": {
       "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
-      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst.",
+      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!",
       "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
       "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
       "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
@@ -1310,6 +1310,62 @@ static const Map<String,dynamic> localizations = {
       "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
       "es": "Este botón cambia el texto procesado a pantalla completa.",
       "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
+    },
+    "pos_suffix": {
+      "en": "suffix",
+      "de": "Suffix"
+    },
+    "pos_na_adj": {
+      "en": "na-adjective",
+      "de": "na-Adjektiv"
+    },
+    "pos_noun": {
+      "en": "noun",
+      "de": "Substantiv"
+    },
+    "pos_prefix": {
+      "en": "prefix",
+      "de": "Präfix"
+    },
+    "pos_verb": {
+      "en": "verb",
+      "de": "Verb"
+    },
+    "pos_i-adjective": {
+      "en": "i-adjective",
+      "de": "i-Adjektiv"
+    },
+    "pos_adverb": {
+      "en": "adverb",
+      "de": "Adverb"
+    },
+    "pos_adnominal": {
+      "en": "adnominal",
+      "de": "Adnominal"
+    },
+    "pos_conjunction": {
+      "en": "conjunction",
+      "de": "Konjunktion"
+    },
+    "pos_particle": {
+      "en": "particle",
+      "de": "Partikel"
+    },
+    "pos_auxillary_verb": {
+      "en": "auxillary verb",
+      "de": "Hilfsverb"
+    },
+    "pos_exclamation": {
+      "en": "exclamation",
+      "de": "Ausruf"
+    },
+    "pos_filler": {
+      "en": "filler",
+      "de": "Füller"
+    },
+    "pos_interjection": {
+      "en": "interjection",
+      "de": "Zwischenruf"
     }
   },
   "DictionaryScreen": {
@@ -2156,10 +2212,24 @@ static const Map<String,dynamic> de = {
     "mockup_2": "Suche Wörter",
     "mockup_3": "Übersetze mit Wörterbüchern",
     "short_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst, in dem du es malst."
+    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!"
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
+    "pos_adnominal": "Adnominal",
+    "pos_adverb": "Adverb",
+    "pos_auxillary_verb": "Hilfsverb",
+    "pos_conjunction": "Konjunktion",
+    "pos_exclamation": "Ausruf",
+    "pos_filler": "Füller",
+    "pos_i-adjective": "i-Adjektiv",
+    "pos_interjection": "Zwischenruf",
+    "pos_na_adj": "na-Adjektiv",
+    "pos_noun": "Substantiv",
+    "pos_particle": "Partikel",
+    "pos_prefix": "Präfix",
+    "pos_suffix": "Suffix",
+    "pos_verb": "Verb",
     "title": "Text",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen bei der Textverarbeitung!",
@@ -2693,6 +2763,20 @@ static const Map<String,dynamic> en = {
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
+    "pos_adnominal": "adnominal",
+    "pos_adverb": "adverb",
+    "pos_auxillary_verb": "auxillary verb",
+    "pos_conjunction": "conjunction",
+    "pos_exclamation": "exclamation",
+    "pos_filler": "filler",
+    "pos_i-adjective": "i-adjective",
+    "pos_interjection": "interjection",
+    "pos_na_adj": "na-adjective",
+    "pos_noun": "noun",
+    "pos_particle": "particle",
+    "pos_prefix": "prefix",
+    "pos_suffix": "suffix",
+    "pos_verb": "verb",
     "title": "Text",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the text processing!",
