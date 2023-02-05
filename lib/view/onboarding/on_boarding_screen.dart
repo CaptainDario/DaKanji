@@ -9,7 +9,6 @@ import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/dakanji_colors.dart';
 
 
 
@@ -82,9 +81,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   Widget build(BuildContext context) {
     
     List<Color> pageColors = [
-      dakanji_red,
+      g_Dakanji_red,
       Theme.of(context).primaryColor,
-      dakanji_green
+      g_Dakanji_green
     ];
 
     return Scaffold(

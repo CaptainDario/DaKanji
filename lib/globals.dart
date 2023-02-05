@@ -3,6 +3,7 @@ library my_prj.globals;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 
 
 /// the title of the app
@@ -10,6 +11,11 @@ const String g_AppTitle = "DaKanji";
 
 /// deep link pattern
 const String g_AppLink = r"dakanji://dakanji/";
+
+/// The green tone that dakanji uses
+const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
+/// The red tone that dakanji uses
+const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
 /// the version number of this app
 String g_Version = "";
