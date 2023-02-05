@@ -1,13 +1,14 @@
 import 'package:async/async.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 
 import 'dictionary_search_util.dart';
 import 'search_isolate.dart';
 
 
 
-/// Class that spawns a number of isolates to search efficiently in the dictionary
+/// Class that spawns a number of isolates to search efficiently in the dictionary.
 class DictionarySearch {
 
   /// Number of isolates that should be created for searching in the dictionary
@@ -22,6 +23,10 @@ class DictionarySearch {
   String directory;
   /// The name of the ISAR file of the dictionary
   String name;
+
+  bool _isSearching = false;
+
+  String? _lastBlockedQuery;
 
 
   DictionarySearch(this.noIsolates, this.languages, this.directory, this.name);
@@ -39,8 +44,15 @@ class DictionarySearch {
   }
 
   /// Queries the database and sorts the results using multiple isolates.
-  Future<List> query (String queryText) async {
+  Future<List<JMdict>?> query (String queryText) async {
     _checkInitialized();
+
+    // do not search if a search is already running but remember the last blocked query
+    if(_isSearching){
+      _lastBlockedQuery = queryText;
+      return null;
+    }
+    _isSearching = true;
 
     // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
@@ -52,11 +64,21 @@ class DictionarySearch {
     // wait for all isolates to finish and merge the results to one list
     final search_result =
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
-
+    // sort and merge the results
     final sort_result = sortJmdictList(search_result, queryText, this.languages);
+    var result = sort_result.expand((element) => element).toList();
+    _isSearching = false;
 
-    return sort_result.expand((element) => element).toList();
+    // if one or more queries were made while this one was running, run the last
+    // one
+    if(_lastBlockedQuery != null){
+      var t = _lastBlockedQuery;
+      _lastBlockedQuery = null;
+      result = (await query(t!)) ?? [];
+      _lastBlockedQuery = null;
+    }
     
+    return result;
   }
 
   /// terminates all isolates and cleans memory
