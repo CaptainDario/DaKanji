@@ -432,7 +432,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
     var cnt = 0;
     for (var text in words) {
-      if(cnt + text.length > tapTextPos.offset){
+      if(cnt + text.length >= tapTextPos.offset){
         _textSelection = TextSelection(
           baseOffset: cnt,
           extentOffset: cnt + text.length
