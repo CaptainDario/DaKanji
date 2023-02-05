@@ -231,7 +231,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   /// User started dragging on the text
   void _onDragStart(DragStartDetails details) {
-    if(_leftHandleSelected || _rightHandleSelected) return;
+    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected)
+      return;
+
     _isDragging = true;
 
     setState(() {
@@ -243,6 +245,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
+    if(words.length == 0)
+      return;
+
     if(_leftHandleSelected)
       _textSelection = TextSelection(
         baseOffset:   _getTextPositionAtOffset(details.localPosition).offset,
