@@ -550,6 +550,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                       dimChanged = true;
                     }
                     return Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         // text selection
                         CustomPaint(
