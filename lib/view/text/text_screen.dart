@@ -15,7 +15,7 @@ import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'package:da_kanji_mobile/view/text/custom_text_popup.dart';
+import 'package:da_kanji_mobile/view/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 
@@ -55,7 +55,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the output readings of mecab
   List<String> mecabReadings = const [];
 
-  /// the padding used between all widges
+  /// the padding used between all widgets
   final double padding = 8.0;
 
   /// if the option to make the analyzed text fullscreen
@@ -305,22 +305,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       Focus(
                                         focusNode: widget.includeTutorial ?
                                           GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                        child: Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: SvgPicture.asset(
-                                              !addSpaces ?
-                                              "assets/icons/space_bar_off.svg" :
-                                              "assets/icons/space_bar_on.svg",
-                                              color: Theme.of(context).brightness == Brightness.light
-                                              ? Colors.black
-                                              : Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                addSpaces = !addSpaces;
-                                              });
-                                            },
+                                        child: AnalysisOptionButton(
+                                          addSpaces,
+                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {addSpaces = !addSpaces;})
                                           ),
                                         ),
                                       ),
@@ -328,66 +317,36 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       Focus(
                                         focusNode: widget.includeTutorial ?
                                           GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                        child: Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            key: GlobalKey(),
-                                            icon: SvgPicture.asset(
-                                              showRubys ?
-                                              "assets/icons/furigana_off.svg" :
-                                              "assets/icons/furigana_on.svg",
-                                              color: Theme.of(context).brightness == Brightness.light
-                                              ? Colors.black
-                                              : Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                showRubys = !showRubys;
-                                              });
-                                            },
+                                        child: AnalysisOptionButton(
+                                          showRubys,
+                                          svgAssetPattern: "assets/icons/furigana_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {showRubys = !showRubys;})
                                           ),
-                                        ),
+                                        )
                                       ),
                                       // button to colorize words matching POS
                                       Focus(
                                         focusNode: widget.includeTutorial ?
                                           GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                        child: Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: SvgPicture.asset(
-                                              colorizePos ?
-                                              "assets/icons/palette_off.svg" :
-                                              "assets/icons/palette_on.svg",
-                                              color: Theme.of(context).brightness == Brightness.light
-                                              ? Colors.black
-                                              : Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                colorizePos = !colorizePos;
-                                              });
-                                            },
+                                        child: AnalysisOptionButton(
+                                          colorizePos,
+                                          svgAssetPattern: "assets/icons/palette_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {colorizePos = !colorizePos;})
                                           ),
-                                        ),
+                                        )
                                       ),
                                       // full screen toggle
                                       Focus(
                                         focusNode: widget.includeTutorial ?
                                           GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                        child: Material(
-                                          color: Theme.of(context).cardColor,
-                                          child: IconButton(
-                                            icon: Icon(!fullScreen ? 
-                                              Icons.open_in_full : 
-                                              Icons.close_fullscreen,
-                                              color: Theme.of(context).brightness == Brightness.light
-                                              ? Colors.black
-                                              : Colors.white,
-                                            ),
-                                            onPressed: onFullScreenButtonPress,
-                                          ),
-                                        ),
+                                        child: AnalysisOptionButton(
+                                          fullScreen,
+                                          onIcon: Icons.fullscreen,
+                                          offIcon: Icons.fullscreen_exit,
+                                          onPressed: onFullScreenButtonPress
+                                        )
                                       ),
                                     ],
                                   )
