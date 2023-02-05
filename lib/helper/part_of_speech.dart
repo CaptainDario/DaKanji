@@ -33,7 +33,7 @@ final Color interjectionColor = Color(0xff98fb98);
 
 
 
-
+/// Converts a ipadic style part of speech string to a unique color
 Color? posToColor(String pos){
   Color? c;
 
@@ -80,7 +80,59 @@ Color? posToColor(String pos){
   else if(pos.startsWith("その他"))
     c = interjectionColor;
   else{
-    print("$pos is an unknown POS");
+    //debugPrint("$pos is an unknown POS");
+  }
+  return c;
+}
+
+/// Converts a ipadic style part of speech string to a unique color
+Color? posToTranslation(String pos){
+  Color? c;
+
+  // suffix
+  if(pos.contains("-接尾"))
+    c = suffixColor; 
+  // na adj
+  else if(pos.startsWith("名詞-形容動詞語幹")) 
+    c = naAdjectiveColor;
+  // noun
+  else if(pos.startsWith("名詞"))      
+    c = nounColor;
+  // prefix
+  else if(pos.startsWith("接頭詞")) 
+    c = prefixColor;
+  // verb
+  else if(pos.startsWith("動詞")) 
+    c = verbColor;
+  // i adj
+  else if(pos.startsWith("形容詞")) 
+    c = iAdjectiveColor;
+  // adverbs
+  else if(pos.startsWith("副詞")) 
+    c = adverbColor;
+  // adnominals
+  else if(pos.startsWith("連体詞")) 
+    c = adnominalColor;
+  // Conjunctions
+  else if(pos.startsWith("接続詞")) 
+    c = conjunctionColor;
+  // Particles
+  else if(pos.startsWith("助詞")) 
+    c = particleColor;
+  // aux verb
+  else if(pos.startsWith("助動詞")) 
+    c = auxVerbColor;
+  // Exclamations
+  else if(pos.startsWith("感動詞")) 
+    c = exclamationColor;
+  // Filler
+  else if(pos.startsWith("フィラ")) 
+    c = fillerColor;
+  // Other Parts of Speech (interjection)
+  else if(pos.startsWith("その他"))
+    c = interjectionColor;
+  else{
+    //debugPrint("$pos is an unknown POS");
   }
   return c;
 }

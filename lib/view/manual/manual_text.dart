@@ -4,7 +4,7 @@ import 'package:simple_html_css/simple_html_css.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/helper/color_conversion.dart';
-import 'package:da_kanji_mobile/model/TextScreen/pos_colors.dart';
+import 'package:da_kanji_mobile/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 

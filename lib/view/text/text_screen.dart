@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/show_cases/multi_focus.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/text/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/model/TextScreen/pos_colors.dart';
+import 'package:da_kanji_mobile/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/view/text/custom_text_popup.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
