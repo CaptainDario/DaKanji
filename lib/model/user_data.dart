@@ -119,7 +119,7 @@ class UserData{
     }
 
     // DEBUGGING: onboarding, changelog, rate popup
-    //showOnboarding = false;
+    //showOnboarding = true;
     //showChangelog = true;
     //showRatePopup = true;
 
