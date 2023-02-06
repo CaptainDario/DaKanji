@@ -179,22 +179,6 @@
     "show_tutorial": "\u041f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0443\u0447\u0435\u0431\u043d\u0438\u043a\u0438 (@:SettingsScreen.restarts_app)",
     "title": "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438"
   },
-  "Stores": {
-    "long_description": "",
-    "mockup_10": "",
-    "mockup_1_1": "",
-    "mockup_1_2": "",
-    "mockup_2": "",
-    "mockup_3": "",
-    "mockup_4": "",
-    "mockup_5": "",
-    "mockup_6": "",
-    "mockup_7": "",
-    "mockup_8": "",
-    "mockup_9": "",
-    "short_description": "",
-    "shortest_description": ""
-  },
   "TextScreen": {
     "input_text_here": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0442\u0435\u043a\u0441\u0442 \u0437\u0434\u0435\u0441\u044c...",
     "pos_adnominal": "",
@@ -203,7 +187,7 @@
     "pos_conjunction": "",
     "pos_exclamation": "",
     "pos_filler": "",
-    "pos_i-adjective": "",
+    "pos_i_adjective": "",
     "pos_interjection": "",
     "pos_na_adj": "",
     "pos_noun": "",

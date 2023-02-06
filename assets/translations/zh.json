@@ -179,22 +179,6 @@
     "show_tutorial": "\u91cd\u65b0\u5c55\u793a\u6559\u7a0b\uff08@:SettingsScreen.restarts_app\uff09\u3002",
     "title": "\u8bbe\u7f6e"
   },
-  "Stores": {
-    "long_description": "",
-    "mockup_10": "",
-    "mockup_1_1": "",
-    "mockup_1_2": "",
-    "mockup_2": "",
-    "mockup_3": "",
-    "mockup_4": "",
-    "mockup_5": "",
-    "mockup_6": "",
-    "mockup_7": "",
-    "mockup_8": "",
-    "mockup_9": "",
-    "short_description": "",
-    "shortest_description": ""
-  },
   "TextScreen": {
     "input_text_here": "\u5728\u8fd9\u91cc\u8f93\u5165\u6587\u5b57...",
     "pos_adnominal": "",
@@ -203,7 +187,7 @@
     "pos_conjunction": "",
     "pos_exclamation": "",
     "pos_filler": "",
-    "pos_i-adjective": "",
+    "pos_i_adjective": "",
     "pos_interjection": "",
     "pos_na_adj": "",
     "pos_noun": "",

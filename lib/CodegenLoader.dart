@@ -143,8 +143,6 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "title": "设置"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "在这里输入文字...",
     "title": "文本",
@@ -170,62 +168,6 @@ class CodegenLoader extends AssetLoader{
   }
 };
 static const Map<String,dynamic> localizations = {
-  "Stores": {
-    "shortest_description": {
-      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
-      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!",
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
-    },
-    "short_description": {
-      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
-      "de": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n漢字を書くだけで、漢字を探し、翻訳することができます。",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
-    },
-    "long_description": {
-      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
-      "de": "Du lernst Japanisch? Dann musst du DaKanji ausprobieren.\r\n\r\nHast du schon mal versucht, einen japanischen Text zu lesen, aber kanntest ein Kanji nicht?\r\nDaKanji kann dir dabei helfen. Zeichne ein Kanji und die App wandelt es in einen digitales Zeichen um. Nicht einmal die Strichfolge ist wichtig! Male Zeichen und kombiniere sie zu Wörtern, die du dann übersetzen kannst und all das komplett offline.\r\n\r\nFunktionen:\r\n* Erkennt mehr als 6500 Kanji und alle Kana komplett offline\r\n* Benutze web und App Wörterbücher, um Zeichen und Wörter nachzuschlagen",
-      "ja": "日本語を勉強しているあなた！「DaKanji」を試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。手書きの漢字をデジタルに変換してくれます。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します。\n* ウェブやアプリの辞書を利用して、漢字や単語を翻訳することができます。",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
-    },
-    "mockup_1_1": {
-      "en": "Don't know a Kanji? Just draw it!",
-      "de": "Du kennst das Kanji nicht? Mal' es einfach!",
-      "ja": "漢字がわからない？まずは書いてみましょう！",
-      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
-      "pl": "Nie znasz Kanji? Po prostu je namaluj!"
-    },
-    "mockup_1_2": {
-      "en": "Even the stroke order doesn't matter.",
-      "de": "Selbst die Strichfolge ist unwichtig.",
-      "ja": "書き順を知らなくても大丈夫！",
-      "es": "Ni siquiera importa el orden de los trazos.",
-      "pl": "Kolejność malowania znaków nie ma znaczenia."
-    },
-    "mockup_2": {
-      "en": "Search words",
-      "de": "Suche Wörter",
-      "es": "Busca palabras",
-      "pl": "Wyszukuj słowa"
-    },
-    "mockup_3": {
-      "en": "Translate with dictionaries",
-      "de": "Übersetze mit Wörterbüchern",
-      "es": "Traduce con diccionarios",
-      "pl": "Tłumacz za pomocą słownika"
-    },
-    "mockup_4": {},
-    "mockup_5": {},
-    "mockup_6": {},
-    "mockup_7": {},
-    "mockup_8": {},
-    "mockup_9": {},
-    "mockup_10": {}
-  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -301,7 +243,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Welcome to the drawing recognition!",
       "de": "Wilkommen zu der Zeichenerkennung!",
       "ru": "Добро пожаловать на распознавание рисунка!",
-      "ja": "文字認識へようこそ!",
+      "ja": "漢字認識へようこそ!",
       "zh": "欢迎大家对绘画的认可!",
       "it": "Benvenuti al riconoscimento del disegno!",
       "fr": "Bienvenue à la reconnaissance du dessin !",
@@ -488,7 +430,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Drawing",
       "de": "Zeichnen",
       "ru": "Рисование",
-      "ja": "文字を書く",
+      "ja": "漢字を探す",
       "zh": "绘图",
       "it": "Disegno",
       "fr": "Dessin",
@@ -714,12 +656,12 @@ static const Map<String,dynamic> localizations = {
       "en": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
       "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
       "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
-      "ja": "大漢字」は、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
+      "ja": "Dakanjiは、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
       "zh": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
       "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
       "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
       "es": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
-      "pl": "Dzięki \"DaKanji\" możesz szybko wyszukiwać słowa korzystając z wbudowanego słownika lub z Internetu."
+      "pl": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub w Internecie."
     },
     "Onboarding_3_title": {
       "en": "Do not know how to read a sentence?",
@@ -736,7 +678,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
       "de": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
       "ru": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
-      "ja": "大漢字のテキスト分析ツールを使って、ふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
+      "ja": "Dakanjiのテキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
       "zh": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
       "it": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
       "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
@@ -782,7 +724,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Drawing",
       "de": "Zeichnen",
       "ru": "Рисование",
-      "ja": "図面",
+      "ja": "漢字を探す",
       "zh": "绘图",
       "it": "Disegno",
       "fr": "Dessin",
@@ -826,7 +768,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Invert long/short press",
       "de": "Invertiere kurzes und langes drücken",
       "ru": "Инвертировать длинный/короткий пресс",
-      "ja": "長押しとタップを反転させる",
+      "ja": "長押しとタップを反転する",
       "zh": "倒置长/短按",
       "it": "Invertire la pressione lunga/corta",
       "fr": "Inverser la presse long/short",
@@ -969,7 +911,7 @@ static const Map<String,dynamic> localizations = {
       "en": "The transparency of the application",
       "de": "Die Transparenz der Anwendung",
       "ru": "Прозрачность приложения",
-      "ja": "アプリ画面の透明性",
+      "ja": "アプリ画面の透過性",
       "zh": "应用程序的透明度",
       "it": "La trasparenza dell'applicazione",
       "fr": "La transparence de l'application",
@@ -991,7 +933,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Inference backend (requires restart)",
       "de": "Inferenz Backend (Neustart notwendig)",
       "ru": "Бэкэнд для выводов (требуется перезапуск)",
-      "ja": "推論バックエンド（再起動されます）",
+      "ja": "推論バックエンド（再起動します）",
       "zh": "推理后端（需要重新启动）。",
       "it": "Backend di inferenza (richiede il riavvio)",
       "fr": "Backend d'inférence (nécessite un redémarrage)",
@@ -1061,7 +1003,7 @@ static const Map<String,dynamic> localizations = {
       "en": "What's wrong? Annotate the view above and then press \"submit\".",
       "de": "Was stimmt nicht (schreibe deine Antwort unten)?",
       "ru": "Что не так (введите свой текст ниже)?",
-      "ja": "何が問題なのか（下にテキストを入力してください）？",
+      "ja": "どんな問題がありましたか？（下にテキストを入力してください）",
       "zh": "什么是错的（在下面输入你的文字）？",
       "it": "Cosa c'è che non va (scrivere il testo qui sotto)?",
       "fr": "Qu'est-ce qui ne va pas (tapez votre texte ci-dessous) ?",
@@ -1072,7 +1014,7 @@ static const Map<String,dynamic> localizations = {
       "en": "navigate",
       "de": "Navigieren",
       "ru": "перейдите по ссылке",
-      "ja": "ナビる",
+      "ja": "操作",
       "zh": "导航",
       "it": "navigare",
       "fr": "naviguer sur",
@@ -1227,7 +1169,7 @@ static const Map<String,dynamic> localizations = {
       "en": "A single tap will select a word.",
       "de": "Durch einmaliges Antippen wird ein Wort ausgewählt.",
       "ru": "Одним нажатием можно выбрать слово.",
-      "ja": "シングルタップで単語が選択されます。",
+      "ja": "シングルタップで単語を選択します",
       "zh": "点击一下就可以选择一个词。",
       "it": "Con un solo tocco si seleziona una parola.",
       "fr": "Une simple pression permet de sélectionner un mot.",
@@ -1238,7 +1180,7 @@ static const Map<String,dynamic> localizations = {
       "en": "A long press will select a word and show the Part of Speech information.",
       "de": "Durch langes Drücken wird ein Wort ausgewählt und die Wortartinformation angezeigt.",
       "ru": "При длительном нажатии выбирается слово и отображается информация о части речи.",
-      "ja": "長押しで単語が選択され、品詞情報が表示されます。",
+      "ja": "長押しで単語を選択すると、品詞が表示されます",
       "zh": "长按会选择一个单词并显示语篇信息。",
       "it": "Premendo a lungo si seleziona una parola e si visualizzano le informazioni sulla parte del discorso.",
       "fr": "Une pression longue permet de sélectionner un mot et d'afficher les informations sur la partie du discours.",
@@ -1252,7 +1194,7 @@ static const Map<String,dynamic> localizations = {
       "ja": "ダブルタップで文章を選択します。",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
-      "fr": "Un double tapotement permet de sélectionner une phrase.",
+      "fr": "Une double tape permet de sélectionner une phrase.",
       "es": "Un doble toque seleccionará una frase.",
       "pl": "Podwójne stuknięcie powoduje wybranie zdania."
     },
@@ -1260,10 +1202,10 @@ static const Map<String,dynamic> localizations = {
       "en": "A triple tap will select a paragraph.",
       "de": "Durch dreimaliges Antippen wird ein Absatz ausgewählt.",
       "ru": "Тройное нажатие позволяет выбрать абзац.",
-      "ja": "トリプルタップすると、段落が選択されます。",
+      "ja": "トリプルタップで段落が選択されます",
       "zh": "点击三下将选择一个段落。",
       "it": "Un triplo tocco selezionerà un paragrafo.",
-      "fr": "Un triple tapotement permet de sélectionner un paragraphe.",
+      "fr": "Une triple tape permet de sélectionner un paragraphe.",
       "es": "Un triple toque seleccionará un párrafo.",
       "pl": "Potrójne stuknięcie powoduje zaznaczenie akapitu."
     },
@@ -1331,7 +1273,7 @@ static const Map<String,dynamic> localizations = {
       "en": "verb",
       "de": "Verb"
     },
-    "pos_i-adjective": {
+    "pos_i_adjective": {
       "en": "i-adjective",
       "de": "i-Adjektiv"
     },
@@ -1748,7 +1690,7 @@ static const Map<String,dynamic> localizations = {
       "en": "We will show you a quick tutorial to get you started.",
       "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
       "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします。",
+      "ja": "簡単なチュートリアルをお見せします",
       "zh": "我们将向你展示一个快速教程，让你开始。",
       "it": "Vi mostreremo una rapida esercitazione per iniziare.",
       "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -1759,7 +1701,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This is the search input field, just tap on it to input any word you would like to search.",
       "de": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
       "ru": "Это поле ввода поиска, просто нажмите на него, чтобы ввести любое слово, которое вы хотите найти.",
-      "ja": "検索欄です。タップして検索したい単語を入力してください。",
+      "ja": "検索欄です。タップして検索したい単語を入力してください",
       "zh": "这是搜索输入字段，只要点击它就可以输入你想搜索的任何单词。",
       "it": "Questo è il campo di inserimento della ricerca, basta toccarlo per inserire la parola che si desidera cercare.",
       "fr": "Il s'agit du champ de saisie de la recherche. Il suffit de taper dessus pour saisir le mot que vous souhaitez rechercher.",
@@ -1770,7 +1712,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This button clears the input or copies the text from your clipboard.",
       "de": "Diese Schaltfläche löscht die Eingabe oder kopiert den Text aus der Zwischenablage.",
       "ru": "Эта кнопка очищает вводимый текст или копирует его из буфера обмена.",
-      "ja": "入力内容のクリア、またはテキストの貼り付けがきます",
+      "ja": "入力内容のクリア、またはテキストの貼り付けができます",
       "zh": "这个按钮可以清除输入或从剪贴板上复制文本。",
       "it": "Questo pulsante cancella l'input o copia il testo dagli appunti.",
       "fr": "Ce bouton efface la saisie ou copie le texte depuis le presse-papiers.",
@@ -1781,7 +1723,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This button opens a screen in which you can draw Kanjis to look them up quickly.",
       "de": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanjia zeichnen kannst, um sie nachzuschlagen.",
       "ru": "Эта кнопка открывает экран, на котором можно нарисовать кандзи для их быстрого поиска.",
-      "ja": "漢字を書いてすぐに調べられる画面が表示されます",
+      "ja": "漢字を書いて調べることも可能です",
       "zh": "这个按钮可以打开一个屏幕，使用时可以画出一个汉字来快速查询。",
       "it": "Questo pulsante apre una schermata in cui è possibile disegnare un Kanji per consultarlo rapidamente.",
       "fr": "Ce bouton ouvre un écran dans lequel l'utilisateur peut dessiner un Kanji pour le rechercher rapidement.",
@@ -1792,7 +1734,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
       "de": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprache der Übersetzungen kann in den Einstellungen gewählt werden.",
       "ru": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
-      "ja": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます。",
+      "ja": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます",
       "zh": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
       "it": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
       "fr": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
@@ -1888,14 +1830,14 @@ static const Map<String,dynamic> ja = {
     "kanji_strokes": "画数",
     "kanji_tab": "漢字",
     "title": "辞書",
-    "tutorial_begin_text": "簡単なチュートリアルをお見せします。",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "ようこそ辞書へ！",
     "tutorial_examples_tab": "検索した単語の例文が表示されます",
     "tutorial_kanji_tab": "検索内容に含まれる漢字の画数、書き順、意味などを見ることができます",
-    "tutorial_search_input_clear_text": "入力内容のクリア、またはテキストの貼り付けがきます",
-    "tutorial_search_input_draw_text": "漢字を書いてすぐに調べられる画面が表示されます",
-    "tutorial_search_input_text": "検索欄です。タップして検索したい単語を入力してください。",
-    "tutorial_word_tab": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます。",
+    "tutorial_search_input_clear_text": "入力内容のクリア、またはテキストの貼り付けができます",
+    "tutorial_search_input_draw_text": "漢字を書いて調べることも可能です",
+    "tutorial_search_input_text": "検索欄です。タップして検索したい単語を入力してください",
+    "tutorial_word_tab": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます",
     "word_antonyms": "反意語",
     "word_conjugation": "活用",
     "word_images": "画像",
@@ -1905,10 +1847,10 @@ static const Map<String,dynamic> ja = {
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません",
-    "title": "文字を書く",
+    "title": "漢字を探す",
     "tutorial_begin_continue": "タップして続ける...",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "文字認識へようこそ!",
+    "tutorial_begin_title": "漢字認識へようこそ!",
     "tutorial_clear": "全て消去します",
     "tutorial_dictionary_settings": "設定から辞書サービスを選択することができます",
     "tutorial_double_tap_prediction": "ダブルタップで文字を検索ボックスに追加できます",
@@ -1926,8 +1868,8 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "書く",
-    "feedback_description_text": "何が問題なのか（下にテキストを入力してください）？",
-    "navigate": "ナビる",
+    "feedback_description_text": "どんな問題がありましたか？（下にテキストを入力してください）",
+    "navigate": "操作",
     "submit": "送信",
     "title": "フィードバック"
   },
@@ -1962,13 +1904,13 @@ static const Map<String,dynamic> ja = {
   "OnBoarding": {
     "Onboarding_1_text": "漢字を書くだけで「DaKanji」があなたの知りたい文字を表示します",
     "Onboarding_1_title": "漢字がわかりませんか？",
-    "Onboarding_2_text": "大漢字」は、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
+    "Onboarding_2_text": "Dakanjiは、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます。",
     "Onboarding_2_title": "漢字や単語を調べる",
-    "Onboarding_3_text": "大漢字のテキスト分析ツールを使って、ふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
+    "Onboarding_3_text": "Dakanjiのテキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます。",
     "Onboarding_3_title": "文章の読み方がわからない？"
   },
   "SettingsScreen": {
-    "advanced_settings_draw_backend": "推論バックエンド（再起動されます）",
+    "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
     "advanced_settings_snap": "私は絶対なのだ・・・",
     "advanced_settings_title": "詳細設定",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
@@ -1979,26 +1921,19 @@ static const Map<String,dynamic> ja = {
     "draw_custom_url_hint": "使用したい辞書のURL",
     "draw_dictionary_system_translator": "OS統合翻訳",
     "draw_double_tap_empty_canvas": "ダブルタップで文字記入欄を空にする",
-    "draw_invert_short_long_press": "長押しとタップを反転させる",
+    "draw_invert_short_long_press": "長押しとタップを反転する",
     "draw_long_press_opens": "辞書を選択",
-    "draw_title": "図面",
+    "draw_title": "漢字を探す",
     "misc_default_screen": "アプリ起動時の初期画面",
     "misc_language": "言語 (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "現在のウィンドウサイズを保存",
     "misc_theme": "テーマ (@:SettingsScreen.restarts_app)",
     "misc_title": "その他",
     "misc_window_on_top": "アプリを常に画面トップに表示する",
-    "misc_window_opacity": "アプリ画面の透明性",
+    "misc_window_opacity": "アプリ画面の透過性",
     "restarts_app": "アプリを再起動する",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "title": "設定"
-  },
-  "Stores": {
-    "long_description": "日本語を勉強しているあなた！「DaKanji」を試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？「DaKanji」はそんなあなたのためにあります。手書きの漢字をデジタルに変換してくれます。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します。\n* ウェブやアプリの辞書を利用して、漢字や単語を翻訳することができます。",
-    "mockup_1_1": "漢字がわからない？まずは書いてみましょう！",
-    "mockup_1_2": "書き順を知らなくても大丈夫！",
-    "short_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n漢字を書くだけで、漢字を探し、翻訳することができます。",
-    "shortest_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！"
   },
   "TextScreen": {
     "input_text_here": "ここにテキストを入力...",
@@ -2009,10 +1944,10 @@ static const Map<String,dynamic> ja = {
     "tutorial_fullscreen_text": "テキストをフルスクリーンに切り替えます",
     "tutorial_furigana_text": "テキストにふりがなをつけます",
     "tutorial_processed_text_double_tap": "ダブルタップで文章を選択します。",
-    "tutorial_processed_text_long_press": "長押しで単語が選択され、品詞情報が表示されます。",
-    "tutorial_processed_text_tap": "シングルタップで単語が選択されます。",
+    "tutorial_processed_text_long_press": "長押しで単語を選択すると、品詞が表示されます",
+    "tutorial_processed_text_tap": "シングルタップで単語を選択します",
     "tutorial_processed_text_text": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
-    "tutorial_processed_text_triple_tap": "トリプルタップすると、段落が選択されます。",
+    "tutorial_processed_text_triple_tap": "トリプルタップで段落が選択されます",
     "tutorial_spaces_text": "テキストにスペースを追加します",
     "tutorial_text_input_text": "ここに文章を入力してください。かなを振ったり、品詞別に表示したりできます"
   },
@@ -2205,15 +2140,6 @@ static const Map<String,dynamic> de = {
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
   },
-  "Stores": {
-    "long_description": "Du lernst Japanisch? Dann musst du DaKanji ausprobieren.\r\n\r\nHast du schon mal versucht, einen japanischen Text zu lesen, aber kanntest ein Kanji nicht?\r\nDaKanji kann dir dabei helfen. Zeichne ein Kanji und die App wandelt es in einen digitales Zeichen um. Nicht einmal die Strichfolge ist wichtig! Male Zeichen und kombiniere sie zu Wörtern, die du dann übersetzen kannst und all das komplett offline.\r\n\r\nFunktionen:\r\n* Erkennt mehr als 6500 Kanji und alle Kana komplett offline\r\n* Benutze web und App Wörterbücher, um Zeichen und Wörter nachzuschlagen",
-    "mockup_1_1": "Du kennst das Kanji nicht? Mal' es einfach!",
-    "mockup_1_2": "Selbst die Strichfolge ist unwichtig.",
-    "mockup_2": "Suche Wörter",
-    "mockup_3": "Übersetze mit Wörterbüchern",
-    "short_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!\nFinde das Zeichen das du suchst einfach in dem du es malst.",
-    "shortest_description": "Du lernst japanisch? Dann musst du DaKanji ausprobieren!"
-  },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
     "pos_adnominal": "Adnominal",
@@ -2222,7 +2148,7 @@ static const Map<String,dynamic> de = {
     "pos_conjunction": "Konjunktion",
     "pos_exclamation": "Ausruf",
     "pos_filler": "Füller",
-    "pos_i-adjective": "i-Adjektiv",
+    "pos_i_adjective": "i-Adjektiv",
     "pos_interjection": "Zwischenruf",
     "pos_na_adj": "na-Adjektiv",
     "pos_noun": "Substantiv",
@@ -2381,8 +2307,6 @@ static const Map<String,dynamic> ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "title": "Настройки"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Введите текст здесь...",
     "title": "Текст",
@@ -2507,7 +2431,7 @@ static const Map<String,dynamic> pl = {
   "OnBoarding": {
     "Onboarding_1_text": "Po prostu go narysuj i DaKanji pokaże Ci znak którego potrzebujesz",
     "Onboarding_1_title": "Nie znasz Kanji?",
-    "Onboarding_2_text": "Dzięki \"DaKanji\" możesz szybko wyszukiwać słowa korzystając z wbudowanego słownika lub z Internetu.",
+    "Onboarding_2_text": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub w Internecie.",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne lub przetłumacz całe zdanie.",
     "Onboarding_3_title": "Nie wiesz, jak czytać zdania?"
@@ -2537,15 +2461,6 @@ static const Map<String,dynamic> pl = {
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
-  },
-  "Stores": {
-    "long_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa",
-    "mockup_1_1": "Nie znasz Kanji? Po prostu je namaluj!",
-    "mockup_1_2": "Kolejność malowania znaków nie ma znaczenia.",
-    "mockup_2": "Wyszukuj słowa",
-    "mockup_3": "Tłumacz za pomocą słownika",
-    "short_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki.",
-    "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Wprowadź tekst tutaj...",
@@ -2752,15 +2667,6 @@ static const Map<String,dynamic> en = {
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
   },
-  "Stores": {
-    "long_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
-    "mockup_1_1": "Don't know a Kanji? Just draw it!",
-    "mockup_1_2": "Even the stroke order doesn't matter.",
-    "mockup_2": "Search words",
-    "mockup_3": "Translate with dictionaries",
-    "short_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
-    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
-  },
   "TextScreen": {
     "input_text_here": "Input text here...",
     "pos_adnominal": "adnominal",
@@ -2769,7 +2675,7 @@ static const Map<String,dynamic> en = {
     "pos_conjunction": "conjunction",
     "pos_exclamation": "exclamation",
     "pos_filler": "filler",
-    "pos_i-adjective": "i-adjective",
+    "pos_i_adjective": "i-adjective",
     "pos_interjection": "interjection",
     "pos_na_adj": "na-adjective",
     "pos_noun": "noun",
@@ -2930,8 +2836,6 @@ static const Map<String,dynamic> it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "title": "Impostazioni"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
     "title": "Testo",
@@ -3087,8 +2991,6 @@ static const Map<String,dynamic> fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "title": "Paramètres"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Entrez le texte ici...",
     "title": "Texte",
@@ -3097,11 +2999,11 @@ static const Map<String,dynamic> fr = {
     "tutorial_colors_text": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
     "tutorial_fullscreen_text": "Ce bouton permet de faire passer le texte traité en plein écran.",
     "tutorial_furigana_text": "Ce bouton ajoute des furigana au texte.",
-    "tutorial_processed_text_double_tap": "Un double tapotement permet de sélectionner une phrase.",
+    "tutorial_processed_text_double_tap": "Une double tape permet de sélectionner une phrase.",
     "tutorial_processed_text_long_press": "Une pression longue permet de sélectionner un mot et d'afficher les informations sur la partie du discours.",
     "tutorial_processed_text_tap": "Une simple pression permet de sélectionner un mot.",
     "tutorial_processed_text_text": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
-    "tutorial_processed_text_triple_tap": "Un triple tapotement permet de sélectionner un paragraphe.",
+    "tutorial_processed_text_triple_tap": "Une triple tape permet de sélectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
@@ -3243,15 +3145,6 @@ static const Map<String,dynamic> es = {
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ajustes"
-  },
-  "Stores": {
-    "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-    "mockup_1_1": "¿No sabes un Kanji? ¡Solo dibújalo!",
-    "mockup_1_2": "Ni siquiera importa el orden de los trazos.",
-    "mockup_2": "Busca palabras",
-    "mockup_3": "Traduce con diccionarios",
-    "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-    "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Introduzca aquí el texto...",

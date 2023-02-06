@@ -179,22 +179,6 @@
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ajustes"
   },
-  "Stores": {
-    "long_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!\n\n\u00bfAlguna vez intentaste leer un texto en Japon\u00e9s pero no sab\u00edas como leer un kanji? DaKanji est\u00e1 para ayudarte. Dibuja un kanji y la app lo convertir\u00e1 en un car\u00e1cter digital. \u00a1Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracter\u00edsticas:\n* Reconocer m\u00e1s de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-    "mockup_10": "",
-    "mockup_1_1": "\u00bfNo sabes un Kanji? \u00a1Solo dib\u00fajalo!",
-    "mockup_1_2": "Ni siquiera importa el orden de los trazos.",
-    "mockup_2": "Busca palabras",
-    "mockup_3": "Traduce con diccionarios",
-    "mockup_4": "",
-    "mockup_5": "",
-    "mockup_6": "",
-    "mockup_7": "",
-    "mockup_8": "",
-    "mockup_9": "",
-    "short_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!\nEncuentra car\u00e1cteres y trad\u00facelos solamente dibuj\u00e1ndolos.",
-    "shortest_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!"
-  },
   "TextScreen": {
     "input_text_here": "Introduzca aqu\u00ed el texto...",
     "pos_adnominal": "",
@@ -203,7 +187,7 @@
     "pos_conjunction": "",
     "pos_exclamation": "",
     "pos_filler": "",
-    "pos_i-adjective": "",
+    "pos_i_adjective": "",
     "pos_interjection": "",
     "pos_na_adj": "",
     "pos_noun": "",

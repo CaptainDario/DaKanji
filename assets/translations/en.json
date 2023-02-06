@@ -179,22 +179,6 @@
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
   },
-  "Stores": {
-    "long_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\n\nDid you ever try to read a Japanese text but did not know how to read some Kanji? \"DaKanji\" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.\n\nFeature overview:\n* Recognize 6500+ Kanji and all Kana offline\n* Use web and app dictionaries to translate characters or words",
-    "mockup_10": "",
-    "mockup_1_1": "Don't know a Kanji? Just draw it!",
-    "mockup_1_2": "Even the stroke order doesn't matter.",
-    "mockup_2": "Search words",
-    "mockup_3": "Translate with dictionaries",
-    "mockup_4": "",
-    "mockup_5": "",
-    "mockup_6": "",
-    "mockup_7": "",
-    "mockup_8": "",
-    "mockup_9": "",
-    "short_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!\nFind characters and translate them just by drawing.",
-    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
-  },
   "TextScreen": {
     "input_text_here": "Input text here...",
     "pos_adnominal": "adnominal",
@@ -203,7 +187,7 @@
     "pos_conjunction": "conjunction",
     "pos_exclamation": "exclamation",
     "pos_filler": "filler",
-    "pos_i-adjective": "i-adjective",
+    "pos_i_adjective": "i-adjective",
     "pos_interjection": "interjection",
     "pos_na_adj": "na-adjective",
     "pos_noun": "noun",
