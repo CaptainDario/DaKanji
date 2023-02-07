@@ -82,10 +82,15 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                       },
                       child: TabBar(
                         mouseCursor: SystemMouseCursors.move,
+                        labelColor: Theme.of(context).highlightColor,
+                        unselectedLabelColor: Colors.grey,
+                        indicatorColor: Theme.of(context).highlightColor,
                         tabs: List.generate(tabNames.length, (index) =>
                           Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Text(tabNames[index]),
+                            child: Text(
+                              tabNames[index],
+                            ),
                           )
                         ) 
                       ),
