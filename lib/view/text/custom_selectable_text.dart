@@ -587,19 +587,17 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               for (var word in words) {
                                 ret.add(
                                   TextSpan(
-                                    text: word.replaceAll("█", " "),
+                                    text: word,
                                     style: TextStyle(
                                       color: widget.showColors 
                                       && widget.wordColors != null
-                                      && word != "█"
+                                      && widget.wordColors![cnt] != null
                                         ? widget.wordColors![cnt]
                                         : widget.textColor
                                     )
                                   )
                                 );
-                                if(word != "█"){
-                                  cnt++;
-                                }
+                                cnt++;
                               }
                               return ret;
                             } ()
