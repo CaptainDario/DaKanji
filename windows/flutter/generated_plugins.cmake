@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   mecab_dart
   screen_retriever
   share_plus
+  tflite_flutter_helper
   url_launcher_windows
   window_manager
 )

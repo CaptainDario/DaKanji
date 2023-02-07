@@ -127,6 +127,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.4.1"
+  camera:
+    dependency: transitive
+    description:
+      name: camera
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.3"
+  camera_android:
+    dependency: transitive
+    description:
+      name: camera_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.4"
+  camera_avfoundation:
+    dependency: transitive
+    description:
+      name: camera_avfoundation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.11"
+  camera_platform_interface:
+    dependency: transitive
+    description:
+      name: camera_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
+  camera_web:
+    dependency: transitive
+    description:
+      name: camera_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
   characters:
     dependency: transitive
     description:
@@ -394,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
@@ -1019,14 +1061,23 @@ packages:
     source: hosted
     version: "0.4.12"
   tflite_flutter:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: ada0cb85f763bacadaa4b41c159350c32f87ed3b
+      ref: c00851c
+      resolved-ref: c00851cbbe7ea41b16802cfaaa701578415eea8a
       url: "https://github.com/CaptainDario/tflite_flutter_plugin"
     source: git
     version: "0.9.0"
+  tflite_flutter_helper:
+    dependency: "direct overridden"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "80538ab77a46cfc81efd1256122190b2cc7b2cce"
+      url: "https://github.com/CaptainDario/tflite_flutter_helper"
+    source: git
+    version: "0.3.0"
   time:
     dependency: transitive
     description:

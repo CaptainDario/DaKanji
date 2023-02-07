@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
   mecab_dart
   screen_retriever
+  tflite_flutter_helper
   url_launcher_linux
   window_manager
 )

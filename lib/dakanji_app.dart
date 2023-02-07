@@ -54,7 +54,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

@@ -156,7 +156,7 @@ Future<void> initGetIt() async {
   await GetIt.I<Settings>().save();
   
   // inference services
-  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter("DrawScreen"));
+  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
 
   // draw screen services 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
