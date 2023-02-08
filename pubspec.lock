@@ -366,9 +366,11 @@ packages:
   flutter_appavailability:
     dependency: "direct main"
     description:
-      path: "plugins/flutter_appavailability"
-      relative: true
-    source: path
+      path: flutter_appavailability
+      ref: HEAD
+      resolved-ref: "7d9b9b8f4eacd8780d6773c6a84b08876b443b2c"
+      url: "https://github.com/CaptainDario/DaKanji-Dependencies"
+    source: git
     version: "0.0.22"
   flutter_driver:
     dependency: transitive
@@ -576,14 +578,14 @@ packages:
     source: hosted
     version: "1.0.3"
   isar:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: isar
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.5"
   isar_flutter_libs:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: isar_flutter_libs
       url: "https://pub.dartlang.org"
@@ -618,12 +620,12 @@ packages:
     source: hosted
     version: "6.5.0"
   kana_kit:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
-      ref: "74433b4"
+      ref: HEAD
       resolved-ref: "74433b403654f234c69158afe8cb0fa584c7edbf"
-      url: "https://github.com/Moseco/kana_kit"
+      url: "https://github.com/CaptainDario/kana_kit"
     source: git
     version: "2.0.0"
   keybinder:
@@ -643,9 +645,11 @@ packages:
   liquid_swipe:
     dependency: "direct main"
     description:
-      path: "plugins/liquid_swipe_flutter"
-      relative: true
-    source: path
+      path: liquid_swipe_flutter
+      ref: HEAD
+      resolved-ref: "7d9b9b8f4eacd8780d6773c6a84b08876b443b2c"
+      url: "https://github.com/CaptainDario/DaKanji-Dependencies"
+    source: git
     version: "2.1.1"
   list_utilities:
     dependency: transitive
@@ -1072,9 +1076,11 @@ packages:
   tflite_flutter_helper:
     dependency: "direct overridden"
     description:
-      path: "../../tflite_flutter_helper"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: f4379465332541dfd4a658c3a6904f612b37f64a
+      url: "https://github.com/CaptainDario/tflite_flutter_helper"
+    source: git
     version: "0.3.0"
   time:
     dependency: transitive

@@ -14,10 +14,6 @@ dependencies:
     sdk: flutter
   
   # all platforms supported
-  database_builder:
-    path: ../DaKanji-Dictionary/database_builder
-  liquid_swipe:
-    path: ./plugins/liquid_swipe_flutter
   platform: 3.1.0
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
@@ -40,33 +36,38 @@ dependencies:
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.1.0
-  # TODO use pub version (https://github.com/jeroen-meijer/kana_kit/)
-  kana_kit:
-    git:
-      url: https://github.com/Moseco/kana_kit
-      ref: 74433b4
   reorderables: 0.5.0
   archive: 3.3.0
   device_info_plus: 5.0.5
   share_plus: 6.3.0
   cross_file: 0.3.3+2
   json_annotation: 4.7.0
-  isar: any # included in dakanji dictionary
-  isar_flutter_libs: any # included in dakanji dictionary
+  
   async: 2.9.0
   simple_html_css: 4.0.0
   animations: 2.0.7
-
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
+
+  #isar: any # included in dakanji dictionary
+  #isar_flutter_libs: any # included in dakanji dictionary
+  #kana_kit: any # included in dakanji dictionary
+
+  database_builder:
+    path: ../DaKanji-Dictionary/database_builder
   flutter_appavailability:        # android, iOS
-    path: ./plugins/flutter_appavailability
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: flutter_appavailability
   mecab_dart:
     git:
       url: https://github.com/CaptainDario/mecab_dart
-  #kagome_dart: 
-  #  path: ../kagome_dart
+  liquid_swipe:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: liquid_swipe_flutter
+
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms
@@ -82,9 +83,8 @@ dependency_overrides:
       git:
         url: https://github.com/CaptainDario/tflite_flutter_plugin
     tflite_flutter_helper:
-      path: ../../tflite_flutter_helper
-      #git:
-        #url: https://github.com/CaptainDario/tflite_flutter_helper
+      git:
+        url: https://github.com/CaptainDario/tflite_flutter_helper
 
 msix_config:
   display_name: DaKanji
