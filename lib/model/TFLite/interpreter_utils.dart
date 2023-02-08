@@ -194,7 +194,6 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // CoreML 3 delegate
-  /*
   if(!exclude.contains(InferenceBackend.CoreML3)){
     try{
       Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, CoreMLVersion: 3);
@@ -213,7 +212,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
       );
     }
     catch (e){}
-  }*/
+  }
   // Metal delegate
   if(!exclude.contains(InferenceBackend.GPU)){
     try {
