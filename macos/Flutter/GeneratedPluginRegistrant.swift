@@ -10,7 +10,7 @@ import flutter_inappwebview
 import in_app_review
 import isar_flutter_libs
 import mecab_dart
-import path_provider_macos
+import path_provider_foundation
 import screen_retriever
 import share_plus
 import shared_preferences_macos
