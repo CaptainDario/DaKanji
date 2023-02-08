@@ -5,7 +5,7 @@ import 'package:isar/isar.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/view/word_lists/word_list.dart';
-import 'package:da_kanji_mobile/view/drawer/Drawer.dart';
+import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 
