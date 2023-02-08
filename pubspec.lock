@@ -1064,19 +1064,17 @@ packages:
     dependency: "direct overridden"
     description:
       path: "."
-      ref: c00851c
-      resolved-ref: c00851cbbe7ea41b16802cfaaa701578415eea8a
+      ref: HEAD
+      resolved-ref: "3582765af8b2d58a27249e528d4412602d4c4427"
       url: "https://github.com/CaptainDario/tflite_flutter_plugin"
     source: git
     version: "0.9.0"
   tflite_flutter_helper:
     dependency: "direct overridden"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "80538ab77a46cfc81efd1256122190b2cc7b2cce"
-      url: "https://github.com/CaptainDario/tflite_flutter_helper"
-    source: git
+      path: "../../tflite_flutter_helper"
+      relative: true
+    source: path
     version: "0.3.0"
   time:
     dependency: transitive
