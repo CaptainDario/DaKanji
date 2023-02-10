@@ -8,7 +8,7 @@ part 'settings_advanced.g.dart';
 
 /// Class to store all settings in the advanced settings
 /// 
-/// To update the toJson code run `flutter pub run build_runner build`
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class SettingsAdvanced with ChangeNotifier {
 

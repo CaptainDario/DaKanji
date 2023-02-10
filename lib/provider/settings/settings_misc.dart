@@ -11,7 +11,7 @@ part 'settings_misc.g.dart';
 
 /// Class to store all settings in the miscellanelous settings
 /// 
-/// To update the toJson code run `flutter pub run build_runner build`
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class SettingsMisc with ChangeNotifier {
 

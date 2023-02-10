@@ -8,7 +8,7 @@ part 'settings_dictionary.g.dart';
 
 /// Class to store all settings in the drawing settings '
 /// 
-/// To update the toJson code run `flutter pub run build_runner build`
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class SettingsDictionary with ChangeNotifier {
 
