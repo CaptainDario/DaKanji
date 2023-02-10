@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +23,7 @@ import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
@@ -59,32 +59,55 @@ Future<void> main() async {
 
   await init();
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-      path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
-      useFallbackTranslations: true,
-      useOnlyLangCode: true,
-      assetLoader: const CodegenLoader(),
-      saveLocale: true,
-      child: Phoenix(
-        child: BetterFeedback(
-          theme: FeedbackThemeData(
-            sheetIsDraggable: true
+  setupErrorCollection();
+
+  runZoned(() => 
+    runApp(
+      EasyLocalization(
+        supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en'),
+        useFallbackTranslations: true,
+        useOnlyLangCode: true,
+        assetLoader: const CodegenLoader(),
+        saveLocale: true,
+        child: Phoenix(
+          child: BetterFeedback(
+            theme: FeedbackThemeData(
+              sheetIsDraggable: true
+            ),
+            localizationsDelegates: [
+              CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+                const Locale('en'): CustomFeedbackLocalizations()
+              },
+            ],
+            mode: FeedbackMode.navigate,
+            child: const DaKanjiApp(),
           ),
-          localizationsDelegates: [
-            CustomFeedbackLocalizationsDelegate()..supportedLocales = {
-              const Locale('en'): CustomFeedbackLocalizations()
-            },
-          ],
-          mode: FeedbackMode.navigate,
-          child: const DaKanjiApp(),
         ),
       ),
     ),
+    zoneSpecification: ZoneSpecification(
+      print: (self, parent, zone, line) {
+        g_appLogs += "${line}\n";
+        parent.print(zone, "EJHEHEHE: ${line}");
+      },
+    )
   );
-  
+
+}
+
+void setupErrorCollection(){
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    g_appLogs += "${details.exception} \n\n ${details.stack}";
+   debugPrint("${details.exception} \n\n ${details.stack}");
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    g_appLogs += "${error} \n\n ${stack}";
+   debugPrint("${error} \n\n ${stack}");
+    return true;
+  };
 }
 
 
@@ -97,7 +120,7 @@ Future<void> init() async {
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  debugPrint(yaml['version']);
+ debugPrint(yaml['version']);
   g_Version = yaml['version'];
 
   await initGetIt();
@@ -116,14 +139,14 @@ Future<void> init() async {
 Future<void> copyDictionaryFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-  debugPrint("documents directory: ${documentsDirectory.toString()}");
+ debugPrint("documents directory: ${documentsDirectory.toString()}");
   final databaseDirectory = Directory(documentsDirectory.path + "/DaKanji" + "/isar/");
 
   // if the file already exists delete it
   final dbFile = File(databaseDirectory.path + '/dictionary.isar');
   if (dbFile.existsSync()) {
     dbFile.deleteSync();
-    debugPrint("Deleted dictionary ISAR");
+   debugPrint("Deleted dictionary ISAR");
   }
 
   // Get pre-populated db file and copy it to the documents directory
@@ -137,7 +160,7 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
-  debugPrint("CLEARED PREFERENCES AT APP START.");
+ debugPrint("CLEARED PREFERENCES AT APP START.");
 }
 
 /// Initialize GetIt by initializing and registering all the instances that
@@ -154,9 +177,6 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();
-  
-  // inference services
-  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
 
   // draw screen services 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
