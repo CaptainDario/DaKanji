@@ -165,10 +165,16 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
-                              Text("${LocaleKeys.DictionaryScreen_kanji_heisig.tr()}: ", style: headerStyle),  Text("NONE"),
-
-                              Text("${LocaleKeys.DictionaryScreen_kanji_skip.tr()}: ", style: headerStyle),    Text("NONE"),
-                              Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.frequency}"),
+                              // TODO : add heisig
+                              //Text("${LocaleKeys.DictionaryScreen_kanji_heisig.tr()}: ", style: headerStyle),  Text("NONE"),
+                              // TODO : add KLC
+                              // TODO : add WaniKani
+                              // TODO : add SKIP
+                              //Text("${LocaleKeys.DictionaryScreen_kanji_skip.tr()}: ", style: headerStyle),    Text("NONE"),
+                              if(widget.kanjidic2entry.frequency != -1)
+                                Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
+                              if(widget.kanjidic2entry.frequency != -1)
+                                Text("${widget.kanjidic2entry.frequency}"),
                             ],
                           ),
                         ),
