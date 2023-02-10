@@ -356,7 +356,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
   }
   ) async 
 {
-  Map<InferenceBackend, double> inferenceBackend = {}; Stopwatch s = Stopwatch();
+  Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
   if(!exclude.contains(InferenceBackend.GPU)){

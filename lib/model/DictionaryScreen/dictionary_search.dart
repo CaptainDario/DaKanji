@@ -1,7 +1,6 @@
 import 'package:async/async.dart';
 
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter/material.dart';
 
 import 'dictionary_search_util.dart';
 import 'search_isolate.dart';

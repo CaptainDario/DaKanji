@@ -2,7 +2,6 @@ import 'dart:isolate';
 import 'package:async/async.dart';
 
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_data.dart';
 import 'package:da_kanji_mobile/model/TFLite/inference_stats.dart';
