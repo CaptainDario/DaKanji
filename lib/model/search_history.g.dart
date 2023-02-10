@@ -121,11 +121,15 @@ const _SearchHistoryschemaEnumValueMap = {
   'None': 0,
   'JMDict': 1,
   'JMEdict': 2,
+  'KanjiVG': 3,
+  'KanjiDic2': 4,
 };
 const _SearchHistoryschemaValueEnumMap = {
   0: DatabaseType.None,
   1: DatabaseType.JMDict,
   2: DatabaseType.JMEdict,
+  3: DatabaseType.KanjiVG,
+  4: DatabaseType.KanjiDic2,
 };
 
 Id _searchHistoryGetId(SearchHistory object) {
