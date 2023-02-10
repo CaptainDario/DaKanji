@@ -83,9 +83,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, true);
-        if(mounted)
-          setState(() {});
       }
+      if(mounted)
+        setState(() {});
     });
   }
 
@@ -192,25 +192,26 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 ],
               ),
             ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-              height: expanded 
-                ? widget.expandedHeight - searchBarInputHeight
-                : 0,
-              child: context.read<DictSearch>().currentSearch != ""
-                // search results if the user entered text
-                ? SearchResultList(
-                  searchResults: context.watch<DictSearch>().searchResults,
-                  onSearchResultPressed: onSearchResultPressed,
-                )
-                // otherwise the search history
-                : SearchResultList(
-                  searchResults: searchHistory,
-                  onSearchResultPressed: onSearchResultPressed,
-                  reversed: true,
-                )
-            )
+            if(searchBarInputHeight != 0)
+              AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+                height: expanded 
+                  ? widget.expandedHeight - searchBarInputHeight
+                  : 0,
+                child: context.read<DictSearch>().currentSearch != ""
+                  // search results if the user entered text
+                  ? SearchResultList(
+                    searchResults: context.watch<DictSearch>().searchResults,
+                    onSearchResultPressed: onSearchResultPressed,
+                  )
+                  // otherwise the search history
+                  : SearchResultList(
+                    searchResults: searchHistory,
+                    onSearchResultPressed: onSearchResultPressed,
+                    reversed: true,
+                  )
+              )
           ],
         )
       ),
