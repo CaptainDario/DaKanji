@@ -16,7 +16,7 @@ class ManualDictionary extends StatelessWidget {
       context, 
       manualTextScreenText,
       defaultTextStyle: TextStyle(
-        color: Theme.of(context).textTheme.bodyText1!.color
+        color: Theme.of(context).textTheme.bodyLarge!.color
       )
     );
   }

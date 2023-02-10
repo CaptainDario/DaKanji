@@ -156,7 +156,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                       child: () {
                         return DefaultTextStyle(
                           style: TextStyle(
-                            color: Theme.of(context).textTheme.button?.color,
+                            color: Theme.of(context).textTheme.labelLarge?.color,
                             decoration: TextDecoration.none,
                             fontSize: 50,
                             fontWeight: FontWeight.normal,
