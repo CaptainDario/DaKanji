@@ -21,7 +21,7 @@ import 'inference_backend.dart';
 /// * Windows: GPU (OpenCL) > XNNPack > CPU <br/>
 /// * Mac    : GPU (OpenCL) > XNNPack > CPU <br/>
 /// * Linux  : GPU (OpenCL) > XNNPack > CPU <br/>
-Future<Map<InferenceBackend, double>> getBestBackend(
+Future<Map<InferenceBackend, double>> testBackends(
   String tfLiteAssetPath,
   Object input,
   Object output,

@@ -1,9 +1,11 @@
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_data.dart';
+import 'package:da_kanji_mobile/model/TFLite/inference_backend.dart';
+import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate.dart';
 import 'package:da_kanji_mobile/model/TFLite/interpreter_utils.dart';
@@ -59,7 +61,7 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-      debugPrint("${this.name} already initialized. Skipping init.");
+     debugPrint("${this.name} already initialized. Skipping init.");
       return;
     }
     
@@ -73,27 +75,52 @@ class DrawingInterpreter with ChangeNotifier{
     
     data = DrawingData(await loadLabels());
 
-    // find the best available backend and load the model
-    var iB = (await getBestBackend(
-      _usedTFLiteAssetPath,
-      data.input,
-      data.output,
-      (Interpreter interpreter, Object input, Object output) => 
-        data.runInterpreter(
-          interpreter, 
-          input as List<List<List<List<double>>>>,
-          output as List<List<double>>
-        ),
-      iterations: 10,
-    )).entries.toList()..sort(((a, b) => a.value.compareTo(b.value)));
-    print("Inference timings for Drawing: $iB, using ${iB.first.key}");
-    interpreter = await initInterpreterFromBackend(iB.first.key, _usedTFLiteAssetPath);
+    interpreter = await initInterpreterFromBackend(
+      await getBestBeckend(),
+      _usedTFLiteAssetPath
+    );
 
     // create and setup isolate
     _inferenceIsolate = DrawingIsolate();
     await _inferenceIsolate?.start(interpreter.address, data);
 
     wasInitialized = true;
+  }
+
+  Future<InferenceBackend> getBestBeckend() async {
+
+    InferenceBackend iB;
+
+    // check if the backend was already tested -> return it if true
+    if(GetIt.I<UserData>().drawingBackend != null) {
+      iB = GetIt.I<UserData>().drawingBackend!;
+    }
+    // Otherwise, find the best available backend and load the model
+    else{
+      // test all backends on this platform
+      List<MapEntry<InferenceBackend, double>> tests = (await testBackends(
+        _usedTFLiteAssetPath,
+        data.input,
+        data.output,
+        (Interpreter interpreter, Object input, Object output) => 
+          data.runInterpreter(
+            interpreter, 
+            input as List<List<List<List<double>>>>,
+            output as List<List<double>>
+          ),
+        iterations: 10,
+      )).entries.toList()..sort(((a, b) => a.value.compareTo(b.value)));
+
+      // store the best backend to disk
+      iB = tests.first.key;
+      GetIt.I<UserData>().drawingBackend = iB;
+      GetIt.I<UserData>().save();
+
+     debugPrint("Inference timings for Drawing: $tests");
+    }
+    
+    debugPrint("Using: ${iB}");
+    return iB;
   }
 
   /// load the labels from file
@@ -127,7 +154,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// Frees all used resources
   void free() {
     if(!wasInitialized){
-      debugPrint(_notInitializedMessage);
+     debugPrint(_notInitializedMessage);
       return;
     }
 

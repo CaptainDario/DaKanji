@@ -15,7 +15,9 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showShowcaseText = json['showShowcaseText'] as bool? ?? true
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
   ..showRatePopup = json['showRatePopup'] as bool? ?? false
-  ..showChangelog = json['showChangelog'] as bool? ?? false;
+  ..showChangelog = json['showChangelog'] as bool? ?? false
+  ..drawingBackend =
+      $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
@@ -27,4 +29,15 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'showOnboarding': instance.showOnboarding,
       'showRatePopup': instance.showRatePopup,
       'showChangelog': instance.showChangelog,
+      'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
     };
+
+const _$InferenceBackendEnumMap = {
+  InferenceBackend.CPU: 'CPU',
+  InferenceBackend.GPU: 'GPU',
+  InferenceBackend.NNApi: 'NNApi',
+  InferenceBackend.CoreML2: 'CoreML2',
+  InferenceBackend.CoreML3: 'CoreML3',
+  InferenceBackend.Metal: 'Metal',
+  InferenceBackend.XNNPack: 'XNNPack',
+};

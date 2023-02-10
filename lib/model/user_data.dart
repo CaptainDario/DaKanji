@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:da_kanji_mobile/model/TFLite/inference_backend.dart';
 import '../globals.dart';
 
 part 'user_data.g.dart';
@@ -57,6 +57,16 @@ class UserData{
   @JsonKey(ignore: true)
   bool newVersionUsed = false;
 
+  /// All languages that are selected to be shown in the dict UI
+  @JsonKey(defaultValue: null)
+  InferenceBackend? _drawingBackend;
+  /// All languages that are selected to be shown in the dict UI
+  InferenceBackend? get drawingBackend => _drawingBackend;
+  /// All languages that are selected to be shown in the dict UI
+  set drawingBackend(InferenceBackend? drawingBackend) {
+    _drawingBackend = drawingBackend;
+  }
+
 
 
   UserData();
@@ -84,12 +94,12 @@ class UserData{
       appOpenedTimes = 5;
     }
 
-    debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
+   debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-    debugPrint("used: $versionUsed now: $g_Version");
+   debugPrint("used: $versionUsed now: $g_Version");
     if(versionUsed != g_Version && appOpenedTimes > 1){
-      newVersionUsed = true; debugPrint("New version installed");
+      newVersionUsed = true;debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
       versionUsed = g_Version;
@@ -114,7 +124,7 @@ class UserData{
 
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % 10 == 0){
-      debugPrint("show rate dialogue");
+     debugPrint("show rate dialogue");
       showRatePopup = true;
     }
 
