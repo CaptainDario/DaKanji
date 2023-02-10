@@ -6,6 +6,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 
+/// A logs of the currently running app so that they can be attached when
+/// using the provide feedback widget
+String g_appLogs = "";
+
 /// the title of the app
 const String g_AppTitle = "DaKanji";
 
