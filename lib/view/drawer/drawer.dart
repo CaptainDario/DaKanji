@@ -374,10 +374,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 BetterFeedback.of(context).show((UserFeedback feedback) async {
                                   
                                   final screenshotFilePath = await writeImageToTmpStorage(feedback.screenshot);
-                                  final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context));
+                                  final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
+                                  final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
 
                                   Share.shareXFiles(
-                                    [XFile(screenshotFilePath), XFile(textFilePath)],
+                                    [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
                                     text: feedback.text,
                                     subject: "DaKanji $g_Version - feedback",
                                     sharePositionOrigin: () {
@@ -414,9 +415,9 @@ Future<String> writeImageToTmpStorage(Uint8List image) async {
 
 /// Saves the given String to the temporary directory of the device and 
 /// returns the path to the file
-Future<String> writeTextToTmpStorage(String text) async {
+Future<String> writeTextToTmpStorage(String text, String fileName) async {
   final Directory output = await getTemporaryDirectory();
-  final String textFilePath = '${output.path}/feedback.txt';
+  final String textFilePath = '${output.path}/${fileName}.txt';
   final File screenshotFile = File(textFilePath);
   await screenshotFile.writeAsString(text);
   return textFilePath;
