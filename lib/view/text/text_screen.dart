@@ -399,9 +399,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     List<TokenNode> _analyzedText = GetIt.I<Mecab>().parse(text);
     // remove EOS symbol
     _analyzedText.removeLast(); 
-    mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
 
-    
+    mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
+    int txtCnt = 0;
     for (var i = 0; i < _analyzedText.length; i++) {
       // remove furigana when: non Japanese, kana only, reading == word
       if(!GetIt.I<KanaKit>().isJapanese(_analyzedText[i].surface) ||
@@ -416,6 +416,17 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       }
       mecabPOS.add(_analyzedText[i].features.sublist(0, 4).join("-"));
       mecabSurfaces.add(_analyzedText[i].surface);
+
+      // add line breaks to mecab output
+      if(i < _analyzedText.length-1 && text[txtCnt + _analyzedText[i].surface.length] == "\n"){
+        while(text[txtCnt + _analyzedText[i].surface.length] == "\n"){
+          mecabPOS.add("");
+          mecabSurfaces.add("\n");
+          mecabReadings.add("");
+          txtCnt += 1;
+        }
+      }
+      txtCnt += _analyzedText[i].surface.length;
     }
   }
 }
