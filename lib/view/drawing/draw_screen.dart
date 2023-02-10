@@ -49,12 +49,13 @@ class DrawScreen extends StatefulWidget {
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
   late double _canvasSize;
-  /// The controller of the webview which is used to show a dict in landscape
-  //WebViewController? landscapeWebViewController;
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
   bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showShowcaseDrawing;
+  /// Future that completes and returns true when the drawing interpreter 
+  /// has been initialized
+  Future<void>? initInterpter;
 
 
   @override
@@ -68,8 +69,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     });
 
     // initialize the drawing interpreter if it has not been already
-    if(!GetIt.I<DrawingInterpreter>().wasInitialized){
-      GetIt.I<DrawingInterpreter>().init();
+    if(!GetIt.I.isRegistered<DrawingInterpreter>()){
+      GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
+      initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) => true);
+        
     }
 
     // init tutorial
@@ -89,13 +92,16 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    GetIt.I<DrawScreenState>().drawingLookup.removeListener(() {
-      if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview) {
-        //landscapeWebViewController?.loadUrl(
-        //  openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
-        //);
-      }
-    });
+
+    // free interpreter when disposing
+    if(GetIt.I.isRegistered<DrawingInterpreter>()){
+      GetIt.I.unregister<DrawingInterpreter>(
+        disposingFunction: (p0) {
+          p0.free();
+        },
+      );
+    }
+
   }
 
   @override
@@ -106,48 +112,58 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       animationAtStart: !widget.openedByDrawer,
       child: ChangeNotifierProvider.value(
         value: GetIt.I<DrawScreenState>().strokes,
-        child: LayoutBuilder(
-          builder: (context, constraints){
-              
-            // set layout and canvas size
-            var t = getDrawScreenLayout(constraints);
-            GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
-            GetIt.I<DrawScreenState>().canvasSize = t.item2;
-            _canvasSize = t.item2;
-              
-            return DrawScreenResponsiveLayout(
-              DrawScreenDrawingCanvas(
-                _canvasSize,
-                GetIt.I<DrawingInterpreter>(),
-                widget.includeTutorial
-              ),
-              DrawScreenPredictionButtons(
-                drawScreenIsLandscape(t.item1),
-                _canvasSize,
-                widget.includeHeroes,
-                widget.includeTutorial
-              ), 
-              DrawScreenMultiCharSearch(
-                _canvasSize,
-                drawScreenIsLandscape(t.item1),
-                widget.includeHeroes,
-                widget.includeTutorial
-              ),
-              DrawScreenUndoButton(_canvasSize, widget.includeTutorial),
-              DrawScreenClearButton(_canvasSize, widget.includeTutorial),
-              _canvasSize,
-              GetIt.I<DrawScreenState>().drawScreenLayout,
-              drawScreenIncludesWebview(t.item1)
-                ? InAppWebView(
-                  initialUrlRequest: URLRequest(
-                    url: WebUri(
-                      openWithSelectedDictionary(
-                        GetIt.I<DrawScreenState>().drawingLookup.chars
-                      ),
+        child: FutureBuilder(
+          future: initInterpter,
+          builder: (context, snapshot) {
+
+            // Assure that the drawing interpreter has been initialized
+            if(!snapshot.hasData)
+              return Container();
+
+            return LayoutBuilder(
+              builder: (context, constraints){
+                  
+                // set layout and canvas size
+                var t = getDrawScreenLayout(constraints);
+                GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
+                GetIt.I<DrawScreenState>().canvasSize = t.item2;
+                _canvasSize = t.item2;
+                  
+                return DrawScreenResponsiveLayout(
+                  DrawScreenDrawingCanvas(
+                    _canvasSize,
+                    GetIt.I<DrawingInterpreter>(),
+                    widget.includeTutorial
+                  ),
+                  DrawScreenPredictionButtons(
+                    drawScreenIsLandscape(t.item1),
+                    _canvasSize,
+                    widget.includeHeroes,
+                    widget.includeTutorial
+                  ), 
+                  DrawScreenMultiCharSearch(
+                    _canvasSize,
+                    drawScreenIsLandscape(t.item1),
+                    widget.includeHeroes,
+                    widget.includeTutorial
+                  ),
+                  DrawScreenUndoButton(_canvasSize, widget.includeTutorial),
+                  DrawScreenClearButton(_canvasSize, widget.includeTutorial),
+                  _canvasSize,
+                  GetIt.I<DrawScreenState>().drawScreenLayout,
+                  drawScreenIncludesWebview(t.item1)
+                    ? InAppWebView(
+                      initialUrlRequest: URLRequest(
+                        url: WebUri(
+                          openWithSelectedDictionary(
+                            GetIt.I<DrawScreenState>().drawingLookup.chars
+                          ),
+                        )
+                      )
                     )
-                  )
-                )
-                : null
+                    : null
+                );
+              }
             );
           }
         ),
