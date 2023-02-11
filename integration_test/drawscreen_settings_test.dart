@@ -58,7 +58,7 @@ void main() {
     preds = (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], kuchiPrediction);
-    debugPrint("Passed step: 1");
+    print("Passed step: 1");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -67,7 +67,7 @@ void main() {
     await tester.tap(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     expect((await Clipboard.getData('text/plain'))?.text, "囗");
-    debugPrint("Passed step: 2");
+    print("Passed step: 2");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
   
@@ -86,7 +86,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.brush));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    debugPrint("Passed step: 3");
+    print("Passed step: 3");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -95,7 +95,7 @@ void main() {
     await tester.longPress(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     expect((await Clipboard.getData('text/plain'))?.text, "囗");
-    debugPrint("Passed step: 4");
+    print("Passed step: 4");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -114,7 +114,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.brush));
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.pumpAndSettle(const Duration(seconds: 1));
-    debugPrint("Passed step: 5");
+    print("Passed step: 5");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
 
@@ -124,7 +124,7 @@ void main() {
     await tester.tap(find.byWidget((tester.widgetList(find.byType(PredictionButton))).first));
     await tester.pumpAndSettle();
     expect(GetIt.I<DrawScreenState>().strokes.strokeCount, 0);
-    debugPrint("Passed step: 6");
+    print("Passed step: 6");
     await tester.pumpAndSettle(const Duration(seconds: 1));
     // #endregion
   });

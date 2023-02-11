@@ -114,13 +114,13 @@ class _PredictionButtonState extends State<PredictionButton>
   }
 
   void longPressed(){
-    debugPrint("longPressed");
+    print("longPressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
     handlePress(context);
   }
 
   void pressed(){
-    debugPrint("pressed");
+    print("pressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
     handlePress(context);
   }

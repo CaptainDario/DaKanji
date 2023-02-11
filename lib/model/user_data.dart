@@ -94,12 +94,12 @@ class UserData{
       appOpenedTimes = 5;
     }
 
-   debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
+   print("The app was opened for the ${appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-   debugPrint("used: $versionUsed now: $g_Version");
+   print("used: $versionUsed now: $g_Version");
     if(versionUsed != g_Version && appOpenedTimes > 1){
-      newVersionUsed = true;debugPrint("New version installed");
+      newVersionUsed = true;print("New version installed");
       // show the changelog
       showChangelog = true;
       versionUsed = g_Version;
@@ -124,7 +124,7 @@ class UserData{
 
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % 10 == 0){
-     debugPrint("show rate dialogue");
+     print("show rate dialogue");
       showRatePopup = true;
     }
 

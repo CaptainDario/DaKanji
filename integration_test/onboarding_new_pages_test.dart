@@ -36,14 +36,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for app to boot');
+      print('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.HomeScreen_whats_new.tr()), findsOneWidget);
     
     Offset closeButton = tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
     await tester.tapAt(closeButton);
-    debugPrint("Passed step: 1");
+    print("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the whats onboarding is shown and skip it
@@ -52,14 +52,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for onboarding to show');
+      print('waiting for onboarding to show');
     }
     
     expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
     
     Offset skipButton = tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first);
     await tester.tapAt(skipButton);
-    debugPrint("Passed step: 2");
+    print("Passed step: 2");
     // #endregion
 
     GetIt.I.reset();

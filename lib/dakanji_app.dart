@@ -70,19 +70,19 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   steps: GetIt.I<Tutorials>().getSteps(),
                   autoSizeTexts: true,
                   onChanged: (int index){
-                    debugPrint("Tutorial step: $index");
+                    print("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
-                      debugPrint("DrawScreen tutorial done, saving...");
+                      print("DrawScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseDrawing = false;
                       GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
-                      debugPrint("DictionaryScreen tutorial done, saving...");
+                      print("DictionaryScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseDictionary = false;
                       GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
-                      debugPrint("TextScreen tutorial done, saving...");
+                      print("TextScreen tutorial done, saving...");
                       GetIt.I<UserData>().showShowcaseText = false;
                       GetIt.I<UserData>().save();
                     }

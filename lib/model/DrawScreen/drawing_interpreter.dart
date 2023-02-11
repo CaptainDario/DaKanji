@@ -61,7 +61,7 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-     debugPrint("${this.name} already initialized. Skipping init.");
+     print("${this.name} already initialized. Skipping init.");
       return;
     }
     
@@ -116,10 +116,10 @@ class DrawingInterpreter with ChangeNotifier{
       GetIt.I<UserData>().drawingBackend = iB;
       GetIt.I<UserData>().save();
 
-     debugPrint("Inference timings for Drawing: $tests");
+     print("Inference timings for Drawing: $tests");
     }
     
-    debugPrint("Using: ${iB}");
+    print("Using: ${iB}");
     return iB;
   }
 
@@ -154,7 +154,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// Frees all used resources
   void free() {
     if(!wasInitialized){
-     debugPrint(_notInitializedMessage);
+     print(_notInitializedMessage);
       return;
     }
 

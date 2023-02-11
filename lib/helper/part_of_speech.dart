@@ -84,7 +84,7 @@ Color? posToColor(String pos){
   else if(pos.startsWith("その他"))
     c = interjectionColor;
   else{
-    debugPrint("$pos is an unknown POS");
+    print("$pos is an unknown POS");
   }
   return c;
 }
@@ -137,7 +137,7 @@ String? posToTranslation(String pos){
   else if(pos.startsWith("その他"))
     localizedPos = LocaleKeys.TextScreen_pos_interjection.tr();
   else{
-    debugPrint("$pos is an unknown POS");
+    print("$pos is an unknown POS");
   }
   return localizedPos;
 }

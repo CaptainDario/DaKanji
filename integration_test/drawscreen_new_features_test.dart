@@ -39,14 +39,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for app to boot');
+      print('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.HomeScreen_whats_new.tr()), findsOneWidget);
     
     Offset closeButton = tester.getCenter(find.text(LocaleKeys.General_close.tr()).first);
     await tester.tapAt(closeButton);
-    debugPrint("Passed step: 1");
+    print("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the drawscreen tutorial is shown
@@ -55,11 +55,11 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for onboarding to show');
+      print('waiting for onboarding to show');
     }
     
     expect(find.byType(DrawingCanvas), findsOneWidget);
-    debugPrint("Passed step: 2");
+    print("Passed step: 2");
     // #endregion
   });
 }

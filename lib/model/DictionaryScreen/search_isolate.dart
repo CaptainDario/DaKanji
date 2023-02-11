@@ -151,7 +151,7 @@ Future<void> _searchInIsar(SendPort p) async {
 
   KanaKit kanaKit = KanaKit();
 
-  debugPrint('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
+  print('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
 
   String messageRomaji;
 
@@ -168,7 +168,7 @@ Future<void> _searchInIsar(SendPort p) async {
       
       // Send the result to the main isolate.
       p.send(searchResults);
-      debugPrint("len ${searchResults.length} time: ${s.elapsed}");
+      print("len ${searchResults.length} time: ${s.elapsed}");
     }
     else if (message == null) {
       // Exit if the main isolate sends a null message
@@ -176,6 +176,6 @@ Future<void> _searchInIsar(SendPort p) async {
     }
   }
 
-  debugPrint('Spawned isolate finished.');
+  print('Spawned isolate finished.');
   Isolate.exit();
 }

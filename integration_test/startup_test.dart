@@ -35,14 +35,14 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for app to boot');
+      print('waiting for app to boot');
     }
     
     expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
     
     Offset skipButton = tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first);
     await tester.tapAt(skipButton);
-    debugPrint("Passed step: 1");
+    print("Passed step: 1");
     // #endregion
 
     // #region 2 - check that the onboarding is shown and skip it
@@ -51,11 +51,11 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for tutorial to show up');
+      print('waiting for tutorial to show up');
     }
     
     expect(find.byType(DrawingCanvas), findsOneWidget);
-    debugPrint("Passed step: 2");
+    print("Passed step: 2");
     // #endregion
 
     // #region 3 - check that the DrawScreen tutorial is shown
@@ -64,11 +64,11 @@ void main() {
       cnt < 100){
       cnt++;
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      debugPrint('waiting for tutorial to show up');
+      print('waiting for tutorial to show up');
     }
     
     expect(find.byType(DrawingCanvas), findsOneWidget);
-    debugPrint("Passed step: 2");
+    print("Passed step: 2");
     // #endregion
 
   });

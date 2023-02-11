@@ -101,11 +101,11 @@ void setupErrorCollection(){
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
     g_appLogs += "${details.exception} \n\n ${details.stack}";
-   debugPrint("${details.exception} \n\n ${details.stack}");
+   print("${details.exception} \n\n ${details.stack}");
   };
   PlatformDispatcher.instance.onError = (error, stack) {
     g_appLogs += "${error} \n\n ${stack}";
-   debugPrint("${error} \n\n ${stack}");
+   print("${error} \n\n ${stack}");
     return true;
   };
 }
@@ -120,7 +120,7 @@ Future<void> init() async {
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
- debugPrint(yaml['version']);
+ print(yaml['version']);
   g_Version = yaml['version'];
 
   await initGetIt();
@@ -139,14 +139,14 @@ Future<void> init() async {
 Future<void> copyDictionaryFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
- debugPrint("documents directory: ${documentsDirectory.toString()}");
+ print("documents directory: ${documentsDirectory.toString()}");
   final databaseDirectory = Directory(documentsDirectory.path + "/DaKanji" + "/isar/");
 
   // if the file already exists delete it
   final dbFile = File(databaseDirectory.path + '/dictionary.isar');
   if (dbFile.existsSync()) {
     dbFile.deleteSync();
-   debugPrint("Deleted dictionary ISAR");
+   print("Deleted dictionary ISAR");
   }
 
   // Get pre-populated db file and copy it to the documents directory
@@ -160,7 +160,7 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
- debugPrint("CLEARED PREFERENCES AT APP START.");
+ print("CLEARED PREFERENCES AT APP START.");
 }
 
 /// Initialize GetIt by initializing and registering all the instances that
