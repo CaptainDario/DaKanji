@@ -90,7 +90,7 @@ Future<void> main() async {
     zoneSpecification: ZoneSpecification(
       print: (self, parent, zone, line) {
         g_appLogs += "${line}\n";
-        parent.print(zone, "EJHEHEHE: ${line}");
+        parent.print(zone, "${line}");
       },
     )
   );
