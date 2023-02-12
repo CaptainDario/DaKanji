@@ -377,13 +377,13 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
                                   final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
 
-                                  Share.shareXFiles(
+                                  await Share.shareXFiles(
                                     [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
                                     text: feedback.text,
                                     subject: "DaKanji $g_Version - feedback",
                                     sharePositionOrigin: () {
                                       RenderBox? box = context.findRenderObject() as RenderBox?;
-                                      return box!.localToGlobal(Offset.zero) & box.size;
+                                      return Rect.fromLTRB(0, 0, box!.size.height/2, box.size.width/2);
                                     } (),
                                   );
                                 });
