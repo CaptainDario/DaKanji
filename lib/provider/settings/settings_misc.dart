@@ -46,7 +46,7 @@ class SettingsMisc with ChangeNotifier {
   ];
 
   @JsonKey(ignore: true)
-  static const int d_selectedStartupScreen = 1;
+  static const int d_selectedStartupScreen = 2;
   /// string denoting the screen that should be loaded at app start
   @JsonKey(defaultValue: d_selectedStartupScreen)
   late int _selectedStartupScreen = d_selectedStartupScreen;

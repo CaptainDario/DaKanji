@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/view/dictionary/dictionary_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -122,7 +123,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
                 liquidController
               ),
-              const DrawScreen(false, false, false),
+              const DictionaryScreen(false, false, ""),
             ],
             onPageChangeCallback: (int activePageIndex) {
               // change the current route to the drawing screen
@@ -130,7 +131,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 GetIt.I<UserData>().showOnboarding = false;
                 GetIt.I<UserData>().save();
                 Future.delayed(const Duration(milliseconds: 500), () =>
-                  Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false)
+                  Navigator.pushNamedAndRemoveUntil(context, "/dictionary", (route) => false)
                 );
               }
             },
