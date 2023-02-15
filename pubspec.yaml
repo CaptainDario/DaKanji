@@ -26,7 +26,7 @@ dependencies:
   awesome_dialog: 3.0.2
   easy_localization: 3.0.1
   flutter_layout_grid: 1.0.3
-  tuple: 2.0.0
+  tuple: 2.0.1
   lottie: 1.2.1
   flutter_svg: 1.1.5
   onboarding_overlay : 3.1.0
@@ -42,6 +42,7 @@ dependencies:
   share_plus: 6.3.0
   cross_file: 0.3.3+2
   json_annotation: 4.7.0
+  path: 1.8.2
   
   async: 2.10.0
   simple_html_css: 4.0.0
@@ -80,8 +81,9 @@ dependencies:
 
 dependency_overrides:
     tflite_flutter: # android, iOS, Linux, MacOS, windows
-      git:
-        url: https://github.com/CaptainDario/tflite_flutter_plugin
+      path: ../../tflite_flutter_plugin
+      #git:
+        #url: https://github.com/CaptainDario/tflite_flutter_plugin
     tflite_flutter_helper:
       git:
         url: https://github.com/CaptainDario/tflite_flutter_helper
