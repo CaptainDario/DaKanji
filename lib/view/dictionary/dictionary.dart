@@ -131,7 +131,9 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: DictionaryExampleTab(),
+                                child: DictionaryExampleTab(
+                                  context.watch<DictSearch>().selectedResult
+                                ),
                               ),
                             ),
                           ),
@@ -189,8 +191,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                               context.watch<DictSearch>().kanjiVGs,
                                               context.watch<DictSearch>().kanjiDic2s
                                             ),
-                                          if(tabsSideBySide < 4) 
-                                            const DictionaryExampleTab(),
+                                          if(tabsSideBySide < 4)
+                                            DictionaryExampleTab(
+                                              context.watch<DictSearch>().selectedResult
+                                            ),
                                         ],
                                       ),
                                     ),
