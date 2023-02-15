@@ -17,6 +17,7 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:archive/archive_io.dart';
 import 'package:feedback/feedback.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
@@ -139,14 +140,14 @@ Future<void> init() async {
 Future<void> copyDictionaryFilesFromAssets() async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
- print("documents directory: ${documentsDirectory.toString()}");
-  final databaseDirectory = Directory(documentsDirectory.path + "/DaKanji" + "/isar/");
+  print("documents directory: ${documentsDirectory.toString()}");
+  final databaseDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji", "isar"]));
 
   // if the file already exists delete it
-  final dbFile = File(databaseDirectory.path + '/dictionary.isar');
+  final dbFile = File(p.joinAll([databaseDirectory.path, 'dictionary.isar']));
   if (dbFile.existsSync()) {
     dbFile.deleteSync();
-   print("Deleted dictionary ISAR");
+    print("Deleted dictionary ISAR");
   }
 
   // Get pre-populated db file and copy it to the documents directory
@@ -199,7 +200,7 @@ Future<void> initGetIt() async {
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.openSync(
-        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, TatoebaSchema],
         directory: isarPath,
         name: "dictionary"
       ),
