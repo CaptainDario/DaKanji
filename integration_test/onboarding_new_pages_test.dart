@@ -1,5 +1,4 @@
 import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

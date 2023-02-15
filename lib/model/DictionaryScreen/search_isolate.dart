@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:async/async.dart';
-import 'package:flutter/material.dart';
 
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
