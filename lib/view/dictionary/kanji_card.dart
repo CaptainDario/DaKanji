@@ -149,17 +149,16 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         ),
                         
                         const SizedBox(width: 8,),
+                        
                         Expanded(
                           child: LayoutGrid(
-                            columnSizes: [auto, 1.fr, auto, 1.fr],
+                            columnSizes: [auto, 1.fr],
                             columnGap: 0.1,
                             rowSizes: List.generate(7, (index) => auto),
                             children: [
-                              Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),       SelectableText(onReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                              Text("${LocaleKeys.DictionaryScreen_kanji_kun_reading.tr()}: ", style: headerStyle),      SelectableText(kunReadings.join(",  ")).withGridPlacement(columnSpan: 3),
-                              Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")).withGridPlacement(columnSpan: 3),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")),
                               
-                              SizedBox(height: 20,).withGridPlacement(columnSpan: 4),
+                              SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("$strokeCount"),
                               Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
@@ -180,8 +179,23 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         ),
                       ],
                     ),
-                    // meanings / translations
+
                     const SizedBox(height: 16,),
+
+                    LayoutGrid(
+                      columnSizes: [auto, 1.fr],
+                      rowSizes: List.generate(4, (index) => auto),
+                      children: [
+                        Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),
+                        SelectableText(onReadings.join(",  ")),
+                        Text("${LocaleKeys.DictionaryScreen_kanji_kun_reading.tr()}: ", style: headerStyle),
+                        SelectableText(kunReadings.join(",  ")),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16,),
+
+                    // meanings / translations
                     ...meanings.entries.map((e) => 
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
