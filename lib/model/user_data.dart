@@ -13,7 +13,7 @@ part 'user_data.g.dart';
 
 /// Class that stores preferences and information about the user
 /// 
-/// To update the toJson code run `flutter pub run build_runner build`
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outpu`
 @JsonSerializable()
 class UserData{
 
