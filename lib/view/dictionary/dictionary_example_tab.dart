@@ -1,3 +1,5 @@
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +47,13 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         .where()
           .mecabBaseFormsElementEqualTo(widget.entry!.kanjis.first)
         .findAllSync();
+      examples = examples.where((example) =>
+          example.translations.any((trans) => 
+            GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
+              isoToiso639_1[trans.language]!.name
+            )
+          )
+        ).toList();
     }
 
   }
