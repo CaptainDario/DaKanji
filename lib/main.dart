@@ -48,7 +48,7 @@ Future<void> main() async {
   runApp(DaKanjiSplash());
 
   // delete settings
-  //await clearPreferences();
+  // await clearPreferences();
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
@@ -194,7 +194,7 @@ Future<void> initGetIt() async {
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = documentsDir + "/DaKanji/" + "isar/";
-  if(true || uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
+  if(uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
     await copyDictionaryFilesFromAssets();
 
   GetIt.I.registerSingleton<Isars>(
