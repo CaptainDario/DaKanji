@@ -194,13 +194,13 @@ Future<void> initGetIt() async {
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = documentsDir + "/DaKanji/" + "isar/";
-  if(uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
+  if(true || uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
     await copyDictionaryFilesFromAssets();
 
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.openSync(
-        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, TatoebaSchema],
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, ExampleSentenceSchema],
         directory: isarPath,
         name: "dictionary"
       ),

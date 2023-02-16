@@ -28,7 +28,7 @@ class DictionaryExampleTab extends StatefulWidget {
 class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
   /// A list of all example sentences that contain `widget.entry.kanjis.first`
-  List<Tatoeba> examples = [];
+  List<ExampleSentence> examples = [];
 
 
   @override
@@ -37,16 +37,19 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     super.initState();
   }
 
+  /// Initializes the list of example sentences.
   void initExamples(){
 
     if(widget.entry != null){
-      examples = GetIt.I<Isars>().dictionary.tatoebas
+      examples = GetIt.I<Isars>().dictionary.exampleSentences
         .where()
           .mecabBaseFormsElementEqualTo(widget.entry!.kanjis.first)
         .findAllSync();
     }
 
   }
+
+  
 
   @override
   void didUpdateWidget(covariant DictionaryExampleTab oldWidget) {
@@ -62,12 +65,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return AnimatedList(
-          initialItemCount: 40,
-          itemBuilder: (context, no, animation) {
-            if(no >= examples.length){
-              return SizedBox();
-            }
+        return ListView.builder(
+          itemCount: examples.length,
+          itemBuilder: (context, no) {
             return ExampleSentenceCard(
               examples[no]
             );

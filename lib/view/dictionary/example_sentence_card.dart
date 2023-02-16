@@ -17,7 +17,7 @@ class ExampleSentenceCard extends StatefulWidget {
   ) : super(key: key);
 
   /// the example sentence
-  final Tatoeba sentences;
+  final ExampleSentence sentences;
 
   @override
   State<ExampleSentenceCard> createState() => _ExampleSentenceCardState();

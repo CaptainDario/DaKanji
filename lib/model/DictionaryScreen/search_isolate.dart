@@ -138,7 +138,7 @@ Future<void> _searchInIsar(SendPort p) async {
 
   // open isar
   Isar isar = Isar.openSync(
-    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, TatoebaSchema],
+    [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, ExampleSentenceSchema],
     directory: directory,
     name: name
   );
