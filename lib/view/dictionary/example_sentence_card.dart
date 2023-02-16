@@ -46,7 +46,8 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
       ).toList()
       // sort to match order set in settings
       ..sort((a, b) => 
-        selectedLangs.indexOf(a.language!) - selectedLangs.indexOf(b.language!)
+        selectedLangs.indexOf(isoToiso639_1[a.language!]!.name)
+        - selectedLangs.indexOf(isoToiso639_1[b.language!]!.name)
       );
   }
 
@@ -90,9 +91,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                       ),
                     ),
                     SizedBox(width: 10,),
-                    Text(
-                      translations.where((e2) => e2.language == e.language).first.sentence!
-                    )
+                    Text(e.sentence!)
                   ],
                 ),
                 
