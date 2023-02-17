@@ -32,9 +32,15 @@ PODS:
   - TensorFlowLiteC (2.11.0):
     - TensorFlowLiteC/Core (= 2.11.0)
   - TensorFlowLiteC/Core (2.11.0)
+  - TensorFlowLiteC/CoreML (2.11.0):
+    - TensorFlowLiteC/Core
+  - TensorFlowLiteC/Metal (2.11.0):
+    - TensorFlowLiteC/Core
   - tflite_flutter (0.1.0):
     - Flutter
-    - TensorFlowLiteC
+    - TensorFlowLiteC (~> 2.11.0)
+    - TensorFlowLiteC/CoreML (~> 2.11.0)
+    - TensorFlowLiteC/Metal (~> 2.11.0)
   - tflite_flutter_helper (0.0.1):
     - Flutter
   - uni_links (0.0.1):
@@ -114,11 +120,11 @@ SPEC CHECKSUMS:
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   TensorFlowLiteC: 8a8cb6fa20ad74dff29b5e490d02c36a14d48148
-  tflite_flutter: e7026092d54cf61dfacdb7aed5a4a25786099ffd
+  tflite_flutter: 57bfede7ef02c24fb20d8cbc0c99259469fc5d7c
   tflite_flutter_helper: 543b46b6bd064b21c92ea6e54bc0b29f1ce74cb5
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher_ios: fb12c43172927bb5cf75aeebd073f883801f1993
 
-PODFILE CHECKSUM: e968127c0798a701d6935a4ecd3449b419c63667
+PODFILE CHECKSUM: 0275592d1faa11c763e10f88967ebca118c0e190
 
 COCOAPODS: 1.11.3
