@@ -87,6 +87,8 @@ class DrawingInterpreter with ChangeNotifier{
     wasInitialized = true;
   }
 
+  /// Tests all available backends on this platform and write the best one to disk
+  /// and also returns it.
   Future<InferenceBackend> getBestBeckend() async {
 
     InferenceBackend iB;
