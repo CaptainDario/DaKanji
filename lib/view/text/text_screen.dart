@@ -193,6 +193,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   RegExp(r"\u000a"),
                                   replacementString: "\n"
                                 ),
+                                // do not allow █
+                                FilteringTextInputFormatter.deny(
+                                  RegExp(r"\U+2588"),
+                                  replacementString: "\n"
+                                ),
                               ],
                               controller: widget.inputController,
                               maxLines: null,
@@ -361,7 +366,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         word = mecabPOS[i];
         break;
       }
-      cnt += (mecabSurfaces[i]+ (addSpaces ? " " : "")).length;
+      cnt += (mecabSurfaces[i] + (addSpaces ? " " : "")).length;
     }
     setState(() {
       

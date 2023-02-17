@@ -584,16 +584,26 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                             children: () {
                               List<TextSpan> ret = [];
                               int cnt = 0;
-                              for (var word in words) {
+                              for (int i = 0; i < words.length; i++) {
                                 ret.add(
                                   TextSpan(
-                                    text: word,
+                                    text: words[i].replaceAll("█", " "),
                                     style: TextStyle(
-                                      color: widget.showColors 
-                                      && widget.wordColors != null
-                                      && widget.wordColors![cnt] != null
-                                        ? widget.wordColors![cnt]
-                                        : widget.textColor
+                                      // show the color if the user enabled it
+                                      // and the color is not null
+                                      // if spaces is enabled caculate index with cnt/2.floor()
+                                      color: () {
+
+                                        int index = widget.addSpaces
+                                          ? (cnt / 2).floor()
+                                          : cnt;
+
+                                        return widget.showColors
+                                            && widget.wordColors != null
+                                            && widget.wordColors![index] != null
+                                          ? widget.wordColors![index]
+                                          : widget.textColor;
+                                      } ()
                                     )
                                   )
                                 );
