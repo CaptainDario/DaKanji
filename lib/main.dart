@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,48 +45,47 @@ import 'package:da_kanji_mobile/provider/isars.dart';
 
 
 Future<void> main() async {
-  
-  runApp(DaKanjiSplash());
-
-  // delete settings
-  // await clearPreferences();
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
-  // wait for localization to be ready
-  await EasyLocalization.ensureInitialized();
-  // init window Manager
-  if(g_desktopPlatform)
-    await windowManager.ensureInitialized();
 
-  await init();
-
-  setupErrorCollection();
+  // delete settings
+  await clearPreferences();
 
   runZoned(() => 
     runApp(
-      EasyLocalization(
-        supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-        path: 'assets/translations',
-        fallbackLocale: const Locale('en'),
-        useFallbackTranslations: true,
-        useOnlyLangCode: true,
-        assetLoader: const CodegenLoader(),
-        saveLocale: true,
-        child: Phoenix(
-          child: BetterFeedback(
-            theme: FeedbackThemeData(
-              sheetIsDraggable: true
-            ),
-            localizationsDelegates: [
-              CustomFeedbackLocalizationsDelegate()..supportedLocales = {
-                const Locale('en'): CustomFeedbackLocalizations()
-              },
-            ],
-            mode: FeedbackMode.navigate,
-            child: const DaKanjiApp(),
-          ),
-        ),
+      FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) {
+
+          if(!snapshot.hasData)
+            return DaKanjiSplash();
+
+          else
+            return EasyLocalization(
+              supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+              path: 'assets/translations',
+              fallbackLocale: const Locale('en'),
+              useFallbackTranslations: true,
+              useOnlyLangCode: true,
+              assetLoader: const CodegenLoader(),
+              saveLocale: true,
+              child: Phoenix(
+                child: BetterFeedback(
+                  theme: FeedbackThemeData(
+                    sheetIsDraggable: true
+                  ),
+                  localizationsDelegates: [
+                    CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+                      const Locale('en'): CustomFeedbackLocalizations()
+                    },
+                  ],
+                  mode: FeedbackMode.navigate,
+                  child: const DaKanjiApp(),
+                ),
+              ),
+            );
+        }
       ),
     ),
     zoneSpecification: ZoneSpecification(
@@ -98,26 +98,16 @@ Future<void> main() async {
 
 }
 
-void setupErrorCollection(){
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    g_appLogs += "${details.exception} \n\n ${details.stack}";
-   print("${details.exception} \n\n ${details.stack}");
-  };
-  PlatformDispatcher.instance.onError = (error, stack) {
-    g_appLogs += "${error} \n\n ${stack}";
-   print("${error} \n\n ${stack}");
-    return true;
-  };
-}
+/// Initializes the app, by initializing all the providers, services, etc.
+Future<bool> init() async {
 
+  // wait for localization to be ready
+  await EasyLocalization.ensureInitialized();
+  // init window Manager
+  if(g_desktopPlatform)
+    await windowManager.ensureInitialized();
 
-/// Initializes the app.
-/// 
-/// This function initializes:
-/// * used version, CHANGELOG and about
-/// * loads the settings
-Future<void> init() async {
+  setupErrorCollection();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
@@ -133,7 +123,25 @@ Future<void> init() async {
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
   }
+
+  testTFLiteBackendsForModels();
+
+  return true;
 }
+
+void setupErrorCollection(){
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    g_appLogs += "${details.exception} \n\n ${details.stack}";
+   print("${details.exception} \n\n ${details.stack}");
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    g_appLogs += "${error} \n\n ${stack}";
+   print("${error} \n\n ${stack}");
+    return true;
+  };
+}
+
 
 /// copies the zipped database from assets to the user's documents directory
 /// and unzips it, if it does not exist already
@@ -194,7 +202,7 @@ Future<void> initGetIt() async {
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = documentsDir + "/DaKanji/" + "isar/";
-  if(uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
+  if(true || uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
     await copyDictionaryFilesFromAssets();
 
   GetIt.I.registerSingleton<Isars>(
@@ -254,3 +262,17 @@ void desktopWindowSetup() {
   windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
   windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
 }
+
+/// Tests all TF Lite models for the backends that are available on the device
+/// This is done by loading the model and running a dummy input through it.
+/// The results are stored in UserData, so that this function does not need to
+/// be called only once.
+Future<void> testTFLiteBackendsForModels() async {
+
+  if(GetIt.I<UserData>().drawingBackend != null){
+    DrawingInterpreter d = DrawingInterpreter();
+    await d.init();
+  }
+
+}
+

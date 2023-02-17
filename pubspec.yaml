@@ -43,6 +43,7 @@ dependencies:
   cross_file: 0.3.3+2
   json_annotation: 4.7.0
   path: 1.8.2
+  flutter_spinkit: 5.1.0
   
   async: 2.10.0
   simple_html_css: 4.0.0
