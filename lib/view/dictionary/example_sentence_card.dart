@@ -73,7 +73,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              SelectableText(
                 widget.sentences.sentence
               ),
               SizedBox(height: 10,),
@@ -91,7 +91,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                       ),
                     ),
                     SizedBox(width: 10,),
-                    Text(e.sentence!)
+                    SelectableText(e.sentence!)
                   ],
                 ),
                 
