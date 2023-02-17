@@ -360,19 +360,22 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
-    int cnt = 0; String word = "";
+    int cnt = 0; String pos = "";
     for (int i = 0; i < mecabSurfaces.length; i++) {
       if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
-        word = mecabPOS[i];
+        pos = posToTranslation(mecabPOS[i]) ?? "";
         break;
       }
       cnt += (mecabSurfaces[i] + (addSpaces ? " " : "")).length;
     }
+
+    if(pos == "")
+      return;
+
     setState(() {
-      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(posToTranslation(word) ?? ""),
+          content: Text(pos),
           duration: Duration(milliseconds: 5000),
         )
       );
