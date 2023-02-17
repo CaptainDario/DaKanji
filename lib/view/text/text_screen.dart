@@ -357,11 +357,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     int cnt = 0; String word = "";
     for (int i = 0; i < mecabSurfaces.length; i++) {
-      cnt += (mecabSurfaces[i]+ (addSpaces ? " " : "")).length;
       if(selection.baseOffset <= cnt && cnt <= selection.extentOffset){
-        word = mecabPOS[i+1];
+        word = mecabPOS[i];
         break;
       }
+      cnt += (mecabSurfaces[i]+ (addSpaces ? " " : "")).length;
     }
     setState(() {
       
