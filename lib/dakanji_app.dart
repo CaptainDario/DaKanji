@@ -67,8 +67,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                 GetIt.I<Tutorials>().reload();
 
                 return Onboarding(
-                  steps: GetIt.I<Tutorials>().getSteps(),
+                  globalOnboarding: true,
                   autoSizeTexts: true,
+                  steps: GetIt.I<Tutorials>().getSteps(),
                   onChanged: (int index){
                     print("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
