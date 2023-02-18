@@ -152,7 +152,7 @@ class OnBoardingPage extends StatelessWidget {
                       child: Text(
                         headerText,
                         textAlign: TextAlign.center,
-                        textScaleFactor: 1.25,
+                        textScaleFactor: 1.5,
                         style: const TextStyle(
                           color: Colors.white
                         ),
@@ -162,7 +162,7 @@ class OnBoardingPage extends StatelessWidget {
                     Text(
                       text,
                       textAlign: TextAlign.center,
-                      textScaleFactor: 0.75,
+                      textScaleFactor: 1,
                       style: const TextStyle(
                         color: Colors.white
                       ),
