@@ -2,7 +2,6 @@ library my_prj.globals;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 

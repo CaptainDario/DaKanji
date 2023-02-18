@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:database_builder/database_builder.dart';

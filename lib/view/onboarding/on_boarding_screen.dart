@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
