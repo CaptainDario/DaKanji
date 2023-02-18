@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:database_builder/database_builder.dart';
@@ -43,17 +45,38 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   void initExamples(){
 
     if(widget.entry != null){
+      List<String> selectedLangs = 
+        GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
+
+      // find all examples in ISAR that cotain this words kanji
       examples = GetIt.I<Isars>().dictionary.exampleSentences
         .where()
           .mecabBaseFormsElementEqualTo(widget.entry!.kanjis.first)
         .findAllSync();
+      // exclude examples that do not contain any translation in any of the
+      // selected languages
       examples = examples.where((example) =>
           example.translations.any((trans) => 
             GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
               isoToiso639_1[trans.language]!.name
             )
           )
-        ).toList();
+        )
+      .toList()
+      // sort translations by avaiablity of preferred languages
+      ..sort((a, b) {
+        int aScore = 0, bScore = 0, cnt = 0;
+        for (String lang in selectedLangs) {
+          if(a.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang))
+            aScore += selectedLangs.length - cnt;
+          if(b.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang))
+            bScore += selectedLangs.length - cnt;
+        
+          cnt++;
+        }
+        return bScore - aScore;
+      });
+        
     }
 
   }
