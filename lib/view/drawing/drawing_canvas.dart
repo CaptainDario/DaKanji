@@ -194,7 +194,7 @@ class _DrawingCanvasState extends State<DrawingCanvas>
             CanvasSnappable(
               key: GetIt.I<Settings>().advanced.useThanosSnap ?
                 GetIt.I<DrawScreenState>().snappableKey : GlobalKey(),
-              snapColor: GetIt.I<Settings>().misc.selectedTheme == LocaleKeys.General_light
+              snapColor: Theme.of(context).brightness == Brightness.light
                 ? Colors.black
                 : Colors.white,
               offset: const Offset(20, -20),
