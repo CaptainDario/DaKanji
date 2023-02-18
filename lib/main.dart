@@ -50,7 +50,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // delete settings
-  await clearPreferences();
+  //await clearPreferences();
 
   runZoned(() => 
     runApp(
@@ -124,7 +124,7 @@ Future<bool> init() async {
     desktopWindowSetup();
   }
 
-  testTFLiteBackendsForModels();
+  await testTFLiteBackendsForModels();
 
   return true;
 }
@@ -269,10 +269,10 @@ void desktopWindowSetup() {
 /// be called only once.
 Future<void> testTFLiteBackendsForModels() async {
 
-  if(GetIt.I<UserData>().drawingBackend != null){
+  if(GetIt.I<UserData>().drawingBackend == null){
     DrawingInterpreter d = DrawingInterpreter();
     await d.init();
-    d.getBestBeckend();
+    await d.getBestBeckend();
   }
 
 }
