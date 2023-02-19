@@ -629,7 +629,7 @@ packages:
     source: hosted
     version: "1.0.4"
   isar:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: isar
       sha256: "5be35dbc489880fccc535da3d1c4b3f5fdeee6ebfcacd4b149e39e803c4029cd"
@@ -637,7 +637,7 @@ packages:
     source: hosted
     version: "3.0.5"
   isar_flutter_libs:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: isar_flutter_libs
       sha256: "9794524734856a8a3629652f9f359b66e3fea3cebeec4dbdeb3e3a8fb253073e"

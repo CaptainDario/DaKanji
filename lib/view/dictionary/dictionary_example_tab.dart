@@ -47,7 +47,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
       // find all examples in ISAR that cotain this words kanji
-      examples = GetIt.I<Isars>().dictionary.exampleSentences
+      examples = GetIt.I<Isars>().examples.exampleSentences
         .where()
           .mecabBaseFormsElementEqualTo(widget.entry!.kanjis.first)
         .findAllSync();

@@ -52,8 +52,8 @@ dependencies:
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
 
-  #isar: any # included in dakanji dictionary
-  #isar_flutter_libs: any # included in dakanji dictionary
+  isar: 3.0.5 # included in dakanji dictionary
+  isar_flutter_libs: any # included in dakanji dictionary
   #kana_kit: any # included in dakanji dictionary
 
   database_builder:

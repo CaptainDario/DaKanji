@@ -111,7 +111,7 @@ Future<bool> init() async {
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
- print(yaml['version']);
+  print(yaml['version']);
   g_Version = yaml['version'];
 
   await initGetIt();
@@ -145,21 +145,21 @@ void setupErrorCollection(){
 
 /// copies the zipped database from assets to the user's documents directory
 /// and unzips it, if it does not exist already
-Future<void> copyDictionaryFilesFromAssets() async {
+Future<void> copyDictionaryFilesFromAssets(String isarName) async {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
   print("documents directory: ${documentsDirectory.toString()}");
   final databaseDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji", "isar"]));
 
   // if the file already exists delete it
-  final dbFile = File(p.joinAll([databaseDirectory.path, 'dictionary.isar']));
+  final dbFile = File(p.joinAll([databaseDirectory.path, isarName+".isar"]));
   if (dbFile.existsSync()) {
     dbFile.deleteSync();
-    print("Deleted dictionary ISAR");
+    print("Deleted $isarName ISAR");
   }
 
   // Get pre-populated db file and copy it to the documents directory
-  ByteData data = await rootBundle.load("assets/dict/dictionary.zip");
+  ByteData data = await rootBundle.load("assets/dict/$isarName.zip");
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
   extractArchiveToDisk(archive, databaseDirectory.path);
 }
@@ -201,16 +201,26 @@ Future<void> initGetIt() async {
   // ISAR / database services
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
-  String isarPath = documentsDir + "/DaKanji/" + "isar/";
-  if(uD.newVersionUsed || !File(isarPath + "dictionary.isar").existsSync())
-    await copyDictionaryFilesFromAssets();
+  String isarPath = p.joinAll([documentsDir, "DaKanji", "isar"]);
+  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "dictionary.isar"])).existsSync())
+    await copyDictionaryFilesFromAssets('dictionary');
+  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "examples.isar"])).existsSync())
+    await copyDictionaryFilesFromAssets('examples');
+
 
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.openSync(
-        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema, ExampleSentenceSchema],
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
         directory: isarPath,
-        name: "dictionary"
+        name: "dictionary",
+        maxSizeMiB: 512
+      ),
+      examples: Isar.openSync(
+        [ExampleSentenceSchema],
+        directory: isarPath,
+        name: "examples",
+        maxSizeMiB: 512
       ),
       searchHistory: Isar.openSync(
         [SearchHistorySchema],
