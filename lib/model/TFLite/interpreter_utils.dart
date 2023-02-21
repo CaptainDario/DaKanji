@@ -1,3 +1,4 @@
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
@@ -406,7 +407,11 @@ Future<Interpreter> _nnapiInterpreter(String assetPath) async {
 
 /// Initializes the interpreter with GPU acceleration.
 Future<Interpreter> _gpuInterpreter(String assetPath) async {
-  final gpuDelegateV2 = GpuDelegateV2();
+  final gpuDelegateV2 = GpuDelegateV2(
+    options: GpuDelegateOptionsV2(
+      isPrecisionLossAllowed: true
+    )
+  );
   final options = InterpreterOptions()..addDelegate(gpuDelegateV2);
   Interpreter i = await Interpreter.fromAsset(
     assetPath,
