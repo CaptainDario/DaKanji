@@ -52,47 +52,39 @@ Future<void> main() async {
   // delete settings
   //await clearPreferences();
 
-  runZoned(() => 
-    runApp(
-      FutureBuilder(
-        future: init(),
-        builder: (context, snapshot) {
+  runApp(
+    FutureBuilder(
+      future: init(),
+      builder: (context, snapshot) {
 
-          if(!snapshot.hasData)
-            return DaKanjiSplash();
+        if(!snapshot.hasData)
+          return DaKanjiSplash();
 
-          else
-            return EasyLocalization(
-              supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-              path: 'assets/translations',
-              fallbackLocale: const Locale('en'),
-              useFallbackTranslations: true,
-              useOnlyLangCode: true,
-              assetLoader: const CodegenLoader(),
-              saveLocale: true,
-              child: Phoenix(
-                child: BetterFeedback(
-                  theme: FeedbackThemeData(
-                    sheetIsDraggable: true
-                  ),
-                  localizationsDelegates: [
-                    CustomFeedbackLocalizationsDelegate()..supportedLocales = {
-                      const Locale('en'): CustomFeedbackLocalizations()
-                    },
-                  ],
-                  mode: FeedbackMode.navigate,
-                  child: const DaKanjiApp(),
+        else
+          return EasyLocalization(
+            supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+            path: 'assets/translations',
+            fallbackLocale: const Locale('en'),
+            useFallbackTranslations: true,
+            useOnlyLangCode: true,
+            assetLoader: const CodegenLoader(),
+            saveLocale: true,
+            child: Phoenix(
+              child: BetterFeedback(
+                theme: FeedbackThemeData(
+                  sheetIsDraggable: true
                 ),
+                localizationsDelegates: [
+                  CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+                    const Locale('en'): CustomFeedbackLocalizations()
+                  },
+                ],
+                mode: FeedbackMode.navigate,
+                child: const DaKanjiApp(),
               ),
-            );
-        }
-      ),
-    ),
-    zoneSpecification: ZoneSpecification(
-      print: (self, parent, zone, line) {
-        g_appLogs += "${line}\n";
-        parent.print(zone, "${line}");
-      },
+            ),
+          );
+      }
     )
   );
 
@@ -106,8 +98,6 @@ Future<bool> init() async {
   // init window Manager
   if(g_desktopPlatform)
     await windowManager.ensureInitialized();
-
-  setupErrorCollection();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
@@ -129,18 +119,6 @@ Future<bool> init() async {
   return true;
 }
 
-void setupErrorCollection(){
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    g_appLogs += "${details.exception} \n\n ${details.stack}";
-   print("${details.exception} \n\n ${details.stack}");
-  };
-  PlatformDispatcher.instance.onError = (error, stack) {
-    g_appLogs += "${error} \n\n ${stack}";
-   print("${error} \n\n ${stack}");
-    return true;
-  };
-}
 
 
 /// copies the zipped database from assets to the user's documents directory
@@ -214,13 +192,11 @@ Future<void> initGetIt() async {
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
         directory: isarPath,
         name: "dictionary",
-        maxSizeMiB: 512
       ),
       examples: Isar.openSync(
         [ExampleSentenceSchema],
         directory: isarPath,
         name: "examples",
-        maxSizeMiB: 512
       ),
       searchHistory: Isar.openSync(
         [SearchHistorySchema],
