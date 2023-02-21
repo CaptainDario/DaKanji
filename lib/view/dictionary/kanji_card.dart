@@ -161,9 +161,18 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("$strokeCount"),
-                              Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle),   Text("${widget.kanjidic2entry.grade}"),
 
-                              Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),    Text("N${widget.kanjidic2entry.jlpt}"),
+                              if(widget.kanjidic2entry.grade != -1)
+                                ...[
+                                  Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle), 
+                                  Text("${widget.kanjidic2entry.grade}"),
+                                ],
+
+                              if(widget.kanjidic2entry.jlpt != -1)
+                                ...[
+                                  Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),
+                                  Text("N${widget.kanjidic2entry.jlpt}"),
+                                ],
                               // TODO : add heisig
                               //Text("${LocaleKeys.DictionaryScreen_kanji_heisig.tr()}: ", style: headerStyle),  Text("NONE"),
                               // TODO : add KLC
@@ -171,9 +180,10 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               // TODO : add SKIP
                               //Text("${LocaleKeys.DictionaryScreen_kanji_skip.tr()}: ", style: headerStyle),    Text("NONE"),
                               if(widget.kanjidic2entry.frequency != -1)
-                                Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
-                              if(widget.kanjidic2entry.frequency != -1)
-                                Text("${widget.kanjidic2entry.frequency}"),
+                                ...[
+                                  Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
+                                  Text("${widget.kanjidic2entry.frequency}"),
+                                ],
                             ],
                           ),
                         ),
@@ -182,6 +192,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
                     const SizedBox(height: 16,),
 
+                    // On / Kun readings
                     LayoutGrid(
                       columnSizes: [auto, 1.fr],
                       rowSizes: List.generate(4, (index) => auto),
