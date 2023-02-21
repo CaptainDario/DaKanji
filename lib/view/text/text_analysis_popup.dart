@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -108,6 +110,10 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                           if(g_webViewSupported)
                             Card(
                               child: InAppWebView(
+                                gestureRecognizers: 
+                                  Set()..add(
+                                    Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                                  ),
                                 initialUrlRequest: (
                                   URLRequest(
                                     url: WebUri("$g_deepLUrl${widget.text}")  

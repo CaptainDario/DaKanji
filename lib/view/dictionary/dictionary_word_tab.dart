@@ -232,6 +232,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 AspectRatio(
                                   aspectRatio: 1,
                                   child: InAppWebView(
+                                    gestureRecognizers: 
+                                      Set()..add(
+                                        Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                                      ),
                                     initialUrlRequest: URLRequest(
                                       url: WebUri("$g_GoogleImgSearchUrl${readingOrKanji}")
                                     )
