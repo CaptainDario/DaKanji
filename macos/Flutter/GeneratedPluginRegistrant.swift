@@ -10,8 +10,10 @@ import flutter_inappwebview
 import in_app_review
 import isar_flutter_libs
 import mecab_dart
+import package_info_plus
 import path_provider_foundation
 import screen_retriever
+import sentry_flutter
 import share_plus
 import shared_preferences_macos
 import tflite_flutter_helper
@@ -24,8 +26,10 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   InAppReviewPlugin.register(with: registry.registrar(forPlugin: "InAppReviewPlugin"))
   IsarFlutterLibsPlugin.register(with: registry.registrar(forPlugin: "IsarFlutterLibsPlugin"))
   MecabDartPlugin.register(with: registry.registrar(forPlugin: "MecabDartPlugin"))
+  FLTPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FLTPackageInfoPlusPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
   ScreenRetrieverPlugin.register(with: registry.registrar(forPlugin: "ScreenRetrieverPlugin"))
+  SentryFlutterPlugin.register(with: registry.registrar(forPlugin: "SentryFlutterPlugin"))
   SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   TfliteFlutterHelperPlugin.register(with: registry.registrar(forPlugin: "TfliteFlutterHelperPlugin"))
