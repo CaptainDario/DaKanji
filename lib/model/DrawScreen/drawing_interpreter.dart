@@ -26,9 +26,9 @@ class DrawingInterpreter with ChangeNotifier{
   bool wasInitialized = false;
 
   /// The path to the tf lite asset
-  final String _tfLiteAssetPath = "tflite_models/CNN_single_char.tflite";
+  final String _tfLiteAssetPath = "assets/tflite_models/CNN_single_char.tflite";
   /// The path to the mock tf lite asset (small size can be included in repo)
-  final String _mockTFLiteAssetPath = "tflite_models/mock_CNN_single_char.tflite";
+  final String _mockTFLiteAssetPath = "assets/tflite_models/mock_CNN_single_char.tflite";
   /// The path to the labels asset
   final String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
   /// The asset path to the used asset for creating the interpreter
@@ -61,13 +61,13 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-     print("${this.name} already initialized. Skipping init.");
+      print("${this.name} already initialized. Skipping init.");
       return;
     }
     
     // load data
     try {
-      await rootBundle.loadBuffer("assets/${_tfLiteAssetPath}");
+      await rootBundle.loadBuffer(_tfLiteAssetPath);
       _usedTFLiteAssetPath = _tfLiteAssetPath;
     } catch(_) {
       _usedTFLiteAssetPath = _mockTFLiteAssetPath;
