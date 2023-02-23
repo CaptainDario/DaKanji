@@ -8,6 +8,7 @@ import zipfile
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/latest"
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
+move_to_dict  = ["dict", "examples"]
 
 
 
@@ -59,7 +60,7 @@ if __name__ == "__main__":
                 zip_ref.extractall("assets/")
 
         # move the dictionary database to assets
-        if(f.startswith("dict")):
+        if(f.startswith(tuple(move_to_dict))):
             shutil.move(f"{tmp_dir}/{f}", "assets/dict/")
 
         
