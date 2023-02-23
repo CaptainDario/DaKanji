@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 import 'package:isar/isar.dart';
@@ -20,6 +20,7 @@ import 'package:feedback/feedback.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:path/path.dart' as p;
 
+import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/dakanji_splash.dart';
@@ -52,41 +53,47 @@ Future<void> main() async {
   // delete settings
   //await clearPreferences();
 
-  runApp(
-    FutureBuilder(
-      future: init(),
-      builder: (context, snapshot) {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = '';
+    },
+    appRunner: () => runApp(
+      FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) {
 
-        if(!snapshot.hasData)
-          return DaKanjiSplash();
+          if(!snapshot.hasData)
+            return DaKanjiSplash();
 
-        else
-          return EasyLocalization(
-            supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-            path: 'assets/translations',
-            fallbackLocale: const Locale('en'),
-            useFallbackTranslations: true,
-            useOnlyLangCode: true,
-            assetLoader: const CodegenLoader(),
-            saveLocale: true,
-            child: Phoenix(
-              child: BetterFeedback(
-                theme: FeedbackThemeData(
-                  sheetIsDraggable: true
+          else
+            return EasyLocalization(
+              supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+              path: 'assets/translations',
+              fallbackLocale: const Locale('en'),
+              useFallbackTranslations: true,
+              useOnlyLangCode: true,
+              assetLoader: const CodegenLoader(),
+              saveLocale: true,
+              child: Phoenix(
+                child: BetterFeedback(
+                  theme: FeedbackThemeData(
+                    sheetIsDraggable: true
+                  ),
+                  localizationsDelegates: [
+                    CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+                      const Locale('en'): CustomFeedbackLocalizations()
+                    },
+                  ],
+                  mode: FeedbackMode.navigate,
+                  child: const DaKanjiApp(),
                 ),
-                localizationsDelegates: [
-                  CustomFeedbackLocalizationsDelegate()..supportedLocales = {
-                    const Locale('en'): CustomFeedbackLocalizations()
-                  },
-                ],
-                mode: FeedbackMode.navigate,
-                child: const DaKanjiApp(),
               ),
-            ),
-          );
-      }
+            );
+        }
+      )
     )
   );
+  
 
 }
 
