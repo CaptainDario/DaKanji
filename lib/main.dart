@@ -1,41 +1,47 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
-
+import 'package:isar/isar.dart';
+import 'package:mecab_dart/mecab_dart.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:window_size/window_size.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:kana_kit/kana_kit.dart';
+import 'package:archive/archive_io.dart';
+import 'package:feedback/feedback.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:path/path.dart' as p;
 
-import 'package:da_kanji_mobile/show_cases/Tutorials.dart';
-import 'package:da_kanji_mobile/model/LightTheme.dart';
-import 'package:da_kanji_mobile/model/DarkTheme.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawingInterpreter.dart';
-import 'package:da_kanji_mobile/model/SettingsArguments.dart';
-import 'package:da_kanji_mobile/helper/DeepLinks.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenLayout.dart';
-import 'package:da_kanji_mobile/model/Changelog.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
-import 'package:da_kanji_mobile/provider/drawing/DrawingLookup.dart';
-import 'package:da_kanji_mobile/provider/drawing/Strokes.dart';
-import 'package:da_kanji_mobile/provider/drawing/KanjiBuffer.dart';
-import 'package:da_kanji_mobile/model/UserData.dart';
-import 'package:da_kanji_mobile/model/PlatformDependentVariables.dart';
-import 'package:da_kanji_mobile/provider/DrawerListener.dart';
-import 'package:da_kanji_mobile/view/home/HomeScreen.dart';
-import 'package:da_kanji_mobile/view/settings/SettingsScreen.dart';
-import 'package:da_kanji_mobile/view/ChangelogScreen.dart';
-import 'package:da_kanji_mobile/view/TestScreen.dart';
-import 'package:da_kanji_mobile/view/drawing/DrawScreen.dart';
-import 'package:da_kanji_mobile/view/text/TextScreen.dart';
-import 'package:da_kanji_mobile/view/AboutScreen.dart';
-import 'package:da_kanji_mobile/view/onboarding/OnBoardingScreen.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/model/search_history.dart';
+import 'package:da_kanji_mobile/dakanji_splash.dart';
+import 'package:da_kanji_mobile/dakanji_app.dart';
+import 'package:da_kanji_mobile/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/helper/deep_links.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
+import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/model/changelog.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/provider/drawing/drawing_lookup.dart';
+import 'package:da_kanji_mobile/provider/drawing/strokes.dart';
+import 'package:da_kanji_mobile/provider/drawing/kanji_buffer.dart';
+import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/model/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/provider/drawer_listener.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+import 'package:da_kanji_mobile/feedback_localization.dart';
+import 'package:da_kanji_mobile/provider/isars.dart';
 
 
 
@@ -43,43 +49,67 @@ Future<void> main() async {
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
-  // wait for localization to be ready
-  await EasyLocalization.ensureInitialized();
 
-  await init();
-  
-  runApp(
-    EasyLocalization(
-      supportedLocales: SUPPORTED_LANGUAGES.map((e) => Locale(e)).toList(),
-      path: 'assets/translations',
-      fallbackLocale: Locale('en'),
-      useFallbackTranslations: true,
-      useOnlyLangCode: true,
-      assetLoader: CodegenLoader(),
-      saveLocale: true,
-      child: Phoenix(
-        child: DaKanjiApp(),
-      ),
-    ),
+  // delete settings
+  //await clearPreferences();
+
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = '';
+    },
+    appRunner: () => runApp(
+      FutureBuilder(
+        future: init(),
+        builder: (context, snapshot) {
+
+          if(!snapshot.hasData)
+            return DaKanjiSplash();
+
+          else
+            return EasyLocalization(
+              supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+              path: 'assets/translations',
+              fallbackLocale: const Locale('en'),
+              useFallbackTranslations: true,
+              useOnlyLangCode: true,
+              assetLoader: const CodegenLoader(),
+              saveLocale: true,
+              child: Phoenix(
+                child: BetterFeedback(
+                  theme: FeedbackThemeData(
+                    sheetIsDraggable: true
+                  ),
+                  localizationsDelegates: [
+                    CustomFeedbackLocalizationsDelegate()..supportedLocales = {
+                      const Locale('en'): CustomFeedbackLocalizations()
+                    },
+                  ],
+                  mode: FeedbackMode.navigate,
+                  child: const DaKanjiApp(),
+                ),
+              ),
+            );
+        }
+      )
+    )
   );
+  
+
 }
 
+/// Initializes the app, by initializing all the providers, services, etc.
+Future<bool> init() async {
 
-/// Initializes the app.
-/// 
-/// This function initializes:
-/// * used version, CHANGELOG and about
-/// * loads the settings
-/// * initializes tensorflow lite and reads the labels from file 
-Future<void> init() async {
-  
-  // NOTE: uncomment to clear the SharedPreferences
-  //await clearPreferences();
+  // wait for localization to be ready
+  await EasyLocalization.ensureInitialized();
+  // init window Manager
+  if(g_desktopPlatform)
+    await windowManager.ensureInitialized();
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  print(yaml['version']);
-  VERSION = yaml['version'];
+  print("Starting DaKanji ${yaml['version']}");
+  g_Version = yaml['version'];
 
   await initGetIt();
 
@@ -90,6 +120,33 @@ Future<void> init() async {
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
   }
+
+  await testTFLiteBackendsForModels();
+
+  return true;
+}
+
+
+
+/// copies the zipped database from assets to the user's documents directory
+/// and unzips it, if it does not exist already
+Future<void> copyDictionaryFilesFromAssets(String isarName) async {
+  // Search and create db file destination folder if not exist
+  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+  print("documents directory: ${documentsDirectory.toString()}");
+  final databaseDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji", "isar"]));
+
+  // if the file already exists delete it
+  final dbFile = File(p.joinAll([databaseDirectory.path, isarName+".isar"]));
+  if (dbFile.existsSync()) {
+    dbFile.deleteSync();
+    print("Deleted $isarName ISAR");
+  }
+
+  // Get pre-populated db file and copy it to the documents directory
+  ByteData data = await rootBundle.load("assets/dict/$isarName.zip");
+  final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
+  extractArchiveToDisk(archive, databaseDirectory.path);
 }
 
 /// Convenience function to clear the SharedPreferences
@@ -97,145 +154,119 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
-  print("CLEARED PREFERENCES AT APP START.");
+ print("CLEARED PREFERENCES AT APP START.");
 }
 
-/// Initialize GetIt by initializing and registering all the instances for it
+/// Initialize GetIt by initializing and registering all the instances that
+/// are accessed through getIt
 Future<void> initGetIt() async {
 
   // services to load from disk
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
   GetIt.I.registerSingleton<Changelog>(Changelog());
   await GetIt.I<Changelog>().init();
-  GetIt.I.registerSingleton<UserData>(UserData());
+  UserData uD = await (UserData().load());
+  GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();
-  
-  // inference services
-  GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter());
 
   // draw screen services 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
-    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.Portrait)
+    Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.portrait)
   );
 
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
-  
-  // screen independent
+
+  // package for converting between kana
+  GetIt.I.registerSingleton<KanaKit>(const KanaKit());
+
+  // ISAR / database services
+  String documentsDir =
+    (await path_provider.getApplicationDocumentsDirectory()).path;
+  String isarPath = p.joinAll([documentsDir, "DaKanji", "isar"]);
+  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "dictionary.isar"])).existsSync())
+    await copyDictionaryFilesFromAssets('dictionary');
+  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "examples.isar"])).existsSync())
+    await copyDictionaryFilesFromAssets('examples');
+
+
+  GetIt.I.registerSingleton<Isars>(
+    Isars(
+      dictionary: Isar.openSync(
+        [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
+        directory: isarPath,
+        name: "dictionary",
+      ),
+      examples: Isar.openSync(
+        [ExampleSentenceSchema],
+        directory: isarPath,
+        name: "examples",
+      ),
+      searchHistory: Isar.openSync(
+        [SearchHistorySchema],
+        directory: isarPath,
+        name: "searchHistory", 
+      )
+    )
+  );
+
+  GetIt.I.registerSingleton<DictionarySearch>(
+    DictionarySearch(
+      2,
+      GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
+        isoToiso639_2B[e]!.name
+      ).toList(),
+      GetIt.I<Isars>().dictionary.directory!,
+      GetIt.I<Isars>().dictionary.name
+    )
+  );
+  GetIt.I<DictionarySearch>().init();
+
+  // Drawer
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
+
+  // Mecab
+  GetIt.I.registerSingleton<Mecab>(Mecab());
+  await GetIt.I<Mecab>().init(
+    "assets/ipadic",
+    true,
+    dicDir: documentsDir + "/DaKanji/ipadic/"
+  );
 }
 
 /// Setup the DaKanji window on desktop platforms
 void desktopWindowSetup() {
-  setWindowMinSize(Size(480, 720));
-  setWindowTitle(APP_TITLE);
-  setWindowFrame(
-    Rect.fromLTWH(
-      0,
-      0, 
-      GetIt.I<Settings>().settingsMisc.windowWidth.toDouble(), 
-      GetIt.I<Settings>().settingsMisc.windowHeight.toDouble()
-    )
-  );
-}
-
-/// The starting widget of the app
-class DaKanjiApp extends StatefulWidget {
-
-  @override
-  _DaKanjiAppState createState() => _DaKanjiAppState();
-}
-
-class _DaKanjiAppState extends State<DaKanjiApp> {
-
-  @override
-  dispose() {
-    linkSub?.cancel();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
   
-  @override
-  Widget build(BuildContext context) {
+  if(kReleaseMode) windowManager.center();
 
-    return MaterialApp(
-      //debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      
-      onGenerateRoute: (settings) {
-        PageRouteBuilder switchScreen (Widget screen) =>
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) {
-                // reload the tutorials
-                GetIt.I<Tutorials>().reload();
+  windowManager.setMinimumSize(const Size(480, 720));
+  windowManager.setTitle(g_AppTitle);
+  
+  windowManager.setSize(Size(
+    GetIt.I<Settings>().misc.windowWidth.toDouble(), 
+    GetIt.I<Settings>().misc.windowHeight.toDouble()
+  ));
 
-                return Onboarding(
-                  steps: GetIt.I<Tutorials>().getSteps(),
-                  autoSizeTexts: true,
-                  onChanged: (int index){
-                    print("Tutorial step: ${index}");
-                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.drawScreenTutorialIndexes.last){
-                      print("DrawScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseDrawing = false;
-                      GetIt.I<UserData>().save();
-                    }
-                  },
-                  child: screen,
-                );
-            },
-            settings: settings,
-            transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c)
-          );
+  if(kReleaseMode) windowManager.center();
 
-        // check type and extract arguments
-        SettingsArguments args;
-        if((settings.arguments is SettingsArguments))
-          args = settings.arguments as SettingsArguments;
-        else
-          args = SettingsArguments(false);
-
-        switch(settings.name){
-          case "/home":
-            return switchScreen(HomeScreen());
-          case "/onboarding":
-            return switchScreen(OnBoardingScreen());
-          case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
-          case "/text":
-            return switchScreen(TextScreen(args.navigatedByDrawer, false, false));
-          case "/settings":
-            return switchScreen(SettingsScreen(args.navigatedByDrawer));
-          case "/about":
-            return switchScreen(AboutScreen(args.navigatedByDrawer));
-          case "/changelog":
-            return switchScreen(ChangelogScreen());
-          case "/testScreen":
-            return switchScreen(TestScreen());
-        }
-        throw UnsupportedError("Unknown route: ${settings.name}");
-      },
-
-      title: APP_TITLE,
-
-      // themes
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: GetIt.I<Settings>().selectedThemeMode(),
-
-      //screens
-      home: HomeScreen(),
-      //home: TestScreen()
-
-    );
-  }
+  windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
+  windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
 }
+
+/// Tests all TF Lite models for the backends that are available on the device
+/// This is done by loading the model and running a dummy input through it.
+/// The results are stored in UserData, so that this function does not need to
+/// be called only once.
+Future<void> testTFLiteBackendsForModels() async {
+
+  if(GetIt.I<UserData>().drawingBackend == null){
+    DrawingInterpreter d = DrawingInterpreter();
+    await d.init();
+    await d.getBestBeckend();
+  }
+
+}
+

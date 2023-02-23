@@ -1,7 +1,8 @@
-<img src="./assets/images/icons/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
+<img src="./assets/images/dakanji/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
-    <a href='https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' height="50"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  height="50"/>
+    <a href='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'>
+      <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  height="50"/>
     </a>
    <tr/>
   <tr>
@@ -28,14 +29,17 @@
 
 ## What is this
 
-"You are learning Japanese? Then you need to give DaKanji a try!
+"You are learning Japanese? Then you need to give "DaKanji" a try!
 
-Did you ever try to read a Japanese text but did not know how to read some Kanji? DaKanji is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to then translate them, and all of that is completely offline.
+Did you ever try to read a Japanese text but did not know some Kanji? "DaKanji" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to translate them, and all of that completely offline.
+But DaKanji can also help you read texts. Use the inbuilt tools to add furigana to texts, lookup words, add spaces and more.
 
 Feature overview:
 
 * Recognize 6500+ Kanji and all Kana offline
-* Use web and app dictionaries to translate characters or words"
+* Use the inbuilt dictionary to lookup words offline
+* Add furigana, spaces and more to texts with the text analysis tools
+* Use it on all your devices"
 
 </br>
 
@@ -44,12 +48,6 @@ Feature overview:
 * "Your program is like magic! Thank you so much!" - saszai2
 * "Well thank you for this software! It seems to try and guess in a more "guess-y" way than jisho and even Google which is usually pretty good at guessing, and it just saved me today!" - princess_daphie
 * "Amazing. I can write kanji messier than a professor and it still picks it up. Very reliable." - Seth Kitchens
-
-## Usage
-
-All major parts of the app include a tutorial.
-But if you want to learn more or prefer a text guide,
-  take a look at the [manual](./manual/manual.md) or open the manual screen in the app.
 
 ## Contributing
 
@@ -61,11 +59,12 @@ Here is a list of a few things which would help this project:
 * For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
 * If you have ideas how to improve this app or you found a bug please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
 * Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be or take a look at [issues labeled as 'good first issue'](https://github.com/CaptainDario/DaKanji/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+* Or if you like this project, giving it a star or rating it on the store of your platform would also help
 
 ## Credits
 
 I want to thank all the people involved in this project, without you the project would not be where it's right now!
 
-But a special thanks goes to michalpatryk and Nurellina.
+But a special thanks goes to michalpatryk.
 
 Please take the time and read the full [credits.](CREDITS.md)

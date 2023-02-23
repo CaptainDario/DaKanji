@@ -3,11 +3,11 @@ description: A cross platform app for mobile and desktop to help learn and use t
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.1.0+31
+version: 3.0.0+37
 
 environment:
-  sdk: ">=2.16.0"
-  flutter: ">=3.0.9"
+  sdk: ">=2.18.2"
+  flutter: ">=3.3.10"
 
 dependencies:
   flutter:
@@ -18,75 +18,107 @@ dependencies:
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
-  image: 3.1.3
-  flutter_markdown: 0.6.9+1
+  image: 3.2.0
+  flutter_markdown: 0.6.13
   get_it: 7.2.0
   provider: 6.0.3
   universal_io: 2.0.4
-  awesome_dialog: 2.1.0
+  awesome_dialog: 3.0.2
   easy_localization: 3.0.1
   flutter_layout_grid: 1.0.3
-  tuple: 2.0.0
+  tuple: 2.0.1
   lottie: 1.2.1
-  liquid_swipe:
-    path: ./plugins/liquid_swipe_flutter
-  flutter_svg: 1.0.3
-  onboarding_overlay : 3.0.0
+  flutter_svg: 1.1.5
+  onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
+  feedback: 2.5.0
+  flutter_staggered_animations: 1.1.1
+  graphview: 1.1.1
+  xml: 6.1.0
+  reorderables: 0.5.0
+  archive: 3.3.2
+  device_info_plus: 5.0.5
+  share_plus: 6.3.0
+  cross_file: 0.3.3+2
+  json_annotation: 4.7.0
+  path: 1.8.2
+  flutter_spinkit: 5.1.0
+  sentry_flutter: 6.20.1
+  async: 2.10.0
+  simple_html_css: 4.0.0
+  animations: 2.0.7
+  # TODO : use non beta version for release
+  flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
+  in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
 
-  # do NOT support all target platforms
-  webview_flutter: 3.0.0          # android, iOS
-  in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
-  tflite_flutter:                 # android, iOS, Linux, MacOS, windows
-    path: ./plugins/tflite_flutter_plugin
+  isar: any # included in dakanji dictionary
+  isar_flutter_libs: any # included in dakanji dictionary
+  #kana_kit: any # included in dakanji dictionary
+
+  database_builder:
+    path: ../DaKanji-Dictionary/database_builder
   flutter_appavailability:        # android, iOS
-    path: ./plugins/flutter_appavailability
-  kagome_dart: 
-    path: ./plugins/kagome_dart
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: flutter_appavailability
+  mecab_dart:
+    git:
+      url: https://github.com/CaptainDario/mecab_dart
+  liquid_swipe:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: liquid_swipe_flutter
+
   uni_links: 0.5.1                # android, iOS, web
 
   # packages which should only target specific platforms
   android_intent_plus: 3.0.2      # android
-  window_size:                     # desktop platforms
-    git:
-      url: https://github.com/google/flutter-desktop-embedding.git
-      path: plugins/window_size
-      ref: 03d957e
+  window_manager: 0.2.7           # desktop
 
   # utility 
-  flutter_launcher_icons: 0.9.2  # android, iOS, Linux, MacOS, windows
-  flutter_native_splash: 2.1.3+1   # android, iOS, web
+  flutter_launcher_icons: 0.11.0  # android, iOS, Linux, MacOS, windows
+  flutter_native_splash: 2.2.9   # android, iOS, web
+
+dependency_overrides:
+    tflite_flutter: # android, iOS, Linux, MacOS, windows
+      path: ../../tflite_flutter_plugin
+      #git:
+        #url: https://github.com/CaptainDario/tflite_flutter_plugin
+    tflite_flutter_helper:
+      git:
+        url: https://github.com/CaptainDario/tflite_flutter_helper
 
 msix_config:
   display_name: DaKanji
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
   identity_name: 61015DaAppLab.DaKanji
-  logo_path: ./assets/images/icons/icon.png
+  logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
   execution-alias: DaKanji
   languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es pl-pl
   
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  msix: 3.5.1
+  msix: 3.6.6
+  json_serializable: 6.5.0
+  build_runner: 2.2.1
+  isar_generator: any # included in dakanji dictionary
   
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  macos: true
-  windows: true 
-  remove_alpha_ios: true
-  image_path: "assets/images/icons/icon.png"
+  image_path_ios: "assets/images/dakanji/icon_white.png"
+  macos:
+    generate: true
+  windows:
+    generate: true 
+  
+  image_path: "assets/images/dakanji/icon.png"
 
 # The following section is specific to Flutter.
 flutter:
@@ -106,6 +138,14 @@ flutter:
           weight: 400
         - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.otf
           style: italic
+    - family: Theater
+      fonts:
+        - asset: assets/fonts/theater/Theater_Bold.otf
+          weight: 900
+    - family: kouzan
+      fonts:
+        - asset: assets/fonts/kouzan/KouzanGyousho.otf
+          weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -115,8 +155,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     # DaKanji icons/images...
-    - assets/images/icons/icon.png
-    - assets/images/icons/banner.png
+    - assets/images/dakanji/icon.png
+    - assets/images/dakanji/banner.png
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
     # onboarding graphics
@@ -124,16 +164,22 @@ flutter:
     - assets/images/onboarding/onboarding_1_2.png
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
+    - assets/images/onboarding/onboarding_3_1.png
+    - assets/images/onboarding/onboarding_3_2.png
     - assets/animations/
+    # brush
+    - assets/images/brush.png
     # icons
-    - assets/fonts/icons/furigana_on.svg
-    - assets/fonts/icons/furigana_off.svg
-    - assets/fonts/icons/space_bar_on.svg
-    - assets/fonts/icons/space_bar_off.svg
-    - assets/fonts/icons/corner_resize.svg
-    # tf lite models
-    - assets/tflite_models/
-    # 
+    - assets/icons/
+    # misc
     - CHANGELOG.md
     - pubspec.yaml
     - CREDITS.md
+
+    # large files
+    # mecab
+    - assets/ipadic/
+    # tf lite models
+    - assets/tflite_models/
+    # dictionary
+    - assets/dict/

@@ -11,12 +11,13 @@ void openReview() async {
   final InAppReview inAppReview = InAppReview.instance;
 
   if((Platform.isAndroid || Platform.isIOS || Platform.isMacOS) &&
-    await inAppReview.isAvailable())
+    await inAppReview.isAvailable()) {
     inAppReview.requestReview();
-  else
+  } else {
     inAppReview.openStoreListing(
-      appStoreId: APPSTORE_ID, 
-      microsoftStoreId: MICROSOFT_STORE_ID
+      appStoreId: g_AppStoreId, 
+      microsoftStoreId: g_MicrosoftStoreId
     );
+  }
 
 }

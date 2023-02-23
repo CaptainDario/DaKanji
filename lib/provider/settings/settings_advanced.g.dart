@@ -1,0 +1,15 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'settings_advanced.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+SettingsAdvanced _$SettingsAdvancedFromJson(Map<String, dynamic> json) =>
+    SettingsAdvanced()..useThanosSnap = json['useThanosSnap'] as bool;
+
+Map<String, dynamic> _$SettingsAdvancedToJson(SettingsAdvanced instance) =>
+    <String, dynamic>{
+      'useThanosSnap': instance.useThanosSnap,
+    };

@@ -3,8 +3,14 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  isar_flutter_libs
+  mecab_dart
+  screen_retriever
+  sentry_flutter
+  share_plus
+  tflite_flutter_helper
   url_launcher_windows
-  window_size
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

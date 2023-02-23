@@ -1,46 +1,113 @@
 PODS:
   - device_info_plus_macos (0.0.1):
     - FlutterMacOS
+  - flutter_inappwebview (0.0.1):
+    - FlutterMacOS
+    - OrderedSet (~> 5.0)
   - FlutterMacOS (1.0.0)
   - in_app_review (0.2.0):
     - FlutterMacOS
+  - isar_flutter_libs (1.0.0):
+    - FlutterMacOS
+  - mecab_dart (0.0.1):
+    - FlutterMacOS
+  - OrderedSet (5.0.0)
+  - package_info_plus (0.0.1):
+    - FlutterMacOS
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - screen_retriever (0.0.1):
+    - FlutterMacOS
+  - Sentry/HybridSDK (7.31.5)
+  - sentry_flutter (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - Sentry/HybridSDK (= 7.31.5)
+  - share_plus (0.0.1):
+    - FlutterMacOS
   - shared_preferences_macos (0.0.1):
+    - FlutterMacOS
+  - tflite_flutter_helper (0.0.1):
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
-  - window_size (0.0.2):
+  - window_manager (0.2.0):
     - FlutterMacOS
 
 DEPENDENCIES:
   - device_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos`)
+  - flutter_inappwebview (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
+  - isar_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos`)
+  - mecab_dart (from `Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos`)
+  - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+  - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
+  - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
+  - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
+  - tflite_flutter_helper (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
-  - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
+  - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
+
+SPEC REPOS:
+  trunk:
+    - OrderedSet
+    - Sentry
 
 EXTERNAL SOURCES:
   device_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos
+  flutter_inappwebview:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   in_app_review:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
+  isar_flutter_libs:
+    :path: Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos
+  mecab_dart:
+    :path: Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos
+  package_info_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+  screen_retriever:
+    :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos
+  sentry_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos
+  share_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/share_plus/macos
   shared_preferences_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos
+  tflite_flutter_helper:
+    :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
-  window_size:
-    :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
+  window_manager:
+    :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  flutter_inappwebview: 62e949df616a9f6e1b0366326381f208c7fcad37
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
-  shared_preferences_macos: 480ce071d0666e37cef23fe6c702293a3d21799e
-  url_launcher_macos: 45af3d61de06997666568a7149c1be98b41c95d4
-  window_size: 339dafa0b27a95a62a843042038fa6c3c48de195
+  isar_flutter_libs: a775292698f2a56059161ae9c011071ab7984d96
+  mecab_dart: 5082f14a3f6a9d0cf0b22a26a9ac2bfec2326064
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
+  path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
+  screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
+  Sentry: 4c9babff9034785067c896fd580b1f7de44da020
+  sentry_flutter: b10ae7a5ddcbc7f04648eeb2672b5747230172f1
+  share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
+  shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
+  tflite_flutter_helper: b9fb1f2880a784c6b4041f6592c351d631ebe55f
+  url_launcher_macos: c04e4fa86382d4f94f6b38f14625708be3ae52e2
+  window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
-PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
+PODFILE CHECKSUM: c75a2cc254fdc3c791fc56851a106d0814079137
 
 COCOAPODS: 1.11.3
