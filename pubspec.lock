@@ -632,26 +632,26 @@ packages:
     dependency: "direct main"
     description:
       name: isar
-      sha256: a0650e628bc6390dbe6f95b6f5d29514aae6e20612654aa145150894244bbfad
+      sha256: "5be35dbc489880fccc535da3d1c4b3f5fdeee6ebfcacd4b149e39e803c4029cd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.5"
   isar_flutter_libs:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
-      sha256: "790def9c42f392a466f18edd2c81c0df5de5d6fbdd318c1cbb455216f008a1f4"
+      sha256: "9794524734856a8a3629652f9f359b66e3fea3cebeec4dbdeb3e3a8fb253073e"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.5"
   isar_generator:
     dependency: "direct dev"
     description:
       name: isar_generator
-      sha256: "7442992f34ab3cf6aa261d1ce2fe161c6a24a68b5335e59f82d568ed68d6e126"
+      sha256: ee4ab5d5b251bc7e86e1257793b57af100065831f00f3a12404b177ae53c2d69
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.5"
   js:
     dependency: transitive
     description:
@@ -1207,9 +1207,11 @@ packages:
   tflite_flutter:
     dependency: "direct overridden"
     description:
-      path: "../../tflite_flutter_plugin"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: c7cab8d65c76815e9c2699fc30edee7caacafbf1
+      url: "https://github.com/CaptainDario/tflite_flutter_plugin"
+    source: git
     version: "0.9.0"
   tflite_flutter_helper:
     dependency: "direct overridden"
