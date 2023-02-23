@@ -423,10 +423,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_launcher_icons
-      sha256: e4d29b76a94cc439c3cb1d8946020bd478e50480a72a256ed6861dae91897962
+      sha256: ce0e501cfc258907842238e4ca605e74b7fd1cdf04b3b43e86c43f3e40a1592c
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.2"
+    version: "0.11.0"
   flutter_layout_grid:
     dependency: "direct main"
     description:
@@ -632,26 +632,26 @@ packages:
     dependency: "direct main"
     description:
       name: isar
-      sha256: "5be35dbc489880fccc535da3d1c4b3f5fdeee6ebfcacd4b149e39e803c4029cd"
+      sha256: a0650e628bc6390dbe6f95b6f5d29514aae6e20612654aa145150894244bbfad
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.2"
   isar_flutter_libs:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
-      sha256: "9794524734856a8a3629652f9f359b66e3fea3cebeec4dbdeb3e3a8fb253073e"
+      sha256: "790def9c42f392a466f18edd2c81c0df5de5d6fbdd318c1cbb455216f008a1f4"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.2"
   isar_generator:
     dependency: "direct dev"
     description:
       name: isar_generator
-      sha256: ee4ab5d5b251bc7e86e1257793b57af100065831f00f3a12404b177ae53c2d69
+      sha256: "7442992f34ab3cf6aa261d1ce2fe161c6a24a68b5335e59f82d568ed68d6e126"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.2"
   js:
     dependency: transitive
     description:

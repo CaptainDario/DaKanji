@@ -3,7 +3,7 @@ description: A cross platform app for mobile and desktop to help learn and use t
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+32
+version: 3.0.0+37
 
 environment:
   sdk: ">=2.18.2"
@@ -52,7 +52,7 @@ dependencies:
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
 
-  isar: 3.0.5 # included in dakanji dictionary
+  isar: any # included in dakanji dictionary
   isar_flutter_libs: any # included in dakanji dictionary
   #kana_kit: any # included in dakanji dictionary
 
