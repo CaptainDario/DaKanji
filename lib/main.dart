@@ -101,7 +101,7 @@ Future<bool> init() async {
 
   // read the applications version from pubspec.yaml
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  print(yaml['version']);
+  print("Starting DaKanji ${yaml['version']}");
   g_Version = yaml['version'];
 
   await initGetIt();
