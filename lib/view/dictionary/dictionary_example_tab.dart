@@ -40,29 +40,38 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   }
 
   /// Initializes the list of example sentences.
-  void initExamples(){
+  /// Limit is the maximum number of examples to be loaded. -1 means no limit.
+  void initExamples({int limit = 10}){
 
     if(widget.entry != null){
+      var searchTerm = widget.entry!.kanjis.length != 0 ?
+        widget.entry!.kanjis.first : widget.entry!.romaji.first;
+
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
+      Stopwatch stopwatch = Stopwatch()..start();
       // find all examples in ISAR that cotain this words kanji
       examples = GetIt.I<Isars>().examples.exampleSentences
         .where()
-          .mecabBaseFormsElementEqualTo(widget.entry!.kanjis.first)
-        .findAllSync();
-      // exclude examples that do not contain any translation in any of the
-      // selected languages
-      examples = examples.where((example) =>
-          example.translations.any((trans) => 
-            GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
-              isoToiso639_1[trans.language]!.name
-            )
+          .mecabBaseFormsElementEqualTo(searchTerm)
+        .filter()
+          // exclude examples that do not contain any translation in any of the
+          // selected languages
+          .translationsElement((q) => 
+            q.anyOf(
+              selectedLangs,
+              (q, element) => q.languageEqualTo(isoToiso639_3[element]!.name))
           )
-        )
-      .toList()
+        .optional(limit != -1, (q) => q.limit(limit))
+        
+        .findAllSync();
+
+      stopwatch.stop();
+      print("filtering took ${stopwatch.elapsedMilliseconds}ms");
+      stopwatch.reset();
       // sort translations by avaiablity of preferred languages
-      ..sort((a, b) {
+      examples.sort((a, b) {
         int aScore = 0, bScore = 0, cnt = 0;
         for (String lang in selectedLangs) {
           if(a.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang))
@@ -74,7 +83,8 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         }
         return bScore - aScore;
       });
-        
+      stopwatch.stop();
+      print("sorting took ${stopwatch.elapsedMilliseconds}ms");
     }
 
   }
@@ -93,17 +103,27 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       return Container();
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ListView.builder(
-          itemCount: examples.length,
-          itemBuilder: (context, no) {
-            return ExampleSentenceCard(
-              examples[no]
-            );
-          }
-        );
-      }
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: examples.length,
+            itemBuilder: (context, no) {
+              return ExampleSentenceCard(
+                examples[no]
+              );
+            }
+          ),
+        ),
+        if(examples.length == 10)
+          TextButton(
+            onPressed: (){
+              initExamples(limit: -1);
+              setState(() {});
+            },
+            child: Text("Show more examples")
+          )
+      ],
     );
   }
 }
