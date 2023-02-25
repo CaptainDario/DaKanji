@@ -19,6 +19,7 @@ import 'package:archive/archive_io.dart';
 import 'package:feedback/feedback.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:path/path.dart' as p;
+import 'package:dio/dio.dart';
 
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
@@ -127,28 +128,6 @@ Future<bool> init() async {
 }
 
 
-
-/// copies the zipped database from assets to the user's documents directory
-/// and unzips it, if it does not exist already
-Future<void> copyDictionaryFilesFromAssets(String isarName) async {
-  // Search and create db file destination folder if not exist
-  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-  print("documents directory: ${documentsDirectory.toString()}");
-  final databaseDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji", "isar"]));
-
-  // if the file already exists delete it
-  final dbFile = File(p.joinAll([databaseDirectory.path, isarName+".isar"]));
-  if (dbFile.existsSync()) {
-    dbFile.deleteSync();
-    print("Deleted $isarName ISAR");
-  }
-
-  // Get pre-populated db file and copy it to the documents directory
-  ByteData data = await rootBundle.load("assets/dict/$isarName.zip");
-  final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
-  extractArchiveToDisk(archive, databaseDirectory.path);
-}
-
 /// Convenience function to clear the SharedPreferences
 Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -180,18 +159,15 @@ Future<void> initGetIt() async {
   // tutorial services
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
 
-  // package for converting between kana
+  // package for converting between hiragana <-> katakana
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
   // ISAR / database services
+  await setupIsarFiles();
+
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "isar"]);
-  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "dictionary.isar"])).existsSync())
-    await copyDictionaryFilesFromAssets('dictionary');
-  if(uD.newVersionUsed || !File(p.joinAll([isarPath, "examples.isar"])).existsSync())
-    await copyDictionaryFilesFromAssets('examples');
-
 
   GetIt.I.registerSingleton<Isars>(
     Isars(
@@ -199,16 +175,19 @@ Future<void> initGetIt() async {
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
         directory: isarPath,
         name: "dictionary",
+        maxSizeMiB: 512
       ),
       examples: Isar.openSync(
         [ExampleSentenceSchema],
         directory: isarPath,
         name: "examples",
+        maxSizeMiB: 512
       ),
       searchHistory: Isar.openSync(
         [SearchHistorySchema],
         directory: isarPath,
-        name: "searchHistory", 
+        name: "searchHistory",
+        maxSizeMiB: 512
       )
     )
   );
@@ -235,6 +214,86 @@ Future<void> initGetIt() async {
     true,
     dicDir: documentsDir + "/DaKanji/ipadic/"
   );
+}
+
+/// Checks if a different version of
+/// * the dictionary DB
+/// * the examples DB
+/// * mecab's ipadic
+/// is needed for this release. If so, copy the new one from assets / donwload
+/// from GitHub.
+Future<void> setupIsarFiles() async {
+
+  // ISAR / database services
+  String documentsDir =
+    (await path_provider.getApplicationDocumentsDirectory()).path;
+  String isarPath = p.joinAll([documentsDir, "DaKanji", "isar"]);
+
+  // check if a different version of the dictionary DB is needed for this release
+  // if so, copy the new one from assets / donwload from GH.
+  if(!File(p.joinAll([isarPath, "dictionary.isar"])).existsSync() ||
+    g_NewDictionary.contains(g_Version) && GetIt.I<UserData>().newVersionUsed)
+  {
+    await getAsset(File("assets/dict/dictionary.isar"), p.joinAll([isarPath, "dictionary.isar"]));
+  }
+
+  // check if a different version of the examples DB is needed for this release
+  // if so, copy the new one from assets / donwload from GH
+  //if(g_NewExamples.contains(g_Version) ||
+  //  !File(p.joinAll([isarPath, "examples.isar"])).existsSync())
+  //  await copyDictionaryFilesFromAssets('examples');
+
+  // TODO: mecab ipadic
+
+}
+
+/// Tries to copy `assetName` from assets and if that fails,
+/// downloads from github. `path` is the destination folder inside of
+/// `applications_documents_directory/DaKanji/`.
+/// 
+/// Note: `assetName` is expected to be a zipped file in assets/github
+Future<void> getAsset(File asset, String dest) async {
+  // Search and create db file destination folder if not exist
+  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+  print("documents directory: ${documentsDirectory.toString()}");
+  final databaseDirectory = Directory(
+    p.joinAll([documentsDirectory.path, "DaKanji", dest])
+  );
+
+  // if the file already exists delete it
+  final dbFile = File(p.joinAll([databaseDirectory.path, asset.uri.pathSegments.last]));
+  if (dbFile.existsSync()) {
+    dbFile.deleteSync();
+    print("Deleted ${asset.uri.pathSegments.last} ISAR");
+  }
+
+  try {
+    await copyFromAssets(asset, databaseDirectory);
+  }
+  catch (e){
+    await downloadAsset(asset.uri.pathSegments.last, databaseDirectory);
+  }
+}
+
+/// copies the zipped database from assets to the user's documents directory
+/// and unzips it, if it does not exist already
+/// 
+/// Caution: throws exception if the asset does not exist
+Future<void> copyFromAssets(File asset,  Directory dest) async {
+  // Get pre-populated db file and copy it to the documents directory
+  ByteData data = await rootBundle.load(asset.path);
+  final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
+  extractArchiveToDisk(archive, dest.path);
+}
+
+/// Downloads the given `assetName` from the given GitHub release
+Future<void> downloadAsset(String assetName, 
+  String url,
+  Directory destinationDirectory,
+  {String releaseName = "latest"}) async 
+{
+  await Dio().download("", destinationDirectory.path);
+  print("Downloaded ${assetName} to ${destinationDirectory.path}");
 }
 
 /// Setup the DaKanji window on desktop platforms
