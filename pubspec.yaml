@@ -48,6 +48,7 @@ dependencies:
   async: 2.10.0
   simple_html_css: 4.0.0
   animations: 2.0.7
+  dio: 5.0.1
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
@@ -176,9 +177,9 @@ flutter:
     - CREDITS.md
 
     # large files
-    # mecab
-    - assets/ipadic/
     # tf lite models
     - assets/tflite_models/
+    # mecab
+    #- assets/ipadic/
     # dictionary
-    - assets/dict/
+    #- assets/dict/

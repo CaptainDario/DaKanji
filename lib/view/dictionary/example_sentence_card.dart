@@ -39,16 +39,19 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
   void initTranslations(){
     List<String> selectedLangs = 
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
+    
     translations = widget.sentences.translations
       // filter translations that are not of any selected language
       .where((e) =>
         selectedLangs.contains(isoToiso639_1[e.language]?.name)
-      ).toList()
+      ).toList();
+      
       // sort to match order set in settings
-      ..sort((a, b) => 
+      translations.sort((a, b) => 
         selectedLangs.indexOf(isoToiso639_1[a.language!]!.name)
         - selectedLangs.indexOf(isoToiso639_1[b.language!]!.name)
       );
+      
   }
 
   @override

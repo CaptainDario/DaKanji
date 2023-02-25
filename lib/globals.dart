@@ -29,8 +29,10 @@ const int g_MinTimesOpenedToAsknotShowRate = 51;
 List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
 List<String> g_OnboardingNewPages = ["0.0.0", "2.0.0", "3.0.0"];
-/// all versions which implemented new dictionary versions (ISAR DB)
+/// all versions that implemented new dictionary versions (ISAR DB)
 List<String> g_NewDictionary = ["3.0.0"];
+/// all versions that implemented new examples versions (ISAR DB)
+List<String> g_NewExamples = ["3.0.0"];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform
