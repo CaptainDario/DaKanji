@@ -83,6 +83,8 @@ Future<void> initServices() async {
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   print("Starting DaKanji ${yaml['version']}");
   g_Version = yaml['version'];
+  g_VersionNumber = g_Version.substring(0, g_Version.indexOf("+"));
+  g_BuildNumber = g_Version.substring(g_Version.indexOf("+")+1);
 
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
 

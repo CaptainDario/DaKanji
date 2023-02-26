@@ -111,7 +111,7 @@ class UserData{
       showChangelog = true;
       versionUsed = g_Version;
 
-      String v = g_Version.replaceRange(g_Version.indexOf("+"), g_Version.length, "");
+      String v = g_VersionNumber;
       // this version has new features for drawing screen => show tutorial
       if(g_DrawingScreenNewFeatures.contains(v)){
         showShowcaseDrawing = true;
