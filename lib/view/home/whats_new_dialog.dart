@@ -1,29 +1,60 @@
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
+import 'package:lottie/lottie.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/view/controllable_lottie_animation.dart';
 import 'package:da_kanji_mobile/view/changelog_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/changelog.dart';
 
 
 
-class WhatsNewDialogue extends StatelessWidget {
+class WhatsNewDialogue extends StatefulWidget {
   const WhatsNewDialogue(
-    this.confettiAnimation_1,
-    this.confettiAnimation_2,
-    this.confettiAnimation_3,
     {Key? key}
   ) : super(key: key);
 
-  final ControllableLottieAnimation confettiAnimation_1;
-  final ControllableLottieAnimation confettiAnimation_2;
-  final ControllableLottieAnimation confettiAnimation_3;
+  @override
+  State<WhatsNewDialogue> createState() => _WhatsNewDialogueState();
+}
+
+class _WhatsNewDialogueState extends State<WhatsNewDialogue>
+  with TickerProviderStateMixin {
+
+  /// controller for the confetti animation 1
+  late AnimationController animControl_1;
+  /// controller for the confetti animation 2
+  late AnimationController animControl_2;
+  /// controller for the confetti animation 3
+  late AnimationController animControl_3;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animControl_1 = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1000),
+    )..addListener(() {
+      if(animControl_1.value == 0.5) animControl_2.forward();
+    });
+    animControl_2 = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1000),
+    )..addListener(() {
+      if(animControl_2.value == 0.5) animControl_3.forward();
+    });
+    animControl_3 = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1000),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      Future.delayed(const Duration(milliseconds: 50), () {})
+        .then((value) => animControl_1.forward());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +68,7 @@ class WhatsNewDialogue extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.height * 4/5,
         width:  MediaQuery.of(context).size.width * 4/5,
-        decoration: BoxDecoration(
-          color: Theme.of(context).dialogBackgroundColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(50),
-              spreadRadius: 7.5,
-              blurRadius: 10,
-              offset: const Offset(0, 0), // changes position of shadow
-            ),
-          ],
-        ),
+        
         child: Container(
           padding: const EdgeInsets.all(5),
           child: Stack(
@@ -64,7 +84,7 @@ class WhatsNewDialogue extends StatelessWidget {
                     child: FittedBox(
                       child: Center(
                         child: Text(
-                          LocaleKeys.HomeScreen_whats_new.tr(),
+                          "🎉 ${LocaleKeys.HomeScreen_whats_new.tr()} 🎉",
                           textScaleFactor: 2,
                         ),
                       ),
@@ -100,6 +120,7 @@ class WhatsNewDialogue extends StatelessWidget {
                       alignment: WrapAlignment.spaceEvenly,
                       runAlignment: WrapAlignment.spaceEvenly,
                       children: [
+                        // complete log button
                         SizedBox(
                           width: innerDialogueWidth*0.45,
                           child: ElevatedButton(
@@ -117,6 +138,7 @@ class WhatsNewDialogue extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 5,),
+                        // close button
                         SizedBox(
                           width: innerDialogueWidth*0.45,
                           child: ElevatedButton(
@@ -124,8 +146,7 @@ class WhatsNewDialogue extends StatelessWidget {
                             ),
                             onPressed: () async {
                               GetIt.I<Settings>().save();
-                              Navigator.pushNamedAndRemoveUntil(
-                                context, "/home", (Route<dynamic> route) => false);
+                              Navigator.pop(context);
                             },
                             child: Text(
                               LocaleKeys.General_close.tr(),
@@ -144,7 +165,10 @@ class WhatsNewDialogue extends StatelessWidget {
                 height: innerDialogueWidth*2,
                 width: innerDialogueWidth*2,
                 child: IgnorePointer(
-                  child: confettiAnimation_1
+                  child: Lottie.asset(
+                    "assets/animations/confetti.json",
+                    controller: animControl_1,
+                  ),
                 ),
               ),
               Positioned(
@@ -153,7 +177,10 @@ class WhatsNewDialogue extends StatelessWidget {
                 height: innerDialogueWidth*2,
                 width: innerDialogueWidth*2,
                 child: IgnorePointer(
-                  child: confettiAnimation_2
+                  child: Lottie.asset(
+                    "assets/animations/confetti.json",
+                    controller: animControl_2,
+                  )
                 ),
               ),
               Positioned(
@@ -162,7 +189,10 @@ class WhatsNewDialogue extends StatelessWidget {
                 height: innerDialogueWidth*2,
                 width: innerDialogueWidth*2,
                 child: IgnorePointer(
-                  child: confettiAnimation_3
+                  child: Lottie.asset(
+                    "assets/animations/confetti.json",
+                    controller: animControl_3,
+                  )
                 ),
               ),
             ],
