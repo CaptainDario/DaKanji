@@ -156,7 +156,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await GetIt.I<Mecab>().init(
     "assets/ipadic",
     true,
-    dicDir: documentsDir + "/DaKanji/ipadic/"
+    dicDir: documentsDir + "/DaKanji/assets/ipadic/"
   );
 }
 
@@ -170,39 +170,27 @@ Future<void> initDocumentsServices(BuildContext context) async {
 Future<void> initDocumentsAssets(BuildContext context) async {
 
   String documentsDir =
-    (await path_provider.getApplicationDocumentsDirectory()).path;
+    p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
+  List<FileSystemEntity> assets = [
+    File("assets/dict/dictionary.isar"), File("assets/dict/examples.isar"), 
+    Directory("assets/ipadic")
+  ];
 
-  // ISAR / database services
-  String isarPath = p.joinAll([documentsDir, "DaKanji", "isar"]);
-
-  // check if a different version of the dictionary DB is needed for this release
-  // if so, copy the new one from assets / donwload from GH.
-  if(!File(p.joinAll([isarPath, "dictionary.isar"])).existsSync() ||
-    g_NewDictionary.contains(g_Version) && 
-      GetIt.I<UserData>().dictVersionUsed != g_Version)
-  {
-    await getAsset(
-      File("assets/dict/dictionary.isar"),
-      p.joinAll([isarPath, "dictionary.isar"]),
-      g_GithubApiDependenciesRelase,
-      context
-    );
-    GetIt.I<UserData>().dictVersionUsed = g_Version;
-    await GetIt.I<UserData>().save();
-  }
-
-  // check if a different version of the examples DB is needed for this release
-  // if so, copy the new one from assets / donwload from GH
-  if(!File(p.joinAll([isarPath, "examples.isar"])).existsSync() ||
-    g_NewDictionary.contains(g_Version) && 
-      GetIt.I<UserData>().dictVersionUsed != g_Version)
-  {
-    await getAsset(
-      File("assets/dict/examples.isar"),
-      p.joinAll([isarPath, "examples.isar"]),
-      g_GithubApiDependenciesRelase,
-      context
-    );
+  // copy assets from assets to documents directory, or download them from GH
+  for (FileSystemEntity asset in assets) {
+    
+    if((!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
+      !Directory(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync()) ||
+      (g_NewDictionary.contains(g_VersionNumber) && 
+        GetIt.I<UserData>().dictVersionUsed != g_VersionNumber))
+    {
+      await getAsset(
+        asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
+        g_GithubApiDependenciesRelase, context
+      );
+      GetIt.I<UserData>().dictVersionUsed = g_VersionNumber;
+      await GetIt.I<UserData>().save();
+    }
   }
 
 }
@@ -213,7 +201,9 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 /// zip will be extracted.
 /// 
 /// Note: `assetName` is expected to be a zipped file in assets/github
-Future<void> getAsset(File asset, String dest, String url, BuildContext context) async {
+Future<void> getAsset(FileSystemEntity asset, String dest, String url,
+  BuildContext context) async
+{
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
   print("documents directory: ${documentsDirectory.toString()}");
@@ -230,7 +220,7 @@ Future<void> getAsset(File asset, String dest, String url, BuildContext context)
   }
 
   try {
-    await copyFromAssets(asset, dbFile.parent);
+    await copyFromAssets(asset.path, dbFile.parent);
   }
   catch (e){
     if(!userAllowedToDownload)
@@ -246,9 +236,9 @@ Future<void> getAsset(File asset, String dest, String url, BuildContext context)
 /// and unzips it, if it does not exist already
 /// 
 /// Caution: throws exception if the asset does not exist
-Future<void> copyFromAssets(File asset,  Directory dest) async {
+Future<void> copyFromAssets(String assetPath,  Directory dest) async {
   // Get pre-populated db file and copy it to the documents directory
-  ByteData data = await rootBundle.load(asset.path);
+  ByteData data = await rootBundle.load(assetPath);
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
   extractArchiveToDisk(archive, dest.path);
 }
@@ -259,14 +249,17 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   // get all releases
   Dio dio = Dio(); String downloadUrl = "";
   Response response = await dio.get(url);
+  String extension = destination.uri.pathSegments.last.split(".").length > 1
+    ? "." + destination.uri.pathSegments.last.split(".").last
+    : "";
 
   // iterate over the releases
   for (var release in response.data){
     // if the version number matches the current version
-    if(release["tag_name"] == "v" + g_Version.replaceRange(g_Version.indexOf("+"), null, "")){
+    if(release["tag_name"] == "v" + g_VersionNumber){
       // iterate over the assets in this release
       for (var element in release["assets"]) {
-        if((element["name"] as String).startsWith(destination.uri.pathSegments.last.replaceAll(".isar", ""))) {
+        if((element["name"] as String).startsWith(destination.uri.pathSegments.last.replaceAll(extension, ""))) {
           downloadUrl = element["browser_download_url"];
           break;
         }
@@ -275,18 +268,18 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   }
     
   // download the asset
-  await Dio().download(downloadUrl, destination.path.replaceAll(".isar", ".zip"));
+  await Dio().download(downloadUrl, destination.path + ".zip");
   print("Downloaded ${destination.uri.pathSegments.last} to ${destination.path}");
 
   // unzip the asset
   await extractFileToDisk(
-    destination.path.replaceAll(".isar", ".zip"),
+    destination.path + ".zip",
     destination.parent.path
   );
   print("Extracted $destination");
   
   // delete the zip file
-  File(destination.path.replaceAll(".isar", ".zip")).deleteSync();
+  File(destination.path + ".zip").deleteSync();
 }
 
 /// Setup the DaKanji window on desktop platforms
