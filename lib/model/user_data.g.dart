@@ -16,6 +16,8 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
   ..showRatePopup = json['showRatePopup'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
+  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
+  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
   ..drawingBackend =
       $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
 
@@ -29,6 +31,8 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'showOnboarding': instance.showOnboarding,
       'showRatePopup': instance.showRatePopup,
       'showChangelog': instance.showChangelog,
+      'dictVersionUsed': instance.dictVersionUsed,
+      'examplesVersionUsed': instance.examplesVersionUsed,
       'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
     };
 

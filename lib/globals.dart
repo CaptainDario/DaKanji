@@ -64,6 +64,8 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+/// lin to the github repo with dependencies needed for dakanji
+const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
 
 /// link to join the discord server
 const g_DiscordInvite = "https://discord.com/invite/gdqaux3r4P";
