@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:da_kanji_mobile/view/home/download_popup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 import 'package:isar/isar.dart';
@@ -177,7 +175,6 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
   // check if a different version of the dictionary DB is needed for this release
   // if so, copy the new one from assets / donwload from GH.
-  /*
   if(!File(p.joinAll([isarPath, "dictionary.isar"])).existsSync() ||
     g_NewDictionary.contains(g_Version) && 
       GetIt.I<UserData>().dictVersionUsed != g_Version)
@@ -190,11 +187,10 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     );
     GetIt.I<UserData>().dictVersionUsed = g_Version;
     await GetIt.I<UserData>().save();
-  }*/
+  }
 
   // check if a different version of the examples DB is needed for this release
   // if so, copy the new one from assets / donwload from GH
-  /*
   if(!File(p.joinAll([isarPath, "examples.isar"])).existsSync() ||
     g_NewDictionary.contains(g_Version) && 
       GetIt.I<UserData>().dictVersionUsed != g_Version)
@@ -205,7 +201,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
       g_GithubApiDependenciesRelase,
       context
     );
-  }*/
+  }
 
 }
 
