@@ -17,7 +17,6 @@ new Features:
   - Colorize words based on their Part of Speech
   - Translate using DeepL
 - Easy way of providing feedback
-- Simple manual for advanced features
 
 Changes:
 
