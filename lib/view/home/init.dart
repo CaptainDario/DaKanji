@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:da_kanji_mobile/view/home/download_popup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -228,7 +229,26 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         context: context,
         btnOkOnPress: () => userAllowedToDownload = true
       ).show();
-    await downloadAssetFromGithubRelease(dbFile, url,);
+
+    while(true){
+      try{
+        throw Exception();
+        await downloadAssetFromGithubRelease(dbFile, url,);
+        break;
+      }
+      catch (e){
+        await AwesomeDialog(
+          context: context,
+          headerAnimationLoop: false,
+          desc: "Download failed, please assure that you have a stable internet connection.",
+          btnOkText: "Retry",
+          btnOkColor: g_Dakanji_green,
+          dialogType: DialogType.noHeader,
+          btnOkOnPress: (){}
+        ).show();
+        print("Download failed, retrying...");
+      }
+    }
   }
 }
 

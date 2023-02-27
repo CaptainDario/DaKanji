@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -19,8 +20,8 @@ AwesomeDialog downloadPopup({
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
     dismissOnTouchOutside: false,
-    btnOkColor: Theme.of(context).primaryColor,
-    btnOkOnPress: btnOkOnPress
+    btnOkColor: g_Dakanji_green,
+    btnOkOnPress: btnOkOnPress,
   );
 
 }
