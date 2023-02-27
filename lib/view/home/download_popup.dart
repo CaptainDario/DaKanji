@@ -1,7 +1,11 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+
 
 
 /// Inform the user that additional data is needed to use the app
@@ -13,10 +17,7 @@ AwesomeDialog downloadPopup({
 
   return AwesomeDialog(
     context: context,
-    desc: "We need to download some files before you can get started. " +
-        "This will only happen once. " +
-        "Please make sure you have a stable internet connection " +
-        "and do not close the app while the download is in progress.",
+    desc: LocaleKeys.HomeScreen_download_popup_permission.tr(),
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
     dismissOnTouchOutside: false,
