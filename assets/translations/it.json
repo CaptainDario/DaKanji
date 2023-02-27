@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'\u00e8 che non va (scrivere il testo qui sotto)?",
+    "feedback_description_text": "Cosa c'\u00e8 che non va? Scrivete il vostro problema qui sotto.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -120,6 +120,9 @@
     "RatePopup_dont_ask_again": "Non chiedetelo pi\u00f9",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe \u00e8 cos\u00ec, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
     "complete_log": "registro completo",
+    "download_failed_popup_retry": "Riprova",
+    "download_failed_popup_text": "Il download non \u00e8 riuscito, assicurarsi di avere una connessione internet stabile.",
+    "download_popup_permission": "\u00c8 necessario scaricare alcuni file prima di poter iniziare. Questa operazione verr\u00e0 eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download \u00e8 in corso.",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'\u00e8 di nuovo"
   },
@@ -130,19 +133,6 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "text_pos_adverb": "",
-    "text_pos_aux_verb": "",
-    "text_pos_conjunction": "",
-    "text_pos_i_adj": "",
-    "text_pos_interjection": "",
-    "text_pos_intro": "",
-    "text_pos_na_adj": "",
-    "text_pos_noun": "",
-    "text_pos_particle": "",
-    "text_pos_pronoun": "",
-    "text_pos_suffix": "",
-    "text_pos_title": "",
-    "text_pos_verb": "",
     "title": "Manuale"
   },
   "OnBoarding": {

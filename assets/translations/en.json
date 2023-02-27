@@ -10,7 +10,7 @@
     "title": "Changelog"
   },
   "DictionaryScreen": {
-    "example_tab": "Example",
+    "example_tab": "Examples",
     "kanji_alternatives": "Alternatives",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Annotate the view above and then press \"submit\".",
+    "feedback_description_text": "What's wrong? Write your issue below.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -120,6 +120,9 @@
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
     "complete_log": "complete log",
+    "download_failed_popup_retry": "Retry",
+    "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
+    "download_popup_permission": "We need to download some files before you can get started. This will only happen once. \nPlease make sure you have a stable internet connection and do not close the app while the download is in progress.",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
@@ -130,19 +133,6 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "text_pos_adverb": "adverb: <a style=\"color:{ADVERB_COLOR}\">this is an <b>adverb</b> example.</a>",
-    "text_pos_aux_verb": "auxillary verb: <a style=\"color:{AUX_VERB_COLOR}\">this is an <b>auxillary verb</b> example.</a>",
-    "text_pos_conjunction": "conjunction: <a style=\"color:{CONJUNCTION_COLOR}\">this is a <b>conjunction</b> example.</a>",
-    "text_pos_i_adj": "\u3044-adjective: <a style=\"color:{I_ADJ_COLOR}\">this is an <b>\u3044-adjective</b> example.</a>",
-    "text_pos_interjection": "interjection: <a style=\"color:{INTERJECTION_COLOR}\">this is an <b>interjection</b> example.</a>",
-    "text_pos_intro": "The meaning of the Part of Speech (POS) colors are:",
-    "text_pos_na_adj": "\u306a-adjective: <a style=\"color:{NA_ADJ_COLOR}\">this is a <b>\u306a-adjective</b> example.</a>",
-    "text_pos_noun": "noun: <a style=\"color:{NOUN_COLOR}\">this is a <b>noun</b> example.</a>",
-    "text_pos_particle": "particle: <a style=\"color:{PARTICLE_COLOR}\">this is a <b>particle</b> example.</a>",
-    "text_pos_pronoun": "pronoun: <a style=\"color:{PRONOUN_COLOR}\">this is a <b>pronoun</b> example.</a>",
-    "text_pos_suffix": "suffix: <a style=\"color:{SUFFIX_COLOR}\">this is a <b>suffix</b> example.</a>",
-    "text_pos_title": "Part of Speech (POS)",
-    "text_pos_verb": "verb: <a style=\"color:{VERB_COLOR}\">this is a <b>verb</b> example.</a>",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -183,7 +173,7 @@
     "input_text_here": "Input text here...",
     "pos_adnominal": "adnominal",
     "pos_adverb": "adverb",
-    "pos_auxillary_verb": "auxillary verb",
+    "pos_auxillary_verb": "auxilary verb",
     "pos_conjunction": "conjunction",
     "pos_exclamation": "exclamation",
     "pos_filler": "filler",

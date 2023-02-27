@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysowa\u0107",
-    "feedback_description_text": "Co jest nie tak (wpisz sw\u00f3j tekst poni\u017cej)?",
+    "feedback_description_text": "Co jest nie tak? Napisz sw\u00f3j problem poni\u017cej.",
     "navigate": "porusza\u0107 si\u0119 po stronie",
     "submit": "wy\u015blij",
     "title": "Informacja zwrotna"
@@ -120,6 +120,9 @@
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
     "complete_log": "pe\u0142ny rejestr",
+    "download_failed_popup_retry": "Retry",
+    "download_failed_popup_text": "Pobieranie nie powiod\u0142o si\u0119, upewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe.",
+    "download_popup_permission": "Zanim zaczniesz, musimy pobra\u0107 kilka plik\u00f3w. B\u0119dzie to mia\u0142o miejsce tylko raz.\nUpewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
   },
@@ -130,19 +133,6 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "text_pos_adverb": "",
-    "text_pos_aux_verb": "",
-    "text_pos_conjunction": "",
-    "text_pos_i_adj": "",
-    "text_pos_interjection": "",
-    "text_pos_intro": "",
-    "text_pos_na_adj": "",
-    "text_pos_noun": "",
-    "text_pos_particle": "",
-    "text_pos_pronoun": "",
-    "text_pos_suffix": "",
-    "text_pos_title": "",
-    "text_pos_verb": "",
     "title": "R\u0119cznie"
   },
   "OnBoarding": {
