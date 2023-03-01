@@ -140,7 +140,8 @@ Future<void> _searchInIsar(SendPort p) async {
   Isar isar = Isar.openSync(
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
     directory: directory,
-    name: name
+    name: name,
+    maxSizeMiB: 512
   );
 
   List<int> ids = isar.jmdict.where().idProperty().findAllSync();
