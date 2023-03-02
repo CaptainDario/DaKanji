@@ -116,14 +116,14 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                   SizedBox(
                     height: innerDialogueHeight * 0.1,
                     width: innerDialogueWidth,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceEvenly,
-                      runAlignment: WrapAlignment.spaceEvenly,
-                      children: [
-                        // complete log button
-                        SizedBox(
-                          width: innerDialogueWidth*0.45,
-                          child: ElevatedButton(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // complete log button
+                          ElevatedButton(
                             onPressed: () => Navigator.push(
                               context, 
                               MaterialPageRoute(builder: (context) => const ChangelogScreen()),
@@ -132,16 +132,13 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                               LocaleKeys.HomeScreen_complete_log.tr(),
                               maxLines: 1,
                               style: const TextStyle(
-                                overflow: TextOverflow.ellipsis
+                                //overflow: TextOverflow
                               ),
                             )
                           ),
-                        ),
-                        const SizedBox(width: 5,),
-                        // close button
-                        SizedBox(
-                          width: innerDialogueWidth*0.45,
-                          child: ElevatedButton(
+                          const SizedBox(width: 5,),
+                          // close button
+                          ElevatedButton(
                             style: const ButtonStyle(
                             ),
                             onPressed: () async {
@@ -152,8 +149,8 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                               LocaleKeys.General_close.tr(),
                             )
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   )
                 ]

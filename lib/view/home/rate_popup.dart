@@ -36,43 +36,45 @@ void showRatePopup(BuildContext context, bool hasDoNotShowOption){
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 50,),
-          Wrap(
-            alignment: WrapAlignment.spaceAround,    
-            children: [
-              // close button
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context, "/home", (Route<dynamic> route) => false
-                  );
-                },
-                child: Text(LocaleKeys.General_close.tr())
-              ),
-              const SizedBox(width: 5,),
-              // rate button
-              ElevatedButton(
-                onPressed: () async {
-                  openReview(); 
-                },
-                child: Text(LocaleKeys.HomeScreen_rate_this_app.tr())
-              ),
-              const SizedBox(width: 5,),
-              // do not ask again button
-              if(hasDoNotShowOption)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row( 
+              children: [
+                // close button
                 ElevatedButton(
-                  style: const ButtonStyle(
-                  ),
                   onPressed: () {
-                    GetIt.I<UserData>().doNotShowRateAgain = true;
-                    GetIt.I<UserData>().save();
+                    Navigator.of(context).pop();
                     Navigator.pushNamedAndRemoveUntil(
                       context, "/home", (Route<dynamic> route) => false
                     );
                   },
-                  child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())
+                  child: Text(LocaleKeys.General_close.tr())
                 ),
-            ],
+                const SizedBox(width: 5,),
+                // rate button
+                ElevatedButton(
+                  onPressed: () async {
+                    openReview(); 
+                  },
+                  child: Text(LocaleKeys.HomeScreen_rate_this_app.tr())
+                ),
+                const SizedBox(width: 5,),
+                // do not ask again button
+                if(hasDoNotShowOption)
+                  ElevatedButton(
+                    style: const ButtonStyle(
+                    ),
+                    onPressed: () {
+                      GetIt.I<UserData>().doNotShowRateAgain = true;
+                      GetIt.I<UserData>().save();
+                      Navigator.pushNamedAndRemoveUntil(
+                        context, "/home", (Route<dynamic> route) => false
+                      );
+                    },
+                    child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())
+                  ),
+              ],
+            ),
           ),
           const SizedBox(height: 10,)
         ],
