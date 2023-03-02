@@ -66,7 +66,6 @@ Future<bool> init() async {
   }
 
   await testTFLiteBackendsForModels();
-
   return true;
 }
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
@@ -93,10 +95,16 @@ Future<Interpreter> initInterpreterFromBackend(
   ) async
 {
   if(inferenceBackend == InferenceBackend.CPU){
-    return _cpuInterpreter(assetPath);
+    return _cpuInterpreter(assetPath, 1);
+  }
+  else if(inferenceBackend.name.startsWith("CPU")){
+    return _cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.XNNPack){
-    return await _xxnPackInterpreter(assetPath);
+    return _xnnPackInterpreter(assetPath, 1);
+  }
+  else if(inferenceBackend.name.startsWith("XNNPack")){
+    return await _xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.GPU){
     return await _gpuInterpreter(assetPath);
@@ -157,20 +165,26 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
   // XNNPack delegate
   if(!exclude.contains(InferenceBackend.XNNPack)){
     try{
-      Interpreter interpreter = await _xxnPackInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.XNNPack, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String xnnBack = "XNNPack_$i";
+        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e) {}
   }
   // CPU delegate
   if(!exclude.contains(InferenceBackend.CPU)){
     try{
-      Interpreter interpreter = await _cpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CPU, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String cpuBack = "CPU_$i";
+        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e){}
   }
@@ -226,20 +240,26 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
   // XNNPack delegate
   if(!exclude.contains(InferenceBackend.XNNPack)){
     try{
-      Interpreter interpreter = await _xxnPackInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.XNNPack, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String xnnBack = "XNNPack_$i";
+        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e) {}
   }
   // CPU delegate
   if(!exclude.contains(InferenceBackend.CPU)){
     try{
-      Interpreter interpreter = await _cpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CPU, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String cpuBack = "CPU_$i";
+        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e){}
   }
@@ -275,20 +295,26 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
   // XNNPack delegate
   if(!exclude.contains(InferenceBackend.XNNPack)){
     try{
-      Interpreter interpreter = await _xxnPackInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.XNNPack, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String xnnBack = "XNNPack_$i";
+        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e) {}
   }
   // CPU delegate
   if(!exclude.contains(InferenceBackend.CPU)){
     try{
-      Interpreter interpreter = await _cpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CPU, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String cpuBack = "CPU_$i";
+        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e){}
   }
@@ -323,20 +349,26 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
   // XNNPack delegate
   if(!exclude.contains(InferenceBackend.XNNPack)){
     try{
-      Interpreter interpreter = await _xxnPackInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.XNNPack, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String xnnBack = "XNNPack_$i";
+        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e) {}
   }
   // CPU delegate
   if(!exclude.contains(InferenceBackend.CPU)){
     try{
-      Interpreter interpreter = await _cpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CPU, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String cpuBack = "CPU_$i";
+        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e){}
   }
@@ -371,20 +403,26 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
   // XNNPack delegate
   if(!exclude.contains(InferenceBackend.XNNPack)){
     try{
-      Interpreter interpreter = await _xxnPackInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.XNNPack, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String xnnBack = "XNNPack_$i";
+        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e) {}
   }
   // CPU delegate
   if(!exclude.contains(InferenceBackend.CPU)){
     try{
-      Interpreter interpreter = await _cpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CPU, iterations, runInterpreter)]
-      );
+      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
+        String cpuBack = "CPU_$i";
+        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
+        inferenceBackend.addEntries(
+          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
+        );
+      }
     }
     catch (e){}
   }
@@ -462,9 +500,9 @@ Future<Interpreter> _coreMLInterpreterIOS(
 }
 
 /// Initializes the interpreter with CPU mode set.
-Future<Interpreter> _cpuInterpreter(String assetPath) async {
+Future<Interpreter> _cpuInterpreter(String assetPath, int threads) async {
   final options = InterpreterOptions()
-    ..threads = Platform.numberOfProcessors - 1;
+    ..threads = threads;
   Interpreter i = await Interpreter.fromAsset(
     assetPath, options: options);
 
@@ -472,13 +510,13 @@ Future<Interpreter> _cpuInterpreter(String assetPath) async {
 }
 
 /// Initializes the interpreter with XNNPack-CPU mode set.
-Future<Interpreter> _xxnPackInterpreter(String assetPath) async {
+Future<Interpreter> _xnnPackInterpreter(String assetPath, int threads) async {
 
   Interpreter interpreter;
   final options = InterpreterOptions()..addDelegate(
     XNNPackDelegate(
       options: XNNPackDelegateOptions(
-        numThreads: Platform.numberOfProcessors >= 4 ? 4 : Platform.numberOfProcessors 
+        numThreads: threads 
       )
     )
   );

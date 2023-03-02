@@ -64,15 +64,9 @@ class UserData{
   @JsonKey(defaultValue: "")
   String examplesVersionUsed = "";
 
-  /// All languages that are selected to be shown in the dict UI
+  /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)
-  InferenceBackend? _drawingBackend;
-  /// All languages that are selected to be shown in the dict UI
-  InferenceBackend? get drawingBackend => _drawingBackend;
-  /// All languages that are selected to be shown in the dict UI
-  set drawingBackend(InferenceBackend? drawingBackend) {
-    _drawingBackend = drawingBackend;
-  }
+  InferenceBackend? drawingBackend;
 
 
 
@@ -137,8 +131,8 @@ class UserData{
 
     // DEBUGGING: onboarding, changelog, rate popup
     //showOnboarding = true;
-    showChangelog  = true;
-    //showRatePopup  = true;
+    //showChangelog  = true;
+    showRatePopup  = true;
 
     save();
   }

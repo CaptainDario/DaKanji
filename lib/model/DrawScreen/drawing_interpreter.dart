@@ -116,9 +116,9 @@ class DrawingInterpreter with ChangeNotifier{
       // store the best backend to disk
       iB = tests.first.key;
       GetIt.I<UserData>().drawingBackend = iB;
-      GetIt.I<UserData>().save();
+      await GetIt.I<UserData>().save();
 
-     print("Inference timings for Drawing: $tests");
+      print("Inference timings for Drawing: $tests");
     }
     
     print("Using: ${iB}");
