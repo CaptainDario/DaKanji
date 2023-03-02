@@ -45,6 +45,8 @@ import 'package:da_kanji_mobile/provider/isars.dart';
 /// If the user pressed the ok-button in the download popup, this will be set to
 /// true.
 bool userAllowedToDownload = false;
+/// have the documents services been initialized
+bool documentsServicesInitialized = false;
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
@@ -101,6 +103,7 @@ Future<void> initServices() async {
   await GetIt.I<Settings>().save();
 
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
+  GetIt.I<Tutorials>().reload();
 
   GetIt.I.registerSingleton<DrawScreenState>(DrawScreenState(
     Strokes(), KanjiBuffer(), DrawingLookup(), DrawScreenLayout.portrait)
@@ -114,6 +117,8 @@ Future<void> initServices() async {
 /// Loads all services from disk that DO depend on data in the documents
 /// directory.
 Future<void> initDocumentsServices(BuildContext context) async {
+
+  if(documentsServicesInitialized) return;
 
   // check if the data in the documents directory is available
   await initDocumentsAssets(context);
@@ -159,6 +164,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
     true,
     dicDir: documentsDir + "/DaKanji/assets/ipadic/"
   );
+
+  documentsServicesInitialized = true;
 }
 
 /// Initializes the document assets, by copying the assets from the assets

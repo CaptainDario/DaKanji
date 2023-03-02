@@ -25,6 +25,7 @@ import 'package:da_kanji_mobile/view/about_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/dakanji_splash.dart';
 
 
 
@@ -144,8 +145,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
 
       //screens
-      home: const HomeScreen(),
+       home: const DaKanjiSplash(),
       //home: TestScreen()
+      initialRoute: "/home",
 
     );
   }

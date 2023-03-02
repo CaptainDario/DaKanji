@@ -1,15 +1,15 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:da_kanji_mobile/dakanji_splash.dart';
-import 'package:da_kanji_mobile/view/home/init.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/view/home/rate_popup.dart' as ratePopup;
 import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
+import 'package:da_kanji_mobile/dakanji_splash.dart';
+import 'package:da_kanji_mobile/view/home/init.dart';
 
 
 
@@ -37,24 +37,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  /// shortcut for accessing how often the app was opened
-  final appOpenedTimes = GetIt.I<UserData>().appOpenedTimes;
-  /// if the documents services have been initialized
-  bool initDocumentsServicesDone = false;
-
   @override
   void initState() {
     super.initState();
-    
-    // setup the app 
-    setupApp()
-    // and afterwards navigate to the selected startup screen
-    .then((value) => 
-      Navigator.pushNamedAndRemoveUntil(context, 
-        "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
-        (route) => false
-      )
-    );
+
+    setupApp();
   }
 
   /// Setup the app by showing the changelog, onboarding, rate popup or 
@@ -62,20 +49,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> setupApp() async {
     if(testing()) return;
 
-    await(initDocumentsServices(context).then(
-      (value) => setState(() {initDocumentsServicesDone = true;}))
-    );
+    await initDocumentsServices(context);
 
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
     }
-    else if(GetIt.I<UserData>().showOnboarding){
+    if(GetIt.I<UserData>().showRatePopup){
+      await showRatePopup();
+    }
+    if(GetIt.I<UserData>().showOnboarding){
       Navigator.pushNamedAndRemoveUntil(
         context, "/onboarding", (route) => false
       );
     }
-    else if(GetIt.I<UserData>().showRatePopup){
-      await showRatePopup();
+    else {
+      Navigator.pushNamedAndRemoveUntil(context, 
+        "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
+        (route) => false
+      );
     }
   }
 
@@ -116,10 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Shows a rate popup which lets the user rate the app
   Future<void> showRatePopup() async {
     // show a rating dialogue WITHOUT "do not show again"-option
-    if(appOpenedTimes < g_MinTimesOpenedToAsknotShowRate) {
-      ratePopup.showRatePopup(context, false);
-    } else {
-      ratePopup.showRatePopup(context, true);
+    if(GetIt.I<UserData>().appOpenedTimes < g_MinTimesOpenedToAsknotShowRate) {
+      await ratePopup.showRatePopup(context, false);
+    }
+    else {
+      await ratePopup.showRatePopup(context, true);
     }
 
     GetIt.I<UserData>().showRatePopup = false;
