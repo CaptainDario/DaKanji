@@ -7,9 +7,9 @@ new Features:
 
 - Inbuilt dictionary
   - Search with kanji, kana or romaji
-  - Multi language support: english, german, french, spanish, ...
+  - Multi-language support: English, German, French, Spanish, ...
   - Conjugation of verbs, adjectives, copula
-  - Detailed informations of Kanjis
+  - Detailed information about Kanjis
   - Example sentences
 - Text processing screen
   - Add furigana to any text
@@ -24,9 +24,10 @@ Changes:
 
 Fixed:
 
-- After tap outside of rate dialog stuck with blank screen
+- After tapping outside of the rate dialog stuck with a blank screen
 - Rate dialog "close"-button does not work
 - TF Lite not working on some SoCs
+- many more...
 
 -------------------------------------------------------------------------
 
