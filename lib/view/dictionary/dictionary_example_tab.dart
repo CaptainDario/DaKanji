@@ -100,7 +100,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   @override
   Widget build(BuildContext context) {
     if(examples.isEmpty){
-      return Container();
+      return Center(
+        child: Icon(Icons.search_off)
+      );
     }
 
     return ListView.builder(

@@ -73,10 +73,10 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   @override
   Widget build(BuildContext context) {
 
-    init();
-
     return widget.kanjiVGs.isEmpty || widget.kanjidic2entries.isEmpty
-      ? Container()
+      ? Center(
+        child: Icon(Icons.search_off)
+      )
       : SingleChildScrollView(
         child: Column(
           children: () {
