@@ -67,9 +67,11 @@ class AboutScreen extends StatelessWidget {
                     )
                   ),
                   onTapLink: (text, url, title) {
-                    
-                    launchUrlString(Uri.encodeFull(url ?? ""));
-                    
+                    if(url != null)
+                      launchUrlString(
+                        Uri.encodeFull(url),
+                        mode: LaunchMode.externalApplication,
+                      );
                   },
                 ),
               ),
