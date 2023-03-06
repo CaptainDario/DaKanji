@@ -270,15 +270,18 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     icon: const Icon(Icons.more_vert),
                     onSelected: (String selection) {
                       String url = "";
-                      // Kanji Graph
+                      // japanese Graph
                       if(selection == menuItems[0]) {
-                        url = "$g_theKanjiMapUrl${widget.kanjidic2entry.character}";
+                        url = Uri.encodeFull("$g_theKanjiMapUrl${widget.kanjidic2entry.character}");
                       }
                       // Kanji Map
                       else if(selection == menuItems[1]) {
-                        url = "$g_japaneseGraphUrl${widget.kanjidic2entry.character}";
+                        url = Uri.encodeFull("$g_japaneseGraphUrl${widget.kanjidic2entry.character}");
                       }
-                      launchUrlString(Uri.encodeFull(url));
+                      launchUrlString(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
                     },
                     itemBuilder: (context) => List.generate(
                       menuItems.length,
