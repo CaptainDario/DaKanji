@@ -243,7 +243,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 )
                               ],
                             ),
-                          if(conjugationPos != null)
+                          if(conjugationPos != null && !conjugationPos!.isEmpty)
                             ConjugationExpansionTile(
                               word: readingOrKanji!,
                               pos: conjugationPos!,
