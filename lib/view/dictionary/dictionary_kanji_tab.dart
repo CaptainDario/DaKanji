@@ -43,6 +43,12 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(covariant DictionaryKanjiTab oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
   /// Initializes this widget by searching aternatives in the passsed Kanjis
   void init(){
     // check that the parameters changed before doing init
