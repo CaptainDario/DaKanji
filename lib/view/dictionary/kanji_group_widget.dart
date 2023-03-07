@@ -1,9 +1,13 @@
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graphview/GraphView.dart';
+import 'package:tuple/tuple.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/kanjiVG_util.dart';
+
 
 
 
@@ -31,36 +35,40 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   /// graph of the KanjiVG element
   final Graph graph = Graph()..isTree = true;
-  // builder configuration for the GraphView
+  /// builder configuration for the GraphView
   BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
-  // List containing all sub SVGs of the KanjiVG entry and its order matches
-  // all `Node.Id` in `graph`
+  /// List containing all sub SVGs of the KanjiVG entry and its order matches
+  /// all `Node.Id` in `graph`
   late List<String> kanjiVGStringList;
+  /// List containing the unicode characters matching the order of 
+  /// `kanjiVGStringList`
+  /// Empty strings in the list mean that this character part does not exist
+  /// in unicode
+  late List<String> kanjiVGChars;
   
 
   @override
   void initState() {
-
-    kanjiVGStringList = kanjiVGToGraph(widget.kanjiVG, graph);
-    builder
-      ..siblingSeparation = (10)
-      ..levelSeparation = (15)
-      ..subtreeSeparation = (30)
-      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
-
+    init();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant KanjiGroupWidget oldWidget) {
-    kanjiVGStringList = kanjiVGToGraph(widget.kanjiVG, graph);
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init(){
+    Tuple2 tmp = kanjiVGToGraph(widget.kanjiVG, graph);
+    kanjiVGStringList = tmp.item1;
+    kanjiVGChars = tmp.item2;
+
     builder
       ..siblingSeparation = (10)
       ..levelSeparation = (15)
       ..subtreeSeparation = (30)
       ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
-      
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -77,15 +85,32 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
               ..strokeWidth = 2
               ..style = PaintingStyle.stroke,
             builder: (Node node) {
-              return Container(
-                width:  50,
-                height: 50,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Colors.black)
-                ),
-                child: Center(
-                  child: SvgPicture.string(
-                    kanjiVGStringList[(node.key!.value as int)]
+              return GestureDetector(
+                onLongPress: (){
+                  if(kanjiVGChars[node.key!.value] != ""){
+                    Navigator.pushNamedAndRemoveUntil(
+                      context, 
+                      '/dictionary', 
+                      (route) => false,
+                      arguments: NavigationArguments(false, kanjiVGChars[node.key!.value])
+                    );
+                  }
+                },
+                child: Container(
+                  width:  50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2,
+                        color: kanjiVGChars[node.key!.value] != ""
+                          ? g_Dakanji_green
+                          : Colors.black,
+                      )
+                  ),
+                  child: Center(
+                    child: SvgPicture.string(
+                      kanjiVGStringList[(node.key!.value as int)]
+                    ),
                   ),
                 ),
               );
