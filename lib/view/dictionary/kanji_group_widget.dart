@@ -92,7 +92,9 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                       context, 
                       '/dictionary', 
                       (route) => false,
-                      arguments: NavigationArguments(false, kanjiVGChars[node.key!.value])
+                      arguments: NavigationArguments(
+                        false, dictSearch: kanjiVGChars[node.key!.value]
+                      )
                     );
                   }
                 },

@@ -7,8 +7,12 @@ import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 /// Class which notifies its listeners always when [_chars] changed.
 class DrawingLookup with ChangeNotifier{
   
-  /// the character(s) which can be searched in a dictionary
+  /// the character(s) that should be searched in a dictionary
   String _chars = "";
+  /// a prefix which will be added to [_chars] when looking up
+  String charPrefix = "";
+  /// a postfix which will be added to [_chars] when looking up
+  String charPostfix = "";
   /// the dictionary URL for looking up [_chars]
   String _url = "";
   /// are the characters which will be looked up from the kanjibuffer
@@ -21,7 +25,7 @@ class DrawingLookup with ChangeNotifier{
   DrawingLookup();
 
   String get chars{
-    return _chars;
+    return charPrefix + _chars + charPostfix;
   }
 
   String get url{
