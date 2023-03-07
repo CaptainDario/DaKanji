@@ -256,6 +256,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       selectionColor: Theme.of(context).highlightColor,
                                       onSelectionChange: onCustomSelectableTextChange,
                                       onLongPress: onCustomSelectableTextLongPressed,
+                                      onTapOutsideOfText: (Offset location) {
+                                        if(popupAnimationController.isCompleted){
+                                          popupAnimationController.reverse();
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
