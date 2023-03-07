@@ -12,7 +12,6 @@ import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
@@ -231,10 +230,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void onSearchResultPressed(JMdict entry) async {
     // update search variables
     context.read<DictSearch>().selectedResult = entry;
-    List<String> kanjis =
-      removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
-    context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
-    context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
 
     // store new search in search history
     var isar = GetIt.I<Isars>().searchHistory;

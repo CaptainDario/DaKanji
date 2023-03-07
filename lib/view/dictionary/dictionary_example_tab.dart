@@ -99,12 +99,18 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
   @override
   Widget build(BuildContext context) {
-    if(examples.isEmpty){
+    // if a result was selected, but there are no examples for it, sow icon
+    if(examples.isEmpty && widget.entry != null){
       return Center(
         child: Icon(Icons.search_off)
       );
     }
+    // if no result was selected, show nothing
+    else if(examples.isEmpty && widget.entry == null){
+      return Container();
+    }
 
+    // Otherwise, if there are examples, show them
     return ListView.builder(
       itemCount: examples.length,
       itemBuilder: (context, no) {

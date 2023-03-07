@@ -118,8 +118,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: DictionaryKanjiTab(
-                                  context.read<DictSearch>().kanjiVGs,
-                                  context.read<DictSearch>().kanjiDic2s
+                                  context.read<DictSearch>().selectedResult
                                 ),
                               ),
                             ),
@@ -188,8 +187,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                             ),
                                           if(tabsSideBySide < 4) 
                                             DictionaryKanjiTab(
-                                              context.watch<DictSearch>().kanjiVGs,
-                                              context.watch<DictSearch>().kanjiDic2s
+                                              context.watch<DictSearch>().selectedResult
                                             ),
                                           if(tabsSideBySide < 4)
                                             DictionaryExampleTab(

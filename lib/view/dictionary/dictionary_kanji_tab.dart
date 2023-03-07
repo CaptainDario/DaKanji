@@ -1,25 +1,27 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:provider/provider.dart';
 
+import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/view/dictionary/kanji_card.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 
 
 
 class DictionaryKanjiTab extends StatefulWidget {
-  const DictionaryKanjiTab(
-    this.kanjiVGs,
-    this.kanjidic2entries,
-    {Key? key}
-  ) : super(key: key);
+  /// The entry for which examples should be shown
+  final JMdict? entry;
 
-  /// A list of KanjiVG entries that should be shown
-  final List<KanjiSVG> kanjiVGs;
-  /// A List of kanjidic2 entries thath should be shown
-  final List<Kanjidic2> kanjidic2entries;
+  const DictionaryKanjiTab(
+    this.entry,
+    {
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   State<DictionaryKanjiTab> createState() => _DictionaryKanjiTabState();
@@ -31,6 +33,8 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   List<KanjiSVG> lastKanjiVGs = [];
   /// List of kanjiSVG without alternatives
   List<KanjiSVG> kanjiVGs = [];
+  /// list of all entries from kanji dic 2 that should be shown
+  List<Kanjidic2> kanjiDic2s = [];
   /// List of KanjiSVG alternatives
   Map<String, List<KanjiSVG>> alternatives = {};
   
@@ -51,45 +55,58 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
 
   /// Initializes this widget by searching aternatives in the passsed Kanjis
   void init(){
-    // check that the parameters changed before doing init
-    if(!listEquals(lastKanjiVGs, widget.kanjiVGs)){
 
-      lastKanjiVGs = []; kanjiVGs = []; alternatives = {};
-
-      // kanjiVG includes alternate writings of kanji therefore
-      // those alternatives need to be added to the `alternatives` list
-      // and removed from `widget.kanjiVGs`
-      KanjiSVG? last = null;
-      for (int i = 0; i < widget.kanjiVGs.length; i++) {
-        // if the current and last key are the same add current to alternatives
-        if(last?.character == widget.kanjiVGs[i].character){
-          alternatives.putIfAbsent(widget.kanjiVGs[i].character, () => []);
-          alternatives[widget.kanjiVGs[i].character]!.add(widget.kanjiVGs[i]);
-        }
-        else
-          kanjiVGs.add(widget.kanjiVGs[i]);
-        
-        last = widget.kanjiVGs[i];
-        
-      }
+    if(context.read<DictSearch>().selectedResult == null){
+      return;
     }
-    lastKanjiVGs = widget.kanjiVGs;
+
+    // update search results
+    List<String> kanjis =
+      removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
+    kanjiVGs = findMatchingKanjiSVG(kanjis);
+    kanjiDic2s = findMatchingKanjiDic2(kanjis);
+
+    lastKanjiVGs = []; kanjiVGs = []; alternatives = {};
+
+    // kanjiVG includes alternate writings of kanji therefore
+    // those alternatives need to be added to the `alternatives` list
+    // and removed from `widget.kanjiVGs`
+    KanjiSVG? last = null;
+    for (int i = 0; i < findMatchingKanjiSVG(kanjis).length; i++) {
+      // if the current and last key are the same add current to alternatives
+      if(last?.character == findMatchingKanjiSVG(kanjis)[i].character){
+        alternatives.putIfAbsent(findMatchingKanjiSVG(kanjis)[i].character, () => []);
+        alternatives[findMatchingKanjiSVG(kanjis)[i].character]!.add(findMatchingKanjiSVG(kanjis)[i]);
+      }
+      else
+        kanjiVGs.add(findMatchingKanjiSVG(kanjis)[i]);
+      
+      last = findMatchingKanjiSVG(kanjis)[i];
+      
+    }
+    
+    lastKanjiVGs = findMatchingKanjiSVG(kanjis);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return widget.kanjiVGs.isEmpty || widget.kanjidic2entries.isEmpty
-      ? Center(
+    if(context.read<DictSearch>().selectedResult == null){
+      return Container();
+    }
+    if(kanjiVGs.isEmpty){
+      return Center(
         child: Icon(Icons.search_off)
-      )
-      : SingleChildScrollView(
+      );
+    }
+    else
+      return SingleChildScrollView(
         child: Column(
           children: () {
             return List.generate(kanjiVGs.length, 
             (i) => DictionaryScreenKanjiCard(
               kanjiVGs[i],
-              widget.kanjidic2entries[i],
+              kanjiDic2s[i],
               GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
               // if there are alternative writings for this kanji
               alternatives: alternatives.containsKey(kanjiVGs[i].character)
