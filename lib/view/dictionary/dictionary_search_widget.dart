@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
@@ -31,6 +32,8 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool isExpanded; 
   /// Can the search results be collapsed
   final bool canCollapse;
+  /// shoul the button to navigate to the drawing screen be included
+  final bool includeDrawButton;
 
   const DictionarySearchWidget(
     {
@@ -38,6 +41,7 @@ class DictionarySearchWidget extends StatefulWidget {
       required this.expandedHeight,
       this.isExpanded = false,
       this.canCollapse = true,
+      this.includeDrawButton = true,
       super.key
     }
   );
@@ -169,25 +173,29 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     ),
                   ),
                   // drawing screen button
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                    child: IconButton(
-                      splashRadius: 20,
-                      icon: Icon(Icons.brush),
-                      onPressed: () {
-                        setState(() {
-                          expanded = true;
-                        });
-                        GetIt.I<Settings>().drawing.selectedDictionary =
-                          GetIt.I<Settings>().drawing.inbuiltDictId;
-                        Navigator.pushNamedAndRemoveUntil(
-                          context, 
-                          "/drawing",
-                          (route) => true
-                        );
-                      },
-                    ),
-                  )
+                  if(widget.includeDrawButton)
+                    Focus(
+                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                      child: IconButton(
+                        splashRadius: 20,
+                        icon: Icon(Icons.brush),
+                        onPressed: () {
+                          setState(() {
+                            expanded = true;
+                          });
+                          GetIt.I<Settings>().drawing.selectedDictionary =
+                            GetIt.I<Settings>().drawing.inbuiltDictId;
+                          Navigator.pushNamedAndRemoveUntil(
+                            context, 
+                            "/drawing",
+                            (route) => true,
+                            arguments: NavigationArguments(
+                              false, drawSearchPrefix: searchInputController.text
+                            )
+                          );
+                        },
+                      ),
+                    )
                 ],
               ),
             ),
