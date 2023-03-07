@@ -1,10 +1,9 @@
-import 'package:da_kanji_mobile/model/settings_arguments.dart';
-import 'package:da_kanji_mobile/provider/isars.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -16,6 +15,8 @@ import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
+import 'package:da_kanji_mobile/provider/isars.dart';
 
 
 
@@ -204,7 +205,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                         context, 
                                         "/dictionary",
                                         (route) => true,
-                                        arguments: NavigationArguments(false, e.kanjis.length > 0 ? e.kanjis.first : e.readings.first)
+                                        arguments: NavigationArguments(
+                                          false,
+                                          e.kanjis.length > 0
+                                          ? e.kanjis.first
+                                          : e.readings.first
+                                        )
                                       ),
                                   )
                                 ).toList()

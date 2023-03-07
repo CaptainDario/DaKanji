@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
-import 'package:da_kanji_mobile/model/settings_arguments.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';

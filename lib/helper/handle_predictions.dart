@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/model/settings_arguments.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/provider/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
