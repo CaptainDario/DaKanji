@@ -67,6 +67,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   FocusNode searchTextFieldFocusNode = FocusNode();
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
+
+  late AnimationController searchBarAnimationController = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: 400),
+  );
+  
   
 
   @override
@@ -74,8 +80,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     super.initState();
     updateSearchHistoryIds();
 
-    if(widget.isExpanded)
+    //searchBarAnimationController.drive(CurveTween(curve: Curves.easeOut));
+
+    if(widget.isExpanded){
       expanded = true;
+      searchBarAnimationController.value = 1.0;
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       RenderBox r = searchTextInputKey.currentContext!.findRenderObject()! as RenderBox;
@@ -96,6 +106,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
     updateSearchHistoryIds();
     super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    searchBarAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -131,6 +147,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   
                         setState(() {
                           expanded = !expanded;
+
+                          if(expanded)
+                            searchBarAnimationController.forward();
+                          else
+                            searchBarAnimationController.reverse();
                         });
                       },
                     ),
@@ -150,6 +171,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       onTap: () {
                         setState(() {
                           expanded = true;
+                          searchBarAnimationController.forward();
                         });
                       },
                       onChanged: (text) async {
@@ -200,12 +222,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
               ),
             ),
             if(searchBarInputHeight != 0)
-              AnimatedContainer(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-                height: expanded 
-                  ? widget.expandedHeight - searchBarInputHeight
-                  : 0,
+              AnimatedBuilder(
+                animation: searchBarAnimationController,
+                builder: (context, child) {
+                  return Container(
+                    //duration: Duration(milliseconds: 400),
+                    //curve: Curves.easeInOut,
+                    height: (widget.expandedHeight - searchBarInputHeight)
+                        * searchBarAnimationController.value,
+                    child: child 
+                  );
+                },
                 child: context.read<DictSearch>().currentSearch != ""
                   // search results if the user entered text
                   ? SearchResultList(
@@ -251,10 +278,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     searchHistory.add(entry);
 
     // collapse the search bar
-    if(widget.canCollapse)
+    if(widget.canCollapse){
       setState(() {
         expanded = false;
+        searchBarAnimationController.reverse();
       });
+    }
   }
 
   /// callback when the copy/paste from clipboard button is pressed
@@ -272,6 +301,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       await updateSearchResults(data, true);
     }
     expanded = true;
+    searchBarAnimationController.forward();
     setState(() { });
   }
 
