@@ -188,7 +188,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       onPressed: onClipboardButtonPressed,
                       icon: Icon(
                         searchInputController.text == ""
-                          ? Icons.copy
+                          ? Icons.paste
                           : Icons.clear,
                         size: 20,
                       ),
