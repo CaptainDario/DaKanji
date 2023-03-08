@@ -284,6 +284,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         searchBarAnimationController.reverse();
       });
     }
+
+    // close the keyboard
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   /// callback when the copy/paste from clipboard button is pressed
