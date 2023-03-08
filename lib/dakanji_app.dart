@@ -103,7 +103,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           args = settings.arguments as NavigationArguments;
         }
         else{
-          args = NavigationArguments(false, "");
+          args = NavigationArguments(false);
         }
 
         switch(settings.name){
@@ -112,7 +112,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/onboarding":
             return switchScreen(const OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
+            return switchScreen(DrawScreen(
+              args.navigatedByDrawer, args.drawSearchPrefix, args.drawSearchPostfix, true, true
+            ));
           case "/dictionary":
             return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
           case "/text":
