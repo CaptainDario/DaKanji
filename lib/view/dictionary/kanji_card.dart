@@ -58,8 +58,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
   TextStyle headerStyle = TextStyle(color: Colors.grey);
-  /// Kanji groups Regex
-  RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke[Numbers|Paths].*a).*?>');
+  /// Kanji groups Regex, extracts all tags that are kanji part tags
+  RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke(Numbers|Paths)).*?>');
 
   @override
   void initState() {
@@ -228,6 +228,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       ),
                     ).toList(),
                     const SizedBox(height: 16,),
+
+                    // Kanji groups
                     if((kanjiGroupsRe.allMatches(widget.kanjiVG.svg)).length > 1)
                       ExpansionTile(
                         title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
@@ -270,15 +272,18 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     icon: const Icon(Icons.more_vert),
                     onSelected: (String selection) {
                       String url = "";
-                      // Kanji Graph
+                      // japanese Graph
                       if(selection == menuItems[0]) {
-                        url = "$g_theKanjiMapUrl${widget.kanjidic2entry.character}";
+                        url = Uri.encodeFull("$g_theKanjiMapUrl${widget.kanjidic2entry.character}");
                       }
                       // Kanji Map
                       else if(selection == menuItems[1]) {
-                        url = "$g_japaneseGraphUrl${widget.kanjidic2entry.character}";
+                        url = Uri.encodeFull("$g_japaneseGraphUrl${widget.kanjidic2entry.character}");
                       }
-                      launchUrlString(Uri.encodeFull(url));
+                      launchUrlString(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
                     },
                     itemBuilder: (context) => List.generate(
                       menuItems.length,

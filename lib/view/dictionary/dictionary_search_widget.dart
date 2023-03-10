@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
@@ -32,6 +32,8 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool isExpanded; 
   /// Can the search results be collapsed
   final bool canCollapse;
+  /// shoul the button to navigate to the drawing screen be included
+  final bool includeDrawButton;
 
   const DictionarySearchWidget(
     {
@@ -39,6 +41,7 @@ class DictionarySearchWidget extends StatefulWidget {
       required this.expandedHeight,
       this.isExpanded = false,
       this.canCollapse = true,
+      this.includeDrawButton = true,
       super.key
     }
   );
@@ -64,15 +67,25 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   FocusNode searchTextFieldFocusNode = FocusNode();
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
-  
 
+  late AnimationController searchBarAnimationController;
+  
+  
   @override
   void initState() {
     super.initState();
+
+    searchBarAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+    );
+
     updateSearchHistoryIds();
 
-    if(widget.isExpanded)
+    if(widget.isExpanded){
       expanded = true;
+      searchBarAnimationController.value = 1.0;
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       RenderBox r = searchTextInputKey.currentContext!.findRenderObject()! as RenderBox;
@@ -93,6 +106,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
     updateSearchHistoryIds();
     super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    searchBarAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -128,6 +147,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   
                         setState(() {
                           expanded = !expanded;
+
+                          if(expanded)
+                            searchBarAnimationController.forward();
+                          else
+                            searchBarAnimationController.reverse();
                         });
                       },
                     ),
@@ -147,6 +171,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       onTap: () {
                         setState(() {
                           expanded = true;
+                          searchBarAnimationController.forward();
                         });
                       },
                       onChanged: (text) async {
@@ -163,42 +188,51 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       onPressed: onClipboardButtonPressed,
                       icon: Icon(
                         searchInputController.text == ""
-                          ? Icons.copy
+                          ? Icons.paste
                           : Icons.clear,
                         size: 20,
                       ),
                     ),
                   ),
                   // drawing screen button
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                    child: IconButton(
-                      splashRadius: 20,
-                      icon: Icon(Icons.brush),
-                      onPressed: () {
-                        setState(() {
-                          expanded = true;
-                        });
-                        GetIt.I<Settings>().drawing.selectedDictionary =
-                          GetIt.I<Settings>().drawing.inbuiltDictId;
-                        Navigator.pushNamedAndRemoveUntil(
-                          context, 
-                          "/drawing",
-                          (route) => true
-                        );
-                      },
-                    ),
-                  )
+                  if(widget.includeDrawButton)
+                    Focus(
+                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                      child: IconButton(
+                        splashRadius: 20,
+                        icon: Icon(Icons.brush),
+                        onPressed: () {
+                          setState(() {
+                            expanded = true;
+                          });
+                          GetIt.I<Settings>().drawing.selectedDictionary =
+                            GetIt.I<Settings>().drawing.inbuiltDictId;
+                          Navigator.pushNamedAndRemoveUntil(
+                            context, 
+                            "/drawing",
+                            (route) => true,
+                            arguments: NavigationArguments(
+                              false, drawSearchPrefix: searchInputController.text
+                            )
+                          );
+                        },
+                      ),
+                    )
                 ],
               ),
             ),
             if(searchBarInputHeight != 0)
-              AnimatedContainer(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-                height: expanded 
-                  ? widget.expandedHeight - searchBarInputHeight
-                  : 0,
+              AnimatedBuilder(
+                animation: searchBarAnimationController,
+                builder: (context, child) {
+                  return Container(
+                    //duration: Duration(milliseconds: 400),
+                    //curve: Curves.easeInOut,
+                    height: (widget.expandedHeight - searchBarInputHeight)
+                        * searchBarAnimationController.value,
+                    child: child 
+                  );
+                },
                 child: context.read<DictSearch>().currentSearch != ""
                   // search results if the user entered text
                   ? SearchResultList(
@@ -231,10 +265,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void onSearchResultPressed(JMdict entry) async {
     // update search variables
     context.read<DictSearch>().selectedResult = entry;
-    List<String> kanjis =
-      removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
-    context.read<DictSearch>().kanjiVGs = findMatchingKanjiSVG(kanjis);
-    context.read<DictSearch>().kanjiDic2s = findMatchingKanjiDic2(kanjis);
 
     // store new search in search history
     var isar = GetIt.I<Isars>().searchHistory;
@@ -248,10 +278,15 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     searchHistory.add(entry);
 
     // collapse the search bar
-    if(widget.canCollapse)
+    if(widget.canCollapse){
       setState(() {
         expanded = false;
+        searchBarAnimationController.reverse();
       });
+    }
+
+    // close the keyboard
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   /// callback when the copy/paste from clipboard button is pressed
@@ -269,6 +304,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       await updateSearchResults(data, true);
     }
     expanded = true;
+    searchBarAnimationController.forward();
     setState(() { });
   }
 

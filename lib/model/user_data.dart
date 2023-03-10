@@ -12,7 +12,7 @@ part 'user_data.g.dart';
 
 /// Class that stores preferences and information about the user
 /// 
-/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outpu`
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class UserData{
 
@@ -56,15 +56,17 @@ class UserData{
   @JsonKey(ignore: true)
   bool newVersionUsed = false;
 
-  /// All languages that are selected to be shown in the dict UI
+  /// The version of the dictionary that is currentl in the documents folder
+  @JsonKey(defaultValue: "")
+  String dictVersionUsed = "";
+
+  /// The version of the examples that is currently in the documents folder
+  @JsonKey(defaultValue: "")
+  String examplesVersionUsed = "";
+
+  /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)
-  InferenceBackend? _drawingBackend;
-  /// All languages that are selected to be shown in the dict UI
-  InferenceBackend? get drawingBackend => _drawingBackend;
-  /// All languages that are selected to be shown in the dict UI
-  set drawingBackend(InferenceBackend? drawingBackend) {
-    _drawingBackend = drawingBackend;
-  }
+  InferenceBackend? drawingBackend;
 
 
 
@@ -103,7 +105,7 @@ class UserData{
       showChangelog = true;
       versionUsed = g_Version;
 
-      String v = g_Version.replaceRange(g_Version.indexOf("+"), g_Version.length, "");
+      String v = g_VersionNumber;
       // this version has new features for drawing screen => show tutorial
       if(g_DrawingScreenNewFeatures.contains(v)){
         showShowcaseDrawing = true;

@@ -3,7 +3,7 @@ description: A cross platform app for mobile and desktop to help learn and use t
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+37
+version: 3.0.0+38
 
 environment:
   sdk: ">=2.18.2"
@@ -97,7 +97,7 @@ msix_config:
   logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
   execution-alias: DaKanji
-  languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es pl-pl
+  languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es, pl-pl
   
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
-import 'package:da_kanji_mobile/model/settings_arguments.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
@@ -25,6 +25,7 @@ import 'package:da_kanji_mobile/view/about_screen.dart';
 import 'package:da_kanji_mobile/view/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/view/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/dakanji_splash.dart';
 
 
 
@@ -102,7 +103,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           args = settings.arguments as NavigationArguments;
         }
         else{
-          args = NavigationArguments(false, "");
+          args = NavigationArguments(false);
         }
 
         switch(settings.name){
@@ -111,7 +112,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/onboarding":
             return switchScreen(const OnBoardingScreen());
           case "/drawing":
-            return switchScreen(DrawScreen(args.navigatedByDrawer, true, true));
+            return switchScreen(DrawScreen(
+              args.navigatedByDrawer, args.drawSearchPrefix, args.drawSearchPostfix, true, true
+            ));
           case "/dictionary":
             return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
           case "/text":
@@ -144,8 +147,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
 
       //screens
-      home: const HomeScreen(),
+       home: const DaKanjiSplash(),
       //home: TestScreen()
+      initialRoute: "/home",
 
     );
   }

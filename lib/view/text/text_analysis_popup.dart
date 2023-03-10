@@ -104,7 +104,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                             key: Key(widget.text),
                             false, 
                             initialSearch: widget.text,
-                            includeActionButton: false,
+                            includeDrawButton: false,
                             isExpanded: true,
                           ),
                           if(g_webViewSupported)

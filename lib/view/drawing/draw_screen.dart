@@ -30,13 +30,19 @@ class DrawScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
+  /// A prefix that is prepended to every search query
+  final String searchPrefix;
+  /// A prefix that is appended to every search query
+  final String searchPostfix;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
   const DrawScreen(
-    this.openedByDrawer, 
+    this.openedByDrawer,
+    this.searchPrefix,
+    this.searchPostfix,
     this.includeHeroes, 
     this.includeTutorial, 
     {Key? key}
@@ -61,6 +67,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
+    GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
       if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {

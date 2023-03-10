@@ -23,10 +23,4 @@ class DictSearch with ChangeNotifier {
   JMdict? get selectedResult {
     return _selectedResult;
   }
-
-  /// the KanjiVG entries matching `selectedResult`
-  List<KanjiSVG> kanjiVGs = [];
-
-  /// the KanjiDic entries matching `selectedResult`
-  List<Kanjidic2> kanjiDic2s = [];
 }

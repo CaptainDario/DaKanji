@@ -29,7 +29,8 @@ class CustomSelectableText extends StatefulWidget {
     this.onTap,
     this.onLongPress,
     this.onDoubleTap,
-    this.onTripleTap
+    this.onTripleTap,
+    this.onTapOutsideOfText,
   }) : super(key: key);
 
   /// a list containing all words that should be displayed
@@ -66,16 +67,23 @@ class CustomSelectableText extends StatefulWidget {
   final Color textBoxesColor;
 
   /// callback that should be executed when the currently selected text chagnes
-  /// provides the current selection as parameter
+  /// provides the current `TextSelection` as parameter
   final void Function(TextSelection)? onSelectionChange;
   /// callback that is executed when a single tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
   final void Function(TextSelection)? onTap;
   /// callbach that is executed when a long press is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
   final void Function(TextSelection)? onLongPress;
   /// callback that is executed when a double tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
   final void Function(TextSelection)? onDoubleTap;
   /// callback that is executed when a triple tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
   final void Function(TextSelection)? onTripleTap;
+  /// callback that is executed when a tap is executed outside of the text
+  /// provides the `Offset` where the tap appeared as parameter
+  final void Function(Offset)? onTapOutsideOfText;
 
   @override
   _CustomSelectableTextState createState() => _CustomSelectableTextState();
@@ -383,7 +391,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   TextPosition _getTextPositionAtOffset(Offset localOffset) {
     final myBox = context.findRenderObject();
     final textOffset = _renderParagraph!.globalToLocal(localOffset, ancestor: myBox);
-    return _renderParagraph!.getPositionForOffset(textOffset);
+    TextPosition tP = _renderParagraph!.getPositionForOffset(textOffset);
+    bool isOverText = _isOffsetOverText(localOffset);
+    return tP;
   }
 
   // ignore: unused_element
@@ -484,9 +494,19 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
     return Listener(
       onPointerDown: (event) {
+        // if the user tapped outside of the text, remove selection
+        if(!_isOffsetOverText(event.localPosition)){
+          setState(() => _selectionRects.clear());
+          
+          if(widget.onTapOutsideOfText != null)
+            widget.onTapOutsideOfText!(event.localPosition);
+          
+          return;
+        }
+
         // assure that words are in the text fields AND 
         if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
-
+    
         tapped++; isTapped = true;
     
         if (multiTapTimer != null) {
@@ -593,11 +613,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                       // and the color is not null
                                       // if spaces is enabled caculate index with cnt/2.floor()
                                       color: () {
-
+    
                                         int index = widget.addSpaces
                                           ? (cnt / 2).floor()
                                           : cnt;
-
+    
                                         return widget.showColors
                                             && widget.wordColors != null
                                             && widget.wordColors![index] != null
@@ -651,19 +671,25 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         // the text selection handles (left)
                         if(_selectionRects.isNotEmpty)
                           Positioned(
-                            left: _selectionRects.first.left - 10,
-                            top: _selectionRects.first.top - 10,
+                            left: _selectionRects.first.left - 20,
+                            top: _selectionRects.first.top - 20,
                             child: Listener(
                               onPointerDown: (event) => _leftHandleSelected = true,
                               onPointerUp: (event) => _leftHandleSelected = false,
                               child: Container(
-                                height: 20,
-                                width:  20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(1000000)
+                                height: 40,
+                                width:  40,
+                                child: Center(
+                                  child: Container(
+                                    height: 20,
+                                    width:  20,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(1000000)
+                                      ),
+                                      color: widget.selectionColor,
+                                    ),
                                   ),
-                                  color: widget.selectionColor,
                                 ),
                               ),
                             ),
@@ -671,19 +697,25 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                         // the text selection handles (right)
                         if(_selectionRects.isNotEmpty)
                           Positioned(
-                            left: _selectionRects.last.right - 10,
-                            top: _selectionRects.last.bottom-10,
+                            left: _selectionRects.last.right - 20,
+                            top: _selectionRects.last.bottom - 20,
                             child: Listener(
                               onPointerDown: (event) => _rightHandleSelected = true,
                               onPointerUp: (event) => _rightHandleSelected = false,
                               child: Container(
-                                height: 20,
-                                width:  20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(1000000)
+                                height: 40,
+                                width:  40,
+                                child: Center(
+                                  child: Container(
+                                    height: 20,
+                                    width:  20,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(1000000)
+                                      ),
+                                      color: widget.selectionColor,
+                                    ),
                                   ),
-                                  color: widget.selectionColor,
                                 ),
                               ),
                             ),

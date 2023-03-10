@@ -34,7 +34,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
 
 * A big shout out to all current and past testers!
   * Android
-    * pa9eup, tsumugii_12, Francesco S.
+    * pa9eup, michalpatryk, tsumugii_12, Francesco S., モフン
   * iOS
     * ゆうか 田村村, モフン, Nurellina
   * Windows:

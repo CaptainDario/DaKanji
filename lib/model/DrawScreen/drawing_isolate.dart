@@ -3,6 +3,7 @@ import 'package:async/async.dart';
 
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+import 'package:tuple/tuple.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_data.dart';
 import 'package:da_kanji_mobile/model/TFLite/inference_stats.dart';
 
@@ -100,8 +101,7 @@ class DrawingIsolate {
       inferenceStats.postProcessingTime = stopwatch.elapsed.inMilliseconds;
 
       // send result and stats to main isolate
-      sendPort.send(out);
-      sendPort.send(inferenceStats);
+      sendPort.send(Tuple2.fromList([out, inferenceStats]));
     }
   }
 }

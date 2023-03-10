@@ -20,7 +20,11 @@ const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
-/// the version number of this app
+/// just the version number of this app
+String g_VersionNumber = "";
+/// the build number of this app
+String g_BuildNumber = "";
+/// the complete version number of this app: version + build number
 String g_Version = "";
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
@@ -64,6 +68,8 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+/// lin to the github repo with dependencies needed for dakanji
+const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
 
 /// link to join the discord server
 const g_DiscordInvite = "https://discord.com/invite/gdqaux3r4P";

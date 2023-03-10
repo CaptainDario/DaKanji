@@ -99,31 +99,34 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
   @override
   Widget build(BuildContext context) {
-    if(examples.isEmpty){
+    // if a result was selected, but there are no examples for it, sow icon
+    if(examples.isEmpty && widget.entry != null){
+      return Center(
+        child: Icon(Icons.search_off)
+      );
+    }
+    // if no result was selected, show nothing
+    else if(examples.isEmpty && widget.entry == null){
       return Container();
     }
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: examples.length,
-            itemBuilder: (context, no) {
-              return ExampleSentenceCard(
-                examples[no]
-              );
-            }
-          ),
-        ),
-        if(examples.length == 10)
-          TextButton(
+    // Otherwise, if there are examples, show them
+    return ListView.builder(
+      itemCount: examples.length,
+      itemBuilder: (context, no) {
+        if(examples.length == 10 && no == 9)
+          return TextButton(
             onPressed: (){
               initExamples(limit: -1);
               setState(() {});
             },
             child: Text("Show more examples")
-          )
-      ],
+          );
+
+        return ExampleSentenceCard(
+          examples[no]
+        );
+      }
     );
   }
 }

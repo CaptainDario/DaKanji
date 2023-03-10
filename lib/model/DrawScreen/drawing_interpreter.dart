@@ -1,12 +1,13 @@
-import 'package:da_kanji_mobile/model/DrawScreen/drawing_data.dart';
-import 'package:da_kanji_mobile/model/TFLite/inference_backend.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:tuple/tuple.dart';
 
+import 'package:da_kanji_mobile/model/DrawScreen/drawing_data.dart';
+import 'package:da_kanji_mobile/model/TFLite/inference_backend.dart';
+import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate.dart';
 import 'package:da_kanji_mobile/model/TFLite/interpreter_utils.dart';
 import 'package:da_kanji_mobile/model/TFLite/inference_stats.dart';
@@ -116,9 +117,9 @@ class DrawingInterpreter with ChangeNotifier{
       // store the best backend to disk
       iB = tests.first.key;
       GetIt.I<UserData>().drawingBackend = iB;
-      GetIt.I<UserData>().save();
+      await GetIt.I<UserData>().save();
 
-     print("Inference timings for Drawing: $tests");
+      print("Inference timings for Drawing: $tests");
     }
     
     print("Using: ${iB}");
@@ -141,9 +142,10 @@ class DrawingInterpreter with ChangeNotifier{
     _inferenceIsolate!.sendPort.send(input);
 
     // receive detections and stats + emit changed signal
-    _predictions = await _inferenceIsolate!.messageQueue.next;
-    InferenceStats stats = await _inferenceIsolate!.messageQueue.next;
-    stats.totalTime = stopwatch.elapsed.inMilliseconds;
+    Tuple2 tmp = await _inferenceIsolate!.messageQueue.next;
+    _predictions = tmp.item1;
+    inferenceStats = tmp.item2;
+    inferenceStats!.totalTime = stopwatch.elapsed.inMilliseconds;
     notifyListeners();
 
   }

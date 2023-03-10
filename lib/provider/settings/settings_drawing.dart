@@ -61,7 +61,7 @@ class SettingsDrawing with ChangeNotifier  {
 
   /// Identifier for the inbuilt dictionary
   @JsonKey(ignore: true)
-  String inbuiltDictId = "inbuilt";
+  String inbuiltDictId = "DaKanji";
 
   /// The default value for `customURL`
   @JsonKey(ignore: true)
@@ -78,8 +78,8 @@ class SettingsDrawing with ChangeNotifier  {
   }
 
   /// The string representation of the dictionary which will be used (long press)
-  @JsonKey(defaultValue: "inbuilt")
-  String _selectedDictionary = "inbuilt";
+  @JsonKey(defaultValue: "DaKanji")
+  String _selectedDictionary = "DaKanji";
   /// The string representation of the dictionary which will be used (long press)
   String get selectedDictionary => _selectedDictionary;
   /// The string representation of the dictionary which will be used (long press)

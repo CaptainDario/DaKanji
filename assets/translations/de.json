@@ -10,7 +10,7 @@
     "title": "\u00c4nderungen"
   },
   "DictionaryScreen": {
-    "example_tab": "Beispiel",
+    "example_tab": "Beispiele",
     "kanji_alternatives": "Alternativen",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
@@ -28,10 +28,10 @@
     "tutorial_begin_title": "Willkommen zum W\u00f6rterbuch!",
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispiels\u00e4tze, in denen das ausgew\u00e4hlte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enth\u00e4lt Informationen \u00fcber die im Wort verwendeten Kanjis. Dazu geh\u00f6ren Anzahl und Reihenfolge der Striche und die Bedeutung.",
-    "tutorial_search_input_clear_text": "Diese Schaltfl\u00e4che l\u00f6scht die Eingabe oder kopiert den Text aus der Zwischenablage.",
-    "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du Kanjia zeichnen kannst, um sie nachzuschlagen.",
+    "tutorial_search_input_clear_text": "Diese Schaltfl\u00e4che l\u00f6scht die Eingabe oder f\u00fcgt den Text aus der Zwischenablage.",
+    "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzuf\u00fcgen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld f\u00fcr die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen m\u00f6chtest.",
-    "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprache der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
+    "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprachen der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -70,7 +70,7 @@
     "word_conj_verb_te_form": "\u3066-Form",
     "word_conj_verb_volitional": "Intentional",
     "word_conj_verb_volitional_m": "Lass [nicht] machen!",
-    "word_conjugation": "Konjugation",
+    "word_conjugation": "Konjugationen",
     "word_images": "Bilder",
     "word_proverbs": "Sprichw\u00f6rter",
     "word_synonyms": "Synonyme",
@@ -99,7 +99,7 @@
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Was stimmt nicht (schreibe deine Antwort unten)?",
+    "feedback_description_text": "Was stimmt nicht? Beschreibe dein Problem unten.",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -120,6 +120,9 @@
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!",
     "complete_log": "vollst\u00e4ndiges Log",
+    "download_failed_popup_retry": "Wiederholung",
+    "download_failed_popup_text": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
+    "download_popup_permission": "Bevor Sie loslegen k\u00f6nnen, m\u00fcssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schlie\u00dfen Sie die App nicht, w\u00e4hrend der Download l\u00e4uft.",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
@@ -130,19 +133,6 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "text_pos_adverb": "Adverb: <a style=\"color:{ADVERB_COLOR}\">Dies ist ein <b>Adverb</b> Beispiel.</a>",
-    "text_pos_aux_verb": "Hilfsverb: <a style=\"color:{AUX_VERB_COLOR}\">Dies ist ein <b>Hilfsverb</b> Beispiel.</a>",
-    "text_pos_conjunction": "Konjunktion: <a style=\"color:{CONJUNCTION_COLOR}\">Dies ist ein <b>Konjunktion</b> Beispiel.</a>",
-    "text_pos_i_adj": "\u3044-Adjektiv: <a style=\"color:{I_ADJ_COLOR}\">Dies ist ein <b>\u3044-Adjektiv</b> Beispiel.</a>",
-    "text_pos_interjection": "Interjektion: <a style=\"color:{INTERJECTION_COLOR}\">Dies ist ein <b>Interjektion</b> Beispiel.</a>",
-    "text_pos_intro": "Die Bedeutung der Part of Speech (POS) Farben sind:",
-    "text_pos_na_adj": "\u306a-Adjektiv: <a style=\"color:{NA_ADJ_COLOR}\">Dies ist ein <b>\u306a-Adjektiv</b> Beispiel.</a>",
-    "text_pos_noun": "Substantiv: <a style=\"color:{NOUN_COLOR}\">Dies ist ein <b>Nomen</b> Beispiel.</a>",
-    "text_pos_particle": "Partikel: <a style=\"color:{PARTICLE_COLOR}\">Dies ist ein <b>Teilchen</b> Beispiel.</a>",
-    "text_pos_pronoun": "Pronomen: <a style=\"color:{PRONOUN_COLOR}\">Dies ist ein <b>Pronomen</b> Beispiel.</a>",
-    "text_pos_suffix": "Suffix: <a style=\"color:{SUFFIX_COLOR}\">Dies ist ein <b>Suffix</b> Beispiel.</a>",
-    "text_pos_title": "Part of Speech (POS)",
-    "text_pos_verb": "Verb: <a style=\"color:{VERB_COLOR}\">Dies ist ein <b>Verb</b> Beispiel.</a>",
     "title": "Handbuch"
   },
   "OnBoarding": {

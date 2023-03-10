@@ -186,16 +186,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               inputFormatters: [
                                 FilteringTextInputFormatter.deny(
-                                  RegExp(r"\u000d"),
+                                  RegExp(r"\u000d| "),
                                   //replacementString: "\r"
                                 ),
                                 FilteringTextInputFormatter.deny(
-                                  RegExp(r"\u000a"),
-                                  replacementString: "\n"
-                                ),
-                                // do not allow █
-                                FilteringTextInputFormatter.deny(
-                                  RegExp(r"\U+2588"),
+                                  RegExp(r"\u000a|\U+2588"),
                                   replacementString: "\n"
                                 ),
                               ],
@@ -256,6 +251,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       selectionColor: Theme.of(context).highlightColor,
                                       onSelectionChange: onCustomSelectableTextChange,
                                       onLongPress: onCustomSelectableTextLongPressed,
+                                      onTapOutsideOfText: (Offset location) {
+                                        if(popupAnimationController.isCompleted){
+                                          popupAnimationController.reverse();
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
@@ -348,7 +348,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     int end   = max(selection.baseOffset, selection.extentOffset);
     String word = mecabSurfaces
       .join(addSpaces ? " " : "")
-      .substring(start, end);
+      .substring(start, end)
+      .replaceAll(" ", "");
     setState(() {
       selectedText = word;
     });

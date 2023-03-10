@@ -21,8 +21,8 @@ class Dictionary extends StatefulWidget {
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
-  /// should the action button for drawing a character be included
-  final bool includeActionButton;
+  /// should the button for opening the drawing screen be included
+  final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
   final bool isExpanded; 
 
@@ -30,7 +30,7 @@ class Dictionary extends StatefulWidget {
     this.includeTutorial,
     {
       this.initialSearch = "",
-      this.includeActionButton = true,
+      this.includeDrawButton = true,
       this.isExpanded = false,
       Key? key
     }
@@ -94,6 +94,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 expandedHeight: constraints.maxHeight - 25,
                                 isExpanded: true,
                                 canCollapse: false,
+                                includeDrawButton: widget.includeDrawButton,
                               ),
                             ),
                           ),
@@ -118,8 +119,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: DictionaryKanjiTab(
-                                  context.read<DictSearch>().kanjiVGs,
-                                  context.read<DictSearch>().kanjiDic2s
+                                  context.read<DictSearch>().selectedResult
                                 ),
                               ),
                             ),
@@ -188,8 +188,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                             ),
                                           if(tabsSideBySide < 4) 
                                             DictionaryKanjiTab(
-                                              context.watch<DictSearch>().kanjiVGs,
-                                              context.watch<DictSearch>().kanjiDic2s
+                                              context.watch<DictSearch>().selectedResult
                                             ),
                                           if(tabsSideBySide < 4)
                                             DictionaryExampleTab(
@@ -219,6 +218,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       initialSearch: widget.initialSearch,
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
+                      includeDrawButton: widget.includeDrawButton,
                     ),
                   ),
                 ),
