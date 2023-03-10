@@ -34,9 +34,9 @@ class KanjiGroupWidget extends StatefulWidget {
 class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   /// graph of the KanjiVG element
-  final Graph graph = Graph()..isTree = true;
+  late Graph graph;
   /// builder configuration for the GraphView
-  BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
+  late BuchheimWalkerConfiguration builder;
   /// List containing all sub SVGs of the KanjiVG entry and its order matches
   /// all `Node.Id` in `graph`
   late List<String> kanjiVGStringList;
@@ -60,11 +60,13 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
   }
 
   void init(){
+    graph = Graph()..isTree = true;
+
     Tuple2 tmp = kanjiVGToGraph(widget.kanjiVG, graph);
     kanjiVGStringList = tmp.item1;
     kanjiVGChars = tmp.item2;
 
-    builder
+    builder = BuchheimWalkerConfiguration()
       ..siblingSeparation = (10)
       ..levelSeparation = (15)
       ..subtreeSeparation = (30)
@@ -94,6 +96,16 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                       (route) => false,
                       arguments: NavigationArguments(
                         false, dictSearch: kanjiVGChars[node.key!.value]
+                      )
+                    );
+                  }
+                },
+                onTap: () {
+                  if(kanjiVGChars[node.key!.value] != ""){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("copied: ${kanjiVGChars[node.key!.value]}"),
+                        duration: Duration(seconds: 1),
                       )
                     );
                   }
