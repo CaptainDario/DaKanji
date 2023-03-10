@@ -68,19 +68,19 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
 
-  late AnimationController searchBarAnimationController = AnimationController(
-    vsync: this,
-    duration: Duration(milliseconds: 400),
-  );
+  late AnimationController searchBarAnimationController;
   
   
-
   @override
   void initState() {
     super.initState();
-    updateSearchHistoryIds();
 
-    //searchBarAnimationController.drive(CurveTween(curve: Curves.easeOut));
+    searchBarAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+    );
+
+    updateSearchHistoryIds();
 
     if(widget.isExpanded){
       expanded = true;
