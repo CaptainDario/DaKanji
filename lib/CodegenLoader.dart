@@ -44,10 +44,10 @@ class CodegenLoader extends AssetLoader{
     "tutorial_begin_title": "Willkommen zum Wörterbuch!",
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
-    "tutorial_search_input_clear_text": "Diese Schaltfläche löscht die Eingabe oder kopiert den Text aus der Zwischenablage.",
-    "tutorial_search_input_draw_text": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanjia zeichnen kannst, um sie nachzuschlagen.",
+    "tutorial_search_input_clear_text": "Diese Schaltfläche löscht die Eingabe oder fügt den Text aus der Zwischenablage.",
+    "tutorial_search_input_draw_text": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzufügen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
-    "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprache der Übersetzungen kann in den Einstellungen gewählt werden.",
+    "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -86,7 +86,7 @@ class CodegenLoader extends AssetLoader{
     "word_conj_verb_te_form": "て-Form",
     "word_conj_verb_volitional": "Intentional",
     "word_conj_verb_volitional_m": "Lass [nicht] machen!",
-    "word_conjugation": "Konjugation",
+    "word_conjugation": "Konjugationen",
     "word_images": "Bilder",
     "word_proverbs": "Sprichwörter",
     "word_synonyms": "Synonyme",
@@ -251,12 +251,12 @@ static const Map<String,dynamic> en = {
     "title": "Dictionary",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the dictionary!",
-    "tutorial_examples_tab": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
-    "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
-    "tutorial_search_input_clear_text": "This button clears the input or copies the text from your clipboard.",
-    "tutorial_search_input_draw_text": "This button opens a screen in which you can draw Kanjis to look them up quickly.",
+    "tutorial_examples_tab": "Lastly, the examples tab shows you some example sentences that use the selected word.",
+    "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes stroke order, count and meanings.",
+    "tutorial_search_input_clear_text": "This button clears the input or pastes the text from your clipboard.",
+    "tutorial_search_input_draw_text": "This button opens a screen in which you can draw Kanjis to add them to the search query.",
     "tutorial_search_input_text": "This is the search input field, just tap on it to input any word you would like to search.",
-    "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
+    "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
     "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
@@ -295,7 +295,7 @@ static const Map<String,dynamic> en = {
     "word_conj_verb_te_form": "て-form",
     "word_conj_verb_volitional": "Volitional",
     "word_conj_verb_volitional_m": "Let's [not] do!",
-    "word_conjugation": "Conjugation",
+    "word_conjugation": "Conjugations",
     "word_images": "Images",
     "word_proverbs": "Proverbs",
     "word_synonyms": "Synonyms",
@@ -347,7 +347,7 @@ static const Map<String,dynamic> en = {
     "complete_log": "complete log",
     "download_failed_popup_retry": "Retry",
     "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
-    "download_popup_permission": "We need to download some files before you can get started. This will only happen once. \nPlease make sure you have a stable internet connection and do not close the app while the download is in progress.",
+    "download_popup_permission": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
@@ -363,7 +363,7 @@ static const Map<String,dynamic> en = {
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
-    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
+    "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or on the internet.",
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
     "Onboarding_3_title": "Do not know how to read a sentence?"
@@ -1013,9 +1013,9 @@ static const Map<String,dynamic> ja = {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
     "complete_log": "全てのログ",
-    "download_failed_popup_retry": "リトライ",
+    "download_failed_popup_retry": "再試行",
     "download_failed_popup_text": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
-    "download_popup_permission": "作業を開始する前に、いくつかのファイルをダウンロードする必要があります。これは一度だけ行われます。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
+    "download_popup_permission": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
     "rate_this_app": "評価",
     "whats_new": "最新情報"
   },
@@ -1031,7 +1031,7 @@ static const Map<String,dynamic> ja = {
   "OnBoarding": {
     "Onboarding_1_text": "漢字を書くだけで「DaKanji」があなたの知りたい文字を探します",
     "Onboarding_1_title": "漢字がわからない？",
-    "Onboarding_2_text": "Dakanjiは、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます",
+    "Onboarding_2_text": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
     "Onboarding_2_title": "漢字や単語を調べる",
     "Onboarding_3_text": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
     "Onboarding_3_title": "文章の読み方がわからない？"
@@ -1084,7 +1084,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_colors_text": "テキストの品詞を色別に表示します（色の意味は、マニュアルから確認できます）",
     "tutorial_fullscreen_text": "テキストをフルスクリーンに切り替えます",
     "tutorial_furigana_text": "テキストにふりがなをつけます",
-    "tutorial_processed_text_double_tap": "ダブルタップで文章を選択します。",
+    "tutorial_processed_text_double_tap": "ダブルタップで文章が選択されます。",
     "tutorial_processed_text_long_press": "長押しで単語を選択すると、品詞が表示されます",
     "tutorial_processed_text_tap": "シングルタップで単語を選択します",
     "tutorial_processed_text_text": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
@@ -1551,10 +1551,10 @@ static const Map<String,dynamic> localizations = {
       "pl": "Oceń"
     },
     "download_popup_permission": {
-      "en": "We need to download some files before you can get started. This will only happen once. \nPlease make sure you have a stable internet connection and do not close the app while the download is in progress.",
+      "en": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
       "de": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
       "ru": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
-      "ja": "作業を開始する前に、いくつかのファイルをダウンロードする必要があります。これは一度だけ行われます。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
+      "ja": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
       "zh": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
       "it": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
       "fr": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
@@ -1565,7 +1565,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Retry",
       "de": "Wiederholung",
       "ru": "Повторная попытка",
-      "ja": "リトライ",
+      "ja": "再試行",
       "zh": "重试",
       "it": "Riprova",
       "fr": "Réessayer",
@@ -1619,10 +1619,10 @@ static const Map<String,dynamic> localizations = {
       "pl": "Podejrzyj znaki i wyrazy"
     },
     "Onboarding_2_text": {
-      "en": "With \"DaKanji\" you can quickly lookup words using the inbuilt dictionary or on the internet.",
+      "en": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or on the internet.",
       "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
       "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
-      "ja": "Dakanjiは、内蔵の辞書やインターネットを使って、素早く言葉を調べることができます",
+      "ja": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
       "zh": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
       "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
       "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
@@ -2105,7 +2105,7 @@ static const Map<String,dynamic> localizations = {
       "en": "A double tap will select a sentence.",
       "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
       "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "ダブルタップで文章を選択します。",
+      "ja": "ダブルタップで文章が選択されます。",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
@@ -2262,8 +2262,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Słowo"
     },
     "word_conjugation": {
-      "en": "Conjugation",
-      "de": "Konjugation",
+      "en": "Conjugations",
+      "de": "Konjugationen",
       "ru": "Спряжение",
       "ja": "活用",
       "zh": "共轭法",
@@ -2659,8 +2659,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać."
     },
     "tutorial_search_input_clear_text": {
-      "en": "This button clears the input or copies the text from your clipboard.",
-      "de": "Diese Schaltfläche löscht die Eingabe oder kopiert den Text aus der Zwischenablage.",
+      "en": "This button clears the input or pastes the text from your clipboard.",
+      "de": "Diese Schaltfläche löscht die Eingabe oder fügt den Text aus der Zwischenablage.",
       "ru": "Эта кнопка очищает вводимый текст или копирует его из буфера обмена.",
       "ja": "入力内容のクリア、またはテキストの貼り付けができます",
       "zh": "这个按钮可以清除输入或从剪贴板上复制文本。",
@@ -2670,8 +2670,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ten przycisk czyści dane wejściowe lub kopiuje tekst ze schowka."
     },
     "tutorial_search_input_draw_text": {
-      "en": "This button opens a screen in which you can draw Kanjis to look them up quickly.",
-      "de": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanjia zeichnen kannst, um sie nachzuschlagen.",
+      "en": "This button opens a screen in which you can draw Kanjis to add them to the search query.",
+      "de": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzufügen.",
       "ru": "Эта кнопка открывает экран, на котором можно нарисовать кандзи для их быстрого поиска.",
       "ja": "漢字を書いて調べることも可能です",
       "zh": "这个按钮可以打开一个屏幕，使用时可以画出一个汉字来快速查询。",
@@ -2681,8 +2681,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać."
     },
     "tutorial_word_tab": {
-      "en": "This tab includes various information about the selected search result, such as conjugation and translations. The language of the translations can be chosen in the settings.",
-      "de": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprache der Übersetzungen kann in den Einstellungen gewählt werden.",
+      "en": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
+      "de": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
       "ru": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
       "ja": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます",
       "zh": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
@@ -2692,7 +2692,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach."
     },
     "tutorial_kanji_tab": {
-      "en": "The Kanji-tab includes information about the Kanjis used in the word. This includes number and order of strokes and meanings.",
+      "en": "The Kanji-tab includes information about the Kanjis used in the word. This includes stroke order, count and meanings.",
       "de": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
       "ru": "Вкладка Kanji-tab содержит информацию о кандзи, используемых в слове. Сюда входит количество и порядок штрихов, а также значения.",
       "ja": "検索内容に含まれる漢字の画数、書き順、意味などを見ることができます",
@@ -2703,7 +2703,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia."
     },
     "tutorial_examples_tab": {
-      "en": "Lastly, the examples tabs shows you some example sentences that use the selected word.",
+      "en": "Lastly, the examples tab shows you some example sentences that use the selected word.",
       "de": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
       "ru": "Наконец, на вкладке \"Примеры\" показаны примеры предложений, в которых используется выбранное слово.",
       "ja": "検索した単語の例文が表示されます",
