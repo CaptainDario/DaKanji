@@ -58,8 +58,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
   TextStyle headerStyle = TextStyle(color: Colors.grey);
-  /// Kanji groups Regex
-  RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke[Numbers|Paths].*a).*?>');
+  /// Kanji groups Regex, extracts all tags that are kanji part tags
+  RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke(Numbers|Paths)).*?>');
 
   @override
   void initState() {
@@ -228,6 +228,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       ),
                     ).toList(),
                     const SizedBox(height: 16,),
+
+                    // Kanji groups
                     if((kanjiGroupsRe.allMatches(widget.kanjiVG.svg)).length > 1)
                       ExpansionTile(
                         title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
