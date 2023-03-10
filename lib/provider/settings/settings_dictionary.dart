@@ -15,7 +15,7 @@ class SettingsDictionary with ChangeNotifier {
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(ignore: true)
   static const List<String> d_translationLanguageCodes = [
-    "en", "de", "ru", "it", "fr",  "es", "pl", // "zh",
+    "en", "de", "ru", "it", "fr", "es", "pl"//, "zh",
   ];
   /// All languages that are available in the dictionary in the useres order
   @JsonKey(defaultValue: d_translationLanguageCodes)
