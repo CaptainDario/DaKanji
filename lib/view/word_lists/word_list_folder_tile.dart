@@ -45,6 +45,8 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
   bool nameEditing = false;
   /// Focus node for the name editing text field
   FocusNode nameEditingFocus = FocusNode();
+  /// is an item currently being dragged over this tile
+  bool itemDraggingOverThis = false;
 
 
   @override
@@ -55,59 +57,75 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Draggable(
-      feedback: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: this.widget
-      ),
-      data: widget.node,
-      onDraggableCanceled: (velocity, offset) => setState(() => {}),
-      child: DragTarget<TreeNode>(
-        onAccept: (TreeNode data) {
-          // do not allow self drags
-          if(data == widget.node) return;
+    // make list reorderable
+    return ReorderableDelayedDragStartListener(
+      index: widget.index,
+      // make tile draggable
+      child: Draggable(
+        feedback: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Opacity(
+            opacity: 0.5,
+            child: widget
+          )
+        ),
+        data: widget.node,
+        onDraggableCanceled: (velocity, offset) => setState(() => {}),
+        // make tile droppable
+        child: DragTarget<TreeNode>(
+          onWillAccept: (data) {
+            // do not allow self drags
+            if(data == widget.node) return false;
 
-          setState(() {
-            widget.node.addChild(data.parent!.removeChild(data) as TreeNode<String>);
-          });
+            // mark this widget as accepting the element
+            setState(() {itemDraggingOverThis = true;});
 
-          widget.onDragAccept?.call(data, widget.node);
-        },
-        builder: (context, candidateItems, rejectedItems) {
-          return Card(
-            child: InkWell(
-              onTap: () {
-                if(widget.onTap != null){
-                  widget.onTap!(widget.node);
-                };
-              },
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.folder),
-                    SizedBox(width: 8.0,),
-                    Expanded(
-                      child: TextField(
-                        autofocus: true,
-                        focusNode: nameEditingFocus,
-                        controller: _controller,
-                        enabled: nameEditing,
-                        decoration: InputDecoration(
-                          border: nameEditing ? null : InputBorder.none,
-                          hintText: "Name"
-                        ),
-                        onEditingComplete: () {
-                          renamingComplete();
-                        },
-                        onTapOutside: (event) {
-                          renamingComplete();
-                        },
-                      )
-                    ),
-                    ReorderableDragStartListener(
-                      index: widget.index,
-                      child: PopupMenuButton<PopupMenuButtonItems>(
+            return true;
+          },
+          onLeave: (data) {
+            setState(() {itemDraggingOverThis = false;});
+          },
+          onAccept: (TreeNode data) {
+            setState(() {
+              widget.node.addChild(data.parent!.removeChild(data) as TreeNode<String>);
+            });
+    
+            widget.onDragAccept?.call(data, widget.node);
+          },
+          builder: (context, candidateItems, rejectedItems) {
+            return Card(
+              color: itemDraggingOverThis ? Colors.grey[300] : null,
+              child: InkWell(
+                onTap: () {
+                  if(widget.onTap != null){
+                    widget.onTap!(widget.node);
+                  };
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.folder),
+                      SizedBox(width: 8.0,),
+                      Expanded(
+                        child: TextField(
+                          autofocus: true,
+                          focusNode: nameEditingFocus,
+                          controller: _controller,
+                          enabled: nameEditing,
+                          decoration: InputDecoration(
+                            border: nameEditing ? null : InputBorder.none,
+                            hintText: "Name"
+                          ),
+                          onEditingComplete: () {
+                            renamingComplete();
+                          },
+                          onTapOutside: (event) {
+                            renamingComplete();
+                          },
+                        )
+                      ),
+                      PopupMenuButton<PopupMenuButtonItems>(
                         onSelected: (PopupMenuButtonItems value) {
                           switch(value){
                             case PopupMenuButtonItems.Rename:
@@ -128,14 +146,14 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
                             child: Text("Delete")
                           ),
                         ],
-                      )
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }
+            );
+          }
+        ),
       ),
     );
   }
@@ -147,6 +165,7 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
       nameEditing = true;
     });
     
+    // set the focus AFTER the widget has been built
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       nameEditingFocus.requestFocus();
       _controller.selection = TextSelection(
