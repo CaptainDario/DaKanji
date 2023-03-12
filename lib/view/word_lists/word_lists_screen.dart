@@ -45,6 +45,8 @@ class _WordListsScreenState extends State<WordListsScreen> {
   late List<int> searchHistoryIds;
   /// the root of this word lists
   late TreeNode<String> parent;
+  /// is an item being dragged over the back button
+  bool itemDraggingOverBack = false;
 
   @override
   void initState() {
@@ -71,17 +73,37 @@ class _WordListsScreenState extends State<WordListsScreen> {
           children: [
             // back button
             if(parent.parent != null)
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context, "/word_lists", (route) => false,
-                    arguments: NavigationArguments(
-                      false,
-                      wordListScreenNode: parent.parent
-                    )
-                  );
+              DragTarget<TreeNode<String>>(
+                onWillAccept: (data) {
+                  setState(() {itemDraggingOverBack = true;});
+                  return true;
                 },
-                icon: Icon(Icons.arrow_back)
+                onLeave: (data) {
+                  setState(() {itemDraggingOverBack = false;});
+                },
+                onAccept: (data) {
+                  setState(() {
+                    parent.removeChild(data);
+                    parent.parent!.addChild(data);
+                  });
+                },
+                builder: (context, candidateItems, rejectedItems) {
+                  return Container(
+                    color: itemDraggingOverBack ? Colors.grey[300] : null,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context, "/word_lists", (route) => false,
+                          arguments: NavigationArguments(
+                            false,
+                            wordListScreenNode: parent.parent
+                          )
+                        );
+                      },
+                      icon: Icon(Icons.arrow_back)
+                    ),
+                  );
+                }
               ),
             Expanded(child: SizedBox()),
             // add new list button
