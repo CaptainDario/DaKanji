@@ -1,6 +1,8 @@
 
 
 
+import 'package:da_kanji_mobile/model/tree_node.dart';
+
 /// Class to store arguments for navigating with named routs
 class NavigationArguments{
 
@@ -16,6 +18,10 @@ class NavigationArguments{
   //DICT
   /// query that should be searched when navigating the dictionary screen
   final String dictSearch;
+
+  // WORD LISTS
+  /// node of the word list screen that should be opened
+  final TreeNode<String>? wordListScreenNode;
   
 
   NavigationArguments(
@@ -23,7 +29,10 @@ class NavigationArguments{
     {
       this.drawSearchPrefix = "",
       this.drawSearchPostfix = "",
-      this.dictSearch = ""
+
+      this.dictSearch = "",
+
+      this.wordListScreenNode = null
     }
   );
 

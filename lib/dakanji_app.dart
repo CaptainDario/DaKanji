@@ -124,7 +124,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/word_lists":
-            return switchScreen(WordListsScreen(args.navigatedByDrawer, true));
+            return switchScreen(WordListsScreen(args.navigatedByDrawer, true, args.wordListScreenNode));
           case "/settings":
             return switchScreen(SettingsScreen(args.navigatedByDrawer));
           case "/about":
