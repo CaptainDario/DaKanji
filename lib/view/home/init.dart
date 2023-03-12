@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/word_lists.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,6 +99,8 @@ Future<void> initServices() async {
   UserData uD = await (UserData().load());
   GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
+
+  GetIt.I.registerSingleton<WordLists>(WordLists(TreeNode(""))..load());
 
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
