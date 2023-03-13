@@ -147,7 +147,7 @@ class _WordListNodeState extends State<WordListNode> {
                           : Icons.arrow_drop_up
                         ),
                         onPressed: () {
-                          if(widget.node.level <= 1) return;
+                          if(widget.node.level < 1) return;
 
                           setState(() {
                             widget.node.value.isExpanded = !widget.node.value.isExpanded;
