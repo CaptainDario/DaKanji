@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:tuple/tuple.dart';
-
 import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:da_kanji_mobile/model/word_lists.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
 
 
@@ -15,21 +14,23 @@ enum  PopupMenuButtonItems {
 class WordListNode extends StatefulWidget {
 
   /// The tree node that represents this tile
-  final TreeNode<Tuple3<String, WordListNodeType, List<int>>> node;
+  final TreeNode<WordListsData> node;
   /// The index of this tile in the list
   final int index;
   /// If the textfield should be enabled and focused when the tile is created
   final bool editTextOnCreate;
   /// Callback that is executed when the user taps on this tile, provides the
   /// `TreeNode` as a parameter
-  final void Function(TreeNode<Tuple3<String, WordListNodeType, List<int>>> node)? onTap;
+  final void Function(TreeNode<WordListsData> node)? onTap;
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
-  final void Function(TreeNode destinationNode, TreeNode thisNode)? onDragAccept;
+  final void Function(TreeNode<WordListsData> destinationNode, TreeNode thisNode)? onDragAccept;
   /// Callback that is executed when the user taps the delete button
   /// on this tile. Provides this `TreeNode` as a parameter
-  final void Function(TreeNode thisNode)? onDeletePressed;
-
+  final void Function(TreeNode<WordListsData> thisNode)? onDeletePressed;
+  /// Callback that is executed when the user taps the folder open/close button
+  /// on this tile. Provides this `TreeNode` as a parameter
+  final void Function(TreeNode<WordListsData> thisNode)? onFolderPressed;
   const WordListNode(
     this.node,
     this.index,
@@ -38,6 +39,7 @@ class WordListNode extends StatefulWidget {
       this.onTap,
       this.onDragAccept,
       this.onDeletePressed,
+      this.onFolderPressed,
       super.key
     }
   );
@@ -59,11 +61,20 @@ class _WordListNodeState extends State<WordListNode> {
 
   @override
   void initState() {
-    _controller.text = widget.node.value.item1;
+    init();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant WordListNode oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init(){
+    _controller.text = widget.node.value.name;
 
     if(widget.editTextOnCreate) nameEditing = true;
-
-    super.initState();
   }
 
   @override
@@ -73,6 +84,10 @@ class _WordListNodeState extends State<WordListNode> {
       index: widget.index,
       // make tile draggable
       child: Draggable(
+        maxSimultaneousDrags: wordListDefaultTypes.contains(widget.node.value.type)
+          ? 0
+          : 1,
+        data: widget.node,
         feedback: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Opacity(
@@ -80,14 +95,15 @@ class _WordListNodeState extends State<WordListNode> {
             child: widget
           )
         ),
-        data: widget.node,
         onDraggableCanceled: (velocity, offset) => setState(() => {}),
         // make tile droppable
         child: DragTarget<TreeNode>(
           onWillAccept: (data) {
-            // do not allow self drags
-            if(data == widget.node ||
-              wordListFolderTypes.contains(widget.node.value.item2))
+            // do not allow dropping ...
+            if(data == null ||
+              data == widget.node || // ... in itself
+              widget.node.value.type != WordListNodeType.folder || // .. in a non-user-folder
+              widget.node.getPath().contains(data)) // ... in a child
               return false;
 
             // mark this widget as accepting the element
@@ -99,77 +115,95 @@ class _WordListNodeState extends State<WordListNode> {
             setState(() {itemDraggingOverThis = false;});
           },
           onAccept: (TreeNode data) {
+
+            var d = data as TreeNode<WordListsData>;
+
             setState(() {
-              widget.node.addChild(data.parent!.removeChild(data)
-                as TreeNode<Tuple3<String, WordListNodeType, List<int>>>);
+              data.parent!.removeChild(d);
+              widget.node.addChild(d);
+              _controller.text = widget.node.value.name;
             });
     
             widget.onDragAccept?.call(data, widget.node);
           },
           builder: (context, candidateItems, rejectedItems) {
-            return Card(
+            return Container(
               color: itemDraggingOverThis ? Colors.grey[300] : null,
+              padding: EdgeInsets.fromLTRB(
+                15.0*(widget.node.level-1)+8, 0, 0, 0
+              ),
               child: InkWell(
                 onTap: () {
                   if(widget.onTap != null){
                     widget.onTap!(widget.node);
                   };
                 },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        wordListFolderTypes.contains(widget.node.value.item2)
-                          ? Icons.folder
-                          : Icons.list
-                      ),
-                      SizedBox(width: 8.0,),
-                      Expanded(
-                        child: TextField(
-                          autofocus: true,
-                          focusNode: nameEditingFocus,
-                          controller: _controller,
-                          enabled: nameEditing,
-                          decoration: InputDecoration(
-                            border: nameEditing ? null : InputBorder.none,
-                            hintText: "Name"
-                          ),
-                          onEditingComplete: () {
-                            renamingComplete();
-                          },
-                          onTapOutside: (event) {
-                            renamingComplete();
-                          },
-                        )
-                      ),
-                      if(!widget.node.value.item2.name.contains("Default"))
-                      PopupMenuButton<PopupMenuButtonItems>(
-                        onSelected: (PopupMenuButtonItems value) {
-                          switch(value){
-                            case PopupMenuButtonItems.Rename:
-                              renameButtonPressed();
-                              break;
-                            case PopupMenuButtonItems.Delete:
-                              deleteButtonPressed();
-                              break;
-                          }
+                child: Row(
+                  children: [
+                    wordListFolderTypes.contains(widget.node.value.type)
+                      ? IconButton(
+                        icon: Icon( widget.node.value.isExpanded
+                          ? Icons.arrow_drop_down
+                          : Icons.arrow_drop_up
+                        ),
+                        onPressed: () {
+                          if(widget.node.level <= 1) return;
+
+                          setState(() {
+                            widget.node.value.isExpanded = !widget.node.value.isExpanded;
+                          });
+                          widget.onFolderPressed?.call(widget.node);
                         },
-                        itemBuilder: (context) => [
-                          if(!widget.node.value.item2.name.contains("Default"))
-                            PopupMenuItem(
-                              value: PopupMenuButtonItems.Rename,
-                              child: Text("Rename")
-                            ),
-                          if(!widget.node.value.item2.name.contains("Default"))
-                            PopupMenuItem(
-                              value: PopupMenuButtonItems.Delete,
-                              child: Text("Delete")
-                            ),
-                        ],
+                      )
+                      : Container(
+                        width: 48,
+                        child: Icon(Icons.list)
                       ),
-                    ],
-                  ),
+                    SizedBox(width: 8.0,),
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        focusNode: nameEditingFocus,
+                        controller: _controller,
+                        enabled: nameEditing,
+                        decoration: InputDecoration(
+                          border: nameEditing ? null : InputBorder.none,
+                          hintText: "Name"
+                        ),
+                        onEditingComplete: () {
+                          renamingComplete();
+                        },
+                        onTapOutside: (event) {
+                          renamingComplete();
+                        },
+                      ),
+                    ),
+                    if(!wordListDefaultTypes.contains(widget.node.value.type.name.contains("Default")))
+                    PopupMenuButton<PopupMenuButtonItems>(
+                      onSelected: (PopupMenuButtonItems value) {
+                        switch(value){
+                          case PopupMenuButtonItems.Rename:
+                            renameButtonPressed();
+                            break;
+                          case PopupMenuButtonItems.Delete:
+                            deleteButtonPressed();
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        if(!wordListDefaultTypes.contains(widget.node.value.type))
+                          PopupMenuItem(
+                            value: PopupMenuButtonItems.Rename,
+                            child: Text("Rename")
+                          ),
+                        if(!wordListDefaultTypes.contains(widget.node.value.type))
+                          PopupMenuItem(
+                            value: PopupMenuButtonItems.Delete,
+                            child: Text("Delete")
+                          ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );
@@ -197,11 +231,12 @@ class _WordListNodeState extends State<WordListNode> {
     
   }
 
+  /// Executed when the user finishes renaming the folder
   void renamingComplete(){
     setState(() {
       nameEditing = false;
     });
-    widget.node.value = Tuple3(_controller.text, widget.node.value.item2, widget.node.value.item3);
+    widget.node.value.name = _controller.text;
   }
 
   /// Executed when the user presses the delete button

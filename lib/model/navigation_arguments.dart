@@ -1,7 +1,3 @@
-import 'package:tuple/tuple.dart';
-
-import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:da_kanji_mobile/model/word_lists.dart';
 
 
 
@@ -21,11 +17,6 @@ class NavigationArguments{
   /// query that should be searched when navigating the dictionary screen
   final String dictSearch;
 
-  // WORD LISTS
-  /// node of the word list screen that should be opened
-  final TreeNode<Tuple3<String, WordListNodeType, List<int>>>? wordListScreenNode;
-  
-
   NavigationArguments(
     this.navigatedByDrawer,
     {
@@ -33,8 +24,6 @@ class NavigationArguments{
       this.drawSearchPostfix = "",
 
       this.dictSearch = "",
-
-      this.wordListScreenNode = null
     }
   );
 

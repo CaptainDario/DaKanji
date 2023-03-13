@@ -142,8 +142,8 @@ class TreeNode<T> with ChangeNotifier{
     List<TreeNode<T>> path = [this];
 
     while (path.first.parent != null) {
-      if(path.first.parent != null)
-        path.insert(0, path.last.parent!);
+      TreeNode<T> parent = path.first.parent!;
+      path.insert(0, parent);
     }
 
     return path;

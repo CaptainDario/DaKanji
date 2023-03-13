@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:json_annotation/json_annotation.dart';
 
+import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:tuple/tuple.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
 part 'word_lists.g.dart';
 
@@ -56,11 +55,11 @@ enum WordListsDefaults{
 class WordLists {
 
   /// The root node of the word lists
-  late TreeNode<Tuple3<String, WordListNodeType, List<int>>> root;
+  late TreeNode<WordListsData> root;
 
   WordLists(){
-    root = TreeNode<Tuple3<String, WordListNodeType, List<int>>>(
-      Tuple3("Word Lists", WordListNodeType.root, []),
+    root = TreeNode<WordListsData>(
+      WordListsData("Word Lists", WordListNodeType.root, [], true),
     );
     
     addDefaults();
@@ -69,17 +68,17 @@ class WordLists {
   /// Addes the default folder and lists to the word lists
   void addDefaults(){
     /// add the defaults folder
-    TreeNode<Tuple3<String, WordListNodeType, List<int>>> defaults =
-      TreeNode<Tuple3<String, WordListNodeType, List<int>>>(
-        Tuple3("Defaults", WordListNodeType.folderDefault, []),
+    TreeNode<WordListsData> defaults =
+      TreeNode<WordListsData>(
+        WordListsData("Defaults", WordListNodeType.folderDefault, [], true),
       );
     root.addChild(defaults);
 
     // add defaults lists
     for (var element in WordListsDefaults.values) {
       defaults.addChild(
-        TreeNode<Tuple3<String, WordListNodeType, List<int>>>(
-          Tuple3(element.name, WordListNodeType.wordListDefault, []),
+        TreeNode<WordListsData>(
+          WordListsData(element.name, WordListNodeType.wordListDefault, [], true),
         )
       );
     }

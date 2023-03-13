@@ -5,10 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/view/word_lists/word_list_screen.dart';
-import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/view/word_lists/word_list_node.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:da_kanji_mobile/model/word_lists.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 
@@ -22,13 +22,13 @@ class WordListsScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   /// the parent of this word lists
-  final TreeNode<Tuple3<String, WordListNodeType, List<int>>>? parent;
+  final TreeNode<WordListsData>? parent;
 
   const WordListsScreen(
     this.openedByDrawer,
     this.includeTutorial,
-    this.parent,
     {
+      this.parent,
       super.key
     }
   );
@@ -42,11 +42,13 @@ class _WordListsScreenState extends State<WordListsScreen> {
   /// A list with all ids from the search history
   late List<int> searchHistoryIds;
   /// the root of this word lists
-  late TreeNode<Tuple3<String, WordListNodeType, List<int>>> parent;
+  late TreeNode<WordListsData> parent;
   /// is an item being dragged over the back button
   bool itemDraggingOverBack = false;
   /// did the user add a new node (folder / word list)
-  bool addedNewNode = false;
+  TreeNode<WordListsData>? addedNewNode;
+  /// Is currently an word lists node dragged over list
+  bool itemDraggingOverThis = false;
 
 
   @override
@@ -60,121 +62,105 @@ class _WordListsScreenState extends State<WordListsScreen> {
   @override
   Widget build(BuildContext context) {
 
+    List<TreeNode<WordListsData>> childrenDFS = parent.DFS().toList();
+
     return DaKanjiDrawer(
       currentScreen: Screens.word_lists,
       animationAtStart: !widget.openedByDrawer,
-      child: ReorderableListView(
-        buildDefaultDragHandles: false,
-        header: Row(
-          children: [
-            // back button
-            if(parent.parent != null)
-              DragTarget<TreeNode<Tuple3<String, WordListNodeType, List<int>>>>(
-                onWillAccept: (data) {
-                  setState(() {itemDraggingOverBack = true;});
-                  return true;
-                },
-                onLeave: (data) {
-                  setState(() {itemDraggingOverBack = false;});
-                },
-                onAccept: (data) {
-                  setState(() {
-                    parent.removeChild(data);
-                    parent.parent!.addChild(data);
-                  });
-                },
-                builder: (context, candidateItems, rejectedItems) {
-                  return Container(
-                    color: itemDraggingOverBack ? Colors.grey[300] : null,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context, "/word_lists", (route) => false,
-                          arguments: NavigationArguments(
-                            false,
-                            wordListScreenNode: parent.parent
-                          )
-                        );
-                      },
-                      icon: Icon(Icons.arrow_back)
-                    ),
-                  );
-                }
-              ),
-            Expanded(child: SizedBox()),
-            // add new list button
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  addedNewNode = true;
-                  parent.addChild(TreeNode(Tuple3("New List", WordListNodeType.wordList, [])));
-                });
-              },
-              icon: Icon(Icons.format_list_bulleted_add)
-            ), 
-            // add new folder button
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  addedNewNode = true;
-                  parent.addChild(TreeNode(Tuple3("New folder", WordListNodeType.folder, [])));
-                });
-              },
-              icon: Icon(Icons.create_new_folder)
-            ), 
-          ],
-        ),
-        proxyDecorator: proxyDecorator,
-        children: <Widget>[
-          for (int i = 0; i < parent.children.length; i++)
-            WordListNode(
-              parent.children[i],
-              i,
-              onTap: (TreeNode<Tuple3<String, WordListNodeType, List<int>>> node) {
-                if(wordListFolderTypes.contains(node.value.item2)){
-                  Navigator.pushNamedAndRemoveUntil(
-                    context, "/word_lists", (route) => false,
-                    arguments: NavigationArguments(
-                      false,
-                      wordListScreenNode: node
-                    )
-                  );
-                }
-                else if(wordListListypes.contains(node.value.item2)){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => 
-                      WordListScreen(
-                        node,
-                      )
-                    ),
-                  );
-                }
-              },
-              onDragAccept: (destinationNode, thisNode) {
-                setState(() {});
-              },
-              onDeletePressed: (TreeNode node) {
-                setState(() {
-                  parent.removeChild(parent.children[i]);
-                });
-              },
-              key: Key('$i'),
-              editTextOnCreate: addedNewNode && i == parent.children.length - 1 ? true : false,
-            ),
-        ],
-        onReorder: (int oldIndex, int newIndex) {
+      child: DragTarget<TreeNode<WordListsData>>(
+        onWillAccept: (data) {
+
+          if(parent.children.contains(data)) return false;
+
+          // mark this widget as accepting the element
+          setState(() {itemDraggingOverThis = true;});
+          return true;
+        },
+        onLeave: (data) {
+          setState(() {itemDraggingOverThis = false;});
+        },
+        onAccept: (data) {
           setState(() {
-            if (oldIndex < newIndex) {
-              newIndex -= 1;
-            }
-            final TreeNode<Tuple3<String, WordListNodeType, List<int>>> item =
-              parent.children.removeAt(oldIndex);
-            parent.insertChild(item, newIndex);
+            itemDraggingOverThis = false;
+            data.parent!.removeChild(data);
+            parent.addChild(data);
           });
+        },
+        builder: (context, candidateData, rejectedData) {
+          return Container(
+            color: itemDraggingOverThis ? Colors.grey[300] : null,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: SizedBox()),
+                    // add new list button
+                    IconButton(
+                      onPressed: () {
+                        addNewWordListNode(WordListNodeType.wordList);
+                      },
+                      icon: Icon(Icons.format_list_bulleted_add)
+                    ), 
+                    // add new folder button
+                    IconButton(
+                      onPressed: () {
+                        addNewWordListNode(WordListNodeType.folder);
+                      },
+                      icon: Icon(Icons.create_new_folder)
+                    ), 
+                  ],
+                ),
+                for (int i = 0; i < childrenDFS.length; i++)
+                  if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded))
+                    WordListNode(
+                      childrenDFS[i],
+                      i,
+                      onTap: (TreeNode<WordListsData> node) {
+                        if(wordListListypes.contains(node.value.type)){
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => 
+                              WordListScreen(
+                                node,
+                              )
+                            ),
+                          );
+                        }
+                      },
+                      onDragAccept: (destinationNode, thisNode) {
+                        setState(() {});
+                      },
+                      onDeletePressed: (TreeNode node) {
+                        setState(() {
+                          parent.removeChild(parent.children[i]);
+                        });
+                      },
+                      onFolderPressed: (node) => setState(() {}),
+                      key: Key('$i'),
+                      editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
+                    )
+              ],
+            ),
+          );
         }
-      ),
+      )
     );
+  }
+
+  /// Adds a new folder / word list to the tree
+  void addNewWordListNode(WordListNodeType nodeType){
+
+    // update the tree with the new widget
+    setState(() {
+      addedNewNode =
+        TreeNode(WordListsData("New folder", nodeType, [], true));
+      parent.addChild(addedNewNode!);
+    });
+    // after the naming text field has focus unset `addedNewNode`
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      addedNewNode = null;
+    });
+
   }
 
   Widget proxyDecorator(

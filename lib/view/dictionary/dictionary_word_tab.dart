@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,8 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo",
+    "Add to List"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -307,6 +309,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             }
                             else if(selection == menuItems[5]) {
                               launchUrlString(Uri.encodeFull("$g_forvo${readingOrKanji}"));
+                            }
+                            else if(selection == menuItems[6]) {
+                              AwesomeDialog(
+                                context: context,
+                                headerAnimationLoop: false,
+                                dialogType: DialogType.noHeader,
+                                body: Text("Hola")
+                              )..show();
                             }
                           },
                           itemBuilder: (context) => List.generate(
