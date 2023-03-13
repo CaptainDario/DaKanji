@@ -1,10 +1,11 @@
 import 'dart:collection';
-import 'dart:convert';
+import 'package:flutter/material.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
 
 
+/// Enum that defines the traversal mode available for the tree
 enum TreeTraversalMode{
   /// Traverse the tree in breadth first order
   BFS,
@@ -12,14 +13,15 @@ enum TreeTraversalMode{
   DFS,
 }
 
-class TreeNode<T> {
+/// A node in a tree structure, emits a notification when it is modified
+class TreeNode<T> with ChangeNotifier{
 
   /// the value of this node
   T value;
   /// a list containing all children of this TreeNode
   List<TreeNode<T>> _children = [];
   /// a list containing all children of this TreeNode
-  get children => _children;
+  List<TreeNode<T>> get children => List.unmodifiable(_children);
   /// the parent TreeNode of this TreeNode, if null this is the root
   TreeNode<T>? parent;
   /// the level of this node in the tree, 0 means it is the root
@@ -38,33 +40,45 @@ class TreeNode<T> {
 
   /// adds newNode as a child to this node
   void addChild (TreeNode<T> newNode) {
-    children.add(newNode);
+    _children.add(newNode);
     newNode.parent = this;
     
     // update the level information for the whole subtree
-    for (final node in DFS()) {
-      node._level = node.parent!.level + 1;
-    }
+    updateLevel();
+
+    notifyListeners();
   }
 
   /// Adds all nodes in `newNodes` as children to this node
   void addChildren (List<TreeNode<T>> newNodes) {
-    children.addAll(newNodes);
+    _children.addAll(newNodes);
     for (final node in newNodes) {
       node.parent = this;
     }
 
     // update the level information for the whole subtree
-    for (final node in DFS()) {
-      node._level = node.parent!.level + 1;
-    }
+    updateLevel();
+
+    notifyListeners();
+  }
+
+  /// inserts `newNode` as a child to this node at the given `index`
+  void insertChild (TreeNode<T> newNode, int index) {
+    _children.insert(index, newNode);
+    newNode.parent = this;
+
+    // update the level information for the whole subtree
+    updateLevel();
+
+    notifyListeners();
   }
   
   /// removes `node` from the children of this node and returns it
   TreeNode<T> removeChild (TreeNode<T> node) {
-    children.remove(node);
+    _children.remove(node);
     node.parent = null;
 
+    notifyListeners();
     return node;
   }
 
@@ -77,24 +91,37 @@ class TreeNode<T> {
     List<TreeNode<T>> removed = [];
 
     for (final node in nodes) {
-      removed.add(children.remove(node));
-      node.parent = null;
+      if(_children.remove(node)){
+        removed.add(node);
+        node.parent = null;
+        node.updateLevel();
+      }
     }
 
+    notifyListeners();
     return removed;
   }
 
   /// removes all nodes from the children of this node and returns them
   List<TreeNode<T>> clearChildren () {
 
-    List<TreeNode<T>> tmp = children;
+    List<TreeNode<T>> tmp = _children;
 
-    for (final node in children) {
+    for (final TreeNode<T> node in _children) {
       node.parent = null;
+      node.updateLevel();
     }
-    children.clear();
+    _children.clear();
 
+    notifyListeners();
     return tmp;
+  }
+
+  /// Update the level information of all nodes in the subtree
+  void updateLevel () {
+    for (final node in DFS()) {
+      node._level = node.parent!.level + 1;
+    }
   }
 
   /// Traverses the tree and returns the top level node
@@ -129,7 +156,7 @@ class TreeNode<T> {
     while (queue.isNotEmpty) {
       TreeNode<T> node = queue.removeFirst();
       yield node;
-      queue.addAll(node.children);
+      queue.addAll(node._children);
     }
   }
 
@@ -171,14 +198,14 @@ class TreeNode<T> {
     
     if (root.children.isEmpty) return TreeNode(root.value);
 
-    return TreeNode(root.value)..children.addAll(
-      root.children.map((e) => e._copy(e))
+    return TreeNode(root.value).._children.addAll(
+      root._children.map((e) => e._copy(e))
     );
   }
 
   @override
   String toString() {
-    return "$value, level: $level, children: ${children.map((e) => e.value)}";
+    return "$value, level: $level, children: ${_children.map((e) => e.value)}";
   }
 
   /// Converts this tree to a string by traversing it and printing the values
@@ -192,7 +219,7 @@ class TreeNode<T> {
         treeString += "\n${node.level}: ";
         previousLevel = node.level;
       }
-      treeString += "${node.value} c: ${node.children.map((e) => e.value)}\t";
+      treeString += "${node.value} c: ${node._children.map((e) => e.value)}\t";
     }
 
     return treeString;
@@ -228,7 +255,7 @@ class TreeNode<T> {
     return {
       'value': value,
       'level': level,
-      'children': children.map((e) => e.toJson()).toList(),
+      'children': _children.map((e) => e.toJson()).toList(),
     };
   }
 }
