@@ -1,8 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import 'package:tuple/tuple.dart';
+
 import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:graphview/GraphView.dart';
+import 'package:da_kanji_mobile/model/word_lists.dart';
 
 
 
@@ -11,34 +12,41 @@ enum  PopupMenuButtonItems {
   Delete
 }
 
-class WordListFolderTile extends StatefulWidget {
+class WordListNode extends StatefulWidget {
 
   /// The tree node that represents this tile
-  final TreeNode<String> node;
+  final TreeNode<Tuple3<String, WordListNodeType, List<int>>> node;
   /// The index of this tile in the list
   final int index;
+  /// If the textfield should be enabled and focused when the tile is created
+  final bool editTextOnCreate;
   /// Callback that is executed when the user taps on this tile, provides the
   /// `TreeNode` as a parameter
-  final void Function(TreeNode<String> node)? onTap;
+  final void Function(TreeNode<Tuple3<String, WordListNodeType, List<int>>> node)? onTap;
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
   final void Function(TreeNode destinationNode, TreeNode thisNode)? onDragAccept;
+  /// Callback that is executed when the user taps the delete button
+  /// on this tile. Provides this `TreeNode` as a parameter
+  final void Function(TreeNode thisNode)? onDeletePressed;
 
-  const WordListFolderTile(
+  const WordListNode(
     this.node,
     this.index,
     {
+      this.editTextOnCreate = false,
       this.onTap,
       this.onDragAccept,
+      this.onDeletePressed,
       super.key
     }
   );
 
   @override
-  State<WordListFolderTile> createState() => _WordListFolderTileState();
+  State<WordListNode> createState() => _WordListNodeState();
 }
 
-class _WordListFolderTileState extends State<WordListFolderTile> {
+class _WordListNodeState extends State<WordListNode> {
   /// The text controller for the name editing text field
   TextEditingController _controller = TextEditingController();
   /// is the name of the folder currently being edited
@@ -51,7 +59,10 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
 
   @override
   void initState() {
-    _controller.text = widget.node.value;
+    _controller.text = widget.node.value.item1;
+
+    if(widget.editTextOnCreate) nameEditing = true;
+
     super.initState();
   }
 
@@ -75,7 +86,9 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
         child: DragTarget<TreeNode>(
           onWillAccept: (data) {
             // do not allow self drags
-            if(data == widget.node) return false;
+            if(data == widget.node ||
+              wordListFolderTypes.contains(widget.node.value.item2))
+              return false;
 
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
@@ -87,7 +100,8 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
           },
           onAccept: (TreeNode data) {
             setState(() {
-              widget.node.addChild(data.parent!.removeChild(data) as TreeNode<String>);
+              widget.node.addChild(data.parent!.removeChild(data)
+                as TreeNode<Tuple3<String, WordListNodeType, List<int>>>);
             });
     
             widget.onDragAccept?.call(data, widget.node);
@@ -105,7 +119,11 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
                   padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
                   child: Row(
                     children: [
-                      Icon(Icons.folder),
+                      Icon(
+                        wordListFolderTypes.contains(widget.node.value.item2)
+                          ? Icons.folder
+                          : Icons.list
+                      ),
                       SizedBox(width: 8.0,),
                       Expanded(
                         child: TextField(
@@ -125,6 +143,7 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
                           },
                         )
                       ),
+                      if(!widget.node.value.item2.name.contains("Default"))
                       PopupMenuButton<PopupMenuButtonItems>(
                         onSelected: (PopupMenuButtonItems value) {
                           switch(value){
@@ -132,19 +151,21 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
                               renameButtonPressed();
                               break;
                             case PopupMenuButtonItems.Delete:
-                              // TODO implement delete
+                              deleteButtonPressed();
                               break;
                           }
                         },
                         itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: PopupMenuButtonItems.Rename,
-                            child: Text("Rename")
-                          ),
-                          PopupMenuItem(
-                            value: PopupMenuButtonItems.Delete,
-                            child: Text("Delete")
-                          ),
+                          if(!widget.node.value.item2.name.contains("Default"))
+                            PopupMenuItem(
+                              value: PopupMenuButtonItems.Rename,
+                              child: Text("Rename")
+                            ),
+                          if(!widget.node.value.item2.name.contains("Default"))
+                            PopupMenuItem(
+                              value: PopupMenuButtonItems.Delete,
+                              child: Text("Delete")
+                            ),
                         ],
                       ),
                     ],
@@ -180,12 +201,12 @@ class _WordListFolderTileState extends State<WordListFolderTile> {
     setState(() {
       nameEditing = false;
     });
-    widget.node.value = _controller.text;
+    widget.node.value = Tuple3(_controller.text, widget.node.value.item2, widget.node.value.item3);
   }
 
   /// Executed when the user presses the delete button
   void deleteButtonPressed(){
-    // TODO implement delete
+    widget.onDeletePressed?.call(widget.node);
   }
 
 }

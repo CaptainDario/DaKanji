@@ -1,18 +1,16 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
+import 'package:tuple/tuple.dart';
 
+import 'package:da_kanji_mobile/view/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/model/navigation_arguments.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_list_folder_tile.dart';
+import 'package:da_kanji_mobile/view/word_lists/word_list_node.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
 import 'package:da_kanji_mobile/model/word_lists.dart';
-import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/model/search_history.dart';
 
 
 
@@ -24,7 +22,7 @@ class WordListsScreen extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   /// the parent of this word lists
-  final TreeNode<String>? parent;
+  final TreeNode<Tuple3<String, WordListNodeType, List<int>>>? parent;
 
   const WordListsScreen(
     this.openedByDrawer,
@@ -44,19 +42,17 @@ class _WordListsScreenState extends State<WordListsScreen> {
   /// A list with all ids from the search history
   late List<int> searchHistoryIds;
   /// the root of this word lists
-  late TreeNode<String> parent;
+  late TreeNode<Tuple3<String, WordListNodeType, List<int>>> parent;
   /// is an item being dragged over the back button
   bool itemDraggingOverBack = false;
+  /// did the user add a new node (folder / word list)
+  bool addedNewNode = false;
+
 
   @override
   void initState() {
   
     parent = widget.parent ?? GetIt.I<WordLists>().root;
-    
-    searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearchedDesc()
-      .dictEntryIdProperty()
-      .findAllSync();
 
     super.initState();
   }
@@ -73,7 +69,7 @@ class _WordListsScreenState extends State<WordListsScreen> {
           children: [
             // back button
             if(parent.parent != null)
-              DragTarget<TreeNode<String>>(
+              DragTarget<TreeNode<Tuple3<String, WordListNodeType, List<int>>>>(
                 onWillAccept: (data) {
                   setState(() {itemDraggingOverBack = true;});
                   return true;
@@ -110,8 +106,8 @@ class _WordListsScreenState extends State<WordListsScreen> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  // TODO ADD LIST
-                  print("TODO ADD LIST");
+                  addedNewNode = true;
+                  parent.addChild(TreeNode(Tuple3("New List", WordListNodeType.wordList, [])));
                 });
               },
               icon: Icon(Icons.format_list_bulleted_add)
@@ -120,7 +116,8 @@ class _WordListsScreenState extends State<WordListsScreen> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  parent.addChild(TreeNode<String>("New folder"));
+                  addedNewNode = true;
+                  parent.addChild(TreeNode(Tuple3("New folder", WordListNodeType.folder, [])));
                 });
               },
               icon: Icon(Icons.create_new_folder)
@@ -130,22 +127,40 @@ class _WordListsScreenState extends State<WordListsScreen> {
         proxyDecorator: proxyDecorator,
         children: <Widget>[
           for (int i = 0; i < parent.children.length; i++)
-            WordListFolderTile(
+            WordListNode(
               parent.children[i],
               i,
-              onTap: (TreeNode<String> node) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context, "/word_lists", (route) => false,
-                  arguments: NavigationArguments(
-                    false,
-                    wordListScreenNode: node
-                  )
-                );
+              onTap: (TreeNode<Tuple3<String, WordListNodeType, List<int>>> node) {
+                if(wordListFolderTypes.contains(node.value.item2)){
+                  Navigator.pushNamedAndRemoveUntil(
+                    context, "/word_lists", (route) => false,
+                    arguments: NavigationArguments(
+                      false,
+                      wordListScreenNode: node
+                    )
+                  );
+                }
+                else if(wordListListypes.contains(node.value.item2)){
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => 
+                      WordListScreen(
+                        node,
+                      )
+                    ),
+                  );
+                }
               },
               onDragAccept: (destinationNode, thisNode) {
                 setState(() {});
               },
+              onDeletePressed: (TreeNode node) {
+                setState(() {
+                  parent.removeChild(parent.children[i]);
+                });
+              },
               key: Key('$i'),
+              editTextOnCreate: addedNewNode && i == parent.children.length - 1 ? true : false,
             ),
         ],
         onReorder: (int oldIndex, int newIndex) {
@@ -153,46 +168,12 @@ class _WordListsScreenState extends State<WordListsScreen> {
             if (oldIndex < newIndex) {
               newIndex -= 1;
             }
-            final TreeNode<String> item = parent.children.removeAt(oldIndex);
-            parent.children.insert(newIndex, item);
+            final TreeNode<Tuple3<String, WordListNodeType, List<int>>> item =
+              parent.children.removeAt(oldIndex);
+            parent.insertChild(item, newIndex);
           });
         }
       ),
-      /*
-      child: ListView(
-        children: [
-          Card(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => 
-                    WordList(
-                      entrySources: [],
-                      entryIds: searchHistoryIds,
-                      name: "Search History"
-                    )
-                  ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                      child: Text("Search history"),
-                    ),
-                    Text("Items: ${searchHistoryIds.length}")
-                  ],
-                ),
-              ),
-            )
-          )
-        ],
-      )
-      */
     );
   }
 

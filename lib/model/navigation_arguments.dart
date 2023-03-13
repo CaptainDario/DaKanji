@@ -1,7 +1,9 @@
-
-
+import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/word_lists.dart';
+
+
 
 /// Class to store arguments for navigating with named routs
 class NavigationArguments{
@@ -21,7 +23,7 @@ class NavigationArguments{
 
   // WORD LISTS
   /// node of the word list screen that should be opened
-  final TreeNode<String>? wordListScreenNode;
+  final TreeNode<Tuple3<String, WordListNodeType, List<int>>>? wordListScreenNode;
   
 
   NavigationArguments(

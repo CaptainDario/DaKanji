@@ -15,15 +15,12 @@ class WordList extends StatelessWidget {
   final String name;
   /// A list containing the ids of the database entries to show
   final List<int> entryIds;
-  /// A list matching `entryIds` with the sources of the entries
-  final List<DatabaseType> entrySources;
 
 
   const WordList(
     {
       required this.name,
       required this.entryIds,
-      required this.entrySources,
       super.key
     }
   );
