@@ -377,10 +377,13 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
                                   final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
 
+                                  String feedbackText = "Send to: daapplab\n" + feedback.text;
+                                  String feedbackSubject = "DaKanji $g_Version - feedback";
+
                                   await Share.shareXFiles(
                                     [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
-                                    text: feedback.text,
-                                    subject: "DaKanji $g_Version - feedback",
+                                    text: Platform.isWindows ? feedbackSubject : feedbackText,
+                                    subject: Platform.isWindows ? feedbackText : feedbackSubject,
                                     sharePositionOrigin: () {
                                       RenderBox? box = context.findRenderObject() as RenderBox?;
                                       return Rect.fromLTRB(0, 0, box!.size.height/2, box.size.width/2);
