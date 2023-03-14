@@ -111,6 +111,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       );
     }
 
+    // clear the canvas when leaving the screen
+    GetIt.I<DrawScreenState>().strokes.deleteAllStrokes();
+
   }
 
   @override
