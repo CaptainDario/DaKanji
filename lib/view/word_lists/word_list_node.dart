@@ -31,6 +31,11 @@ class WordListNode extends StatefulWidget {
   /// Callback that is executed when the user taps the folder open/close button
   /// on this tile. Provides this `TreeNode` as a parameter
   final void Function(TreeNode<WordListsData> thisNode)? onFolderPressed;
+  /// Callback that is executed when the user taps the checkbox
+  /// on this tile. Provides this `TreeNode` as a parameter
+  final void Function (TreeNode<WordListsData> thisNode)? onSelectedToggled;
+
+
   const WordListNode(
     this.node,
     this.index,
@@ -40,6 +45,7 @@ class WordListNode extends StatefulWidget {
       this.onDragAccept,
       this.onDeletePressed,
       this.onFolderPressed,
+      this.onSelectedToggled,
       super.key
     }
   );
@@ -178,31 +184,49 @@ class _WordListNodeState extends State<WordListNode> {
                         },
                       ),
                     ),
-                    if(!wordListDefaultTypes.contains(widget.node.value.type.name.contains("Default")))
-                    PopupMenuButton<PopupMenuButtonItems>(
-                      onSelected: (PopupMenuButtonItems value) {
-                        switch(value){
-                          case PopupMenuButtonItems.Rename:
-                            renameButtonPressed();
-                            break;
-                          case PopupMenuButtonItems.Delete:
-                            deleteButtonPressed();
-                            break;
+                    // checkbox for this entry
+                    if(!wordListDefaultTypes.contains(widget.node.value.type) &&
+                      widget.onSelectedToggled != null)
+                      Checkbox(
+                        value: widget.node.value.isChecked,
+                        onChanged: (value) {
+                          if(value == null) return;
+
+                          setState(() {
+                            widget.node.value.isChecked = value;
+                            widget.node.DFS().forEach((element) {
+                              element.value.isChecked = value;
+                            });
+                          });
+
+                          widget.onSelectedToggled!.call(widget.node);
                         }
-                      },
-                      itemBuilder: (context) => [
-                        if(!wordListDefaultTypes.contains(widget.node.value.type))
-                          PopupMenuItem(
-                            value: PopupMenuButtonItems.Rename,
-                            child: Text("Rename")
-                          ),
-                        if(!wordListDefaultTypes.contains(widget.node.value.type))
-                          PopupMenuItem(
-                            value: PopupMenuButtonItems.Delete,
-                            child: Text("Delete")
-                          ),
-                      ],
-                    ),
+                      ),
+                    if(!wordListDefaultTypes.contains(widget.node.value.type.name.contains("Default")))
+                      PopupMenuButton<PopupMenuButtonItems>(
+                        onSelected: (PopupMenuButtonItems value) {
+                          switch(value){
+                            case PopupMenuButtonItems.Rename:
+                              renameButtonPressed();
+                              break;
+                            case PopupMenuButtonItems.Delete:
+                              deleteButtonPressed();
+                              break;
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          if(!wordListDefaultTypes.contains(widget.node.value.type))
+                            PopupMenuItem(
+                              value: PopupMenuButtonItems.Rename,
+                              child: Text("Rename")
+                            ),
+                          if(!wordListDefaultTypes.contains(widget.node.value.type))
+                            PopupMenuItem(
+                              value: PopupMenuButtonItems.Delete,
+                              child: Text("Delete")
+                            ),
+                        ],
+                      ),
                   ],
                 ),
               ),

@@ -13,6 +13,8 @@ class WordListsData {
   List<int> wordIds;
   /// Is this node's UI is expanded (has no effect if `type` is list)
   bool isExpanded;
+  /// Is this node's checkbox checked
+  bool isChecked = false;
 
   WordListsData(
     this.name,

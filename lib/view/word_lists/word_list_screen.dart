@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_list.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
+import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 
 
 
@@ -51,13 +52,27 @@ class _WordListScreenState extends State<WordListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(widget.node.value.name)
+        ),
+      ),
       body: widget.node.value.wordIds.isEmpty
         ? Center(
           child: Text('No entries in this word list'),
         )
-        : WordList(
-          name: widget.node.value.name,
-          entryIds: widget.node.value.wordIds,
+        : SearchResultList(
+          searchResults: GetIt.I<Isars>().dictionary.jmdict.where()
+            .anyOf(widget.node.value.wordIds, (q, element) => q.idEqualTo(element))
+            .findAllSync(),
+          onSearchResultPressed: (entry){
+            // TODO open dictionary screen with this entry
+          },
         )
     );
   }

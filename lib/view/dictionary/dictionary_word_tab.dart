@@ -13,6 +13,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as W;
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -314,8 +316,25 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               AwesomeDialog(
                                 context: context,
                                 headerAnimationLoop: false,
+                                useRootNavigator: false,
                                 dialogType: DialogType.noHeader,
-                                body: Text("Hola")
+                                body: W.WordLists(
+                                  false,
+                                  GetIt.I<WordLists>().root,
+                                  onSelectionConfirmed: (selection) {
+                                    
+                                    selection.where(
+                                      (sel) =>
+                                        // assure this node is a word list
+                                        wordListListypes.contains(sel.value.type) &&
+                                        // assure that the word is not already in the list
+                                        !sel.value.wordIds.contains(widget.entry!.id)
+                                    ).forEach(
+                                      (sel) => sel.value.wordIds.add(widget.entry!.id)
+                                    );
+                                    Navigator.of(context, rootNavigator: false).pop();
+                                  },
+                                )
                               )..show();
                             }
                           },
