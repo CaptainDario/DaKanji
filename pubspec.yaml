@@ -1,9 +1,9 @@
 name: da_kanji_mobile
-description: A cross platform app for mobile and desktop to help learn and use the Japanese language.
+description: You are learning Japanese? Then you need to give "DaKanji" a try!
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+38
+version: 3.0.0+43
 
 environment:
   sdk: ">=2.18.2"
