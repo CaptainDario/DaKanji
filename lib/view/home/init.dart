@@ -179,6 +179,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
   String documentsDir =
     p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
+  print("documents directory: ${documentsDir.toString()}");
   List<FileSystemEntity> assets = [
     File("assets/dict/dictionary.isar"), File("assets/dict/examples.isar"), 
     Directory("assets/ipadic")
@@ -214,7 +215,6 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-  print("documents directory: ${documentsDirectory.toString()}");
 
   // if the file already exists delete it
   final dbFile = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
