@@ -41,12 +41,6 @@ class DaKanjiApp extends StatefulWidget {
 class _DaKanjiAppState extends State<DaKanjiApp> {
 
   @override
-  dispose() {
-    linkSub?.cancel();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
   }

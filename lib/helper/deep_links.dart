@@ -1,113 +1,37 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:app_links/app_links.dart';
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:universal_io/io.dart';
 
 
-StreamSubscription? linkSub;
+
+final AppLinks _appLinks = AppLinks();
+
+NavigationArguments? g_deepLinkNavigationArguments;
 
 Future<void> initDeepLinksStream() async {
-  // ... check initialUri
 
-  // Attach a listener to the stream
-  linkSub = linkStream.listen((String? link) {
-
-    print("Stream: "+ (link ?? "none"));
-    handleLink(link);
-
-  },
-  onError: (err) {
-    print("An error occurred handling the DeepLink stream!");
+  /// Subscribe to all events when app is started.
+  // (Use allStringLinkStream to get it as [String])
+  _appLinks.allUriLinkStream.listen((uri) {
+    if(uri.isScheme("dakanji") && uri.toString().startsWith(g_AppLink))
+      handleDeepLink(uri.toString());
   });
 }
 
-/// 
-Future<void> getInitialDeepLink() async {
-  
-  try {
-    String? initialLink = await getInitialLink();
-    print("Initial Link: " + (initialLink ?? "none"));
-    handleLink(initialLink);
-  }
-  on PlatformException {
-    print("Not started by DeepLink.");
-  }
-}
-
-void handleLink(String? link){
-
-  if(link == null) return;
+void handleDeepLink(String link){
 
   String short = link.replaceFirst(g_AppLink, "");
 
-  if(short.startsWith("jisho")){
-    print("contains jisho");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[0];
-  }
-  else if(short.startsWith("wadoku")){
-    print("contains wadoku");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[1];
-  }
-  else if(short.startsWith("weblio")){
-    print("contains weblio");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[2];
-  }
-  else if(short.startsWith("URL")){
-    print("contains custom URL");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[3];
-    short = Uri.decodeFull(short.replaceFirst("URL/", ""));
-    print("given custom url:" + short);
-    GetIt.I<Settings>().drawing.customURL = short;
-  }
-  else if(Platform.isAndroid){
-    if(short.startsWith("aedict")){
-      print("contains aedict");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[5];
-    }
-    else if(short.startsWith("akebi")){
-      print("contains akebi");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[6];
-    }
-    else if(short.startsWith("takoboto")){
-      print("contains takoboto");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[7];
-    }
-  }
-  else if(Platform.isIOS){
-    if(short.startsWith("shirabe")){
-      print("contains shirabe");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[4];
-    }
-    else if(short.startsWith("imiwa")){
-      print("contains imiwa");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[5];
-    }
-    else if(short.startsWith("japanese")){
-      print("contains japanese");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[6];
-    }
-    else if(short.startsWith("midori")){
-      print("contains midori");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[7];
-    }
-  }
-  else{
-    print("No matching dictionary found!");
-  }
+  debugPrint("Deeplink: $short");
+
+  if(short.startsWith("dictionary"))
+    handDeepLinkDict(short);
+}
+
+void handDeepLinkDict(String dictLink){
+
 }
