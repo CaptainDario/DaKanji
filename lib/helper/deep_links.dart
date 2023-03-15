@@ -10,8 +10,9 @@ import 'package:da_kanji_mobile/globals.dart';
 
 final AppLinks _appLinks = AppLinks();
 
-NavigationArguments? g_deepLinkNavigationArguments;
 
+/// Initialize the deep link stream, i.e. dakanji listening to the links that
+/// start with "dakanji://"
 Future<void> initDeepLinksStream() async {
 
   /// Subscribe to all events when app is started.
@@ -22,16 +23,30 @@ Future<void> initDeepLinksStream() async {
   });
 }
 
+/// Handles the deep link
 void handleDeepLink(String link){
 
   String short = link.replaceFirst(g_AppLink, "");
 
   debugPrint("Deeplink: $short");
 
-  if(short.startsWith("dictionary"))
-    handDeepLinkDict(short);
+  if(short.startsWith("dictionary/"))
+    handDeepLinkDict(short.replaceFirst("dictionary/", ""));
 }
 
+/// Handles deep links that are related to the dictionary
 void handDeepLinkDict(String dictLink){
-
+  NavigationArguments? args;
+  if(dictLink.startsWith("id/")){
+    args = NavigationArguments(
+      false,
+      initialEntryId: int.tryParse(dictLink.replaceFirst("id/", ""))
+    );
+  }
+  
+  if(args != null)
+    g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+      "/dictionary",
+      (route) => false, arguments: args
+    );
 }

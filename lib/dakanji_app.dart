@@ -10,7 +10,6 @@ import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
 import 'package:da_kanji_mobile/model/navigation_arguments.dart';
-import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
@@ -53,6 +52,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      navigatorKey: g_NavigatorKey,
       
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
@@ -93,6 +93,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
         // check type and extract arguments
         NavigationArguments args;
+
         if((settings.arguments is NavigationArguments)){
           args = settings.arguments as NavigationArguments;
         }
@@ -110,7 +111,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, args.drawSearchPrefix, args.drawSearchPostfix, true, true
             ));
           case "/dictionary":
-            return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
+            return switchScreen(DictionaryScreen(
+              args.navigatedByDrawer, true, args.initialDictSearch, initialEntryId: args.initialEntryId,
+            ));
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, true));
           case "/kanji":

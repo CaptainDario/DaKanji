@@ -15,7 +15,10 @@ class NavigationArguments{
 
   //DICT
   /// query that should be searched when navigating the dictionary screen
-  final String dictSearch;
+  final String initialDictSearch;
+  /// id of the entry that should be shown when navigating to the dictionary
+  /// screen
+  final int? initialEntryId;
 
   NavigationArguments(
     this.navigatedByDrawer,
@@ -23,7 +26,8 @@ class NavigationArguments{
       this.drawSearchPrefix = "",
       this.drawSearchPostfix = "",
 
-      this.dictSearch = "",
+      this.initialDictSearch = "",
+      this.initialEntryId,
     }
   );
 

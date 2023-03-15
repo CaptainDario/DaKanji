@@ -20,6 +20,9 @@ const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
+/// The key of the global navigator (material app)
+GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
+
 /// just the version number of this app
 String g_VersionNumber = "";
 /// the build number of this app
