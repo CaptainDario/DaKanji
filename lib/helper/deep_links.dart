@@ -37,10 +37,22 @@ void handleDeepLink(String link){
 /// Handles deep links that are related to the dictionary
 void handDeepLinkDict(String dictLink){
   NavigationArguments? args;
+
+  /// search by id
   if(dictLink.startsWith("id/")){
     args = NavigationArguments(
       false,
       initialEntryId: int.tryParse(dictLink.replaceFirst("id/", ""))
+    );
+  }
+  /// normal dictionary search
+  else if(dictLink.startsWith("search/")){
+    // assure that the search string is not encoded
+    String search = dictLink.replaceFirst("search/", "");
+    search = Uri.decodeFull(search);
+    args = NavigationArguments(
+      false,
+      initialDictSearch: search
     );
   }
   
