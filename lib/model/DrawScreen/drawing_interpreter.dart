@@ -77,7 +77,7 @@ class DrawingInterpreter with ChangeNotifier{
     data = DrawingData(await loadLabels());
 
     interpreter = await initInterpreterFromBackend(
-      await getBestBeckend(),
+      await getBackend(),
       _usedTFLiteAssetPath
     );
 
@@ -88,9 +88,26 @@ class DrawingInterpreter with ChangeNotifier{
     wasInitialized = true;
   }
 
-  /// Tests all available backends on this platform and write the best one to disk
-  /// and also returns it.
-  Future<InferenceBackend> getBestBeckend() async {
+  /// Returns either the saved backend or CPU backend with half the cores
+  /// available on this platform.
+  Future<InferenceBackend> getBackend() async {
+
+    InferenceBackend iB;
+
+    // check if the backend was already tested -> return it if true
+    if(GetIt.I<UserData>().drawingBackend != null) {
+      iB = GetIt.I<UserData>().drawingBackend!;
+    }
+    // Otherwise, find the best available backend and load the model
+    else {
+      iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
+    }
+
+    return iB;
+  }
+
+  /// Tests all available backends on this platform and returns it.
+  Future<InferenceBackend> getBestBackend() async {
 
     InferenceBackend iB;
 

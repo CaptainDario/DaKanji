@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -22,6 +21,8 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_icon_butt
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/view/settings/optimize_backends_popup.dart';
 
 
 
@@ -398,6 +399,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onTileTapped: (newValue) {
                               settings.advanced.useThanosSnap = newValue;
                               settings.save();
+                            },
+                          ),
+                          // text backends
+                          ResponsiveIconButtonTile(
+                            text: "Optimize Neural Network backends",
+                            icon: Icons.saved_search_sharp,
+                            onButtonPressed: () {
+                              optimizeBackendsPopup(context)..show();
                             },
                           ),
                         ],
