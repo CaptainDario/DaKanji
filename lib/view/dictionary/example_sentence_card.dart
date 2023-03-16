@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import "package:database_builder/database_builder.dart";
 
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 
@@ -67,8 +68,16 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
       return Container();
     }
 
-    return SizedBox(
-      //height: 150,
+    return GestureDetector(
+      onLongPress: () {
+        Navigator.of(context).pushNamed(
+          "/text",
+          arguments: NavigationArguments(
+            false,
+            initialText: widget.sentences.sentence
+          )
+        );
+      },
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
