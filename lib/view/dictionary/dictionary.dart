@@ -57,12 +57,21 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   @override
   void initState() {
     
+    // show the initial word if it was given
     if(widget.initialEntryId != null){
       search.selectedResult =
-      GetIt.I<Isars>().dictionary.jmdict.getSync(widget.initialEntryId!);
+        GetIt.I<Isars>().dictionary.jmdict.getSync(widget.initialEntryId!);
     }
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant Dictionary oldWidget) {
+    setState(() {
+      search.currentSearch = widget.initialSearch;
+    });
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

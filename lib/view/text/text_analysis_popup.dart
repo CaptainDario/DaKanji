@@ -42,6 +42,8 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
 
+  InAppWebViewController? webController;
+
 
   @override
   void initState() {
@@ -50,6 +52,20 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
     if(g_webViewSupported)
       tabNames.add("Deepl");
+  }
+
+  @override
+  void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
+    setState(() {
+      // load new URL
+      if(webController != null)
+        webController?.loadUrl(
+          urlRequest: URLRequest(
+            url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
+          )
+        );
+    });
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -87,6 +103,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                         labelColor: Theme.of(context).highlightColor,
                         unselectedLabelColor: Colors.grey,
                         indicatorColor: Theme.of(context).highlightColor,
+                        onTap: (tabNo){
+                          if(tabNames[tabNo] != "Deepl"){
+                            webController = null;
+                          }
+                        },
                         tabs: List.generate(tabNames.length, (index) =>
                           Padding(
                             padding: EdgeInsets.all(8.0),
@@ -101,7 +122,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                       child: TabBarView(
                         children: [
                           Dictionary(
-                            key: Key(widget.text),
                             false, 
                             initialSearch: widget.text,
                             includeDrawButton: false,
@@ -110,6 +130,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                           if(g_webViewSupported)
                             Card(
                               child: InAppWebView(
+                                //key: Key(widget.text),
                                 gestureRecognizers: 
                                   Set()..add(
                                     Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
@@ -119,6 +140,9 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                                     url: WebUri("$g_deepLUrl${widget.text}")  
                                   )
                                 ),
+                                onWebViewCreated: (controller) {
+                                  webController = controller;
+                                },
                               ),
                             )
                         ]
