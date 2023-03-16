@@ -1,8 +1,12 @@
 library my_prj.globals;
 
+import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
-import 'package:flutter/material.dart';
+
+
 
 
 /// A logs of the currently running app so that they can be attached when
@@ -19,6 +23,15 @@ const String g_AppLink = r"dakanji://dakanji/";
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
+
+// INITIALIZE APP
+/// If the user pressed the ok-button in the download popup, this will be set to
+/// true.
+bool g_userAllowedToDownload = false;
+/// have the documents services been initialized
+bool g_documentsServicesInitialized = false;
+/// The progress of initializing the app
+StreamController<String> g_initTextStream = StreamController<String>();
 
 /// just the version number of this app
 String g_VersionNumber = "";

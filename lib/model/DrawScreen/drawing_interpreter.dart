@@ -11,6 +11,7 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate.dart';
 import 'package:da_kanji_mobile/model/TFLite/interpreter_utils.dart';
 import 'package:da_kanji_mobile/model/TFLite/inference_stats.dart';
+import 'package:universal_io/io.dart';
 
 
 
@@ -133,9 +134,6 @@ class DrawingInterpreter with ChangeNotifier{
 
       // store the best backend to disk
       iB = tests.first.key;
-      GetIt.I<UserData>().drawingBackend = iB;
-      await GetIt.I<UserData>().save();
-
       print("Inference timings for Drawing: $tests");
     }
     

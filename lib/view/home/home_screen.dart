@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import 'package:da_kanji_mobile/view/home/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/view/home/rate_popup.dart' as ratePopup;
 import 'package:da_kanji_mobile/view/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/dakanji_splash.dart';
-import 'package:da_kanji_mobile/view/home/init.dart';
 
 
 
@@ -123,7 +123,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: DaKanjiSplash(),
+      body: StreamBuilder<String>(
+        stream: g_initTextStream.stream,
+        builder: (context, snapshot) {
+          return DaKanjiSplash(
+            text: snapshot.data ,
+          );
+        }
+      ),
     );
   }
 }
