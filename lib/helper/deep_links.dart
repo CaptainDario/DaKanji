@@ -32,10 +32,27 @@ void handleDeepLink(String link){
 
   if(short.startsWith("dictionary/"))
     handDeepLinkDict(short.replaceFirst("dictionary/", ""));
+  else if(short.startsWith("text/"))
+    handleDeepLinkText(short.replaceFirst("text/", ""));
+}
+
+/// Handles deep links that are related to the text screen
+void handleDeepLinkText(String textLink){
+
+  NavigationArguments args = NavigationArguments(
+    false,
+    initialText: Uri.decodeFull(textLink)
+  );
+  
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/text",
+    (route) => false, arguments: args
+  );
 }
 
 /// Handles deep links that are related to the dictionary
 void handDeepLinkDict(String dictLink){
+
   NavigationArguments? args;
 
   /// search by id
