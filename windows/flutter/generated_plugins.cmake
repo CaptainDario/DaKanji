@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  app_links
   isar_flutter_libs
   mecab_dart
   screen_retriever

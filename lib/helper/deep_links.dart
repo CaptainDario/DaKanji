@@ -1,113 +1,81 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:app_links/app_links.dart';
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:universal_io/io.dart';
 
 
-StreamSubscription? linkSub;
 
+final AppLinks _appLinks = AppLinks();
+
+
+/// Initialize the deep link stream, i.e. dakanji listening to the links that
+/// start with "dakanji://"
 Future<void> initDeepLinksStream() async {
-  // ... check initialUri
 
-  // Attach a listener to the stream
-  linkSub = linkStream.listen((String? link) {
-
-    print("Stream: "+ (link ?? "none"));
-    handleLink(link);
-
-  },
-  onError: (err) {
-    print("An error occurred handling the DeepLink stream!");
+  /// Subscribe to all events when app is started.
+  // (Use allStringLinkStream to get it as [String])
+  _appLinks.allUriLinkStream.listen((uri) {
+    if(uri.isScheme("dakanji") && uri.toString().startsWith(g_AppLink))
+      handleDeepLink(uri.toString());
   });
 }
 
-/// 
-Future<void> getInitialDeepLink() async {
-  
-  try {
-    String? initialLink = await getInitialLink();
-    print("Initial Link: " + (initialLink ?? "none"));
-    handleLink(initialLink);
-  }
-  on PlatformException {
-    print("Not started by DeepLink.");
-  }
-}
-
-void handleLink(String? link){
-
-  if(link == null) return;
+/// Handles the deep link
+void handleDeepLink(String link){
 
   String short = link.replaceFirst(g_AppLink, "");
 
-  if(short.startsWith("jisho")){
-    print("contains jisho");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[0];
+  debugPrint("Deeplink: $short");
+
+  if(short.startsWith("dictionary/"))
+    handDeepLinkDict(short.replaceFirst("dictionary/", ""));
+  else if(short.startsWith("text/"))
+    handleDeepLinkText(short.replaceFirst("text/", ""));
+}
+
+/// Handles deep links that are related to the text screen
+void handleDeepLinkText(String textLink){
+
+  NavigationArguments args = NavigationArguments(
+    false,
+    initialText: Uri.decodeFull(textLink)
+  );
+  
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/text",
+    (route) => false, arguments: args
+  );
+}
+
+/// Handles deep links that are related to the dictionary
+void handDeepLinkDict(String dictLink){
+
+  NavigationArguments? args;
+
+  /// search by id
+  if(dictLink.startsWith("id/")){
+    args = NavigationArguments(
+      false,
+      initialEntryId: int.tryParse(dictLink.replaceFirst("id/", ""))
+    );
   }
-  else if(short.startsWith("wadoku")){
-    print("contains wadoku");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[1];
+  /// normal dictionary search
+  else if(dictLink.startsWith("search/")){
+    // assure that the search string is not encoded
+    String search = dictLink.replaceFirst("search/", "");
+    search = Uri.decodeFull(search);
+    args = NavigationArguments(
+      false,
+      initialDictSearch: search
+    );
   }
-  else if(short.startsWith("weblio")){
-    print("contains weblio");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[2];
-  }
-  else if(short.startsWith("URL")){
-    print("contains custom URL");
-    GetIt.I<Settings>().drawing.selectedDictionary =
-      GetIt.I<Settings>().drawing.dictionaries[3];
-    short = Uri.decodeFull(short.replaceFirst("URL/", ""));
-    print("given custom url:" + short);
-    GetIt.I<Settings>().drawing.customURL = short;
-  }
-  else if(Platform.isAndroid){
-    if(short.startsWith("aedict")){
-      print("contains aedict");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[5];
-    }
-    else if(short.startsWith("akebi")){
-      print("contains akebi");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[6];
-    }
-    else if(short.startsWith("takoboto")){
-      print("contains takoboto");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[7];
-    }
-  }
-  else if(Platform.isIOS){
-    if(short.startsWith("shirabe")){
-      print("contains shirabe");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[4];
-    }
-    else if(short.startsWith("imiwa")){
-      print("contains imiwa");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[5];
-    }
-    else if(short.startsWith("japanese")){
-      print("contains japanese");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[6];
-    }
-    else if(short.startsWith("midori")){
-      print("contains midori");
-      GetIt.I<Settings>().drawing.selectedDictionary =
-        GetIt.I<Settings>().drawing.dictionaries[7];
-    }
-  }
-  else{
-    print("No matching dictionary found!");
-  }
+  
+  if(args != null)
+    g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+      "/dictionary",
+      (route) => false, arguments: args
+    );
 }

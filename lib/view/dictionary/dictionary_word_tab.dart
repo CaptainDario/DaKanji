@@ -211,7 +211,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                         (route) => true,
                                         arguments: NavigationArguments(
                                           false,
-                                          dictSearch: e.kanjis.length > 0
+                                          initialDictSearch: e.kanjis.length > 0
                                           ? e.kanjis.first
                                           : e.readings.first
                                         )

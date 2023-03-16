@@ -71,7 +71,7 @@ dependencies:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
       path: liquid_swipe_flutter
 
-  uni_links: 0.5.1                # android, iOS, web
+  app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
 
   # packages which should only target specific platforms
   android_intent_plus: 3.0.2      # android

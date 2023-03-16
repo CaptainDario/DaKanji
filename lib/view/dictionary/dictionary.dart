@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/provider/isars.dart';
+import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -25,11 +28,14 @@ class Dictionary extends StatefulWidget {
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
   final bool isExpanded; 
+  /// The id of the entry that should be shown when the dict is opened
+  final int? initialEntryId;
 
   const Dictionary(
     this.includeTutorial,
     {
       this.initialSearch = "",
+      this.initialEntryId,
       this.includeDrawButton = true,
       this.isExpanded = false,
       Key? key
@@ -44,13 +50,29 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
 
   /// How many tabs should be shown side by side in the window 
   int tabsSideBySide = -1;
-  /// Function that is executed when the tab was changed
-  late void Function() changeTab;
   /// Current search in the dictionary
   DictSearch search = DictSearch();
-  /// Used to check if `widget.initialQuery` changed
-  String initialSearch = "";
 
+
+  @override
+  void initState() {
+    
+    // show the initial word if it was given
+    if(widget.initialEntryId != null){
+      search.selectedResult =
+        GetIt.I<Isars>().dictionary.jmdict.getSync(widget.initialEntryId!);
+    }
+
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant Dictionary oldWidget) {
+    setState(() {
+      search.currentSearch = widget.initialSearch;
+    });
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +81,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
       value: search,
       child: LayoutBuilder(
         builder: ((context, constraints) {
-  
+          
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
     
