@@ -115,7 +115,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, true, args.initialDictSearch, initialEntryId: args.initialEntryId,
             ));
           case "/text":
-            return switchScreen(TextScreen(args.navigatedByDrawer, true));
+            return switchScreen(TextScreen(args.navigatedByDrawer, true, initialText: args.initialText,));
           case "/kanji":
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/kuzushiji":
