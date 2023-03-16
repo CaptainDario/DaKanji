@@ -63,6 +63,7 @@ assets/dict/*
 # ignore mecab files
 assets/ipadic
 assets/__MACOSX
+assets/ipadic.zip
 
 # plugins to ignore
 # ignore custom tf lite flutter repo
