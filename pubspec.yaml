@@ -3,7 +3,7 @@ description: You are learning Japanese? Then you need to give "DaKanji" a try!
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+43
+version: 3.0.0+44
 
 environment:
   sdk: ">=2.18.2"
@@ -179,7 +179,9 @@ flutter:
     # large files
     # tf lite models
     - assets/tflite_models/
+
+    # can be downloaded
     # mecab
-    - assets/ipadic/
+    - assets/ipadic.zip
     # dictionary
     - assets/dict/
