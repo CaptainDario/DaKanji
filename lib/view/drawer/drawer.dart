@@ -307,6 +307,23 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 drawerWidth: _drawerWidth,
                                 drawerController: _drawerController,
                               ),
+                            // Drawer entry to go to the kana screen
+                            if(kDebugMode)
+                              DrawerElement(
+                                // TODO change to kana icon
+                                leading: IconData(
+                                  0x304B,
+                                  fontFamily: "kouzan"
+                                ),
+                                leadingSize: 0.7,
+                                leadingAlignment: Alignment(-1000, 0),
+                                // TODO add to google localization
+                                title: "kana", //LocaleKeys.KuzushijiScreen_title.tr(),
+                                route: "/kana",
+                                selected: widget.currentScreen == Screens.kana,
+                                drawerWidth: _drawerWidth,
+                                drawerController: _drawerController,
+                              ),
                             // Drawer entry to go to the kuzushiji screen
                             if(kDebugMode)
                               DrawerElement(
