@@ -49,6 +49,7 @@ dependencies:
   simple_html_css: 4.0.0
   animations: 2.0.7
   dio: 5.0.1
+  flutter_speed_dial: 6.2.0
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)

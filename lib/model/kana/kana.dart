@@ -1,5 +1,8 @@
+import 'package:kana_kit/kana_kit.dart';
 
 
+
+/// Hiragana
 List<List<String>> hiragana = [
   ["あ", "い", "う", "え", "お"],
   ["か", "き", "く", "け", "こ"],
@@ -10,6 +13,11 @@ List<List<String>> hiragana = [
   ["ま", "み", "む", "め", "も"],
   ["や",  "",  "ゆ",  "", "よ"],
   ["ら", "り", "る", "れ", "ろ"],
-  ["わ",   "",  "",   "", "を"],
-  ["ん"]
+  ["わ",   "", "を",  "", "ん"],
 ];
+
+List<List<String>> katakana = hiragana.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
