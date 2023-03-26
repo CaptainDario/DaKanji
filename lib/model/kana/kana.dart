@@ -2,7 +2,7 @@ import 'package:kana_kit/kana_kit.dart';
 
 
 
-/// Hiragana
+/// 2D Hiragana table
 List<List<String>> hiragana = [
   ["あ", "い", "う", "え", "お"],
   ["か", "き", "く", "け", "こ"],
@@ -16,6 +16,37 @@ List<List<String>> hiragana = [
   ["わ",   "", "を",  "", "ん"],
 ];
 
+List<List<String>> hiraDakuten = [
+  ["が", "ぎ", "ぐ", "げ", "ご"],
+  ["ざ", "じ", "ず", "ぜ", "ぞ"],
+  ["だ", "ぢ", "づ", "で", "ど"],
+  ["ば", "び", "ぶ", "べ", "ぼ"],
+  ["ぱ", "ぴ", "ぷ", "ぺ", "ぽ"],
+];
+
+List<List<String>> hiraHandakuten = [
+  ["ぱ", "ぴ", "ぷ", "ぺ", "ぽ"],
+];
+
+List<List<String>> hiraYoon = [
+  ["きゃ", "きゅ", "きょ"],
+  ["しゃ", "しゅ", "しょ"],
+  ["ちゃ", "ちゅ", "ちょ"],
+  ["にゃ", "にゅ", "にょ"],
+  ["ひゃ", "ひゅ", "ひょ"],
+  ["みゃ", "みゅ", "みょ"],
+  ["りゃ", "りゅ", "りょ"],
+];
+
+List<List<String>> hiraYoonDakuten = [
+  ["ぎゃ", "ぎゅ", "ぎょ"],
+  ["じゃ", "じゅ", "じょ"],
+  ["ぢゃ", "ぢゅ", "ぢょ"],
+  ["びゃ", "びゅ", "びょ"],
+  ["ぴゃ", "ぴゅ", "ぴょ"],
+];
+
+/// 2D Katakana table
 List<List<String>> katakana = hiragana.map((e) => 
   e.map((e) =>
     KanaKit().toKatakana(e)
