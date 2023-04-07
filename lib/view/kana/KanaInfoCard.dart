@@ -81,7 +81,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                   // kana
                   Expanded(
                     child: Center(
-                      child: SvgPicture.string(kanaSvg),
+                      child: SvgPicture.string(
+                        kanaSvg,
+                        color: Theme.of(context).brightness == Brightness.light ?
+                        Colors.black : Colors.white,
+                      ),
                     )
                   ),
                   // mnemonic (if there is one)
@@ -97,7 +101,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                   if(widget.kana.length > 1)
                     Expanded(
                       child: Center(
-                        child: SvgPicture.string(yoonSVG),
+                        child: SvgPicture.string(
+                          yoonSVG,
+                          color: Theme.of(context).brightness == Brightness.light ?
+                        Colors.black : Colors.white,
+                        ),
                       )
                     )
                 ],
