@@ -92,8 +92,8 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                   if(widget.kana.length < 2)
                     Expanded(
                       child: Center(
-                        child: Text(
-                          "Mnemonic - picture"
+                        child: Image.asset(
+                          "assets/images/kana/individuals/${widget.kana}.png",
                         )
                       )
                     ),
