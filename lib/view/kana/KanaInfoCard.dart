@@ -2,10 +2,10 @@ import 'package:da_kanji_mobile/model/kana/kana.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:kana_kit/kana_kit.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 
@@ -105,14 +105,25 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
             ),
             if(mnemonic != null)
               Expanded(
-                child: Wrap(
-                  clipBehavior: Clip.hardEdge,
-                  children: [
-                    Text(
-                      overflow: TextOverflow.fade,
-                      mnemonic!
-                    ),
-                  ],
+                child: Center(
+                  child: Wrap(
+                    clipBehavior: Clip.hardEdge,
+                    children: [
+                      MarkdownBody(
+                        styleSheet: MarkdownStyleSheet(
+                          p: TextStyle(
+                            fontSize: 20,
+                          ),
+                          // bold text
+                          strong: TextStyle(
+                            fontSize: 20,
+                          )
+                        ),
+                        data: mnemonic!,
+                        softLineBreak: true,
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],
