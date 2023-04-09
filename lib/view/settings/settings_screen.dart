@@ -103,12 +103,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           text: settings.drawing.customURL,
                           enabled: true,
                           hintText: LocaleKeys.SettingsScreen_draw_custom_url_hint.tr(),
-                          icon: Icons.info_outline,
+                          leadingIcon: Icons.info_outline,
                           onChanged: (value) {
                             settings.drawing.customURL = value;
                             settings.save();
                           },
-                          onButtonPressed: () => showCustomURLPopup(context),
+                          onLeadingIconPressed: () => showCustomURLPopup(context),
                         ),
                       // invert long/short press
                       ResponsiveCheckBoxTile(
@@ -409,6 +409,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               optimizeBackendsPopup(context)..show();
                             },
                           ),
+                          ResponsiveCheckBoxTile(
+                            text: "test",
+                            value: false
+                          )
                         ],
                       ),
                       // #endregion
