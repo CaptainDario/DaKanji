@@ -67,8 +67,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   FocusNode searchTextFieldFocusNode = FocusNode();
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
-
+  /// AnimationController for closing and opening the search bar
   late AnimationController searchBarAnimationController;
+  /// Animation for closing and opening the search bar
+  late Animation<double> searchBarAnimation;
+
   
   
   @override
@@ -79,6 +82,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       vsync: this,
       duration: Duration(milliseconds: 400),
     );
+    searchBarAnimation = new Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(new CurvedAnimation(
+      parent: searchBarAnimationController,
+      curve: Curves.easeIn
+    ));
 
     updateSearchHistoryIds();
 
@@ -226,13 +236,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             ),
             if(searchBarInputHeight != 0)
               AnimatedBuilder(
-                animation: searchBarAnimationController,
+                animation: searchBarAnimation,
                 builder: (context, child) {
                   return Container(
                     //duration: Duration(milliseconds: 400),
                     //curve: Curves.easeInOut,
                     height: (widget.expandedHeight - searchBarInputHeight)
-                        * searchBarAnimationController.value,
+                        * searchBarAnimation.value,
                     child: child 
                   );
                 },
