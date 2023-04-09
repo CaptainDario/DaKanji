@@ -31,7 +31,7 @@ bool g_userAllowedToDownload = false;
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
-StreamController<String> g_initTextStream = StreamController<String>();
+StreamController<String> g_initTextStream = StreamController<String>.broadcast();
 
 /// just the version number of this app
 String g_VersionNumber = "";
