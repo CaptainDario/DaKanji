@@ -144,7 +144,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         : Icons.search),
                       onPressed: () {
                         if(!widget.canCollapse) return;
-  
+
+                        //close onscreen keyboard
+                        FocusManager.instance.primaryFocus?.unfocus();
+
                         setState(() {
                           expanded = !expanded;
 
