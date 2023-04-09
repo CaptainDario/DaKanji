@@ -251,12 +251,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   ? SearchResultList(
                     searchResults: context.watch<DictSearch>().searchResults,
                     onSearchResultPressed: onSearchResultPressed,
+                    showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                   )
                   // otherwise the search history
                   : SearchResultList(
                     searchResults: searchHistory,
                     onSearchResultPressed: onSearchResultPressed,
                     reversed: true,
+                    showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                   )
               )
           ],

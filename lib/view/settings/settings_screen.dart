@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -235,6 +236,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         ),
                       ),
+                      // show word frequency in search results / dictionary
+                      ResponsiveCheckBoxTile(
+                        text: "Show word frequency",
+                        value: GetIt.I<Settings>().dictionary.showWordFruequency,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            GetIt.I<Settings>().dictionary.showWordFruequency = value;
+                            GetIt.I<Settings>().save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          await AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Text(
+                                "test"
+                              )
+                            )
+                          )..show();
+                        },
+                      ),
                       // Do not deconjugate inputs to the dictionary
                       /*
                       ResponsiveCheckBoxTile(
@@ -409,10 +435,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               optimizeBackendsPopup(context)..show();
                             },
                           ),
-                          ResponsiveCheckBoxTile(
-                            text: "test",
-                            value: false
-                          )
                         ],
                       ),
                       // #endregion

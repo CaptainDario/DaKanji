@@ -14,6 +14,8 @@ class SearchResultList extends StatefulWidget {
   final List searchResults;
   /// should the searchResults be shown in reverse
   final bool reversed;
+  /// If true the word frequency will be displayed
+  final bool showWordFrequency;
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
@@ -21,8 +23,9 @@ class SearchResultList extends StatefulWidget {
   const SearchResultList(
     {
       required this.searchResults,
-      this.onSearchResultPressed,
       this.reversed = false,
+      this.showWordFrequency = false,
+      this.onSearchResultPressed,
       super.key
     }
   );
@@ -42,6 +45,7 @@ class _SearchResultListState extends State<SearchResultList> {
         return SearchResultCard(
           dictEntry: widget.searchResults[i],
           resultIndex: i,
+          showWordFrequency: widget.showWordFrequency,
           onPressed: (selection) {
             if(widget.onSearchResultPressed != null)
                 widget.onSearchResultPressed!(selection);
