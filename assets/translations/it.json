@@ -145,6 +145,11 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
+    "advanced_settings_optimize_cancel": "Annullamento",
+    "advanced_settings_optimize_nn": "Ottimizzare le reti neurali",
+    "advanced_settings_optimize_ok": "Ok",
+    "advanced_settings_optimizing": "Ottimizzazione...\nNon chiudere l'applicazione.",
+    "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione pu\u00f2 richiedere un po' di tempo a seconda del dispositivo, ma pu\u00f2 migliorare notevolmente le prestazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
     "custom_url_explanation": "L'applicazione sostituir\u00e0 un segnaposto nell'URL con il carattere previsto. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto \u00e8: \"\u53e3\" e si vuole aprire il sito \"jisho.org\". Per prima cosa \u00e8 necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/\u53e3\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",

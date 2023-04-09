@@ -145,6 +145,11 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
+    "advanced_settings_optimize_cancel": "Cancelar",
+    "advanced_settings_optimize_nn": "Optimizar las redes neuronales",
+    "advanced_settings_optimize_ok": "Ok",
+    "advanced_settings_optimizing": "Optimizando...\nPor favor, no cierre la aplicaci\u00f3n.",
+    "advanced_settings_optimze_warning": "Esto optimizar\u00e1 la ejecuci\u00f3n de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",

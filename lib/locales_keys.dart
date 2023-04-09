@@ -135,6 +135,11 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
+  static const SettingsScreen_advanced_settings_optimize_cancel = 'SettingsScreen.advanced_settings_optimize_cancel';
+  static const SettingsScreen_advanced_settings_optimize_nn = 'SettingsScreen.advanced_settings_optimize_nn';
+  static const SettingsScreen_advanced_settings_optimize_ok = 'SettingsScreen.advanced_settings_optimize_ok';
+  static const SettingsScreen_advanced_settings_optimizing = 'SettingsScreen.advanced_settings_optimizing';
+  static const SettingsScreen_advanced_settings_optimze_warning = 'SettingsScreen.advanced_settings_optimze_warning';
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';

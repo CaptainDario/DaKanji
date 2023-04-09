@@ -145,6 +145,11 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend d'inf\u00e9rence (n\u00e9cessite un red\u00e9marrage)",
+    "advanced_settings_optimize_cancel": "Annuler",
+    "advanced_settings_optimize_nn": "Optimiser les r\u00e9seaux neuronaux",
+    "advanced_settings_optimize_ok": "Ok",
+    "advanced_settings_optimizing": "Optimisation...\nNe fermez pas l'application.",
+    "advanced_settings_optimze_warning": "Cela optimisera l'ex\u00e9cution du r\u00e9seau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut am\u00e9liorer consid\u00e9rablement les performances.",
     "advanced_settings_snap": "Je suis in\u00e9vitable...",
     "advanced_settings_title": "Param\u00e8tres avanc\u00e9s",
     "custom_url_explanation": "L'application remplacera un caract\u00e8re de remplacement dans l'URL par le caract\u00e8re pr\u00e9dit. Ce caract\u00e8re de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caract\u00e8re pr\u00e9dit est : '\u53e3' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web \u00e0 rechercher. Dans ce cas : 'https://jisho.org/search/\u53e3'. Maintenant, seul le caract\u00e8re dans l'URL doit \u00eatre remplac\u00e9 par le caract\u00e8re de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",

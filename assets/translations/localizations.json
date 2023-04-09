@@ -20,7 +20,7 @@
       "it": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
       "fr": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
       "es": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
-      "pl": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nDaKanji dostępne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje możesz zobaczyć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJeżeli napotkasz problemy korzystając z tej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj]({GITHUB_ISSUES}), dołącz na [serwer discord]({DISCORD_SERVER}) albo wyślij [e-mail](daapplab@gmail.com). \nPolityka prywatności dostępna jest [tutaj]({PRIVACY_POLICE})"
+      "pl": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nDaKanji dostępne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje możesz zobaczyć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJeżeli napotkasz problemy korzystając z tej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj]({GITHUB_ISSUES}), dołącz na [serwer discord]({DISCORD_SERVER}) albo użyj menu opinii aby wysłać zrzut ekranu z opisem"
     },
     "show_changelog": {
       "en": "Show me the complete changelog.",
@@ -468,7 +468,7 @@
       "it": "Riprova",
       "fr": "Réessayer",
       "es": "Reintentar",
-      "pl": "Retry"
+      "pl": "Ponów"
     },
     "download_failed_popup_text": {
       "en": "Download failed, please assure that you have a stable internet connection.",
@@ -517,7 +517,7 @@
       "pl": "Podejrzyj znaki i wyrazy"
     },
     "Onboarding_2_text": {
-      "en": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or on the internet.",
+      "en": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
       "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
       "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
       "ja": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
@@ -525,7 +525,7 @@
       "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
       "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
       "es": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
-      "pl": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub w Internecie."
+      "pl": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub użyj skrótu do słownika Internetowego."
     },
     "Onboarding_3_title": {
       "en": "Do not know how to read a sentence?",
@@ -536,10 +536,10 @@
       "it": "Non sapete leggere una frase?",
       "fr": "Vous ne savez pas comment lire une phrase ?",
       "es": "¿No sabe leer una frase?",
-      "pl": "Nie wiesz, jak czytać zdania?"
+      "pl": "Nie wiesz jak przeczytać zdanie?"
     },
     "Onboarding_3_text": {
-      "en": "Use DaKanji's text analysis tools to add furigana, spaces and more or translate the whole sentence.",
+      "en": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
       "de": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
       "ru": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
       "ja": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
@@ -547,7 +547,7 @@
       "it": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
       "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
       "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
-      "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne lub przetłumacz całe zdanie."
+      "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie."
     }
   },
   "SettingsScreen": {
@@ -692,7 +692,7 @@
       "it": "Convertire gli input in forma base",
       "fr": "Convertir les entrées en forme de base",
       "es": "Convertir entradas en forma básica",
-      "pl": "Przekształcenie danych wejściowych na postać podstawową"
+      "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
     },
     "dict_languages": {
       "en": "Show translations in (drag to reorder)",
@@ -780,7 +780,7 @@
       "it": "La trasparenza dell'applicazione",
       "fr": "La transparence de l'application",
       "es": "La transparencia de la aplicación",
-      "pl": "Przejrzystość aplikacji"
+      "pl": "Transparentność aplikacji"
     },
     "advanced_settings_title": {
       "en": "Advanced settings",
@@ -814,6 +814,61 @@
       "fr": "Je suis inévitable...",
       "es": "Soy inevitable...",
       "pl": "Jestem nieunikniony..."
+    },
+    "advanced_settings_optimize_nn": {
+      "en": "Optimize Neural Networks",
+      "de": "Neuronale Netze optimieren",
+      "ru": "Оптимизация нейронных сетей",
+      "ja": "ニューラルネットの最適化",
+      "zh": "优化神经网络",
+      "it": "Ottimizzare le reti neurali",
+      "fr": "Optimiser les réseaux neuronaux",
+      "es": "Optimizar las redes neuronales",
+      "pl": "Optymalizacja sieci neuronowych"
+    },
+    "advanced_settings_optimizing": {
+      "en": "Optimizing...\nPlease do not close the app.",
+      "de": "Optimiert...\nBitte schließen Sie die App nicht.",
+      "ru": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
+      "ja": "最適化中...\nアプリを閉じないようにしてください。",
+      "zh": "正在优化...\n请不要关闭该应用程序。",
+      "it": "Ottimizzazione...\nNon chiudere l'applicazione.",
+      "fr": "Optimisation...\nNe fermez pas l'application.",
+      "es": "Optimizando...\nPor favor, no cierre la aplicación.",
+      "pl": "Optymalizacja...\nProszę nie zamykać aplikacji."
+    },
+    "advanced_settings_optimze_warning": {
+      "en": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
+      "de": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
+      "ru": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
+      "ja": "これにより、ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nお使いのデバイスによっては時間がかかる場合がありますが、劇的に性能が向上します。",
+      "zh": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
+      "it": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
+      "fr": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
+      "es": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
+      "pl": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie."
+    },
+    "advanced_settings_optimize_cancel": {
+      "en": "Cancel",
+      "de": "Abbrechen",
+      "ru": "Отмена",
+      "ja": "キャンセル",
+      "zh": "取消",
+      "it": "Annullamento",
+      "fr": "Annuler",
+      "es": "Cancelar",
+      "pl": "Anuluj"
+    },
+    "advanced_settings_optimize_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "オッケー",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
     }
   },
   "WebviewScreen": {
@@ -850,7 +905,7 @@
       "it": "Feedback",
       "fr": "Commentaires",
       "es": "Comentarios",
-      "pl": "Informacja zwrotna"
+      "pl": "Opinia"
     },
     "draw": {
       "en": "draw",
@@ -861,7 +916,7 @@
       "it": "sorteggio",
       "fr": "dessiner",
       "es": "dibujar",
-      "pl": "rysować"
+      "pl": "rysuj"
     },
     "feedback_description_text": {
       "en": "What's wrong? Write your issue below.",
@@ -883,7 +938,7 @@
       "it": "navigare",
       "fr": "naviguer sur",
       "es": "navegue por",
-      "pl": "poruszać się po stronie"
+      "pl": "nawigacja"
     },
     "submit": {
       "en": "submit",
@@ -907,7 +962,7 @@
       "it": "Manuale",
       "fr": "Manuel",
       "es": "Manual",
-      "pl": "Ręcznie"
+      "pl": "Instrukcja"
     }
   },
   "TextScreen": {
@@ -942,7 +997,7 @@
       "it": "Benvenuti nell'elaborazione del testo!",
       "fr": "Bienvenue dans le traitement de texte !",
       "es": "¡Bienvenido al tratamiento de textos!",
-      "pl": "Zapraszamy na obróbkę tekstu!"
+      "pl": "Zapraszamy do przetwaczanie tekstu!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
@@ -986,7 +1041,7 @@
       "it": "Con un solo tocco si seleziona una parola.",
       "fr": "Une simple pression permet de sélectionner un mot.",
       "es": "Un solo toque seleccionará una palabra.",
-      "pl": "Pojedyncze stuknięcie powoduje wybór słowa."
+      "pl": "Pojedyncze stuknięcie spowoduje zaznaczenie słowa."
     },
     "tutorial_processed_text_long_press": {
       "en": "A long press will select a word and show the Part of Speech information.",
@@ -1008,7 +1063,7 @@
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
       "es": "Un doble toque seleccionará una frase.",
-      "pl": "Podwójne stuknięcie powoduje wybranie zdania."
+      "pl": "Podwójne stuknięcie spowoduje zaznaczenie zdania."
     },
     "tutorial_processed_text_triple_tap": {
       "en": "A triple tap will select a paragraph.",
@@ -1052,7 +1107,7 @@
       "it": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
       "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
       "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
-      "pl": "Ten przycisk pokazuje słowa tekstu w różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
+      "pl": "Ten przycisk oznacza części mowy w tekscie różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
     },
     "tutorial_fullscreen_text": {
       "en": "This button switches the processed text to full screen.",
@@ -1068,57 +1123,68 @@
     "pos_suffix": {
       "en": "suffix",
       "de": "Suffix",
-      "ja": "接尾辞"
+      "ja": "接尾辞",
+      "pl": "przyrostek"
     },
     "pos_na_adj": {
       "en": "na-adjective",
       "de": "na-Adjektiv",
-      "ja": "な形容詞"
+      "ja": "な形容詞",
+      "pl": "przymiotnik na-"
     },
     "pos_noun": {
       "en": "noun",
       "de": "Substantiv",
-      "ja": "名詞"
+      "ja": "名詞",
+      "pl": "rzeczownik"
     },
     "pos_prefix": {
       "en": "prefix",
       "de": "Präfix",
-      "ja": "接頭辞"
+      "ja": "接頭辞",
+      "pl": "przedrostek"
     },
     "pos_verb": {
       "en": "verb",
       "de": "Verb",
-      "ja": "動詞"
+      "ja": "動詞",
+      "pl": "czasownik"
     },
     "pos_i_adjective": {
       "en": "i-adjective",
       "de": "i-Adjektiv",
-      "ja": "い形容詞"
+      "ja": "い形容詞",
+      "pl": "przymiotnik i-"
     },
     "pos_adverb": {
       "en": "adverb",
       "de": "Adverb",
-      "ja": "副詞"
+      "ja": "副詞",
+      "pl": "przysłowek"
     },
     "pos_adnominal": {
       "en": "adnominal",
       "de": "Adnominal",
-      "ja": "連体詞"
+      "ja": "連体詞",
+      "pl": "przydawka"
     },
     "pos_conjunction": {
       "en": "conjunction",
       "de": "Konjunktion",
-      "ja": "接続詞"
+      "ja": "接続詞",
+      "pl": "spójnik"
     },
     "pos_particle": {
       "en": "particle",
       "de": "Partikel",
-      "ja": "助詞"
+      "ja": "助詞",
+      "pl": "partykuła"
     },
     "pos_auxillary_verb": {
       "en": "auxilary verb",
       "de": "Hilfsverb",
-      "ja": "助動詞"
+      "ja": "助動詞",
+      "pl": "czasownik pomocniczy"
     },
     "pos_exclamation": {
       "en": "exclamation",
@@ -1232,12 +1298,12 @@
     "word_conj_plain": {
       "en": "Plain",
       "de": "Einfach",
-      "ja": "普通形"
+      "ja": "普通体"
     },
     "word_conj_polite": {
       "en": "Polite",
       "de": "Höflich",
-      "ja": "ます形"
+      "ja": "丁寧体"
     },
     "word_conj_verb_non_past": {
       "en": "Present, (Future)",

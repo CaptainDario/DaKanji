@@ -145,6 +145,11 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
+    "advanced_settings_optimize_cancel": "Abbrechen",
+    "advanced_settings_optimize_nn": "Neuronale Netze optimieren",
+    "advanced_settings_optimize_ok": "Ok",
+    "advanced_settings_optimizing": "Optimiert...\nBitte schlie\u00dfen Sie die App nicht.",
+    "advanced_settings_optimze_warning": "Dadurch wird die Ausf\u00fchrung des neuronalen Netzwerks f\u00fcr Ihr Ger\u00e4t optimiert.\nDies kann je nach Ger\u00e4t eine Weile dauern, kann aber die Leistung erheblich verbessern.",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '\u53e3' und man wil es auf 'jisho.org' nachschlagen. Daf\u00fcr muss als erste die URL der website, welche f\u00fcr das Suchen benutzt wird, herausgefunden werden. F\u00fcr 'jisho.org' ist das: 'https://jisho.org/search/\u53e3'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das f\u00fchrt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
