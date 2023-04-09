@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:da_kanji_mobile/model/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -56,6 +57,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   /// The functions to be called when the menu items are pressed
   late List<Function> menuFunctions;  
 
+  final AudioPlayer kanaSoundPlayer = AudioPlayer();
+
 
   @override
   void initState() {
@@ -71,6 +74,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       vsync: this,
       duration: Duration(milliseconds: 250)
     );
+
     super.initState();
   }
 
@@ -153,7 +157,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                     isPortrait,
                     showRomaji: showRomaji,
                     onTap: (String kana) {
-                      print("Pressed: $kana");
+                      kanaSoundPlayer.setAsset("assets/audios/kana/individuals/${kana}.wav");
+                      kanaSoundPlayer.play();
                       setState(() {
                         currentKana = kana;
                         currentKanaX =
@@ -162,7 +167,6 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                         currentKanaY = MediaQuery.of(context).size.height / gridRowCount * getKanaY(kana)
                           + cellHeight/2;
                         _controller.forward(from: 0);
-                        print("currentKanaX: $currentKanaX");
                       });
                     },
                   ),
