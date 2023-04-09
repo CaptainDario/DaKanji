@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/model/kana/kana.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
@@ -8,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
+import 'package:da_kanji_mobile/model/kana/kana.dart';
 
 
 
@@ -35,6 +35,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   String yoonSVG = "";
   /// The mnemonic of the kana
   String? mnemonic = null;
+
 
   @override
   void initState() {
