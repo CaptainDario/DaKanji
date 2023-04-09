@@ -53,6 +53,7 @@ dependencies:
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
+  just_audio: 0.9.32
 
   isar: any # included in dakanji dictionary
   isar_flutter_libs: any # included in dakanji dictionary
@@ -168,9 +169,10 @@ flutter:
     - assets/images/onboarding/onboarding_3_1.png
     - assets/images/onboarding/onboarding_3_2.png
     - assets/animations/
-    # kana mnemonics
+    # kana mnemonics / sounds
     - assets/images/kana/individuals/
-    # brush
+    - assets/audios/kana/individuals/
+    # kanji drawing brush
     - assets/images/brush.png
     # icons
     - assets/icons/
@@ -191,6 +193,6 @@ flutter:
     # tf lite models
     - assets/tflite_models/
     # mecab
-    #- assets/ipadic/
+    - assets/ipadic/
     # dictionary
-    #- assets/dict/
+    - assets/dict/
