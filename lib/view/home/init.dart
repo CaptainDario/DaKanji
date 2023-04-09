@@ -349,6 +349,7 @@ Future<void> optimizeTFLiteBackendsForModels() async {
   DrawingInterpreter d = DrawingInterpreter();
   await d.init();
   GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
+  d.free();
 
   print("Finished optimizing TFLite backends for models...");
   
