@@ -403,7 +403,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           // text backends
                           ResponsiveIconButtonTile(
-                            text: "Optimize Neural Network backends",
+                            text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
                             icon: Icons.saved_search_sharp,
                             onButtonPressed: () {
                               optimizeBackendsPopup(context)..show();
