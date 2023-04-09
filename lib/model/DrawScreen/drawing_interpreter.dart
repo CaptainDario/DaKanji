@@ -101,7 +101,11 @@ class DrawingInterpreter with ChangeNotifier{
     }
     // Otherwise, find the best available backend and load the model
     else {
-      iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
+      // on single core return CPU_1
+      if(Platform.numberOfProcessors == 1)
+        iB = getCPUFromString("CPU_1");
+      else
+        iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
     }
 
     return iB;
