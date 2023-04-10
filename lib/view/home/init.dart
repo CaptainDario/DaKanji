@@ -142,7 +142,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   GetIt.I.registerSingleton<DictionarySearch>(
     DictionarySearch(
-      2,
+      GetIt.I<Settings>().advanced.noOfSearchIsolates,
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
         isoToiso639_2B[e]!.name
       ).toList(),
