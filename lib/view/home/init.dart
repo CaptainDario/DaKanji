@@ -147,7 +147,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
         isoToiso639_2B[e]!.name
       ).toList(),
       GetIt.I<Isars>().dictionary.directory!,
-      GetIt.I<Isars>().dictionary.name
+      GetIt.I<Isars>().dictionary.name,
+      GetIt.I<Settings>().dictionary.convertToHiragana
     )
   );
   GetIt.I<DictionarySearch>().init();

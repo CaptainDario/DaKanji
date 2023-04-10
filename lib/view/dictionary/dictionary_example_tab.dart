@@ -45,7 +45,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
     if(widget.entry != null){
       var searchTerm = widget.entry!.kanjis.length != 0 ?
-        widget.entry!.kanjis.first : widget.entry!.romaji.first;
+        widget.entry!.kanjis.first : widget.entry!.hiraganas.first;
 
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;

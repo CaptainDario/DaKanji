@@ -59,11 +59,11 @@ class SettingsDictionary with ChangeNotifier {
   bool searchDeconjugate = d_searchDeconjugate;
 
   @JsonKey(ignore: true)
-  static const bool d_searchKanaize = true;
-  @JsonKey(defaultValue: d_searchKanaize)
+  static const bool d_convertToHiragana = true;
+  @JsonKey(defaultValue: d_convertToHiragana)
   /// Should the search term be converted to kana if it is written in romaji
   /// before searching
-  bool searchKanaize = d_searchKanaize;
+  bool convertToHiragana = d_convertToHiragana;
 
 
   SettingsDictionary();
