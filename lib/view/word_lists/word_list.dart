@@ -4,11 +4,12 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 
 
-/// A widget to show a word list
+/// A widget to show a word list, i.e.: the actual entries
 class WordList extends StatelessWidget {
 
   /// The name of this list
@@ -45,7 +46,17 @@ class WordList extends StatelessWidget {
         searchResults: GetIt.I<Isars>().dictionary.jmdict.where()
           .anyOf(entryIds, (q, element) => q.idEqualTo(element))
           .findAllSync(),
-        onSearchResultPressed: (entry){
+        onSearchResultPressed: (entry) async {
+          await Navigator.pushNamed(
+            context, 
+            '/dictionary', 
+            //(route) => false,
+            arguments: NavigationArguments(
+              false, dictSearch: entry.kanjis.first
+            )
+          );
+        },
+        onDismissed: (DismissDirection direction, JMdict entry, int idx) {
 
         },
       )

@@ -65,6 +65,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   double searchBarInputHeight = 0;
   /// The FoucsNode of the search input field
   FocusNode searchTextFieldFocusNode = FocusNode();
+  /// A list containing the ids of all searches the user made
+  /// matches the search history Isar collection
+  List<int> searchHistoryIds = [];
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
   /// AnimationController for closing and opening the search bar
@@ -257,8 +260,22 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   : SearchResultList(
                     searchResults: searchHistory,
                     onSearchResultPressed: onSearchResultPressed,
-                    reversed: true,
+                    //reversed: true,
                     showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                    onDismissed: (direction, entry, idx) async {
+                      int id = searchHistoryIds.removeAt(
+                        (idx).toInt()
+                      );
+                      
+                      await GetIt.I<Isars>().searchHistory.writeTxn(() async {
+                        final success = await GetIt.I<Isars>().searchHistory.searchHistorys
+                          .delete(id);
+                        debugPrint('Deleted search history entry: $success');
+                      });
+                      setState(() {
+                        updateSearchHistoryIds();
+                      });
+                    }
                   )
               )
           ],
@@ -269,11 +286,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// updates the search history
   void updateSearchHistoryIds(){
+    searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
+      .sortByDateSearchedDesc()
+      .idProperty()
+      .findAllSync();
     List<int> ids = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearched()
+      .sortByDateSearchedDesc()
       .dictEntryIdProperty()
       .findAllSync();
-    searchHistory = GetIt.I<Isars>().dictionary.jmdict.getAllSync(ids).toList();
+    searchHistory = GetIt.I<Isars>().dictionary.jmdict
+      .getAllSync(ids)
+      .toList();
   }
 
   /// callback that is executed when the user presses on a search result

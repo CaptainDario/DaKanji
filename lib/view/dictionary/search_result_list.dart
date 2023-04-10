@@ -7,7 +7,6 @@ import 'search_result_card.dart';
 
 
 /// List that shows the search results of `DictSearch`
-/// Needs a `Provider<Dictsearch>` above it in the widget tree
 class SearchResultList extends StatefulWidget {
 
   /// The search results that should be shown in the list
@@ -19,6 +18,10 @@ class SearchResultList extends StatefulWidget {
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
+  /// Callback that is executed when the user dismisses a search result.
+  /// Provides the DissmissDirection the dismissed item and
+  /// the index in the list as a parameter
+  final void Function(DismissDirection direction, JMdict entry, int idx)? onDismissed;
 
   const SearchResultList(
     {
@@ -26,6 +29,7 @@ class SearchResultList extends StatefulWidget {
       this.reversed = false,
       this.showWordFrequency = false,
       this.onSearchResultPressed,
+      this.onDismissed,
       super.key
     }
   );
@@ -42,14 +46,33 @@ class _SearchResultListState extends State<SearchResultList> {
       itemBuilder: ((context, index) {
         // determine index based on 
         int i = widget.reversed ? widget.searchResults.length-index-1 : index;
-        return SearchResultCard(
-          dictEntry: widget.searchResults[i],
-          resultIndex: i,
-          showWordFrequency: widget.showWordFrequency,
-          onPressed: (selection) {
-            if(widget.onSearchResultPressed != null)
-                widget.onSearchResultPressed!(selection);
-          } 
+
+        return Dismissible(
+          key: ValueKey(widget.searchResults[i].id),
+          direction: widget.onDismissed != null
+            ? DismissDirection.endToStart
+            : DismissDirection.none,
+          background: Container(
+            color: Colors.red,
+            child: Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(Icons.delete)
+            ),
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(left: 20),
+          ),
+          onDismissed: (DismissDirection direction) {
+            widget.onDismissed?.call(direction, widget.searchResults[i], i);
+          },
+          child: SearchResultCard(
+            dictEntry: widget.searchResults[i],
+            resultIndex: i,
+            showWordFrequency: widget.showWordFrequency,
+            onPressed: (selection) {
+              if(widget.onSearchResultPressed != null)
+                  widget.onSearchResultPressed!(selection);
+            } 
+          ),
         );
       })
     );
