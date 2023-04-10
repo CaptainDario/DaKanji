@@ -47,6 +47,8 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
   TabController? tabController;
   /// The conjugated word that is displayed currently
   String conjugatedWord = "";
+  /// The part of speech of the word so the conjugation patterns can be determined
+  List<Pos> pos = [];
 
 
   @override
@@ -118,17 +120,21 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
     // reset all conjugation variables
     conjugationTitles.clear(); conjugationExplanations.clear(); _conjos.clear();
     tabTitles.clear(); words.clear();
+    pos = widget.pos;
+    if(pos.contains(Pos.adj_na) && pos.contains(Pos.n)){
+      pos.remove(Pos.adj_na);
+    }
     
-    for (int i = 0; i < widget.pos.length; i++){
+    for (int i = 0; i < pos.length; i++){
 
       // add "だ" coplua for noun and "な" adjectives
-      if(widget.pos[i] == Pos.n || widget.pos[i] == Pos.adj_na){
-        widget.pos[i] = Pos.cop;
+      if(pos[i] == Pos.n || pos[i] == Pos.adj_na){
+        pos[i] = Pos.cop;
         words.add(widget.word + "だ");
       }
       // add "する" to words that conjugate with "する" 
-      else if(widget.pos[i] == Pos.vs){
-        widget.pos[i] = Pos.vs_i;
+      else if(pos[i] == Pos.vs){
+        pos[i] = Pos.vs_i;
         words.add(widget.word + "する");
       }
       else{
@@ -136,21 +142,21 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
       }
 
       // add conjugation titles and descriptions matching the POS
-      if(posEnumToPosDescription[widget.pos[i]]!.contains(" verb")){
+      if(posEnumToPosDescription[pos[i]]!.contains(" verb")){
         conjugationTitles.add(verbConjugations.map((e) => e.item1).toList());
         conjugationExplanations.add(verbConjugations.map((e) => e.item2).toList());
         _conjugations.add(verbConjugations.map((e) => e.item3).toList());
         tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_verb.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_plain.tr()}");
         tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_verb.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_polite.tr()}");
       }
-      else if(posEnumToPosDescription[widget.pos[i]]!.contains("adjective")){
+      else if(posEnumToPosDescription[pos[i]]!.contains("adjective")){
         conjugationTitles.add(adjectiveConjugations.map((e) => e.item1).toList());
         conjugationExplanations.add(adjectiveConjugations.map((e) => e.item2).toList());
         _conjugations.add(adjectiveConjugations.map((e) => e.item3).toList());
         tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_adjective.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_plain.tr()}");
         tabTitles.add("${LocaleKeys.DictionaryScreen_word_conj_adjective.tr()} - ${LocaleKeys.DictionaryScreen_word_conj_polite.tr()}");
       }
-      else if (widget.pos.contains(Pos.cop)){
+      else if (pos.contains(Pos.cop)){
         conjugationTitles.add(adjectiveConjugations.map((e) => e.item1).toList());
         conjugationExplanations.add(adjectiveConjugations.map((e) => e.item2).toList());
         _conjugations.add(adjectiveConjugations.map((e) => e.item3).toList());
@@ -165,19 +171,19 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
       for (int j = 0; j < _conjugations[i].length; j++) {
 
         _conjos[i].add([
-          conjosFromArgs(widget.pos[i], _conjugations[i][j], false, false)
+          conjosFromArgs(pos[i], _conjugations[i][j], false, false)
           .map((conjo) => 
             conjugate(words[i], conjo)
           ).toList().join(" / "),
-          conjosFromArgs(widget.pos[i], _conjugations[i][j], true, false)
+          conjosFromArgs(pos[i], _conjugations[i][j], true, false)
           .map((conjo) => 
             conjugate(words[i], conjo)
           ).toList().join(" / "),
-          conjosFromArgs(widget.pos[i], _conjugations[i][j], false, true)
+          conjosFromArgs(pos[i], _conjugations[i][j], false, true)
           .map((conjo) => 
             conjugate(words[i], conjo)
           ).toList().join(" / "),
-          conjosFromArgs(widget.pos[i], _conjugations[i][j], true, true)
+          conjosFromArgs(pos[i], _conjugations[i][j], true, true)
           .map((conjo) => 
             conjugate(words[i], conjo)
           ).toList().join(" / ")
