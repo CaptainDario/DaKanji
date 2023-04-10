@@ -414,9 +414,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
     int txtCnt = 0;
     for (var i = 0; i < _analyzedText.length; i++) {
-      // remove furigana when: non Japanese, kana only, reading == word
+      // remove furigana when: non Japanese, kana only, no reading, reading == word
       if(!GetIt.I<KanaKit>().isJapanese(_analyzedText[i].surface) ||
         GetIt.I<KanaKit>().isKana(_analyzedText[i].surface) ||
+        _analyzedText[i].features.length < 8 ||
         _analyzedText[i].features[7] == _analyzedText[i].surface
       )
       {
