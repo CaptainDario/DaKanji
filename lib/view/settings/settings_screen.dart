@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -257,8 +258,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             btnOkColor: g_Dakanji_green,
                             btnOkOnPress: (){},
                             body: Center(
-                              child: Text(
-                                LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr()
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr()
+                                ),
                               )
                             )
                           )..show();
@@ -282,8 +286,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             btnOkColor: g_Dakanji_green,
                             btnOkOnPress: (){},
                             body: Center(
-                              child: Text(
-                                LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                                ),
                               )
                             )
                           )..show();
@@ -292,11 +299,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // Convert to kana before searching
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_dict_kanaize.tr(),
-                        value: settings.dictionary.searchKanaize,
+                        value: settings.dictionary.convertToHiragana,
                         leadingIcon: Icons.info_outline,
                         onTileTapped: (value) {
                           setState(() {
-                            settings.dictionary.searchKanaize = value;
+                            settings.dictionary.convertToHiragana = value;
                             settings.save();
                           });
                         },
@@ -307,8 +314,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             btnOkColor: g_Dakanji_green,
                             btnOkOnPress: (){},
                             body: Center(
-                              child: Text(
-                                LocaleKeys.SettingsScreen_dict_kanaize_body.tr(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_kanaize_body.tr(),
+                                ),
                               )
                             )
                           )..show();
