@@ -25,6 +25,8 @@ class Dictionary extends StatefulWidget {
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
   final bool isExpanded; 
+  /// Should the search term be deconjugated before searching
+  final bool allowDeconjugation;
 
   const Dictionary(
     this.includeTutorial,
@@ -32,6 +34,7 @@ class Dictionary extends StatefulWidget {
       this.initialSearch = "",
       this.includeDrawButton = true,
       this.isExpanded = false,
+      this.allowDeconjugation=true,
       Key? key
     }
   ) : super(key: key);
@@ -95,6 +98,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 isExpanded: true,
                                 canCollapse: false,
                                 includeDrawButton: widget.includeDrawButton,
+                                allowDeconjugation: widget.allowDeconjugation
                               ),
                             ),
                           ),
@@ -219,6 +223,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
                       includeDrawButton: widget.includeDrawButton,
+                      allowDeconjugation: widget.allowDeconjugation
                     ),
                   ),
                 ),

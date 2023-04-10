@@ -1,10 +1,11 @@
-import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
@@ -83,6 +84,7 @@ class _DictionaryScreenState
         widget.includeTutorial,
         initialSearch: widget.initialSearch,
         isExpanded: widget.initialSearch != "",
+        allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
       )
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/view/text/text_analysis_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +8,8 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/view/text/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/show_cases/multi_focus.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
@@ -151,6 +152,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                 poupAnimationController: popupAnimationController,
                 padding: 8.0,
                 constraints: constraints,
+                allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
                 children: [
                   // Text input
                   Focus(

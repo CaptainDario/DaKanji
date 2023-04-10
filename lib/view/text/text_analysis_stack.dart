@@ -17,6 +17,8 @@ class TextAnalysisStack extends StatefulWidget {
   final double padding;
   /// BoxConstraints in which the TextAnalysisPopup should be movable
   final BoxConstraints constraints;
+  /// Should the text be deconjugated
+  final bool allowDeconjugation;
 
   const TextAnalysisStack(
     {
@@ -24,6 +26,7 @@ class TextAnalysisStack extends StatefulWidget {
       required this.textToAnalyze,
       required this.poupAnimationController,
       required this.constraints,
+      this.allowDeconjugation=true,
       this.padding = 8.0,
       super.key
     }

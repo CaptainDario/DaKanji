@@ -32,8 +32,10 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool isExpanded; 
   /// Can the search results be collapsed
   final bool canCollapse;
-  /// shoul the button to navigate to the drawing screen be included
+  /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
+  /// should queries be deconjugated
+  final bool allowDeconjugation;
 
   const DictionarySearchWidget(
     {
@@ -42,6 +44,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
+      this.allowDeconjugation = true,
       super.key
     }
   );
@@ -108,7 +111,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch, true);
+        await updateSearchResults(initialSearch, widget.allowDeconjugation);
       }
       if(mounted)
         setState(() {});
@@ -191,7 +194,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         });
                       },
                       onChanged: (text) async {
-                        await updateSearchResults(text, true);
+                        await updateSearchResults(text, widget.allowDeconjugation);
                         setState(() {});
                       },
                     ),
@@ -339,7 +342,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data, true);
+      await updateSearchResults(data, widget.allowDeconjugation);
     }
     expanded = true;
     searchBarAnimationController.forward();
