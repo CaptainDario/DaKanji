@@ -41,7 +41,9 @@ String g_BuildNumber = "";
 String g_Version = "";
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
-const int g_MinTimesOpenedToAsknotShowRate = 51;
+const int g_MinTimesOpenedToAsknotShowRate = 401;
+/// How often does the app need to be opened to ask the user to rate the app
+const int g_AskRateAfterEach = 20;
 /// all versions which implemented new features for the drawing screen
 List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
