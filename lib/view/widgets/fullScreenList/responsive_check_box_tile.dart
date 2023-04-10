@@ -10,7 +10,10 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
     {
       required this.text,
       required this.value,
+      this.leadingIcon,
+      this.infoText,
       this.onTileTapped,
+      this.onLeadingIconPressed,
       Key? key
     }
   ) : super(key: key);
@@ -19,8 +22,15 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
   final String text;
   /// the current value of the checkbox
   final bool value;
+  /// the icon for the button to press
+  final IconData? leadingIcon;
+  /// when set to a value shows a leading info icon and when the user presses
+  /// this icon a info dialog will open
+  final String? infoText;
   /// callback which will be executed by in every tap
   final Function (bool value)? onTileTapped;
+  /// callback which will be execute when the icon button on the side is pressed
+  final Function? onLeadingIconPressed;
 
   @override
   State<ResponsiveCheckBoxTile> createState() => _ResponsiveCheckBoxTileState();
@@ -28,7 +38,7 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
 
 class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
 
-
+  /// is the tile checked or not
   bool checked = false;
 
   @override
@@ -51,6 +61,24 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
           width: width,
           child: Row(
             children: [
+              if(widget.leadingIcon != null)
+                Center(
+                  child: SizedBox(
+                    child: FittedBox(
+                      child: IconButton(
+                        splashRadius: tileHeight*0.5,
+                        onPressed: () {
+                          setState(() {
+                            if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!();
+                          });
+                        },
+                        icon: Icon(
+                          widget.leadingIcon,
+                        )
+                      ),
+                    ),
+                  ),
+                ),
               Expanded(
                 child: Container(
                   height: (tileHeight*0.75),
@@ -73,7 +101,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                       checked = value;
                     }
 
-                    if(widget.onTileTapped != null) widget.onTileTapped!(checked);
+                    widget.onTileTapped?.call(checked);
                   });
                 },
               ),

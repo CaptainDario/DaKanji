@@ -19,6 +19,7 @@ class TextAnalysisPopup extends StatefulWidget {
   const TextAnalysisPopup(
     {
       required this.text,
+      this.allowDeconjugation=true,
       this.onMovedViaHeader,
       this.onResizedViaCorner,
       Key? key
@@ -26,6 +27,8 @@ class TextAnalysisPopup extends StatefulWidget {
 
   /// The text shown in this widget
   final String text;
+
+  final bool allowDeconjugation;
   /// Callback that is executed when the popup was moved by dragging it at the 
   /// header
   final Function(PointerMoveEvent)? onMovedViaHeader;
@@ -126,6 +129,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                             initialSearch: widget.text,
                             includeDrawButton: false,
                             isExpanded: true,
+                            allowDeconjugation: widget.allowDeconjugation,
                           ),
                           if(g_webViewSupported)
                             Card(

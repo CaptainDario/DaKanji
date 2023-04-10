@@ -1,10 +1,13 @@
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +25,9 @@ import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_icon_butt
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/view/settings/optimize_backends_popup.dart';
+import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_slider_tile.dart';
 
 
 
@@ -102,17 +108,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           text: settings.drawing.customURL,
                           enabled: true,
                           hintText: LocaleKeys.SettingsScreen_draw_custom_url_hint.tr(),
-                          icon: Icons.info_outline,
+                          leadingIcon: Icons.info_outline,
                           onChanged: (value) {
                             settings.drawing.customURL = value;
                             settings.save();
                           },
-                          onButtonPressed: () => showCustomURLPopup(context),
+                          onLeadingIconPressed: () => showCustomURLPopup(context),
                         ),
                       // invert long/short press
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_draw_invert_short_long_press.tr(),
-                        value: GetIt.I<Settings>().drawing.invertShortLongPress,
+                        value: settings.drawing.invertShortLongPress,
                         onTileTapped: (bool? newValue){
                           settings.drawing.invertShortLongPress = newValue ?? false;
                           settings.save();
@@ -121,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // double tap empties canvas
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_draw_double_tap_empty_canvas.tr(),
-                        value: GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap,
+                        value: settings.drawing.emptyCanvasAfterDoubleTap,
                         onTileTapped: (bool? newValue){
                           settings.drawing.emptyCanvasAfterDoubleTap = newValue ?? false;
                           settings.save();
@@ -130,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if(g_webViewSupported)
                         ResponsiveCheckBoxTile(
                           text: LocaleKeys.SettingsScreen_draw_browser_for_online_dict.tr(),
-                          value: GetIt.I<Settings>().drawing.useWebview,
+                          value: settings.drawing.useWebview,
                           onTileTapped: (value) {
                             settings.drawing.useWebview = value;
                             settings.save();
@@ -180,7 +186,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: List.generate(
                             settings.dictionary.translationLanguageCodes.length,
                             (index) {
-                              String lang = GetIt.I<Settings>().dictionary.translationLanguageCodes[index];
+                              String lang = settings.dictionary.translationLanguageCodes[index];
                               return GestureDetector(
                                 onTap: () {
                                   if(lang == iso639_1.en.name)
@@ -234,16 +240,90 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         ),
                       ),
-                      // Do not deconjugate inputs to the dictionary
-                      /*
+                      // show word frequency in search results / dictionary
                       ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
-                        value: false,
+                        text: LocaleKeys.SettingsScreen_dict_show_word_freq.tr(),
+                        value: settings.dictionary.showWordFruequency,
+                        leadingIcon: Icons.info_outline,
                         onTileTapped: (value) {
-
+                          setState(() {
+                            settings.dictionary.showWordFruequency = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          await AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr()
+                                ),
+                              )
+                            )
+                          )..show();
                         },
                       ),
-                      */
+                      // try to deconjugate words before searching
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+                        value: settings.dictionary.searchDeconjugate,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.searchDeconjugate = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          await AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                                ),
+                              )
+                            )
+                          )..show();
+                        },
+                      ),
+                      // Convert to kana before searching
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_kanaize.tr(),
+                        value: settings.dictionary.convertToHiragana,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.convertToHiragana = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          await AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_kanaize_body.tr(),
+                                ),
+                              )
+                            )
+                          )..show();
+                        },
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -325,7 +405,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         },
                       ),
-                      // windows size
+                      // window size
                       if(g_desktopPlatform)
                         ResponsiveIconButtonTile(
                           text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
@@ -352,29 +432,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       // window opacity
                       if(g_desktopPlatform)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Text(
-                                LocaleKeys.SettingsScreen_misc_window_opacity.tr()
-                              )
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Slider(
-                                value: settings.misc.windowOpacity,
-                                max: 1.0,
-                                min: 0.2,
-                                onChanged: (double value) {
-                                  windowManager.setOpacity(value);
-                                  settings.misc.windowOpacity = value;
-                                  settings.save();
-                                },
-                              ),
-                            ),
-                          ],
+                        ResponsiveSliderTile(
+                          text: LocaleKeys.SettingsScreen_misc_window_opacity.tr(),
+                          value: settings.misc.windowOpacity,
+                          onSliderMoved: (double value) {
+                            windowManager.setOpacity(value);
+                            settings.misc.windowOpacity = value;
+                            settings.save();
+                          },
                         ),
                       // #endregion
 
@@ -400,6 +465,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               settings.save();
                             },
                           ),
+                          // optimize backends
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
+                            icon: Icons.saved_search_sharp,
+                            onButtonPressed: () {
+                              optimizeBackendsPopup(context)..show();
+                            },
+                          ),
+                          //
+                          ResponsiveSliderTile(
+                            text: "Number of search processes",
+                            min: 1,
+                            max: max(Platform.numberOfProcessors.toDouble(), 2),
+                            divisions: max(Platform.numberOfProcessors - 1, 1),
+                            value: settings.advanced.noOfSearchIsolates.toDouble(),
+                            leadingIcon: Icons.info_outline,
+                            onLeadingIconPressed: () {
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.noHeader,
+                                btnOkColor: g_Dakanji_green,
+                                btnOkOnPress: (){},
+                                body: Center(
+                                  child: Text(
+                                    "Number of search processes"
+                                  )
+                                )
+                              )..show();
+                            },
+                            onSliderMoved: (double value) {
+                              setState(() {
+                                settings.advanced.noOfSearchIsolates = value.toInt();
+                                settings.save();
+                              });
+                            },
+                          )
                         ],
                       ),
                       // #endregion

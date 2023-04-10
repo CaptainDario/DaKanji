@@ -13,6 +13,7 @@ class SearchResultCard extends StatefulWidget {
     {
       required this.dictEntry,
       required this.resultIndex,
+      this.showWordFrequency = false,
       this.onPressed,
       Key? key
     }
@@ -20,7 +21,9 @@ class SearchResultCard extends StatefulWidget {
 
   /// The reading that should be displayed in this card
   final JMdict dictEntry;
-  /// 
+  /// If true the word frequency will be displayed
+  final bool showWordFrequency;
+  /// The index of this result in the search results
   final int resultIndex;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
@@ -123,7 +126,18 @@ class _SearchResultCardState extends State<SearchResultCard> {
                         fontSize: 10,
                         letterSpacing: 0
                       ),
-                    )
+                    ),
+                    if(widget.showWordFrequency)
+                      SizedBox(height: 5,),
+                    if(widget.showWordFrequency)
+                      Text(
+                        textAlign: TextAlign.end,
+                        widget.dictEntry.frequency.toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          letterSpacing: 0
+                        ),
+                      ),
                   ],
                 ),
               )

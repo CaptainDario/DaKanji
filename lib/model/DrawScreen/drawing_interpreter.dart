@@ -11,6 +11,7 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_isolate.dart';
 import 'package:da_kanji_mobile/model/TFLite/interpreter_utils.dart';
 import 'package:da_kanji_mobile/model/TFLite/inference_stats.dart';
+import 'package:universal_io/io.dart';
 
 
 
@@ -77,7 +78,7 @@ class DrawingInterpreter with ChangeNotifier{
     data = DrawingData(await loadLabels());
 
     interpreter = await initInterpreterFromBackend(
-      await getBestBeckend(),
+      await getBackend(),
       _usedTFLiteAssetPath
     );
 
@@ -88,9 +89,30 @@ class DrawingInterpreter with ChangeNotifier{
     wasInitialized = true;
   }
 
-  /// Tests all available backends on this platform and write the best one to disk
-  /// and also returns it.
-  Future<InferenceBackend> getBestBeckend() async {
+  /// Returns either the saved backend or CPU backend with half the cores
+  /// available on this platform.
+  Future<InferenceBackend> getBackend() async {
+
+    InferenceBackend iB;
+
+    // check if the backend was already tested -> return it if true
+    if(GetIt.I<UserData>().drawingBackend != null) {
+      iB = GetIt.I<UserData>().drawingBackend!;
+    }
+    // Otherwise, find the best available backend and load the model
+    else {
+      // on single core return CPU_1
+      if(Platform.numberOfProcessors == 1)
+        iB = getCPUFromString("CPU_1");
+      else
+        iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
+    }
+
+    return iB;
+  }
+
+  /// Tests all available backends on this platform and returns it.
+  Future<InferenceBackend> getBestBackend() async {
 
     InferenceBackend iB;
 
@@ -116,9 +138,6 @@ class DrawingInterpreter with ChangeNotifier{
 
       // store the best backend to disk
       iB = tests.first.key;
-      GetIt.I<UserData>().drawingBackend = iB;
-      await GetIt.I<UserData>().save();
-
       print("Inference timings for Drawing: $tests");
     }
     

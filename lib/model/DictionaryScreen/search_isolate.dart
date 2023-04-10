@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:async/async.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 
@@ -25,13 +27,16 @@ class SearchIsolate {
   Isolate? isolate;
   /// The queue for the results of the search isolate
   StreamQueue? events;
-  /// A name fot this isolate 
-  String? debugName;
+  /// Should the search be converted to hiragana
+  bool convertToHiragana;
 
   /// The directory of the ISAR file of the dictionary
   String directory;
   /// The name of the ISAR file of the dictionary
   String name;
+
+  /// A name fot this isolate 
+  String? debugName;
   /// Has the isolate been initialized
   bool _initialized = false;
 
@@ -40,6 +45,7 @@ class SearchIsolate {
     this.languages,
     this.directory,
     this.name,
+    this.convertToHiragana,
     {
       this.debugName,
       int no_processes = 2
@@ -80,6 +86,7 @@ class SearchIsolate {
     isolateSendPort!.send(noIsolates);
     isolateSendPort!.send(directory);
     isolateSendPort!.send(name);
+    isolateSendPort!.send(GetIt.I<Settings>().dictionary.convertToHiragana);
 
     _initialized = true;
   }
@@ -136,6 +143,8 @@ Future<void> _searchInIsar(SendPort p) async {
   String directory = await events.next;
   String name = await events.next;
 
+  bool kanaize = await events.next;
+
   // open isar
   Isar isar = Isar.openSync(
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
@@ -153,17 +162,20 @@ Future<void> _searchInIsar(SendPort p) async {
 
   print('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
 
-  String messageRomaji;
+  String messageHiragana = "";
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
     if (message is String) {
       Stopwatch s = Stopwatch()..start();
 
-      messageRomaji = kanaKit.toRomaji(message);
+      // convert the message to hiragana if setting enabled
+      if(kanaize)
+        messageHiragana = kanaKit.toHiragana(message);
       
       List<JMdict> searchResults = 
-        buildJMDictQuery(isar, idRangeStart, idRangeEnd, message, messageRomaji, langs)
+        buildJMDictQuery(isar, idRangeStart, idRangeEnd,
+          message, messageHiragana, langs)
         .limit(1000).findAllSync();
       
       // Send the result to the main isolate.

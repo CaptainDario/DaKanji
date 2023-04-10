@@ -46,6 +46,25 @@ class SettingsDictionary with ChangeNotifier {
     notifyListeners();
   }
 
+  @JsonKey(ignore: true)
+  static const bool d_showWordFruequency = false;
+  @JsonKey(defaultValue: d_showWordFruequency)
+  /// Should the word frequency be shown in the dict UI
+  bool showWordFruequency = d_showWordFruequency;
+
+  @JsonKey(ignore: true)
+  static const bool d_searchDeconjugate = true;
+  @JsonKey(defaultValue: d_searchDeconjugate)
+  /// Should the search term be deconjugated before searching
+  bool searchDeconjugate = d_searchDeconjugate;
+
+  @JsonKey(ignore: true)
+  static const bool d_convertToHiragana = true;
+  @JsonKey(defaultValue: d_convertToHiragana)
+  /// Should the search term be converted to kana if it is written in romaji
+  /// before searching
+  bool convertToHiragana = d_convertToHiragana;
+
 
   SettingsDictionary();
 

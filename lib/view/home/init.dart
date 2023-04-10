@@ -43,11 +43,6 @@ import 'package:da_kanji_mobile/provider/isars.dart';
 
 
 
-/// If the user pressed the ok-button in the download popup, this will be set to
-/// true.
-bool userAllowedToDownload = false;
-/// have the documents services been initialized
-bool documentsServicesInitialized = false;
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
@@ -67,7 +62,7 @@ Future<bool> init() async {
     desktopWindowSetup();
   }
 
-  await testTFLiteBackendsForModels();
+  //await optimizeTFLiteBackendsForModels();
   return true;
 }
 
@@ -122,7 +117,7 @@ Future<void> initServices() async {
 /// directory.
 Future<void> initDocumentsServices(BuildContext context) async {
 
-  if(documentsServicesInitialized) return;
+  if(g_documentsServicesInitialized) return;
 
   // check if the data in the documents directory is available
   await initDocumentsAssets(context);
@@ -151,12 +146,13 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   GetIt.I.registerSingleton<DictionarySearch>(
     DictionarySearch(
-      2,
+      GetIt.I<Settings>().advanced.noOfSearchIsolates,
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
         isoToiso639_2B[e]!.name
       ).toList(),
       GetIt.I<Isars>().dictionary.directory!,
-      GetIt.I<Isars>().dictionary.name
+      GetIt.I<Isars>().dictionary.name,
+      GetIt.I<Settings>().dictionary.convertToHiragana
     )
   );
   GetIt.I<DictionarySearch>().init();
@@ -169,7 +165,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
     dicDir: documentsDir + "/DaKanji/assets/ipadic/"
   );
 
-  documentsServicesInitialized = true;
+  g_documentsServicesInitialized = true;
 }
 
 /// Initializes the document assets, by copying the assets from the assets
@@ -183,6 +179,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
   String documentsDir =
     p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
+  print("documents directory: ${documentsDir.toString()}");
   List<FileSystemEntity> assets = [
     File("assets/dict/dictionary.isar"), File("assets/dict/examples.isar"), 
     Directory("assets/ipadic")
@@ -212,13 +209,12 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 /// `applications_documents_directory/DaKanji/` where, the file extracts the
 /// zip will be extracted.
 /// 
-/// Note: `assetName` is expected to be a zipped file in assets/github
+/// Note: `asset` is expected to be a zipped file in assets/github
 Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   BuildContext context) async
 {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-  print("documents directory: ${documentsDirectory.toString()}");
 
   // if the file already exists delete it
   final dbFile = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
@@ -226,7 +222,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
     dbFile.deleteSync();
     print("Deleted ${asset.uri.pathSegments.last} ISAR");
   }
-  // otherwise create the folder sstructure
+  // otherwise create the folder structure
   else{
     dbFile.parent.createSync(recursive: true);
   }
@@ -235,10 +231,10 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
     await copyFromAssets(asset.path, dbFile.parent);
   }
   catch (e){
-    if(!userAllowedToDownload)
+    if(!g_userAllowedToDownload)
       await downloadPopup(
         context: context,
-        btnOkOnPress: () => userAllowedToDownload = true
+        btnOkOnPress: () => g_userAllowedToDownload = true
       ).show();
 
     while(true){
@@ -267,7 +263,11 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 /// 
 /// Caution: throws exception if the asset does not exist
 Future<void> copyFromAssets(String assetPath,  Directory dest) async {
-  // Get pre-populated db file and copy it to the documents directory
+
+  assetPath = assetPath.split(".").first + ".zip";
+  print(assetPath);
+
+  // Get the zipped file from assets
   ByteData data = await rootBundle.load(assetPath);
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
   extractArchiveToDisk(archive, dest.path);
@@ -298,8 +298,19 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   }
     
   // download the asset
-  await Dio().download(downloadUrl, destination.path + ".zip");
-  print("Downloaded ${destination.uri.pathSegments.last} to ${destination.path}");
+  String fileName = destination.uri.pathSegments.last;
+  await Dio().download(
+    downloadUrl, destination.path + ".zip",
+    onReceiveProgress: (received, total) {
+      if (total != -1) {
+        String progress =
+          "${fileName.split(".")[0]}: ${(received / total * 100).toStringAsFixed(0) + "%"}";
+        g_initTextStream.add(progress);
+        print(progress);
+      }
+    }
+  );
+  print("Downloaded ${fileName} to ${destination.path}");
 
   // unzip the asset
   await extractFileToDisk(
@@ -333,15 +344,21 @@ void desktopWindowSetup() {
 
 /// Tests all TF Lite models for the backends that are available on the device
 /// This is done by loading the model and running a dummy input through it.
-/// The results are stored in UserData, so that this function does not need to
+/// The results are stored in UserData, so that this function does only need to
 /// be called only once.
-Future<void> testTFLiteBackendsForModels() async {
+Future<void> optimizeTFLiteBackendsForModels() async {
 
-  if(GetIt.I<UserData>().drawingBackend == null){
-    DrawingInterpreter d = DrawingInterpreter();
-    await d.init();
-    await d.getBestBeckend();
-  }
+  print("Optimizing TFLite backends for models...");
+
+  // find the best backend for the drawing ml
+  DrawingInterpreter d = DrawingInterpreter();
+  await d.init();
+  GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
+  d.free();
+
+  print("Finished optimizing TFLite backends for models...");
+  
+  await GetIt.I<UserData>().save();
 
 }
 

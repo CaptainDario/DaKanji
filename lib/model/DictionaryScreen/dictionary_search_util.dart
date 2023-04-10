@@ -15,7 +15,10 @@ import 'package:da_kanji_mobile/provider/isars.dart';
 ///    Those three categories are sorted individually and merged in the end
 /// 2.  sort inside each category based on <br/>
 ///   1. word frequency
-List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<String> languages){
+List<List<JMdict>> sortJmdictList(
+  List<JMdict> entries, String queryText, List<String> languages,
+  bool convertToHiragana
+){
 
   /// lists with three sub lists
   /// 0 - full matchs 
@@ -26,8 +29,10 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
   List<List<int>> matchIndices = [[], [], []];
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
-  /// the query converted to Romaji
-  String queryTextRomaji = KanaKit().toRomaji(queryText);
+  /// the query converted to Romaji (if settin is enabled)
+  String queryTextConverted = convertToHiragana
+    ? KanaKit().toHiragana(queryText)
+    : queryText;
 
   // iterate over the entries and create a ranking for each 
   for (JMdict entry in entries) {
@@ -36,7 +41,7 @@ List<List<JMdict>> sortJmdictList(List<JMdict> entries, String queryText, List<S
     
     // READING matched
     if(ranked.item1 == -1)
-      ranked = rankMatches([entry.romaji], queryTextRomaji);
+      ranked = rankMatches([entry.hiraganas], queryTextConverted);
     
     // MEANING matched
     if(ranked.item1 == -1){
@@ -169,9 +174,13 @@ List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
 ///  Builds a search query for the JMDict database in ISAR
 QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd,
-  String message, String messageRomaji, List<String> langs
+  String message, String messageHiragana, List<String> langs
 )
 {
+  // if a message hiragana is provided (the setting for converting is enabled),
+  // search for it
+  String convertedQuery = messageHiragana == '' ? message : messageHiragana;
+
   QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
 
     // limit this process to one chunk of size (entries.length / num_processes)
@@ -187,9 +196,15 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
       t.kanjisElementContains(message)
     )
 
-  // search over readings (user entered query)
+  // search over readings (kana or message directly)
   .or()
-    .romajiElementContains(messageRomaji)
+    .optional(convertedQuery.length < 3, (t) => 
+      t.hiraganasElementStartsWith(convertedQuery)
+    ).or()
+    .optional(convertedQuery.length >= 3, (t) => 
+      t.hiraganasElementStartsWith(convertedQuery)
+    )
+    
 
   // search over meanings
   .or()

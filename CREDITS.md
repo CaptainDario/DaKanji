@@ -4,7 +4,9 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
 
 * development
   * Dictionary
-    * Thank you so much michalpatryk, you are a huge help! Without you this project would not be in the state it currently is.
+    * Thank you so much michalpatryk, for creating and populating most of the dictionary database and schema. Without you DaKanji would not be in its current state!
+    * Data pre-processing:
+      * [wordfreq](https://pypi.org/project/wordfreq/)
   * Modified Packages
     * [bitmap](https://github.com/renancaraujo/bitmap)
     * [snappable](https://github.com/MarcinusX/snappable)
@@ -36,7 +38,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
 
 * A big shout out to all current and past testers!
   * Android
-    * pa9eup, michalpatryk, tsumugii_12, Francesco S., モフン
+    * pa9eup, michalpatryk, tsumugii_12, Francesco S., モフン, mch99
   * iOS
     * ゆうか 田村村, モフン, Nurellina
   * Windows:

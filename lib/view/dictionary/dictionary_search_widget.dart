@@ -32,8 +32,10 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool isExpanded; 
   /// Can the search results be collapsed
   final bool canCollapse;
-  /// shoul the button to navigate to the drawing screen be included
+  /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
+  /// should queries be deconjugated
+  final bool allowDeconjugation;
 
   const DictionarySearchWidget(
     {
@@ -42,6 +44,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
+      this.allowDeconjugation = true,
       super.key
     }
   );
@@ -65,10 +68,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   double searchBarInputHeight = 0;
   /// The FoucsNode of the search input field
   FocusNode searchTextFieldFocusNode = FocusNode();
+  /// A list containing the ids of all searches the user made
+  /// matches the search history Isar collection
+  List<int> searchHistoryIds = [];
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
-
+  /// AnimationController for closing and opening the search bar
   late AnimationController searchBarAnimationController;
+  /// Animation for closing and opening the search bar
+  late Animation<double> searchBarAnimation;
+
   
   
   @override
@@ -79,6 +88,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       vsync: this,
       duration: Duration(milliseconds: 400),
     );
+    searchBarAnimation = new Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(new CurvedAnimation(
+      parent: searchBarAnimationController,
+      curve: Curves.easeIn
+    ));
 
     updateSearchHistoryIds();
     init();
@@ -109,7 +125,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch, true);
+        await updateSearchResults(initialSearch, widget.allowDeconjugation);
       }
       if(mounted)
         setState(() {});
@@ -152,7 +168,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         : Icons.search),
                       onPressed: () {
                         if(!widget.canCollapse) return;
-  
+
+                        //close onscreen keyboard
+                        FocusManager.instance.primaryFocus?.unfocus();
+
                         setState(() {
                           expanded = !expanded;
 
@@ -183,7 +202,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         });
                       },
                       onChanged: (text) async {
-                        await updateSearchResults(text, true);
+                        await updateSearchResults(text, widget.allowDeconjugation);
                         setState(() {});
                       },
                     ),
@@ -231,13 +250,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             ),
             if(searchBarInputHeight != 0)
               AnimatedBuilder(
-                animation: searchBarAnimationController,
+                animation: searchBarAnimation,
                 builder: (context, child) {
                   return Container(
                     //duration: Duration(milliseconds: 400),
                     //curve: Curves.easeInOut,
                     height: (widget.expandedHeight - searchBarInputHeight)
-                        * searchBarAnimationController.value,
+                        * searchBarAnimation.value,
                     child: child 
                   );
                 },
@@ -246,12 +265,28 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   ? SearchResultList(
                     searchResults: context.watch<DictSearch>().searchResults,
                     onSearchResultPressed: onSearchResultPressed,
+                    showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                   )
                   // otherwise the search history
                   : SearchResultList(
                     searchResults: searchHistory,
                     onSearchResultPressed: onSearchResultPressed,
-                    reversed: true,
+                    //reversed: true,
+                    showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                    onDismissed: (direction, entry, idx) async {
+                      int id = searchHistoryIds.removeAt(
+                        (idx).toInt()
+                      );
+                      
+                      await GetIt.I<Isars>().searchHistory.writeTxn(() async {
+                        final success = await GetIt.I<Isars>().searchHistory.searchHistorys
+                          .delete(id);
+                        debugPrint('Deleted search history entry: $success');
+                      });
+                      setState(() {
+                        updateSearchHistoryIds();
+                      });
+                    }
                   )
               )
           ],
@@ -262,11 +297,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// updates the search history
   void updateSearchHistoryIds(){
+    searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
+      .sortByDateSearchedDesc()
+      .idProperty()
+      .findAllSync();
     List<int> ids = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearched()
+      .sortByDateSearchedDesc()
       .dictEntryIdProperty()
       .findAllSync();
-    searchHistory = GetIt.I<Isars>().dictionary.jmdict.getAllSync(ids).toList();
+    searchHistory = GetIt.I<Isars>().dictionary.jmdict
+      .getAllSync(ids)
+      .toList();
   }
 
   /// callback that is executed when the user presses on a search result
@@ -309,7 +350,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data, true);
+      await updateSearchResults(data, widget.allowDeconjugation);
     }
     expanded = true;
     searchBarAnimationController.forward();

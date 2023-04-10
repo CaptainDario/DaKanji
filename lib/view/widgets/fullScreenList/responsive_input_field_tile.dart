@@ -6,10 +6,10 @@ class ResponsiveInputFieldTile extends StatefulWidget {
   const ResponsiveInputFieldTile(
     {
       required this.enabled,
-      required this.icon,
+      this.leadingIcon,
       this.text,
       this.onChanged,
-      this.onButtonPressed,
+      this.onLeadingIconPressed,
       this.hintText,
       Key? key
     }
@@ -18,13 +18,13 @@ class ResponsiveInputFieldTile extends StatefulWidget {
   /// Is the Input field enabled
   final bool enabled;
   /// the icon for the button to press
-  final IconData icon;
+  final IconData? leadingIcon;
   // leading text
   final String? text;
   /// callback which will be executed at every input change
   final Function (String value)? onChanged;
   /// callback which will be execute when the icon button on the side is pressed
-  final Function? onButtonPressed;
+  final Function? onLeadingIconPressed;
   /// the hint text to show when nothing was inputted
   final String? hintText;
 
@@ -34,7 +34,16 @@ class ResponsiveInputFieldTile extends StatefulWidget {
 
 class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
 
+  /// the controller for the input field
+  TextEditingController _controller = TextEditingController();
 
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.text != null)
+      _controller.text = widget.text!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +61,34 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
           width: width,
           child: Row(
             children: [
+              if(widget.leadingIcon != null)
+                Center(
+                  child: SizedBox(
+                    child: FittedBox(
+                      child: IconButton(
+                        splashRadius: tileHeight*0.5,
+                        onPressed: () {
+                          setState(() {
+                            if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!();
+                          });
+                        },
+                        icon: Icon(
+                          widget.leadingIcon,
+                        )
+                      ),
+                    ),
+                  ),
+                ),
               Expanded(
                 child: SizedBox(
                   height: (tileHeight*0.75),
                   child: TextField(
+                    controller: _controller,
                     enabled: widget.enabled,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
                       labelText: widget.hintText,
                       border: const OutlineInputBorder(),
-                      hintText: widget.hintText,
                     ),
                     onChanged: (value) {
                       if(widget.onChanged != null) {
@@ -72,23 +99,6 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
                 ),
               ),
               SizedBox(width: width*0.05,),
-              Center(
-                child: SizedBox(
-                  height: tileHeight*0.75,
-                  child: FittedBox(
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if(widget.onButtonPressed != null) widget.onButtonPressed!();
-                        });
-                      },
-                      icon: Icon(
-                        widget.icon,
-                      )
-                    ),
-                  ),
-                ),
-              ),
             ]
           ),
         ),

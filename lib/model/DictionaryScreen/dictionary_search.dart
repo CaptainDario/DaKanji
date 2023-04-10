@@ -22,21 +22,27 @@ class DictionarySearch {
   String directory;
   /// The name of the ISAR file of the dictionary
   String name;
-
+  /// Is a search currently running
   bool _isSearching = false;
-
+  /// The last query that was blocked by a running search
   String? _lastBlockedQuery;
+  /// Should the search be converted to hiragana
+  bool convertToHiragana;
 
 
-  DictionarySearch(this.noIsolates, this.languages, this.directory, this.name);
+  DictionarySearch(
+    this.noIsolates, this.languages, this.directory, this.name, this.convertToHiragana
+  );
 
 
   /// Needs to be called before using this object
   void init () async {
     
     for (var i = 0; i < noIsolates; i++) {
-      _searchIsolates.add(SearchIsolate(languages, directory, name)
-        ..init(i, noIsolates));
+      _searchIsolates.add(SearchIsolate(
+        languages, directory, name, convertToHiragana,
+      )
+      ..init(i, noIsolates));
     }
 
     _initialized = true;
@@ -64,7 +70,9 @@ class DictionarySearch {
     final search_result =
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
-    final sort_result = sortJmdictList(search_result, queryText, this.languages);
+    final sort_result = sortJmdictList(
+      search_result, queryText, this.languages, this.convertToHiragana
+    );
     var result = sort_result.expand((element) => element).toList();
     _isSearching = false;
 

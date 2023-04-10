@@ -125,7 +125,7 @@ class UserData{
     }
 
     // should a rate popup be shown
-    if (!doNotShowRateAgain && appOpenedTimes % 10 == 0){
+    if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
      print("show rate dialogue");
       showRatePopup = true;
     }
