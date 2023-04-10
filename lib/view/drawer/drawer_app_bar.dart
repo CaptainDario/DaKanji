@@ -41,7 +41,11 @@ class DrawerAppBar extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => _drawerController.forward(from: 0.0),
+              onTap: () {
+                _drawerController.forward(from: 0.0);
+                //close onscreen keyboard if one is opened
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
               child: Icon(
                 Icons.menu,
                 size: height*0.5,
