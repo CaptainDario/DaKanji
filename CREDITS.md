@@ -5,6 +5,8 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
 * development
   * Dictionary
     * Thank you so much michalpatryk, you are a huge help! Without you this project would not be in the state it currently is.
+    * Data pre-processing:
+      * [wordfreq](https://pypi.org/project/wordfreq/)
   * Modified Packages
     * [bitmap](https://github.com/renancaraujo/bitmap)
     * [snappable](https://github.com/MarcinusX/snappable)
