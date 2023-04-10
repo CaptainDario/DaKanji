@@ -293,7 +293,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
                                     child: AnalysisOptionButton(
                                       colorizePos,
-                                      svgAssetPattern: "assets/icons/palette_*.svg",
+                                      svgAssetPattern: "assets/icons/pos_*.svg",
                                       onPressed: (() => 
                                         setState(() {colorizePos = !colorizePos;})
                                       ),
