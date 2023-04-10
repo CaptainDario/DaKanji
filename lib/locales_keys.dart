@@ -135,6 +135,8 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
+  static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
+  static const SettingsScreen_advanced_settings_number_search_procs_body = 'SettingsScreen.advanced_settings_number_search_procs_body';
   static const SettingsScreen_advanced_settings_optimize_cancel = 'SettingsScreen.advanced_settings_optimize_cancel';
   static const SettingsScreen_advanced_settings_optimize_nn = 'SettingsScreen.advanced_settings_optimize_nn';
   static const SettingsScreen_advanced_settings_optimize_ok = 'SettingsScreen.advanced_settings_optimize_ok';
@@ -144,7 +146,12 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_dict_deconjugate = 'SettingsScreen.dict_deconjugate';
+  static const SettingsScreen_dict_deconjugate_body = 'SettingsScreen.dict_deconjugate_body';
+  static const SettingsScreen_dict_kanaize = 'SettingsScreen.dict_kanaize';
+  static const SettingsScreen_dict_kanaize_body = 'SettingsScreen.dict_kanaize_body';
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
+  static const SettingsScreen_dict_show_word_freq = 'SettingsScreen.dict_show_word_freq';
+  static const SettingsScreen_dict_show_word_freq_body = 'SettingsScreen.dict_show_word_freq_body';
   static const SettingsScreen_draw_browser_for_online_dict = 'SettingsScreen.draw_browser_for_online_dict';
   static const SettingsScreen_draw_custom_url_format = 'SettingsScreen.draw_custom_url_format';
   static const SettingsScreen_draw_custom_url_hint = 'SettingsScreen.draw_custom_url_hint';

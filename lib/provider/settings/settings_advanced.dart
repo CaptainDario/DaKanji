@@ -28,6 +28,13 @@ class SettingsAdvanced with ChangeNotifier {
     notifyListeners();
   }
 
+  @JsonKey(ignore: true)
+  static const int d_noOfSearchIsolates = 2;
+  /// The number of isolates to use for searching in the database
+  @JsonKey(defaultValue: d_noOfSearchIsolates)
+  int noOfSearchIsolates = d_noOfSearchIsolates;
+
+
   SettingsAdvanced();
 
   /// Instantiates a new instance from a json map

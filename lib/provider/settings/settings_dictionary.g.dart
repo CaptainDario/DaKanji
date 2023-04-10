@@ -17,11 +17,15 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)
               .toList()
-      ..showWordFruequency = json['showWordFruequency'] as bool? ?? false;
+      ..showWordFruequency = json['showWordFruequency'] as bool? ?? false
+      ..searchDeconjugate = json['searchDeconjugate'] as bool? ?? true
+      ..searchKanaize = json['searchKanaize'] as bool? ?? true;
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
       'translationLanguageCodes': instance.translationLanguageCodes,
       'selectedTranslationLanguages': instance.selectedTranslationLanguages,
       'showWordFruequency': instance.showWordFruequency,
+      'searchDeconjugate': instance.searchDeconjugate,
+      'searchKanaize': instance.searchKanaize,
     };

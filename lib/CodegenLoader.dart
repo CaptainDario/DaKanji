@@ -122,6 +122,8 @@ class CodegenLoader extends AssetLoader{
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
+    "advanced_settings_number_search_procs": "搜索过程的数量",
+    "advanced_settings_number_search_procs_body": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
     "advanced_settings_optimize_cancel": "取消",
     "advanced_settings_optimize_nn": "优化神经网络",
     "advanced_settings_optimize_ok": "好的",
@@ -131,7 +133,12 @@ class CodegenLoader extends AssetLoader{
     "advanced_settings_title": "高级设置",
     "custom_url_explanation": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
     "dict_deconjugate": "将输入转换为基本形式",
+    "dict_deconjugate_body": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
+    "dict_kanaize": "将搜索词转换为假名",
+    "dict_kanaize_body": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
     "dict_languages": "显示翻译在（拖动以重新排序）。",
+    "dict_show_word_freq": "显示词频",
+    "dict_show_word_freq_body": "DaKanji使用词频测量法对其字典条目进行排名。这个词频是对一个词的用法的估计。这种估计是基于不同的数据来源：\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短形式的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n所显示的数字是实际词频的一种变化，称为Zipf频率，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。我们使用0作为默认的Zipf值，用于不出现在给定词表中的词，尽管它应该意味着每十亿个词中出现一次。",
     "draw_browser_for_online_dict": "为网络字典使用网络视图",
     "draw_custom_url_format": "自定义URL格式",
     "draw_custom_url_hint": "你的字典的URL",
@@ -860,6 +867,39 @@ static const Map<String,dynamic> localizations = {
       "es": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
       "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
     },
+    "dict_languages": {
+      "en": "Show translations in (drag to reorder)",
+      "de": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
+      "ru": "Показать переводы в (перетащите, чтобы изменить порядок)",
+      "ja": "翻訳言語を選択する（ドラッグで並び替え可能）",
+      "zh": "显示翻译在（拖动以重新排序）。",
+      "it": "Mostra le traduzioni in (trascinare per riordinare)",
+      "fr": "Afficher les traductions dans (glisser pour réorganiser)",
+      "es": "Mostrar traducciones en (arrastre para reordenar)",
+      "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
+    },
+    "dict_show_word_freq": {
+      "en": "Show word frequency",
+      "de": "Worthäufigkeit anzeigen",
+      "ru": "Показать частоту слов",
+      "ja": "単語の頻度を表示する",
+      "zh": "显示词频",
+      "it": "Mostra la frequenza delle parole",
+      "fr": "Afficher la fréquence des mots",
+      "es": "Mostrar frecuencia de palabras",
+      "pl": "Pokaż częstość występowania słów"
+    },
+    "dict_show_word_freq_body": {
+      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.",
+      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
+      "ru": "DaKanji использует меру частоты слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова. Эта оценка основана на различных источниках данных:\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* Веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете.\nПоказанное число является вариацией фактической частоты слов, называемой частотой Зипфа, которая стремится представить частоту слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в данном списке слов, хотя это должно означать одно появление на миллиард слов.",
+      "ja": "大漢字では、辞書項目のランク付けに単語頻度という指標を使用しています。この単語頻度は、ある単語の使用頻度を推定するものです。この推定は、さまざまなデータソースに基づいています：\n* Wikipedia、百科事典のテキストを表す。\n* 字幕、OPUS OpenSubtitles 2018およびSUBTLEXから。\n* ウェブテキスト、OSCARより\n* 短編ソーシャルメディアを代表するTwitter\n* Redditは、より長いインターネット上のコメントを表すことができます。\n表示されている数字は、Zipf頻度と呼ばれる実際の単語頻度のバリエーションで、単語頻度を人間に優しい対数スケールで返すことを目的としています。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10乗対数です。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現する。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。10億語に1回出現することを意味しますが、与えられた単語リストに出現しない単語のZipf値はデフォルトで0を使用します。",
+      "zh": "DaKanji使用词频测量法对其字典条目进行排名。这个词频是对一个词的用法的估计。这种估计是基于不同的数据来源：\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短形式的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n所显示的数字是实际词频的一种变化，称为Zipf频率，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。我们使用0作为默认的Zipf值，用于不出现在给定词表中的词，尽管它应该意味着每十亿个词中出现一次。",
+      "it": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola è una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\nIl numero mostrato è una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
+      "fr": "DaKanji utilise une mesure de la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'usage d'un mot. Cette estimation est basée sur différentes sources de données :\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, représentant les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\nLe nombre indiqué est une variante de la fréquence réelle des mots, appelée fréquence de Zipf, qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois où il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs de Zipf raisonnables se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans la liste de mots donnée, bien que cela doive signifier une occurrence par milliard de mots.",
+      "es": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimación del uso de una palabra. Esta estimación se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\nLa cifra mostrada es una variación de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logarítmica de fácil comprensión para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque debería significar una aparición por cada mil millones de palabras.",
+      "pl": "DaKanji używa miary częstotliwości słów, aby uszeregować swoje hasła słownikowe. Częstotliwość słów jest szacunkową oceną ich użycia. Szacunki te oparte są na różnych źródłach danych:\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe.\nPokazana liczba jest odmianą rzeczywistej częstotliwości słowa zwaną częstotliwością Zipfa, która ma na celu zwrócenie częstotliwości słowa w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem z 10 razy, kiedy pojawia się ono na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w danej liście słów, chociaż powinno to oznaczać jedno wystąpienie na miliard słów."
+    },
     "dict_deconjugate": {
       "en": "Convert inputs to base form",
       "de": "Konvertierung der Eingaben in die Basisform",
@@ -871,16 +911,38 @@ static const Map<String,dynamic> localizations = {
       "es": "Convertir entradas en forma básica",
       "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
     },
-    "dict_languages": {
-      "en": "Show translations in (drag to reorder)",
-      "de": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
-      "ru": "Показать переводы в (перетащите, чтобы изменить порядок)",
-      "ja": "翻訳言語を選択する（ドラッグで並び替え可能）",
-      "zh": "显示翻译在（拖动以重新排序）。",
-      "it": "Mostra le traduzioni in (trascinare per riordinare)",
-      "fr": "Afficher les traductions dans (glisser pour réorganiser)",
-      "es": "Mostrar traducciones en (arrastre para reordenar)",
-      "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
+    "dict_deconjugate_body": {
+      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\nFor intermediate learners, the recommendation is to turn off this setting.",
+      "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
+      "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
+      "ja": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
+      "zh": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
+      "it": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
+      "fr": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
+      "es": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
+      "pl": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia."
+    },
+    "dict_kanaize": {
+      "en": "Convert search term to kana",
+      "de": "Suchbegriff in Kana umwandeln",
+      "ru": "Преобразование поискового термина в кану",
+      "ja": "検索語をかなに変換する",
+      "zh": "将搜索词转换为假名",
+      "it": "Convertire i termini di ricerca in kana",
+      "fr": "Convertir les termes de recherche en kana",
+      "es": "Convertir el término de búsqueda en kana",
+      "pl": "Konwertuj wyszukiwane hasła do kany"
+    },
+    "dict_kanaize_body": {
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
+      "ru": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
+      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
+      "zh": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
+      "it": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
+      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
+      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
+      "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -1001,7 +1063,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Ottimizzare le reti neurali",
       "fr": "Optimiser les réseaux neuronaux",
       "es": "Optimizar las redes neuronales",
-      "pl": "Optymalizacja sieci neuronowych"
+      "pl": "Optymalizuj sieć neuronową"
     },
     "advanced_settings_optimizing": {
       "en": "Optimizing...\nPlease do not close the app.",
@@ -1046,6 +1108,28 @@ static const Map<String,dynamic> localizations = {
       "fr": "Ok",
       "es": "Ok",
       "pl": "Ok"
+    },
+    "advanced_settings_number_search_procs": {
+      "en": "Number of search processes",
+      "de": "Anzahl der Suchprozesse",
+      "ru": "Количество процессов поиска",
+      "ja": "検索処理数",
+      "zh": "搜索过程的数量",
+      "it": "Numero di processi di ricerca",
+      "fr": "Nombre de processus de recherche",
+      "es": "Número de procesos de búsqueda",
+      "pl": "Liczba procesów wyszukiwania"
+    },
+    "advanced_settings_number_search_procs_body": {
+      "en": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+      "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
+      "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
+      "ja": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
+      "zh": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
+      "it": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
+      "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
+      "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
+      "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
     }
   },
   "WebviewScreen": {
@@ -1366,17 +1450,20 @@ static const Map<String,dynamic> localizations = {
     "pos_exclamation": {
       "en": "exclamation",
       "de": "Ausruf",
-      "ja": "感嘆詞"
+      "ja": "感嘆詞",
+      "pl": "wykrzyknienie"
     },
     "pos_filler": {
       "en": "filler",
       "de": "Füller",
-      "ja": "つなぎ言葉"
+      "ja": "つなぎ言葉",
+      "pl": "wypełniacz"
     },
     "pos_interjection": {
       "en": "interjection",
       "de": "Zwischenruf",
-      "ja": "間投詞"
+      "ja": "間投詞",
+      "pl": "wyraz cząstkowy"
     }
   },
   "DictionaryScreen": {
@@ -1460,27 +1547,32 @@ static const Map<String,dynamic> localizations = {
     "word_conj_verb": {
       "en": "Verb",
       "de": "Verb",
-      "ja": "動詞"
+      "ja": "動詞",
+      "pl": "Czasownik"
     },
     "word_conj_adjective": {
       "en": "Adjective",
       "de": "Adjektiv",
-      "ja": "形容詞"
+      "ja": "形容詞",
+      "pl": "Przymiotnik"
     },
     "word_conj_copula": {
       "en": "Copula",
       "de": "Kopula",
-      "ja": "コピュラ"
+      "ja": "コピュラ",
+      "pl": "Lącznik"
     },
     "word_conj_plain": {
       "en": "Plain",
       "de": "Einfach",
-      "ja": "普通体"
+      "ja": "普通体",
+      "pl": "Nieformalny"
     },
     "word_conj_polite": {
       "en": "Polite",
       "de": "Höflich",
-      "ja": "丁寧体"
+      "ja": "丁寧体",
+      "pl": "Uprzejmy"
     },
     "word_conj_verb_non_past": {
       "en": "Present, (Future)",
@@ -2027,6 +2119,8 @@ static const Map<String,dynamic> ja = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
+    "advanced_settings_number_search_procs": "検索処理数",
+    "advanced_settings_number_search_procs_body": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
     "advanced_settings_optimize_cancel": "キャンセル",
     "advanced_settings_optimize_nn": "ニューラルネットの最適化",
     "advanced_settings_optimize_ok": "オッケー",
@@ -2036,7 +2130,12 @@ static const Map<String,dynamic> ja = {
     "advanced_settings_title": "詳細設定",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
     "dict_deconjugate": "入力内容を基本形に変換する",
+    "dict_deconjugate_body": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
+    "dict_kanaize": "検索語をかなに変換する",
+    "dict_kanaize_body": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
     "dict_languages": "翻訳言語を選択する（ドラッグで並び替え可能）",
+    "dict_show_word_freq": "単語の頻度を表示する",
+    "dict_show_word_freq_body": "大漢字では、辞書項目のランク付けに単語頻度という指標を使用しています。この単語頻度は、ある単語の使用頻度を推定するものです。この推定は、さまざまなデータソースに基づいています：\n* Wikipedia、百科事典のテキストを表す。\n* 字幕、OPUS OpenSubtitles 2018およびSUBTLEXから。\n* ウェブテキスト、OSCARより\n* 短編ソーシャルメディアを代表するTwitter\n* Redditは、より長いインターネット上のコメントを表すことができます。\n表示されている数字は、Zipf頻度と呼ばれる実際の単語頻度のバリエーションで、単語頻度を人間に優しい対数スケールで返すことを目的としています。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10乗対数です。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現する。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。10億語に1回出現することを意味しますが、与えられた単語リストに出現しない単語のZipf値はデフォルトで0を使用します。",
     "draw_browser_for_online_dict": "ウェブビューでウェブ辞書を開く",
     "draw_custom_url_format": "カスタムURL",
     "draw_custom_url_hint": "使用したい辞書のURL",
@@ -2241,6 +2340,8 @@ static const Map<String,dynamic> de = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
+    "advanced_settings_number_search_procs": "Anzahl der Suchprozesse",
+    "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
     "advanced_settings_optimize_cancel": "Abbrechen",
     "advanced_settings_optimize_nn": "Neuronale Netze optimieren",
     "advanced_settings_optimize_ok": "Ok",
@@ -2250,7 +2351,12 @@ static const Map<String,dynamic> de = {
     "advanced_settings_title": "Erweiterte Einstellungen",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Konvertierung der Eingaben in die Basisform",
+    "dict_deconjugate_body": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
+    "dict_kanaize": "Suchbegriff in Kana umwandeln",
+    "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
     "dict_languages": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
+    "dict_show_word_freq": "Worthäufigkeit anzeigen",
+    "dict_show_word_freq_body": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
     "draw_browser_for_online_dict": "Benutze einen webview für web Wörterbücher",
     "draw_custom_url_format": "Benutzerdefiniertes URL format",
     "draw_custom_url_hint": "URL von dem Wörterbuch das benutzt werden soll",
@@ -2416,6 +2522,8 @@ static const Map<String,dynamic> ru = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
+    "advanced_settings_number_search_procs": "Количество процессов поиска",
+    "advanced_settings_number_search_procs_body": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
     "advanced_settings_optimize_cancel": "Отмена",
     "advanced_settings_optimize_nn": "Оптимизация нейронных сетей",
     "advanced_settings_optimize_ok": "Хорошо",
@@ -2425,7 +2533,12 @@ static const Map<String,dynamic> ru = {
     "advanced_settings_title": "Дополнительные настройки",
     "custom_url_explanation": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Преобразование входных данных в базовую форму",
+    "dict_deconjugate_body": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
+    "dict_kanaize": "Преобразование поискового термина в кану",
+    "dict_kanaize_body": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
     "dict_languages": "Показать переводы в (перетащите, чтобы изменить порядок)",
+    "dict_show_word_freq": "Показать частоту слов",
+    "dict_show_word_freq_body": "DaKanji использует меру частоты слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова. Эта оценка основана на различных источниках данных:\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* Веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете.\nПоказанное число является вариацией фактической частоты слов, называемой частотой Зипфа, которая стремится представить частоту слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в данном списке слов, хотя это должно означать одно появление на миллиард слов.",
     "draw_browser_for_online_dict": "Использование веб-просмотра для веб-словарей",
     "draw_custom_url_format": "Пользовательский формат URL",
     "draw_custom_url_hint": "URL вашего словаря",
@@ -2504,6 +2617,11 @@ static const Map<String,dynamic> pl = {
     "tutorial_search_input_text": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać.",
     "tutorial_word_tab": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach.",
     "word_antonyms": "Antonimy",
+    "word_conj_adjective": "Przymiotnik",
+    "word_conj_copula": "Lącznik",
+    "word_conj_plain": "Nieformalny",
+    "word_conj_polite": "Uprzejmy",
+    "word_conj_verb": "Czasownik",
     "word_conjugation": "Koniugacja",
     "word_images": "Zdjęcia",
     "word_proverbs": "Przysłowia",
@@ -2579,8 +2697,10 @@ static const Map<String,dynamic> pl = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
+    "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania",
+    "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów.",
     "advanced_settings_optimize_cancel": "Anuluj",
-    "advanced_settings_optimize_nn": "Optymalizacja sieci neuronowych",
+    "advanced_settings_optimize_nn": "Optymalizuj sieć neuronową",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optymalizacja...\nProszę nie zamykać aplikacji.",
     "advanced_settings_optimze_warning": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie.",
@@ -2588,7 +2708,12 @@ static const Map<String,dynamic> pl = {
     "advanced_settings_title": "Ustawienia zaawansowane",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Przekształcenie danych wejściowych na postać bezokolicznikową",
+    "dict_deconjugate_body": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia.",
+    "dict_kanaize": "Konwertuj wyszukiwane hasła do kany",
+    "dict_kanaize_body": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie.",
     "dict_languages": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)",
+    "dict_show_word_freq": "Pokaż częstość występowania słów",
+    "dict_show_word_freq_body": "DaKanji używa miary częstotliwości słów, aby uszeregować swoje hasła słownikowe. Częstotliwość słów jest szacunkową oceną ich użycia. Szacunki te oparte są na różnych źródłach danych:\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe.\nPokazana liczba jest odmianą rzeczywistej częstotliwości słowa zwaną częstotliwością Zipfa, która ma na celu zwrócenie częstotliwości słowa w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem z 10 razy, kiedy pojawia się ono na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w danej liście słów, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.",
     "draw_browser_for_online_dict": "Użyj webview dla słowników internetowych",
     "draw_custom_url_format": "Niestandardowy format URL",
     "draw_custom_url_hint": "URL twojego słownika",
@@ -2614,7 +2739,10 @@ static const Map<String,dynamic> pl = {
     "pos_adverb": "przysłowek",
     "pos_auxillary_verb": "czasownik pomocniczy",
     "pos_conjunction": "spójnik",
+    "pos_exclamation": "wykrzyknienie",
+    "pos_filler": "wypełniacz",
     "pos_i_adjective": "przymiotnik i-",
+    "pos_interjection": "wyraz cząstkowy",
     "pos_na_adj": "przymiotnik na-",
     "pos_noun": "rzeczownik",
     "pos_particle": "partykuła",
@@ -2790,6 +2918,8 @@ static const Map<String,dynamic> en = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
+    "advanced_settings_number_search_procs": "Number of search processes",
+    "advanced_settings_number_search_procs_body": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",
     "advanced_settings_optimize_ok": "Ok",
@@ -2799,7 +2929,12 @@ static const Map<String,dynamic> en = {
     "advanced_settings_title": "Advanced settings",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convert inputs to base form",
+    "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\nFor intermediate learners, the recommendation is to turn off this setting.",
+    "dict_kanaize": "Convert search term to kana",
+    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
     "dict_languages": "Show translations in (drag to reorder)",
+    "dict_show_word_freq": "Show word frequency",
+    "dict_show_word_freq_body": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
     "draw_custom_url_format": "Custom URL format",
     "draw_custom_url_hint": "URL of your dictionary",
@@ -2967,6 +3102,8 @@ static const Map<String,dynamic> it = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
+    "advanced_settings_number_search_procs": "Numero di processi di ricerca",
+    "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
     "advanced_settings_optimize_cancel": "Annullamento",
     "advanced_settings_optimize_nn": "Ottimizzare le reti neurali",
     "advanced_settings_optimize_ok": "Ok",
@@ -2976,7 +3113,12 @@ static const Map<String,dynamic> it = {
     "advanced_settings_title": "Impostazioni avanzate",
     "custom_url_explanation": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertire gli input in forma base",
+    "dict_deconjugate_body": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
+    "dict_kanaize": "Convertire i termini di ricerca in kana",
+    "dict_kanaize_body": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
     "dict_languages": "Mostra le traduzioni in (trascinare per riordinare)",
+    "dict_show_word_freq": "Mostra la frequenza delle parole",
+    "dict_show_word_freq_body": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola è una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\nIl numero mostrato è una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
     "draw_browser_for_online_dict": "Utilizzare una webview per i dizionari web",
     "draw_custom_url_format": "Formato URL personalizzato",
     "draw_custom_url_hint": "URL del vostro dizionario",
@@ -3130,6 +3272,8 @@ static const Map<String,dynamic> fr = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
+    "advanced_settings_number_search_procs": "Nombre de processus de recherche",
+    "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
     "advanced_settings_optimize_cancel": "Annuler",
     "advanced_settings_optimize_nn": "Optimiser les réseaux neuronaux",
     "advanced_settings_optimize_ok": "Ok",
@@ -3139,7 +3283,12 @@ static const Map<String,dynamic> fr = {
     "advanced_settings_title": "Paramètres avancés",
     "custom_url_explanation": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertir les entrées en forme de base",
+    "dict_deconjugate_body": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
+    "dict_kanaize": "Convertir les termes de recherche en kana",
+    "dict_kanaize_body": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
     "dict_languages": "Afficher les traductions dans (glisser pour réorganiser)",
+    "dict_show_word_freq": "Afficher la fréquence des mots",
+    "dict_show_word_freq_body": "DaKanji utilise une mesure de la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'usage d'un mot. Cette estimation est basée sur différentes sources de données :\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, représentant les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\nLe nombre indiqué est une variante de la fréquence réelle des mots, appelée fréquence de Zipf, qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois où il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs de Zipf raisonnables se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans la liste de mots donnée, bien que cela doive signifier une occurrence par milliard de mots.",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",
     "draw_custom_url_format": "Format d'URL personnalisé",
     "draw_custom_url_hint": "URL de votre dictionnaire",
@@ -3293,6 +3442,8 @@ static const Map<String,dynamic> es = {
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
+    "advanced_settings_number_search_procs": "Número de procesos de búsqueda",
+    "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
     "advanced_settings_optimize_cancel": "Cancelar",
     "advanced_settings_optimize_nn": "Optimizar las redes neuronales",
     "advanced_settings_optimize_ok": "Ok",
@@ -3302,7 +3453,12 @@ static const Map<String,dynamic> es = {
     "advanced_settings_title": "Ajustes avanzados",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma básica",
+    "dict_deconjugate_body": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
+    "dict_kanaize": "Convertir el término de búsqueda en kana",
+    "dict_kanaize_body": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
     "dict_languages": "Mostrar traducciones en (arrastre para reordenar)",
+    "dict_show_word_freq": "Mostrar frecuencia de palabras",
+    "dict_show_word_freq_body": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimación del uso de una palabra. Esta estimación se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\nLa cifra mostrada es una variación de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logarítmica de fácil comprensión para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque debería significar una aparición por cada mil millones de palabras.",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",

@@ -52,6 +52,19 @@ class SettingsDictionary with ChangeNotifier {
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
+  @JsonKey(ignore: true)
+  static const bool d_searchDeconjugate = true;
+  @JsonKey(defaultValue: d_searchDeconjugate)
+  /// Should the search term be deconjugated before searching
+  bool searchDeconjugate = d_searchDeconjugate;
+
+  @JsonKey(ignore: true)
+  static const bool d_searchKanaize = true;
+  @JsonKey(defaultValue: d_searchKanaize)
+  /// Should the search term be converted to kana if it is written in romaji
+  /// before searching
+  bool searchKanaize = d_searchKanaize;
+
 
   SettingsDictionary();
 
