@@ -1,4 +1,8 @@
 PODS:
+  - app_links (1.0.0):
+    - FlutterMacOS
+  - audio_session (0.0.1):
+    - FlutterMacOS
   - device_info_plus_macos (0.0.1):
     - FlutterMacOS
   - flutter_inappwebview (0.0.1):
@@ -8,6 +12,8 @@ PODS:
   - in_app_review (0.2.0):
     - FlutterMacOS
   - isar_flutter_libs (1.0.0):
+    - FlutterMacOS
+  - just_audio (0.0.1):
     - FlutterMacOS
   - mecab_dart (0.0.1):
     - FlutterMacOS
@@ -36,11 +42,14 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
+  - audio_session (from `Flutter/ephemeral/.symlinks/plugins/audio_session/macos`)
   - device_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos`)
   - flutter_inappwebview (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - isar_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos`)
+  - just_audio (from `Flutter/ephemeral/.symlinks/plugins/just_audio/macos`)
   - mecab_dart (from `Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
@@ -58,6 +67,10 @@ SPEC REPOS:
     - Sentry
 
 EXTERNAL SOURCES:
+  app_links:
+    :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
+  audio_session:
+    :path: Flutter/ephemeral/.symlinks/plugins/audio_session/macos
   device_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos
   flutter_inappwebview:
@@ -68,6 +81,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
   isar_flutter_libs:
     :path: Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos
+  just_audio:
+    :path: Flutter/ephemeral/.symlinks/plugins/just_audio/macos
   mecab_dart:
     :path: Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos
   package_info_plus:
@@ -90,11 +105,14 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
+  app_links: 4481ed4d71f384b0c3ae5016f4633aa73d32ff67
+  audio_session: dea1f41890dbf1718f04a56f1d6150fd50039b72
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
   flutter_inappwebview: 62e949df616a9f6e1b0366326381f208c7fcad37
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
+  just_audio: 9b67ca7b97c61cfc9784ea23cd8cc55eb226d489
   mecab_dart: 5082f14a3f6a9d0cf0b22a26a9ac2bfec2326064
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
@@ -108,6 +126,6 @@ SPEC CHECKSUMS:
   url_launcher_macos: c04e4fa86382d4f94f6b38f14625708be3ae52e2
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
-PODFILE CHECKSUM: c75a2cc254fdc3c791fc56851a106d0814079137
+PODFILE CHECKSUM: b0cc1fdf1eda0fefb5163971bbf18550427d02c4
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
