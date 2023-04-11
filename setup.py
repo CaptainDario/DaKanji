@@ -56,8 +56,7 @@ if __name__ == "__main__":
         
         # move ipadic to assets and unpack
         if(f.startswith("ipadic")):
-            with zipfile.ZipFile(f"{tmp_dir}/ipadic.zip", 'r') as zip_ref:
-                zip_ref.extractall("assets/")
+            shutil.move(f"{tmp_dir}/ipadic.zip", "assets/")
 
         # move the dictionary database to assets
         if(f.startswith(tuple(move_to_dict))):
