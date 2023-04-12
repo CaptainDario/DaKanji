@@ -86,7 +86,7 @@ class SearchIsolate {
     isolateSendPort!.send(noIsolates);
     isolateSendPort!.send(directory);
     isolateSendPort!.send(name);
-    isolateSendPort!.send(GetIt.I<Settings>().dictionary.convertToHiragana);
+    isolateSendPort!.send(convertToHiragana);
 
     _initialized = true;
   }
