@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:media_kit/media_kit.dart';
 
 import 'package:da_kanji_mobile/model/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -53,11 +53,10 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   double currentKanaY = 0;
   /// The animation controller for the kana info card
   late AnimationController _controller;
-
   /// The functions to be called when the menu items are pressed
   late List<Function> menuFunctions;  
-
-  final AudioPlayer kanaSoundPlayer = AudioPlayer();
+  /// The player for the kana sound
+  final Player kanaSoundPlayer = Player();
 
 
   @override
@@ -81,6 +80,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   @override
   void dispose() {
     _controller.dispose();
+    kanaSoundPlayer.dispose();
     super.dispose();
   }
 
@@ -156,9 +156,12 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                     currentKanaTable,
                     isPortrait,
                     showRomaji: showRomaji,
-                    onTap: (String kana) {
-                      kanaSoundPlayer.setAsset("assets/audios/kana/individuals/${kana}.wav");
-                      kanaSoundPlayer.play();
+                    onTap: (String kana) async {
+                      await kanaSoundPlayer.open(
+                        Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
+                        play: true
+                      );
+
                       setState(() {
                         currentKana = kana;
                         currentKanaX =
