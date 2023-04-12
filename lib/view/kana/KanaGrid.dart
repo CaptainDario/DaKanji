@@ -94,9 +94,7 @@ class _KanaGridState extends State<KanaGrid> {
                       // romaji
                       if(widget.showRomaji)
                         TextSpan(
-                          text: KanaKit().toRomaji(
-                            "\n" + currentKana
-                          ),
+                          text: "\n" + convertToRomaji(currentKana),
                           style: TextStyle(
                             overflow: TextOverflow.visible,
                             color: Theme.of(context).brightness == Brightness.light ?

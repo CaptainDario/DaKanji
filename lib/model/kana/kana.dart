@@ -2,6 +2,60 @@ import 'package:kana_kit/kana_kit.dart';
 
 
 
+/// converts the given kana to romaji maching the audio files
+String convertToRomaji(String kana){
+  
+  String romaji = ""; KanaKit k = KanaKit();
+
+  switch (k.toHiragana(kana)) {
+
+    case "どぅ":
+      romaji = "dwu";
+      break;
+    case "とぅ":
+      romaji = "twu";
+      break;
+    case "てぃ":  
+      romaji = "ti";
+      break;
+    case "でぃ":  
+      romaji = "di";
+      break;
+    
+    case "ふぁ":
+      romaji = "fa";
+      break;
+    case "ふぃ":
+      romaji = "fi";
+      break;
+    case "ふぇ":  
+      romaji = "fe";
+      break;
+    case "ふぉ":  
+      romaji = "fo";
+      break;
+
+    case "つぁ":
+      romaji = "tza";
+      break;
+    case "つぃ":
+      romaji = "tzi";
+      break;
+    case "つぇ":  
+      romaji = "tze";
+      break;
+    case "つぉ":  
+      romaji = "tzo";
+      break;
+
+    default:
+      romaji = KanaKit().toRomaji(kana);
+  }
+
+  return romaji;
+}
+
+
 /// 2D Hiragana table
 List<List<String>> hiragana = [
   ["あ", "い", "う", "え", "お"],
@@ -54,8 +108,8 @@ List<List<String>> hiraYoon = [
 
   ["うぃ", "うぇ", "うぉ", ""],
   ["つぁ", "つぃ", "つぇ", "つぉ"],
-  ["てぃ", "ディ", "とぅ", "ドゥ"],
-  ["シェ", "じぇ", "ちぇ", ""]
+  ["てぃ", "でぃ", "とぅ", "どぅ"],
+  ["しぇ", "じぇ", "ちぇ", ""]
 ];
 
 //****
