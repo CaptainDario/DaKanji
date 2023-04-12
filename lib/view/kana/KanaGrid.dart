@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import 'package:kana_kit/kana_kit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
+import 'package:da_kanji_mobile/model/kana/kana.dart';
 
 
 
@@ -63,7 +63,7 @@ class _KanaGridState extends State<KanaGrid> {
           duration: Duration(milliseconds: 300),
           child: currentKana != ""
           ? FadeInAnimation(
-            key: Key("${currentKana}_${widget.showRomaji}"),
+            key: Key("${currentKana}_${widget.showRomaji}_${widget.isPortrait}"),
             child: ScaleAnimation(
               child: TextButton(
                 onPressed: () {
