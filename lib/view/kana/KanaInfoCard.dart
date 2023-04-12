@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +32,8 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
 
   /// The svg of the kana
   String kanaSvg = "";
+  /// The svg of the kana's mnemonics
+  String mnemonicSvg = "";
   /// The svg of the dakuten
   String yoonSVG = "";
   /// The mnemonic of the kana
@@ -50,11 +53,21 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   }
 
   /// initialize the kanaSvg and yoonSVG
-  void init(){
+  void init() async {
     // get the svg of the kana
     kanaSvg = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
       .characterEqualTo(widget.kana[0])
     .findFirstSync()!.svg;
+
+    if((hiragana + katakana).contains(widget.kana)){
+      rootBundle.loadString(
+        "assets/images/kana/individuals/${widget.kana}.svg"
+      ).then((value) {
+        setState(() {
+          mnemonicSvg = value;
+        });
+      });
+    }
 
     // get the svg of the yoon kana if there is one
     // get the mnemonic of the kana if there is one
@@ -66,6 +79,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     else {
       mnemonic = kanaMnemonics[widget.kana[0]];
     }
+
   }
 
   @override
@@ -90,11 +104,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                     )
                   ),
                   // mnemonic (if there is one)
-                  if(widget.kana.length < 2)
+                  if(widget.kana.length < 2 && mnemonicSvg != "")
                     Expanded(
                       child: Center(
-                        child: Image.asset(
-                          "assets/images/kana/individuals/${widget.kana}.png",
+                        child: SvgPicture.string(
+                          mnemonicSvg
                         )
                       )
                     ),
@@ -106,7 +120,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                           yoonSVG,
                           color: Theme.of(context).brightness == Brightness.light ?
                         Colors.black : Colors.white,
-                        ),
+                        )
                       )
                     )
                 ],
