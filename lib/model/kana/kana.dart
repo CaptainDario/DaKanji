@@ -1,8 +1,32 @@
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
+
 import 'package:kana_kit/kana_kit.dart';
 
 
 
-/// converts the given kana to romaji maching the audio files
+/// Increases the font size of the stroke numbers to `size` and sets stroke
+/// number's color to `color`.
+String modifyKanjiVGSvg(String svg,
+  {
+    int size=14, Color textColor=g_Dakanji_red, Color strokeColor=Colors.white
+  }
+){
+
+  String textHexColor = textColor.value.toRadixString(16)
+    .padLeft(6, '0').substring(2, 8);
+  String strokeHexColor = strokeColor.value.toRadixString(16)
+    .padLeft(6, '0').substring(2, 8);
+
+  String s = svg.replaceAll(
+    "<text", "<text font-size=\"$size\" fill=\"#$textHexColor\" stroke=\"#$textHexColor\""
+  );
+  s = s.replaceAll("stroke:#000000", "stroke:#$strokeHexColor");
+
+  return s;
+}
+
+/// converts the given kana to romaji maching the audio file names of the app
 String convertToRomaji(String kana){
   
   String romaji = ""; KanaKit k = KanaKit();

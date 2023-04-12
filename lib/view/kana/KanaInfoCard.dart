@@ -58,6 +58,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     kanaSvg = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
       .characterEqualTo(widget.kana[0])
     .findFirstSync()!.svg;
+    kanaSvg = modifyKanjiVGSvg(kanaSvg);
 
     if((hiragana + katakana).contains(widget.kana)){
       rootBundle.loadString(
@@ -75,6 +76,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
       yoonSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
         .characterEqualTo(widget.kana[1])
       .findFirstSync()!.svg;
+      yoonSVG = modifyKanjiVGSvg(yoonSVG);
     }
     else {
       mnemonic = kanaMnemonics[widget.kana[0]];
@@ -98,8 +100,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                     child: Center(
                       child: SvgPicture.string(
                         kanaSvg,
-                        color: Theme.of(context).brightness == Brightness.light ?
-                        Colors.black : Colors.white,
+                        cacheColorFilter: true,
                       ),
                     )
                   ),
@@ -118,8 +119,6 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       child: Center(
                         child: SvgPicture.string(
                           yoonSVG,
-                          color: Theme.of(context).brightness == Brightness.light ?
-                        Colors.black : Colors.white,
                         )
                       )
                     )
@@ -140,6 +139,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                           // bold text
                           strong: TextStyle(
                             fontSize: 20,
+                            decoration: TextDecoration.underline,
                           )
                         ),
                         data: mnemonic!,
