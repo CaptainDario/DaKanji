@@ -203,7 +203,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
       t.hiraganasElementStartsWith(convertedQuery)
     ).or()
     .optional(convertedQuery.length >= 2, (t) => 
-      .hiraganasElementContains(convertedQuery)
+      t.hiraganasElementContains(convertedQuery)
     )
     
 
