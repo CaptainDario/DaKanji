@@ -135,13 +135,13 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
       }
       else{
         // sort by difference in length
-        if(_a.item3 != _b.item3){
-          return _a.item3.compareTo(_b.item3);
-        }
+        //if(_a.item3 != _b.item3){
+        //  return _a.item3.compareTo(_b.item3);
+        //}
         // sort by frequency
-        else {
+        //else {
           return -_a.item1.frequency.compareTo(_b.item1.frequency);
-        }
+        //}
       }
     }
   );
