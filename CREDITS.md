@@ -18,7 +18,8 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
   * icon / banner
     * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
   * UI
-    * Shout out to Nurellina! Without your help the Drawing would not look as good as it does now
+    * Drawing
+      * Shout out to Nurellina!
 * Data, images and other resources:
   * [flag-icons](https://github.com/lipis/flag-icons)
   * Databases:
@@ -33,7 +34,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * [ja_pitch_accent](https://github.com/kishimoto-tsuneyo/ja_pitch_accent)
   * Thanks Adrian Jordanov for the [font THEATER](https://www.1001fonts.com/theater-font.html)
   * Thanks 青柳衡山 (Aoyagi Kouzan) for the [font Kouzan Gyoushou](https://www.freejapanesefont.com/kouzan-semi-cursive-brush-font/).
-  * Thank you so much ゆうか 田村村 for recording the kana sounds
+  * Thank you so much ゆうか 田村村 for recording the kana sounds, and helping with the mnemonics
   * Thank you LeafPiece for the [kana mnemonics](https://commons.wikimedia.org/wiki/File:Japanese_Kana_Mnemonic_Chart.png#filelinks)
 
 * A big shout out to all current and past testers!
