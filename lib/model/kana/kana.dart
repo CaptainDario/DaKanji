@@ -120,21 +120,75 @@ List<List<String>> hiraYoonHandakuten = [
 List<List<String>> hiraDaku = hiraDakuten + hiraYoonDakuten + hiraHandakuten + hiraYoonHandakuten;
 
 List<List<String>> hiraYoon = [
-  ["きゃ", "きゅ", "きょ", ""],
-  ["しゃ", "しゅ", "しょ", ""],
-  ["ちゃ", "ちゅ", "ちょ", ""],
-  ["にゃ", "にゅ", "にょ", ""],
-  ["ひゃ", "ひゅ", "ひょ", ""],
-  ["みゃ", "みゅ", "みょ", ""],
-  ["りゃ", "りゅ", "りょ", ""],
-
-  ["ふぁ", "ふぃ", "ふぇ", "ふぉ"],
-
-  ["うぃ", "うぇ", "うぉ", ""],
-  ["つぁ", "つぃ", "つぇ", "つぉ"],
-  ["てぃ", "でぃ", "とぅ", "どぅ"],
-  ["しぇ", "じぇ", "ちぇ", ""]
+  ["きゃ", "きゅ", "きょ"],
+  ["しゃ", "しゅ", "しょ"],
+  ["ちゃ", "ちゅ", "ちょ"],
+  ["にゃ", "にゅ", "にょ"],
+  ["ひゃ", "ひゅ", "ひょ"],
+  ["みゃ", "みゅ", "みょ"],
+  ["りゃ", "りゅ", "りょ"],
 ];
+
+List<List<String>> hiraSpecial =[
+  ["ふぁ", "ふぃ", "ふぇ", "ふぉ"],
+  ["つぁ", "つぃ", "つぇ", "つぉ"],
+  [""   , "うぃ", "うぇ", "うぉ"],
+  ["", "", "", ""],
+  ["", "", "しぇ", ""],
+  ["", "", "じぇ", ""],
+  ["", "", "でぃ", ""],
+  ["", "", "", ""],
+  ["しぇ", "じぇ", "ちぇ", ""],
+  ["てぃ", "でぃ", "",    ""],
+  ["とぅ", "どぅ", "",    ""],
+];
+
+
+/// 2D Katakana table
+List<List<String>> katakana = hiragana.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataDakuten = hiraDakuten.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataYoonDakuten = hiraYoonDakuten.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataHandakuten = hiraHandakuten.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataYoonHandakuten = hiraYoonHandakuten.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataDaku = kataDakuten + kataYoonDakuten + kataHandakuten + kataYoonHandakuten;
+
+List<List<String>> kataYoon = hiraYoon.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
+List<List<String>> kataSpecial = hiraSpecial.map((e) => 
+  e.map((e) =>
+    KanaKit().toKatakana(e)
+  ).toList()
+).toList();
+
 
 //****
 Map<String, String> kanaMnemonics = {
@@ -240,45 +294,3 @@ Map<String, String> kanaMnemonics = {
   "ん" : "The letter '**n**'",
   "ン" : "E**n**velope",
 };
-
-
-
-/// 2D Katakana table
-List<List<String>> katakana = hiragana.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
-List<List<String>> kataDakuten = hiraDakuten.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
-List<List<String>> kataYoonDakuten = hiraYoonDakuten.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
-List<List<String>> kataHandakuten = hiraHandakuten.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
-List<List<String>> kataYoonHandakuten = hiraYoonHandakuten.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
-List<List<String>> kataDaku = kataDakuten + kataYoonDakuten + kataHandakuten + kataYoonHandakuten;
-
-List<List<String>> kataYoon = hiraYoon.map((e) => 
-  e.map((e) =>
-    KanaKit().toKatakana(e)
-  ).toList()
-).toList();
-
