@@ -44,6 +44,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   bool showDaku = false;
   /// Are yoon being shown
   bool showYoon = false;
+  /// Are special yoon being shown
+  bool showSpecial = false;
 
   /// The currently selected kana
   String? currentKana;
@@ -67,6 +69,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       yoonDialPressed,
       kanaDialPressed,
       romajiDialPressed,
+      showSpecialDialPressed,
     ];  
 
     _controller = AnimationController(
@@ -90,10 +93,11 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
 
     /// The menu items to be displayed in the speed dial
     List<String> menuItems = [
-      showDaku   ? "dakuten_on.svg"  : "dakuten_off.svg",
-      showYoon   ? "yoon_on.svg"     : "yoon_off.svg", 
-      isHiragana ? "switch_hira.svg" : "switch_kata.svg",
-      showRomaji ? "romaji_on.svg"   : "romaji_off.svg"
+      showDaku        ? "dakuten_on.svg"  : "dakuten_off.svg",
+      showYoon        ? "yoon_on.svg"     : "yoon_off.svg",
+      isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
+      showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
+      showSpecial ? "yoon_on.svg"     : "yoon_off.svg", 
     ].map((e) => "assets/icons/kana/" + e).toList();
     
     
@@ -117,7 +121,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
           focusColor: g_Dakanji_green,
           onPressed: () => isDialOpen.value = !isDialOpen.value,
           child: SpeedDial(
-            icon: Icons.menu,
+            icon: Icons.settings,
             activeIcon: Icons.close,
             iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: g_Dakanji_green,
@@ -219,7 +223,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                         ),
                       );
                     }
-                  )
+                  ),
               ],
             );
           }
@@ -263,6 +267,9 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       else if(showDaku){
         currentKanaTable = hiraDaku;
       }
+      else if(showSpecial){
+        currentKanaTable = hiraSpecial;
+      }
       else{
         currentKanaTable = hiragana;
       }
@@ -273,6 +280,9 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       }
       else if(showDaku){
         currentKanaTable = kataDaku;
+      }
+      else if(showSpecial){
+        currentKanaTable = kataSpecial;
       }
       else{
         currentKanaTable = katakana;
@@ -312,6 +322,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     } else {
       showDaku = true;
       showYoon = false;
+      showSpecial = false;
     }
   }
 
@@ -320,8 +331,19 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     if(showYoon){
       showYoon = false;
     } else {
-      showYoon = true;
       showDaku = false;
+      showYoon = true;
+      showSpecial = false;
+    }
+  }
+
+  void showSpecialDialPressed() {
+    if(showSpecial){
+      showSpecial = false;
+    } else {
+      showDaku = false;
+      showYoon = false;
+      showSpecial = true;
     }
   }
 
