@@ -65,6 +65,7 @@ dependencies:
   media_kit_libs_ios_video: 1.0.3              # iOS package for video (& audio) native libraries.
   media_kit_libs_macos_video: 1.0.3            # macOS package for video (& audio) native libraries.
   media_kit_libs_linux: 1.0.1                  # Linux dependency package.
+  file_picker: 5.2.9
 
   isar: any # included in dakanji dictionary
   isar_flutter_libs: any # included in dakanji dictionary
