@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/view/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/view/kana/KanaScreen.dart';
 import 'package:da_kanji_mobile/view/word_lists/word_lists_screen.dart';
 import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
@@ -115,6 +116,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(DictionaryScreen(
               args.navigatedByDrawer, true, args.initialDictSearch, initialEntryId: args.initialEntryId,
             ));
+          case "/dojg":
+            return switchScreen(const DoJGScreen());
           case "/text":
             return switchScreen(TextScreen(args.navigatedByDrawer, true, initialText: args.initialText,));
           case "/kanji":

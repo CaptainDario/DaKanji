@@ -285,6 +285,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the dojg screen
+                            if(kDebugMode)
+                              DrawerElement(
+                                leading: Icons.book,
+                                title: "DOJG", //LocaleKeys.DOJGScreen_title.tr(),
+                                route: "/dojg",
+                                selected: widget.currentScreen == Screens.dojg,
+                                drawerWidth: _drawerWidth,
+                                drawerController: _drawerController,
+                              ),
                             // Drawer entry to go to the text processing screen
                             DrawerElement(
                               leading: Icons.text_snippet,

@@ -73,6 +73,9 @@ class DrawerAppBar extends StatelessWidget {
                   case Screens.dictionary:
                     title = LocaleKeys.DictionaryScreen_title.tr();
                     break;
+                  case Screens.dojg:
+                    title = "DOJG";//LocaleKeys.DoJGScreen_title.tr();
+                    break;
                   case Screens.text:
                     title = LocaleKeys.TextScreen_title.tr();
                     break;
@@ -80,8 +83,7 @@ class DrawerAppBar extends StatelessWidget {
                     title = LocaleKeys.KanjiScreen_title.tr();
                     break;
                   case Screens.kana:
-                    // TODO add to google localization
-                    title = "Kana";// LocaleKeys.KanjiScreen_title.tr();
+                    title = LocaleKeys.KanjiScreen_title.tr();
                     break;
                   case Screens.kuzushiji:
                     title = LocaleKeys.KuzushijiScreen_title.tr();
