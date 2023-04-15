@@ -4,7 +4,6 @@ import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
