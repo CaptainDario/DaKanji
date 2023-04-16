@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -138,7 +139,7 @@ class _WordListNodeState extends State<WordListNode> {
           },
           builder: (context, candidateItems, rejectedItems) {
             return Container(
-              color: itemDraggingOverThis ? Colors.grey[300] : null,
+              color: itemDraggingOverThis ? g_Dakanji_green.withOpacity(0.5) : null,
               padding: EdgeInsets.fromLTRB(
                 15.0*(widget.node.level-1)+8, 0, 0, 0
               ),
