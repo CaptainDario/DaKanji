@@ -7,6 +7,7 @@ import 'package:da_kanji_mobile/provider/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/provider/settings/settings_advanced.dart';
 import 'package:da_kanji_mobile/provider/settings/settings_misc.dart';
 import 'package:da_kanji_mobile/provider/settings/settings_dictionary.dart';
+import 'package:da_kanji_mobile/provider/settings/settings_anki.dart';
 
 
 
@@ -21,6 +22,8 @@ class Settings with ChangeNotifier {
   late SettingsAdvanced _advanced;
   /// All settings related to the dictionary part of the app
   late SettingsDictionary _dictionary;
+  /// All settings related to the anki integration
+  late SettingsAnki _anki;
 
 
   Settings(){
@@ -28,6 +31,7 @@ class Settings with ChangeNotifier {
     _misc       = SettingsMisc(); 
     _advanced   = SettingsAdvanced();
     _dictionary = SettingsDictionary();
+    _anki       = SettingsAnki();
   }
 
 
@@ -47,6 +51,10 @@ class Settings with ChangeNotifier {
     return _dictionary;
   }
 
+  SettingsAnki get anki {
+    return _anki;
+  }
+
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
     // obtain shared preferences
@@ -57,12 +65,14 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsMisc', json.encode(misc.toJson()));
     prefs.setString('settingsAdvanced', json.encode(advanced.toJson()));
     prefs.setString('settingsDictionary', json.encode(dictionary.toJson()));
+    prefs.setString('settingsAnki', json.encode(anki.toJson()));
   }
 
   /// Load all saved settings from SharedPreferences.
   Future<void> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
+    // DRAWING SETTINGS
     try{
       String tmp = prefs.getString('settingsDrawing') ?? "";
       if(tmp != "") {_drawing = SettingsDrawing.fromJson(json.decode(tmp));}
@@ -73,6 +83,7 @@ class Settings with ChangeNotifier {
     }
     _drawing.addListener(() => notifyListeners());
     
+    // MISC SETTINGS
     try{
       String tmp = prefs.getString('settingsMisc') ?? "";
       if(tmp != "") {_misc = SettingsMisc.fromJson(json.decode(tmp));}
@@ -83,6 +94,7 @@ class Settings with ChangeNotifier {
     }
     _misc.addListener(() => notifyListeners());
 
+    // ADVANCED SETTINGS
     try{
       String tmp = prefs.getString('settingsAdvanced') ?? "";
       if(tmp != "") {_advanced = SettingsAdvanced.fromJson(json.decode(tmp));}
@@ -93,6 +105,7 @@ class Settings with ChangeNotifier {
     }
     _advanced.addListener(() => notifyListeners());
 
+    // DICTIONARY SETTINGS
     try{
       String tmp = prefs.getString('settingsDictionary') ?? "";
       if(tmp != "") {_dictionary = SettingsDictionary.fromJson(json.decode(tmp));}
@@ -102,6 +115,17 @@ class Settings with ChangeNotifier {
       _dictionary = SettingsDictionary();
     }
     _dictionary.addListener(() => notifyListeners());
+
+    // ANKI SETTINGS
+    try{
+      String tmp = prefs.getString('settingsAnki') ?? "";
+      if(tmp != "") {_anki = SettingsAnki.fromJson(json.decode(tmp));}
+      else {_anki = SettingsAnki();}
+    }
+    catch (e) {
+      _anki = SettingsAnki();
+    }
+    _anki.addListener(() => notifyListeners());
   }
 }
 
