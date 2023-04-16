@@ -143,6 +143,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               children: List.generate( (widget.entry!.readings.length),
                                 // Characters of word reading with  pitch accent
                                 (index_1) => Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children:
                                   [
                                     ...List.generate(
