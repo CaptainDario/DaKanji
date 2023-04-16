@@ -27,11 +27,13 @@ PODS:
     - FlutterMacOS
   - screen_retriever (0.0.1):
     - FlutterMacOS
-  - Sentry/HybridSDK (7.31.5)
+  - Sentry/HybridSDK (8.4.0):
+    - SentryPrivate (= 8.4.0)
   - sentry_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 7.31.5)
+    - Sentry/HybridSDK (= 8.4.0)
+  - SentryPrivate (8.4.0)
   - share_plus (0.0.1):
     - FlutterMacOS
   - shared_preferences_macos (0.0.1):
@@ -68,6 +70,7 @@ SPEC REPOS:
   trunk:
     - OrderedSet
     - Sentry
+    - SentryPrivate
 
 EXTERNAL SOURCES:
   app_links:
@@ -124,8 +127,9 @@ SPEC CHECKSUMS:
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
-  Sentry: 4c9babff9034785067c896fd580b1f7de44da020
-  sentry_flutter: b10ae7a5ddcbc7f04648eeb2672b5747230172f1
+  Sentry: 16d46dd5ca10e7f4469a2611805a3de123188add
+  sentry_flutter: 45124526f72f01bacc790d075443692cd490ee78
+  SentryPrivate: 2bb4f8d9ff558b25ac70b66c1dedc58a7c43630b
   share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
   shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
   tflite_flutter_helper: b9fb1f2880a784c6b4041f6592c351d631ebe55f
