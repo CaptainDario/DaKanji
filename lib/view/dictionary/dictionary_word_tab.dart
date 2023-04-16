@@ -13,7 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as W;
+import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as WordListsUI;
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
@@ -319,9 +319,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 headerAnimationLoop: false,
                                 useRootNavigator: false,
                                 dialogType: DialogType.noHeader,
-                                body: W.WordLists(
+                                body: WordListsUI.WordLists(
                                   false,
                                   GetIt.I<WordLists>().root,
+                                  showDefaults: false,
                                   onSelectionConfirmed: (selection) {
                                     
                                     selection.where(

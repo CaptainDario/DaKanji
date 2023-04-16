@@ -16,6 +16,8 @@ class WordLists extends StatefulWidget {
   final bool includeTutorial;
   /// the parent of this word lists
   final TreeNode<WordListsData>? parent;
+  /// should the default word lists be included
+  final bool showDefaults;
   /// Callback when that is triggered when the user presses the ok button
   /// after selecting word lists / folders. Provides a list with all selected
   /// nodes
@@ -25,6 +27,7 @@ class WordLists extends StatefulWidget {
     this.includeTutorial,
     this.parent,
     {
+      this.showDefaults = true,
       this.onSelectionConfirmed,
       super.key
     }
@@ -96,7 +99,10 @@ class _WordListsState extends State<WordLists> {
                 ],
               ),
               for (int i = 0; i < childrenDFS.length; i++)
-                if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded))
+                // Only show if the parent is expanded
+                // Only show the default lists/folder if `showDefaults` is true
+                if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded) &&
+                  (widget.showDefaults || !childrenDFS[i].value.type.toString().contains("Default")))
                   WordListNode(
                     childrenDFS[i],
                     i,
@@ -114,7 +120,7 @@ class _WordListsState extends State<WordLists> {
                     },
                     onDragAccept: (destinationNode, thisNode) {
                       setState(() {
-                        // TODO change drop color here
+
                       });
                     },
                     onDeletePressed: (TreeNode node) {
