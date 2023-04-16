@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -138,18 +139,36 @@ class _WordListsState extends State<WordLists> {
                 
                 // confirm selection button if word lists are opened in selection mode
                 if(widget.onSelectionConfirmed != null)
-                  TextButton(
-                    onPressed: (){
-
-                      List<TreeNode<WordListsData>> selection =
-                        widget.parent!.DFS().where(
-                          (node) => node.value.isChecked
-                        ).toList();
-
-                      widget.onSelectionConfirmed!(selection);
-                    },
-                    child: Text("OK")
-                  ),
+                  ...[
+                    SizedBox(height: 16),
+                    Divider(),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                            ),
+                          ),
+                          onPressed: (){
+                            List<TreeNode<WordListsData>> selection =
+                              widget.parent!.DFS().where(
+                                (node) => node.value.isChecked
+                              ).toList();
+                            widget.onSelectionConfirmed!(selection);
+                          },
+                          child: Text("OK")
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                  ]
             ],
           ),
         );
