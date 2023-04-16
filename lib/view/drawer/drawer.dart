@@ -369,7 +369,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerController: _drawerController,
                             ),
                             // Drawer entry to go to the manual screen
-                            /*
                             DrawerElement(
                               leading: Icons.help,
                               title: LocaleKeys.ManualScreen_title.tr(),
@@ -378,7 +377,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
-                            */
                             // Drawer entry to send feedback
                             DrawerElement(
                               leading: Icons.feedback,
