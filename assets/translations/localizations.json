@@ -1863,6 +1863,42 @@
     "title": {
       "en": "Word lists",
       "de": "Wortlisten"
+    },
+    "no_entries": {
+      "en": "No entries in this word list",
+      "de": "Keine Einträge in dieser Liste"
+    },
+    "add": {
+      "en": "add",
+      "de": "Hinzufügen"
+    },
+    "new_list": {
+      "en": "New list",
+      "de": "Neue Liste"
+    },
+    "new_folder": {
+      "en": "New folder",
+      "de": "Neuer Ordner"
+    },
+    "defaults": {
+      "en": "defaults",
+      "de": "Standard"
+    },
+    "search_history": {
+      "en": "Search history",
+      "de": "Suchverlauf"
+    },
+    "node_hint_text": {
+      "en": "Name",
+      "de": "Name"
+    },
+    "rename": {
+      "en": "Rename",
+      "de": "Umbennen"
+    },
+    "delete": {
+      "en": "Delete",
+      "de": "Löschen"
     }
   }
 }

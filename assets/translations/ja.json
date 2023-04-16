@@ -232,6 +232,15 @@
     "title": "\u30a6\u30a7\u30d6\u30d3\u30e5\u30fc"
   },
   "WordListsScreen": {
+    "add": "",
+    "defaults": "",
+    "delete": "",
+    "new_folder": "",
+    "new_list": "",
+    "no_entries": "",
+    "node_hint_text": "",
+    "rename": "",
+    "search_history": "",
     "title": ""
   }
 }

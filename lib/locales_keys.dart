@@ -219,6 +219,15 @@ abstract class  LocaleKeys {
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';
+  static const WordListsScreen_add = 'WordListsScreen.add';
+  static const WordListsScreen_defaults = 'WordListsScreen.defaults';
+  static const WordListsScreen_delete = 'WordListsScreen.delete';
+  static const WordListsScreen_new_folder = 'WordListsScreen.new_folder';
+  static const WordListsScreen_new_list = 'WordListsScreen.new_list';
+  static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';
+  static const WordListsScreen_node_hint_text = 'WordListsScreen.node_hint_text';
+  static const WordListsScreen_rename = 'WordListsScreen.rename';
+  static const WordListsScreen_search_history = 'WordListsScreen.search_history';
   static const WordListsScreen_title = 'WordListsScreen.title';
   static const WordListsScreen = 'WordListsScreen';
 

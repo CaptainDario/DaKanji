@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
@@ -151,7 +154,7 @@ class _WordListNodeState extends State<WordListNode> {
                       ? IconButton(
                         icon: Icon( widget.node.value.isExpanded
                           ? Icons.arrow_drop_down
-                          : Icons.arrow_drop_up
+                          : Icons.arrow_right
                         ),
                         onPressed: () {
                           if(widget.node.level < 1) return;
@@ -175,7 +178,7 @@ class _WordListNodeState extends State<WordListNode> {
                         enabled: nameEditing,
                         decoration: InputDecoration(
                           border: nameEditing ? null : InputBorder.none,
-                          hintText: "Name"
+                          hintText: LocaleKeys.WordListsScreen_node_hint_text.tr()
                         ),
                         onEditingComplete: () {
                           renamingComplete();
@@ -219,12 +222,16 @@ class _WordListNodeState extends State<WordListNode> {
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
                               value: PopupMenuButtonItems.Rename,
-                              child: Text("Rename")
+                              child: Text(
+                                LocaleKeys.WordListsScreen_rename.tr(),
+                              )
                             ),
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
                               value: PopupMenuButtonItems.Delete,
-                              child: Text("Delete")
+                              child: Text(
+                                LocaleKeys.WordListsScreen_delete.tr(),
+                              )
                             ),
                         ],
                       ),

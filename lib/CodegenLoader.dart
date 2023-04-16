@@ -2026,6 +2026,42 @@ static const Map<String,dynamic> localizations = {
     "title": {
       "en": "Word lists",
       "de": "Wortlisten"
+    },
+    "no_entries": {
+      "en": "No entries in this word list",
+      "de": "Keine Einträge in dieser Liste"
+    },
+    "add": {
+      "en": "add",
+      "de": "Hinzufügen"
+    },
+    "new_list": {
+      "en": "New list",
+      "de": "Neue Liste"
+    },
+    "new_folder": {
+      "en": "New folder",
+      "de": "Neuer Ordner"
+    },
+    "defaults": {
+      "en": "defaults",
+      "de": "Standard"
+    },
+    "search_history": {
+      "en": "Search history",
+      "de": "Suchverlauf"
+    },
+    "node_hint_text": {
+      "en": "Name",
+      "de": "Name"
+    },
+    "rename": {
+      "en": "Rename",
+      "de": "Umbennen"
+    },
+    "delete": {
+      "en": "Delete",
+      "de": "Löschen"
     }
   }
 };
@@ -2458,6 +2494,15 @@ static const Map<String,dynamic> de = {
     "title": "Webview"
   },
   "WordListsScreen": {
+    "add": "Hinzufügen",
+    "defaults": "Standard",
+    "delete": "Löschen",
+    "new_folder": "Neuer Ordner",
+    "new_list": "Neue Liste",
+    "no_entries": "Keine Einträge in dieser Liste",
+    "node_hint_text": "Name",
+    "rename": "Umbennen",
+    "search_history": "Suchverlauf",
     "title": "Wortlisten"
   }
 };
@@ -3071,6 +3116,15 @@ static const Map<String,dynamic> en = {
     "title": "Webview"
   },
   "WordListsScreen": {
+    "add": "add",
+    "defaults": "defaults",
+    "delete": "Delete",
+    "new_folder": "New folder",
+    "new_list": "New list",
+    "no_entries": "No entries in this word list",
+    "node_hint_text": "Name",
+    "rename": "Rename",
+    "search_history": "Search history",
     "title": "Word lists"
   }
 };

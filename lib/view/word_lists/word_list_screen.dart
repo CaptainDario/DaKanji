@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
@@ -10,6 +11,8 @@ import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/model/navigation_arguments.dart';
 
 
 
@@ -69,7 +72,7 @@ class _WordListScreenState extends State<WordListScreen> {
       ),
       body: widget.node.value.wordIds.isEmpty
         ? Center(
-          child: Text('No entries in this word list'),
+          child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
         )
         : SearchResultList(
           searchResults: GetIt.I<Isars>().dictionary.jmdict.where()

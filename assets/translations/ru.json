@@ -232,6 +232,15 @@
     "title": "Webview"
   },
   "WordListsScreen": {
+    "add": "",
+    "defaults": "",
+    "delete": "",
+    "new_folder": "",
+    "new_list": "",
+    "no_entries": "",
+    "node_hint_text": "",
+    "rename": "",
+    "search_history": "",
     "title": ""
   }
 }

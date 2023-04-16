@@ -232,6 +232,15 @@
     "title": "\u7f51\u9875\u6d4f\u89c8"
   },
   "WordListsScreen": {
+    "add": "",
+    "defaults": "",
+    "delete": "",
+    "new_folder": "",
+    "new_list": "",
+    "no_entries": "",
+    "node_hint_text": "",
+    "rename": "",
+    "search_history": "",
     "title": ""
   }
 }

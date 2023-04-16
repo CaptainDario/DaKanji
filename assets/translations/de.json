@@ -232,6 +232,15 @@
     "title": "Webview"
   },
   "WordListsScreen": {
+    "add": "Hinzuf\u00fcgen",
+    "defaults": "Standard",
+    "delete": "L\u00f6schen",
+    "new_folder": "Neuer Ordner",
+    "new_list": "Neue Liste",
+    "no_entries": "Keine Eintr\u00e4ge in dieser Liste",
+    "node_hint_text": "Name",
+    "rename": "Umbennen",
+    "search_history": "Suchverlauf",
     "title": "Wortlisten"
   }
 }
