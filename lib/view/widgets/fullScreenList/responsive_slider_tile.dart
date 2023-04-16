@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 
 class ResponsiveSliderTile extends StatefulWidget {
@@ -19,6 +21,8 @@ class ResponsiveSliderTile extends StatefulWidget {
   /// when set to a value shows a leading info icon and when the user presses
   /// this icon a info dialog will open
   final String? infoText;
+  /// The autoSizeGroup to use for the text
+  final AutoSizeGroup? autoSizeGroup;
   /// callback which is executed when the user moves the slider
   final Function (double value)? onSliderMoved;
   /// callback which will be execute when the icon button on the side is pressed
@@ -33,6 +37,7 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.divisions,
       this.leadingIcon,
       this.infoText,
+      this.autoSizeGroup,
       this.onSliderMoved,
       this.onLeadingIconPressed,
       Key? key
@@ -56,8 +61,9 @@ class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
           ),
         Expanded(
           flex: 5,
-          child: Text(
-            widget.text
+          child: AutoSizeText(
+            widget.text,
+            group: widget.autoSizeGroup,
           )
         ),
         Expanded(
