@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/helper/anki/anki.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -48,12 +49,21 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
 
+  /// The scroll controller for the list of settings
   late ScrollController scrollController;
+  /// All available anki decks
+  List<String> ankiDecks = ["DaKanji", "+"];
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
+
+    getDeckNames().then((value) {
+      setState(() {
+        ankiDecks = value;
+      });
+    });
   }
 
   @override
@@ -101,6 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ?? settings.drawing.dictionaries[0];
                           settings.save();
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // custom URL input
                       if(settings.drawing.selectedDictionary == settings.drawing.webDictionaries[3])
@@ -122,7 +133,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTileTapped: (bool? newValue){
                           settings.drawing.invertShortLongPress = newValue ?? false;
                           settings.save();
-                        }
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // double tap empties canvas
                       ResponsiveCheckBoxTile(
@@ -131,7 +143,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTileTapped: (bool? newValue){
                           settings.drawing.emptyCanvasAfterDoubleTap = newValue ?? false;
                           settings.save();
-                        }
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       if(g_webViewSupported)
                         ResponsiveCheckBoxTile(
@@ -141,6 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.drawing.useWebview = value;
                             settings.save();
                           },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
@@ -151,6 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.save();
                           Phoenix.rebirth(context);
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // #endregion
 
@@ -267,6 +282,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             )
                           )..show();
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // try to deconjugate words before searching
                       ResponsiveCheckBoxTile(
@@ -295,6 +311,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             )
                           )..show();
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // Convert to kana before searching
                       ResponsiveCheckBoxTile(
@@ -323,6 +340,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             )
                           )..show();
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
@@ -333,6 +351,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.save();
                           Phoenix.rebirth(context);
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
 
                       // #endregion
@@ -354,7 +373,80 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.save();
                           Phoenix.rebirth(context);
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
+
+                      // #endregion
+
+                      const Divider(),
+
+                      // #region - Anki header
+                      ResponsiveHeaderTile(
+                        LocaleKeys.SettingsScreen_anki_title.tr(),
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // the default deck to add cards to
+                      ResponsiveDropDownTile(
+                        text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
+                        value: ankiDecks[0],
+                        items: ankiDecks,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // how many langauges should be included
+                      ResponsiveSliderTile(
+                        text: LocaleKeys.SettingsScreen_anki_default_no_langs.tr(),
+                        value: 0,
+                        min: 0,
+                        max: settings.dictionary.selectedTranslationLanguages.length.toDouble(),
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // how many different lines from entries should be included
+                      ResponsiveSliderTile(
+                        text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
+                        value: 3,
+                        min: 0,
+                        max: 5,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // include google image (disabled for now)
+                      if(false)
+                        ResponsiveCheckBoxTile(
+                          text: "Include google image",
+                          value: settings.anki.includeGoogleImage,
+                          onTileTapped: (value) {
+                            setState(() {
+                              settings.anki.includeGoogleImage = value;
+                              settings.save();
+                            });
+                          },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
+                        ),
+                      // include audio (disabled for now)
+                      if(false)
+                        ResponsiveCheckBoxTile(
+                          text: "Include audio",
+                          value: settings.anki.includeAudio,
+                          onTileTapped: (value) {
+                            setState(() {
+                              settings.anki.includeAudio = value;
+                              settings.save();
+                            });
+                          },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
+                        ),
+                      // include screenshot (disabled for now)
+                      if(false)
+                        ResponsiveCheckBoxTile(
+                          text: "Include screenshot",
+                          value: settings.anki.includeScreenshot,
+                          onTileTapped: (value) {
+                            setState(() {
+                              settings.anki.includeScreenshot = value;
+                              settings.save();
+                            });
+                          },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
+                        ),
 
                       // #endregion
 
@@ -377,6 +469,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.save();
                           Phoenix.rebirth(context);
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // screen to show when app starts
                       ResponsiveDropDownTile(
@@ -392,6 +485,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           }
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // app languages
                       ResponsiveDropDownTile(
@@ -404,6 +498,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Phoenix.rebirth(context);
                           }
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // window size
                       if(g_desktopPlatform)
@@ -418,6 +513,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                             settings.save();
                           },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
                       // window always on top
                       if(g_desktopPlatform)
@@ -429,6 +525,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.misc.alwaysOnTop = checked;
                             settings.save();
                           },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
                       // window opacity
                       if(g_desktopPlatform)
@@ -440,6 +537,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.misc.windowOpacity = value;
                             settings.save();
                           },
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
                       // #endregion
 
@@ -464,6 +562,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               settings.advanced.useThanosSnap = newValue;
                               settings.save();
                             },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
                           ),
                           // optimize backends
                           ResponsiveIconButtonTile(
@@ -472,10 +571,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () {
                               optimizeBackendsPopup(context)..show();
                             },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
                           ),
-                          //
+                          // number of search isolates
                           ResponsiveSliderTile(
-                            text: "Number of search processes",
+                            text: LocaleKeys.SettingsScreen_advanced_settings_number_search_procs.tr(),
                             min: 1,
                             max: max(Platform.numberOfProcessors.toDouble(), 2),
                             divisions: max(Platform.numberOfProcessors - 1, 1),
@@ -487,10 +587,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 dialogType: DialogType.noHeader,
                                 btnOkColor: g_Dakanji_green,
                                 btnOkOnPress: (){},
-                                body: Center(
-                                  child: Text(
-                                    "Number of search processes"
-                                  )
+                                body: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      LocaleKeys.SettingsScreen_advanced_settings_number_search_procs_body.tr()
+                                    )
+                                  ),
                                 )
                               )..show();
                             },
@@ -500,7 +603,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 settings.save();
                               });
                             },
-                          )
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
                         ],
                       ),
                       // #endregion
