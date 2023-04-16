@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:simple_html_css/simple_html_css.dart';
+
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 
 
@@ -8,16 +12,16 @@ import 'package:simple_html_css/simple_html_css.dart';
 class ManualDictionary extends StatelessWidget {
   ManualDictionary({super.key});
 
-  final String manualTextScreenText = "";
+  final String manualTextScreenText = 
+    LocaleKeys.ManualScreen_dict_text_examples_analyze.tr() + "\n" +
+    LocaleKeys.ManualScreen_dict_text_kanji_elements.tr();
 
   @override
   Widget build(BuildContext context) {
-    return HTML.toRichText(
-      context, 
-      manualTextScreenText,
-      defaultTextStyle: TextStyle(
-        color: Theme.of(context).textTheme.bodyLarge!.color
-      )
+    return SingleChildScrollView(
+      child: MarkdownBody(
+        data: manualTextScreenText,
+      ),
     );
   }
 }

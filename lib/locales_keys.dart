@@ -125,6 +125,14 @@ abstract class  LocaleKeys {
   static const KanjiScreen = 'KanjiScreen';
   static const KuzushijiScreen_title = 'KuzushijiScreen.title';
   static const KuzushijiScreen = 'KuzushijiScreen';
+  static const ManualScreen_anki_test_connection = 'ManualScreen.anki_test_connection';
+  static const ManualScreen_anki_test_connection_fail = 'ManualScreen.anki_test_connection_fail';
+  static const ManualScreen_anki_test_connection_success = 'ManualScreen.anki_test_connection_success';
+  static const ManualScreen_anki_text = 'ManualScreen.anki_text';
+  static const ManualScreen_anki_title = 'ManualScreen.anki_title';
+  static const ManualScreen_dict_text_examples_analyze = 'ManualScreen.dict_text_examples_analyze';
+  static const ManualScreen_dict_text_kanji_elements = 'ManualScreen.dict_text_kanji_elements';
+  static const ManualScreen_dict_title = 'ManualScreen.dict_title';
   static const ManualScreen_title = 'ManualScreen.title';
   static const ManualScreen = 'ManualScreen';
   static const OnBoarding_Onboarding_1_text = 'OnBoarding.Onboarding_1_text';

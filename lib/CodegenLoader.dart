@@ -27,7 +27,6 @@ class CodegenLoader extends AssetLoader{
   },
   "DictionaryScreen": {
     "example_tab": "例子",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "频率。",
     "kanji_grade": "等级",
     "kanji_groups": "汉字组",
@@ -48,7 +47,6 @@ class CodegenLoader extends AssetLoader{
     "tutorial_word_tab": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
     "word_antonyms": "反义词",
     "word_conjugation": "共轭法",
-    "word_images": "#ERROR!",
     "word_proverbs": "谚语",
     "word_synonyms": "同义词",
     "word_tab": "词语"
@@ -104,12 +102,11 @@ class CodegenLoader extends AssetLoader{
     "whats_new": "最新信息"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "手册"
   },
   "OnBoarding": {
@@ -131,21 +128,19 @@ class CodegenLoader extends AssetLoader{
     "advanced_settings_optimze_warning": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
     "advanced_settings_snap": "我是不可避免的...",
     "advanced_settings_title": "高级设置",
+    "anki_title": "Anki",
     "custom_url_explanation": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
     "dict_deconjugate": "将输入转换为基本形式",
     "dict_deconjugate_body": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
     "dict_kanaize": "将搜索词转换为假名",
     "dict_kanaize_body": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
     "dict_languages": "显示翻译在（拖动以重新排序）。",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "为网络字典使用网络视图",
     "draw_custom_url_format": "自定义URL格式",
     "draw_custom_url_hint": "你的字典的URL",
     "draw_dictionary_system_translator": "操作系统集成翻译器",
     "draw_double_tap_empty_canvas": "双击后空出画布",
     "draw_invert_short_long_press": "倒置长/短按",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "绘图",
     "misc_default_screen": "启动应用程序时的初始屏幕",
     "misc_language": "语言 (@:SettingsScreen.restarts_app)",
@@ -179,7 +174,6 @@ class CodegenLoader extends AssetLoader{
     "title": "网页浏览"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> localizations = {
@@ -825,14 +819,8 @@ static const Map<String,dynamic> localizations = {
     },
     "draw_long_press_opens": {
       "en": "Dictionary selection",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "辞書を選択",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Wörterbuch Auswahl",
+      "ja": "辞書を選択"
     },
     "draw_browser_for_online_dict": {
       "en": "Use a webview for web dictionaries",
@@ -880,25 +868,12 @@ static const Map<String,dynamic> localizations = {
     },
     "dict_show_word_freq": {
       "en": "Show word frequency",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
+      "de": "Zeige Wordfrequenz",
       "pl": "Pokaż częstość występowania słów"
     },
     "dict_show_word_freq_body": {
-      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
-      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "en": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte."
     },
     "dict_deconjugate": {
       "en": "Convert inputs to base form",
@@ -934,8 +909,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Konwertuj wyszukiwane hasła do kany"
     },
     "dict_kanaize_body": {
-      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
-      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted when this settings is enabled, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you know what you are searching, you can disable this setting.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und somit wird 万 gefunden, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Zum Beispiel, wird die Suche nach りんご umgewandelt und findet リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, findet eine Suche nach りんご nicht リンゴ.\nWenn Sie wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
       "ru": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
       "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
       "zh": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
@@ -945,16 +920,27 @@ static const Map<String,dynamic> localizations = {
       "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
     },
     "anki_title": {
-      "en": "Anki"
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
     },
     "anki_default_deck": {
-      "en": "Default deck (quick send)"
+      "en": "Default deck",
+      "de": "Standard deck"
     },
     "anki_default_no_langs": {
-      "en": "Number of langs to include"
+      "en": "Number of languages on notes",
+      "de": "Anzahl an Sprachen auf Karten"
     },
     "anki_default_no_translations": {
-      "en": "Number of translations per language to include"
+      "en": "Number of translations on notes",
+      "de": "Anzahl von Übersetungen auf Karten"
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -1133,7 +1119,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Liczba procesów wyszukiwania (wymaga ponownego uruchomienia)"
     },
     "advanced_settings_number_search_procs_body": {
-      "en": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+      "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
       "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
       "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
       "ja": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
@@ -1236,6 +1222,39 @@ static const Map<String,dynamic> localizations = {
       "fr": "Manuel",
       "es": "Manual",
       "pl": "Instrukcja"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_text": {
+      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below."
+    },
+    "anki_test_connection": {
+      "en": "Test connection to Anki",
+      "de": "Überprüfe Verbindung zu Anki"
+    },
+    "anki_test_connection_success": {
+      "en": "You are connected to Anki! 🎉"
+    },
+    "anki_test_connection_fail": {
+      "en": "You are not connected to Anki! 😢"
+    },
+    "dict_title": {
+      "en": "Dictionary"
+    },
+    "dict_text_kanji_elements": {
+      "en": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary."
+    },
+    "dict_text_examples_analyze": {
+      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing."
     }
   },
   "TextScreen": {
@@ -1331,7 +1350,6 @@ static const Map<String,dynamic> localizations = {
       "en": "A double tap will select a sentence.",
       "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
       "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "#ERROR!",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
@@ -1547,14 +1565,7 @@ static const Map<String,dynamic> localizations = {
     },
     "word_images": {
       "en": "Images",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Bilder"
     },
     "word_conj_verb": {
       "en": "Verb",
@@ -1880,14 +1891,8 @@ static const Map<String,dynamic> localizations = {
     },
     "kanji_alternatives": {
       "en": "Alternatives",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "その他の字体",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Alternativen",
+      "ja": "その他の字体"
     },
     "example_tab": {
       "en": "Examples",
@@ -1992,40 +1997,19 @@ static const Map<String,dynamic> localizations = {
   "KanjiScreen": {
     "title": {
       "en": "Kanji",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kanji"
     }
   },
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kuzushiji"
     }
   },
   "WordListsScreen": {
     "title": {
       "en": "Word lists",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Wortlisten"
     }
   }
 };
@@ -2087,7 +2071,6 @@ static const Map<String,dynamic> ja = {
     "word_conj_verb_te_form": "て形",
     "word_conj_verb_volitional": "意向形",
     "word_conjugation": "活用",
-    "word_images": "#ERROR!",
     "word_proverbs": "ことわざ",
     "word_synonyms": "同義語",
     "word_tab": "ワード"
@@ -2143,12 +2126,11 @@ static const Map<String,dynamic> ja = {
     "whats_new": "最新情報"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "マニュアル"
   },
   "OnBoarding": {
@@ -2170,14 +2152,13 @@ static const Map<String,dynamic> ja = {
     "advanced_settings_optimze_warning": "これにより、ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nお使いのデバイスによっては時間がかかる場合がありますが、劇的に性能が向上します。",
     "advanced_settings_snap": "私は絶対なのだ・・・",
     "advanced_settings_title": "詳細設定",
+    "anki_title": "Anki",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
     "dict_deconjugate": "入力内容を基本形に変換する",
     "dict_deconjugate_body": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
     "dict_kanaize": "検索語をかなに変換する",
     "dict_kanaize_body": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
     "dict_languages": "翻訳言語を選択する（ドラッグで並び替え可能）",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "ウェブビューでウェブ辞書を開く",
     "draw_custom_url_format": "カスタムURL",
     "draw_custom_url_hint": "使用したい辞書のURL",
@@ -2219,7 +2200,6 @@ static const Map<String,dynamic> ja = {
     "tutorial_colors_text": "テキストの品詞を色別に表示します（色の意味は、マニュアルから確認できます）",
     "tutorial_fullscreen_text": "テキストをフルスクリーンに切り替えます",
     "tutorial_furigana_text": "テキストにふりがなをつけます",
-    "tutorial_processed_text_double_tap": "#ERROR!",
     "tutorial_processed_text_long_press": "長押しで単語を選択すると、品詞が表示されます",
     "tutorial_processed_text_tap": "シングルタップで単語を選択します",
     "tutorial_processed_text_text": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
@@ -2232,7 +2212,6 @@ static const Map<String,dynamic> ja = {
     "title": "ウェブビュー"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> de = {
@@ -2248,7 +2227,7 @@ static const Map<String,dynamic> de = {
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
-    "kanji_alternatives": "#ERROR!",
+    "kanji_alternatives": "Alternativen",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
@@ -2308,7 +2287,7 @@ static const Map<String,dynamic> de = {
     "word_conj_verb_volitional": "Intentional",
     "word_conj_verb_volitional_m": "Lass [nicht] machen!",
     "word_conjugation": "Konjugationen",
-    "word_images": "#ERROR!",
+    "word_images": "Bilder",
     "word_proverbs": "Sprichwörter",
     "word_synonyms": "Synonyme",
     "word_tab": "Wort"
@@ -2364,12 +2343,14 @@ static const Map<String,dynamic> de = {
     "whats_new": "Was gibt's neues"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
+    "title": "Kanji"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
+    "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_test_connection": "Überprüfe Verbindung zu Anki",
+    "anki_title": "Anki",
     "title": "Handbuch"
   },
   "OnBoarding": {
@@ -2391,13 +2372,17 @@ static const Map<String,dynamic> de = {
     "advanced_settings_optimze_warning": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
+    "anki_default_deck": "Standard deck",
+    "anki_default_no_langs": "Anzahl an Sprachen auf Karten",
+    "anki_default_no_translations": "Anzahl von Übersetungen auf Karten",
+    "anki_title": "Anki",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Konvertierung der Eingaben in die Basisform",
     "dict_deconjugate_body": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
     "dict_kanaize": "Suchbegriff in Kana umwandeln",
-    "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
+    "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und somit wird 万 gefunden, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Zum Beispiel, wird die Suche nach りんご umgewandelt und findet リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, findet eine Suche nach りんご nicht リンゴ.\nWenn Sie wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
     "dict_languages": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
-    "dict_show_word_freq": "#ERROR!",
+    "dict_show_word_freq": "Zeige Wordfrequenz",
     "dict_show_word_freq_body": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
     "draw_browser_for_online_dict": "Benutze einen webview für web Wörterbücher",
     "draw_custom_url_format": "Benutzerdefiniertes URL format",
@@ -2405,7 +2390,7 @@ static const Map<String,dynamic> de = {
     "draw_dictionary_system_translator": "betriebssysteminternes Übersetzer",
     "draw_double_tap_empty_canvas": "Lösche alle Striche nach doppeltem Tippen",
     "draw_invert_short_long_press": "Invertiere kurzes und langes drücken",
-    "draw_long_press_opens": "#ERROR!",
+    "draw_long_press_opens": "Wörterbuch Auswahl",
     "draw_title": "Zeichnen",
     "misc_default_screen": "Startbildschirm beim öffnen der App",
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
@@ -2453,7 +2438,7 @@ static const Map<String,dynamic> de = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
+    "title": "Wortlisten"
   }
 };
 static const Map<String,dynamic> ru = {
@@ -2469,7 +2454,6 @@ static const Map<String,dynamic> ru = {
   },
   "DictionaryScreen": {
     "example_tab": "Пример",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Частота.",
     "kanji_grade": "Класс",
     "kanji_groups": "Группы кандзи",
@@ -2490,7 +2474,6 @@ static const Map<String,dynamic> ru = {
     "tutorial_word_tab": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
     "word_antonyms": "Антонимы",
     "word_conjugation": "Спряжение",
-    "word_images": "#ERROR!",
     "word_proverbs": "Притчи",
     "word_synonyms": "Синонимы",
     "word_tab": "Слово"
@@ -2546,12 +2529,11 @@ static const Map<String,dynamic> ru = {
     "whats_new": "что нового"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "Руководство"
   },
   "OnBoarding": {
@@ -2573,21 +2555,19 @@ static const Map<String,dynamic> ru = {
     "advanced_settings_optimze_warning": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
     "advanced_settings_snap": "Я неизбежен...",
     "advanced_settings_title": "Дополнительные настройки",
+    "anki_title": "Anki",
     "custom_url_explanation": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Преобразование входных данных в базовую форму",
     "dict_deconjugate_body": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
     "dict_kanaize": "Преобразование поискового термина в кану",
     "dict_kanaize_body": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
     "dict_languages": "Показать переводы в (перетащите, чтобы изменить порядок)",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Использование веб-просмотра для веб-словарей",
     "draw_custom_url_format": "Пользовательский формат URL",
     "draw_custom_url_hint": "URL вашего словаря",
     "draw_dictionary_system_translator": "Встроенный в ОС переводчик",
     "draw_double_tap_empty_canvas": "Пустой холст после двойного нажатия",
     "draw_invert_short_long_press": "Инвертировать длинный/короткий пресс",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Рисование",
     "misc_default_screen": "Начальный экран при запуске приложения",
     "misc_language": "язык (@:SettingsScreen.restarts_app)",
@@ -2621,7 +2601,6 @@ static const Map<String,dynamic> ru = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> pl = {
@@ -2637,7 +2616,6 @@ static const Map<String,dynamic> pl = {
   },
   "DictionaryScreen": {
     "example_tab": "Przykłady",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Częstotliowść",
     "kanji_grade": "Stopień",
     "kanji_groups": "Grupy kanji",
@@ -2695,7 +2673,6 @@ static const Map<String,dynamic> pl = {
     "word_conj_verb_volitional": "Wolicjonalny",
     "word_conj_verb_volitional_m": "[nie] róbmy!",
     "word_conjugation": "Koniugacja",
-    "word_images": "#ERROR!",
     "word_proverbs": "Przysłowia",
     "word_synonyms": "Synonimy",
     "word_tab": "Słowo"
@@ -2751,12 +2728,11 @@ static const Map<String,dynamic> pl = {
     "whats_new": "co nowego"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "Instrukcja"
   },
   "OnBoarding": {
@@ -2778,6 +2754,7 @@ static const Map<String,dynamic> pl = {
     "advanced_settings_optimze_warning": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie.",
     "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
+    "anki_title": "Anki",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Przekształcenie danych wejściowych na postać bezokolicznikową",
     "dict_deconjugate_body": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia.",
@@ -2785,14 +2762,12 @@ static const Map<String,dynamic> pl = {
     "dict_kanaize_body": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie.",
     "dict_languages": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)",
     "dict_show_word_freq": "Pokaż częstość występowania słów",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Użyj webview dla słowników internetowych",
     "draw_custom_url_format": "Niestandardowy format URL",
     "draw_custom_url_hint": "URL twojego słownika",
     "draw_dictionary_system_translator": "Tłumacz systemowy",
     "draw_double_tap_empty_canvas": "Wyczyść płótno podwójnym kliknięciem",
     "draw_invert_short_long_press": "Odwróć długie/krótkie kliknięcie",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Obraz",
     "misc_default_screen": "Ekran początkowy przy uruchamianiu aplikacji",
     "misc_language": "język (@:SettingsScreen.restarts_app)",
@@ -2840,7 +2815,6 @@ static const Map<String,dynamic> pl = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> en = {
@@ -2978,6 +2952,14 @@ static const Map<String,dynamic> en = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_test_connection": "Test connection to Anki",
+    "anki_test_connection_fail": "You are not connected to Anki! 😢",
+    "anki_test_connection_success": "You are connected to Anki! 🎉",
+    "anki_text": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below.",
+    "anki_title": "Anki",
+    "dict_text_examples_analyze": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing.",
+    "dict_text_kanji_elements": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
+    "dict_title": "Dictionary",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -2991,7 +2973,7 @@ static const Map<String,dynamic> en = {
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (requires restart)",
-    "advanced_settings_number_search_procs_body": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+    "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",
     "advanced_settings_optimize_ok": "Ok",
@@ -2999,18 +2981,18 @@ static const Map<String,dynamic> en = {
     "advanced_settings_optimze_warning": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
-    "anki_default_deck": "Default deck (quick send)",
-    "anki_default_no_langs": "Number of langs to include",
-    "anki_default_no_translations": "Number of translations per language to include",
+    "anki_default_deck": "Default deck",
+    "anki_default_no_langs": "Number of languages on notes",
+    "anki_default_no_translations": "Number of translations on notes",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convert inputs to base form",
     "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
     "dict_kanaize": "Convert search term to kana",
-    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
+    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted when this settings is enabled, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you know what you are searching, you can disable this setting.",
     "dict_languages": "Show translations in (drag to reorder)",
     "dict_show_word_freq": "Show word frequency",
-    "dict_show_word_freq_body": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+    "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
     "draw_custom_url_format": "Custom URL format",
     "draw_custom_url_hint": "URL of your dictionary",
@@ -3081,7 +3063,6 @@ static const Map<String,dynamic> it = {
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
@@ -3104,7 +3085,6 @@ static const Map<String,dynamic> it = {
     "tutorial_word_tab": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
     "word_antonyms": "Anonimi",
     "word_conjugation": "Coniugazione",
-    "word_images": "#ERROR!",
     "word_proverbs": "Proverbi",
     "word_synonyms": "Sinonimi",
     "word_tab": "Parola"
@@ -3160,12 +3140,11 @@ static const Map<String,dynamic> it = {
     "whats_new": "cosa c'è di nuovo"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "Manuale"
   },
   "OnBoarding": {
@@ -3187,21 +3166,19 @@ static const Map<String,dynamic> it = {
     "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
+    "anki_title": "Anki",
     "custom_url_explanation": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertire gli input in forma base",
     "dict_deconjugate_body": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
     "dict_kanaize": "Convertire i termini di ricerca in kana",
     "dict_kanaize_body": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
     "dict_languages": "Mostra le traduzioni in (trascinare per riordinare)",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Utilizzare una webview per i dizionari web",
     "draw_custom_url_format": "Formato URL personalizzato",
     "draw_custom_url_hint": "URL del vostro dizionario",
     "draw_dictionary_system_translator": "Traduttore integrato nel sistema operativo",
     "draw_double_tap_empty_canvas": "Tela vuota dopo il doppio tocco",
     "draw_invert_short_long_press": "Invertire la pressione lunga/corta",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Disegno",
     "misc_default_screen": "Schermata iniziale all'avvio dell'applicazione",
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
@@ -3235,7 +3212,6 @@ static const Map<String,dynamic> it = {
     "title": "Vista sul web"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> fr = {
@@ -3251,7 +3227,6 @@ static const Map<String,dynamic> fr = {
   },
   "DictionaryScreen": {
     "example_tab": "Exemple",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Fréq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Groupes de kanji",
@@ -3274,7 +3249,6 @@ static const Map<String,dynamic> fr = {
     "tutorial_word_tab": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
     "word_antonyms": "Antonymes",
     "word_conjugation": "Conjugaison",
-    "word_images": "#ERROR!",
     "word_proverbs": "Proverbes",
     "word_synonyms": "Synonymes",
     "word_tab": "Word"
@@ -3330,12 +3304,11 @@ static const Map<String,dynamic> fr = {
     "whats_new": "Quoi de neuf ?"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "Manuel"
   },
   "OnBoarding": {
@@ -3357,21 +3330,19 @@ static const Map<String,dynamic> fr = {
     "advanced_settings_optimze_warning": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
     "advanced_settings_snap": "Je suis inévitable...",
     "advanced_settings_title": "Paramètres avancés",
+    "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertir les entrées en forme de base",
     "dict_deconjugate_body": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
     "dict_kanaize": "Convertir les termes de recherche en kana",
     "dict_kanaize_body": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
     "dict_languages": "Afficher les traductions dans (glisser pour réorganiser)",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",
     "draw_custom_url_format": "Format d'URL personnalisé",
     "draw_custom_url_hint": "URL de votre dictionnaire",
     "draw_dictionary_system_translator": "Traducteur intégré au système d'exploitation",
     "draw_double_tap_empty_canvas": "Toile vide après un double tapotement",
     "draw_invert_short_long_press": "Inverser la presse long/short",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Dessin",
     "misc_default_screen": "Écran initial au démarrage de l'application",
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
@@ -3405,7 +3376,6 @@ static const Map<String,dynamic> fr = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String,dynamic> es = {
@@ -3421,7 +3391,6 @@ static const Map<String,dynamic> es = {
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",
-    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Frec.",
     "kanji_grade": "Grado",
     "kanji_groups": "Grupos de kanji",
@@ -3444,7 +3413,6 @@ static const Map<String,dynamic> es = {
     "tutorial_word_tab": "Esta pestaña incluye diversa información sobre el resultado de búsqueda seleccionado, como la conjugación y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
     "word_antonyms": "Antónimos",
     "word_conjugation": "Conjugación",
-    "word_images": "#ERROR!",
     "word_proverbs": "Proverbios",
     "word_synonyms": "Sinónimos",
     "word_tab": "Palabra"
@@ -3500,12 +3468,11 @@ static const Map<String,dynamic> es = {
     "whats_new": "qué hay de nuevo"
   },
   "KanjiScreen": {
-    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "#ERROR!"
   },
   "ManualScreen": {
+    "anki_title": "Anki",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -3527,21 +3494,19 @@ static const Map<String,dynamic> es = {
     "advanced_settings_optimze_warning": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
+    "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma básica",
     "dict_deconjugate_body": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
     "dict_kanaize": "Convertir el término de búsqueda en kana",
     "dict_kanaize_body": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
     "dict_languages": "Mostrar traducciones en (arrastre para reordenar)",
-    "dict_show_word_freq": "#ERROR!",
-    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",
     "draw_dictionary_system_translator": "Traductor integrado de tu SO",
     "draw_double_tap_empty_canvas": "Vaciar lienzo después de una pulsación doble",
     "draw_invert_short_long_press": "Invertir pulsación larga/breve",
-    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Dibujar",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicación",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
@@ -3575,7 +3540,6 @@ static const Map<String,dynamic> es = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "#ERROR!"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};

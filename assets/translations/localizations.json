@@ -641,14 +641,8 @@
     },
     "draw_long_press_opens": {
       "en": "Dictionary selection",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "辞書を選択",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Wörterbuch Auswahl",
+      "ja": "辞書を選択"
     },
     "draw_browser_for_online_dict": {
       "en": "Use a webview for web dictionaries",
@@ -696,25 +690,12 @@
     },
     "dict_show_word_freq": {
       "en": "Show word frequency",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
+      "de": "Zeige Wordfrequenz",
       "pl": "Pokaż częstość występowania słów"
     },
     "dict_show_word_freq_body": {
-      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
-      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "en": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte."
     },
     "dict_deconjugate": {
       "en": "Convert inputs to base form",
@@ -750,8 +731,8 @@
       "pl": "Konwertuj wyszukiwane hasła do kany"
     },
     "dict_kanaize_body": {
-      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
-      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted when this settings is enabled, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you know what you are searching, you can disable this setting.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und somit wird 万 gefunden, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Zum Beispiel, wird die Suche nach りんご umgewandelt und findet リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, findet eine Suche nach りんご nicht リンゴ.\nWenn Sie wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
       "ru": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
       "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
       "zh": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
@@ -761,16 +742,27 @@
       "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
     },
     "anki_title": {
-      "en": "Anki"
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
     },
     "anki_default_deck": {
-      "en": "Default deck (quick send)"
+      "en": "Default deck",
+      "de": "Standard deck"
     },
     "anki_default_no_langs": {
-      "en": "Number of langs to include"
+      "en": "Number of languages on notes",
+      "de": "Anzahl an Sprachen auf Karten"
     },
     "anki_default_no_translations": {
-      "en": "Number of translations per language to include"
+      "en": "Number of translations on notes",
+      "de": "Anzahl von Übersetungen auf Karten"
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -949,7 +941,7 @@
       "pl": "Liczba procesów wyszukiwania (wymaga ponownego uruchomienia)"
     },
     "advanced_settings_number_search_procs_body": {
-      "en": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+      "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
       "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
       "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
       "ja": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
@@ -1052,6 +1044,39 @@
       "fr": "Manuel",
       "es": "Manual",
       "pl": "Instrukcja"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_text": {
+      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below."
+    },
+    "anki_test_connection": {
+      "en": "Test connection to Anki",
+      "de": "Überprüfe Verbindung zu Anki"
+    },
+    "anki_test_connection_success": {
+      "en": "You are connected to Anki! 🎉"
+    },
+    "anki_test_connection_fail": {
+      "en": "You are not connected to Anki! 😢"
+    },
+    "dict_title": {
+      "en": "Dictionary"
+    },
+    "dict_text_kanji_elements": {
+      "en": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary."
+    },
+    "dict_text_examples_analyze": {
+      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing."
     }
   },
   "TextScreen": {
@@ -1147,7 +1172,6 @@
       "en": "A double tap will select a sentence.",
       "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
       "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "#ERROR!",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
@@ -1363,14 +1387,7 @@
     },
     "word_images": {
       "en": "Images",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Bilder"
     },
     "word_conj_verb": {
       "en": "Verb",
@@ -1711,14 +1728,8 @@
     },
     "kanji_alternatives": {
       "en": "Alternatives",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "その他の字体",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Alternativen",
+      "ja": "その他の字体"
     },
     "example_tab": {
       "en": "Examples",
@@ -1823,40 +1834,19 @@
   "KanjiScreen": {
     "title": {
       "en": "Kanji",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kanji"
     }
   },
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kuzushiji"
     }
   },
   "WordListsScreen": {
     "title": {
       "en": "Word lists",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Wortlisten"
     }
   }
 }
