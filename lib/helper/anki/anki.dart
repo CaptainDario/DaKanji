@@ -12,7 +12,7 @@ Uri anki_connect_url = Uri.http("localhost:8765");
 /// Addes the given note to Anki
 /// 
 /// Note: if the deck or model does not exist, it will be created
-void addNote(AnkiNote note) async {
+Future<bool> addNote(AnkiNote note) async {
 
   // checl that anki is running
   if(!await checkAnkiAvailable()){
@@ -40,6 +40,8 @@ void addNote(AnkiNote note) async {
   else {
     throw Exception("Unsupported platform");
   }
+
+  return true;
 }
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`

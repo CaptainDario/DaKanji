@@ -12,6 +12,48 @@ part 'settings_anki.g.dart';
 @JsonSerializable()
 class SettingsAnki with ChangeNotifier {
 
+  /// The default value for `defaultDeck`
+  @JsonKey(ignore: true)
+  static const String d_defaultDeck = "";
+  /// When creating a new note, the deck to add the card to by default
+  @JsonKey(defaultValue: d_defaultDeck)
+  String _defaultDeck = d_defaultDeck;
+  /// When creating a new note, the deck to add the card to by default
+  String get defaultDeck => _defaultDeck;
+  /// When creating a new note, the deck to add the card to by default
+  set defaultDeck(String value) {
+    _defaultDeck = value;
+    notifyListeners();
+  }
+
+  /// The default value for `noLangsToInclude`
+  @JsonKey(ignore: true)
+  static const int d_noLangsToInclude = 1;
+  /// When creating a new note, how many langs should be included
+  @JsonKey(defaultValue: d_noLangsToInclude)
+  int _noLangsToInclude = d_noLangsToInclude;
+  /// When creating a new note, how many langs should be included
+  int get noLangsToInclude => _noLangsToInclude;
+  /// When creating a new note, how many langs should be included
+  set noLangsToInclude(int value) {
+    _noLangsToInclude = value;
+    notifyListeners();
+  }
+
+  /// The default value for `noTranslations`
+  @JsonKey(ignore: true)
+  static const int d_noTranslations = 3;
+  /// When creating a new note, how many translations should be included
+  @JsonKey(defaultValue: d_noTranslations)
+  int _noTranslations = d_noTranslations;
+  /// When creating a new note, how many translations should be included
+  int get noTranslations => _noTranslations;
+  /// When creating a new note, how many translations should be included
+  set noTranslations(int value) {
+    _noTranslations = value;
+    notifyListeners();
+  }
+
   /// The default value for `includeGoogleImage`
   @JsonKey(ignore: true)
   static const bool d_includeGoogleImage = false;
@@ -31,14 +73,28 @@ class SettingsAnki with ChangeNotifier {
   static const bool d_includeAudio = false;
   /// should an audio file be downloaded and included in the card
   @JsonKey(defaultValue: d_includeAudio)
-  bool includeAudio = d_includeAudio;
+  bool _includeAudio = d_includeAudio;
+  /// should an audio file be downloaded and included in the card
+  bool get includeAudio => _includeAudio;
+  /// should an audio file be downloaded and included in the card
+  set includeAudio(bool value) {
+    _includeAudio = value;
+    notifyListeners();
+  }
 
   /// The default value for `includeScreenshot`
   @JsonKey(ignore: true)
   static const bool d_includeScreenshot = false;
   /// Include a screenshot of the current screen in the card
   @JsonKey(defaultValue: d_includeScreenshot)
-  bool includeScreenshot = d_includeScreenshot;
+  bool _includeScreenshot = d_includeScreenshot;
+  /// Include a screenshot of the current screen in the card
+  bool get includeScreenshot => _includeScreenshot;
+  /// Include a screenshot of the current screen in the card
+  set includeScreenshot(bool value) {
+    _includeScreenshot = value;
+    notifyListeners();
+  }
 
 
   SettingsAnki();

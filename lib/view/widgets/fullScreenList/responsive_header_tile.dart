@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 class ResponsiveHeaderTile extends StatelessWidget {
   const ResponsiveHeaderTile(
     this.text,
+    this.icon,
     {
       this.autoSizeGroup,
       Key? key
@@ -17,6 +18,8 @@ class ResponsiveHeaderTile extends StatelessWidget {
   final String text;
   /// the auto
   final AutoSizeGroup? autoSizeGroup;
+  /// the icon to display
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +35,25 @@ class ResponsiveHeaderTile extends StatelessWidget {
       child: SizedBox(
         height: tileHeight*0.5,
         child: FittedBox(
-          child: Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            textScaleFactor: 1.25,
-            maxLines: 1,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            children: [
+              Icon(
+                this.icon,
+                size: tileHeight*0.3,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                text,
+                overflow: TextOverflow.ellipsis,
+                textScaleFactor: 1.25,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
       ),

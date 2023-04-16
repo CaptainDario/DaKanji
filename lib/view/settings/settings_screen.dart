@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/helper/anki/anki.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -9,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,6 +29,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
 import 'package:da_kanji_mobile/view/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/helper/anki/anki.dart';
 
 
 
@@ -99,6 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // Drawing header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_draw_title.tr(),
+                        Icons.brush,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // Dictionary Options
@@ -175,6 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.DictionaryScreen_title.tr(),
+                        Icons.book,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       Padding(
@@ -276,7 +279,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: MarkdownBody(
-                                  data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr()
+                                  data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
+                                  onTapLink: (text, href, title) {
+                                    if(href != null)
+                                      launchUrlString(href);
+                                  },
                                 ),
                               )
                             )
@@ -362,6 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.TextScreen_title.tr(),
+                        Icons.text_snippet,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // reshow tutorial
@@ -383,6 +391,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - Anki header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
+                        IconData(
+                          0xe803,
+                          fontFamily: 'Anki',
+                        ),
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // the default deck to add cards to
@@ -395,18 +407,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // how many langauges should be included
                       ResponsiveSliderTile(
                         text: LocaleKeys.SettingsScreen_anki_default_no_langs.tr(),
-                        value: 0,
+                        value: settings.anki.noLangsToInclude.toDouble(),
                         min: 0,
                         max: settings.dictionary.selectedTranslationLanguages.length.toDouble(),
                         autoSizeGroup: g_SettingsAutoSizeGroup,
+                        onSliderMoved: (value) {
+                          setState(() {
+                            settings.anki.noLangsToInclude = value.toInt();
+                            settings.save();
+                          });
+                        },
                       ),
                       // how many different lines from entries should be included
                       ResponsiveSliderTile(
                         text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
-                        value: 3,
+                        value: settings.anki.noTranslations.toDouble(),
                         min: 0,
                         max: 5,
                         autoSizeGroup: g_SettingsAutoSizeGroup,
+                        divisions: 5,
+                        onSliderMoved: (value) {
+                          setState(() {
+                            settings.anki.noTranslations = value.toInt();
+                            settings.save();
+                          });
+                        },
                       ),
                       // include google image (disabled for now)
                       if(false)
@@ -455,6 +480,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_misc_title.tr(),
+                        Icons.settings,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // theme

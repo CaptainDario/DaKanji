@@ -160,6 +160,10 @@ flutter:
       fonts:
         - asset: assets/fonts/kouzan/KouzanGyousho.otf
           weight: 900
+    - family: anki
+      fonts:
+        - asset: assets/icons/anki.ttf
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
