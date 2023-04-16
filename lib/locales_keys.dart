@@ -144,6 +144,10 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_optimze_warning = 'SettingsScreen.advanced_settings_optimze_warning';
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
+  static const SettingsScreen_anki_default_deck = 'SettingsScreen.anki_default_deck';
+  static const SettingsScreen_anki_default_no_langs = 'SettingsScreen.anki_default_no_langs';
+  static const SettingsScreen_anki_default_no_translations = 'SettingsScreen.anki_default_no_translations';
+  static const SettingsScreen_anki_title = 'SettingsScreen.anki_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_dict_deconjugate = 'SettingsScreen.dict_deconjugate';
   static const SettingsScreen_dict_deconjugate_body = 'SettingsScreen.dict_deconjugate_body';

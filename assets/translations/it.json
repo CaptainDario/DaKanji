@@ -11,7 +11,7 @@
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",
-    "kanji_alternatives": "Alternative",
+    "kanji_alternatives": "#ERROR!",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
@@ -71,7 +71,7 @@
     "word_conj_verb_volitional": "",
     "word_conj_verb_volitional_m": "",
     "word_conjugation": "Coniugazione",
-    "word_images": "Immagini",
+    "word_images": "#ERROR!",
     "word_proverbs": "Proverbi",
     "word_synonyms": "Sinonimi",
     "word_tab": "Parola"
@@ -127,10 +127,10 @@
     "whats_new": "cosa c'\u00e8 di nuovo"
   },
   "KanjiScreen": {
-    "title": "Kanji"
+    "title": "#ERROR!"
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
+    "title": "#ERROR!"
   },
   "ManualScreen": {
     "title": "Manuale"
@@ -145,7 +145,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
-    "advanced_settings_number_search_procs": "Numero di processi di ricerca",
+    "advanced_settings_number_search_procs": "Numero di processi di ricerca (richiede il riavvio)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza pi\u00f9 processi. Di solito, 2 \u00e8 un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare pi\u00f9 processi.",
     "advanced_settings_optimize_cancel": "Annullamento",
     "advanced_settings_optimize_nn": "Ottimizzare le reti neurali",
@@ -154,21 +154,25 @@
     "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione pu\u00f2 richiedere un po' di tempo a seconda del dispositivo, ma pu\u00f2 migliorare notevolmente le prestazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
+    "anki_default_deck": "",
+    "anki_default_no_langs": "",
+    "anki_default_no_translations": "",
+    "anki_title": "",
     "custom_url_explanation": "L'applicazione sostituir\u00e0 un segnaposto nell'URL con il carattere previsto. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto \u00e8: \"\u53e3\" e si vuole aprire il sito \"jisho.org\". Per prima cosa \u00e8 necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/\u53e3\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertire gli input in forma base",
     "dict_deconjugate_body": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando \u00e8 abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, \u98df\u3079\u307e\u3059\u3001\u98df\u3079\u3089\u308c\u308b\u3001\u98df\u3079\u306a\u3044 tutti sono convertiti in \u98df\u3079\u308b.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
     "dict_kanaize": "Convertire i termini di ricerca in kana",
     "dict_kanaize_body": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ci\u00f2 significa che la ricerca di \"taberu\" trover\u00e0 \u98df\u3079\u308b, ma pu\u00f2 anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verr\u00e0 convertita in \u307e\u3093 e quindi corrisponder\u00e0 a \u4e07, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso \u00e8 quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di \u308a\u3093\u3054 verr\u00e0 convertita e corrisponder\u00e0 quindi a \u30ea\u30f3\u30b4. Se invece questa impostazione \u00e8 disattivata, \u308a\u3093\u3054 non corrisponder\u00e0 a \u30ea\u30f3\u30b4.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
     "dict_languages": "Mostra le traduzioni in (trascinare per riordinare)",
-    "dict_show_word_freq": "Mostra la frequenza delle parole",
-    "dict_show_word_freq_body": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola \u00e8 una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente pi\u00f9 lunghi su Internet\nIl numero mostrato \u00e8 una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola \u00e8 il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji \u00e8 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
+    "dict_show_word_freq": "#ERROR!",
+    "dict_show_word_freq_body": "#ERROR!",
     "draw_browser_for_online_dict": "Utilizzare una webview per i dizionari web",
     "draw_custom_url_format": "Formato URL personalizzato",
     "draw_custom_url_hint": "URL del vostro dizionario",
     "draw_dictionary_system_translator": "Traduttore integrato nel sistema operativo",
     "draw_double_tap_empty_canvas": "Tela vuota dopo il doppio tocco",
     "draw_invert_short_long_press": "Invertire la pressione lunga/corta",
-    "draw_long_press_opens": "Selezione del dizionario",
+    "draw_long_press_opens": "#ERROR!",
     "draw_title": "Disegno",
     "misc_default_screen": "Schermata iniziale all'avvio dell'applicazione",
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
@@ -216,6 +220,6 @@
     "title": "Vista sul web"
   },
   "WordListsScreen": {
-    "title": "Elenchi di parole"
+    "title": "#ERROR!"
   }
 }

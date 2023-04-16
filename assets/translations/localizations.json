@@ -641,14 +641,14 @@
     },
     "draw_long_press_opens": {
       "en": "Dictionary selection",
-      "de": "Auswahl des Wörterbuchs",
-      "ru": "Выбор словаря",
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
       "ja": "辞書を選択",
-      "zh": "词典选择",
-      "it": "Selezione del dizionario",
-      "fr": "Sélection de dictionnaires",
-      "es": "Selección de diccionarios",
-      "pl": "Wybór słownika"
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "draw_browser_for_online_dict": {
       "en": "Use a webview for web dictionaries",
@@ -696,25 +696,25 @@
     },
     "dict_show_word_freq": {
       "en": "Show word frequency",
-      "de": "Worthäufigkeit anzeigen",
-      "ru": "Показать частоту слов",
-      "ja": "単語の頻度を表示する",
-      "zh": "显示词频",
-      "it": "Mostra la frequenza delle parole",
-      "fr": "Afficher la fréquence des mots",
-      "es": "Mostrar frecuencia de palabras",
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
       "pl": "Pokaż częstość występowania słów"
     },
     "dict_show_word_freq_body": {
-      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.",
+      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
       "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
-      "ru": "DaKanji использует меру частоты слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова. Эта оценка основана на различных источниках данных:\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* Веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете.\nПоказанное число является вариацией фактической частоты слов, называемой частотой Зипфа, которая стремится представить частоту слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в данном списке слов, хотя это должно означать одно появление на миллиард слов.",
-      "ja": "大漢字では、辞書項目のランク付けに単語頻度という指標を使用しています。この単語頻度は、ある単語の使用頻度を推定するものです。この推定は、さまざまなデータソースに基づいています：\n* Wikipedia、百科事典のテキストを表す。\n* 字幕、OPUS OpenSubtitles 2018およびSUBTLEXから。\n* ウェブテキスト、OSCARより\n* 短編ソーシャルメディアを代表するTwitter\n* Redditは、より長いインターネット上のコメントを表すことができます。\n表示されている数字は、Zipf頻度と呼ばれる実際の単語頻度のバリエーションで、単語頻度を人間に優しい対数スケールで返すことを目的としています。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10乗対数です。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現する。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。10億語に1回出現することを意味しますが、与えられた単語リストに出現しない単語のZipf値はデフォルトで0を使用します。",
-      "zh": "DaKanji使用词频测量法对其字典条目进行排名。这个词频是对一个词的用法的估计。这种估计是基于不同的数据来源：\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短形式的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n所显示的数字是实际词频的一种变化，称为Zipf频率，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。我们使用0作为默认的Zipf值，用于不出现在给定词表中的词，尽管它应该意味着每十亿个词中出现一次。",
-      "it": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola è una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\nIl numero mostrato è una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
-      "fr": "DaKanji utilise une mesure de la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'usage d'un mot. Cette estimation est basée sur différentes sources de données :\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, représentant les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\nLe nombre indiqué est une variante de la fréquence réelle des mots, appelée fréquence de Zipf, qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois où il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs de Zipf raisonnables se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans la liste de mots donnée, bien que cela doive signifier une occurrence par milliard de mots.",
-      "es": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimación del uso de una palabra. Esta estimación se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\nLa cifra mostrada es una variación de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logarítmica de fácil comprensión para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque debería significar una aparición por cada mil millones de palabras.",
-      "pl": "DaKanji używa miary częstotliwości słów, aby uszeregować swoje hasła słownikowe. Częstotliwość słów jest szacunkową oceną ich użycia. Szacunki te oparte są na różnych źródłach danych:\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe.\nPokazana liczba jest odmianą rzeczywistej częstotliwości słowa zwaną częstotliwością Zipfa, która ma na celu zwrócenie częstotliwości słowa w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem z 10 razy, kiedy pojawia się ono na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w danej liście słów, chociaż powinno to oznaczać jedno wystąpienie na miliard słów."
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "dict_deconjugate": {
       "en": "Convert inputs to base form",
@@ -728,7 +728,7 @@
       "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
     },
     "dict_deconjugate_body": {
-      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\nFor intermediate learners, the recommendation is to turn off this setting.",
+      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
       "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
       "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
       "ja": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
@@ -759,6 +759,18 @@
       "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
       "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
       "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
+    },
+    "anki_title": {
+      "en": "Anki"
+    },
+    "anki_default_deck": {
+      "en": "Default deck (quick send)"
+    },
+    "anki_default_no_langs": {
+      "en": "Number of langs to include"
+    },
+    "anki_default_no_translations": {
+      "en": "Number of translations per language to include"
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -926,15 +938,15 @@
       "pl": "Ok"
     },
     "advanced_settings_number_search_procs": {
-      "en": "Number of search processes",
-      "de": "Anzahl der Suchprozesse",
-      "ru": "Количество процессов поиска",
-      "ja": "検索処理数",
-      "zh": "搜索过程的数量",
-      "it": "Numero di processi di ricerca",
-      "fr": "Nombre de processus de recherche",
-      "es": "Número de procesos de búsqueda",
-      "pl": "Liczba procesów wyszukiwania"
+      "en": "Number of search processes  (requires restart)",
+      "de": "Anzahl der Suchprozesse (erfordert Neustart)",
+      "ru": "Количество процессов поиска (требуется перезапуск)",
+      "ja": "検索プロセス数（再起動が必要）",
+      "zh": "搜索进程的数量（需要重新启动）。",
+      "it": "Numero di processi di ricerca (richiede il riavvio)",
+      "fr": "Nombre de processus de recherche (nécessite un redémarrage)",
+      "es": "Número de procesos de búsqueda (requiere reinicio)",
+      "pl": "Liczba procesów wyszukiwania (wymaga ponownego uruchomienia)"
     },
     "advanced_settings_number_search_procs_body": {
       "en": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -1135,7 +1147,7 @@
       "en": "A double tap will select a sentence.",
       "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
       "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "ダブルタップで文章が選択されます。",
+      "ja": "#ERROR!",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
@@ -1351,14 +1363,14 @@
     },
     "word_images": {
       "en": "Images",
-      "de": "Bilder",
-      "ru": "Изображения",
-      "ja": "画像",
-      "zh": "图片",
-      "it": "Immagini",
-      "fr": "Images",
-      "es": "Imágenes",
-      "pl": "Zdjęcia"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "word_conj_verb": {
       "en": "Verb",
@@ -1393,92 +1405,110 @@
     "word_conj_verb_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ja": "現在形（未来）"
+      "ja": "現在形（未来）",
+      "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_verb_non_past_m": {
       "en": "Will [not] do",
       "de": "Macht [nicht]",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] Zrobić"
     },
     "word_conj_verb_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ja": "過去形"
+      "ja": "過去形",
+      "pl": "Przeszły"
     },
     "word_conj_verb_past_m": {
       "en": "Did [not] do",
       "de": "Hat [nicht] gemacht",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] Zrobił"
     },
     "word_conj_verb_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ja": "て形"
+      "ja": "て形",
+      "pl": "Forma て"
     },
     "word_conj_verb_volitional": {
       "en": "Volitional",
       "de": "Intentional",
-      "ja": "意向形"
+      "ja": "意向形",
+      "pl": "Wolicjonalny"
     },
     "word_conj_verb_volitional_m": {
       "en": "Let's [not] do!",
       "de": "Lass [nicht] machen!",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] róbmy!"
     },
     "word_conj_verb_imperative": {
       "en": "Imperative",
       "de": "Imperativ",
-      "ja": "命令形"
+      "ja": "命令形",
+      "pl": "Rozkazujący"
     },
     "word_conj_verb_imperative_m": {
       "en": "Do [not] do!",
       "de": "Mach [nicht]!",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] rób!"
     },
     "word_conj_verb_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ja": "仮定形"
+      "ja": "仮定形",
+      "pl": "Provisional"
     },
     "word_conj_verb_provisional_m": {
       "en": "If X does [not do], if X is [not]",
       "de": "Wenn X [nicht] macht, wenn X [nicht] ist",
-      "ja": null
+      "ja": null,
+      "pl": "Jeżeli X [nie] zrobi, jeżeli X [nie] jest"
     },
     "word_conj_verb_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ja": "条件形"
+      "ja": "条件形",
+      "pl": "Warunkowy"
     },
     "word_conj_verb_conditional_m": {
       "en": "If X were [not] to do, when X does [not] do",
       "de": "Wenn X [nicht] machen würde, falls X [nicht] macht",
-      "ja": null
+      "ja": null,
+      "pl": "Jeżeli X by [nie] zrobił, jeżeli X by [nie] był"
     },
     "word_conj_verb_potential": {
       "en": "Potential",
       "de": "Potential",
-      "ja": "可能形"
+      "ja": "可能形",
+      "pl": "Potencjalny"
     },
     "word_conj_verb_potential_m": {
       "en": "[Not] be able to do, can [not] do",
       "de": "Kann [nicht] machen",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] jest w stanie, [nie] może"
     },
     "word_conj_verb_passive": {
       "en": "Passive, Respectful",
       "de": "Passiv, Respektvoll",
-      "ja": "受動形、尊敬語"
+      "ja": "受動形、尊敬語",
+      "pl": "Pasywny, z szacunkiem"
     },
     "word_conj_verb_passive_m": {
       "en": "Is [not] done (by ...), will [not] be done (by ...)",
       "de": "Wird (von...) [nicht] gemacht",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] jest zrobione (przez...), [nie] zostanie zropione (przez...)"
     },
     "word_conj_verb_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ja": "使役形"
+      "ja": "使役形",
+      "pl": "Przyczynowy"
     },
     "word_conj_verb_causative_m": {
       "en": "Does [not] / will [not] make, let (someone) do",
@@ -1488,7 +1518,8 @@
     "word_conj_verb_causative_passive": {
       "en": "Causative passive",
       "de": "Kausativ passiv",
-      "ja": "受動形"
+      "ja": "受動形",
+      "pl": "Przyczynowy pasywny"
     },
     "word_conj_verb_causative_passive_m": {
       "en": "Is [not] made / will [not] be made to do (by someone)",
@@ -1498,57 +1529,68 @@
     "word_conj_adj_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ja": "現在形（未来）"
+      "ja": "現在形（未来）",
+      "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_adj_non_past_m": {
       "en": "Is [not]",
       "de": "Ist [nicht]",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] jest"
     },
     "word_conj_adj_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ja": "過去形"
+      "ja": "過去形",
+      "pl": "Przeszły"
     },
     "word_conj_adj_past_m": {
       "en": "was [not]",
       "de": "War [nicht]",
-      "ja": null
+      "ja": null,
+      "pl": "[nie] był"
     },
     "word_conj_adj_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ja": "て形"
+      "ja": "て形",
+      "pl": "forma て"
     },
     "word_conj_adj_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ja": "仮定形"
+      "ja": "仮定形",
+      "pl": "Provisional"
     },
     "word_conj_adj_provisional_m": {
       "en": "If it is [not]",
       "de": "Wenn X [nicht] ist",
-      "ja": null
+      "ja": null,
+      "pl": "Jeżeli [nie] jest"
     },
     "word_conj_adj_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ja": "条件形"
+      "ja": "条件形",
+      "pl": "Warunkowy"
     },
     "word_conj_adj_conditional_m": {
       "en": "When/if it is [not]",
       "de": "Falls X [nicht] ist",
-      "ja": null
+      "ja": null,
+      "pl": "Kiedy/jeśli to [nie] jest"
     },
     "word_conj_adj_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ja": "使役形"
+      "ja": "使役形",
+      "pl": "Przyczynowy"
     },
     "word_conj_adj_causative_m": {
       "en": "Make somebody [not]",
       "de": "Jmd. [nicht] machen",
-      "ja": null
+      "ja": null,
+      "pl": "Zrób kogoś [nie]"
     },
     "kanji_tab": {
       "en": "Kanji",
@@ -1581,7 +1623,7 @@
       "it": "Radicali",
       "fr": "Radicaux",
       "es": "Radicales",
-      "pl": "Radicals"
+      "pl": "Radicals (metoda kluczy)"
     },
     "kanji_strokes": {
       "en": "Strokes",
@@ -1592,7 +1634,7 @@
       "it": "Ictus",
       "fr": "Strokes",
       "es": "Trazos",
-      "pl": "Udary"
+      "pl": "Pociągnięcia pędzla"
     },
     "kanji_grade": {
       "en": "Grade",
@@ -1665,18 +1707,18 @@
       "it": "Freq.",
       "fr": "Fréq.",
       "es": "Frec.",
-      "pl": "Freq."
+      "pl": "Częstotliowść"
     },
     "kanji_alternatives": {
       "en": "Alternatives",
-      "de": "Alternativen",
-      "ru": "Альтернативы",
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
       "ja": "その他の字体",
-      "zh": "替代品",
-      "it": "Alternative",
-      "fr": "Alternatives",
-      "es": "Alternativas",
-      "pl": "Alternatywy"
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "example_tab": {
       "en": "Examples",
@@ -1687,7 +1729,7 @@
       "it": "Esempio",
       "fr": "Exemple",
       "es": "Ejemplo",
-      "pl": "Przykład"
+      "pl": "Przykłady"
     },
     "tutorial_begin_title": {
       "en": "Welcome to the dictionary!",
@@ -1764,7 +1806,7 @@
       "it": "La scheda Kanji contiene informazioni sui Kanji utilizzati nella parola. Include il numero e l'ordine dei tratti e il significato.",
       "fr": "L'onglet Kanji comprend des informations sur les Kanjis utilisés dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
       "es": "La pestaña Kanji incluye información sobre los Kanjis utilizados en la palabra. Incluye el número y el orden de los trazos y los significados.",
-      "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia."
+      "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę, kolejność uderzeń oraz znaczenia."
     },
     "tutorial_examples_tab": {
       "en": "Lastly, the examples tab shows you some example sentences that use the selected word.",
@@ -1781,40 +1823,40 @@
   "KanjiScreen": {
     "title": {
       "en": "Kanji",
-      "de": "Kanji",
-      "ru": "Кандзи",
-      "ja": "漢字",
-      "zh": "汉字",
-      "it": "Kanji",
-      "fr": "Kanji",
-      "es": "Kanji",
-      "pl": "Kanji"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     }
   },
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji",
-      "ru": "Кудзусидзи",
-      "ja": "くずし字",
-      "zh": "库兹吉",
-      "it": "Kuzushiji",
-      "fr": "Kuzushiji",
-      "es": "Kuzushiji",
-      "pl": "Kuzushiji"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     }
   },
   "WordListsScreen": {
     "title": {
       "en": "Word lists",
-      "de": "Wortlisten",
-      "ru": "Списки слов",
-      "ja": "単語リスト",
-      "zh": "词表",
-      "it": "Elenchi di parole",
-      "fr": "Listes de mots",
-      "es": "Listas de palabras",
-      "pl": "Listy słowne"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     }
   }
 }
