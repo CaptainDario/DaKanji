@@ -271,7 +271,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   : SearchResultList(
                     searchResults: searchHistory,
                     onSearchResultPressed: onSearchResultPressed,
-                    //reversed: true,
                     showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                     onDismissed: (direction, entry, idx) async {
                       int id = searchHistoryIds.removeAt(
