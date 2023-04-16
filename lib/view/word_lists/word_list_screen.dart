@@ -71,7 +71,13 @@ class _WordListScreenState extends State<WordListScreen> {
             .anyOf(widget.node.value.wordIds, (q, element) => q.idEqualTo(element))
             .findAllSync(),
           onSearchResultPressed: (entry){
-            // TODO open dictionary screen with this entry
+            Navigator.of(context).pushNamed(
+              '/dictionary',
+              arguments: NavigationArguments(
+                false,
+                initialEntryId: entry.id
+              )
+            );
           },
         )
     );
