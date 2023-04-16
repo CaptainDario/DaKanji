@@ -5,8 +5,8 @@ import 'package:simple_html_css/simple_html_css.dart';
 
 
 /// The manual for the TextScreen
-class ManualText extends StatelessWidget {
-  ManualText({super.key});
+class ManualTextScreen extends StatelessWidget {
+  ManualTextScreen({super.key});
 
   final String manualTextScreenText = "";
   /*
