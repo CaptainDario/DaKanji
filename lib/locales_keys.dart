@@ -70,8 +70,12 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_conj_verb_volitional = 'DictionaryScreen.word_conj_verb_volitional';
   static const DictionaryScreen_word_conj_verb_volitional_m = 'DictionaryScreen.word_conj_verb_volitional_m';
   static const DictionaryScreen_word_conjugation = 'DictionaryScreen.word_conjugation';
+  static const DictionaryScreen_word_dialect = 'DictionaryScreen.word_dialect';
+  static const DictionaryScreen_word_field = 'DictionaryScreen.word_field';
   static const DictionaryScreen_word_images = 'DictionaryScreen.word_images';
   static const DictionaryScreen_word_proverbs = 'DictionaryScreen.word_proverbs';
+  static const DictionaryScreen_word_reading = 'DictionaryScreen.word_reading';
+  static const DictionaryScreen_word_see_also = 'DictionaryScreen.word_see_also';
   static const DictionaryScreen_word_synonyms = 'DictionaryScreen.word_synonyms';
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
   static const DictionaryScreen = 'DictionaryScreen';

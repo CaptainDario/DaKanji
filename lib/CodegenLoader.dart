@@ -1519,6 +1519,22 @@ static const Map<String,dynamic> localizations = {
       "es": "Palabra",
       "pl": "Słowo"
     },
+    "word_field": {
+      "en": "Field:",
+      "de": "Feld"
+    },
+    "word_dialect": {
+      "en": "Dialect:",
+      "de": "Dialekt"
+    },
+    "word_see_also": {
+      "en": "See also:",
+      "de": "Siehe auch:"
+    },
+    "word_reading": {
+      "en": "Reading:",
+      "de": "Lesung:"
+    },
     "word_conjugation": {
       "en": "Conjugations",
       "de": "Konjugationen",
@@ -2287,8 +2303,12 @@ static const Map<String,dynamic> de = {
     "word_conj_verb_volitional": "Intentional",
     "word_conj_verb_volitional_m": "Lass [nicht] machen!",
     "word_conjugation": "Konjugationen",
+    "word_dialect": "Dialekt",
+    "word_field": "Feld",
     "word_images": "Bilder",
     "word_proverbs": "Sprichwörter",
+    "word_reading": "Lesung:",
+    "word_see_also": "Siehe auch:",
     "word_synonyms": "Synonyme",
     "word_tab": "Wort"
   },
@@ -2890,8 +2910,12 @@ static const Map<String,dynamic> en = {
     "word_conj_verb_volitional": "Volitional",
     "word_conj_verb_volitional_m": "Let's [not] do!",
     "word_conjugation": "Conjugations",
+    "word_dialect": "Dialect:",
+    "word_field": "Field:",
     "word_images": "Images",
     "word_proverbs": "Proverbs",
+    "word_reading": "Reading:",
+    "word_see_also": "See also:",
     "word_synonyms": "Synonyms",
     "word_tab": "Word"
   },

@@ -186,20 +186,20 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           // field
                           if(widget.entry!.field.length > 0)
                             Text(
-                              "Field: ${widget.entry!.field.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.entry!.field.join(", ")}",
                               style: partOfSpeechStyle,
                             ),
                           // dialects
                           if(widget.entry!.dialect.length > 0)
                             Text(
-                              "Dialect: ${widget.entry!.dialect.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_dialect.tr()} ${widget.entry!.dialect.join(", ")}",
                               style: partOfSpeechStyle
                             ),
                           // xref
                           if(widget.entry!.xref.length > 0)
                             Text.rich(
                               TextSpan(
-                                text: "See also: ",
+                                text: "${LocaleKeys.DictionaryScreen_word_see_also.tr()} ",
                                 children: GetIt.I<Isars>().dictionary.jmdict
                                   .getAllSync(widget.entry!.xref)
                                 .map((e) => TextSpan(
@@ -225,7 +225,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           // rinf
                           if(widget.entry!.re_inf.length > 0)
                             Text(
-                              "Reading: ${widget.entry!.re_inf.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_reading.tr()} ${widget.entry!.re_inf.join(", ")}",
                               style: partOfSpeechStyle,
                             ),
                           const SizedBox(

@@ -1341,6 +1341,22 @@
       "es": "Palabra",
       "pl": "Słowo"
     },
+    "word_field": {
+      "en": "Field:",
+      "de": "Feld"
+    },
+    "word_dialect": {
+      "en": "Dialect:",
+      "de": "Dialekt"
+    },
+    "word_see_also": {
+      "en": "See also:",
+      "de": "Siehe auch:"
+    },
+    "word_reading": {
+      "en": "Reading:",
+      "de": "Lesung:"
+    },
     "word_conjugation": {
       "en": "Conjugations",
       "de": "Konjugationen",
