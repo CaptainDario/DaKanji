@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/model/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as W;
+import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as wordLists;
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 
@@ -59,13 +59,12 @@ class _WordListsScreenState extends State<WordListsScreen> {
     return DaKanjiDrawer(
       currentScreen: Screens.word_lists,
       animationAtStart: !widget.openedByDrawer,
-      child: W.WordLists(
+      child: wordLists.WordLists(
         widget.includeTutorial,
         parent,
         onSelectionConfirmed: widget.onSelectionConfirmed,
       ),
     );
   }
-
 
 }

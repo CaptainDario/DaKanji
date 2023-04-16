@@ -60,7 +60,9 @@ class _WordListsState extends State<WordLists> {
         return true;
       },
       onLeave: (data) {
-        setState(() {itemDraggingOverThis = false;});
+        setState(() {
+          itemDraggingOverThis = false;
+        });
       },
       onAccept: (data) {
         setState(() {
@@ -111,7 +113,9 @@ class _WordListsState extends State<WordLists> {
                       }
                     },
                     onDragAccept: (destinationNode, thisNode) {
-                      setState(() {});
+                      setState(() {
+                        // TODO change drop color here
+                      });
                     },
                     onDeletePressed: (TreeNode node) {
                       setState(() {
@@ -147,7 +151,7 @@ class _WordListsState extends State<WordLists> {
     );
   }
 
-    /// Adds a new folder / word list to the tree
+  /// Adds a new folder / word list to the tree
   void addNewWordListNode(WordListNodeType nodeType){
 
     // update the tree with the new widget
@@ -173,7 +177,6 @@ class _WordListsState extends State<WordLists> {
         return Center(
           child: Material(
             elevation: elevation,
-            //color: Colors.grey,
             shadowColor: Colors.grey,
             child: child,
           ),

@@ -128,6 +128,7 @@ class _WordListNodeState extends State<WordListNode> {
               data.parent!.removeChild(d);
               widget.node.addChild(d);
               _controller.text = widget.node.value.name;
+              itemDraggingOverThis = false;
             });
     
             widget.onDragAccept?.call(data, widget.node);
