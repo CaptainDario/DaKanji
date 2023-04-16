@@ -32,10 +32,13 @@ class WordListScreen extends StatefulWidget {
 
 class _WordListScreenState extends State<WordListScreen> {
  
+  /// is this a default list
+  bool isDefault = false;
+
   @override
   void initState() {
 
-
+    // if this list is the search history list, add all the search history
     if(widget.node.value.name == WordListsDefaults.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
       widget.node.value.wordIds.addAll(
@@ -45,6 +48,8 @@ class _WordListScreenState extends State<WordListScreen> {
           .findAllSync()
       );
     }
+    if(widget.node.value.type.name.contains("Default"))
+      isDefault = true;
 
     super.initState();
   }
@@ -70,6 +75,13 @@ class _WordListScreenState extends State<WordListScreen> {
           searchResults: GetIt.I<Isars>().dictionary.jmdict.where()
             .anyOf(widget.node.value.wordIds, (q, element) => q.idEqualTo(element))
             .findAllSync(),
+          onDismissed: isDefault
+            ? null
+            : (direction, entry, listIndex) {
+              setState(() {
+                widget.node.value.wordIds.remove(entry.id);
+              });
+            },
           onSearchResultPressed: (entry){
             Navigator.of(context).pushNamed(
               '/dictionary',
