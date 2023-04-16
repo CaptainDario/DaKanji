@@ -409,7 +409,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_anki_default_no_langs.tr(),
                         value: settings.anki.noLangsToInclude.toDouble(),
                         min: 0,
-                        max: settings.dictionary.selectedTranslationLanguages.length.toDouble(),
+                        max: settings.dictionary.translationLanguageCodes.length.toDouble()-1.0,
+                        divisions: settings.dictionary.translationLanguageCodes.length-1,
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                         onSliderMoved: (value) {
                           setState(() {
@@ -424,8 +425,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: settings.anki.noTranslations.toDouble(),
                         min: 0,
                         max: 5,
-                        autoSizeGroup: g_SettingsAutoSizeGroup,
                         divisions: 5,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                         onSliderMoved: (value) {
                           setState(() {
                             settings.anki.noTranslations = value.toInt();
