@@ -126,7 +126,7 @@ class _WordListsState extends State<WordLists> {
                     },
                     onDeletePressed: (TreeNode node) {
                       setState(() {
-                        widget.parent!.removeChild(widget.parent!.children[i]);
+                        node.parent!.removeChild(node);
                       });
                     },
                     onFolderPressed: (node) => setState(() {}),
