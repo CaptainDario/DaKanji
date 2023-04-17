@@ -13,7 +13,7 @@ part 'settings_dictionary.g.dart';
 class SettingsDictionary with ChangeNotifier {
 
   /// The deafult value for `translationLanguageCodes`
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const List<String> d_translationLanguageCodes = [
     "en", "de", "ru", "it", "fr", "es", "pl"//, "zh",
   ];
@@ -23,7 +23,7 @@ class SettingsDictionary with ChangeNotifier {
   
 
   /// All languages that are available in the dictionary
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Map<String, String> translationLanguagesToSvgPath = 
     Map<String, String>.fromIterable(
       (d_translationLanguageCodes),
@@ -33,7 +33,7 @@ class SettingsDictionary with ChangeNotifier {
   
 
   /// The default value for `selectedTranslationLanguagesDefault` 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const List<String> d_selectedTranslationLanguages = ["en"];
   /// All languages that are selected to be shown in the dict UI
   @JsonKey(defaultValue: d_selectedTranslationLanguages)
@@ -46,19 +46,19 @@ class SettingsDictionary with ChangeNotifier {
     notifyListeners();
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const bool d_showWordFruequency = false;
   @JsonKey(defaultValue: d_showWordFruequency)
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const bool d_searchDeconjugate = true;
   @JsonKey(defaultValue: d_searchDeconjugate)
   /// Should the search term be deconjugated before searching
   bool searchDeconjugate = d_searchDeconjugate;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const bool d_convertToHiragana = true;
   @JsonKey(defaultValue: d_convertToHiragana)
   /// Should the search term be converted to kana if it is written in romaji
