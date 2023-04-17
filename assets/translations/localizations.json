@@ -1899,6 +1899,10 @@
     "delete": {
       "en": "Delete",
       "de": "Löschen"
+    },
+    "ok": {
+      "en": "ok",
+      "de": "ok"
     }
   }
 }

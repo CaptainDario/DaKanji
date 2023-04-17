@@ -226,6 +226,7 @@ abstract class  LocaleKeys {
   static const WordListsScreen_new_list = 'WordListsScreen.new_list';
   static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';
   static const WordListsScreen_node_hint_text = 'WordListsScreen.node_hint_text';
+  static const WordListsScreen_ok = 'WordListsScreen.ok';
   static const WordListsScreen_rename = 'WordListsScreen.rename';
   static const WordListsScreen_search_history = 'WordListsScreen.search_history';
   static const WordListsScreen_title = 'WordListsScreen.title';

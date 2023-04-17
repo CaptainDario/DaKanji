@@ -2062,6 +2062,10 @@ static const Map<String,dynamic> localizations = {
     "delete": {
       "en": "Delete",
       "de": "Löschen"
+    },
+    "ok": {
+      "en": "ok",
+      "de": "ok"
     }
   }
 };
@@ -2501,6 +2505,7 @@ static const Map<String,dynamic> de = {
     "new_list": "Neue Liste",
     "no_entries": "Keine Einträge in dieser Liste",
     "node_hint_text": "Name",
+    "ok": "ok",
     "rename": "Umbennen",
     "search_history": "Suchverlauf",
     "title": "Wortlisten"
@@ -3123,6 +3128,7 @@ static const Map<String,dynamic> en = {
     "new_list": "New list",
     "no_entries": "No entries in this word list",
     "node_hint_text": "Name",
+    "ok": "ok",
     "rename": "Rename",
     "search_history": "Search history",
     "title": "Word lists"
