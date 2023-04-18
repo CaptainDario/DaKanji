@@ -112,7 +112,7 @@ class _WordListNodeState extends State<WordListNode> {
             // do not allow dropping ...
             if(data == null ||
               data == widget.node || // ... in itself
-              widget.node.value.type != WordListNodeType.folder || // .. in a non-user-folder
+              wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
               widget.node.getPath().contains(data)) // ... in a child
               return false;
 
@@ -129,10 +129,38 @@ class _WordListNodeState extends State<WordListNode> {
             var d = data as TreeNode<WordListsData>;
 
             setState(() {
-              data.parent!.removeChild(d);
-              widget.node.addChild(d);
-              _controller.text = widget.node.value.name;
-              itemDraggingOverThis = false;
+              
+              // list / folder draged on folder
+              if((d.value.type == WordListNodeType.folder || 
+                d.value.type == WordListNodeType.wordList) &&
+                widget.node.value.type == WordListNodeType.folder){
+                d.parent!.removeChild(d);
+                widget.node.addChild(d);
+                _controller.text = widget.node.value.name;
+                itemDraggingOverThis = false;
+              }
+              // list draged on list
+              else if(d.value.type == WordListNodeType.wordList &&
+                widget.node.value.type == WordListNodeType.wordList){
+                // add a new folder
+                TreeNode<WordListsData> newFolder = TreeNode<WordListsData>(
+                  WordListsData(
+                    "New Folder", WordListNodeType.folder, [], true
+                  )
+                );
+                widget.node.parent!.addChild(newFolder);
+
+                // add this and the drag target to the new folder and remove them from their old parents
+                d.parent!.removeChild(d);
+                widget.node.parent!.removeChild(widget.node);
+                newFolder.addChild(widget.node);
+                newFolder.addChild(d);
+
+                _controller.text = widget.node.value.name;
+                itemDraggingOverThis = false;
+              }
+
+              
             });
     
             widget.onDragAccept?.call(data, widget.node);
