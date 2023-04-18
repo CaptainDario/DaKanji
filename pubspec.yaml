@@ -55,17 +55,17 @@ dependencies:
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   #media_kit: 0.0.4+1
-  media_kit: 
-    git:
-      url: https://github.com/alexmercerind/media_kit
-      path: media_kit
-      ref: fix/121
-  media_kit_video: 0.0.4                       # For video rendering.
-  media_kit_native_event_loop: 1.0.2           # Enables support for higher number of concurrent instances. Optional.
-  media_kit_libs_windows_video: 1.0.1          # Windows package for video (& audio) native libraries.
-  media_kit_libs_ios_video: 1.0.3              # iOS package for video (& audio) native libraries.
-  media_kit_libs_macos_video: 1.0.3            # macOS package for video (& audio) native libraries.
-  media_kit_libs_linux: 1.0.1                  # Linux dependency package.
+  pdf: 3.8.4
+  media_kit: 0.0.5+1
+  media_kit_video: 0.0.6                        # For video rendering.
+  
+  media_kit_native_event_loop: 1.0.3            # Support for higher number of concurrent instances & better performance.
+  
+  media_kit_libs_windows_video: 1.0.2           # Windows package for video native libraries.
+  media_kit_libs_android_video: 1.0.0           # Android package for video native libraries.
+  media_kit_libs_macos_video: 1.0.4             # macOS package for video native libraries.
+  media_kit_libs_ios_video: 1.0.4               # iOS package for video native libraries.
+  media_kit_libs_linux: 1.0.2                   # GNU/Linux dependency package.
 
   isar: any # included in dakanji dictionary
   isar_flutter_libs: any # included in dakanji dictionary
