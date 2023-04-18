@@ -1,10 +1,12 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
+
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/view/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/view/word_lists/word_list_node.dart';
-import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
@@ -78,98 +80,102 @@ class _WordListsState extends State<WordLists> {
       builder: (context, candidateData, rejectedData) {
         return Container(
           color: itemDraggingOverThis ? Colors.grey[300] : null,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(child: SizedBox()),
-                  // add new list button
-                  IconButton(
-                    onPressed: () {
-                      addNewWordListNode(WordListNodeType.wordList);
-                    },
-                    icon: Icon(Icons.format_list_bulleted_add)
-                  ), 
-                  // add new folder button
-                  IconButton(
-                    onPressed: () {
-                      addNewWordListNode(WordListNodeType.folder);
-                    },
-                    icon: Icon(Icons.create_new_folder)
-                  ), 
-                ],
-              ),
-              for (int i = 0; i < childrenDFS.length; i++)
-                // Only show if the parent is expanded
-                // Only show the default lists/folder if `showDefaults` is true
-                if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded) &&
-                  (widget.showDefaults || !childrenDFS[i].value.type.toString().contains("Default")))
-                  WordListNode(
-                    childrenDFS[i],
-                    i,
-                    onTap: (TreeNode<WordListsData> node) {
-                      if(wordListListypes.contains(node.value.type)){
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => 
-                            WordListScreen(
-                              node,
-                            )
-                          ),
-                        );
-                      }
-                    },
-                    onDragAccept: (destinationNode, thisNode) {
-                      setState(() {
-
-                      });
-                    },
-                    onDeletePressed: (TreeNode node) {
-                      setState(() {
-                        node.parent!.removeChild(node);
-                      });
-                    },
-                    onFolderPressed: (node) => setState(() {}),
-                    onSelectedToggled: widget.onSelectionConfirmed == null
-                      ? null
-                      : (thisNode) => setState(() {}),
-                    key: Key('$i'),
-                    editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
-                  ),
-                
-                // confirm selection button if word lists are opened in selection mode
-                if(widget.onSelectionConfirmed != null)
-                  ...[
-                    SizedBox(height: 16),
-                    Divider(),
-                    SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(100),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: SizedBox()),
+                    // add new list button
+                    IconButton(
+                      onPressed: () {
+                        addNewWordListNode(WordListNodeType.wordList);
+                      },
+                      icon: Icon(Icons.format_list_bulleted_add)
+                    ), 
+                    // add new folder button
+                    IconButton(
+                      onPressed: () {
+                        addNewWordListNode(WordListNodeType.folder);
+                      },
+                      icon: Icon(Icons.create_new_folder)
+                    ), 
+                  ],
+                ),
+                for (int i = 0; i < childrenDFS.length; i++)
+                  // Only show if the parent is expanded
+                  // Only show the default lists/folder if `showDefaults` is true
+                  if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded) &&
+                    (widget.showDefaults || !childrenDFS[i].value.type.toString().contains("Default")))
+                    WordListNode(
+                      childrenDFS[i],
+                      i,
+                      onTap: (TreeNode<WordListsData> node) {
+                        if(wordListListypes.contains(node.value.type)){
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => 
+                              WordListScreen(
+                                node,
+                              )
+                            ),
+                          );
+                        }
+                      },
+                      onDragAccept: (destinationNode, thisNode) {
+                        setState(() {
+          
+                        });
+                      },
+                      onDeletePressed: (TreeNode node) {
+                        setState(() {
+                          node.parent!.removeChild(node);
+                        });
+                      },
+                      onFolderPressed: (node) => setState(() {}),
+                      onSelectedToggled: widget.onSelectionConfirmed == null
+                        ? null
+                        : (thisNode) => setState(() {}),
+                      key: Key('$i'),
+                      editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
+                    ),
+                  
+                  // confirm selection button if word lists are opened in selection mode
+                  if(widget.onSelectionConfirmed != null)
+                    ...[
+                      SizedBox(height: 16),
+                      Divider(),
+                      SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
                               ),
                             ),
+                            onPressed: (){
+                              List<TreeNode<WordListsData>> selection =
+                                widget.parent!.DFS().where(
+                                  (node) => node.value.isChecked
+                                ).toList();
+                              widget.onSelectionConfirmed!(selection);
+                            },
+                            child: Text(
+                              LocaleKeys.WordListsScreen_ok.tr()
+                            )
                           ),
-                          onPressed: (){
-                            List<TreeNode<WordListsData>> selection =
-                              widget.parent!.DFS().where(
-                                (node) => node.value.isChecked
-                              ).toList();
-                            widget.onSelectionConfirmed!(selection);
-                          },
-                          child: Text("OK")
                         ),
                       ),
-                    ),
-                    SizedBox(height: 16),
-                  ]
-            ],
+                      SizedBox(height: 16),
+                    ]
+              ],
+            ),
           ),
         );
       }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
@@ -275,6 +275,7 @@ class _WordListNodeState extends State<WordListNode> {
   /// Executed when the user presses the delete button
   void deleteButtonPressed(){
     widget.onDeletePressed?.call(widget.node);
+    
   }
 
 }

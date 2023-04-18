@@ -7,8 +7,11 @@ part of 'word_lists.dart';
 // **************************************************************************
 
 WordLists _$WordListsFromJson(Map<String, dynamic> json) => WordLists()
-  ..root = TreeNode<WordListsData>.fromJson(json['root'] as Map<String, dynamic>);
+  ..userCreatedLists = (json['userCreatedLists'] as List<dynamic>)
+      .map((e) => TreeNode<WordListsData>.fromJson(e as Map<String, dynamic>))
+      .toList();
 
 Map<String, dynamic> _$WordListsToJson(WordLists instance) => <String, dynamic>{
-      'root': instance.root.toJson(),
+      'userCreatedLists':
+          instance.userCreatedLists.map((e) => e.toJson()).toList(),
     };

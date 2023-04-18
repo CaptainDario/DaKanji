@@ -93,9 +93,10 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
 
-  GetIt.I.registerSingleton<WordLists>(
-    WordLists()..load()
-  );
+  WordLists wL = WordLists();
+  wL.load();
+  GetIt.I.registerSingleton<WordLists>(wL);
+
 
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();

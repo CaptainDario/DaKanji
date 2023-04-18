@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
-import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/search_history.dart';
 import 'package:da_kanji_mobile/view/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

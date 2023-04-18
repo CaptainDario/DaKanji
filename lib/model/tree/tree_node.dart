@@ -1,7 +1,12 @@
 import 'dart:collection';
+import 'package:da_kanji_mobile/model/tree/tree_node_json_converter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:json_annotation/json_annotation.dart';
+
+part 'tree_node.g.dart';
+
+
 
 
 
@@ -13,38 +18,74 @@ enum TreeTraversalMode{
   DFS,
 }
 
-/// A node in a tree structure, emits a notification when it is modified
+/// A node in a tree structure, emits a notification when it's structure changes
+/// If `T` is a `ChangeNotifier` it will also send notifications when one of it's
+/// values is modified
+@JsonSerializable(explicitToJson: true)
 class TreeNode<T> with ChangeNotifier{
 
   /// the value of this node
+  @TreeNodeConverter()
   T value;
+  /// The id of this node, used for deserializing this object
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  int _id = 0;
+
   /// a list containing all children of this TreeNode
+  @TreeNodeConverter()
   List<TreeNode<T>> _children = [];
   /// a list containing all children of this TreeNode
+  @TreeNodeConverter()
   List<TreeNode<T>> get children => List.unmodifiable(_children);
+
   /// the parent TreeNode of this TreeNode, if null this is the root
+  @JsonKey(includeFromJson: false, includeToJson: false)
   TreeNode<T>? parent;
+  /// A unique ID in the tree, used for deserializing this objetc, null means
+  /// this is the root
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  int? _parentID = null;
+
   /// the level of this node in the tree, 0 means it is the root
+  @JsonKey(includeFromJson: true, includeToJson: true)
   int _level = 0;
   /// the level of this node in the tree, 0 means it is the root
+  @JsonKey(includeFromJson: false, includeToJson: false)
   int get level => _level;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   late Map<TreeTraversalMode, Iterable<TreeNode<T>>> _iterDict = {
     TreeTraversalMode.BFS: BFS(),
     TreeTraversalMode.DFS: DFS(),
   };
 
 
-  TreeNode (this.value, {int level = 0});
+  TreeNode(
+    this.value,
+    {
+      List<TreeNode<T>> children = const [],
+    }
+  ){
+
+    if(children.isNotEmpty)
+      this._children = children;
+    else
+      this._children = [];
+  }
+
 
   /// adds newNode as a child to this node
   void addChild (TreeNode<T> newNode) {
+    // if the added data is a change notifier, add `this` as a listener
+    if(newNode.value is ChangeNotifier)
+      (newNode.value as ChangeNotifier).addListener(notifyListeners);
+
     _children.add(newNode);
     newNode.parent = this;
     
-    // update the level information for the whole subtree
+    // update the tree
     updateLevel();
+    updateID();
 
     notifyListeners();
   }
@@ -52,23 +93,34 @@ class TreeNode<T> with ChangeNotifier{
   /// Adds all nodes in `newNodes` as children to this node
   void addChildren (List<TreeNode<T>> newNodes) {
     _children.addAll(newNodes);
-    for (final node in newNodes) {
-      node.parent = this;
+    for (final newNode in newNodes) {
+      newNode.parent = this;
+
+      // if the added data is a change notifier, add `this` as a listener
+      if(newNode.value is ChangeNotifier)
+        (newNode.value as ChangeNotifier).addListener(notifyListeners);
     }
 
-    // update the level information for the whole subtree
+    // update the tree
     updateLevel();
+    updateID();
 
     notifyListeners();
   }
 
   /// inserts `newNode` as a child to this node at the given `index`
   void insertChild (TreeNode<T> newNode, int index) {
+
     _children.insert(index, newNode);
     newNode.parent = this;
 
-    // update the level information for the whole subtree
+    // if the added data is a change notifier, add `this` as a listener
+    if(newNode.value is ChangeNotifier)
+      (newNode.value as ChangeNotifier).addListener(notifyListeners);
+
+    // update the tree
     updateLevel();
+    updateID();
 
     notifyListeners();
   }
@@ -77,8 +129,15 @@ class TreeNode<T> with ChangeNotifier{
   TreeNode<T> removeChild (TreeNode<T> node) {
     _children.remove(node);
     node.parent = null;
+    node.updateID();
+    // if the removed data is a change notifier, remove listener
+    if(node.value is ChangeNotifier)
+      (node.value as ChangeNotifier).removeListener(notifyListeners);
+
+    updateID();
 
     notifyListeners();
+
     return node;
   }
 
@@ -93,12 +152,18 @@ class TreeNode<T> with ChangeNotifier{
     for (final node in nodes) {
       if(_children.remove(node)){
         removed.add(node);
+        // if the removed data is a change notifier, remove listener
+        if(node.value is ChangeNotifier)
+          (node.value as ChangeNotifier).removeListener(notifyListeners);
         node.parent = null;
         node.updateLevel();
+        node.updateID();
       }
     }
 
+    updateID();
     notifyListeners();
+
     return removed;
   }
 
@@ -108,11 +173,16 @@ class TreeNode<T> with ChangeNotifier{
     List<TreeNode<T>> tmp = _children;
 
     for (final TreeNode<T> node in _children) {
+      // if the removed data is a change notifier, remove listener
+      if(node.value is ChangeNotifier)
+        (node.value as ChangeNotifier).removeListener(notifyListeners);
       node.parent = null;
       node.updateLevel();
+      node.updateID();
     }
     _children.clear();
 
+    updateID();
     notifyListeners();
     return tmp;
   }
@@ -121,6 +191,24 @@ class TreeNode<T> with ChangeNotifier{
   void updateLevel () {
     for (final node in DFS()) {
       node._level = node.parent!.level + 1;
+    }
+  }
+
+  /// Update the id of all nodes in this tree
+  void updateID () {
+
+    TreeNode<T> root = getRoot();
+
+    int cnt = 0;
+    for (final n in root.BFS()) {
+      n._id = cnt;
+
+      if(n.parent != null)
+        n._parentID = n.parent!._id;
+      else
+        n._parentID = null;
+
+      cnt++;
     }
   }
 
@@ -186,6 +274,22 @@ class TreeNode<T> with ChangeNotifier{
     return null;
   }
 
+  /// Searches the node in the tree that has the ID `id`. If the tree does not
+  /// contain the `query` returns null.
+  /// `mode` determines the algorithm used to traverse the tree.
+  TreeNode<T>? findByID(int id, {TreeTraversalMode mode = TreeTraversalMode.BFS}){
+
+    var iter = _iterDict[mode]!;
+
+    for (var node in iter) {
+      if(node._id == id){
+        return node;
+      }
+    }
+
+    return null;
+  }
+
   /// Copies the tree to a new tree and returns it.
   TreeNode<T> copy(){
     return _copy(this);
@@ -198,9 +302,12 @@ class TreeNode<T> with ChangeNotifier{
     
     if (root.children.isEmpty) return TreeNode(root.value);
 
-    return TreeNode(root.value).._children.addAll(
-      root._children.map((e) => e._copy(e))
-    );
+    TreeNode(root.value)
+      .._children.addAll(
+        root._children.map((e) => e._copy(e))
+      );
+
+    throw Exception('Not implemented');
   }
 
   @override
@@ -238,24 +345,18 @@ class TreeNode<T> with ChangeNotifier{
     return treeList;
   }
 
-  factory TreeNode.fromJson(Map<String, dynamic> json) {
+  factory TreeNode.fromJson(Map<String,dynamic> json){
+    
+    TreeNode<T> root = _$TreeNodeFromJson<T>(json);
+    
+    for (final node in root.BFS()){
+      if(node._parentID == null) continue;
 
-    T value = json['value'] as T;
-    int level = json['level'] as int;
-    List<TreeNode<T>> children = (json['children'] as List<dynamic>)
-      .map((e) => TreeNode<T>.fromJson(e as Map<String, dynamic>))
-      .toList();
+      node.parent = root.findByID(node._parentID!);
+    }
 
-    return TreeNode<T>(value)
-      .._level = level
-      .._children = children;
+    return root;
   }
 
-  Map<String, dynamic> toJson(){
-    return {
-      'value': value,
-      'level': level,
-      'children': _children.map((e) => e.toJson()).toList(),
-    };
-  }
+  Map<String,dynamic> toJson() => _$TreeNodeToJson<T>(this);
 }

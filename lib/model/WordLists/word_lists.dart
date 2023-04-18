@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/model/tree_node.dart';
+import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
 part 'word_lists.g.dart';
@@ -43,8 +43,10 @@ List<WordListNodeType> get wordListUserTypes => [
   WordListNodeType.wordList,
 ];
 
+
 enum WordListsDefaults{
   searchHistory,
+  JLPTN5, JLPTN4, JLPTN3, JLPTN2, JLPTN1,
 }
 
 /// The tree of word lists and folders that the user has created
@@ -55,26 +57,25 @@ enum WordListsDefaults{
 class WordLists {
 
   /// The root node of the word lists
-  late TreeNode<WordListsData> root;
-
-  WordLists(){
-    root = TreeNode<WordListsData>(
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  late TreeNode<WordListsData> root = TreeNode<WordListsData>(
       WordListsData("Word Lists", WordListNodeType.root, [], true),
     );
+
+  /// the node that contains the default word lists
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  TreeNode<WordListsData> defaults = TreeNode<WordListsData>(
+      WordListsData("Defaults", WordListNodeType.folderDefault, [], false),
+    );
+
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  List<TreeNode<WordListsData>> userCreatedLists = [];
+
+
+  WordLists(){
     
-    addDefaults();
-  }
-
-  /// Addes the default folder and lists to the word lists
-  void addDefaults(){
-    /// add the defaults folder
-    TreeNode<WordListsData> defaults =
-      TreeNode<WordListsData>(
-        WordListsData("Defaults", WordListNodeType.folderDefault, [], true),
-      );
+    /// add the defaults folder / lists
     root.addChild(defaults);
-
-    // add defaults lists
     for (var element in WordListsDefaults.values) {
       defaults.addChild(
         TreeNode<WordListsData>(
@@ -82,6 +83,11 @@ class WordLists {
         )
       );
     }
+
+    // always save when the lists tree changes
+    root.addListener(() async {
+      await save();
+    });
   }
 
   /// Saves the word lists to shared preferences
@@ -89,12 +95,18 @@ class WordLists {
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
 
+    // get the user created lists
+    userCreatedLists = root.children.where(
+      (element) => wordListUserTypes.contains(element.value.type)
+    ).toList();
+
     // set value in shared preferences
-    prefs.setString('wordLists', toJson().toString());
+    String encoded = jsonEncode(toJson());
+    await prefs.setString('wordLists', encoded);
   }
 
   /// Loads the word lists from shared preferences.
-  /// Returns true if the word lists were loaded successfully, false otherwise.
+  /// Returns `true` if loading was successful, `false` otherwise.
   Future<bool> load() async {
 
     bool loaded = false;
@@ -105,10 +117,19 @@ class WordLists {
     // load values from shared preferences
     String tmp = prefs.getString('wordLists') ?? "";
     if(tmp != ""){
-      root = TreeNode.fromJson(jsonDecode(tmp));
+      WordLists wL = WordLists.fromJson(jsonDecode(tmp));
+      root.addChildren(wL.userCreatedLists);
+
+      // add save listeners to all nodes
+      for (var node in root.BFS()) {
+        node.value.addListener(() {
+          save();
+        });
+      }
+
       loaded = true;
     }
-    
+
     return loaded;
   }
   
@@ -117,5 +138,10 @@ class WordLists {
     => _$WordListsFromJson(json);
 
   /// Create a JSON map from this object
-  Map<String, dynamic> toJson() => _$WordListsToJson(this);
+  Map<String, dynamic> toJson() {
+
+    Map<String, dynamic> jsonMap = _$WordListsToJson(this);
+
+    return jsonMap;
+  }
 }
