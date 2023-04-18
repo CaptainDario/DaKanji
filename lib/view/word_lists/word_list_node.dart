@@ -12,7 +12,10 @@ import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
 
 enum  PopupMenuButtonItems {
   Rename,
-  Delete
+  Delete,
+  SendToAnki,
+  ToPdfHorizontal,
+  ToPdfVertical,
 }
 
 class WordListNode extends StatefulWidget {
@@ -245,6 +248,13 @@ class _WordListNodeState extends State<WordListNode> {
                             case PopupMenuButtonItems.Delete:
                               deleteButtonPressed();
                               break;
+                            case PopupMenuButtonItems.SendToAnki:
+                              break;
+                            case PopupMenuButtonItems.ToPdfHorizontal:
+                              break;
+                            case PopupMenuButtonItems.ToPdfVertical:
+                              toPDFVertical();
+                              break;
                           }
                         },
                         itemBuilder: (context) => [
@@ -262,6 +272,25 @@ class _WordListNodeState extends State<WordListNode> {
                                 LocaleKeys.WordListsScreen_delete.tr(),
                               )
                             ),
+
+                          PopupMenuItem(
+                            value: PopupMenuButtonItems.SendToAnki,
+                            child: Text(
+                              "Send to anki"
+                            )
+                          ),
+                          PopupMenuItem(
+                            value: PopupMenuButtonItems.ToPdfHorizontal,
+                            child: Text(
+                              "To PDF (horizontal)"
+                            )
+                          ),
+                          PopupMenuItem(
+                            value: PopupMenuButtonItems.ToPdfVertical,
+                            child: Text(
+                              "To PDF (vertical)"
+                            )
+                          )
                         ],
                       ),
                   ],
@@ -306,4 +335,20 @@ class _WordListNodeState extends State<WordListNode> {
     
   }
 
+  ///
+  void toPDFVertical(){
+    final Uint8List fontData = File('open-sans.ttf').readAsBytesSync();
+    final ttf = pw.Font.ttf(fontData.buffer.asByteData());
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text('Hello World', style: pw.TextStyle(font: ttf, fontSize: 40)),
+          ); // Center
+        }
+      )
+    ); 
+  }
 }
