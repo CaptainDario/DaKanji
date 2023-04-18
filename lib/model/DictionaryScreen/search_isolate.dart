@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:async/async.dart';
-import 'package:get_it/get_it.dart';
 
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
 import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 
 
 
