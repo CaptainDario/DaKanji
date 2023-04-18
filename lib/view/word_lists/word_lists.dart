@@ -119,6 +119,7 @@ class _WordListsState extends State<WordLists> {
                             childrenDFS[i],
                             i,
                             onTap: (TreeNode<WordListsData> node) {
+                              // if the node is a word list, navigate to the word list screen
                               if(wordListListypes.contains(node.value.type)){
                                 Navigator.push(
                                   context, 
@@ -128,6 +129,12 @@ class _WordListsState extends State<WordLists> {
                                     )
                                   ),
                                 );
+                              }
+                              // if the node is a folder, toggle the expanded state
+                              else if(wordListFolderTypes.contains(node.value.type)) {
+                                setState(() {
+                                  node.value.isExpanded = !node.value.isExpanded;
+                                });
                               }
                             },
                             onDragAccept: (destinationNode, thisNode) {

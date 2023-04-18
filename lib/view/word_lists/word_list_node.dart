@@ -115,19 +115,19 @@ class _WordListNodeState extends State<WordListNode> {
               wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
               widget.node.getPath().contains(data)) // ... in a child
               return false;
-
+    
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
-
+    
             return true;
           },
           onLeave: (data) {
             setState(() {itemDraggingOverThis = false;});
           },
           onAccept: (TreeNode data) {
-
+    
             var d = data as TreeNode<WordListsData>;
-
+    
             setState(() {
               
               // list / folder draged on folder
@@ -149,17 +149,17 @@ class _WordListNodeState extends State<WordListNode> {
                   )
                 );
                 widget.node.parent!.addChild(newFolder);
-
+    
                 // add this and the drag target to the new folder and remove them from their old parents
                 d.parent!.removeChild(d);
                 widget.node.parent!.removeChild(widget.node);
                 newFolder.addChild(widget.node);
                 newFolder.addChild(d);
-
+    
                 _controller.text = widget.node.value.name;
                 itemDraggingOverThis = false;
               }
-
+    
               
             });
     
@@ -187,7 +187,7 @@ class _WordListNodeState extends State<WordListNode> {
                         ),
                         onPressed: () {
                           if(widget.node.level < 1) return;
-
+    
                           setState(() {
                             widget.node.value.isExpanded = !widget.node.value.isExpanded;
                           });
@@ -224,14 +224,14 @@ class _WordListNodeState extends State<WordListNode> {
                         value: widget.node.value.isChecked,
                         onChanged: (value) {
                           if(value == null) return;
-
+    
                           setState(() {
                             widget.node.value.isChecked = value;
                             widget.node.DFS().forEach((element) {
                               element.value.isChecked = value;
                             });
                           });
-
+    
                           widget.onSelectedToggled!.call(widget.node);
                         }
                       ),
