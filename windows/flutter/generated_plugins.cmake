@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   isar_flutter_libs
   mecab_dart
+  media_kit_libs_windows_video
   media_kit_video
   screen_retriever
   sentry_flutter
@@ -16,7 +17,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
-  media_kit_libs_windows_video
   media_kit_native_event_loop
 )
 
