@@ -164,57 +164,56 @@ class _WordListsState extends State<WordLists> {
                               )?.value.type
                             )
                           )
-                            // add a divider in which lists can be dragged (eaier reorder)
-                            DragTarget<TreeNode<WordListsData>>(
-                              onWillAccept: (TreeNode<WordListsData>? data) {
+                          // add a divider in which lists can be dragged (eaier reorder)
+                          DragTarget<TreeNode<WordListsData>>(
+                            onWillAccept: (TreeNode<WordListsData>? data) {
 
-                                // do no allow self drags
-                                if(data == null || i == childrenDFS.indexOf(data)-1)
-                                  return false;
+                              // do no allow self drags
+                              if(data == null || i == childrenDFS.indexOf(data)-1)
+                                return false;
 
-                                draggingOverDividerIndex = i; 
-                                return true;
-                              },
-                              onAccept: (data) {
+                              draggingOverDividerIndex = i; 
+                              return true;
+                            },
+                            onAccept: (data) {
 
-                                TreeNode<WordListsData> thisNode =
-                                  childrenDFS[i+1];
-                                if(thisNode.parent!.value.type == WordListNodeType.folderDefault) {
-                                  thisNode = childrenDFS.firstWhere((n) => 
-                                    wordListUserTypes.contains(n.value.type)
-                                  );
-                                }
-
-                                setState(() {
-                                  data.parent!.removeChild(data);
-                                  thisNode.parent!.insertChild(
-                                    data, 
-                                    thisNode.parent!.children.indexOf(thisNode)
-                                  );
-                                });
-                                draggingOverDividerIndex = null;
-                              },
-                              onLeave: (node) {
-                                setState(() {
-                                  draggingOverDividerIndex = null;
-                                });
-                              },
-                              builder: (context, candidateData, rejectedData) {
-                                return Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                    15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
-                                  ),
-                                  child: Container(
-                                    height: 8,
-                                    color: draggingOverDividerIndex == i
-                                      ? g_Dakanji_green.withOpacity(0.5)
-                                      : null, //Colors.pink.withOpacity(0.5),
-                                  ),
+                              TreeNode<WordListsData> thisNode =
+                                childrenDFS[i+1];
+                              if(thisNode.parent!.value.type == WordListNodeType.folderDefault) {
+                                thisNode = childrenDFS.firstWhere((n) => 
+                                  wordListUserTypes.contains(n.value.type)
                                 );
                               }
-                            )
+
+                              setState(() {
+                                data.parent!.removeChild(data);
+                                thisNode.parent!.insertChild(
+                                  data, 
+                                  thisNode.parent!.children.indexOf(thisNode)
+                                );
+                              });
+                              draggingOverDividerIndex = null;
+                            },
+                            onLeave: (node) {
+                              setState(() {
+                                draggingOverDividerIndex = null;
+                              });
+                            },
+                            builder: (context, candidateData, rejectedData) {
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
+                                ),
+                                child: Container(
+                                  height: 8,
+                                  color: draggingOverDividerIndex == i
+                                    ? g_Dakanji_green.withOpacity(0.5)
+                                    : null, //Colors.pink.withOpacity(0.5),
+                                ),
+                              );
+                            }
+                          )
                         ]
-                        
                   ],
                 ),
               ),
