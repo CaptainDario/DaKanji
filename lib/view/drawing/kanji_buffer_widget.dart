@@ -238,7 +238,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
-                          fontFamily: "NotoSans",
+                          fontFamily: "NotoSansJP",
                           color: Theme.of(context).textTheme.bodyLarge!.color,
                           fontSize: 100,
                         ),

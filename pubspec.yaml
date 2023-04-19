@@ -138,20 +138,26 @@ flutter_icons:
 flutter:
   
   fonts:
-    - family: NotoSans
+    - family: NotoSansJP
       fonts:
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Black.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Black.ttf
           weight: 900
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Bold.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Light.otf
-          weight: 300
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.otf
-          style: italic
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.ttf
+          weight: 100
     - family: Theater
       fonts:
         - asset: assets/fonts/theater/Theater_Bold.otf
