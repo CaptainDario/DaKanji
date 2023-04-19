@@ -60,12 +60,14 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     .findFirstSync()!.svg;
     kanaSvg = modifyKanjiVGSvg(kanaSvg);
 
-    if((hiragana + katakana).contains(widget.kana)){
+    if((kana).contains(widget.kana)){
       rootBundle.loadString(
         "assets/images/kana/individuals/${widget.kana}.svg"
       ).then((value) {
         setState(() {
-          mnemonicSvg = value;
+          mnemonicSvg = themeMnemonicSvg(
+            value, Theme.of(context).brightness == Brightness.dark
+          );
         });
       });
     }
@@ -109,7 +111,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                     Expanded(
                       child: Center(
                         child: SvgPicture.string(
-                          mnemonicSvg
+                          mnemonicSvg,
                         )
                       )
                     ),
