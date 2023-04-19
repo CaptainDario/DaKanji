@@ -256,7 +256,7 @@ class _WordListNodeState extends State<WordListNode> {
                             case PopupMenuButtonItems.ToPdfHorizontal:
                               break;
                             case PopupMenuButtonItems.ToPdfVertical:
-                              toPDFVertical();
+                              toPDFPortrait();
                               break;
                           }
                         },
@@ -275,7 +275,7 @@ class _WordListNodeState extends State<WordListNode> {
                                 LocaleKeys.WordListsScreen_delete.tr(),
                               )
                             ),
-
+                          /*
                           PopupMenuItem(
                             value: PopupMenuButtonItems.SendToAnki,
                             child: Text(
@@ -285,13 +285,13 @@ class _WordListNodeState extends State<WordListNode> {
                           PopupMenuItem(
                             value: PopupMenuButtonItems.ToPdfHorizontal,
                             child: Text(
-                              "To PDF (horizontal)"
+                              "To PDF (landscape)"
                             )
-                          ),
+                          ),*/
                           PopupMenuItem(
                             value: PopupMenuButtonItems.ToPdfVertical,
                             child: Text(
-                              "To PDF (vertical)"
+                              "To PDF (portrait)"
                             )
                           )
                         ],
@@ -339,23 +339,46 @@ class _WordListNodeState extends State<WordListNode> {
   }
 
   /// Export this word list as a PDF file
-  void toPDFVertical() async {
+  void toPDFPortrait() async {
     
     final pdf = pw.Document();
     final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
+    final notoStyle = pw.TextStyle(
+      font: ttf,
+      fontSize: 20
+    );
 
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
+        orientation: pw.PageOrientation.portrait,
         build: (pw.Context context) {
           return pw.Center(
-            child: pw.Text(
-              "Hello World",
-              style: pw.TextStyle(
-                font: ttf,
-                fontSize: 20
-              )
-            ),
+            child: pw.Table(
+              children: [
+                pw.TableRow(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        "Banana",
+                        style: notoStyle
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: pw.Text(
+                        "バナナ",
+                        style: notoStyle
+                      )
+                    )
+                  ]
+                ),
+                pw.TableRow(
+                  children: [
+                    
+                  ]
+                )
+              ]
+            )
           ); // Center
         }
       )
