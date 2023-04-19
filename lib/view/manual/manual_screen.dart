@@ -35,7 +35,7 @@ class _ManualScreenState extends State<ManualScreen>
     //Icons.brush,
     Icons.book,
     //Icons.text_snippet,
-    IconData(
+    const IconData(
       0xe803,
       fontFamily: "Anki",
     )

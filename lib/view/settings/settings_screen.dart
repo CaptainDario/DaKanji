@@ -391,7 +391,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - Anki header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
-                        IconData(
+                        const IconData(
                           0xe803,
                           fontFamily: 'Anki',
                         ),
