@@ -54,8 +54,8 @@ dependencies:
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  #media_kit: 0.0.4+1
   pdf: 3.8.4
+  printing: 5.9.3
   media_kit: 0.0.5+1
   media_kit_video: 0.0.6                        # For video rendering.
   

@@ -1,8 +1,11 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
@@ -335,20 +338,33 @@ class _WordListNodeState extends State<WordListNode> {
     
   }
 
-  ///
-  void toPDFVertical(){
-    final Uint8List fontData = File('open-sans.ttf').readAsBytesSync();
-    final ttf = pw.Font.ttf(fontData.buffer.asByteData());
+  /// Export this word list as a PDF file
+  void toPDFVertical() async {
+    
+    final pdf = pw.Document();
+    final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
 
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return pw.Center(
-            child: pw.Text('Hello World', style: pw.TextStyle(font: ttf, fontSize: 40)),
+            child: pw.Text(
+              "Hello World",
+              style: pw.TextStyle(
+                font: ttf,
+                fontSize: 20
+              )
+            ),
           ); // Center
         }
       )
-    ); 
+    );
+    
+    await Printing.layoutPdf(onLayout: 
+      (PdfPageFormat format) async => pdf.save()
+    );
+
   }
+
 }
