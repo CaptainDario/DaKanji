@@ -16,7 +16,7 @@ part 'settings_misc.g.dart';
 class SettingsMisc with ChangeNotifier {
 
   /// the available options of themes
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> themesLocaleKeys = [
     LocaleKeys.General_light,
     LocaleKeys.General_dark,
@@ -24,7 +24,7 @@ class SettingsMisc with ChangeNotifier {
   ];
   
   /// A Map from the string of a theme to the ThemeMode of the theme.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Map<String, ThemeMode> themesDict = {
     LocaleKeys.General_light : ThemeMode.light,
     LocaleKeys.General_dark : ThemeMode.dark,
@@ -32,20 +32,20 @@ class SettingsMisc with ChangeNotifier {
   };
 
   /// The startup screen options 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> startupScreensLocales = [
     LocaleKeys.DrawScreen_title,
     LocaleKeys.DictionaryScreen_title,
     LocaleKeys.TextScreen_title,
   ];
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<Screens> startupScreens = [
     Screens.drawing,
     Screens.dictionary,
     Screens.text,
   ];
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const int d_selectedStartupScreen = 2;
   /// string denoting the screen that should be loaded at app start
   @JsonKey(defaultValue: d_selectedStartupScreen)
@@ -60,7 +60,7 @@ class SettingsMisc with ChangeNotifier {
 
 
   /// The default value for `windowWidth`
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const int d_windowWidth = 480;
   /// width of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -68,7 +68,7 @@ class SettingsMisc with ChangeNotifier {
 
 
   /// The default value for `windowHeight`
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const int d_windowHeight = 720;
   /// height of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -76,7 +76,7 @@ class SettingsMisc with ChangeNotifier {
 
 
   /// The default value for `selectedTheme` 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const String d_selectedTheme = LocaleKeys.General_system;
   /// The theme which the application will use.
   /// System will match the settings of the system.

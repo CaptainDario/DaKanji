@@ -24,6 +24,8 @@ const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
+/// The key of the global navigator (material app)
+GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
 // INITIALIZE APP
 /// If the user pressed the ok-button in the download popup, this will be set to
 /// true.

@@ -29,7 +29,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> matchIndices = [[], [], []];
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
-  /// the query converted to Romaji (if settin is enabled)
+  /// the query converted to hiragana (if settin is enabled)
   String queryTextConverted = convertToHiragana
     ? KanaKit().toHiragana(queryText)
     : queryText;
@@ -37,7 +37,7 @@ List<List<JMdict>> sortJmdictList(
   // iterate over the entries and create a ranking for each 
   for (JMdict entry in entries) {
     // KANJI matched
-    Tuple3 ranked = rankMatches([entry.kanjis], queryText);
+    Tuple3 ranked = rankMatches([entry.kanjis], queryTextConverted);
     
     // READING matched
     if(ranked.item1 == -1)
@@ -51,7 +51,7 @@ List<List<JMdict>> sortJmdictList(
         ).map((LanguageMeanings e) => 
           e.meanings!
         ).toList();
-      ranked = rankMatches(k, queryText);
+      ranked = rankMatches(k, queryTextConverted);
     }
     // the query was found in this entry
     if(ranked.item1 != -1){
@@ -135,13 +135,13 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
       }
       else{
         // sort by difference in length
-        if(_a.item3 != _b.item3){
-          return _a.item3.compareTo(_b.item3);
-        }
+        //if(_a.item3 != _b.item3){
+        //  return _a.item3.compareTo(_b.item3);
+        //}
         // sort by frequency
-        else {
+        //else {
           return -_a.item1.frequency.compareTo(_b.item1.frequency);
-        }
+        //}
       }
     }
   );
@@ -180,6 +180,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
   // if a message hiragana is provided (the setting for converting is enabled),
   // search for it
   String convertedQuery = messageHiragana == '' ? message : messageHiragana;
+  print(convertedQuery);
 
   QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
 
@@ -198,11 +199,11 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
 
   // search over readings (kana or message directly)
   .or()
-    .optional(convertedQuery.length < 3, (t) => 
+    .optional(convertedQuery.length < 1, (t) => 
       t.hiraganasElementStartsWith(convertedQuery)
     ).or()
-    .optional(convertedQuery.length >= 3, (t) => 
-      t.hiraganasElementStartsWith(convertedQuery)
+    .optional(convertedQuery.length >= 2, (t) => 
+      t.hiraganasElementContains(convertedQuery)
     )
     
 

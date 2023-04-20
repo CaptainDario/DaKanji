@@ -22,12 +22,15 @@ class DictionaryScreen extends StatefulWidget {
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
+  /// The id of the entry that should be shown when the dict is opened
+  final int? initialEntryId;
 
   const DictionaryScreen(
     this.openedByDrawer,
     this.includeTutorial,
     this.initialSearch,
     {
+      this.initialEntryId,
       Key? key
     }
   ) : super(key: key);
@@ -84,6 +87,7 @@ class _DictionaryScreenState
         widget.includeTutorial,
         initialSearch: widget.initialSearch,
         isExpanded: widget.initialSearch != "",
+        initialEntryId: widget.initialEntryId,
         allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
       )
     );

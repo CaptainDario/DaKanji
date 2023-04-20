@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
+
 import 'package:get_it/get_it.dart';
 
-import 'package:isar/isar.dart';
-
-import 'package:da_kanji_mobile/provider/isars.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_list.dart';
+import 'package:da_kanji_mobile/model/tree/tree_node.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
+import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
+import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as wordLists;
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/model/search_history.dart';
 
 
 
-/// The screen for all kanji related functionalities
+/// The screen for all word lists related functionalities
 class WordListsScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
+  /// the parent of this word lists
+  final TreeNode<WordListsData>? parent;
+  /// Callback when that is triggered when the user presses the ok button
+  /// after selecting word lists
+  final void Function(List<TreeNode<WordListsData>>)? onSelectionConfirmed;
+
 
   const WordListsScreen(
     this.openedByDrawer,
     this.includeTutorial,
     {
+      this.onSelectionConfirmed,
+      this.parent,
       super.key
     }
   );
@@ -33,58 +41,30 @@ class WordListsScreen extends StatefulWidget {
 
 class _WordListsScreenState extends State<WordListsScreen> {
 
-  /// A list with all ids from the search history
-  late List<int> searchHistoryIds;
+  /// the root of this word lists
+  late TreeNode<WordListsData> parent;
+
 
   @override
   void initState() {
-    
-    searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearchedDesc()
-      .dictEntryIdProperty()
-      .findAllSync();
+  
+    parent = widget.parent ?? GetIt.I<WordLists>().root;
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return DaKanjiDrawer(
       currentScreen: Screens.word_lists,
       animationAtStart: !widget.openedByDrawer,
-      child: ListView(
-        children: [
-          Card(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => 
-                    WordList(
-                      entrySources: [],
-                      entryIds: searchHistoryIds,
-                      name: "Search History"
-                    )
-                  ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                      child: Text("Search history"),
-                    ),
-                    Text("Items: ${searchHistoryIds.length}")
-                  ],
-                ),
-              ),
-            )
-          )
-        ],
-      )
+      child: wordLists.WordLists(
+        widget.includeTutorial,
+        parent,
+        onSelectionConfirmed: widget.onSelectionConfirmed,
+      ),
     );
   }
+
 }

@@ -15,23 +15,23 @@ part 'settings_drawing.g.dart';
 class SettingsDrawing with ChangeNotifier  {
 
   /// The placeholder in the URL's which will be replaced by the predicted kanji
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const String kanjiPlaceholder = "%X%";
 
   /// The URL of the jisho website
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
 
   /// The URL of the weblio website
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
 
   /// The URL of the weblio website
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   late String weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
   
   /// A list with all web dictionaries
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> webDictionaries = [
     "jisho (web)",
     "wadoku (web)",
@@ -39,7 +39,7 @@ class SettingsDrawing with ChangeNotifier  {
     "url"
   ];
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> androidDictionaries = [
     "system (app)",
     "aedict (app)",
@@ -47,7 +47,7 @@ class SettingsDrawing with ChangeNotifier  {
     "takoboto (app)", 
   ];
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> iosDictionaries = [
     "shirabe jisho (app)",
     "imiwa? (app)",
@@ -56,15 +56,15 @@ class SettingsDrawing with ChangeNotifier  {
   ];
 
   /// A list with all available dictionary options.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   late List<String> dictionaries;
 
   /// Identifier for the inbuilt dictionary
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String inbuiltDictId = "DaKanji";
 
   /// The default value for `customURL`
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   static const d_customURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
   /// The custom URL a user can define on the settings page.
   @JsonKey(defaultValue: d_customURL)

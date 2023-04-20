@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 
@@ -12,6 +11,7 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
       required this.value,
       this.leadingIcon,
       this.infoText,
+      this.autoSizeGroup,
       this.onTileTapped,
       this.onLeadingIconPressed,
       Key? key
@@ -27,6 +27,8 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
   /// when set to a value shows a leading info icon and when the user presses
   /// this icon a info dialog will open
   final String? infoText;
+  /// The autoSizeGroup to use for the text
+  final AutoSizeGroup? autoSizeGroup;
   /// callback which will be executed by in every tap
   final Function (bool value)? onTileTapped;
   /// callback which will be execute when the icon button on the side is pressed
@@ -88,7 +90,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     maxLines: 2,
-                    group: g_SettingsAutoSizeGroup
+                    group: widget.autoSizeGroup
                   )
                 ),
               ),

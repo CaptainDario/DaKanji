@@ -11,7 +11,7 @@
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",
-    "kanji_alternatives": "Alternativas",
+    "kanji_alternatives": "",
     "kanji_frequency": "Frec.",
     "kanji_grade": "Grado",
     "kanji_groups": "Grupos de kanji",
@@ -71,8 +71,12 @@
     "word_conj_verb_volitional": "",
     "word_conj_verb_volitional_m": "",
     "word_conjugation": "Conjugaci\u00f3n",
-    "word_images": "Im\u00e1genes",
+    "word_dialect": "",
+    "word_field": "",
+    "word_images": "",
     "word_proverbs": "Proverbios",
+    "word_reading": "",
+    "word_see_also": "",
     "word_synonyms": "Sin\u00f3nimos",
     "word_tab": "Palabra"
   },
@@ -126,13 +130,24 @@
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
   },
+  "KanaChartScreen": {
+    "title": ""
+  },
   "KanjiScreen": {
-    "title": "Kanji"
+    "title": ""
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
+    "title": ""
   },
   "ManualScreen": {
+    "anki_test_connection": "",
+    "anki_test_connection_fail": "",
+    "anki_test_connection_success": "",
+    "anki_text": "",
+    "anki_title": "Anki",
+    "dict_text_examples_analyze": "",
+    "dict_text_kanji_elements": "",
+    "dict_title": "",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -145,7 +160,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
-    "advanced_settings_number_search_procs": "N\u00famero de procesos de b\u00fasqueda",
+    "advanced_settings_number_search_procs": "N\u00famero de procesos de b\u00fasqueda (requiere reinicio)",
     "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza m\u00faltiples procesos. Normalmente, 2 es un buen valor para la base de datos est\u00e1ndar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar m\u00e1s procesos.",
     "advanced_settings_optimize_cancel": "Cancelar",
     "advanced_settings_optimize_nn": "Optimizar las redes neuronales",
@@ -154,21 +169,25 @@
     "advanced_settings_optimze_warning": "Esto optimizar\u00e1 la ejecuci\u00f3n de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
+    "anki_default_deck": "",
+    "anki_default_no_langs": "",
+    "anki_default_no_translations": "",
+    "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma b\u00e1sica",
     "dict_deconjugate_body": "Esta opci\u00f3n activa la \"desconjugaci\u00f3n\" de verbos, adjetivos y c\u00f3pulas. Cuando est\u00e1 activada, DaKanji intenta convertir el t\u00e9rmino buscado en su forma base. Por ejemplo, \u98df\u3079\u307e\u3059\u3001\u98df\u3079\u3089\u308c\u308b\u3001\u98df\u3079\u306a\u3044 se convierte en \u98df\u3079\u308b.\nPara los alumnos de nivel intermedio, la recomendaci\u00f3n es desactivar este ajuste.",
     "dict_kanaize": "Convertir el t\u00e9rmino de b\u00fasqueda en kana",
     "dict_kanaize_body": "Al activar esta opci\u00f3n, DaKanji convierte cualquier t\u00e9rmino de b\u00fasqueda en una representaci\u00f3n kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrar\u00e1 \u98df\u3079\u308b, pero tambi\u00e9n puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la b\u00fasqueda de \"man\" se convertir\u00e1 en \u307e\u3093 y, por lo tanto, coincidir\u00e1 con \u4e07, mientras que la intenci\u00f3n era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la b\u00fasqueda \u308a\u3093\u3054 se convertir\u00e1 y, por tanto, coincidir\u00e1 con \u30ea\u30f3\u30b4. Pero cuando este ajuste est\u00e1 desactivado, \u308a\u3093\u3054 no coincidir\u00e1 con \u30ea\u30f3\u30b4.\nSi sabes perfectamente lo que buscas, desactiva esta opci\u00f3n.",
     "dict_languages": "Mostrar traducciones en (arrastre para reordenar)",
-    "dict_show_word_freq": "Mostrar frecuencia de palabras",
-    "dict_show_word_freq_body": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimaci\u00f3n del uso de una palabra. Esta estimaci\u00f3n se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclop\u00e9dico.\n* Subt\u00edtulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente m\u00e1s largos\nLa cifra mostrada es una variaci\u00f3n de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logar\u00edtmica de f\u00e1cil comprensi\u00f3n para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del n\u00famero de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada mill\u00f3n de palabras.\nLos valores Zipf razonables est\u00e1n entre 0 y 8, pero el valor Zipf m\u00ednimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque deber\u00eda significar una aparici\u00f3n por cada mil millones de palabras.",
+    "dict_show_word_freq": "",
+    "dict_show_word_freq_body": "",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",
     "draw_dictionary_system_translator": "Traductor integrado de tu SO",
     "draw_double_tap_empty_canvas": "Vaciar lienzo despu\u00e9s de una pulsaci\u00f3n doble",
     "draw_invert_short_long_press": "Invertir pulsaci\u00f3n larga/breve",
-    "draw_long_press_opens": "Selecci\u00f3n de diccionarios",
+    "draw_long_press_opens": "",
     "draw_title": "Dibujar",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicaci\u00f3n",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
@@ -216,6 +235,20 @@
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Listas de palabras"
+    "add": "",
+    "create_pdf": "",
+    "defaults": "",
+    "delete": "",
+    "new_folder": "",
+    "new_list": "",
+    "no_entries": "",
+    "node_hint_text": "",
+    "of": "",
+    "ok": "",
+    "page": "",
+    "rename": "",
+    "search_history": "",
+    "send_to_anki": "",
+    "title": ""
   }
 }

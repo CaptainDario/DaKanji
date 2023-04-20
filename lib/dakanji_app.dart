@@ -1,16 +1,16 @@
-import 'package:da_kanji_mobile/view/word_lists/word_lists_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/view/kana/KanaScreen.dart';
+import 'package:da_kanji_mobile/view/word_lists/word_lists_screen.dart';
 import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
 import 'package:da_kanji_mobile/model/navigation_arguments.dart';
-import 'package:da_kanji_mobile/helper/deep_links.dart';
 import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
@@ -41,12 +41,6 @@ class DaKanjiApp extends StatefulWidget {
 class _DaKanjiAppState extends State<DaKanjiApp> {
 
   @override
-  dispose() {
-    linkSub?.cancel();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
   }
@@ -59,6 +53,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      navigatorKey: g_NavigatorKey,
       
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
@@ -99,6 +94,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
 
         // check type and extract arguments
         NavigationArguments args;
+
         if((settings.arguments is NavigationArguments)){
           args = settings.arguments as NavigationArguments;
         }
@@ -116,11 +112,15 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, args.drawSearchPrefix, args.drawSearchPostfix, true, true
             ));
           case "/dictionary":
-            return switchScreen(DictionaryScreen(args.navigatedByDrawer, true, args.dictSearch));
+            return switchScreen(DictionaryScreen(
+              args.navigatedByDrawer, true, args.initialDictSearch, initialEntryId: args.initialEntryId,
+            ));
           case "/text":
-            return switchScreen(TextScreen(args.navigatedByDrawer, true));
+            return switchScreen(TextScreen(args.navigatedByDrawer, true, initialText: args.initialText,));
           case "/kanji":
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
+          case "/kana_chart":
+            return switchScreen(KanaScreen(args.navigatedByDrawer));
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/word_lists":

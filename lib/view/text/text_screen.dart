@@ -29,19 +29,20 @@ import 'package:da_kanji_mobile/model/user_data.dart';
 /// Those can than be copied / opened in dictionaries by buttons.
 class TextScreen extends StatefulWidget {
 
-  TextScreen(
-    this.openedByDrawer, 
-    this.includeTutorial, 
-    {
-      Key? key
-    }) : super(key: key);
-
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
-  
-  final TextEditingController inputController = TextEditingController();
+  /// The text that should be analyzed when the screen is opened
+  final String? initialText;
+
+  TextScreen(
+    this.openedByDrawer, 
+    this.includeTutorial, 
+    {
+      this.initialText,
+      Key? key
+    }) : super(key: key);
 
   @override
   _TextScreenState createState() => _TextScreenState();
@@ -80,7 +81,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// the animation for animating maximizing the processed text widget
   late Animation _animation;
 
-
+  /// the input field's controller
+  final TextEditingController inputController = TextEditingController();
   /// the currently selected text
   String selectedText = "";
   /// the text that is currently in the input field
@@ -113,8 +115,19 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       CurveTween(curve: Curves.easeInOut)
     );
 
-    // init tutorial
+    // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+
+      // if there is initial text, set it
+      if(widget.initialText != null){
+        setState(() {
+          inputController.text = widget.initialText!;
+          inputText = widget.initialText!;
+          processText(inputText);
+        }); 
+      }
+
+      // init tutorial
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showShowcaseText && widget.includeTutorial) {
@@ -196,7 +209,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   replacementString: "\n"
                                 ),
                               ],
-                              controller: widget.inputController,
+                              controller: inputController,
                               maxLines: null,
                               style: const TextStyle(
                                 fontSize: 20,

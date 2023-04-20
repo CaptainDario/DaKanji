@@ -2,19 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 
-import 'package:da_kanji_mobile/globals.dart';
-
 
 
 class ResponsiveIconButtonTile extends StatefulWidget {
-  const ResponsiveIconButtonTile(
-    {
-      required this.text,
-      required this.icon,
-      this.onButtonPressed,
-      Key? key
-    }
-  ) : super(key: key);
 
   /// the description of this settings
   final String text;
@@ -22,6 +12,19 @@ class ResponsiveIconButtonTile extends StatefulWidget {
   final IconData icon;
   /// callback which will be executed by every button press
   final Function? onButtonPressed;
+  /// The autoSizeGroup to use for the text
+  final AutoSizeGroup? autoSizeGroup;
+
+
+  const ResponsiveIconButtonTile(
+    {
+      required this.text,
+      required this.icon,
+      this.onButtonPressed,
+      this.autoSizeGroup,
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   State<ResponsiveIconButtonTile> createState() => _ResponsiveIconButtonTileState();
@@ -56,7 +59,7 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     maxLines: 2,
-                    group: g_SettingsAutoSizeGroup
+                    group: widget.autoSizeGroup
                   )
                 ),
               ),

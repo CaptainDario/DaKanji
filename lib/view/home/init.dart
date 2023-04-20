@@ -19,6 +19,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:path/path.dart' as p;
 import 'package:dio/dio.dart';
 
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/view/home/download_popup.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
@@ -54,10 +55,9 @@ Future<bool> init() async {
 
   await initServices();
 
-  if(Platform.isAndroid || Platform.isIOS){
-    await initDeepLinksStream();
-    await getInitialDeepLink();
-  }
+  // deep links
+  await initDeepLinksStream();
+  
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
   }
@@ -92,6 +92,11 @@ Future<void> initServices() async {
   UserData uD = await (UserData().load());
   GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
+
+  WordLists wL = WordLists();
+  wL.load();
+  GetIt.I.registerSingleton<WordLists>(wL);
+
 
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();

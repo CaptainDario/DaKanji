@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/view/word_lists/word_lists.dart' as WordListsUI;
+import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/view/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/view/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -56,7 +59,8 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo"
+    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo",
+    "Add to List"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -139,6 +143,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               children: List.generate( (widget.entry!.readings.length),
                                 // Characters of word reading with  pitch accent
                                 (index_1) => Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children:
                                   [
                                     ...List.generate(
@@ -181,20 +186,20 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           // field
                           if(widget.entry!.field.length > 0)
                             Text(
-                              "Field: ${widget.entry!.field.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.entry!.field.join(", ")}",
                               style: partOfSpeechStyle,
                             ),
                           // dialects
                           if(widget.entry!.dialect.length > 0)
                             Text(
-                              "Dialect: ${widget.entry!.dialect.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_dialect.tr()} ${widget.entry!.dialect.join(", ")}",
                               style: partOfSpeechStyle
                             ),
                           // xref
                           if(widget.entry!.xref.length > 0)
                             Text.rich(
                               TextSpan(
-                                text: "See also: ",
+                                text: "${LocaleKeys.DictionaryScreen_word_see_also.tr()} ",
                                 children: GetIt.I<Isars>().dictionary.jmdict
                                   .getAllSync(widget.entry!.xref)
                                 .map((e) => TextSpan(
@@ -207,7 +212,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                         (route) => true,
                                         arguments: NavigationArguments(
                                           false,
-                                          dictSearch: e.kanjis.length > 0
+                                          initialDictSearch: e.kanjis.length > 0
                                           ? e.kanjis.first
                                           : e.readings.first
                                         )
@@ -220,7 +225,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           // rinf
                           if(widget.entry!.re_inf.length > 0)
                             Text(
-                              "Reading: ${widget.entry!.re_inf.join(", ")}",
+                              "${LocaleKeys.DictionaryScreen_word_reading.tr()} ${widget.entry!.re_inf.join(", ")}",
                               style: partOfSpeechStyle,
                             ),
                           const SizedBox(
@@ -307,6 +312,37 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             }
                             else if(selection == menuItems[5]) {
                               launchUrlString(Uri.encodeFull("$g_forvo${readingOrKanji}"));
+                            }
+                            // add to word list
+                            else if(selection == menuItems[6]) {
+                              AwesomeDialog(
+                                context: context,
+                                headerAnimationLoop: false,
+                                useRootNavigator: false,
+                                dialogType: DialogType.noHeader,
+                                body: SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.8,
+                                  width: MediaQuery.of(context).size.width * 0.8,
+                                  child: WordListsUI.WordLists(
+                                    false,
+                                    GetIt.I<WordLists>().root,
+                                    showDefaults: false,
+                                    onSelectionConfirmed: (selection) {
+                                      
+                                      selection.where(
+                                        (sel) =>
+                                          // assure this node is a word list
+                                          wordListListypes.contains(sel.value.type) &&
+                                          // assure that the word is not already in the list
+                                          !sel.value.wordIds.contains(widget.entry!.id)
+                                      ).forEach(
+                                        (sel) => sel.value.wordIds.add(widget.entry!.id)
+                                      );
+                                      Navigator.of(context, rootNavigator: false).pop();
+                                    },
+                                  ),
+                                )
+                              )..show();
                             }
                           },
                           itemBuilder: (context) => List.generate(

@@ -97,7 +97,21 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     ));
 
     updateSearchHistoryIds();
+    init();
+    
+  }
 
+  @override
+  void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
+    
+    updateSearchHistoryIds();
+    init();
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  /// init this widget on init or rebuild
+  void init(){
     if(widget.isExpanded){
       expanded = true;
       searchBarAnimationController.value = 1.0;
@@ -116,12 +130,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(mounted)
         setState(() {});
     });
-  }
-
-  @override
-  void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
-    updateSearchHistoryIds();
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -263,7 +271,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   : SearchResultList(
                     searchResults: searchHistory,
                     onSearchResultPressed: onSearchResultPressed,
-                    //reversed: true,
                     showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                     onDismissed: (direction, entry, idx) async {
                       int id = searchHistoryIds.removeAt(

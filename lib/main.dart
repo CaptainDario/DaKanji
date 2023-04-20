@@ -6,7 +6,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
+import 'package:media_kit/media_kit.dart';
 
+import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:da_kanji_mobile/view/home/init.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -21,6 +23,7 @@ Future<void> main() async {
 
   // initialize the app
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
 
   // delete settings
   //await clearPreferences();
