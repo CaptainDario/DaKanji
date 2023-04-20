@@ -69,16 +69,15 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
       });
     });
     // if there is a mnemonic for this kana
-      rootBundle.loadString(
-        "assets/images/kana/individuals/${widget.kana}.svg"
-      ).then((value) {
-        setState(() {
-          mnemonicSvg = themeMnemonicSvg(
-            value, Theme.of(context).brightness == Brightness.dark
-          );
-        });
+    rootBundle.loadString(
+      "assets/images/kana/individuals/${widget.kana}.svg"
+    ).then((value) {
+      setState(() {
+        mnemonicSvg = themeMnemonicSvg(
+          value, Theme.of(context).brightness == Brightness.dark
+        );
       });
-    }
+    });
 
     // get the svg of the yoon kana if there is one
     if(widget.kana.length > 1){
