@@ -29,7 +29,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> matchIndices = [[], [], []];
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
-  /// the query converted to hiragana (if settin is enabled)
+  /// the query converted to hiragana (if setting is enabled)
   String queryTextConverted = convertToHiragana
     ? KanaKit().toHiragana(queryText)
     : queryText;
@@ -37,7 +37,7 @@ List<List<JMdict>> sortJmdictList(
   // iterate over the entries and create a ranking for each 
   for (JMdict entry in entries) {
     // KANJI matched
-    Tuple3 ranked = rankMatches([entry.kanjis], queryTextConverted);
+    Tuple3 ranked = rankMatches([entry.kanjis], queryText);
     
     // READING matched
     if(ranked.item1 == -1)
@@ -51,7 +51,7 @@ List<List<JMdict>> sortJmdictList(
         ).map((LanguageMeanings e) => 
           e.meanings!
         ).toList();
-      ranked = rankMatches(k, queryTextConverted);
+      ranked = rankMatches(k, queryText);
     }
     // the query was found in this entry
     if(ranked.item1 != -1){
@@ -180,7 +180,6 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
   // if a message hiragana is provided (the setting for converting is enabled),
   // search for it
   String convertedQuery = messageHiragana == '' ? message : messageHiragana;
-  print(convertedQuery);
 
   QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
 
