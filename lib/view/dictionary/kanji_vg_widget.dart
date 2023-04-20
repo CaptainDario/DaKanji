@@ -82,6 +82,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
     cnt = 0;
     for (var element in document.findAllElements("text")) {
       element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
+      element.setAttribute("fill", "hsl($cnt, 100%, 50%)");
       element.setAttribute("stroke-width", "0.5");
 
       cnt += cntInc;
