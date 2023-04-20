@@ -206,6 +206,8 @@ flutter:
     - assets/icons/kana/dakuten_off.svg
     - assets/icons/kana/romaji_on.svg
     - assets/icons/kana/romaji_off.svg
+    - assets/icons/kana/special_on.svg
+    - assets/icons/kana/special_off.svg
     # misc
     - CHANGELOG.md
     - pubspec.yaml

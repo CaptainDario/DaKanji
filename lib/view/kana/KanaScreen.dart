@@ -97,7 +97,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       showYoon        ? "yoon_on.svg"     : "yoon_off.svg",
       isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
       showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
-      showSpecial ? "yoon_on.svg"     : "yoon_off.svg", 
+      showSpecial     ? "special_on.svg"  : "special_off.svg", 
     ].map((e) => "assets/icons/kana/" + e).toList();
     
     
