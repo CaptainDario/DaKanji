@@ -101,6 +101,8 @@ class CodegenLoader extends AssetLoader{
     "rate_this_app": "速率",
     "whats_new": "最新信息"
   },
+  "KanaChartScreen": {
+  },
   "KanjiScreen": {
   },
   "KuzushijiScreen": {
@@ -193,7 +195,7 @@ static const Map<String,dynamic> localizations = {
       "en": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
       "de": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App oder Verbesserungsvorschläge hast , bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder nutze das Feedback widget um einen annotierten screenshot zu schicken.\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
       "ru": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
-      "ja": "「DaKanji」は、日本語学習者、日本語使用者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認できます。",
+      "ja": "「DaKanji」は、日本語学習者、日本語話者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) でご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認いただけます。",
       "zh": "\"DaKanji\"帮助日语学生和使用日语的人。\n\"DaKanji\"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
       "it": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
       "fr": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
@@ -1257,6 +1259,12 @@ static const Map<String,dynamic> localizations = {
       "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing."
     }
   },
+  "KanaChartScreen": {
+    "title": {
+      "en": "Kana chart",
+      "de": "Kana Tabelle"
+    }
+  },
   "TextScreen": {
     "title": {
       "en": "Text",
@@ -2066,12 +2074,28 @@ static const Map<String,dynamic> localizations = {
     "ok": {
       "en": "ok",
       "de": "ok"
+    },
+    "page": {
+      "en": "page",
+      "de": "Seite"
+    },
+    "of": {
+      "en": "of",
+      "de": "von"
+    },
+    "send_to_anki": {
+      "en": "Send to anki",
+      "de": "Zu Anki schicken"
+    },
+    "create_pdf": {
+      "en": "Create PDF",
+      "de": "Konvertiere zu PDF"
     }
   }
 };
 static const Map<String,dynamic> ja = {
   "AboutScreen": {
-    "about_text": "「DaKanji」は、日本語学習者、日本語使用者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認できます。",
+    "about_text": "「DaKanji」は、日本語学習者、日本語話者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) でご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認いただけます。",
     "credits": "クレジット",
     "show_changelog": "全ての更新履歴を表示",
     "software_informations_button": "ソフトウェア情報",
@@ -2180,6 +2204,8 @@ static const Map<String,dynamic> ja = {
     "download_popup_permission": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
     "rate_this_app": "評価",
     "whats_new": "最新情報"
+  },
+  "KanaChartScreen": {
   },
   "KanjiScreen": {
   },
@@ -2402,6 +2428,9 @@ static const Map<String,dynamic> de = {
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
+  "KanaChartScreen": {
+    "title": "Kana Tabelle"
+  },
   "KanjiScreen": {
     "title": "Kanji"
   },
@@ -2499,15 +2528,19 @@ static const Map<String,dynamic> de = {
   },
   "WordListsScreen": {
     "add": "Hinzufügen",
+    "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "Löschen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",
     "no_entries": "Keine Einträge in dieser Liste",
     "node_hint_text": "Name",
+    "of": "von",
     "ok": "ok",
+    "page": "Seite",
     "rename": "Umbennen",
     "search_history": "Suchverlauf",
+    "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
   }
 };
@@ -2597,6 +2630,8 @@ static const Map<String,dynamic> ru = {
     "download_popup_permission": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
+  },
+  "KanaChartScreen": {
   },
   "KanjiScreen": {
   },
@@ -2796,6 +2831,8 @@ static const Map<String,dynamic> pl = {
     "download_popup_permission": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
+  },
+  "KanaChartScreen": {
   },
   "KanjiScreen": {
   },
@@ -3019,6 +3056,9 @@ static const Map<String,dynamic> en = {
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
+  "KanaChartScreen": {
+    "title": "Kana chart"
+  },
   "KanjiScreen": {
     "title": "Kanji"
   },
@@ -3122,15 +3162,19 @@ static const Map<String,dynamic> en = {
   },
   "WordListsScreen": {
     "add": "add",
+    "create_pdf": "Create PDF",
     "defaults": "defaults",
     "delete": "Delete",
     "new_folder": "New folder",
     "new_list": "New list",
     "no_entries": "No entries in this word list",
     "node_hint_text": "Name",
+    "of": "of",
     "ok": "ok",
+    "page": "page",
     "rename": "Rename",
     "search_history": "Search history",
+    "send_to_anki": "Send to anki",
     "title": "Word lists"
   }
 };
@@ -3222,6 +3266,8 @@ static const Map<String,dynamic> it = {
     "download_popup_permission": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
+  },
+  "KanaChartScreen": {
   },
   "KanjiScreen": {
   },
@@ -3387,6 +3433,8 @@ static const Map<String,dynamic> fr = {
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
+  "KanaChartScreen": {
+  },
   "KanjiScreen": {
   },
   "KuzushijiScreen": {
@@ -3550,6 +3598,8 @@ static const Map<String,dynamic> es = {
     "download_popup_permission": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
+  },
+  "KanaChartScreen": {
   },
   "KanjiScreen": {
   },

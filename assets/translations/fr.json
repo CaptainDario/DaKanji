@@ -130,6 +130,9 @@
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
+  "KanaChartScreen": {
+    "title": ""
+  },
   "KanjiScreen": {
     "title": ""
   },
@@ -233,15 +236,19 @@
   },
   "WordListsScreen": {
     "add": "",
+    "create_pdf": "",
     "defaults": "",
     "delete": "",
     "new_folder": "",
     "new_list": "",
     "no_entries": "",
     "node_hint_text": "",
+    "of": "",
     "ok": "",
+    "page": "",
     "rename": "",
     "search_history": "",
+    "send_to_anki": "",
     "title": ""
   }
 }

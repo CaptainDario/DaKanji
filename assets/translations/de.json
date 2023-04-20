@@ -130,6 +130,9 @@
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
+  "KanaChartScreen": {
+    "title": "Kana Tabelle"
+  },
   "KanjiScreen": {
     "title": "Kanji"
   },
@@ -233,15 +236,19 @@
   },
   "WordListsScreen": {
     "add": "Hinzuf\u00fcgen",
+    "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "L\u00f6schen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",
     "no_entries": "Keine Eintr\u00e4ge in dieser Liste",
     "node_hint_text": "Name",
+    "of": "von",
     "ok": "ok",
+    "page": "Seite",
     "rename": "Umbennen",
     "search_history": "Suchverlauf",
+    "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
   }
 }

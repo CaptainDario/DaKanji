@@ -130,6 +130,9 @@
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
+  "KanaChartScreen": {
+    "title": "Kana chart"
+  },
   "KanjiScreen": {
     "title": "Kanji"
   },
@@ -233,15 +236,19 @@
   },
   "WordListsScreen": {
     "add": "add",
+    "create_pdf": "Create PDF",
     "defaults": "defaults",
     "delete": "Delete",
     "new_folder": "New folder",
     "new_list": "New list",
     "no_entries": "No entries in this word list",
     "node_hint_text": "Name",
+    "of": "of",
     "ok": "ok",
+    "page": "page",
     "rename": "Rename",
     "search_history": "Search history",
+    "send_to_anki": "Send to anki",
     "title": "Word lists"
   }
 }
