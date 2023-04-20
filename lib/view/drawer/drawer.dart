@@ -317,10 +317,9 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 ),
                                 leadingSize: 0.7,
                                 leadingAlignment: Alignment(-1000, 0),
-                                // TODO add to google localization
-                                title: "kana", //LocaleKeys.KuzushijiScreen_title.tr(),
-                                route: "/kana",
-                                selected: widget.currentScreen == Screens.kana,
+                                title: LocaleKeys.KanaChartScreen_title.tr(),
+                                route: "/kana_chart",
+                                selected: widget.currentScreen == Screens.kana_chart,
                                 drawerWidth: _drawerWidth,
                                 drawerController: _drawerController,
                               ),

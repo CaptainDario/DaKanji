@@ -5,7 +5,7 @@ enum Screens{
   dictionary,
   text,
   kanji,
-  kana,
+  kana_chart,
   kuzushiji,
   word_lists,
   home,
