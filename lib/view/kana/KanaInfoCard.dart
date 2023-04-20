@@ -52,15 +52,22 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     super.didUpdateWidget(oldWidget);
   }
 
-  /// initialize the kanaSvg and yoonSVG
+  /// initialize this widget
   void init() async {
     // get the svg of the kana
     kanaSvg = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
       .characterEqualTo(widget.kana[0])
     .findFirstSync()!.svg;
-    kanaSvg = modifyKanjiVGSvg(kanaSvg);
-
-    if((kana).contains(widget.kana)){
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        kanaSvg = modifyKanjiVGSvg(kanaSvg,
+          strokeColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white
+            : Colors.black
+        );
+      });
+    });
+    // if there is a mnemonic for this kana
       rootBundle.loadString(
         "assets/images/kana/individuals/${widget.kana}.svg"
       ).then((value) {
@@ -73,13 +80,18 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     }
 
     // get the svg of the yoon kana if there is one
-    // get the mnemonic of the kana if there is one
     if(widget.kana.length > 1){
       yoonSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
         .characterEqualTo(widget.kana[1])
       .findFirstSync()!.svg;
-      yoonSVG = modifyKanjiVGSvg(yoonSVG);
+      yoonSVG = modifyKanjiVGSvg(
+        yoonSVG,
+        strokeColor: SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+          ? Colors.white
+          : Colors.black
+      );
     }
+    // get the text of the mnemonic
     else {
       mnemonic = kanaMnemonics[widget.kana[0]];
     }
@@ -102,7 +114,6 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                     child: Center(
                       child: SvgPicture.string(
                         kanaSvg,
-                        cacheColorFilter: true,
                       ),
                     )
                   ),
