@@ -52,19 +52,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// The scroll controller for the list of settings
   late ScrollController scrollController;
-  /// All available anki decks
-  List<String> ankiDecks = ["DaKanji", "+"];
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
 
-    getDeckNames().then((value) {
-      setState(() {
-        ankiDecks = value;
-      });
-    });
   }
 
   @override
@@ -389,6 +382,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const Divider(),
 
                       // #region - Anki header
+                      /*
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
                         const IconData(
@@ -436,6 +430,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // include google image (disabled for now)
                       if(false)
+                        // ignore: dead_code
                         ResponsiveCheckBoxTile(
                           text: "Include google image",
                           value: settings.anki.includeGoogleImage,
@@ -449,6 +444,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       // include audio (disabled for now)
                       if(false)
+                        // ignore: dead_code
                         ResponsiveCheckBoxTile(
                           text: "Include audio",
                           value: settings.anki.includeAudio,
@@ -462,6 +458,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       // include screenshot (disabled for now)
                       if(false)
+                        // ignore: dead_code
                         ResponsiveCheckBoxTile(
                           text: "Include screenshot",
                           value: settings.anki.includeScreenshot,
@@ -473,7 +470,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
-
+                      */
                       // #endregion
 
                       const Divider(),
