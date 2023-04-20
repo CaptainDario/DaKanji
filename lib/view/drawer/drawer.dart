@@ -311,7 +311,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             if(kDebugMode)
                               DrawerElement(
                                 // TODO change to kana icon
-                                leading: IconData(
+                                leading: const IconData(
                                   0x304B,
                                   fontFamily: "kouzan"
                                 ),
