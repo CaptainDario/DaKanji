@@ -115,7 +115,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     
 
     return DaKanjiDrawer(
-      currentScreen: Screens.kana,
+      currentScreen: Screens.kana_chart,
+      animationAtStart: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           focusColor: g_Dakanji_green,
