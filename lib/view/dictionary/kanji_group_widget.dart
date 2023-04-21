@@ -87,43 +87,48 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
               ..strokeWidth = 2
               ..style = PaintingStyle.stroke,
             builder: (Node node) {
-              return GestureDetector(
-                onLongPress: (){
-                  if(kanjiVGChars[node.key!.value] != ""){
-                    Navigator.pushNamedAndRemoveUntil(
-                      context, 
-                      '/dictionary', 
-                      (route) => false,
-                      arguments: NavigationArguments(
-                        false, initialDictSearch: kanjiVGChars[node.key!.value]
-                      )
-                    );
-                  }
-                },
-                onTap: () {
-                  if(kanjiVGChars[node.key!.value] != ""){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("copied: ${kanjiVGChars[node.key!.value]}"),
-                        duration: Duration(seconds: 1),
-                      )
-                    );
-                  }
-                },
-                child: Container(
-                  width:  50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
-                        color: kanjiVGChars[node.key!.value] != ""
-                          ? g_Dakanji_green
-                          : Colors.black,
-                      )
-                  ),
-                  child: Center(
-                    child: SvgPicture.string(
-                      kanjiVGStringList[(node.key!.value as int)]
+              return MouseRegion(
+                cursor: kanjiVGChars[node.key!.value] != ""
+                  ? SystemMouseCursors.click
+                  : MouseCursor.defer,
+                child: GestureDetector(
+                  onLongPress: (){
+                    if(kanjiVGChars[node.key!.value] != ""){
+                      Navigator.pushNamedAndRemoveUntil(
+                        context, 
+                        '/dictionary', 
+                        (route) => false,
+                        arguments: NavigationArguments(
+                          false, initialDictSearch: kanjiVGChars[node.key!.value]
+                        )
+                      );
+                    }
+                  },
+                  onTap: () {
+                    if(kanjiVGChars[node.key!.value] != ""){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("copied: ${kanjiVGChars[node.key!.value]}"),
+                          duration: Duration(seconds: 1),
+                        )
+                      );
+                    }
+                  },
+                  child: Container(
+                    width:  50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: kanjiVGChars[node.key!.value] != ""
+                            ? g_Dakanji_green
+                            : Colors.black,
+                        )
+                    ),
+                    child: Center(
+                      child: SvgPicture.string(
+                        kanjiVGStringList[(node.key!.value as int)]
+                      ),
                     ),
                   ),
                 ),
