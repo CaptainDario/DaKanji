@@ -1929,6 +1929,10 @@ static const Map<String,dynamic> localizations = {
       "es": "Ejemplo",
       "pl": "Przykłady"
     },
+    "examples_more": {
+      "en": "Show more examples",
+      "de": "Zeige mehr Beispiele."
+    },
     "tutorial_begin_title": {
       "en": "Welcome to the dictionary!",
       "de": "Willkommen zum Wörterbuch!",
@@ -2309,6 +2313,7 @@ static const Map<String,dynamic> de = {
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
+    "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
@@ -2937,6 +2942,7 @@ static const Map<String,dynamic> en = {
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
+    "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",

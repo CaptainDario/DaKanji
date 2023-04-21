@@ -11,6 +11,7 @@
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
+    "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",

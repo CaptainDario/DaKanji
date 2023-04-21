@@ -1764,6 +1764,10 @@
       "es": "Ejemplo",
       "pl": "Przykłady"
     },
+    "examples_more": {
+      "en": "Show more examples",
+      "de": "Zeige mehr Beispiele."
+    },
     "tutorial_begin_title": {
       "en": "Welcome to the dictionary!",
       "de": "Willkommen zum Wörterbuch!",

@@ -10,6 +10,7 @@ abstract class  LocaleKeys {
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';
+  static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
   static const DictionaryScreen_kanji_alternatives = 'DictionaryScreen.kanji_alternatives';
   static const DictionaryScreen_kanji_frequency = 'DictionaryScreen.kanji_frequency';
   static const DictionaryScreen_kanji_grade = 'DictionaryScreen.kanji_grade';
