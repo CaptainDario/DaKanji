@@ -7,10 +7,6 @@ class NavigationArguments{
   // GENERAL
   /// was the route opened by the navigation drawer
   final bool navigatedByDrawer;
-  /// If set to true, the app will include a back-arrow instead of the hamburger
-  /// menu (useful if a sceen should just be shown shortly and the user likely
-  /// want to go back to the previous screen)
-  final bool useBackArrowAppBar;
 
   // DRAWING SCREEN
   /// prefix that should be prepended to every search query
@@ -32,8 +28,6 @@ class NavigationArguments{
   NavigationArguments(
     this.navigatedByDrawer,
     {
-      this.useBackArrowAppBar = false,
-
       this.drawSearchPrefix = "",
       this.drawSearchPostfix = "",
 

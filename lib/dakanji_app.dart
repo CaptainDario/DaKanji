@@ -120,7 +120,6 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/text":
             return switchScreen(TextScreen(
               args.navigatedByDrawer, true, 
-              useBackArrowAppBar: args.useBackArrowAppBar,
               initialText: args.initialText,
             ));
           case "/kanji":
