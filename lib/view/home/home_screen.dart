@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: g_initTextStream.stream,
         builder: (context, snapshot) {
           return DaKanjiSplash(
-            text: snapshot.data ,
+            text: snapshot.data,
           );
         }
       ),

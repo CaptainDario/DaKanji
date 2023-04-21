@@ -1,7 +1,8 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+
 import 'package:da_kanji_mobile/model/dark_theme.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/view/widgets/da_kanji_progress_indicator.dart';
 
 
 
@@ -54,12 +55,7 @@ class DaKanjiSplash extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20,),
-              const SpinKitSpinningLines(
-                color: g_Dakanji_green,
-                lineWidth: 3,
-                size: 30.0,
-                itemCount: 10,
-              ),
+              const DaKanjiProgressIndicator(),
               if(text != null)
                 Text(
                   text!,
