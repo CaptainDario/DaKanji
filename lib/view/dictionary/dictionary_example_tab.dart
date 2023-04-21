@@ -174,8 +174,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
           selectedLangs,
           (q, element) => q.languageEqualTo(isoToiso639_3[element]!.name))
       )
-    
-    
+    .optional(limit != -1, (q) => q.limit(limit))
     .findAllSync();
 
   if(examples.isEmpty){
