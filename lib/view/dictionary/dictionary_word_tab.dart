@@ -1,5 +1,6 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -202,21 +203,36 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 text: "${LocaleKeys.DictionaryScreen_word_see_also.tr()} ",
                                 children: GetIt.I<Isars>().dictionary.jmdict
                                   .getAllSync(widget.entry!.xref)
-                                .map((e) => TextSpan(
-                                    text: (e!.kanjis.length > 0 ? e.kanjis.first : e.readings.first) + "、",
-                                    mouseCursor: SystemMouseCursors.click,
-                                    recognizer: TapGestureRecognizer()..onTap = 
-                                      () => Navigator.pushNamedAndRemoveUntil(
-                                        context, 
-                                        "/dictionary",
-                                        (route) => true,
-                                        arguments: NavigationArguments(
-                                          false,
-                                          initialDictSearch: e.kanjis.length > 0
-                                          ? e.kanjis.first
-                                          : e.readings.first
-                                        )
+                                .mapIndexed((i, e) => TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: (e!.kanjis.length > 0 ? e.kanjis.first : e.readings.first),
+                                        mouseCursor: SystemMouseCursors.click,
+                                        style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Theme.of(context).brightness == Brightness.dark
+                                            ? Colors.white
+                                            : Colors.black,
+                                        ),
+                                        recognizer: TapGestureRecognizer()..onTap = 
+                                          () => Navigator.pushNamedAndRemoveUntil(
+                                            context, 
+                                            "/dictionary",
+                                            (route) => true,
+                                            arguments: NavigationArguments(
+                                              false,
+                                              initialDictSearch: e.kanjis.length > 0
+                                              ? e.kanjis.first
+                                              : e.readings.first
+                                            )
+                                          ),
                                       ),
+                                      if(i < widget.entry!.xref.length-1)
+                                        TextSpan(
+                                          text: "、",
+                                          style: partOfSpeechStyle,
+                                        )
+                                    ]
                                   )
                                 ).toList()
                               ),
