@@ -109,14 +109,20 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(const OnBoardingScreen());
           case "/drawing":
             return switchScreen(DrawScreen(
-              args.navigatedByDrawer, args.drawSearchPrefix, args.drawSearchPostfix, true, true
+              args.navigatedByDrawer, args.drawSearchPrefix,
+              args.drawSearchPostfix, true, true
             ));
           case "/dictionary":
             return switchScreen(DictionaryScreen(
-              args.navigatedByDrawer, true, args.initialDictSearch, initialEntryId: args.initialEntryId,
+              args.navigatedByDrawer, true, args.initialDictSearch,
+              initialEntryId: args.initialEntryId,
             ));
           case "/text":
-            return switchScreen(TextScreen(args.navigatedByDrawer, true, initialText: args.initialText,));
+            return switchScreen(TextScreen(
+              args.navigatedByDrawer, true, 
+              useBackArrowAppBar: args.useBackArrowAppBar,
+              initialText: args.initialText,
+            ));
           case "/kanji":
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/kana_chart":

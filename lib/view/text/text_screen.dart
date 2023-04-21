@@ -31,6 +31,10 @@ class TextScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
+  /// If set to true, the app will include a back-arrow instead of the hamburger
+  /// menu (useful if a sceen should just be shown shortly and the user likely
+  /// want to go back to the previous screen)
+  final bool useBackArrowAppBar;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   /// The text that should be analyzed when the screen is opened
@@ -40,6 +44,7 @@ class TextScreen extends StatefulWidget {
     this.openedByDrawer, 
     this.includeTutorial, 
     {
+      this.useBackArrowAppBar = false,
       this.initialText,
       Key? key
     }) : super(key: key);
@@ -128,14 +133,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       }
 
       // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseText && widget.includeTutorial) {
+      if(widget.includeTutorial){
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && 
+          GetIt.I<UserData>().showShowcaseText) {
 
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().textScreenTutorial.indexes!
-        );
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().textScreenTutorial.indexes!
+          );
+        }
       }
     });
   }
@@ -151,6 +158,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     return DaKanjiDrawer(
       currentScreen: Screens.text,
+      useBackArrowAppBar: widget.useBackArrowAppBar,
       animationAtStart: !widget.openedByDrawer,
       child: LayoutBuilder(
         builder: (context, constraints) {

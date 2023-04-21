@@ -28,7 +28,11 @@ class DaKanjiDrawer extends StatefulWidget{
 
   /// The actual page to show when the drawer is not visible.
   final Widget child;
-  /// The currently selected 
+  /// If set to true, the app will include a back-arrow instead of the hamburger
+  /// menu (useful if a sceen should just be shown shortly and the user likely
+  /// want to go back to the previous screen)
+  final bool useBackArrowAppBar;
+  /// The currently selected screen
   final Screens currentScreen;
   /// should the animation begin at the start or end
   final bool animationAtStart;
@@ -37,6 +41,7 @@ class DaKanjiDrawer extends StatefulWidget{
   const DaKanjiDrawer(
     {
       required this.child,
+      this.useBackArrowAppBar = false,
       required this.currentScreen,
       this.animationAtStart = true,
       Key? key, 
@@ -153,17 +158,19 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
                   // the top app bar
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    toolbarHeight: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
-                    leadingWidth: 0,
-                    titleSpacing: 0,
-                    title: DrawerAppBar(
-                      drawerController: _drawerController, 
-                      currentScreen: widget.currentScreen,
-                      height: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
+                  appBar: widget.useBackArrowAppBar
+                    ? AppBar()
+                    : AppBar(
+                      automaticallyImplyLeading: false,
+                      toolbarHeight: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
+                      leadingWidth: 0,
+                      titleSpacing: 0,
+                      title: DrawerAppBar(
+                        drawerController: _drawerController, 
+                        currentScreen: widget.currentScreen,
+                        height: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
+                      ),
                     ),
-                  ),
                   //the screen (child)
                   body: SafeArea(child: child!)
                 ),
