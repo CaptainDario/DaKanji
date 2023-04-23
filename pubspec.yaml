@@ -72,7 +72,10 @@ dependencies:
   #kana_kit: any # included in dakanji dictionary
 
   database_builder:
-    path: ../DaKanji-Dictionary/database_builder
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dictionary
+      path: database_builder
+    #path: ../DaKanji-Dictionary/database_builder
   flutter_appavailability:        # android, iOS
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
