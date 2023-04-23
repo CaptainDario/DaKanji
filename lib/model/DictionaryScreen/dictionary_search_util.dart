@@ -34,37 +34,42 @@ List<List<JMdict>> sortJmdictList(
     ? KanaKit().toHiragana(queryText)
     : queryText;
 
-  // iterate over the entries and create a ranking for each 
-  for (JMdict entry in entries) {
-    // KANJI matched
-    Tuple3 ranked = rankMatches([entry.kanjis], queryText);
-    
-    // READING matched
-    if(ranked.item1 == -1)
-      ranked = rankMatches([entry.hiraganas], queryTextConverted);
-    
-    // MEANING matched
-    if(ranked.item1 == -1){
-      // filter all langauges that are selected in the settings and join them to a list
-      List<List<String>> k = entry.meanings.where((LanguageMeanings e) =>
-          languages.contains(e.language)
-        ).map((LanguageMeanings e) => 
-          e.meanings!
-        ).toList();
-      ranked = rankMatches(k, queryText);
-    }
-    // the query was found in this entry
-    if(ranked.item1 != -1){
-      matches[ranked.item1].add(entry);
-      matchIndices[ranked.item1].add(ranked.item3);
-      lenDifferences[ranked.item1].add(ranked.item2);
-    }
-  }
+  // if no wildcard is used, iterate over the entries and create a ranking for each
+  if(!queryText.contains(RegExp(r"\?|\*")))
+    // iterate over the entries and create a ranking for each
+    for (JMdict entry in entries) {
+      // KANJI matched
+      Tuple3 ranked = rankMatches([entry.kanjis], queryText);
+      
+      // READING matched
+      if(ranked.item1 == -1)
+        ranked = rankMatches([entry.hiraganas], queryTextConverted);
+      
+      // MEANING matched
+      if(ranked.item1 == -1){
+        // filter all langauges that are selected in the settings and join them to a list
+        List<List<String>> k = entry.meanings.where((LanguageMeanings e) =>
+            languages.contains(e.language)
+          ).map((LanguageMeanings e) => 
+            e.meanings!
+          ).toList();
+        ranked = rankMatches(k, queryText);
+      }
+      // the query was found in this entry
+      if(ranked.item1 != -1){
+        matches[ranked.item1].add(entry);
+        matchIndices[ranked.item1].add(ranked.item3);
+        lenDifferences[ranked.item1].add(ranked.item2);
+      }
 
-  // sort the results
-  matches[0] = sortEntries(matches[0], matchIndices[0], lenDifferences[0]);
-  matches[1] = sortEntries(matches[1], matchIndices[1], lenDifferences[1]);
-  matches[2] = sortEntries(matches[2], matchIndices[2], lenDifferences[2]);
+    // sort the results
+    matches[0] = sortEntries(matches[0], matchIndices[0], lenDifferences[0]);
+    matches[1] = sortEntries(matches[1], matchIndices[1], lenDifferences[1]);
+    matches[2] = sortEntries(matches[2], matchIndices[2], lenDifferences[2]);
+  }
+  else {
+    matches[0] = entries..sort((a, b) => b.frequency.compareTo(a.frequency));
+  }
 
   return matches;
 }
@@ -178,8 +183,10 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
 )
 {
   // if a message hiragana is provided (the setting for converting is enabled),
-  // search for it
+  // search for the converted message
   String convertedQuery = messageHiragana == '' ? message : messageHiragana;
+  // check if the search contains a wildcard
+  bool containsWildcard = convertedQuery.contains(RegExp(r"\?|\*"));
 
   QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
 
@@ -189,35 +196,49 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
   .filter()
 
     // search over kanji
-    .optional(message.length == 1, (t) => 
-      t.kanjisElementStartsWith(message)
-    ).or()
-    .optional(message.length > 1, (t) => 
-      t.kanjisElementContains(message)
+    .optional(!containsWildcard, (q) => 
+      q.optional(message.length == 1, (t) => 
+        t.kanjisElementStartsWith(message, caseSensitive: false)
+      ).or()
+      .optional(message.length > 1, (t) => 
+        t.kanjisElementContains(message, caseSensitive: false)
+      )
+    )
+    .optional(containsWildcard, (q) => 
+      q.kanjisElementMatches(convertedQuery)
     )
 
   // search over readings (kana or message directly)
   .or()
-    .optional(convertedQuery.length < 1, (t) => 
-      t.hiraganasElementStartsWith(convertedQuery)
-    ).or()
-    .optional(convertedQuery.length >= 2, (t) => 
-      t.hiraganasElementContains(convertedQuery)
+    .optional(!containsWildcard, (q) => 
+      q.optional(convertedQuery.length < 2, (t) => 
+        t.hiraganasElementStartsWith(convertedQuery, caseSensitive: false)
+      ).or()
+      .optional(convertedQuery.length >= 2, (t) => 
+        t.hiraganasElementContains(convertedQuery, caseSensitive: false)
+      )
     )
-    
+    .optional(containsWildcard, (q) =>
+      q.hiraganasElementMatches(convertedQuery)
+    )
 
   // search over meanings
   .or()
     .meaningsElement((meaning) => 
-      meaning.anyOf(langs, (m, lang) => m
-        .languageEqualTo(lang)
-        .optional(message.length < 3, (m) => m
-          .meaningsElementStartsWith(message, caseSensitive: false)
+        meaning.anyOf(langs, (m, lang) => m
+          .languageEqualTo(lang, caseSensitive: false)
+          .optional(!containsWildcard, (q) =>
+            q.optional(message.length < 3, (m) => m
+              .meaningsElementStartsWith(message, caseSensitive: false)
+            )
+            .optional(message.length >= 3, (m) => m
+              .meaningsElementContains(message, caseSensitive: false)
+            )
+          )
+          .optional(containsWildcard, (m) => 
+            m.meaningsElementMatches(message)
+          )
         )
-        .optional(message.length >= 3, (m) => m
-          .meaningsElementContains(message, caseSensitive: false)
-        )
-      )
     );
 
   return q;

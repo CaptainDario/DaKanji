@@ -171,11 +171,15 @@ Future<void> _searchInIsar(SendPort p) async {
       if(kanaize)
         messageHiragana = kanaKit.toHiragana(message);
       
+      // check if the message contains wildcards and replace them appropriately
+      String _message = message.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
+      messageHiragana = messageHiragana.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
+
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd,
-          message, messageHiragana, langs)
+          _message, messageHiragana, langs)
         .limit(1000).findAllSync();
-      
+      print(searchResults);
       // Send the result to the main isolate.
       p.send(searchResults);
       print("len ${searchResults.length} time: ${s.elapsed}");
