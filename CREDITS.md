@@ -23,15 +23,15 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
 * Data, images and other resources:
   * [flag-icons](https://github.com/lipis/flag-icons)
   * Databases:
-    * [KanjiVG](https://kanjivg.tagaini.net/)
-    * [Kanjidic 2](http://www.edrdg.org/wiki/index.php/KANJIDIC_Project)
-    * [JMDict](https://www.edrdg.org/enamdict/enamdict_doc.html)
-    * [ENAMDICT](https://www.edrdg.org/enamdict/enamdict_doc.html)
-    * [UniDic](https://clrd.ninjal.ac.jp/unidic/)
-    * [Tatoeba](https://tatoeba.org/en/)
+    * [KanjiVG](https://kanjivg.tagaini.net/): for kanji svg images
+    * [Kanjidic 2](http://www.edrdg.org/wiki/index.php/KANJIDIC_Project): for kanji definitions
+    * [JMDict](https://www.edrdg.org/enamdict/enamdict_doc.html): for dictionary files
+    * [ENAMDICT](https://www.edrdg.org/enamdict/enamdict_doc.html): for Japanese names
+    * IPADIC: for PoS tagging
+    * [Tatoeba](https://tatoeba.org/en/): for example sentences
     * [Wordnet](https://bond-lab.github.io/wnja/eng/index.html)
-    * [Jconj](https://github.com/yamagoya/jconj)
-    * [ja_pitch_accent](https://github.com/kishimoto-tsuneyo/ja_pitch_accent)
+    * [Jconj](https://github.com/yamagoya/jconj): for conjugation data
+    * [Kanjijium](https://github.com/kishimoto-tsuneyo/ja_pitch_accent): for pitch accent data
   * Thanks Adrian Jordanov for the [font THEATER](https://www.1001fonts.com/theater-font.html)
   * Thanks 青柳衡山 (Aoyagi Kouzan) for the [font Kouzan Gyoushou](https://www.freejapanesefont.com/kouzan-semi-cursive-brush-font/).
   * Thank you so much ゆうか 田村村 for recording the kana sounds, and helping with the mnemonics
