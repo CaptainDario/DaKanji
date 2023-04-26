@@ -8,8 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-import 'package:da_kanji_mobile/provider/isars.dart';
-import 'package:da_kanji_mobile/model/kana/kana.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/application/kana/kana.dart';
 
 
 

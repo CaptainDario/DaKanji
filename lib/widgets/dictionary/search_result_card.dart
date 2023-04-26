@@ -1,10 +1,10 @@
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:flutter/material.dart';
 
-import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:database_builder/database_builder.dart';
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 
 
 /// A Card that is used to preview the content of a search result

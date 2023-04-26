@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
-import 'package:da_kanji_mobile/helper/conjugation/conj.dart';
-import 'package:da_kanji_mobile/helper/conjugation/conjugate.dart';
-import 'package:da_kanji_mobile/helper/conjugation/conjugation_descriptions.dart';
+import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+import 'package:da_kanji_mobile/application/conjugation/conjugate.dart';
+import 'package:da_kanji_mobile/data/conjugation/conjugation_descriptions.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 

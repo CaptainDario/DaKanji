@@ -4,11 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:provider/provider.dart';
 
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/provider/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 
 
 

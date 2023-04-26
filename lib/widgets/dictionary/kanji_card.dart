@@ -12,7 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 

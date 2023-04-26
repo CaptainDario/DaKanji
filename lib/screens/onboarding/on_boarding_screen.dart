@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
-import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

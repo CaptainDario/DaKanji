@@ -7,13 +7,13 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji/kanji_screen.dart';
-import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/model/light_theme.dart';
-import 'package:da_kanji_mobile/model/dark_theme.dart';
-import 'package:da_kanji_mobile/model/navigation_arguments.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
+import 'package:da_kanji_mobile/data/theme/light_theme.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/screens/home/home_screen.dart';
 import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
@@ -25,7 +25,7 @@ import 'package:da_kanji_mobile/screens/about/about_screen.dart';
 import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
-import 'package:da_kanji_mobile/dakanji_splash.dart';
+import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 
 

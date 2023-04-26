@@ -8,16 +8,16 @@ import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 import 'package:quiver/iterables.dart';
 
-import 'package:da_kanji_mobile/helper/dictionary_filters/filter_options.dart';
-import 'package:da_kanji_mobile/model/navigation_arguments.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/provider/isars.dart';
-import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/model/search_history.dart';
-import 'package:da_kanji_mobile/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/model/DictionaryScreen/dictionary_search.dart';
+import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
-import 'package:da_kanji_mobile/provider/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 
 
 

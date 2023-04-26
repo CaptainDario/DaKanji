@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/helper/handle_predictions.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
+import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 
 
 

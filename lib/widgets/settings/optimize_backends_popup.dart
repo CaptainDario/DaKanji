@@ -5,7 +5,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/home/init.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 

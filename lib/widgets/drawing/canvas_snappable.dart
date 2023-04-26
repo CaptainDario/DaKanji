@@ -2,7 +2,7 @@ library snappable;
 
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'package:da_kanji_mobile/model/bitmap.dart';
+import 'package:da_kanji_mobile/domain/bitmap.dart';
 
 import 'package:flutter/material.dart';
 

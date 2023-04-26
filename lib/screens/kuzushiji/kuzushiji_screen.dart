@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/model/screens.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 
 

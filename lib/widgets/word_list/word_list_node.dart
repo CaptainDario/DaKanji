@@ -1,10 +1,9 @@
-import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/services.dart';
 
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:pdf/pdf.dart';
@@ -14,10 +13,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/tree/tree_node.dart';
-import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
-import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';
+import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_progress_indicator.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
 

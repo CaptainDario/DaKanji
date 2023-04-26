@@ -1,12 +1,12 @@
-import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-import 'package:da_kanji_mobile/show_cases/multi_focus.dart';
-import 'package:da_kanji_mobile/provider/drawing/kanji_buffer.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
 
 

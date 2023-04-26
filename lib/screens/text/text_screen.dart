@@ -8,17 +8,17 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/text/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/show_cases/multi_focus.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/model/screens.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/helper/part_of_speech.dart';
+import 'package:da_kanji_mobile/application/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
-import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
 
 

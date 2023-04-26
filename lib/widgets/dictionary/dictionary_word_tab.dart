@@ -12,11 +12,11 @@ import 'package:database_builder/database_builder.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/helper/conjugation/conjos.dart';
+import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/helper/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
-import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

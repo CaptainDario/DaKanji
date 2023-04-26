@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:da_kanji_mobile/dakanji_splash.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -8,8 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:media_kit/media_kit.dart';
 
-import 'package:da_kanji_mobile/dakanji_splash.dart';
-import 'package:da_kanji_mobile/widgets/home/init.dart';
+import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';

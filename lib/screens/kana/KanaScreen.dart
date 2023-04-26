@@ -5,9 +5,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:media_kit/media_kit.dart';
 
-import 'package:da_kanji_mobile/model/kana/kana.dart';
+import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/model/screens.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kana/KanaInfoCard.dart';
 import 'package:da_kanji_mobile/widgets/kana/KanaGrid.dart';

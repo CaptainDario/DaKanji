@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/provider/drawing/strokes.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
 import 'package:da_kanji_mobile/widgets/drawing/drawing_painter.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 
 
 

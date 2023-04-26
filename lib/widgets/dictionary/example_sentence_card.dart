@@ -1,12 +1,12 @@
-import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import "package:database_builder/database_builder.dart";
 
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
+import 'package:da_kanji_mobile/screens/text/text_screen.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 
 
 

@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-import 'package:da_kanji_mobile/helper/wikipedia/wikipedia_api.dart';
-import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/application/wikipedia/wikipedia_api.dart';
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/meanings_grid.dart';
 
 

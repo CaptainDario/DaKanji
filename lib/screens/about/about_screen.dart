@@ -5,12 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/helper/reviews.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/application/helper/reviews.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 import 'package:da_kanji_mobile/screens/credits/credits_screen.dart';
-import 'package:da_kanji_mobile/model/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/domain/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
 

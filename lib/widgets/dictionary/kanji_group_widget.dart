@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/model/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,7 +6,7 @@ import 'package:graphview/GraphView.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/model/DictionaryScreen/kanjiVG_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
 
 
 

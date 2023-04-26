@@ -11,10 +11,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
-import 'package:da_kanji_mobile/model/screens.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
-import 'package:da_kanji_mobile/provider/drawer_listener.dart';
+import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
 

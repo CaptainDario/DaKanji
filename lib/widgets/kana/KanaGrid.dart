@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-import 'package:da_kanji_mobile/model/kana/kana.dart';
+import 'package:da_kanji_mobile/application/kana/kana.dart';
 
 
 

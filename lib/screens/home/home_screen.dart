@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-import 'package:da_kanji_mobile/widgets/home/init.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_popup.dart' as ratePopup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
-import 'package:da_kanji_mobile/dakanji_splash.dart';
+import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 
 

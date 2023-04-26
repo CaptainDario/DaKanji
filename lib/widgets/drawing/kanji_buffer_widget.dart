@@ -7,8 +7,8 @@ import 'package:flutter/physics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
-import 'package:da_kanji_mobile/helper/handle_predictions.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 
