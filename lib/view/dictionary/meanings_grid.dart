@@ -72,7 +72,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
             );
             ret.add(
               SelectableText(
-                widget.meanings[j],
+                widget.meanings[j].replaceAll("⬜", ", "),
                 style: widget.style
               )
             );

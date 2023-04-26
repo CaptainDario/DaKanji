@@ -119,14 +119,15 @@ class _SearchResultCardState extends State<SearchResultCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      textAlign: TextAlign.end,
-                      widget.dictEntry.partOfSpeech.first.split(" ").join(" \u200B").toString(),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        letterSpacing: 0
+                    if(widget.dictEntry.partOfSpeech != null)
+                      Text(
+                        widget.dictEntry.partOfSpeech!.toSet().join(" \u200B").toString(),
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          letterSpacing: 0
+                        ),
                       ),
-                    ),
                     if(widget.showWordFrequency)
                       SizedBox(height: 5,),
                     if(widget.showWordFrequency)

@@ -175,11 +175,17 @@ Future<void> _searchInIsar(SendPort p) async {
       String _message = message.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
       messageHiragana = messageHiragana.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
 
+      // extract filters from query
+      List<String> filters = _message.split(" ").where((e) => e.startsWith("#")).toList();
+      _message = _message.split(" ").where((e) => !e.startsWith("#")).join(" ");
+
+      print("${filters} ${filters.length} $_message");
+
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd,
           _message, messageHiragana, langs)
         .limit(1000).findAllSync();
-      print(searchResults);
+
       // Send the result to the main isolate.
       p.send(searchResults);
       print("len ${searchResults.length} time: ${s.elapsed}");

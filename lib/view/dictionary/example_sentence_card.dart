@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/text/text_screen.dart';
+import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';

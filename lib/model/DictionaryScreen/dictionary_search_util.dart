@@ -194,37 +194,46 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
     .idBetween(idRangeStart, idRangeEnd)
 
   .filter()
-
-    // search over kanji
-    .optional(!containsWildcard, (q) => 
-      q.optional(message.length == 1, (t) => 
-        t.kanjisElementStartsWith(message, caseSensitive: false)
-      ).or()
-      .optional(message.length > 1, (t) => 
-        t.kanjisElementContains(message, caseSensitive: false)
+    // apply filters
+    /*.group((qu) => 
+      qu.anyOf(["verb", "noun", "biology"], (q, element) => 
+        q.partOfSpeechElementContains(element)
+          .or()
+        .fieldElementContains(element)
+      ) 
+    )
+  .and()*/
+    .group((qu) => 
+      // search over kanji
+      qu.optional(!containsWildcard, (q) => 
+        q.optional(message.length == 1, (t) => 
+          t.kanjisElementStartsWith(message, caseSensitive: false)
+        ).or()
+        .optional(message.length > 1, (t) => 
+          t.kanjisElementContains(message, caseSensitive: false)
+        )
       )
-    )
-    .optional(containsWildcard, (q) => 
-      q.kanjisElementMatches(convertedQuery)
-    )
-
-  // search over readings (kana or message directly)
-  .or()
-    .optional(!containsWildcard, (q) => 
-      q.optional(convertedQuery.length < 2, (t) => 
-        t.hiraganasElementStartsWith(convertedQuery, caseSensitive: false)
-      ).or()
-      .optional(convertedQuery.length >= 2, (t) => 
-        t.hiraganasElementContains(convertedQuery, caseSensitive: false)
+      .optional(containsWildcard, (q) => 
+        q.kanjisElementMatches(convertedQuery)
       )
-    )
-    .optional(containsWildcard, (q) =>
-      q.hiraganasElementMatches(convertedQuery)
-    )
 
-  // search over meanings
-  .or()
-    .meaningsElement((meaning) => 
+    // search over readings (kana or message directly)
+    .or()
+      .optional(!containsWildcard, (q) => 
+        q.optional(convertedQuery.length < 2, (t) => 
+          t.hiraganasElementStartsWith(convertedQuery, caseSensitive: false)
+        ).or()
+        .optional(convertedQuery.length >= 2, (t) => 
+          t.hiraganasElementContains(convertedQuery, caseSensitive: false)
+        )
+      )
+      .optional(containsWildcard, (q) =>
+        q.hiraganasElementMatches(convertedQuery)
+      )
+
+    // search over meanings
+    .or()
+      .meaningsElement((meaning) => 
         meaning.anyOf(langs, (m, lang) => m
           .languageEqualTo(lang, caseSensitive: false)
           .optional(!containsWildcard, (q) =>
@@ -238,8 +247,10 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
           .optional(containsWildcard, (m) => 
             m.meaningsElementMatches(message)
           )
-        )
-    );
+        )  
+    )
+  );
+
 
   return q;
 }

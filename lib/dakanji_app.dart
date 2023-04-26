@@ -4,27 +4,27 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/view/kana/KanaScreen.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/view/kanji/kanji_screen.dart';
+import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
+import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji/kanji_screen.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/light_theme.dart';
 import 'package:da_kanji_mobile/model/dark_theme.dart';
 import 'package:da_kanji_mobile/model/navigation_arguments.dart';
-import 'package:da_kanji_mobile/view/manual/manual_screen.dart';
+import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/view/home/home_screen.dart';
-import 'package:da_kanji_mobile/view/settings/settings_screen.dart';
+import 'package:da_kanji_mobile/screens/home/home_screen.dart';
+import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
 import 'package:da_kanji_mobile/view/changelog_screen.dart';
 import 'package:da_kanji_mobile/view/test_screen.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen.dart';
-import 'package:da_kanji_mobile/view/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/view/text/text_screen.dart';
+import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/view/about_screen.dart';
-import 'package:da_kanji_mobile/view/onboarding/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/view/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/dakanji_splash.dart';
 
 

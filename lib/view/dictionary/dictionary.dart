@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/provider/isars.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
