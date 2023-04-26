@@ -40,7 +40,12 @@ class SettingsScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
 
-  const SettingsScreen(this.openedByDrawer, {super.key});
+  const SettingsScreen(
+    this.openedByDrawer,
+    {
+      super.key
+    }
+  );
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -341,6 +346,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
+                      // Show wikipedia definition in the entry
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_show_wikipedia_definitions.tr(),
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                        value: settings.dictionary.includeWikipediaDefinition,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.includeWikipediaDefinition = value;
+                            settings.save();
+                          });
+                        },
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -381,7 +398,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const Divider(),
 
                       // #region - Anki header
-                      /*
+                      /* TODO - add anki settings
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
                         const IconData(
@@ -469,10 +486,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
-                      */
+                      
                       // #endregion
 
                       const Divider(),
+                      */
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(

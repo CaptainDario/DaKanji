@@ -89,6 +89,7 @@ class _DictionaryScreenState
         isExpanded: widget.initialSearch != "",
         initialEntryId: widget.initialEntryId,
         allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
+        includeWikipediaDefinition: GetIt.I<Settings>().dictionary.includeWikipediaDefinition,
       )
     );
   }

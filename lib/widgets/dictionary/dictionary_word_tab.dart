@@ -25,13 +25,19 @@ import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab_kanji.dar
 
 
 class DictionaryWordTab extends StatefulWidget {
-  const DictionaryWordTab(
-    this.entry,
-    {Key? key}
-  ) : super(key: key);
 
   /// the dict entry that should be shown 
   final JMdict? entry;
+  /// Whether to include the wikipedia definition
+  final bool includeWikipediaDefinition;
+
+  const DictionaryWordTab(
+    this.entry,
+    {
+      this.includeWikipediaDefinition = false,
+      Key? key
+    }
+  ) : super(key: key);
 
 
   @override
@@ -125,14 +131,13 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         const SizedBox(
                           height: 30,
                         ),
+
                         // meanings
                         WordMeanings(
                           entry: widget.entry!, 
                           meaningsStyle: meaningsStyle,
-                          
+                          includeWikipediaDefinition: widget.includeWikipediaDefinition,
                         ),
-
-                        
 
                         if(g_webViewSupported)
                           ExpansionTile(

@@ -79,6 +79,7 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_see_also = 'DictionaryScreen.word_see_also';
   static const DictionaryScreen_word_synonyms = 'DictionaryScreen.word_synonyms';
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
+  static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
   static const DrawScreen_not_installed = 'DrawScreen.not_installed';
   static const DrawScreen_title = 'DrawScreen.title';
@@ -169,6 +170,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_dict_kanaize = 'SettingsScreen.dict_kanaize';
   static const SettingsScreen_dict_kanaize_body = 'SettingsScreen.dict_kanaize_body';
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
+  static const SettingsScreen_dict_show_wikipedia_definitions = 'SettingsScreen.dict_show_wikipedia_definitions';
   static const SettingsScreen_dict_show_word_freq = 'SettingsScreen.dict_show_word_freq';
   static const SettingsScreen_dict_show_word_freq_body = 'SettingsScreen.dict_show_word_freq_body';
   static const SettingsScreen_draw_browser_for_online_dict = 'SettingsScreen.draw_browser_for_online_dict';

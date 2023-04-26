@@ -79,7 +79,8 @@
     "word_reading": "Reading:",
     "word_see_also": "See also:",
     "word_synonyms": "Synonyms",
-    "word_tab": "Word"
+    "word_tab": "Word",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -146,7 +147,7 @@
     "anki_test_connection_success": "You are connected to Anki! \ud83c\udf89",
     "anki_text": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below.",
     "anki_title": "Anki",
-    "dict_text_examples_analyze": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing.",
+    "dict_text_examples_analyze": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_kanji_elements": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
     "dict_title": "Dictionary",
     "title": "Manual"
@@ -180,6 +181,7 @@
     "dict_kanaize": "Convert search term to kana",
     "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find \u98df\u3079\u308b, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to \u307e\u3093 and therfore, matches \u4e07, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching \u308a\u3093\u3054 will be converted when this settings is enabled, and therefore match \u30ea\u30f3\u30b4. But when this setting is disabled, \u308a\u3093\u3054 will not match \u30ea\u30f3\u30b4.\nIf you know what you are searching, you can disable this setting.",
     "dict_languages": "Show translations in (drag to reorder)",
+    "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
     "dict_show_word_freq": "Show word frequency",
     "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",

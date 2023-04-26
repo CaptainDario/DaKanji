@@ -741,6 +741,10 @@
       "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
       "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
     },
+    "dict_show_wikipedia_definitions": {
+      "en": "Show definitions from wikipedia",
+      "de": "Zeige Definitionen from Wikipedia"
+    },
     "anki_title": {
       "en": "Anki",
       "de": "Anki",
@@ -1064,10 +1068,12 @@
       "de": "Überprüfe Verbindung zu Anki"
     },
     "anki_test_connection_success": {
-      "en": "You are connected to Anki! 🎉"
+      "en": "You are connected to Anki! 🎉",
+      "de": "Du bist mit Anki verbunden! 🎉"
     },
     "anki_test_connection_fail": {
-      "en": "You are not connected to Anki! 😢"
+      "en": "You are not connected to Anki! 😢",
+      "de": "Du bist nicht mit Anki verbunde! 😢"
     },
     "dict_title": {
       "en": "Dictionary"
@@ -1076,7 +1082,7 @@
       "en": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary."
     },
     "dict_text_examples_analyze": {
-      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing."
+      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by double tapping on them."
     }
   },
   "KanaChartScreen": {
@@ -1630,6 +1636,10 @@
       "de": "Jmd. [nicht] machen",
       "ja": null,
       "pl": "Zrób kogoś [nie]"
+    },
+    "word_wikipedia": {
+      "en": "Wikipedia",
+      "de": "Wikipedia"
     },
     "kanji_tab": {
       "en": "Kanji",

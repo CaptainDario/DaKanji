@@ -79,7 +79,8 @@
     "word_reading": "",
     "word_see_also": "",
     "word_synonyms": "Synonymes",
-    "word_tab": "Word"
+    "word_tab": "Word",
+    "word_wikipedia": ""
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non install\u00e9",
@@ -180,6 +181,7 @@
     "dict_kanaize": "Convertir les termes de recherche en kana",
     "dict_kanaize_body": "Lorsque ce param\u00e8tre est activ\u00e9, DaKanji convertit tout terme de recherche en une repr\u00e9sentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera \u98df\u3079\u308b, mais cela peut \u00e9galement conduire \u00e0 des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en \u307e\u3093 et correspondra donc \u00e0 \u4e07, alors que le mot anglais \"man\" \u00e9tait l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de \u308a\u3093\u3054 sera convertie et correspondra donc \u00e0 \u30ea\u30f3\u30b4. Mais lorsque ce param\u00e8tre est d\u00e9sactiv\u00e9, \u308a\u3093\u3054 ne correspondra pas \u00e0 \u30ea\u30f3\u30b4.\nSi vous savez absolument ce que vous recherchez, d\u00e9sactivez ce param\u00e8tre.",
     "dict_languages": "Afficher les traductions dans (glisser pour r\u00e9organiser)",
+    "dict_show_wikipedia_definitions": "",
     "dict_show_word_freq": "",
     "dict_show_word_freq_body": "",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",

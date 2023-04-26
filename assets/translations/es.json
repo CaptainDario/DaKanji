@@ -79,7 +79,8 @@
     "word_reading": "",
     "word_see_also": "",
     "word_synonyms": "Sin\u00f3nimos",
-    "word_tab": "Palabra"
+    "word_tab": "Palabra",
+    "word_wikipedia": ""
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",
@@ -180,6 +181,7 @@
     "dict_kanaize": "Convertir el t\u00e9rmino de b\u00fasqueda en kana",
     "dict_kanaize_body": "Al activar esta opci\u00f3n, DaKanji convierte cualquier t\u00e9rmino de b\u00fasqueda en una representaci\u00f3n kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrar\u00e1 \u98df\u3079\u308b, pero tambi\u00e9n puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la b\u00fasqueda de \"man\" se convertir\u00e1 en \u307e\u3093 y, por lo tanto, coincidir\u00e1 con \u4e07, mientras que la intenci\u00f3n era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la b\u00fasqueda \u308a\u3093\u3054 se convertir\u00e1 y, por tanto, coincidir\u00e1 con \u30ea\u30f3\u30b4. Pero cuando este ajuste est\u00e1 desactivado, \u308a\u3093\u3054 no coincidir\u00e1 con \u30ea\u30f3\u30b4.\nSi sabes perfectamente lo que buscas, desactiva esta opci\u00f3n.",
     "dict_languages": "Mostrar traducciones en (arrastre para reordenar)",
+    "dict_show_wikipedia_definitions": "",
     "dict_show_word_freq": "",
     "dict_show_word_freq_body": "",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",

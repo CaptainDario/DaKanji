@@ -65,6 +65,12 @@ class SettingsDictionary with ChangeNotifier {
   /// before searching
   bool convertToHiragana = d_convertToHiragana;
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  static const bool d_IncludeWikipediaDefinition = true;
+  @JsonKey(defaultValue: d_IncludeWikipediaDefinition)
+  /// Should wikipedia be included in the searchresults
+  bool includeWikipediaDefinition = d_IncludeWikipediaDefinition;
+
 
   SettingsDictionary();
 

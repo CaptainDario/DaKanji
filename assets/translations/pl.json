@@ -79,7 +79,8 @@
     "word_reading": "",
     "word_see_also": "",
     "word_synonyms": "Synonimy",
-    "word_tab": "S\u0142owo"
+    "word_tab": "S\u0142owo",
+    "word_wikipedia": ""
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -180,6 +181,7 @@
     "dict_kanaize": "Konwertuj wyszukiwane has\u0142a do kany",
     "dict_kanaize_body": "Kiedy w\u0142\u0105czone jest to ustawienie, DaKanji konwertuje ka\u017cdy wyszukiwany termin na jednolit\u0105 reprezentacj\u0119 kana przed wyszukaniem go. Oznacza to, \u017ce wyszukiwanie 'taberu' znajdzie \u98df\u3079\u308b, ale mo\u017ce r\u00f3wnie\u017c prowadzi\u0107 do niezamierzonych dopasowa\u0144.\nNa przyk\u0142ad wyszukiwanie 'man' zostanie przekonwertowane na \u307e\u3093 i dlatego pasuje do \u4e07, podczas gdy angielskie s\u0142owo 'man' by\u0142o zamierzone.\nInnym przypadkiem s\u0105 s\u0142owa, kt\u00f3re u\u017cywaj\u0105 hiragana i katakana. Na przyk\u0142ad, wyszukiwanie \u308a\u3093\u3054 zostanie przekonwertowane, a zatem b\u0119dzie pasowa\u0107 do \u30ea\u30f3\u30b4. Ale gdy to ustawienie jest wy\u0142\u0105czone, \u308a\u3093\u3054 nie b\u0119dzie pasowa\u0107 do \u30ea\u30f3\u30b4.\nJe\u015bli absolutnie wiesz, czego szukasz, wy\u0142\u0105cz to ustawienie.",
     "dict_languages": "Poka\u017c t\u0142umaczenia w (przeci\u0105gnij, aby zmieni\u0107 kolejno\u015b\u0107)",
+    "dict_show_wikipedia_definitions": "",
     "dict_show_word_freq": "Poka\u017c cz\u0119sto\u015b\u0107 wyst\u0119powania s\u0142\u00f3w",
     "dict_show_word_freq_body": "",
     "draw_browser_for_online_dict": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych",

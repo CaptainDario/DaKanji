@@ -49,7 +49,7 @@ class CodegenLoader extends AssetLoader{
     "word_conjugation": "共轭法",
     "word_proverbs": "谚语",
     "word_synonyms": "同义词",
-    "word_tab": "词语"
+    "word_tab": "词语",
   },
   "DrawScreen": {
     "not_installed": "未安装{DICTIONARY}。",
@@ -921,6 +921,10 @@ static const Map<String,dynamic> localizations = {
       "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
       "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
     },
+    "dict_show_wikipedia_definitions": {
+      "en": "Show definitions from wikipedia",
+      "de": "Zeige Definitionen from Wikipedia"
+    },
     "anki_title": {
       "en": "Anki",
       "de": "Anki",
@@ -1244,10 +1248,12 @@ static const Map<String,dynamic> localizations = {
       "de": "Überprüfe Verbindung zu Anki"
     },
     "anki_test_connection_success": {
-      "en": "You are connected to Anki! 🎉"
+      "en": "You are connected to Anki! 🎉",
+      "de": "Du bist mit Anki verbunden! 🎉"
     },
     "anki_test_connection_fail": {
-      "en": "You are not connected to Anki! 😢"
+      "en": "You are not connected to Anki! 😢",
+      "de": "Du bist nicht mit Anki verbunde! 😢"
     },
     "dict_title": {
       "en": "Dictionary"
@@ -1256,7 +1262,7 @@ static const Map<String,dynamic> localizations = {
       "en": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary."
     },
     "dict_text_examples_analyze": {
-      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing."
+      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by double tapping on them."
     }
   },
   "KanaChartScreen": {
@@ -1796,6 +1802,10 @@ static const Map<String,dynamic> localizations = {
       "de": "Jmd. [nicht] machen",
       "pl": "Zrób kogoś [nie]"
     },
+    "word_wikipedia": {
+      "en": "Wikipedia",
+      "de": "Wikipedia"
+    },
     "kanji_tab": {
       "en": "Kanji",
       "de": "Kanji",
@@ -2157,7 +2167,7 @@ static const Map<String,dynamic> ja = {
     "word_conjugation": "活用",
     "word_proverbs": "ことわざ",
     "word_synonyms": "同義語",
-    "word_tab": "ワード"
+    "word_tab": "ワード",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません",
@@ -2381,7 +2391,8 @@ static const Map<String,dynamic> de = {
     "word_reading": "Lesung:",
     "word_see_also": "Siehe auch:",
     "word_synonyms": "Synonyme",
-    "word_tab": "Wort"
+    "word_tab": "Wort",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
@@ -2444,6 +2455,8 @@ static const Map<String,dynamic> de = {
   },
   "ManualScreen": {
     "anki_test_connection": "Überprüfe Verbindung zu Anki",
+    "anki_test_connection_fail": "Du bist nicht mit Anki verbunde! 😢",
+    "anki_test_connection_success": "Du bist mit Anki verbunden! 🎉",
     "anki_title": "Anki",
     "title": "Handbuch"
   },
@@ -2476,6 +2489,7 @@ static const Map<String,dynamic> de = {
     "dict_kanaize": "Suchbegriff in Kana umwandeln",
     "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und somit wird 万 gefunden, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Zum Beispiel, wird die Suche nach りんご umgewandelt und findet リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, findet eine Suche nach りんご nicht リンゴ.\nWenn Sie wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
     "dict_languages": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
+    "dict_show_wikipedia_definitions": "Zeige Definitionen from Wikipedia",
     "dict_show_word_freq": "Zeige Wordfrequenz",
     "dict_show_word_freq_body": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
     "draw_browser_for_online_dict": "Benutze einen webview für web Wörterbücher",
@@ -2584,7 +2598,7 @@ static const Map<String,dynamic> ru = {
     "word_conjugation": "Спряжение",
     "word_proverbs": "Притчи",
     "word_synonyms": "Синонимы",
-    "word_tab": "Слово"
+    "word_tab": "Слово",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} не установлен",
@@ -2785,7 +2799,7 @@ static const Map<String,dynamic> pl = {
     "word_conjugation": "Koniugacja",
     "word_proverbs": "Przysłowia",
     "word_synonyms": "Synonimy",
-    "word_tab": "Słowo"
+    "word_tab": "Słowo",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -3010,7 +3024,8 @@ static const Map<String,dynamic> en = {
     "word_reading": "Reading:",
     "word_see_also": "See also:",
     "word_synonyms": "Synonyms",
-    "word_tab": "Word"
+    "word_tab": "Word",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -3077,7 +3092,7 @@ static const Map<String,dynamic> en = {
     "anki_test_connection_success": "You are connected to Anki! 🎉",
     "anki_text": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below.",
     "anki_title": "Anki",
-    "dict_text_examples_analyze": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by simply long pressing.",
+    "dict_text_examples_analyze": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_kanji_elements": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
     "dict_title": "Dictionary",
     "title": "Manual"
@@ -3111,6 +3126,7 @@ static const Map<String,dynamic> en = {
     "dict_kanaize": "Convert search term to kana",
     "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted when this settings is enabled, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you know what you are searching, you can disable this setting.",
     "dict_languages": "Show translations in (drag to reorder)",
+    "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
     "dict_show_word_freq": "Show word frequency",
     "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
@@ -3221,7 +3237,7 @@ static const Map<String,dynamic> it = {
     "word_conjugation": "Coniugazione",
     "word_proverbs": "Proverbi",
     "word_synonyms": "Sinonimi",
-    "word_tab": "Parola"
+    "word_tab": "Parola",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installato",
@@ -3387,7 +3403,7 @@ static const Map<String,dynamic> fr = {
     "word_conjugation": "Conjugaison",
     "word_proverbs": "Proverbes",
     "word_synonyms": "Synonymes",
-    "word_tab": "Word"
+    "word_tab": "Word",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installé",
@@ -3553,7 +3569,7 @@ static const Map<String,dynamic> es = {
     "word_conjugation": "Conjugación",
     "word_proverbs": "Proverbios",
     "word_synonyms": "Sinónimos",
-    "word_tab": "Palabra"
+    "word_tab": "Palabra",
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",

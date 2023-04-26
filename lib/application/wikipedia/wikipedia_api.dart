@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 /// Uses the given locale to query the wikipedia API.
 Future<String> getWikipediaDefinition(String topic, String locale) async {
 
-  String url = "https://$locale.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=$topic";
+  String url = "https://$locale.wikipedia.org/w/api.php?action=query&rvprop=content&prop=extracts&format=json&exintro=&titles=$topic";
   Response response;
 
   try{
