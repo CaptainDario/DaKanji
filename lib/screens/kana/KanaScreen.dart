@@ -8,9 +8,9 @@ import 'package:media_kit/media_kit.dart';
 import 'package:da_kanji_mobile/model/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'package:da_kanji_mobile/view/kana/KanaInfoCard.dart';
-import 'package:da_kanji_mobile/view/kana/KanaGrid.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/kana/KanaInfoCard.dart';
+import 'package:da_kanji_mobile/widgets/kana/KanaGrid.dart';
 
 
 

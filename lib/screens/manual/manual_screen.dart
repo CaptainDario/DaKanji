@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/view/manual/manual_button.dart';
-import 'package:da_kanji_mobile/view/manual/manual_text.dart';
-import 'package:da_kanji_mobile/view/manual/manual_dictionary.dart';
-import 'package:da_kanji_mobile/view/manual/manual_anki.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_text.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_anki.dart';
 
 
 /// The screen to show the manual of DaKanji

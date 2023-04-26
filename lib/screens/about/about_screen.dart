@@ -7,7 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/helper/reviews.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 import 'package:da_kanji_mobile/screens/credits/credits_screen.dart';
 import 'package:da_kanji_mobile/model/platform_dependent_variables.dart';

@@ -17,18 +17,18 @@ import 'package:reorderables/reorderables.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_header_tile.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'package:da_kanji_mobile/view/settings/custom_url_popup.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_check_box_tile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_drop_down_tile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_icon_button_tile.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_input_field_tile.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_header_tile.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/settings/custom_url_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_check_box_tile.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_drop_down_tile.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/helper/iso/iso_table.dart';
-import 'package:da_kanji_mobile/view/settings/optimize_backends_popup.dart';
-import 'package:da_kanji_mobile/view/widgets/fullScreenList/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fullScreenList/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/helper/anki/anki.dart';
 
 

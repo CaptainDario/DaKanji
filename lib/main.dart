@@ -9,7 +9,7 @@ import 'package:feedback/feedback.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:da_kanji_mobile/dakanji_splash.dart';
-import 'package:da_kanji_mobile/view/home/init.dart';
+import 'package:da_kanji_mobile/widgets/home/init.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';

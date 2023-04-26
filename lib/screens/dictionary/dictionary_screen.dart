@@ -5,10 +5,10 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/provider/settings/settings.dart';
-import 'package:da_kanji_mobile/view/dictionary/dictionary.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
 import 'package:da_kanji_mobile/provider/dict_search_result.dart';
 import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
 

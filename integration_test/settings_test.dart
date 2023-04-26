@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/drawing/drawing_canvas.dart';
+import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';

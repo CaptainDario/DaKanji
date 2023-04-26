@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/model/dark_theme.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/view/widgets/da_kanji_progress_indicator.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_progress_indicator.dart';
 
 
 

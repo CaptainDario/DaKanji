@@ -10,14 +10,14 @@ import 'package:da_kanji_mobile/model/DrawScreen/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_responsive_layout.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_clear_button.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_drawing_canvas.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_multi_char_search.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_prediction_buttons.dart';
-import 'package:da_kanji_mobile/view/drawing/draw_screen_undo_button.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_responsive_layout.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_clear_button.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_drawing_canvas.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_multi_char_search.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_prediction_buttons.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_undo_button.dart';
 import 'package:da_kanji_mobile/helper/handle_predictions.dart';
 
 
