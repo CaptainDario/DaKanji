@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';

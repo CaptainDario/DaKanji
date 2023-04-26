@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/model/screens.dart';
 import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'kanji_drawing.dart';
+import '../../view/kanji/kanji_drawing.dart';
 
 
 

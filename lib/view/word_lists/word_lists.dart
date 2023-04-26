@@ -6,8 +6,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_list_screen.dart';
-import 'package:da_kanji_mobile/view/word_lists/word_list_node.dart';
+import 'package:da_kanji_mobile/screens/word_list/word_list_screen.dart';
+import 'package:da_kanji_mobile/view/word_list/word_list_node.dart';
 import 'package:da_kanji_mobile/model/tree/tree_node.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists.dart';
 import 'package:da_kanji_mobile/model/WordLists/word_lists_data.dart';

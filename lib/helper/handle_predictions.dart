@@ -14,7 +14,7 @@ import 'package:da_kanji_mobile/provider/settings/settings.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
 import 'package:da_kanji_mobile/view/download_app_dialogue.dart';
-import 'package:da_kanji_mobile/view/webview_screen.dart';
+import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
