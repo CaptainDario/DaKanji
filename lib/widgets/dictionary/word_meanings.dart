@@ -47,6 +47,17 @@ class _WordMeaningsState extends State<WordMeanings> {
     value: (value) => false,
   );
 
+  Future<String>? wikipediaRequest;
+
+  Map<String, String> wikipediaSummary = {};
+
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,8 +75,23 @@ class _WordMeaningsState extends State<WordMeanings> {
             (element) => isoToiso639_1[element.language]!.name == lang
           ).toList();
           
+          if(!wikipediaSummary.containsKey(lang)){
+            wikipediaRequest = getWikipediaDefinition(
+              // for japanese words, use the kanji/kana, otherwise the first meaning
+              lang == "ja"
+                ? widget.entry.kanjis.length > 0 ? widget.entry.kanjis.first : widget.entry.readings.first
+                : meanings.first.meanings!.first.split("⬜").first,
+              lang
+            ).then<String>((value) {
+              setState(() {
+                wikipediaSummary[lang] = value;
+              });
+              return value;
+            });
+          }
           
-          if(meanings.isNotEmpty){
+          // language flag
+          if(meanings.isNotEmpty || wikipediaSummary != "" && wikipediaSummary != null)
             ret.add(
               Row(
                 children: [
@@ -83,6 +109,8 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ],
               ),
             );
+          // add the meanings
+          if(meanings.isNotEmpty)
             ret.add(
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 8.0, 8.0, 8.0),
@@ -97,67 +125,58 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ),
               )
             );
-
-            // add the wikipedia definition
-            if(this.widget.includeWikipediaDefinition)
-              ret.add(
-                FutureBuilder(
-                  future: getWikipediaDefinition(
-                    lang == "jp"
-                      ? widget.entry.kanjis.first
-                      : meanings.first.meanings!.first.split("⬜").first,
-                    lang
-                  ),
-                  builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.done &&
-                      snapshot.data != "")
-                      return Column( 
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            LocaleKeys.DictionaryScreen_word_wikipedia.tr(),
-                            style: TextStyle(
-                              fontSize: 14
-                            ),
+          // add the wikipedia definition
+          if(this.widget.includeWikipediaDefinition)
+            ret.add(
+              FutureBuilder(
+                future: wikipediaRequest,
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.done &&
+                    wikipediaSummary[lang] != "" && wikipediaSummary[lang] != null)
+                    return Column( 
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          LocaleKeys.DictionaryScreen_word_wikipedia.tr(),
+                          style: TextStyle(
+                            fontSize: 14
                           ),
-                          SizedBox(height: 10,),
-                          if(snapshot.data!.length < 500 || wikiExpanded[lang]!)
-                            HtmlWidget(
-                              snapshot.data.toString(),
-                              
-                              onTapUrl: (p0) {
+                        ),
+                        SizedBox(height: 10,),
+                        if(wikipediaSummary[lang]!.length < 400 || wikiExpanded[lang]!)
+                          HtmlWidget(
+                            wikipediaSummary[lang]!.toString(),
+                            
+                            onTapUrl: (p0) {
+                              launchUrlString(p0);
+                              return false;
+                            },
+                          ),
+                        if(wikipediaSummary[lang]!.length >= 400)
+                          HtmlWidget(
+                            wikipediaSummary[lang]!.toString().substring(0, 400) + "<a href='...'>...</a>",
+                            
+                            onTapUrl: (p0) {
+                              if(p0 == "...")
+                                setState(() {
+                                  wikiExpanded[lang] = true;
+                                });
+                              else
                                 launchUrlString(p0);
-                                return false;
-                              },
-                            ),
-                          if(snapshot.data!.length >= 500)
-                            HtmlWidget(
-                              snapshot.data.toString().substring(0, 250) + "<a href='...'>...</a>",
-                              
-                              onTapUrl: (p0) {
-                                if(p0 == "...")
-                                  setState(() {
-                                    wikiExpanded[lang] = true;
-                                  });
-                                else
-                                  launchUrlString(p0);
-                                return true;
-                              },
-                            ),
-                        ]
-                      );
-                    else if(snapshot.connectionState == ConnectionState.done &&
-                      snapshot.data == "")
-                      return Container();
-                    else
-                      return Center(child: const DaKanjiProgressIndicator());
-                  },
-                )
-              );
-
-            ret.add(SizedBox(height: 20,));
-                
-          }
+                              return true;
+                            },
+                          ),
+                      ]
+                    );
+                  else if(snapshot.connectionState == ConnectionState.done &&
+                    snapshot.data == "")
+                    return Container();
+                  else
+                    return Center(child: const DaKanjiProgressIndicator());
+                },
+              )
+            );
+          ret.add(SizedBox(height: 20,));
 
           return ret;
         }).expand((element) => element).toList(),
