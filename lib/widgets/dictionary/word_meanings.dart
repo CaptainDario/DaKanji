@@ -91,7 +91,7 @@ class _WordMeaningsState extends State<WordMeanings> {
           }
           
           // language flag
-          if(meanings.isNotEmpty || wikipediaSummary != "" && wikipediaSummary != null)
+          if(meanings.isNotEmpty)
             ret.add(
               Row(
                 children: [
@@ -125,58 +125,6 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ),
               )
             );
-          // add the wikipedia definition
-          if(this.widget.includeWikipediaDefinition)
-            ret.add(
-              FutureBuilder(
-                future: wikipediaRequest,
-                builder: (context, snapshot) {
-                  if(snapshot.connectionState == ConnectionState.done &&
-                    wikipediaSummary[lang] != "" && wikipediaSummary[lang] != null)
-                    return Column( 
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          LocaleKeys.DictionaryScreen_word_wikipedia.tr(),
-                          style: TextStyle(
-                            fontSize: 14
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        if(wikipediaSummary[lang]!.length < 400 || wikiExpanded[lang]!)
-                          HtmlWidget(
-                            wikipediaSummary[lang]!.toString(),
-                            
-                            onTapUrl: (p0) {
-                              launchUrlString(p0);
-                              return false;
-                            },
-                          ),
-                        if(wikipediaSummary[lang]!.length >= 400)
-                          HtmlWidget(
-                            wikipediaSummary[lang]!.toString().substring(0, 400) + "<a href='...'>...</a>",
-                            
-                            onTapUrl: (p0) {
-                              if(p0 == "...")
-                                setState(() {
-                                  wikiExpanded[lang] = true;
-                                });
-                              else
-                                launchUrlString(p0);
-                              return true;
-                            },
-                          ),
-                      ]
-                    );
-                  else if(snapshot.connectionState == ConnectionState.done &&
-                    snapshot.data == "")
-                    return Container();
-                  else
-                    return Center(child: const DaKanjiProgressIndicator());
-                },
-              )
-            );
-          ret.add(SizedBox(height: 20,));
 
           return ret;
         }).expand((element) => element).toList(),

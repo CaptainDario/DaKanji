@@ -346,18 +346,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
-                      // Show wikipedia definition in the entry
-                      ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_dict_show_wikipedia_definitions.tr(),
-                        autoSizeGroup: g_SettingsAutoSizeGroup,
-                        value: settings.dictionary.includeWikipediaDefinition,
-                        onTileTapped: (value) {
-                          setState(() {
-                            settings.dictionary.includeWikipediaDefinition = value;
-                            settings.save();
-                          });
-                        },
-                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),

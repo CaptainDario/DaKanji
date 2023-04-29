@@ -15,7 +15,7 @@ class SettingsDictionary with ChangeNotifier {
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(includeFromJson: false, includeToJson: false)
   static const List<String> d_translationLanguageCodes = [
-    "en", "de", "ru", "it", "fr", "es", "pl", "ja"//, "zh",
+    "en", "de", "ru", "it", "fr", "es", "pl",
   ];
   /// All languages that are available in the dictionary in the useres order
   @JsonKey(defaultValue: d_translationLanguageCodes)
@@ -64,12 +64,6 @@ class SettingsDictionary with ChangeNotifier {
   /// Should the search term be converted to kana if it is written in romaji
   /// before searching
   bool convertToHiragana = d_convertToHiragana;
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  static const bool d_IncludeWikipediaDefinition = true;
-  @JsonKey(defaultValue: d_IncludeWikipediaDefinition)
-  /// Should wikipedia be included in the searchresults
-  bool includeWikipediaDefinition = d_IncludeWikipediaDefinition;
 
 
   SettingsDictionary();
