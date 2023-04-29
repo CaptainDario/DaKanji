@@ -56,15 +56,16 @@ dependencies:
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   pdf: 3.8.4
   printing: 5.9.3
-  media_kit: 0.0.5+1
-  media_kit_video: 0.0.6                        # For video rendering.
+  media_kit: 0.0.7                              # Primary package.
+  
+  media_kit_video: 0.0.9                        # For video rendering.
   
   media_kit_native_event_loop: 1.0.3            # Support for higher number of concurrent instances & better performance.
   
-  media_kit_libs_windows_video: 1.0.2           # Windows package for video native libraries.
-  media_kit_libs_android_video: 1.0.0           # Android package for video native libraries.
-  media_kit_libs_macos_video: 1.0.4             # macOS package for video native libraries.
+  media_kit_libs_android_video: 1.0.2           # Android package for video native libraries.
   media_kit_libs_ios_video: 1.0.4               # iOS package for video native libraries.
+  media_kit_libs_macos_video: 1.0.5             # macOS package for video native libraries.
+  media_kit_libs_windows_video: 1.0.2           # Windows package for video native libraries.
   media_kit_libs_linux: 1.0.2                   # GNU/Linux dependency package.
 
   isar: any # included in dakanji dictionary
@@ -186,6 +187,8 @@ flutter:
     - assets/images/dakanji/banner.png
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
+    # dictionary screen
+    - assets/dict/krad.zip
     # onboarding graphics
     - assets/images/onboarding/onboarding_1_1.png
     - assets/images/onboarding/onboarding_1_2.png

@@ -305,6 +305,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.2"
+  csv:
+    dependency: transitive
+    description:
+      name: csv
+      sha256: "016b31a51a913744a0a1655c74ff13c9379e1200e246a03d96c81c5d9ed297b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   cupertino_icons:
     dependency: transitive
     description:
@@ -955,18 +963,18 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit
-      sha256: "4c2b3bb600c063ad194934ea7439bce3135cc6b4f9555222c3dc12ca1aa1d85c"
+      sha256: "47c0a035b0d6d3ddbd783217283d289615a27f55cc41c7a5bf5919f0acd60d2e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5+1"
+    version: "0.0.7"
   media_kit_libs_android_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_android_video
-      sha256: "76fa95350b472f9dc163dd11e0145133c2e05456c06d0febb4e189922a68bd3c"
+      sha256: "22f702860b77d9e78254a339dafd63d970454459413f77817fd41769e69c047c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   media_kit_libs_ios_video:
     dependency: "direct main"
     description:
@@ -987,10 +995,10 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit_libs_macos_video
-      sha256: ab1cbdf51400e30a9087bd7d6e10c6130d17296e76313fedd0ef0c57dae8c0f4
+      sha256: c4d3706af5a67bf194d8208eef5cf29ea79e64931ea9bcd50f665b9a438f8416
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   media_kit_libs_windows_video:
     dependency: "direct main"
     description:
@@ -1011,10 +1019,10 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit_video
-      sha256: "3860b1e8b2779a5702ecea7e6e3d8b16a79407ad478234008550cca660ac52ad"
+      sha256: "634872ca85575e5756c466af04d1adbdb5178315d7f801901b8c731fae314c66"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.9"
   meta:
     dependency: transitive
     description:
@@ -1496,10 +1504,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "33b31b6beb98100bf9add464a36a8dd03eb10c7a8cf15aeec535e9b054aaf04b"
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
