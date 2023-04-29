@@ -10,7 +10,7 @@ import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
-import 'package:da_kanji_mobile/domain/tfLite/inference_stats.dart';
+import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
 import 'package:universal_io/io.dart';
 
 

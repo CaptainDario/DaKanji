@@ -5,7 +5,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 import 'package:tuple/tuple.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
-import 'package:da_kanji_mobile/domain/tfLite/inference_stats.dart';
+import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
 
 
 
