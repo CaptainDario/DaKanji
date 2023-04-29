@@ -137,7 +137,11 @@ Future<void> initDocumentsServices(BuildContext context) async {
       searchHistory: Isar.openSync(
         [SearchHistorySchema], directory: isarPath,
         name: "searchHistory", maxSizeMiB: 512
-      )
+      ),
+      krad: Isar.openSync(
+        [KradSchema], directory: isarPath,
+        name: "krad", maxSizeMiB: 512
+      ),
     )
   );
 
@@ -179,7 +183,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   print("documents directory: ${documentsDir.toString()}");
   List<FileSystemEntity> assets = [
     File("assets/dict/dictionary.isar"), File("assets/dict/examples.isar"), 
-    Directory("assets/ipadic")
+    File("assets/dict/krad.isar"), Directory("assets/ipadic")
   ];
 
   // copy assets from assets to documents directory, or download them from GH

@@ -11,12 +11,15 @@ class Isars {
   Isar examples;
   /// Isar instance that contains the search history
   Isar searchHistory;
+  /// Isar instance that contains the kanji radical data
+  Isar krad;
 
   Isars(
     {
       required this.dictionary,
       required this.examples,
-      required this.searchHistory
+      required this.searchHistory,
+      required this.krad
     }
   );
 }
