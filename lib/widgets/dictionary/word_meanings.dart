@@ -40,18 +40,6 @@ class WordMeanings extends StatefulWidget {
 
 class _WordMeaningsState extends State<WordMeanings> {
 
-  // did the user expand the wikipedia entries
-  Map<String, bool> wikiExpanded = Map.fromIterable(
-    GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
-    key: (lang) => lang, 
-    value: (value) => false,
-  );
-
-  Future<String>? wikipediaRequest;
-
-  Map<String, String> wikipediaSummary = {};
-
-
   @override
   void initState() {
 
@@ -75,20 +63,6 @@ class _WordMeaningsState extends State<WordMeanings> {
             (element) => isoToiso639_1[element.language]!.name == lang
           ).toList();
           
-          if(!wikipediaSummary.containsKey(lang)){
-            wikipediaRequest = getWikipediaDefinition(
-              // for japanese words, use the kanji/kana, otherwise the first meaning
-              lang == "ja"
-                ? widget.entry.kanjis.length > 0 ? widget.entry.kanjis.first : widget.entry.readings.first
-                : meanings.first.meanings!.first.split("⬜").first,
-              lang
-            ).then<String>((value) {
-              setState(() {
-                wikipediaSummary[lang] = value;
-              });
-              return value;
-            });
-          }
           
           // language flag
           if(meanings.isNotEmpty)
