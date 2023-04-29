@@ -14,7 +14,7 @@ class RadicalPopupBody extends StatefulWidget {
   final double height;
   /// the isar instance with the radicals data
   final Isar kradIsar;
-
+  /// the text controller of the search bar
   final TextEditingController searchController;
   
   const RadicalPopupBody(
