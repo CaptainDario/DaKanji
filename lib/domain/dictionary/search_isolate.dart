@@ -89,11 +89,12 @@ class DictionarySearchIsolate {
     _initialized = true;
   }
 
+
   /// Kills the isolate, this should be called before discarding this object.
   void kill() {
     _checkInitialized();
 
-    receivePort!.sendPort.send(null);
+    isolateSendPort!.send(null);
 
     _initialized = false;
   }
@@ -164,6 +165,13 @@ Future<void> _searchInIsar(SendPort p) async {
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
+    print(message);
+
+    if (message == null) {
+      // Exit if the main isolate sends a null message
+      break;
+    }
+    
     if (message is String) {
       Stopwatch s = Stopwatch()..start();
 
@@ -189,11 +197,7 @@ Future<void> _searchInIsar(SendPort p) async {
       // Send the result to the main isolate.
       p.send(searchResults);
       print("len ${searchResults.length} time: ${s.elapsed}");
-    }
-    else if (message == null) {
-      // Exit if the main isolate sends a null message
-      break;
-    }
+    }    
   }
 
   print('Spawned isolate finished.');
