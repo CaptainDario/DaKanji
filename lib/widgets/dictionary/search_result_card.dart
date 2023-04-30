@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -34,6 +35,27 @@ class SearchResultCard extends StatefulWidget {
 }
 
 class _SearchResultCardState extends State<SearchResultCard> {
+
+  late List<String> pos;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  @override
+  void didUpdateWidget(covariant SearchResultCard oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init(){
+    pos = widget.dictEntry.meanings.map((e) => e.partOfSpeech)
+      .whereNotNull().flattened
+      .whereNotNull().map((e) => e.split("⬜"))
+      .flattened.toSet().toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +120,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
                             return Text(
                               widget.dictEntry.meanings[idx].meanings!.length > index
-                                ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings![index]}"
+                                ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings![index].split("⬜").join(", ")}"
                                 : "",
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -119,9 +141,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if(widget.dictEntry.partOfSpeech != null)
+                    if(pos.isNotEmpty)
                       Text(
-                        widget.dictEntry.partOfSpeech!.toSet().join(" \u200B").toString(),
+                        pos.join(", \u200B").toString(),
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                           fontSize: 10,
@@ -130,7 +152,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                       ),
                     if(widget.showWordFrequency)
                       SizedBox(height: 5,),
-                    if(widget.showWordFrequency)
+                    if( widget.showWordFrequency)
                       Text(
                         textAlign: TextAlign.end,
                         widget.dictEntry.frequency.toStringAsFixed(2),
