@@ -994,6 +994,39 @@
       "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
       "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
+    },
+    "advanced_settings_reset_settings": {
+      "en": "Resets the settings.",
+      "de": "Setzt die Einstellungen zurück.",
+      "ru": "Сброс настроек.",
+      "ja": "設定をリセットする。",
+      "zh": "重置设置。",
+      "it": "Ripristina le impostazioni.",
+      "fr": "Réinitialise les paramètres.",
+      "es": "Restablece la configuración.",
+      "pl": "Resetuje ustawienia."
+    },
+    "advanced_settings_delete_dict": {
+      "en": "Deletes the dictionary files.",
+      "de": "Löscht die Wörterbuchdateien.",
+      "ru": "Удаляет файлы словарей.",
+      "ja": "辞書ファイルを削除します。",
+      "zh": "删除字典文件。",
+      "it": "Elimina i file del dizionario.",
+      "fr": "Supprime les fichiers du dictionnaire.",
+      "es": "Borra los archivos del diccionario.",
+      "pl": "Usuwa pliki słownikowe."
+    },
+    "advanced_settings_delete_history": {
+      "en": "Deletes the search history.",
+      "de": "Löscht den Suchverlauf.",
+      "ru": "Удаляет историю поиска.",
+      "ja": "検索履歴を削除する。",
+      "zh": "删除搜索历史。",
+      "it": "Elimina la cronologia delle ricerche.",
+      "fr": "Supprime l'historique des recherches.",
+      "es": "Borra el historial de búsqueda.",
+      "pl": "Usuwa historię wyszukiwania."
     }
   },
   "WebviewScreen": {

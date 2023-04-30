@@ -8,15 +8,12 @@ import 'package:feedback/feedback.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/feedback_localization.dart';
 
 
-
-GlobalKey daKanjiKey = GlobalKey(debugLabel: 'DaKanjiAppKey');
 
 Future<void> main() async {
 
@@ -32,21 +29,21 @@ Future<void> main() async {
       options.dsn = '';
     },
     appRunner: () => runApp(
-      FutureBuilder(
-        future: init(),
-        builder: (context, snapshot) {
-          if(snapshot.hasData == false)
-            return DaKanjiSplash();
-          else
-            return EasyLocalization(
-              supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-              path: 'assets/translations',
-              fallbackLocale: const Locale('en'),
-              useFallbackTranslations: true,
-              useOnlyLangCode: true,
-              assetLoader: const CodegenLoader(),
-              saveLocale: true,
-              child: Phoenix(
+      Phoenix(
+        child: FutureBuilder(
+          future: g_initApp,
+          builder: (context, snapshot) {
+            if(snapshot.hasData == false)
+              return DaKanjiSplash();
+            else
+              return EasyLocalization(
+                supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+                path: 'assets/translations',
+                fallbackLocale: const Locale('en'),
+                useFallbackTranslations: true,
+                useOnlyLangCode: true,
+                assetLoader: const CodegenLoader(),
+                saveLocale: true,
                 child: BetterFeedback(
                   theme: FeedbackThemeData(
                     sheetIsDraggable: true
@@ -59,9 +56,9 @@ Future<void> main() async {
                   mode: FeedbackMode.navigate,
                   child: const DaKanjiApp(),
                 ),
-              ),
-            );
-        }
+              );
+          }
+        ),
       )
     )
   );

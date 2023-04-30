@@ -166,6 +166,8 @@
     "Onboarding_3_title": "Du wei\u00dft nicht wie man einen  Satz liest?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "L\u00f6scht die W\u00f6rterbuchdateien.",
+    "advanced_settings_delete_history": "L\u00f6scht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (erfordert Neustart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert f\u00fcr die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
@@ -174,6 +176,7 @@
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimiert...\nBitte schlie\u00dfen Sie die App nicht.",
     "advanced_settings_optimze_warning": "Dadurch wird die Ausf\u00fchrung des neuronalen Netzwerks f\u00fcr Ihr Ger\u00e4t optimiert.\nDies kann je nach Ger\u00e4t eine Weile dauern, kann aber die Leistung erheblich verbessern.",
+    "advanced_settings_reset_settings": "Setzt die Einstellungen zur\u00fcck.",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "anki_default_deck": "Standard deck",

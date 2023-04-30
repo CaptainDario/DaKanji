@@ -123,22 +123,21 @@ Future<void> initDocumentsServices(BuildContext context) async {
   String documentsDir =
     (await path_provider.getApplicationDocumentsDirectory()).path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
-
   GetIt.I.registerSingleton<Isars>(
     Isars(
-      dictionary: Isar.openSync(
+      dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
         directory: isarPath, name: "dictionary", maxSizeMiB: 512
       ),
-      examples: Isar.openSync(
+      examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
         name: "examples", maxSizeMiB: 512
       ),
-      searchHistory: Isar.openSync(
+      searchHistory: Isar.getInstance("searchHistory") ?? Isar.openSync(
         [SearchHistorySchema], directory: isarPath,
         name: "searchHistory", maxSizeMiB: 512
       ),
-      krad: Isar.openSync(
+      krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
         name: "krad", maxSizeMiB: 512
       ),
@@ -154,7 +153,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       GetIt.I<Isars>().dictionary.directory!,
       GetIt.I<Isars>().dictionary.name,
       GetIt.I<Settings>().dictionary.convertToHiragana
-    )
+    ), dispose: (param) => param.kill(),
   );
   GetIt.I<DictionarySearch>().init();
 

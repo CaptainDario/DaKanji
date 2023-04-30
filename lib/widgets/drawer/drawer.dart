@@ -106,7 +106,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   void dispose() { 
     _drawerController.dispose();
     super.dispose();
-    GetIt.I<DrawerListener>().removeListener(_handleDrawer);
+    if(GetIt.I.isRegistered<DrawerListener>())
+      GetIt.I<DrawerListener>().removeListener(_handleDrawer);
   }
 
   @override

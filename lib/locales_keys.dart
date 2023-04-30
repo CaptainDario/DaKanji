@@ -155,6 +155,8 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_text = 'OnBoarding.Onboarding_3_text';
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
+  static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
+  static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
   static const SettingsScreen_advanced_settings_number_search_procs_body = 'SettingsScreen.advanced_settings_number_search_procs_body';
@@ -163,6 +165,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_optimize_ok = 'SettingsScreen.advanced_settings_optimize_ok';
   static const SettingsScreen_advanced_settings_optimizing = 'SettingsScreen.advanced_settings_optimizing';
   static const SettingsScreen_advanced_settings_optimze_warning = 'SettingsScreen.advanced_settings_optimze_warning';
+  static const SettingsScreen_advanced_settings_reset_settings = 'SettingsScreen.advanced_settings_reset_settings';
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
   static const SettingsScreen_anki_default_deck = 'SettingsScreen.anki_default_deck';

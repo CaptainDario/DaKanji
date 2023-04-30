@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -14,6 +15,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
 
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
@@ -29,6 +31,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/application/app/restart.dart';
 
 
 
@@ -633,6 +636,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               });
                             },
                             autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                          // Reset settings
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_reset_settings.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              await clearPreferences();
+                            },
+                          ),
+                          // Delete dict
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
+                              restartApp(context);
+                            },
+                          ),
+                          // delete search history
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
+                              restartApp(context);
+                            },
                           ),
                         ],
                       ),

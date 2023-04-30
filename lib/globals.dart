@@ -1,5 +1,6 @@
 library my_prj.globals;
 
+import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -26,7 +27,11 @@ const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
+
 // INITIALIZE APP
+/// global init function feature that needs to complete before the app can be
+/// started
+var g_initApp = init();
 /// If the user pressed the ok-button in the download popup, this will be set to
 /// true.
 bool g_userAllowedToDownload = false;

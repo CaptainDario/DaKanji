@@ -142,6 +142,8 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_3_title": "不知道如何读懂一个句子？"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "删除字典文件。",
+    "advanced_settings_delete_history": "删除搜索历史。",
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
     "advanced_settings_number_search_procs": "搜索进程的数量（需要重新启动）。",
     "advanced_settings_number_search_procs_body": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
@@ -150,6 +152,7 @@ class CodegenLoader extends AssetLoader{
     "advanced_settings_optimize_ok": "好的",
     "advanced_settings_optimizing": "正在优化...\n请不要关闭该应用程序。",
     "advanced_settings_optimze_warning": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
+    "advanced_settings_reset_settings": "重置设置。",
     "advanced_settings_snap": "我是不可避免的...",
     "advanced_settings_title": "高级设置",
     "anki_default_deck": "默认甲板",
@@ -1217,6 +1220,39 @@ static const Map<String,dynamic> localizations = {
       "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
       "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
+    },
+    "advanced_settings_reset_settings": {
+      "en": "Resets the settings.",
+      "de": "Setzt die Einstellungen zurück.",
+      "ru": "Сброс настроек.",
+      "ja": "設定をリセットする。",
+      "zh": "重置设置。",
+      "it": "Ripristina le impostazioni.",
+      "fr": "Réinitialise les paramètres.",
+      "es": "Restablece la configuración.",
+      "pl": "Resetuje ustawienia."
+    },
+    "advanced_settings_delete_dict": {
+      "en": "Deletes the dictionary files.",
+      "de": "Löscht die Wörterbuchdateien.",
+      "ru": "Удаляет файлы словарей.",
+      "ja": "辞書ファイルを削除します。",
+      "zh": "删除字典文件。",
+      "it": "Elimina i file del dizionario.",
+      "fr": "Supprime les fichiers du dictionnaire.",
+      "es": "Borra los archivos del diccionario.",
+      "pl": "Usuwa pliki słownikowe."
+    },
+    "advanced_settings_delete_history": {
+      "en": "Deletes the search history.",
+      "de": "Löscht den Suchverlauf.",
+      "ru": "Удаляет историю поиска.",
+      "ja": "検索履歴を削除する。",
+      "zh": "删除搜索历史。",
+      "it": "Elimina la cronologia delle ricerche.",
+      "fr": "Supprime l'historique des recherches.",
+      "es": "Borra el historial de búsqueda.",
+      "pl": "Usuwa historię wyszukiwania."
     }
   },
   "WebviewScreen": {
@@ -2613,6 +2649,8 @@ static const Map<String,dynamic> ja = {
     "Onboarding_3_title": "文章の読み方がわからない？"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "辞書ファイルを削除します。",
+    "advanced_settings_delete_history": "検索履歴を削除する。",
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
     "advanced_settings_number_search_procs": "検索プロセス数（再起動が必要）",
     "advanced_settings_number_search_procs_body": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
@@ -2621,6 +2659,7 @@ static const Map<String,dynamic> ja = {
     "advanced_settings_optimize_ok": "オッケー",
     "advanced_settings_optimizing": "最適化中...\nアプリを閉じないようにしてください。",
     "advanced_settings_optimze_warning": "これにより、ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nお使いのデバイスによっては時間がかかる場合がありますが、劇的に性能が向上します。",
+    "advanced_settings_reset_settings": "設定をリセットする。",
     "advanced_settings_snap": "私は絶対なのだ・・・",
     "advanced_settings_title": "詳細設定",
     "anki_default_deck": "デフォルトのデッキ",
@@ -2874,6 +2913,8 @@ static const Map<String,dynamic> de = {
     "Onboarding_3_title": "Du weißt nicht wie man einen  Satz liest?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
+    "advanced_settings_delete_history": "Löscht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (erfordert Neustart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
@@ -2882,6 +2923,7 @@ static const Map<String,dynamic> de = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimiert...\nBitte schließen Sie die App nicht.",
     "advanced_settings_optimze_warning": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
+    "advanced_settings_reset_settings": "Setzt die Einstellungen zurück.",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
     "anki_default_deck": "Standard deck",
@@ -3096,6 +3138,8 @@ static const Map<String,dynamic> ru = {
     "Onboarding_3_title": "Не умеете читать предложения?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Удаляет файлы словарей.",
+    "advanced_settings_delete_history": "Удаляет историю поиска.",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
     "advanced_settings_number_search_procs": "Количество процессов поиска (требуется перезапуск)",
     "advanced_settings_number_search_procs_body": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
@@ -3104,6 +3148,7 @@ static const Map<String,dynamic> ru = {
     "advanced_settings_optimize_ok": "Хорошо",
     "advanced_settings_optimizing": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
     "advanced_settings_optimze_warning": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
+    "advanced_settings_reset_settings": "Сброс настроек.",
     "advanced_settings_snap": "Я неизбежен...",
     "advanced_settings_title": "Дополнительные настройки",
     "anki_default_deck": "Колода по умолчанию",
@@ -3338,6 +3383,8 @@ static const Map<String,dynamic> pl = {
     "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
+    "advanced_settings_delete_history": "Usuwa historię wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania (wymaga ponownego uruchomienia)",
     "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów.",
@@ -3346,6 +3393,7 @@ static const Map<String,dynamic> pl = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optymalizacja...\nProszę nie zamykać aplikacji.",
     "advanced_settings_optimze_warning": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie.",
+    "advanced_settings_reset_settings": "Resetuje ustawienia.",
     "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
     "anki_default_deck": "Pokład domyślny",
@@ -3599,6 +3647,8 @@ static const Map<String,dynamic> en = {
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Deletes the dictionary files.",
+    "advanced_settings_delete_history": "Deletes the search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (requires restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -3607,6 +3657,7 @@ static const Map<String,dynamic> en = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizing...\nPlease do not close the app.",
     "advanced_settings_optimze_warning": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
+    "advanced_settings_reset_settings": "Resets the settings.",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
     "anki_default_deck": "Default deck",
@@ -3821,6 +3872,8 @@ static const Map<String,dynamic> it = {
     "Onboarding_3_title": "Non sapete leggere una frase?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Elimina i file del dizionario.",
+    "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (richiede il riavvio)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
@@ -3829,6 +3882,7 @@ static const Map<String,dynamic> it = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Ottimizzazione...\nNon chiudere l'applicazione.",
     "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
+    "advanced_settings_reset_settings": "Ripristina le impostazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
     "anki_default_deck": "Mazzo predefinito",
@@ -4028,6 +4082,8 @@ static const Map<String,dynamic> fr = {
     "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
+    "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (nécessite un redémarrage)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
@@ -4036,6 +4092,7 @@ static const Map<String,dynamic> fr = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimisation...\nNe fermez pas l'application.",
     "advanced_settings_optimze_warning": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
+    "advanced_settings_reset_settings": "Réinitialise les paramètres.",
     "advanced_settings_snap": "Je suis inévitable...",
     "advanced_settings_title": "Paramètres avancés",
     "anki_default_deck": "Pont par défaut",
@@ -4235,6 +4292,8 @@ static const Map<String,dynamic> es = {
     "Onboarding_3_title": "¿No sabe leer una frase?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
+    "advanced_settings_delete_history": "Borra el historial de búsqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "Número de procesos de búsqueda (requiere reinicio)",
     "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
@@ -4243,6 +4302,7 @@ static const Map<String,dynamic> es = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizando...\nPor favor, no cierre la aplicación.",
     "advanced_settings_optimze_warning": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
+    "advanced_settings_reset_settings": "Restablece la configuración.",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
     "anki_default_deck": "Cubierta por defecto",

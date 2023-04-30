@@ -166,6 +166,8 @@
     "Onboarding_3_title": "Non sapete leggere una frase?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Elimina i file del dizionario.",
+    "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (richiede il riavvio)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza pi\u00f9 processi. Di solito, 2 \u00e8 un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare pi\u00f9 processi.",
@@ -174,6 +176,7 @@
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Ottimizzazione...\nNon chiudere l'applicazione.",
     "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione pu\u00f2 richiedere un po' di tempo a seconda del dispositivo, ma pu\u00f2 migliorare notevolmente le prestazioni.",
+    "advanced_settings_reset_settings": "Ripristina le impostazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
     "anki_default_deck": "Mazzo predefinito",
