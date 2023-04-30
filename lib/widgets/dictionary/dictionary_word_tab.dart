@@ -91,16 +91,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         : widget.entry!.kanjis[0];
 
       // get the pos for conjugating this word
-      conjugationPos = List<List<String>>
-        .from(widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .where((element) => element != null)
-        .expand((e) => e!)
-        .map((e) => e?.split("⬜")))
-        .flattened
-        .map((e) => posDescriptionToPosEnum[e]!)
+      conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
+        .whereNotNull().expand((e) => e)
+        .whereNotNull().map((e) => e.split("⬜"))
+        .flattened.map((e) => posDescriptionToPosEnum[e]!)
         .where((e) => posUsed.contains(e))
-        .toSet()
-        .toList();
+        .toSet().toList();
     }
   }
 
