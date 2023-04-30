@@ -152,7 +152,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
 
       //screens
-       home: const DaKanjiSplash(),
+      home: const DaKanjiSplash(),
       //home: TestScreen()
       initialRoute: "/home",
 
