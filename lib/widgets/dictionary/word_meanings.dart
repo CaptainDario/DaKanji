@@ -91,7 +91,7 @@ class _WordMeaningsState extends State<WordMeanings> {
                 child: Column(
                   children: [
                     MeaningsGrid(
-                      meanings: meanings.first.meanings!,
+                      meanings: meanings.first,
                       style: widget.meaningsStyle,
                       limit: 5,
                     ),
