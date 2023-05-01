@@ -22,6 +22,7 @@ class NavigationArguments{
   final int? initialEntryId;
 
   // TEXT SCREEN
+  /// The text that should be shown when opening the text screen
   final String? initialText;
 
 
