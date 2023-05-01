@@ -63,9 +63,22 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                         widget.entry.readingRestriction![j]!.contains(widget.entry.kanjis[i]))
                         for (int k = 0; k < widget.entry.readings[j].length; k++)
                           Container(
-                            decoration: const BoxDecoration(
-                              // TODO: pitch accent - @ DaKanji v3.4
-                              //border: Border(right: BorderSide(color: Colors.white,width: 1.5,),)
+                            // TODO pitch accent decoration
+                            decoration: BoxDecoration(
+                              border: widget.entry.accents != null &&
+                                widget.entry.accents![j] != null &&
+                                widget.entry.accents![j]!.contains((k+1).toString())
+                              ? Border(
+                                top: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ),
+                                right: BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.5,
+                                ),
+                              )
+                              : null
                             ),
                             child: Text.rich(
                               TextSpan(
