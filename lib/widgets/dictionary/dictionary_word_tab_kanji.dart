@@ -1,5 +1,6 @@
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 
 
@@ -21,6 +22,26 @@ class DictionaryWordTabKanji extends StatefulWidget {
 }
 
 class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
+
+  /// does this entry have kanji
+  late bool hasKanji;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant DictionaryWordTabKanji oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init(){
+    hasKanji = !widget.entry.kanjis.isEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,10 +51,13 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     );
 
     /// the text style to use for all readings
-    TextStyle readingStyle = const TextStyle(
-      fontSize: 14,
-      color: Colors.grey
-    );
+    TextStyle readingStyle = hasKanji
+      ? const TextStyle(
+        fontSize: 14,
+        color: Colors.grey
+      )
+      : kanjiStyle
+    ;
 
     Map<String, int> readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
         .where((e) => e != null)
@@ -51,8 +75,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // kanjis and writings
-          for (int i = 0; i < widget.entry.kanjis.length; i++)
+          for (int i = 0; i < (hasKanji ? widget.entry.kanjis.length : 1); i++)
             ...[
+              // readings
               Transform.translate(
                 offset: Offset(0, 6),
                 child: Wrap(
@@ -100,7 +125,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                             : "",
                                           style: TextStyle(
                                             fontSize: 10,
-                                            color: Colors.grey
+                                            color: hasKanji ? Colors.grey : null
                                           )
                                         ),
                                       ),
@@ -117,32 +142,34 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                             ),
                           ),
-                  ],
-                ),
+                    ],
+                  ),
               ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: widget.entry.kanjis[i],
-                      style: kanjiStyle
-                    ),
-                    for (String info in widget.entry.kanjiInfo![i]!.split("⬜"))
-                      if(info != "")
-                        WidgetSpan(
-                          child: Transform.translate(
-                            offset: Offset(1, -18),
-                            child: Text(
-                              kanjiInfos[info].toString() +
-                                (info == widget.entry.kanjiInfo![i]!.split("⬜").last
-                                  ? ""
-                                  : ","),
-                            ),
+              // kanjis in big font, if there are kanjis
+              if(widget.entry.kanjis.isNotEmpty)
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: widget.entry.kanjis[i],
+                        style: kanjiStyle
+                      ),
+                      for (String info in widget.entry.kanjiInfo![i]!.split("⬜"))
+                        if(info != "")
+                          WidgetSpan(
+                            child: Transform.translate(
+                              offset: Offset(1, -18),
+                              child: Text(
+                                kanjiInfos[info].toString() +
+                                  (info == widget.entry.kanjiInfo![i]!.split("⬜").last
+                                    ? ""
+                                    : ","),
+                              ),
+                            )
                           )
-                        )
-                  ]
+                    ]
+                  )
                 )
-              )
             ],
           
           // special information
