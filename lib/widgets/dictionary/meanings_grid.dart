@@ -1,13 +1,17 @@
 import 'dart:math';
-
-import 'package:collection/collection.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:get_it/get_it.dart';
+
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:tuple/tuple.dart';
 
 
 
@@ -42,7 +46,14 @@ class _MeaningsGridState extends State<MeaningsGrid> {
   /// if there are more than `widet.limit` meanings, should they be shown
   bool showAllMeanings = false;
   /// all related entries
-  List<List<JMdict?>?> realtedEntries = [];
+  List<List<JMdict?>?> relatedEntries = [];
+  /// all antonym entries
+  List<List<JMdict?>?> antonymEntries = []; 
+  /// the text style to use for the information texts
+  TextStyle informationStyle = TextStyle(
+    color: Colors.grey[600],
+    fontSize: 14
+  );
 
   @override
   void initState() {
@@ -57,25 +68,29 @@ class _MeaningsGridState extends State<MeaningsGrid> {
   }
 
   void init(){
-    realtedEntries = [];
+    relatedEntries = []; antonymEntries = [];
     
-    // get all related entries from ISAR (xref)
-    if(widget.meanings.xref != null){
-      for (var i = 0; i < widget.meanings.xref!.length; i++) {
-        if(widget.meanings.xref![i] != null){
-          realtedEntries.add([]);
-          for (var j = 0; j < widget.meanings.xref![i]!.attributes.length; j++) {
-            realtedEntries[i]!.add(GetIt.I<Isars>().dictionary.jmdict.getSync(
-              int.parse(widget.meanings.xref![i]!.attributes[j]!)
-            ));
+    // get all related entries (xref) and antonym entries (ant) from isar
+    for (var pair in [Tuple2(widget.meanings.xref, relatedEntries), Tuple2(widget.meanings.antonyms, antonymEntries)]){
+      var e = pair.item1, entries = pair.item2;
+      if(e != null){
+        for (var i = 0; i < e.length; i++) {
+          if(e[i] != null){
+            entries.add([]);
+            for (var j = 0; j < e[i]!.attributes.length; j++) {
+              entries[i]!.add(GetIt.I<Isars>().dictionary.jmdict.getSync(
+                int.parse(e[i]!.attributes[j]!)
+              ));
+            }
           }
-        }
-        else{
-          realtedEntries.add(null);
+          else{
+            entries.add(null);
+          }
         }
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +115,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
           // one meaning row of the table 
           List<Widget> ret = [];
           for (int j = 0; j < tableLength; j++) {
+            // the number of this meaning
             ret.add(
               Align(
                 alignment: Alignment.topRight,
@@ -111,30 +127,30 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 ),
               ),
             );
+            // additional information for this entry
             ret.add(
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // the actual meaning
                   SelectableText(
                     widget.meanings.meanings![j].replaceAll("⬜", ", "),
                     style: widget.style
                   ),
-                  // refernces, ex.: 悪どい, 
+                  // refernces, ex.: 悪どい, アメラグ
                   if(widget.meanings.xref != null && widget.meanings.xref![j] != null)
                     RichText(
                       text: TextSpan(
-                        text: "See also: ",
-                        style: TextStyle(
-                          color: Colors.grey
-                        ),
+                        text: LocaleKeys.DictionaryScreen_word_see_also.tr() + " ",
+                        style: informationStyle,
                         children: [
-                          for (int i = 0; i < realtedEntries[j]!.length; i++)
-                            if(realtedEntries[j] != null)
+                          for (int i = 0; i < relatedEntries[j]!.length; i++)
+                            if(relatedEntries[j] != null)
                               TextSpan(
-                                text: (realtedEntries[j]![i]!.kanjis.isEmpty
-                                  ? realtedEntries[j]![i]!.readings.first
-                                  : realtedEntries[j]![i]!.kanjis.first)
-                                  + (i < realtedEntries[j]!.length - 1
+                                text: (relatedEntries[j]![i]!.kanjis.isEmpty
+                                  ? relatedEntries[j]![i]!.readings.first
+                                  : relatedEntries[j]![i]!.kanjis.first)
+                                  + (i < relatedEntries[j]!.length - 1
                                     ? ", "
                                     : ""),
                                   recognizer: TapGestureRecognizer()
@@ -154,13 +170,89 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                         ]
                       ),
                     ),
-                  // kanji targets
-                  if(widget.meanings.senseKanjiTarget != null)
+                  // antonyms: 
+                  if(widget.meanings.antonyms != null && widget.meanings.antonyms![j] != null)
+                    RichText(
+                      text: TextSpan(
+                        text: LocaleKeys.DictionaryScreen_word_antonyms.tr() + " ",
+                        style: informationStyle,
+                        children: [
+                          for (int i = 0; i < antonymEntries[j]!.length; i++)
+                            if(antonymEntries[j] != null)
+                              TextSpan(
+                                text: (antonymEntries[j]![i]!.kanjis.isEmpty
+                                  ? antonymEntries[j]![i]!.readings.first
+                                  : antonymEntries[j]![i]!.kanjis.first)
+                                  + (i < antonymEntries[j]!.length - 1
+                                    ? ", "
+                                    : ""),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      int id = int.parse(widget.meanings.antonyms![j]!.attributes[i]!);
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        "/dictionary",
+                                        (route) => false,
+                                        arguments: NavigationArguments(
+                                          false,
+                                          initialEntryId: id
+                                        )
+                                      );
+                                    },
+                              )
+                        ]
+                      ),
+                    ),
+                  // kanji targets: １つ星
+                  if(widget.meanings.senseKanjiTarget != null && widget.meanings.senseKanjiTarget![j] != null)
                     Text(
-                      "test"
+                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
+                      widget.meanings.senseKanjiTarget![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // reading targets: 空車
+                  if(widget.meanings.senseReadingTarget != null && widget.meanings.senseReadingTarget![j] != null)
+                    Text(
+                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
+                      widget.meanings.senseReadingTarget![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // field of usage: 一尉
+                  if(widget.meanings.field != null && widget.meanings.field![j] != null)
+                    Text(
+                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
+                      widget.meanings.field![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // source language of gairaigo: 金平糖
+                  if(widget.meanings.source != null && widget.meanings.source![j] != null)
+                    Text(
+                      LocaleKeys.DictionaryScreen_word_source_language.tr() + " " +
+                      widget.meanings.source![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // dialect where this word is used: 賢い
+                  if(widget.meanings.dialect != null && widget.meanings.dialect![j] != null)
+                    Text(
+                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
+                      widget.meanings.dialect![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // additional information for about this sense: 表す
+                  if(widget.meanings.senseInfo != null && widget.meanings.senseInfo![j] != null)
+                    Text(
+                      LocaleKeys.DictionaryScreen_word_info.tr() + " " +
+                      widget.meanings.senseInfo![j]!.attributes.join(","),
+                      style: informationStyle,
+                    ),
+                  // Part of Speech: 
+                  if(widget.meanings.partOfSpeech != null && widget.meanings.partOfSpeech![j] != null)
+                    Text(
+                      widget.meanings.partOfSpeech![j]!.attributes.join(","),
+                      style: informationStyle,
                     ),
                 ],
-              )
+              ),
             );
           }
           // show more button
@@ -178,7 +270,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                       child: Icon(Icons.expand_more)
                     ),
                     SizedBox(width: 10,),
-                    Text("More...")
+                    Text(LocaleKeys.DictionaryScreen_word_meanings_more.tr())
                   ],
                 )
               ).withGridPlacement(columnSpan: 2)
