@@ -12,7 +12,6 @@ import 'package:database_builder/database_builder.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
@@ -28,13 +27,10 @@ class DictionaryWordTab extends StatefulWidget {
 
   /// the dict entry that should be shown 
   final JMdict? entry;
-  /// Whether to include the wikipedia definition
-  final bool includeWikipediaDefinition;
 
   const DictionaryWordTab(
     this.entry,
     {
-      this.includeWikipediaDefinition = false,
       Key? key
     }
   ) : super(key: key);

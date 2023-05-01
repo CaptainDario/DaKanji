@@ -31,8 +31,6 @@ class Dictionary extends StatefulWidget {
   final int? initialEntryId;
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
-  /// Whether to include the wikipedia definition
-  final bool includeWikipediaDefinition;
 
   const Dictionary(
     this.includeTutorial,
@@ -42,7 +40,6 @@ class Dictionary extends StatefulWidget {
       this.includeDrawButton = true,
       this.isExpanded = false,
       this.allowDeconjugation=true,
-      this.includeWikipediaDefinition = false,
       Key? key
     }
   ) : super(key: key);
@@ -135,7 +132,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 padding: EdgeInsets.all(8),
                                 child: DictionaryWordTab(
                                   context.watch<DictSearch>().selectedResult,
-                                  includeWikipediaDefinition: widget.includeWikipediaDefinition,
                                 ),
                               ),
                             ),
@@ -214,7 +210,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                           if(tabsSideBySide < 2)
                                             DictionaryWordTab(
                                               context.watch<DictSearch>().selectedResult,
-                                              includeWikipediaDefinition: widget.includeWikipediaDefinition,
                                             ),
                                           if(tabsSideBySide < 4) 
                                             DictionaryKanjiTab(
