@@ -121,6 +121,25 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                       children: [
                         
                         DictionaryWordTabKanji(widget.entry!),
+
+                        const SizedBox(
+                          height: 10,
+                        ),
+
+                        // JLPT
+                        if(widget.entry!.jlptLevel != null && widget.entry!.jlptLevel!.isNotEmpty)
+                          Wrap(
+                            children: [
+                              for (var jlpt in widget.entry!.jlptLevel!.toSet())
+                                Text(
+                                  "$jlpt",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12
+                                  ),
+                                ),
+                            ],
+                          ),
                         
                         const SizedBox(
                           height: 30,
