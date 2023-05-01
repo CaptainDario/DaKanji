@@ -52,9 +52,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
   void init(){
     pos = widget.dictEntry.meanings.map((e) => e.partOfSpeech)
-      .whereNotNull().flattened
-      .whereNotNull().map((e) => e.split("⬜"))
-      .flattened.toSet().toList();
+      .whereNotNull().expand((element) => element)
+      .whereNotNull().map((e) => e.attributes)
+      .expand((e) => e)
+      .whereNotNull().toSet().toList();
   }
 
   @override
