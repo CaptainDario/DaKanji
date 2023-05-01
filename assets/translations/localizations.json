@@ -1509,6 +1509,28 @@
       "es": "Palabra",
       "pl": "Słowo"
     },
+    "word_see_also": {
+      "en": "See also:",
+      "de": "Siehe auch:",
+      "ru": "См. также:",
+      "ja": "こちらもご覧ください：",
+      "zh": "另见：",
+      "it": "Vedi anche:",
+      "fr": "Voir aussi",
+      "es": "Véase también:",
+      "pl": "Zobacz także:"
+    },
+    "word_restricted_to": {
+      "en": "Restricted to:",
+      "de": "Eingeschränkt auf:",
+      "ru": "Ограничено:",
+      "ja": "に制限される：",
+      "zh": "限于：1：",
+      "it": "Riservato a:",
+      "fr": "Restreint à :",
+      "es": "Restringido a:",
+      "pl": "Ograniczone do:"
+    },
     "word_field": {
       "en": "Field:",
       "de": "Feld",
@@ -1519,6 +1541,17 @@
       "fr": "Domaine :",
       "es": "Campo:",
       "pl": "Pol:"
+    },
+    "word_source_language": {
+      "en": "Source language:",
+      "de": "Ursprungssprache:",
+      "ru": "Исходный язык:",
+      "ja": "ソース言語です：",
+      "zh": "源语言：",
+      "it": "Lingua di partenza:",
+      "fr": "Langue source :",
+      "es": "Idioma de origen:",
+      "pl": "Język źródłowy:"
     },
     "word_dialect": {
       "en": "Dialect:",
@@ -1531,20 +1564,27 @@
       "es": "Dialecto:",
       "pl": "Dialekt:"
     },
-    "word_see_also": {
-      "en": "See also:",
-      "de": "Siehe auch:",
-      "ru": "См. также:",
-      "ja": "こちらもご覧ください：",
-      "zh": "另见：",
-      "it": "Vedi anche:",
-      "fr": "Voir aussi",
-      "es": "Véase también:",
-      "pl": "Zobacz także:"
+    "word_info": {
+      "en": "Info:",
+      "de": "Infos:",
+      "ru": "Информация:",
+      "ja": "情報です：",
+      "zh": "信息：",
+      "it": "Info:",
+      "fr": "Info :",
+      "es": "Info:",
+      "pl": "Info:"
     },
     "word_reading": {
       "en": "Reading:",
-      "de": "Lesung:"
+      "de": "Lesung:",
+      "ru": "Чтение:",
+      "ja": "読むことです：",
+      "zh": "阅读：",
+      "it": "Lettura:",
+      "fr": "Lecture :",
+      "es": "Lectura:",
+      "pl": "Czyt:"
     },
     "word_conjugation": {
       "en": "Conjugations",
@@ -1569,8 +1609,8 @@
       "pl": "Przysłowia"
     },
     "word_synonyms": {
-      "en": "Synonyms",
-      "de": "Synonyme",
+      "en": "Synonyms:",
+      "de": "Synonyme:",
       "ru": "Синонимы",
       "ja": "同義語",
       "zh": "同义词",
@@ -1580,15 +1620,15 @@
       "pl": "Synonimy"
     },
     "word_antonyms": {
-      "en": "Antonyms",
-      "de": "Antonyme",
-      "ru": "Антонимы",
-      "ja": "反意語",
-      "zh": "反义词",
-      "it": "Anonimi",
-      "fr": "Antonymes",
-      "es": "Antónimos",
-      "pl": "Antonimy"
+      "en": "Antonyms:",
+      "de": "Antonyme:",
+      "ru": "Антонимы:",
+      "ja": "反意語です：",
+      "zh": "反义词：",
+      "it": "Anonimi:",
+      "fr": "Antonymes :",
+      "es": "#ERROR!",
+      "pl": "Antony:"
     },
     "word_images": {
       "en": "Images",
@@ -1600,6 +1640,17 @@
       "fr": "Images",
       "es": "Imágenes",
       "pl": "Zdjęcia"
+    },
+    "word_meanings_more": {
+      "en": "More...",
+      "de": "Mehr...",
+      "ru": "Подробнее...",
+      "ja": "もっと詳しく...",
+      "zh": "更多...",
+      "it": "Altro...",
+      "fr": "Plus...",
+      "es": "Más...",
+      "pl": "Więcej..."
     },
     "word_conj_verb": {
       "en": "Verb",
