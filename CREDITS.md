@@ -31,7 +31,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * [Tatoeba](https://tatoeba.org/en/): for example sentences
     * [Wordnet](https://bond-lab.github.io/wnja/eng/index.html)
     * [Jconj](https://github.com/yamagoya/jconj): for conjugation data
-    * [Kanjijium](https://github.com/kishimoto-tsuneyo/ja_pitch_accent): for pitch accent data
+    * [Kanjijium](https://github.com/mifunetoshiro/kanjium): for pitch accent data
     * [jlpt-vocab](https://github.com/stephenmk/yomichan-jlpt-vocab) and [Jonathan Waller](http://www.tanos.co.uk/jlpt/): JLPT vocab data
   * Thanks Adrian Jordanov for the [font THEATER](https://www.1001fonts.com/theater-font.html)
   * Thanks 青柳衡山 (Aoyagi Kouzan) for the [font Kouzan Gyoushou](https://www.freejapanesefont.com/kouzan-semi-cursive-brush-font/).
