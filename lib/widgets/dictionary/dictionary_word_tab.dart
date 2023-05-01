@@ -149,7 +149,6 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         WordMeanings(
                           entry: widget.entry!, 
                           meaningsStyle: meaningsStyle,
-                          includeWikipediaDefinition: widget.includeWikipediaDefinition,
                         ),
 
                         if(g_webViewSupported)
