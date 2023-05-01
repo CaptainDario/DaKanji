@@ -173,11 +173,12 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
             ],
           
           // special information
-          RichText(
-            text: TextSpan(
-              children: [
-                for (int i = 0; i < readingInfos.length; i++)
-                  TextSpan(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (int i = 0; i < readingInfos.length; i++)
+                RichText(
+                  text: TextSpan(
                     children: [
                       WidgetSpan(
                         child: Transform.translate(
@@ -199,30 +200,35 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                       ),
                     ],
                   ),
-                for (int i = 0; i < kanjiInfos.length; i++)
-                  TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Transform.translate(
-                          offset: Offset(0, -5),
-                          child: Text(
-                            "${kanjiInfos.values.toList()[i]} ",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.grey
+                ),
+              for (int i = 0; i < kanjiInfos.length; i++)
+                SelectionContainer.disabled(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Transform.translate(
+                            offset: Offset(0, -5),
+                            child: Text(
+                              "${kanjiInfos.values.toList()[i]} ",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey
+                              )
                             )
                           )
-                        )
-                      ),
-                      TextSpan(
-                        text: ": " + kanjiInfos.keys.toList()[i],
-                        style: readingStyle
-                      ),
-                    ],
+                        ),
+                        TextSpan(
+                          text: ": " + kanjiInfos.keys.toList()[i],
+                          style: readingStyle
+                        ),
+                      ],
+                    ),
                   ),
-              ]
-            )
-          ),
+                ),
+            ]
+          )
+          
         ],
       ),
     );
