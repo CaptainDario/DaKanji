@@ -86,43 +86,24 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                       if(widget.entry.readingRestriction == null ||
                         widget.entry.readingRestriction![j] == null ||
                         widget.entry.readingRestriction![j]!.contains(widget.entry.kanjis[i]))
-                        for (int k = 0; k < widget.entry.readings[j].length; k++)
-                          Container(
-                            // TODO pitch accent decoration
-                            decoration: BoxDecoration(
-                              border: widget.entry.accents != null &&
-                                widget.entry.accents![j] != null &&
-                                widget.entry.accents![j]!.contains((k+1).toString())
-                              ? Border(
-                                top: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.5,
-                                ),
-                                right: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.5,
-                                ),
-                              )
-                              : null
-                            ),
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  // the reading
-                                  TextSpan(
-                                    text: widget.entry.readings[j][k],
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                // the reading
+                                WidgetSpan(
+                                  child: Text(
+                                    widget.entry.readings[j],
                                     style: readingStyle
                                   ),
-                                  // add superscript to indicate smth special with this reading
+                                ),
+                                // add superscript to indicate smth special with this reading
+                                if(widget.entry.readingInfo?[j] != null)
                                   WidgetSpan(
                                     child: Transform.translate(
                                       offset: const Offset(1, -7),
                                       child: SelectionContainer.disabled(
                                         child: Text(
-                                          k == widget.entry.readings[j].length-1 &&
-                                          widget.entry.readingInfo?[j] != null
-                                            ? (readingInfos[widget.entry.readingInfo![j]!]).toString()
-                                            : "",
+                                          (readingInfos[widget.entry.readingInfo![j]!]).toString(),
                                           style: TextStyle(
                                             fontSize: 10,
                                             color: hasKanji ? Colors.grey : null
@@ -131,15 +112,17 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                       ),
                                     ),
                                   ),
-                                  // add comma after each reading
-                                  TextSpan(
-                                    text: j != widget.entry.readings.length-1 &&
-                                    k == widget.entry.readings[j].length-1
-                                      ? "、" : "",
-                                    style: readingStyle
+                                // add comma after each reading
+                                WidgetSpan(
+                                  child: SelectionContainer.disabled(
+                                    child: Text(
+                                      j != widget.entry.readings.length-1
+                                        ? "、" : "",
+                                      style: readingStyle
+                                    ),
                                   ),
-                                ]
-                              ),
+                                )
+                              ]
                             ),
                           ),
                     ],
@@ -227,8 +210,37 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                   ),
                 ),
             ]
-          )
+          ),
           
+          // pitch accent: 川蝦
+          Row(
+            children: [
+              for (int i = 0; i < widget.entry.readings.length; i++)
+                if(widget.entry.accents != null && widget.entry.accents![i] != null)
+                  
+                    for (int a = 0; a < widget.entry.accents![i]!.split(",").length; a++)
+                      ...[
+                        for (int r = 0; r < widget.entry.readings[i].length; r++)
+                          Container(
+                            decoration: getPitchAccentDecoration(
+                              int.parse(widget.entry.accents![i]!.split(",")[a]), 
+                              widget.entry.readings[i],
+                              r 
+                            ),
+                            child: Text(
+                              widget.entry.readings[i][r],
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey
+                              ),
+                            ),
+                          ),
+                        if(i + a != widget.entry.readings.length-1 +
+                          widget.entry.accents![i]!.split(",").length-1)
+                          Text("、"),
+                      ]
+            ]
+          ),
         ],
       ),
     );
