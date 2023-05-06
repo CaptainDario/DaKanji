@@ -245,7 +245,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                       widget.meanings.senseInfo![j]!.attributes.join(","),
                       style: informationStyle,
                     ),
-                  // Part of Speech: 
+                  // Part of Speech: 食べる
                   if(widget.meanings.partOfSpeech != null && widget.meanings.partOfSpeech![j] != null)
                     Text(
                       widget.meanings.partOfSpeech![j]!.attributes.join(","),
