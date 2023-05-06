@@ -217,28 +217,27 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
             children: [
               for (int i = 0; i < widget.entry.readings.length; i++)
                 if(widget.entry.accents != null && widget.entry.accents![i] != null)
-                  
-                    for (int a = 0; a < widget.entry.accents![i]!.split(",").length; a++)
-                      ...[
-                        for (int r = 0; r < widget.entry.readings[i].length; r++)
-                          Container(
-                            decoration: getPitchAccentDecoration(
-                              int.parse(widget.entry.accents![i]!.split(",")[a]), 
-                              widget.entry.readings[i],
-                              r 
-                            ),
-                            child: Text(
-                              widget.entry.readings[i][r],
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey
-                              ),
+                  for (int a = 0; a < widget.entry.accents![i]!.split(",").length; a++)
+                    ...[
+                      for (int r = 0; r < widget.entry.readings[i].length; r++)
+                        Container(
+                          decoration: getPitchAccentDecoration(
+                            int.parse(widget.entry.accents![i]!.split(",")[a]), 
+                            widget.entry.readings[i],
+                            r 
+                          ),
+                          child: Text(
+                            widget.entry.readings[i][r],
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey
                             ),
                           ),
-                        if(i + a != widget.entry.readings.length-1 +
-                          widget.entry.accents![i]!.split(",").length-1)
-                          Text("、"),
-                      ]
+                        ),
+                      if(i + a != widget.entry.readings.length-1 +
+                        widget.entry.accents![i]!.split(",").length-1)
+                        Text("、"),
+                    ]
             ]
           ),
         ],
@@ -257,8 +256,15 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   /// `pitchAccent` == `reading.length` - 尾高 <br/>
   BoxDecoration getPitchAccentDecoration(int pitchAccent, String reading, int at) {
     
+    BorderSide empty = BorderSide(
+      color: Colors.transparent,
+      width: 1.5,
+      
+    );
+
     BoxDecoration falling = BoxDecoration(
       border: Border(
+        left: empty,
         top: BorderSide(
           color: Colors.grey,
           width: 1.5,
@@ -267,15 +273,18 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
           color: Colors.grey,
           width: 1.5,
         ),
+        bottom: empty
       )
     );
     BoxDecoration rising = BoxDecoration(
       border: Border(
-        bottom: BorderSide(
+        left: empty,
+        top: empty,
+        right: BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
-        right: BorderSide(
+        bottom: BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
@@ -283,6 +292,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     );    
     BoxDecoration low = BoxDecoration(
       border: Border(
+        left: empty,
+        top: empty,
+        right: empty,
         bottom: BorderSide(
           color: Colors.grey,
           width: 1.5,
@@ -291,10 +303,13 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     );
     BoxDecoration high = BoxDecoration(
       border: Border(
+        left: empty,
         top: BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
+        right: empty,
+        bottom: empty
       )
     );
 
