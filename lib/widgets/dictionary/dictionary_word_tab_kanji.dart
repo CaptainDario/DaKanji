@@ -233,4 +233,104 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
       ),
     );
   }
+
+  /// Determines the pitchAccent BoxDecoration for a given `reading` at `at`
+  /// using the `pitchAccent` information of the entry.
+  /// Returns the decoration to use for the character at `at`.
+  /// 
+  /// pitch accent: <br/>
+  /// 0 - 平板 <br/>
+  /// 1 - 頭高 <br/>
+  /// 1 < `pitchAccent` < `reading.length` - 中高 <br/>
+  /// `pitchAccent` == `reading.length` - 尾高 <br/>
+  BoxDecoration getPitchAccentDecoration(int pitchAccent, String reading, int at) {
+    
+    BoxDecoration falling = BoxDecoration(
+      border: Border(
+        top: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+        right: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+      )
+    );
+    BoxDecoration rising = BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+        right: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+      )
+    );    
+    BoxDecoration low = BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+      )
+    );
+    BoxDecoration high = BoxDecoration(
+      border: Border(
+        top: BorderSide(
+          color: Colors.grey,
+          width: 1.5,
+        ),
+      )
+    );
+
+    // 平板 
+    if(pitchAccent == 0){
+      if(at == 0)
+        return rising;
+      else
+        return high;
+    }
+    // 頭高
+    else if(pitchAccent == 1 && 1 < reading.length){
+      if(at == 0)
+        return falling;
+      else
+        return low;
+    }
+    // 中高
+    else if(1 < pitchAccent && pitchAccent < reading.length){
+      if(at == 0){
+        return rising;
+      }
+      else if (0 < at && at < pitchAccent-1){
+        return high;
+      }
+      else if (at == pitchAccent-1){
+        return falling;
+      }
+      else {
+        return low;
+      }
+    }
+    // 尾高
+    else if(pitchAccent == reading.length)
+      if(at == 0){
+        if(reading.length == 1)
+          return falling;
+        else
+          return rising;
+      }
+      else if(0 < at && at < reading.length-1)
+        return high;
+      else if(at == reading.length-1)
+        return falling;
+      else
+        return low;
+    else
+      throw Exception("Invalid pitch accent");
+
+  }
 }
