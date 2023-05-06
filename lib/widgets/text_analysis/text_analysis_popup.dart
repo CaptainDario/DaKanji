@@ -172,10 +172,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
                 },
                 child: SvgPicture.asset(
                   "assets/icons/corner_resize.svg",
-                  colorFilter: ColorFilter.mode(
-                    Colors.grey,
-                    BlendMode.srcIn
-                  )
+                  color: Colors.grey,
                 ),
               ),
             ),
