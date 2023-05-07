@@ -61,11 +61,13 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     ;
 
     Map<String, int> readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
-        .whereNotNull().toSet().toList())
+        .whereNotNull().map((e) => e.attributes)
+        .flattened.whereNotNull().toSet().toList())
       .asMap().map((key, value) => MapEntry(value, key+1));
 
     Map<String, int> kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
-        .whereNotNull().map((e) => e.attributes).flattened.whereNotNull().toSet().toList())
+        .whereNotNull().map((e) => e.attributes)
+        .flattened.whereNotNull().toSet().toList())
       .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
 
 
@@ -102,7 +104,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                       offset: const Offset(1, -7),
                                       child: SelectionContainer.disabled(
                                         child: Text(
-                                          (readingInfos[widget.entry.readingInfo![j]!]).toString(),
+                                          (readingInfos[widget.entry.readingInfo![j]!.attributes.join(", ")]).toString(),
                                           style: TextStyle(
                                             fontSize: 10,
                                             color: hasKanji ? Colors.grey : null
@@ -188,7 +190,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
 
           SizedBox(height: 5),
 
-          // special information
+          // special information: 刺草 (re_inf & ke_inf), 然う言う (2x rei_inf), 真っ当 (2x ke_inf) 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
