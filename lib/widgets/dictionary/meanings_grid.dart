@@ -97,10 +97,10 @@ class _MeaningsGridState extends State<MeaningsGrid> {
 
     /// the lenght of this meanings table (how many rows)
     int tableLength = showAllMeanings ?
-      widget.meanings.meanings!.length : 
-      min(widget.meanings.meanings!.length, 5);
+      widget.meanings.meanings.length : 
+      min(widget.meanings.meanings.length, 5);
     /// should the 'show more'-button be there
-    int hide = widget.meanings.meanings!.length > 5 && !showAllMeanings ? 1 : 0;
+    int hide = widget.meanings.meanings.length > 5 && !showAllMeanings ? 1 : 0;
     
     return AnimatedSize(
       duration: Duration(milliseconds: 500),
@@ -134,7 +134,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 children: [
                   // the actual meaning
                   SelectableText(
-                    widget.meanings.meanings![j].replaceAll("⬜", ", "),
+                    widget.meanings.meanings[j].attributes.join(", "),
                     style: widget.style
                   ),
                   // refernces, ex.: 悪どい, アメラグ

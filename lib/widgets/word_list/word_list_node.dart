@@ -483,7 +483,7 @@ class _WordListNodeState extends State<WordListNode> {
                                   maxLines: maxOneLine ? 1 : null
                                 ),
                                 pw.Text(
-                                  language.meanings!.join(", "),
+                                  language.meanings.join(", "),
                                   style: notoStyle,
                                   maxLines: 1
                                 ),
@@ -592,7 +592,7 @@ class _WordListNodeState extends State<WordListNode> {
                                   maxLines: 1
                                 ),
                                 pw.Text(
-                                  language.meanings!.join(", "),
+                                  language.meanings.join(", "),
                                   style: notoStyle,
                                   maxLines: 1
                                 )

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
@@ -47,11 +48,12 @@ List<List<JMdict>> sortJmdictList(
       
       // MEANING matched
       if(ranked.item1 == -1){
-        // filter all langauges that are selected in the settings and join them to a list
+        // filter all entries that have langauge that is enabled and join them to a list
         List<List<String>> k = entry.meanings.where((LanguageMeanings e) =>
-            languages.contains(e.language)
-          ).map((LanguageMeanings e) => 
-            e.meanings!
+            e.meanings.any((e) => languages.contains(e.attributes))
+          )
+          .map((LanguageMeanings e) => 
+            e.meanings.map((e) => e.attributes.whereNotNull()).flattened.toList()
           ).toList();
         ranked = rankMatches(k, queryText);
       }
@@ -232,6 +234,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
       )
 
     // search over meanings
+    /* TODO fix search
     .or()
       .meaningsElement((meaning) => 
         meaning.anyOf(langs, (m, lang) => m
@@ -248,7 +251,8 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
             m.meaningsElementMatches(message)
           )
         )  
-    )
+      
+    )*/
   );
 
 

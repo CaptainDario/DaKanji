@@ -118,10 +118,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
                                 cnt += 1;
                               }
                             }
-
                             return Text(
-                              widget.dictEntry.meanings[idx].meanings!.length > index
-                                ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings![index].split("⬜").join(", ")}"
+                              widget.dictEntry.meanings[idx].meanings.length > index
+                                ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings[index].attributes.join(", ")}"
                                 : "",
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

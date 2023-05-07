@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -60,14 +61,12 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     ;
 
     Map<String, int> readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
-        .where((e) => e != null)
-        .toSet().toList())
+        .whereNotNull().toSet().toList())
       .asMap().map((key, value) => MapEntry(value, key+1));
 
     Map<String, int> kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
-        .where((e) => e != null && e != "")
-        .toSet().toList())
-      .asMap().map((key, value) => MapEntry(value, key+1+readingInfos.length));
+        .whereNotNull().map((e) => e.attributes).flattened.whereNotNull().toSet().toList())
+      .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
 
 
     return SelectionArea(
@@ -85,7 +84,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                     for (int j = 0; j < widget.entry.readings.length; j++)
                       if(widget.entry.readingRestriction == null ||
                         widget.entry.readingRestriction![j] == null ||
-                        widget.entry.readingRestriction![j]!.contains(widget.entry.kanjis[i]))
+                        widget.entry.readingRestriction![j]!.attributes.contains(widget.entry.kanjis[i]))
                           Text.rich(
                             TextSpan(
                               children: [
@@ -137,24 +136,58 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                         text: widget.entry.kanjis[i],
                         style: kanjiStyle
                       ),
-                      for (String info in widget.entry.kanjiInfo![i]!.split("⬜"))
-                        if(info != "")
-                          WidgetSpan(
-                            child: Transform.translate(
-                              offset: Offset(1, -18),
-                              child: Text(
-                                kanjiInfos[info].toString() +
-                                  (info == widget.entry.kanjiInfo![i]!.split("⬜").last
-                                    ? ""
-                                    : ","),
-                              ),
+                      if(widget.entry.kanjiInfo != null && widget.entry.kanjiInfo![i] != null)
+                        for (String? info in widget.entry.kanjiInfo![i]!.attributes)
+                          if(info != null)
+                            WidgetSpan(
+                              child: Transform.translate(
+                                offset: Offset(1, -18),
+                                child: Text(
+                                  kanjiInfos[info].toString() +
+                                    (info == widget.entry.kanjiInfo![i]!.attributes.last
+                                      ? ""
+                                      : ","),
+                                ),
+                              )
                             )
-                          )
                     ]
                   )
                 )
             ],
           
+          SizedBox(height: 5),
+
+          // pitch accent: 川蝦
+          Row(
+            children: [
+              for (int i = 0; i < widget.entry.readings.length; i++)
+                if(widget.entry.accents != null && widget.entry.accents![i] != null)
+                  for (int a = 0; a < widget.entry.accents![i]!.attributes.length; a++)
+                    ...[
+                      for (int r = 0; r < widget.entry.readings[i].length; r++)
+                        Container(
+                          decoration: getPitchAccentDecoration(
+                            int.parse(widget.entry.accents![i]!.attributes[a]!), 
+                            widget.entry.readings[i],
+                            r 
+                          ),
+                          child: Text(
+                            widget.entry.readings[i][r],
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey
+                            ),
+                          ),
+                        ),
+                      if(i + a != widget.entry.readings.length-1 +
+                        widget.entry.accents![i]!.attributes.length-1)
+                        Text("、"),
+                    ]
+            ]
+          ),
+
+          SizedBox(height: 5),
+
           // special information
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,34 +245,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
             ]
           ),
           
-          // pitch accent: 川蝦
-          Row(
-            children: [
-              for (int i = 0; i < widget.entry.readings.length; i++)
-                if(widget.entry.accents != null && widget.entry.accents![i] != null)
-                  for (int a = 0; a < widget.entry.accents![i]!.split(",").length; a++)
-                    ...[
-                      for (int r = 0; r < widget.entry.readings[i].length; r++)
-                        Container(
-                          decoration: getPitchAccentDecoration(
-                            int.parse(widget.entry.accents![i]!.split(",")[a]), 
-                            widget.entry.readings[i],
-                            r 
-                          ),
-                          child: Text(
-                            widget.entry.readings[i][r],
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.grey
-                            ),
-                          ),
-                        ),
-                      if(i + a != widget.entry.readings.length-1 +
-                        widget.entry.accents![i]!.split(",").length-1)
-                        Text("、"),
-                    ]
-            ]
-          ),
+          
         ],
       ),
     );
