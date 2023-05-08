@@ -186,6 +186,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   ];
 
   // copy assets from assets to documents directory, or download them from GH
+  bool downloadAllowed = false;
   for (FileSystemEntity asset in assets) {
     
     if((!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
@@ -195,8 +196,9 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     {
       await getAsset(
         asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
-        g_GithubApiDependenciesRelase, context
+        g_GithubApiDependenciesRelase, context, downloadAllowed
       );
+      downloadAllowed = true;
       GetIt.I<UserData>().dictVersionUsed = g_VersionNumber;
       await GetIt.I<UserData>().save();
     }

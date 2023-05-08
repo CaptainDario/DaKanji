@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_progress_indicator.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 
 
@@ -93,7 +93,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         // Is data loading
         if(snapshot.connectionState != ConnectionState.done){
           return Center(
-            child: DaKanjiProgressIndicator()
+            child: DaKanjiLoadingIndicator()
           );
         }
         else{

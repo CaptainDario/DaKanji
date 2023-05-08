@@ -13,8 +13,7 @@ import 'package:da_kanji_mobile/globals.dart';
 Future<void> restartApp(BuildContext context) async {
 
   g_documentsServicesInitialized = false;
-  g_userAllowedToDownload = false;
-  g_initTextStream = StreamController<String>.broadcast();
+  g_downloadFromGHStream = StreamController<String>.broadcast();
   g_initApp = init();
   await GetIt.I.reset(dispose: true);
   Phoenix.rebirth(context);

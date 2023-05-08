@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_progress_indicator.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
@@ -356,7 +356,7 @@ class _WordListNodeState extends State<WordListNode> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: PdfPreview(
-                loadingWidget: DaKanjiProgressIndicator(),
+                loadingWidget: DaKanjiLoadingIndicator(),
                 actions: [
                   // to portrait
                   IconButton(

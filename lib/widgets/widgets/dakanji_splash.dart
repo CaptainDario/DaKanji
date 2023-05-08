@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_progress_indicator.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 
 
@@ -55,7 +55,7 @@ class DaKanjiSplash extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20,),
-              const DaKanjiProgressIndicator(),
+              const DaKanjiLoadingIndicator(),
               if(text != null)
                 Text(
                   text!,

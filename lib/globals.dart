@@ -32,13 +32,10 @@ GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
 /// global init function feature that needs to complete before the app can be
 /// started
 var g_initApp = init();
-/// If the user pressed the ok-button in the download popup, this will be set to
-/// true.
-bool g_userAllowedToDownload = false;
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
-StreamController<String> g_initTextStream = StreamController<String>.broadcast();
+StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
 
 /// just the version number of this app
 String g_VersionNumber = "";

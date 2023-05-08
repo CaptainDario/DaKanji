@@ -9,10 +9,13 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 /// Inform the user that additional data is needed to use the app
-AwesomeDialog downloadPopup({
-  required BuildContext context,
-  void Function()? btnOkOnPress
-  })
+AwesomeDialog downloadPopup(
+  {
+    required BuildContext context,
+    void Function()? btnOkOnPress,
+    bool dismissable = false
+  }
+)
 {
 
   return AwesomeDialog(
@@ -20,9 +23,11 @@ AwesomeDialog downloadPopup({
     desc: LocaleKeys.HomeScreen_download_popup_permission.tr(),
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
-    dismissOnTouchOutside: false,
+    dismissOnTouchOutside: dismissable,
     btnOkColor: g_Dakanji_green,
     btnOkOnPress: btnOkOnPress,
+    btnCancelColor: g_Dakanji_red,
+    btnCancelOnPress: dismissable ? () {} : null,
   );
 
 }

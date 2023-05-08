@@ -1,17 +1,20 @@
-
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:get_it/get_it.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 
+import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
@@ -20,6 +23,8 @@ import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.da
 import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab_kanji.dart';
+import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 
 
@@ -65,6 +70,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   String? readingOrKanji;
   /// The pos that should be used for conjugating this word
   List<Pos>? conjugationPos;
+  /// the directory in which the audio files are stored
+  late Directory audioFilesDir;
+  /// Playback of audio files
+  final Player player = Player();
 
 
   @override
@@ -80,7 +89,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   }
 
   /// parses and initializes all data elements of this widget
-  void initData(){
+  void initData() async {
+
+    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+
     if(widget.entry != null){
       readingOrKanji = widget.entry!.kanjis.isEmpty
         ? widget.entry!.readings[0]
@@ -93,6 +105,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   @override
@@ -127,17 +145,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
                         // JLPT
                         if(widget.entry!.jlptLevel != null && widget.entry!.jlptLevel!.isNotEmpty)
-                          Wrap(
-                            children: [
-                              for (var jlpt in widget.entry!.jlptLevel!.toSet())
-                                Text(
-                                  "$jlpt",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12
-                                  ),
-                                ),
-                            ],
+                          Text(
+                            widget.entry!.jlptLevel!.join(", "),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12
+                            ),
                           ),
                         
                         const SizedBox(
@@ -175,6 +188,22 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           ),
                       ],
                     ),
+                    if(widget.entry!.audio != null)
+                      Positioned(
+                        top: 0,
+                        right: 40,
+                        child: IconButton(
+                          splashRadius: 25,
+                          icon: const Icon(Icons.play_arrow),
+                          onPressed: () async {
+                            if(!audioFilesDir.existsSync())
+                              downloadAudio();
+
+                            player.open(Media('file:///${audioFilesDir.path}/${widget.entry!.audio}.mp3'));
+                            player.play();
+                          },
+                        )
+                      ),
                     // more menu, to open this word in different web pages
                     Positioned(
                       right: 0,
@@ -252,5 +281,49 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         ),
       ),
     );
+  }
+
+  /// Download the audio files from the github release
+  void downloadAudio(){
+
+    downloadPopup(
+      context: context,
+      dismissable: true,
+      btnOkOnPress: () async {
+        downloadAssetFromGithubRelease(
+          File(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios")),
+          g_GithubApiDependenciesRelase,
+        ).then((value) {
+          Navigator.of(context).pop();
+        });
+        AwesomeDialog(
+          context: context,
+          headerAnimationLoop: false,
+          dismissOnTouchOutside: false,
+          customHeader: Image.asset("assets/images/dakanji/icon.png"),
+          dialogType: DialogType.noHeader,
+          body: StreamBuilder(
+            stream: g_downloadFromGHStream.stream,
+            builder: (context, snapshot) {
+              return Container(
+                height: MediaQuery.of(context).size.height / 4,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DaKanjiLoadingIndicator(),
+                      Text(
+                        snapshot.data ?? ""
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          )
+        ).show();
+      }
+    ).show();
+
   }
 }

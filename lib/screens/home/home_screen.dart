@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: StreamBuilder<String>(
-        stream: g_initTextStream.stream,
+        stream: g_downloadFromGHStream.stream,
         builder: (context, snapshot) {
           return DaKanjiSplash(
             text: snapshot.data,

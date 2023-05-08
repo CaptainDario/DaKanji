@@ -23,35 +23,35 @@ import 'package:da_kanji_mobile/globals.dart';
 /// 
 /// Note: `asset` is expected to be a zipped file in assets/github
 Future<void> getAsset(FileSystemEntity asset, String dest, String url,
-  BuildContext context) async
+  BuildContext context, bool askToDownload) async
 {
   // Search and create db file destination folder if not exist
   final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
 
   // if the file already exists delete it
-  final dbFile = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
-  if (dbFile.existsSync()) {
-    dbFile.deleteSync();
-    print("Deleted ${asset.uri.pathSegments.last} ISAR");
+  final file = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
+  if (file.existsSync()) {
+    file.deleteSync();
+    print("Deleted ${asset.uri.pathSegments.last}");
   }
   // otherwise create the folder structure
   else{
-    dbFile.parent.createSync(recursive: true);
+    file.parent.createSync(recursive: true);
   }
 
   try {
-    await copyFromAssets(asset.path, dbFile.parent);
+    await copyFromAssets(asset.path, file.parent);
   }
   catch (e){
-    if(!g_userAllowedToDownload)
+    if(askToDownload)
       await downloadPopup(
         context: context,
-        btnOkOnPress: () => g_userAllowedToDownload = true
+        btnOkOnPress: () {}
       ).show();
 
     while(true){
       try{
-        await downloadAssetFromGithubRelease(dbFile, url,);
+        await downloadAssetFromGithubRelease(file, url,);
         break;
       }
       catch (e){
@@ -85,7 +85,8 @@ Future<void> copyFromAssets(String assetPath,  Directory dest) async {
   extractArchiveToDisk(archive, dest.path);
 }
 
-/// Downloads the given `assetName` from the given GitHub release
+/// Downloads the given `assetName` from the GitHub (`url`), uses the release
+/// matching this version
 Future<void> downloadAssetFromGithubRelease(File destination, String url) async 
 {
   // get all releases
@@ -117,8 +118,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
       if (total != -1) {
         String progress =
           "${fileName.split(".")[0]}: ${(received / total * 100).toStringAsFixed(0) + "%"}";
-        g_initTextStream.add(progress);
-        print(progress);
+        g_downloadFromGHStream.add(progress);
       }
     }
   );

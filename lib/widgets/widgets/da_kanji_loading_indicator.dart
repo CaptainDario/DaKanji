@@ -7,8 +7,9 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 /// The loading spinner to show while loading data
-class DaKanjiProgressIndicator extends StatelessWidget {
-  const DaKanjiProgressIndicator({super.key});
+class DaKanjiLoadingIndicator extends StatelessWidget {
+
+  const DaKanjiLoadingIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
