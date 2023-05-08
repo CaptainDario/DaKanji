@@ -165,7 +165,6 @@ Future<void> _searchInIsar(SendPort p) async {
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
-    print(message);
 
     if (message == null) {
       // Exit if the main isolate sends a null message
@@ -175,28 +174,24 @@ Future<void> _searchInIsar(SendPort p) async {
     if (message is String) {
       Stopwatch s = Stopwatch()..start();
 
-      // convert the message to hiragana if setting enabled
-      if(kanaize)
-        messageHiragana = kanaKit.toHiragana(message);
-      
       // check if the message contains wildcards and replace them appropriately
       String _message = message.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
       messageHiragana = messageHiragana.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
 
-      // extract filters from query
-      List<String> filters = _message.split(" ").where((e) => e.startsWith("#")).toList();
-      _message = _message.split(" ").where((e) => !e.startsWith("#")).join(" ");
-
-      print("${filters} ${filters.length} $_message");
-
+      // convert the message to hiragana if setting enabled
+      if(kanaize)
+        messageHiragana = kanaKit.toHiragana(message);
+      if(kanaKit.isJapanese(message))
+        _message = kanaKit.toHiragana(kanaKit.toKatakana(message));
+      
       List<JMdict> searchResults = 
-        buildJMDictQuery(isar, idRangeStart, idRangeEnd,
-          _message, messageHiragana, langs)
-        .limit(1000).findAllSync();
+        buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
+          _message, messageHiragana)
+        .findAllSync();
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      print("len ${searchResults.length} time: ${s.elapsed}");
+      print("Query: $message $_message, $messageHiragana len: ${searchResults.length} time: ${s.elapsed}");
     }    
   }
 

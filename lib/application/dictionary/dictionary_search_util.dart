@@ -1,3 +1,5 @@
+
+
 import 'package:collection/collection.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
@@ -49,12 +51,15 @@ List<List<JMdict>> sortJmdictList(
       // MEANING matched
       if(ranked.item1 == -1){
         // filter all entries that have langauge that is enabled and join them to a list
-        List<List<String>> k = entry.meanings.where((LanguageMeanings e) =>
-            e.meanings.any((e) => languages.contains(e.attributes))
-          )
-          .map((LanguageMeanings e) => 
-            e.meanings.map((e) => e.attributes.whereNotNull()).flattened.toList()
-          ).toList();
+        List<List<String>> k = entry.meanings.where(
+          (LanguageMeanings e) => languages.contains(e.language)
+        ).map((e) => 
+          e.meanings.map((e) => 
+            e.attributes.whereNotNull()
+          ).flattened.toList()
+        )
+        .toList();
+        
         ranked = rankMatches(k, queryText);
       }
       // the query was found in this entry
@@ -69,6 +74,7 @@ List<List<JMdict>> sortJmdictList(
     matches[1] = sortEntries(matches[1], matchIndices[1], lenDifferences[1]);
     matches[2] = sortEntries(matches[2], matchIndices[2], lenDifferences[2]);
   }
+  // if a wildcard was used just sort by frequency
   else {
     matches[0] = entries..sort((a, b) => b.frequency.compareTo(a.frequency));
   }
@@ -179,82 +185,87 @@ List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
 }
 
 ///  Builds a search query for the JMDict database in ISAR
-QueryBuilder<JMdict, JMdict, QAfterFilterCondition> buildJMDictQuery(
-  Isar isar, int idRangeStart, int idRangeEnd,
-  String message, String messageHiragana, List<String> langs
-)
+/// 
+/// Searches in the given `isar` for entries with an id between `idRangeStart`
+/// and `idRangeEnd` and a message that matches `message`.
+/// 
+/// Note: potential optimizations: <br/>
+/// * include ID in kanji / kana / meanings index to split load between isolates
+QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
+  Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
+  String query, String queryHiragana)
 {
   // if a message hiragana is provided (the setting for converting is enabled),
   // search for the converted message
-  String convertedQuery = messageHiragana == '' ? message : messageHiragana;
+  String convertedQuery = queryHiragana == '' ? query : queryHiragana;
   // check if the search contains a wildcard
   bool containsWildcard = convertedQuery.contains(RegExp(r"\?|\*"));
 
-  QueryBuilder<JMdict, JMdict, QAfterFilterCondition> q = isar.jmdict.where()
+  QueryBuilder<JMdict, JMdict, QFilterCondition> q;
+  if(!containsWildcard)
+    q = normalQuery(isar, idRangeStart, idRangeEnd, query);
+  else
+    q = wildcardQuery(isar, idRangeStart, idRangeEnd, convertedQuery);    
 
-    // limit this process to one chunk of size (entries.length / num_processes)
-    .idBetween(idRangeStart, idRangeEnd)
+  // extract filters from query
+  List<String> filters = query.split(" ").where((e) => e.startsWith("#")).toList();
+  query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
+
+  return q
+    // only include matches in selected languages
+    .anyOf([], (q, lang) =>
+      q.meaningsElement((qM) => 
+        qM.languageContains(lang)
+      )
+    )
+    
+    // apply filters
+    .optional(filters.isNotEmpty, (q) => 
+      q.anyOf(filters, (q, element) => 
+        q.meaningsElement((qM) => 
+          qM.partOfSpeechElement((qP) => 
+            qP.attributesElementContains(element)
+          )
+            .or()
+          .fieldElement((qF) => 
+            qF.attributesElementContains(element)
+          )
+        )
+      )
+    )
+    .sortByFrequencyDesc()
+    .limit(200 ~/ noIsolates);
+}
+
+QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
+  Isar isar, int idRangeStart, int idRangeEnd, String query){
+
+  return isar.jmdict.where()
+    .kanjisElementStartsWith(query)
+      .or()
+    .hiraganasElementStartsWith(query)
+      .or()
+    .meaningsIndexesElementStartsWith(query)
 
   .filter()
-    // apply filters
-    /*.group((qu) => 
-      qu.anyOf(["verb", "noun", "biology"], (q, element) => 
-        q.partOfSpeechElementContains(element)
-          .or()
-        .fieldElementContains(element)
-      ) 
-    )
-  .and()*/
-    .group((qu) => 
-      // search over kanji
-      qu.optional(!containsWildcard, (q) => 
-        q.optional(message.length == 1, (t) => 
-          t.kanjisElementStartsWith(message, caseSensitive: false)
-        ).or()
-        .optional(message.length > 1, (t) => 
-          t.kanjisElementContains(message, caseSensitive: false)
-        )
-      )
-      .optional(containsWildcard, (q) => 
-        q.kanjisElementMatches(convertedQuery)
-      )
-
-    // search over readings (kana or message directly)
-    .or()
-      .optional(!containsWildcard, (q) => 
-        q.optional(convertedQuery.length < 2, (t) => 
-          t.hiraganasElementStartsWith(convertedQuery, caseSensitive: false)
-        ).or()
-        .optional(convertedQuery.length >= 2, (t) => 
-          t.hiraganasElementContains(convertedQuery, caseSensitive: false)
-        )
-      )
-      .optional(containsWildcard, (q) =>
-        q.hiraganasElementMatches(convertedQuery)
-      )
-
-    // search over meanings
-    /* TODO fix search
-    .or()
-      .meaningsElement((meaning) => 
-        meaning.anyOf(langs, (m, lang) => m
-          .languageEqualTo(lang, caseSensitive: false)
-          .optional(!containsWildcard, (q) =>
-            q.optional(message.length < 3, (m) => m
-              .meaningsElementStartsWith(message, caseSensitive: false)
-            )
-            .optional(message.length >= 3, (m) => m
-              .meaningsElementContains(message, caseSensitive: false)
-            )
-          )
-          .optional(containsWildcard, (m) => 
-            m.meaningsElementMatches(message)
-          )
-        )  
-      
-    )*/
-  );
-
-
-  return q;
+    // limit this process to one chunk of size (entries.length / num_processes)
+    .idBetween(idRangeStart, idRangeEnd)
+  ;
 }
+
+QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
+  Isar isar, int idRangeStart, int idRangeEnd, String query, ){
+
+  return isar.jmdict.where()
+      .idBetween(idRangeStart, idRangeEnd)
+    .filter()
+
+      .kanjisElementMatches(query)
+        .or()
+      .hiraganasElementMatches(query)
+        .or()
+      .meaningsIndexesElementMatches(query)
+  ;
+
+}
+
