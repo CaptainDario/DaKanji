@@ -170,7 +170,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                         ]
                       ),
                     ),
-                  // antonyms: 
+                  // antonyms: 空車
                   if(widget.meanings.antonyms != null && widget.meanings.antonyms![j] != null)
                     RichText(
                       text: TextSpan(
