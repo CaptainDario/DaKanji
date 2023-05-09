@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -59,6 +60,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// The scroll controller for the list of settings
   late ScrollController scrollController;
+  /// Are dict search isolates restarting
+  bool restartingDictSearch = false;
+
 
   @override
   void initState() {
@@ -325,11 +329,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_dict_kanaize.tr(),
                         value: settings.dictionary.convertToHiragana,
                         leadingIcon: Icons.info_outline,
-                        onTileTapped: (value) {
+                        onTileTapped: (value) async {
+                          if(restartingDictSearch) return;
+                          restartingDictSearch = true;
+
                           setState(() {
                             settings.dictionary.convertToHiragana = value;
                             settings.save();
                           });
+                          GetIt.I<DictionarySearch>().convertToHiragana = value;
+                          await GetIt.I<DictionarySearch>().kill();
+                          await GetIt.I<DictionarySearch>().init();
+
+                          restartingDictSearch = false;
                         },
                         onLeadingIconPressed: () async {
                           await AwesomeDialog(

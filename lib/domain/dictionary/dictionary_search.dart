@@ -37,13 +37,13 @@ class DictionarySearch {
 
 
   /// Needs to be called before using this object
-  void init () async {
+  Future<void> init () async {
     
     for (var i = 0; i < noIsolates; i++) {
       _searchIsolates.add(DictionarySearchIsolate(
         languages, directory, name, convertToHiragana,
-      )
-      ..init(i, noIsolates));
+      ));
+      await _searchIsolates[i].init(i, noIsolates);
     }
 
     _initialized = true;
@@ -90,10 +90,11 @@ class DictionarySearch {
   }
 
   /// terminates all isolates and cleans memory
-  void kill() {
+  Future<void> kill() async {
     for (var searchIsolate in _searchIsolates) {
-      searchIsolate.kill();
+      await searchIsolate.kill();
     }
+    _searchIsolates = [];
     _initialized = false;
   }
 

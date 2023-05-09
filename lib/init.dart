@@ -155,7 +155,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       GetIt.I<Settings>().dictionary.convertToHiragana
     ), dispose: (param) => param.kill(),
   );
-  GetIt.I<DictionarySearch>().init();
+  await GetIt.I<DictionarySearch>().init();
 
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
