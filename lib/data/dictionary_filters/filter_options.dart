@@ -1,6 +1,7 @@
 
 
 
+/// filed filteres as defined in JMDict
 Map<String, String> jmDictFields = {
   "MA" : "martial arts term",
   "X" : "rude or X-rated term",
@@ -75,12 +76,14 @@ Map<String, String> jmDictFields = {
   "id" : "idiomatic expression",
 };
 
+/// general part of speech filters that apply to many specific filters
 Map<String, String> jmDictPosGeneral = {
   "adj" : "adjective",
   "noun" : "noun",
   "verb" : "verb",
 };
 
+/// part of speech filteres as defined in JMDict
 Map<String, String> jmDictPos = {
   "vt" : "transitive verb",
   "adj-i" : "adjective (keiyoushi)",
@@ -175,6 +178,7 @@ Map<String, String> jmDictPos = {
   "v2w-s" : "Nidan verb (lower class) with `u' ending and `we' conjugation (archaic)",
 };
 
+/// All part of speech filters (sames as `jmDictPos`) but sorted alphabetically
 Map jmDictPosSorted = jmDictPosGeneral..addAll(
   Map.fromEntries(
     jmDictPos.entries.toList()..sort((a, b) => 
@@ -184,11 +188,13 @@ Map jmDictPosSorted = jmDictPosGeneral..addAll(
   )
 );
 
+/// All field filters (sames as `jmDictFields`) but sorted alphabetically
 Map jmDictFieldsSorted = Map.fromEntries(
   jmDictFields.entries.toList()..sort((a, b) => 
     a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
       .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
   )
+// add the entries from the dict that is longer
 )..addAll(
   Map.fromIterable(
     List.generate(jmDictPosSorted.length-jmDictFields.length, (index) => ""),
@@ -196,3 +202,6 @@ Map jmDictFieldsSorted = Map.fromEntries(
     value: (element) => element,
   )
 );
+
+/// all filters that are available
+Map jmDictAllFilters = jmDictPos..addAll(jmDictFields)..addAll(jmDictPosGeneral);
