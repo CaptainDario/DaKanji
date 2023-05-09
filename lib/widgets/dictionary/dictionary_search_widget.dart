@@ -73,8 +73,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   late Animation<double> searchBarAnimation;
   /// AnimationController for closing and opening the search bar
   late AnimationController searchBarAnimationController;
-  /// Are the filter options expanded
-  bool filterExpanded = false;
   /// The global key of the search input field (used to measure size)
   GlobalKey searchTextInputKey = GlobalKey();
   /// The height of the input searchfield
