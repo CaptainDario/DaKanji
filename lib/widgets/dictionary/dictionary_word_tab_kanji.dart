@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:tuple/tuple.dart';
 
 
 
@@ -26,6 +27,21 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
 
   /// does this entry have kanji
   late bool hasKanji;
+  /// Map of infos about kanjis without duplicates and their index in the kanji list
+  late Map<String, int> kanjiInfos;
+  /// Map of infos about readings without duplicates and their index in the reading list
+  late Map<String, int> readingInfos;
+  /// the text style to use for all words
+  TextStyle kanjiStyle = const TextStyle(
+    fontSize: 30
+  );
+  /// the text style to use for all readings
+  late TextStyle readingStyle;
+  /// List of pitch accent and if available info
+  List<List<int>?> accents = [];
+
+  RegExp accentRegex = RegExp(r"(\d+)");
+
 
   @override
   void initState() {
@@ -41,35 +57,46 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
 
   void init(){
     hasKanji = !widget.entry.kanjis.isEmpty;
-  }
 
-  @override
-  Widget build(BuildContext context) {
-
-    /// the text style to use for all words
-    TextStyle kanjiStyle = const TextStyle(
-      fontSize: 30
-    );
-
-    /// the text style to use for all readings
-    TextStyle readingStyle = hasKanji
-      ? const TextStyle(
-        fontSize: 14,
-        color: Colors.grey
-      )
-      : kanjiStyle
-    ;
-
-    Map<String, int> readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
-        .whereNotNull().map((e) => e.attributes)
-        .flattened.whereNotNull().toSet().toList())
-      .asMap().map((key, value) => MapEntry(value, key+1));
-
-    Map<String, int> kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
+    kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
         .whereNotNull().map((e) => e.attributes)
         .flattened.whereNotNull().toSet().toList())
       .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
 
+    readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
+        .whereNotNull().map((e) => e.attributes)
+        .flattened.whereNotNull().toSet().toList())
+      .asMap().map((key, value) => MapEntry(value, key+1));
+
+    readingStyle = hasKanji
+      ? const TextStyle(
+        fontSize: 14,
+        color: Colors.grey
+      )
+      : kanjiStyle;
+  
+    accents = [];
+    for (var i = 0; i < widget.entry.readings.length; i++) {
+      if(widget.entry.accents != null && widget.entry.accents![i] != null){
+        accents.add([]);
+        for (var j = 0; j < widget.entry.accents![i]!.attributes.length; j++) {
+          int accentPattern = int.parse(
+            accentRegex.allMatches(
+              widget.entry.accents![i]!.attributes[j]!
+            ).first.group(0)!
+          );
+          if(!accents[i]!.contains(accentPattern))
+            accents[i]!.add(accentPattern);
+        }
+      }
+      else{
+        accents.add(null);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return SelectionArea(
       child: Column(
@@ -159,17 +186,17 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
           
           SizedBox(height: 5),
 
-          // pitch accent: 川蝦
+          // pitch accent: 川蝦, 結構
           Row(
             children: [
               for (int i = 0; i < widget.entry.readings.length; i++)
-                if(widget.entry.accents != null && widget.entry.accents![i] != null)
-                  for (int a = 0; a < widget.entry.accents![i]!.attributes.length; a++)
+                if(accents[i] != null)
+                  for (var a = 0; a < accents[i]!.length; a++)
                     ...[
                       for (int r = 0; r < widget.entry.readings[i].length; r++)
                         Container(
                           decoration: getPitchAccentDecoration(
-                            int.parse(widget.entry.accents![i]!.attributes[a]!), 
+                            accents[i]![a],
                             widget.entry.readings[i],
                             r 
                           ),
