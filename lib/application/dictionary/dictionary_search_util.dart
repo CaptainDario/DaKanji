@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:kana_kit/kana_kit.dart';
 import 'package:isar/isar.dart';
 
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
@@ -202,13 +201,6 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
     q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);    
 
   return q
-    // only include matches in selected languages
-    /*.anyOf(langs, (q, lang) =>
-      q.meaningsElement((qM) => 
-        qM.languageContains(lang)
-      )
-    )*/
-    
     // apply filters
     .optional(filters.isNotEmpty, (q) => 
       q.anyOf(filters, (q, filter) => 
