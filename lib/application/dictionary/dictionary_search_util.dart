@@ -19,7 +19,7 @@ import 'package:da_kanji_mobile/domain/isar/isars.dart';
 /// 2.  sort inside each category based on <br/>
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String queryText, List<String> languages,
+  List<JMdict> entries, String queryText, String? queryKana, List<String> languages,
   bool convertToHiragana
 ){
 
@@ -32,21 +32,17 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> matchIndices = [[], [], []];
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
-  /// the query converted to hiragana (if setting is enabled)
-  String queryTextConverted = convertToHiragana
-    ? KanaKit().toHiragana(queryText)
-    : queryText;
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
   if(!queryText.contains(RegExp(r"\?|\*")))
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched
-      Tuple3 ranked = rankMatches([entry.kanjis], queryText);
+      Tuple3 ranked = rankMatches([entry.kanjiIndexes], queryText);
       
       // READING matched
       if(ranked.item1 == -1)
-        ranked = rankMatches([entry.hiraganas], queryTextConverted);
+        ranked = rankMatches([entry.hiraganas], queryKana ?? queryText);
       
       // MEANING matched
       if(ranked.item1 == -1){
@@ -193,42 +189,36 @@ List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
 /// * include ID in kanji / kana / meanings index to split load between isolates
 QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
-  String query, String queryHiragana)
+  String query, String? kanaizedQuery, List<String> filters, List<String> langs)
 {
-  // if a message hiragana is provided (the setting for converting is enabled),
-  // search for the converted message
-  String convertedQuery = queryHiragana == '' ? query : queryHiragana;
+
   // check if the search contains a wildcard
-  bool containsWildcard = convertedQuery.contains(RegExp(r"\?|\*"));
+  bool containsWildcard = query.contains(RegExp(r"\?|\*"));
 
   QueryBuilder<JMdict, JMdict, QFilterCondition> q;
   if(!containsWildcard)
-    q = normalQuery(isar, idRangeStart, idRangeEnd, query);
+    q = normalQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);
   else
-    q = wildcardQuery(isar, idRangeStart, idRangeEnd, convertedQuery);    
-
-  // extract filters from query
-  List<String> filters = query.split(" ").where((e) => e.startsWith("#")).toList();
-  query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
+    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);    
 
   return q
     // only include matches in selected languages
-    .anyOf([], (q, lang) =>
+    /*.anyOf(langs, (q, lang) =>
       q.meaningsElement((qM) => 
         qM.languageContains(lang)
       )
-    )
+    )*/
     
     // apply filters
     .optional(filters.isNotEmpty, (q) => 
-      q.anyOf(filters, (q, element) => 
+      q.anyOf(filters, (q, filter) => 
         q.meaningsElement((qM) => 
           qM.partOfSpeechElement((qP) => 
-            qP.attributesElementContains(element)
+            qP.attributesElementContains(filter)
           )
             .or()
           .fieldElement((qF) => 
-            qF.attributesElementContains(element)
+            qF.attributesElementContains(filter)
           )
         )
       )
@@ -238,12 +228,12 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
 }
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
-  Isar isar, int idRangeStart, int idRangeEnd, String query){
+  Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
 
   return isar.jmdict.where()
-    .kanjisElementStartsWith(query)
+    .kanjiIndexesElementStartsWith(query)
       .or()
-    .hiraganasElementStartsWith(query)
+    .hiraganasElementStartsWith(kanaizedQuery ?? query)
       .or()
     .meaningsIndexesElementStartsWith(query)
 
@@ -254,7 +244,7 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
 }
 
 QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
-  Isar isar, int idRangeStart, int idRangeEnd, String query, ){
+  Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
 
   return isar.jmdict.where()
       .idBetween(idRangeStart, idRangeEnd)
@@ -262,7 +252,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
 
       .kanjisElementMatches(query)
         .or()
-      .hiraganasElementMatches(query)
+      .hiraganasElementMatches(kanaizedQuery ?? query)
         .or()
       .meaningsIndexesElementMatches(query)
   ;

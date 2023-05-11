@@ -4,7 +4,7 @@ import 'package:async/async.dart';
 
 import 'package:isar/isar.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:kana_kit/kana_kit.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
 
@@ -25,8 +25,6 @@ class DictionarySearchIsolate {
   Isolate? isolate;
   /// The queue for the results of the search isolate
   StreamQueue? events;
-  /// Should the search be converted to hiragana
-  bool convertToHiragana;
 
   /// The directory of the ISAR file of the dictionary
   String directory;
@@ -43,7 +41,6 @@ class DictionarySearchIsolate {
     this.languages,
     this.directory,
     this.name,
-    this.convertToHiragana,
     {
       this.debugName,
       int no_processes = 2
@@ -54,7 +51,7 @@ class DictionarySearchIsolate {
   /// 
   /// Warning: this needs to be called before any other function
   /// Note: `noIsolates` needs to be larger than 0
-  void init(int isolateNo, int noIsolates) async {
+  Future<void> init(int isolateNo, int noIsolates) async {
 
     if(noIsolates < 1){
       throw Exception("`noIsolates` needs to be larger than 0");
@@ -84,17 +81,18 @@ class DictionarySearchIsolate {
     isolateSendPort!.send(noIsolates);
     isolateSendPort!.send(directory);
     isolateSendPort!.send(name);
-    isolateSendPort!.send(convertToHiragana);
 
     _initialized = true;
   }
 
 
   /// Kills the isolate, this should be called before discarding this object.
-  void kill() {
+  Future<void> kill() async {
     _checkInitialized();
 
     isolateSendPort!.send(null);
+    var s  = await events!.next;
+    print("killed: $s");
 
     _initialized = false;
   }
@@ -106,13 +104,13 @@ class DictionarySearchIsolate {
   }
 
   /// Queries the dictionay inside an isolate
-  Future<List> query(String query) async {
+  Future<List> query(String query, String? queryKana, List<String> filters) async {
     _checkInitialized();
 
     List result = [];
 
     if(query != ""){
-      isolateSendPort!.send(query);
+      isolateSendPort!.send(Tuple3(query, queryKana, filters));
       result = await events!.next;
     }
     else{
@@ -142,8 +140,6 @@ Future<void> _searchInIsar(SendPort p) async {
   String directory = await events.next;
   String name = await events.next;
 
-  bool kanaize = await events.next;
-
   // open isar
   Isar isar = Isar.openSync(
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
@@ -157,11 +153,7 @@ Future<void> _searchInIsar(SendPort p) async {
   int idRangeStart = (ids[(noEntries/noIsolates*isolateNo).floor()]).floor();
   int idRangeEnd   = (ids[(noEntries/noIsolates*(isolateNo+1)).floor()]).floor();
 
-  KanaKit kanaKit = KanaKit();
-
   print('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
-
-  String messageHiragana = "";
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
@@ -171,30 +163,24 @@ Future<void> _searchInIsar(SendPort p) async {
       break;
     }
     
-    if (message is String) {
+    if (message is Tuple3<String, String?, List<String>>) {
       Stopwatch s = Stopwatch()..start();
-
-      // check if the message contains wildcards and replace them appropriately
-      String _message = message.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
-      messageHiragana = messageHiragana.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
-
-      // convert the message to hiragana if setting enabled
-      if(kanaize)
-        messageHiragana = kanaKit.toHiragana(message);
-      if(kanaKit.isJapanese(message))
-        _message = kanaKit.toHiragana(kanaKit.toKatakana(message));
       
+      String query = message.item1;
+      String? queryKana = message.item2;
+      List<String> filters = message.item3;
+
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
-          _message, messageHiragana)
+          query, queryKana, filters, langs)
         .findAllSync();
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      print("Query: $message $_message, $messageHiragana len: ${searchResults.length} time: ${s.elapsed}");
+      print("Query: $query, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
     }    
   }
 
   print('Spawned isolate finished.');
-  Isolate.exit();
+  Isolate.exit(p, name);
 }

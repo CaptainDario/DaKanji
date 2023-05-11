@@ -1,8 +1,10 @@
 import 'package:async/async.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:kana_kit/kana_kit.dart';
 
-import '../../application/dictionary/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
+import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
 import 'search_isolate.dart';
 
 
@@ -30,6 +32,11 @@ class DictionarySearch {
   /// Should the search be converted to hiragana
   bool convertToHiragana;
 
+  KanaKit _kKitRomaji = KanaKit();
+  KanaKit _kKitKanji = KanaKit(
+    config: KanaKitConfig(passRomaji: true, passKanji: true, upcaseKatakana: false)
+  );
+
 
   DictionarySearch(
     this.noIsolates, this.languages, this.directory, this.name, this.convertToHiragana
@@ -41,7 +48,7 @@ class DictionarySearch {
     
     for (var i = 0; i < noIsolates; i++) {
       _searchIsolates.add(DictionarySearchIsolate(
-        languages, directory, name, convertToHiragana,
+        languages, directory, name,
       ));
       await _searchIsolates[i].init(i, noIsolates);
     }
@@ -60,10 +67,31 @@ class DictionarySearch {
     }
     _isSearching = true;
 
+    // check if the message contains wildcards and replace them appropriately
+    String query = queryText.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
+    
+    // replace full-width chars with normal ones
+    query = query.toHalfWidth();
+
+    // extract filters from query, and remove them from the query
+    List<String> filters = getFilters(query);
+    query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
+
+    // convert query to hiragana if it is Japanese
+    if(_kKitKanji.isJapanese(query))
+      query = _kKitKanji.toHiragana(query);
+
+    // if romaji conversion setting is enabled, convert query to hiragana
+    String? queryKana;
+    if(convertToHiragana) 
+      queryKana = _kKitRomaji.toHiragana(query);
+
     // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
     for (var i = 0; i < noIsolates; i++) {
-      searchGroup.add(_searchIsolates[i].query(queryText));
+      searchGroup.add(_searchIsolates[i].query(
+        query, queryKana, filters
+      ));
     }
     searchGroup.close();
 
@@ -72,7 +100,7 @@ class DictionarySearch {
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
     final sort_result = sortJmdictList(
-      search_result, queryText, this.languages, this.convertToHiragana
+      search_result, query, queryKana, this.languages, this.convertToHiragana
     );
     var result = sort_result.expand((element) => element).toList();
     _isSearching = false;
@@ -82,11 +110,18 @@ class DictionarySearch {
     if(_lastBlockedQuery != null){
       var t = _lastBlockedQuery;
       _lastBlockedQuery = null;
-      result = (await query(t!)) ?? [];
+      result = (await this.query(t!)) ?? [];
       _lastBlockedQuery = null;
     }
     
     return result;
+  }
+
+  /// Extracts the filters from a query
+  List<String> getFilters(String query){
+    return query.split(" ")
+      .where((e) => e.startsWith("#"))
+      .map((e) => jmDictAllFilters[e.replaceFirst("#", "")].toString()).toList();
   }
 
   /// terminates all isolates and cleans memory
