@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,12 +9,12 @@ import 'package:easy_localization/easy_localization.dart';
 class ManualDictionary extends StatelessWidget {
   
   /// heading 1 text style
-  TextStyle heading_1 = TextStyle(
+  final TextStyle heading_1 = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
   /// heading 2 text style
-  TextStyle heading_2 = TextStyle(
+  final TextStyle heading_2 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );

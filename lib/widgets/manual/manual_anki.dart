@@ -13,12 +13,12 @@ import 'package:da_kanji_mobile/application/anki/anki.dart';
 class ManualAnki extends StatelessWidget {
 
   /// heading 1 text style
-  TextStyle heading_1 = TextStyle(
+  final TextStyle heading_1 = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
   /// heading 2 text style
-  TextStyle heading_2 = TextStyle(
+  final TextStyle heading_2 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
