@@ -750,19 +750,26 @@
       "pl": "Konwertuj wyszukiwane hasła do kany"
     },
     "dict_kanaize_body": {
-      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\n\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted when this settings is enabled, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you know what you are searching, you can disable this setting.",
-      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und somit wird 万 gefunden, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Zum Beispiel, wird die Suche nach りんご umgewandelt und findet リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, findet eine Suche nach りんご nicht リンゴ.\nWenn Sie wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
-      "ru": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
-      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
-      "zh": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
-      "it": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
-      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
-      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
-      "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".",
+      "ru": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.",
+      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「たべる」という検索語は、たべるに変換され、食べるを見つけることができますが、意図しないマッチングを引き起こす可能性もあります。\n\n例えば、「man」を検索すると、「まん」に変換されるため、「万」と英語の「man」にマッチします。",
+      "zh": "当启用此设置时，DaKanji会在查找前将任何搜索词转换为统一的假名表示。这意味着查询 \"taberu \"将被转换为たべる，并能找到食べる，但这也可能导致非预期的匹配。\n\n例如，搜索'man'会被转换为まん，因此会匹配到万和英文单词'man'。",
+      "it": "Se si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la query \"taberu\" sarà convertita in たべる e troverà 食べる, ma può anche portare a corrispondenze non volute.\n\nAd esempio, la ricerca di \"man\" verrà convertita in まん e quindi corrisponderà a 万 e alla parola inglese \"man\".",
+      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".",
+      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".",
+      "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'."
     },
     "dict_show_wikipedia_definitions": {
       "en": "Show definitions from wikipedia",
-      "de": "Zeige Definitionen from Wikipedia"
+      "de": "Definitionen von wikipedia anzeigen",
+      "ru": "Показать определения из Википедии",
+      "ja": "wikipediaから定義を表示する",
+      "zh": "显示来自维基百科的定义",
+      "it": "Mostra le definizioni da wikipedia",
+      "fr": "Afficher les définitions de wikipedia",
+      "es": "Mostrar definiciones de wikipedia",
+      "pl": "Pokaż definicje z wikipedii"
     },
     "anki_title": {
       "en": "Anki",
@@ -1133,16 +1140,93 @@
       "es": "Anki",
       "pl": "Anki"
     },
-    "anki_text": {
-      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.\n\n## Installation\n\n### Android\nYou need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.\n\n### Desktop\nOn MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nSetup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.\n\nTo test if DaKanji can reach Anki you can press the button below.",
-      "de": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dazu benötigt jede Plattform ein anderes Setup.\n\n## Installation\n\n### Android\nSie müssen [AnkidDroid] (https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und auf Nachfrage DaKanji die Erlaubnis erteilen, mit Anki zu kommunizieren.\n\n### Desktop\nAuf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.\n\n### iOS\nDie Einrichtung auf iOS ist super einfach, wie auf Android, installiere einfach [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.\n\nUm zu testen, ob DaKanji Anki erreichen kann, kannst du den Button unten drücken.",
-      "ru": "\"DaKanji\" можно использовать для отправки заметок в Anki. Для этого для каждой платформы нужна своя настройка.\n\n## Установка\n\n### Android\nВам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.\n\n### Desktop\nНа MacOS, Windows и Linux у вас должен быть установлен [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nУстановка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.\n\nЧтобы проверить, может ли DaKanji связаться с Anki, вы можете нажать кнопку ниже.",
-      "ja": "大漢字 \"は、Ankiにノートを送信するために使用することができます。そのためには、各プラットフォームで異なる設定が必要です。\n\n## インストール\n\n### アンドロイド\nAnkidDroid」(https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、大漢字にAnkiとのインタラクションを許可するように指示する必要があります。\n\n### デスクトップ\nMacOS、Windows、Linuxでは、「Anki」(https://apps.ankiweb.net/)がインストールされ、「AnkiConnect」(https://ankiweb.net/shared/info/2055492159)が「インストールおよび実行」(https://foosoft.net/projects/anki-connect/)されている必要があります。\n\n### iOS\niOSでの設定は、Androidと同様、[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、大漢字の許可を求めるだけで、超簡単です。\n\n大漢字がAnkiにアクセスできるかどうかは、以下のボタンで確認できます。",
-      "zh": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。\n\n## 安装\n\n### Android\n你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。\n\n### 桌面\n在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，并且[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。\n\n### iOS\n在iOS上的设置非常简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在被询问时授予DaKanji权限。\n\n要测试DaKanji是否能到达Anki，你可以按下下面的按钮。",
-      "it": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.\n\n## Installazione\n\n### Android\nÈ necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando richiesto, concedere a DaKanji il permesso di interagire con Anki.\n\n### Desktop\nSu MacOS, Windows e Linux è necessario avere installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nL'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere i permessi a DaKanji quando richiesto.\n\nPer verificare se DaKanji è in grado di raggiungere Anki, è possibile premere il pulsante sottostante.",
-      "fr": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.\n\n## Installation\n\n### Android\nVous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, accorder à DaKanji la permission d'interagir avec Anki.\n\n### Desktop\nSur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nL'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder la permission à DaKanji lorsqu'elle est demandée.\n\nPour tester si DaKanji peut accéder à Anki, vous pouvez appuyer sur le bouton ci-dessous.",
-      "es": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.\n\n## Instalación\n\n### Android\nNecesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.\n\n### Escritorio\nEn MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) debe estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nLa configuración en iOS es super simple, como en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando se te pida.\n\nPara probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
-      "pl": "DaKanji może być używane do wysyłania notatek do Anki. W tym celu każda platforma wymaga innej konfiguracji.\n\n## Instalacja\n\n### Android\nMusisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz zapytany, daj DaKanji pozwolenie na interakcję z Anki.\n\n### Desktop\nNa MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/).\n\n### iOS\nKonfiguracja na iOS jest super prosta, tak jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni.\n\nAby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej."
+    "anki_setup_intro": {
+      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
+      "de": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
+      "ru": "DaKanji можно использовать для отправки заметок в Anki. Для этого для каждой платформы требуется своя настройка.",
+      "ja": "大漢字は、Ankiにノートを送信するために使用することができます。そのためには、各プラットフォームで異なる設定が必要です。",
+      "zh": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。",
+      "it": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.",
+      "fr": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.",
+      "es": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.",
+      "pl": "DaKanji może być używane do wysyłania notatek do Anki. Do tego każda platforma potrzebuje innej konfiguracji."
+    },
+    "anki_installation_android_title": {
+      "en": "Android",
+      "de": "Android",
+      "ru": "Android",
+      "ja": "アンドロイド",
+      "zh": "安卓",
+      "it": "Android",
+      "fr": "Android",
+      "es": "Android",
+      "pl": "Android"
+    },
+    "anki_installation_android_text": {
+      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+      "ru": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
+      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、大漢字にAnkiとの対話の許可を求めるメッセージが表示されたら、許可する必要があります。",
+      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
+      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
+    },
+    "anki_installation_desktop_title": {
+      "en": "Desktop",
+      "de": "Desktop",
+      "ru": "Рабочий стол",
+      "ja": "デスクトップ",
+      "zh": "桌面",
+      "it": "Desktop",
+      "fr": "Bureau",
+      "es": "Escritorio",
+      "pl": "Pulpit"
+    },
+    "anki_installation_desktop_text": {
+      "en": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
+      "de": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
+      "ru": "На MacOS, Windows и Linux необходимо установить [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).",
+      "ja": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)がインストールされ、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)されている必要があります。",
+      "zh": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
+      "it": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
+      "fr": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
+      "es": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
+      "pl": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/)."
+    },
+    "anki_installation_ios_title": {
+      "en": "iOS",
+      "de": "iOS",
+      "ru": "iOS",
+      "ja": "アイオーエス",
+      "zh": "基础设施",
+      "it": "iOS",
+      "fr": "iOS",
+      "es": "iOS",
+      "pl": "iOS"
+    },
+    "anki_installation_ios_text": {
+      "en": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
+      "de": "Die Einrichtung unter iOS ist genauso einfach wie unter Android. Installiere einfach [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.",
+      "ru": "Установка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.",
+      "ja": "iOSでの設定は、Androidと同様に[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、求められたら大漢字を許可するだけで、超簡単に設定できます。",
+      "zh": "在iOS上的设置超级简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在询问时授予DaKanji权限。",
+      "it": "L'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere l'autorizzazione a DaKanji quando viene richiesto.",
+      "fr": "L'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder l'autorisation à DaKanji lorsqu'elle est demandée.",
+      "es": "La configuración en iOS es super sencilla, al igual que en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando te lo pida.",
+      "pl": "Konfiguracja na iOS jest super prosta, podobnie jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni."
+    },
+    "anki_connection_test": {
+      "en": "To test if DaKanji can reach Anki you can press the button below.",
+      "de": "Um zu testen, ob DaKanji Anki erreichen kann, kannst du den Knopf unten drücken.",
+      "ru": "Чтобы проверить, может ли DaKanji достичь Anki, вы можете нажать кнопку ниже.",
+      "ja": "大漢字がAnkiに届くかどうかは、以下のボタンで確認することができます。",
+      "zh": "要测试DaKanji是否能到达Anki，你可以按下面的按钮。",
+      "it": "Per verificare se DaKanji può raggiungere Anki è possibile premere il pulsante sottostante.",
+      "fr": "Pour tester si DaKanji peut atteindre Anki, vous pouvez cliquer sur le bouton ci-dessous.",
+      "es": "Para probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
+      "pl": "Aby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej."
     },
     "anki_test_connection": {
       "en": "Test connection to Anki",
@@ -1188,27 +1272,71 @@
       "es": "Diccionario",
       "pl": "Słownik"
     },
-    "dict_text_kanji_elements": {
-      "en": "## Kanji - Search for Kanji group\n\nWhen a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
-      "de": "## Kanji - Suche nach Kanji-Gruppe\n\nWenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen umgeben. Durch langes Drücken einer solchen Kanji-Gruppe wird im Wörterbuch danach gesucht.",
-      "ru": "## Кандзи - Поиск группы кандзи\n\nКогда группа кандзи может быть найдена в словаре, она обведена зеленой рамкой. Долгое нажатие на такую группу кандзи приведет к ее поиску в словаре.",
-      "ja": "## 漢字 - 漢字グループを検索する\n\n辞書で検索できる漢字グループには、緑色の枠が表示されます。このような漢字グループを長押しすると、その漢字グループが辞書で検索されます。",
-      "zh": "## 汉字 - 搜索汉字组\n\n当一个汉字组可以在字典中搜索时，它周围有一个绿色的边框。长按这样的汉字组将在字典中搜索到它。",
-      "it": "## Kanji - Ricerca del gruppo Kanji\n\nQuando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde intorno. Premendo a lungo tale gruppo di Kanji, lo si cercherà nel dizionario.",
-      "fr": "## Kanji - Recherche d'un groupe de Kanji\n\nLorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'un cadre vert. Un appui long sur un tel groupe de Kanji permet de le rechercher dans le dictionnaire.",
-      "es": "## Kanji - Buscar grupo de kanji\n\nCuando un grupo Kanji puede ser buscado en el diccionario tiene un borde verde a su alrededor. Si mantienes pulsado un grupo kanji, lo buscarás en el diccionario.",
-      "pl": "## Kanji - wyszukiwanie grupy Kanji\n\nKiedy grupa Kanji może być wyszukiwana w słowniku, ma wokół siebie zieloną obwódkę. Długie naciśnięcie takiej grupy Kanji spowoduje wyszukanie jej w słowniku."
+    "dict_kanji_title": {
+      "en": "Kanji",
+      "de": "Kanji",
+      "ru": "Кандзи",
+      "ja": "漢字",
+      "zh": "汉字",
+      "it": "Kanji",
+      "fr": "Kanji",
+      "es": "Kanji",
+      "pl": "Kanji"
     },
-    "dict_text_examples_analyze": {
-      "en": "## Examples - Opening an example in the Text screen\n\nExamples from the dictionary can be opened in the text processing screen by double tapping on them.",
-      "de": "## Beispiele - Öffnen eines Beispiels in dem Bildschirm \"Text\n\nBeispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
-      "ru": "## Примеры - открытие примера на экране Текст\n\nПримеры из словаря можно открыть на экране обработки текста, дважды коснувшись их.",
-      "ja": "## 例題-テキスト画面で例題を開く\n\n辞書に登録されている例文は、ダブルタップすることでテキスト処理画面で開くことができます。",
-      "zh": "## 例子 - 在文本屏幕中打开一个例子\n\n词典中的例子可以在文本处理屏幕中通过双击来打开。",
-      "it": "## Esempi - Apertura di un esempio nella schermata Testo\n\nGli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
-      "fr": "## Exemples - Ouverture d'un exemple dans l'écran Texte\n\nLes exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en tapant deux fois dessus.",
-      "es": "## Ejemplos - Abrir un ejemplo en la pantalla Texto\n\nLos ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de texto pulsando dos veces sobre ellos.",
-      "pl": "## Przykłady - otwieranie przykładu na ekranie Tekst\n\nPrzykłady ze słownika można otworzyć na ekranie przetwarzania tekstu, stukając w nie dwukrotnie."
+    "dict_kanji_search_kanji_group_title": {
+      "en": "Search Kanji group",
+      "de": "Kanji-Gruppe suchen",
+      "ru": "Поиск группы кандзи",
+      "ja": "漢字グループ検索",
+      "zh": "搜索汉字组",
+      "it": "Ricerca gruppo Kanji",
+      "fr": "Rechercher un groupe de Kanji",
+      "es": "Buscar grupo de kanji",
+      "pl": "Wyszukaj grupę Kanji"
+    },
+    "dict_kanji_search_kanji_group_text": {
+      "en": "When a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
+      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, hat sie einen grünen Rahmen. Wenn Sie eine solche Kanji-Gruppe lange drücken, wird sie im Wörterbuch gesucht.",
+      "ru": "Когда группа кандзи может быть найдена в словаре, она обведена зеленой рамкой. Долгое нажатие на такую группу кандзи приведет к ее поиску в словаре.",
+      "ja": "辞書で検索できる漢字グループには、緑色の枠が表示されます。このような漢字グループを長押しすると、その漢字グループが辞書で検索されます。",
+      "zh": "当一个汉字组可以在字典中搜索时，它周围有一个绿色的边框。长按这样的汉字组可以在字典中搜索到它。",
+      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, è circondato da un bordo verde. Premendo a lungo tale gruppo di Kanji, lo si cercherà nel dizionario.",
+      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'un cadre vert. Un appui long sur un tel groupe de Kanji permet de le rechercher dans le dictionnaire.",
+      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde a su alrededor. Si mantienes pulsado un grupo kanji, lo buscarás en el diccionario.",
+      "pl": "Kiedy grupa Kanji może być wyszukiwana w słowniku, ma wokół siebie zieloną obwódkę. Długie naciśnięcie takiej grupy Kanji spowoduje wyszukanie jej w słowniku."
+    },
+    "dict_examples_title": {
+      "en": "Examples",
+      "de": "Beispiele",
+      "ru": "Примеры",
+      "ja": "例",
+      "zh": "实例",
+      "it": "Esempi",
+      "fr": "Exemples",
+      "es": "Ejemplos",
+      "pl": "Przykłady"
+    },
+    "dict_text_examples_analyze_title": {
+      "en": "Opening examples in the Text screen",
+      "de": "Beispiele im Bildschirm \"Text\" öffnen",
+      "ru": "Открытие примеров на экране \"Текст",
+      "ja": "テキスト画面でのオープニング例",
+      "zh": "在文本屏幕中打开例子",
+      "it": "Apertura di esempi nella schermata Testo",
+      "fr": "Ouvrir des exemples dans l'écran Texte",
+      "es": "Abrir ejemplos en la pantalla Texto",
+      "pl": "Otwieranie przykładów na ekranie Tekst"
+    },
+    "dict_text_examples_analyze_text": {
+      "en": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
+      "de": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
+      "ru": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
+      "ja": "辞書に登録されている例文は、ダブルタップすることでテキスト処理画面で開くことができます。",
+      "zh": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
+      "it": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
+      "fr": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
+      "es": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
+      "pl": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie."
     }
   },
   "KanaChartScreen": {
