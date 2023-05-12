@@ -39,7 +39,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   late TextStyle readingStyle;
   /// List of pitch accent and if available info
   List<List<int>?> accents = [];
-
+  /// the regex to find the accent pattern
   RegExp accentRegex = RegExp(r"(\d+)");
 
 
@@ -58,15 +58,15 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   void init(){
     hasKanji = !widget.entry.kanjis.isEmpty;
 
-    kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
-        .whereNotNull().map((e) => e.attributes)
-        .flattened.whereNotNull().toSet().toList())
-      .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
-
     readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
         .whereNotNull().map((e) => e.attributes)
         .flattened.whereNotNull().toSet().toList())
       .asMap().map((key, value) => MapEntry(value, key+1));
+
+    kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
+        .whereNotNull().map((e) => e.attributes)
+        .flattened.whereNotNull().toSet().toList())
+      .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
 
     readingStyle = hasKanji
       ? const TextStyle(
