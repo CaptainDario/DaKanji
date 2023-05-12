@@ -35,10 +35,10 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    const IconData(
+    /*const IconData(
       0xe803,
       fontFamily: "Anki",
-    )
+    )*/
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
@@ -53,7 +53,6 @@ class _ManualScreenState extends State<ManualScreen>
   Widget build(BuildContext context) {
 
     List<Widget> manualTexts = [
-      //ManualDictionary(),
       ManualDictionary(),
       //ManualTextScreen(),
       ManualAnki()
