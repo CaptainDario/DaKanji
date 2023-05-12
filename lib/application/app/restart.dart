@@ -14,8 +14,8 @@ Future<void> restartApp(BuildContext context) async {
 
   g_documentsServicesInitialized = false;
   g_downloadFromGHStream = StreamController<String>.broadcast();
-  g_initApp = init();
   await GetIt.I.reset(dispose: true);
+  g_initApp = init();
   Phoenix.rebirth(context);
 
 }
