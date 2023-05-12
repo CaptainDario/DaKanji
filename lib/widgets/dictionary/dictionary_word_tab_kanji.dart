@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:tuple/tuple.dart';
 
 
 
@@ -99,183 +98,194 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   Widget build(BuildContext context) {
 
     return SelectionArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // kanjis and writings
-          for (int i = 0; i < (hasKanji ? widget.entry.kanjis.length : 1); i++)
-            ...[
-              // readings
-              Transform.translate(
-                offset: Offset(0, 6),
-                child: Wrap(
-                  children: [
-                    for (int j = 0; j < widget.entry.readings.length; j++)
-                      if(widget.entry.readingRestriction == null ||
-                        widget.entry.readingRestriction![j] == null ||
-                        widget.entry.readingRestriction![j]!.attributes.contains(widget.entry.kanjis[i]))
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Wrap(
+            children: [
+              // kanjis and writings
+              for (int i = 0; i < (hasKanji ? widget.entry.kanjis.length : 1); i++)
+                ...[
+                  Container(
+                    width: i == 0 ? constraints.maxWidth : null,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // readings
+                        Transform.translate(
+                          offset: Offset(0, 6),
+                          child: Wrap(
+                            children: [
+                              for (int j = 0; j < widget.entry.readings.length; j++)
+                                if(widget.entry.readingRestriction == null ||
+                                  widget.entry.readingRestriction![j] == null ||
+                                  widget.entry.readingRestriction![j]!.attributes.contains(widget.entry.kanjis[i]))
+                                    Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          // the reading
+                                          WidgetSpan(
+                                            child: Text(
+                                              widget.entry.readings[j],
+                                              style: readingStyle
+                                            ),
+                                          ),
+                                          // add superscript to indicate smth special with this reading
+                                          if(widget.entry.readingInfo?[j] != null)
+                                            WidgetSpan(
+                                              child: Transform.translate(
+                                                offset: const Offset(1, -7),
+                                                child: SelectionContainer.disabled(
+                                                  child: Text(
+                                                    (readingInfos[widget.entry.readingInfo![j]!.attributes.join(", ")]).toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: hasKanji ? Colors.grey : null
+                                                    )
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          // add comma after each reading
+                                          WidgetSpan(
+                                            child: SelectionContainer.disabled(
+                                              child: Text(
+                                                j != widget.entry.readings.length-1
+                                                  ? "、" : "",
+                                                style: readingStyle
+                                              ),
+                                            ),
+                                          )
+                                        ]
+                                      ),
+                                    ),
+                              ],
+                            ),
+                        ),
+                        // kanjis in big font, if there are kanjis
+                        if(widget.entry.kanjis.isNotEmpty)
                           Text.rich(
                             TextSpan(
                               children: [
-                                // the reading
-                                WidgetSpan(
-                                  child: Text(
-                                    widget.entry.readings[j],
-                                    style: readingStyle
-                                  ),
+                                TextSpan(
+                                  text: widget.entry.kanjis[i],
+                                  style: kanjiStyle
                                 ),
-                                // add superscript to indicate smth special with this reading
-                                if(widget.entry.readingInfo?[j] != null)
-                                  WidgetSpan(
-                                    child: Transform.translate(
-                                      offset: const Offset(1, -7),
-                                      child: SelectionContainer.disabled(
-                                        child: Text(
-                                          (readingInfos[widget.entry.readingInfo![j]!.attributes.join(", ")]).toString(),
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: hasKanji ? Colors.grey : null
-                                          )
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                // add comma after each reading
-                                WidgetSpan(
-                                  child: SelectionContainer.disabled(
-                                    child: Text(
-                                      j != widget.entry.readings.length-1
-                                        ? "、" : "",
-                                      style: readingStyle
-                                    ),
-                                  ),
-                                )
+                                if(widget.entry.kanjiInfo != null && widget.entry.kanjiInfo![i] != null)
+                                  for (String? info in widget.entry.kanjiInfo![i]!.attributes)
+                                    if(info != null)
+                                      WidgetSpan(
+                                        child: Transform.translate(
+                                          offset: Offset(1, -18),
+                                          child: Text(
+                                            kanjiInfos[info].toString() +
+                                              (info == widget.entry.kanjiInfo![i]!.attributes.last
+                                                ? ""
+                                                : ","),
+                                          ),
+                                        )
+                                      )
                               ]
-                            ),
-                          ),
-                    ],
-                  ),
-              ),
-              // kanjis in big font, if there are kanjis
-              if(widget.entry.kanjis.isNotEmpty)
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: widget.entry.kanjis[i],
-                        style: kanjiStyle
-                      ),
-                      if(widget.entry.kanjiInfo != null && widget.entry.kanjiInfo![i] != null)
-                        for (String? info in widget.entry.kanjiInfo![i]!.attributes)
-                          if(info != null)
-                            WidgetSpan(
-                              child: Transform.translate(
-                                offset: Offset(1, -18),
-                                child: Text(
-                                  kanjiInfos[info].toString() +
-                                    (info == widget.entry.kanjiInfo![i]!.attributes.last
-                                      ? ""
-                                      : ","),
-                                ),
-                              )
-                            )
-                    ]
-                  )
-                )
-            ],
-          
-          SizedBox(height: 5),
-
-          // pitch accent: 川蝦, 結構
-          Row(
-            children: [
-              for (int i = 0; i < widget.entry.readings.length; i++)
-                if(accents[i] != null)
-                  for (var a = 0; a < accents[i]!.length; a++)
-                    ...[
-                      for (int r = 0; r < widget.entry.readings[i].length; r++)
-                        Container(
-                          decoration: getPitchAccentDecoration(
-                            accents[i]![a],
-                            widget.entry.readings[i],
-                            r 
-                          ),
-                          child: Text(
-                            widget.entry.readings[i][r],
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey
-                            ),
-                          ),
-                        ),
-                      if(i + a != widget.entry.readings.length-1 +
-                        widget.entry.accents![i]!.attributes.length-1)
-                        Text("、"),
-                    ]
-            ]
-          ),
-
-          SizedBox(height: 5),
-
-          // special information: 刺草 (re_inf & ke_inf), 然う言う (2x rei_inf), 真っ当 (2x ke_inf) 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (int i = 0; i < readingInfos.length; i++)
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Transform.translate(
-                          offset: Offset(0, -5),
-                          child: SelectionContainer.disabled(
-                            child: Text(
-                              "${readingInfos.values.toList()[i]} ",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey
-                              )
-                            ),
-                          )
-                        )
-                      ),
-                      TextSpan(
-                        text: ": " + readingInfos.keys.toList()[i],
-                        style: readingStyle
-                      ),
-                    ],
-                  ),
-                ),
-              for (int i = 0; i < kanjiInfos.length; i++)
-                SelectionContainer.disabled(
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        WidgetSpan(
-                          child: Transform.translate(
-                            offset: Offset(0, -5),
-                            child: Text(
-                              "${kanjiInfos.values.toList()[i]} ",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey
-                              )
                             )
                           )
-                        ),
-                        TextSpan(
-                          text: ": " + kanjiInfos.keys.toList()[i],
-                          style: readingStyle
-                        ),
                       ],
                     ),
-                  ),
-                ),
-            ]
-          ),
+                  )
+                ],
+              
+              SizedBox(height: 5),
           
+              // pitch accent: 川蝦, 結構
+              Row(
+                children: [
+                  for (int i = 0; i < widget.entry.readings.length; i++)
+                    if(accents[i] != null)
+                      for (var a = 0; a < accents[i]!.length; a++)
+                        ...[
+                          for (int r = 0; r < widget.entry.readings[i].length; r++)
+                            Container(
+                              decoration: getPitchAccentDecoration(
+                                accents[i]![a],
+                                widget.entry.readings[i],
+                                r 
+                              ),
+                              child: Text(
+                                widget.entry.readings[i][r],
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey
+                                ),
+                              ),
+                            ),
+                          if(i + a != widget.entry.readings.length-1 +
+                            widget.entry.accents![i]!.attributes.length-1)
+                            Text("、"),
+                        ]
+                ]
+              ),
           
-        ],
+              SizedBox(height: 5),
+          
+              // special information: 刺草 (re_inf & ke_inf), 然う言う (2x rei_inf), 真っ当 (2x ke_inf) 
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int i = 0; i < readingInfos.length; i++)
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Transform.translate(
+                              offset: Offset(0, -5),
+                              child: SelectionContainer.disabled(
+                                child: Text(
+                                  "${readingInfos.values.toList()[i]} ",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.grey
+                                  )
+                                ),
+                              )
+                            )
+                          ),
+                          TextSpan(
+                            text: ": " + readingInfos.keys.toList()[i],
+                            style: readingStyle
+                          ),
+                        ],
+                      ),
+                    ),
+                  for (int i = 0; i < kanjiInfos.length; i++)
+                    SelectionContainer.disabled(
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Transform.translate(
+                                offset: Offset(0, -5),
+                                child: Text(
+                                  "${kanjiInfos.values.toList()[i]} ",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.grey
+                                  )
+                                )
+                              )
+                            ),
+                            TextSpan(
+                              text: ": " + kanjiInfos.keys.toList()[i],
+                              style: readingStyle
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ]
+              ),
+              
+              
+            ],
+          );
+        }
       ),
     );
   }
