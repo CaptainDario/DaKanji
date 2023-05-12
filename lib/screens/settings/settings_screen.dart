@@ -576,6 +576,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ResponsiveSliderTile(
                           text: LocaleKeys.SettingsScreen_misc_window_opacity.tr(),
                           value: settings.misc.windowOpacity,
+                          min: 0.2,
                           onSliderMoved: (double value) {
                             windowManager.setOpacity(value);
                             settings.misc.windowOpacity = value;
@@ -663,7 +664,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
-                              restartApp(context);
+                              await restartApp(context);
                             },
                           ),
                           // delete search history
@@ -672,7 +673,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
                               await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
-                              restartApp(context);
+                              await restartApp(context);
                             },
                           ),
                         ],
