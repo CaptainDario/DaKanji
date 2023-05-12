@@ -140,22 +140,24 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         DictionaryWordTabKanji(widget.entry!),
 
                         const SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
 
                         // JLPT
                         if(widget.entry!.jlptLevel != null && widget.entry!.jlptLevel!.isNotEmpty)
-                          Text(
-                            widget.entry!.jlptLevel!.join(", "),
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12
+                          ...[
+                            Text(
+                              widget.entry!.jlptLevel!.join(", "),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12
+                              ),
                             ),
-                          ),
-                        
-                        const SizedBox(
-                          height: 30,
-                        ),
+                          
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          ],
 
                         // meanings
                         WordMeanings(
