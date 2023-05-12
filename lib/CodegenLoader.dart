@@ -1247,7 +1247,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
     },
     "advanced_settings_reset_settings": {
-      "en": "Resets the settings.",
+      "en": "Reset settings.",
       "de": "Setzt die Einstellungen zurück.",
       "ru": "Сброс настроек.",
       "ja": "設定をリセットする。",
@@ -1258,7 +1258,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Resetuje ustawienia."
     },
     "advanced_settings_delete_dict": {
-      "en": "Deletes the dictionary files.",
+      "en": "Delete dictionary files.",
       "de": "Löscht die Wörterbuchdateien.",
       "ru": "Удаляет файлы словарей.",
       "ja": "辞書ファイルを削除します。",
@@ -1269,7 +1269,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Usuwa pliki słownikowe."
     },
     "advanced_settings_delete_history": {
-      "en": "Deletes the search history.",
+      "en": "Delete search history.",
       "de": "Löscht den Suchverlauf.",
       "ru": "Удаляет историю поиска.",
       "ja": "検索履歴を削除する。",
@@ -3941,8 +3941,8 @@ static const Map<String,dynamic> en = {
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
-    "advanced_settings_delete_dict": "Deletes the dictionary files.",
-    "advanced_settings_delete_history": "Deletes the search history.",
+    "advanced_settings_delete_dict": "Delete dictionary files.",
+    "advanced_settings_delete_history": "Delete search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (requires restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -3951,7 +3951,7 @@ static const Map<String,dynamic> en = {
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizing...\nPlease do not close the app.",
     "advanced_settings_optimze_warning": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
-    "advanced_settings_reset_settings": "Resets the settings.",
+    "advanced_settings_reset_settings": "Reset settings.",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
     "anki_default_deck": "Default deck",

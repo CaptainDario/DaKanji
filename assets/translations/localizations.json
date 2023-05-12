@@ -1003,7 +1003,7 @@
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
     },
     "advanced_settings_reset_settings": {
-      "en": "Resets the settings.",
+      "en": "Reset settings.",
       "de": "Setzt die Einstellungen zurück.",
       "ru": "Сброс настроек.",
       "ja": "設定をリセットする。",
@@ -1014,7 +1014,7 @@
       "pl": "Resetuje ustawienia."
     },
     "advanced_settings_delete_dict": {
-      "en": "Deletes the dictionary files.",
+      "en": "Delete dictionary files.",
       "de": "Löscht die Wörterbuchdateien.",
       "ru": "Удаляет файлы словарей.",
       "ja": "辞書ファイルを削除します。",
@@ -1025,7 +1025,7 @@
       "pl": "Usuwa pliki słownikowe."
     },
     "advanced_settings_delete_history": {
-      "en": "Deletes the search history.",
+      "en": "Delete search history.",
       "de": "Löscht den Suchverlauf.",
       "ru": "Удаляет историю поиска.",
       "ja": "検索履歴を削除する。",
