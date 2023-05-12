@@ -1,22 +1,15 @@
 PODS:
   - app_links (1.0.0):
     - FlutterMacOS
-  - audio_session (0.0.1):
-    - FlutterMacOS
   - device_info_plus_macos (0.0.1):
     - FlutterMacOS
   - flutter_inappwebview (0.0.1):
     - FlutterMacOS
     - OrderedSet (~> 5.0)
   - FlutterMacOS (1.0.0)
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
   - in_app_review (0.2.0):
     - FlutterMacOS
   - isar_flutter_libs (1.0.0):
-    - FlutterMacOS
-  - just_audio (0.0.1):
     - FlutterMacOS
   - mecab_dart (0.0.1):
     - FlutterMacOS
@@ -47,27 +40,20 @@ PODS:
     - FlutterMacOS
   - shared_preferences_macos (0.0.1):
     - FlutterMacOS
-  - sqflite (0.0.2):
-    - FlutterMacOS
-    - FMDB (>= 2.7.5)
   - tflite_flutter_helper (0.0.1):
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
-    - FlutterMacOS
-  - wakelock_macos (0.0.1):
     - FlutterMacOS
   - window_manager (0.2.0):
     - FlutterMacOS
 
 DEPENDENCIES:
   - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
-  - audio_session (from `Flutter/ephemeral/.symlinks/plugins/audio_session/macos`)
   - device_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos`)
   - flutter_inappwebview (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - isar_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos`)
-  - just_audio (from `Flutter/ephemeral/.symlinks/plugins/just_audio/macos`)
   - mecab_dart (from `Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos`)
   - media_kit_libs_macos_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_libs_macos_video/macos`)
   - media_kit_native_event_loop (from `Flutter/ephemeral/.symlinks/plugins/media_kit_native_event_loop/macos`)
@@ -79,15 +65,12 @@ DEPENDENCIES:
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
-  - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
   - tflite_flutter_helper (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
-  - wakelock_macos (from `Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 SPEC REPOS:
   trunk:
-    - FMDB
     - OrderedSet
     - Sentry
     - SentryPrivate
@@ -95,8 +78,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_links:
     :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
-  audio_session:
-    :path: Flutter/ephemeral/.symlinks/plugins/audio_session/macos
   device_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos
   flutter_inappwebview:
@@ -107,8 +88,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
   isar_flutter_libs:
     :path: Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos
-  just_audio:
-    :path: Flutter/ephemeral/.symlinks/plugins/just_audio/macos
   mecab_dart:
     :path: Flutter/ephemeral/.symlinks/plugins/mecab_dart/macos
   media_kit_libs_macos_video:
@@ -131,34 +110,27 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/share_plus/macos
   shared_preferences_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos
-  sqflite:
-    :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
   tflite_flutter_helper:
     :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
-  wakelock_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
   app_links: 4481ed4d71f384b0c3ae5016f4633aa73d32ff67
-  audio_session: dea1f41890dbf1718f04a56f1d6150fd50039b72
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
   flutter_inappwebview: 62e949df616a9f6e1b0366326381f208c7fcad37
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
-  just_audio: 9b67ca7b97c61cfc9784ea23cd8cc55eb226d489
   mecab_dart: 5082f14a3f6a9d0cf0b22a26a9ac2bfec2326064
   media_kit_libs_macos_video: 0a4a5bf21533cba968c0833f1b59e9af8b5847f1
   media_kit_native_event_loop: 9a1b256cfb11adcaebd13a2969c617720c3187e0
   media_kit_video: 1e311a3dfe41f276935f95518b51a0c3ff72114f
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   printing: e4b7e232ff3d5d50a70b20d959aa71035a5c31f9
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   Sentry: 16d46dd5ca10e7f4469a2611805a3de123188add
@@ -166,10 +138,8 @@ SPEC CHECKSUMS:
   SentryPrivate: 2bb4f8d9ff558b25ac70b66c1dedc58a7c43630b
   share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
   shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
-  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
   tflite_flutter_helper: b9fb1f2880a784c6b4041f6592c351d631ebe55f
   url_launcher_macos: 5335912b679c073563f29d89d33d10d459f95451
-  wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
 PODFILE CHECKSUM: 8db8422821fdc0a6504ce149b58d8839fdb535b8
