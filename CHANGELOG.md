@@ -7,9 +7,12 @@ new Features:
 
 - Inbuilt dictionary
   - Search with kanji, kana or romaji
+  - Search Kanji by radical or draw them
   - Multi-language support: English, German, French, Spanish, ...
   - Conjugation of verbs, adjectives, copula
   - Detailed information about Kanjis
+  - 6000+ audios
+  - Pitch accent
   - Example sentences
 - Text processing screen
   - Add furigana to any text
