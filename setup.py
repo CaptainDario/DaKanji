@@ -52,15 +52,15 @@ if __name__ == "__main__":
 
         # move dynamic libraries to blobs
         if(f.startswith(tuple(move_to_blobs))):
-            shutil.move(f"{tmp_dir}/{f}", "blobs/")
+            shutil.copy(f"{tmp_dir}/{f}", "blobs/")
         
         # move ipadic to assets and unpack
         if(f.startswith("ipadic")):
-            shutil.move(f"{tmp_dir}/ipadic.zip", "assets/")
+            shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
 
         # move the dictionary database to assets
         if(f.startswith(tuple(move_to_dict))):
-            shutil.move(f"{tmp_dir}/{f}", "assets/dict/")
+            shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
 
         
 
