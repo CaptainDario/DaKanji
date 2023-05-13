@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/view/drawing/drawing_canvas.dart';
-import 'package:da_kanji_mobile/view/drawing/prediction_button.dart';
-import 'package:da_kanji_mobile/view/drawing/kanji_buffer_widget.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/draw_screen_state.dart';
-import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
+import 'package:da_kanji_mobile/widgets/drawing/prediction_button.dart';
+import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'drawscreen_test_util.dart';
 

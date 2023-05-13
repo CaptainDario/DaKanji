@@ -1,8 +1,13 @@
 library my_prj.globals;
 
+import 'package:da_kanji_mobile/init.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
-import 'package:flutter/material.dart';
+
+
 
 
 /// A logs of the currently running app so that they can be attached when
@@ -23,6 +28,15 @@ const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
 
+// INITIALIZE APP
+/// global init function feature that needs to complete before the app can be
+/// started
+var g_initApp = init();
+/// have the documents services been initialized
+bool g_documentsServicesInitialized = false;
+/// The progress of initializing the app
+StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
+
 /// just the version number of this app
 String g_VersionNumber = "";
 /// the build number of this app
@@ -31,7 +45,9 @@ String g_BuildNumber = "";
 String g_Version = "";
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
-const int g_MinTimesOpenedToAsknotShowRate = 51;
+const int g_MinTimesOpenedToAsknotShowRate = 401;
+/// How often does the app need to be opened to ask the user to rate the app
+const int g_AskRateAfterEach = 20;
 /// all versions which implemented new features for the drawing screen
 List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
