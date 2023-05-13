@@ -648,6 +648,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 settings.save();
                               });
                             },
+                            onChangeEnd: (double value) async {
+                              await GetIt.I<DictionarySearch>().kill();
+                              GetIt.I<DictionarySearch>().noIsolates = value.toInt();
+                              await GetIt.I<DictionarySearch>().init();
+                            },
                             autoSizeGroup: g_SettingsAutoSizeGroup,
                           ),
                           // Reset settings
