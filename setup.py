@@ -3,12 +3,14 @@ import json
 import urllib.request
 import shutil
 import zipfile
+import sys
 
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/latest"
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
-move_to_dict  = ["dict", "examples"]
+move_to_dict  = ["dict", "examples", "krad"]
+files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 
 
 
@@ -34,6 +36,8 @@ def download_latest():
     if not os.path.exists(tmp_dir):
         os.mkdir(tmp_dir)
     for name, url in zip(asset_names, asset_urls):
+        if(name in files_to_exclude):
+            continue
         print(f"Downloading: {name}")
         urllib.request.urlretrieve(url, f"{tmp_dir}/{name}")
 
@@ -44,6 +48,20 @@ def move_assets():
 if __name__ == "__main__":
 
     print("Setting up DaKanji")
+
+    # exclude files for current platform
+    if(sys.platform.startswith("win32")):
+        files_to_exclude.append("libtensorflowlite_c-mac.so")
+        files_to_exclude.append("libtensorflowlite_c-linux.so")
+    elif(sys.platform.startswith("darwin")):
+        files_to_exclude.append("libtensorflowlite_c-linux.so")
+        files_to_exclude.append("libtensorflowlite_c-win.dll")
+        files_to_exclude.append("libmecab_x86.dll")
+    elif(sys.platform.startswith("linux")):
+        files_to_exclude.append("libtensorflowlite_c-mac.so")
+        files_to_exclude.append("libtensorflowlite_c-win.dll")
+        files_to_exclude.append("libmecab_x86.dll")
+
     download_latest()
 
     # move files to correct location
