@@ -265,14 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.2"
-  csv:
-    dependency: transitive
-    description:
-      name: csv
-      sha256: "016b31a51a913744a0a1655c74ff13c9379e1200e246a03d96c81c5d9ed297b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.2"
   dart_style:
     dependency: transitive
     description:
@@ -664,26 +656,26 @@ packages:
     dependency: "direct main"
     description:
       name: isar
-      sha256: "99165dadb2cf2329d3140198363a7e7bff9bbd441871898a87e26914d25cf1ea"
+      sha256: "814695aa17cd1e725f7b751264cc45f0780b9070be6138c556d8b02c19117e48"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0+1"
+    version: "3.0.6-dev.0"
   isar_flutter_libs:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
-      sha256: bc6768cc4b9c61aabff77152e7f33b4b17d2fc93134f7af1c3dd51500fe8d5e8
+      sha256: "05d287b128b470bb1adfac515e098702b5957bf6b06a7d84b3bf82708b5b49ea"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0+1"
+    version: "3.0.6-dev.0"
   isar_generator:
     dependency: "direct dev"
     description:
       name: isar_generator
-      sha256: "76c121e1295a30423604f2f819bc255bc79f852f3bc8743a24017df6068ad133"
+      sha256: a28989bff520f9eee49564104a35b5bac1503adfadea3af613e92563e36267d8
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0+1"
+    version: "3.0.6-dev.0"
   js:
     dependency: transitive
     description:
