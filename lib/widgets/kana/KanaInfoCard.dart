@@ -102,68 +102,71 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   Widget build(BuildContext context) {
 
     return Card(
-      child: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // kana
-                  Expanded(
-                    child: Center(
-                      child: SvgPicture.string(
-                        kanaSvg,
-                      ),
-                    )
-                  ),
-                  // mnemonic (if there is one)
-                  if(widget.kana.length < 2 && mnemonicSvg != "")
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // kana
                     Expanded(
                       child: Center(
                         child: SvgPicture.string(
-                          mnemonicSvg,
-                        )
+                          kanaSvg,
+                        ),
                       )
                     ),
-                  // yoon if there are two kana
-                  if(widget.kana.length > 1)
-                    Expanded(
-                      child: Center(
-                        child: SvgPicture.string(
-                          yoonSVG,
+                    // mnemonic (if there is one)
+                    if(widget.kana.length < 2 && mnemonicSvg != "")
+                      Expanded(
+                        child: Center(
+                          child: SvgPicture.string(
+                            mnemonicSvg,
+                          )
+                        )
+                      ),
+                    // yoon if there are two kana
+                    if(widget.kana.length > 1)
+                      Expanded(
+                        child: Center(
+                          child: SvgPicture.string(
+                            yoonSVG,
+                          )
                         )
                       )
-                    )
-                ],
-              ),
-            ),
-            if(mnemonic != null)
-              Expanded(
-                child: Center(
-                  child: Wrap(
-                    clipBehavior: Clip.hardEdge,
-                    children: [
-                      MarkdownBody(
-                        styleSheet: MarkdownStyleSheet(
-                          p: TextStyle(
-                            fontSize: 20,
-                          ),
-                          // bold text
-                          strong: TextStyle(
-                            fontSize: 20,
-                            decoration: TextDecoration.underline,
-                          )
-                        ),
-                        data: mnemonic!,
-                        softLineBreak: true,
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
-          ],
-        )
+              if(mnemonic != null)
+                Expanded(
+                  child: Center(
+                    child: Wrap(
+                      clipBehavior: Clip.hardEdge,
+                      children: [
+                        MarkdownBody(
+                          styleSheet: MarkdownStyleSheet(
+                            p: TextStyle(
+                              fontSize: 20,
+                            ),
+                            // bold text
+                            strong: TextStyle(
+                              fontSize: 20,
+                              decoration: TextDecoration.underline,
+                            )
+                          ),
+                          data: mnemonic!,
+                          softLineBreak: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          )
+        ),
       )
     );
   }
