@@ -136,10 +136,14 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                     // yoon if there are two kana
                     if(widget.kana.length > 1)
                       Expanded(
-                        child: Center(
-                          child: SvgPicture.string(
-                            yoonSVG,
-                          )
+                        child: Transform.translate(
+                          offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                          child: Center(
+                            child: SvgPicture.string(
+                              yoonSVG,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                            )
+                          ),
                         )
                       )
                   ],
