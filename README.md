@@ -29,17 +29,21 @@
 
 ## What is this
 
-"You are learning Japanese? Then you need to try DaKanji"!
-
-Did you ever try to read a Japanese text but did not know some Kanji? "DaKanji" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to translate them, and all of that completely offline.
-But DaKanji can also help you read texts. Use the inbuilt tools to add furigana to texts, lookup words, add spaces and more.
+You are learning Japanese? Then you need to try DaKanji! <br>
+Use the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!
 
 Feature overview:
 
-* Recognize 6500+ Kanji and all Kana offline
-* Use the inbuilt dictionary to lookup words offline
-* Add furigana, spaces and more to texts with the text analysis tools
-* Use it on all your devices: Android, Windows, Mac, iOS or Linux it doesn't matter!
+* Recognize 6500+ Kanji and all Kana offline by just drawing them
+* Use the inbuilt dictionary to look up words offline
+  * Multi-language support: en, es, de, fr, ...
+  * Detailed information about words: pitch accent, related words, ...
+  * Detailed information about Kanji: radicals, JLPT, ...
+  * Example sentences
+  * Drawing or radical-based kanji lookup
+  * 6000+ audios
+* Read any text with ease by adding furigana, spaces, and more to texts
+* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!
 
 </br>
 
