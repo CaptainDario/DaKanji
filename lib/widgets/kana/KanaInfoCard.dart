@@ -116,6 +116,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       child: Center(
                         child: SvgPicture.string(
                           kanaSvg,
+                          height: MediaQuery.of(context).size.height * 0.2,
                         ),
                       )
                     ),
@@ -125,6 +126,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                         child: Center(
                           child: SvgPicture.string(
                             mnemonicSvg,
+                            height: MediaQuery.of(context).size.height * 0.2,
                           )
                         )
                       ),
@@ -169,5 +171,13 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         ),
       )
     );
+  }
+
+  /// Calculate text size
+  Size _calculateTextSize(String text, TextStyle style) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    return textPainter.size;
   }
 }
