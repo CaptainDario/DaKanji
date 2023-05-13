@@ -111,8 +111,6 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     /// the height of a cell in the grid
     double cellHeight = MediaQuery.of(context).size.height / gridRowCount;
 
-    
-    
 
     return DaKanjiDrawer(
       currentScreen: Screens.kana_chart,
@@ -151,8 +149,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
             bool isPortrait = constraints.maxWidth < constraints.maxHeight;
             setCurrrentKanaTable(!isPortrait);
 
-            double popupWidth = (isPortrait ? constraints.maxWidth : constraints.maxHeight*2) / 1.5;
-            double popupHeight = (isPortrait ? constraints.maxHeight : constraints.maxWidth) / 3;
+            double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
+            double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
 
             return Stack(
               children: [
@@ -170,9 +168,9 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                       setState(() {
                         currentKana = kana;
                         currentKanaX =
-                          MediaQuery.of(context).size.width / gridColumnCount * getKanaX(kana)
+                          constraints.maxWidth / gridColumnCount * getKanaX(kana)
                           + cellWidth/2;
-                        currentKanaY = MediaQuery.of(context).size.height / gridRowCount * getKanaY(kana)
+                        currentKanaY = constraints.maxHeight / gridRowCount * getKanaY(kana)
                           + cellHeight/2;
                         _controller.forward(from: 0);
                       });
@@ -181,7 +179,9 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                 ),
                 // gray background -> close popup
                 if(currentKana != null)
-                  Positioned.fill(
+                  Positioned(
+                    height: constraints.maxHeight,
+                    width: constraints.maxWidth,
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
