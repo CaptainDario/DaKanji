@@ -33,7 +33,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> lenDifferences = [[], [], []];
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
-  if(!queryText.contains(RegExp(r"\?|\*")))
+  if(!queryText.contains(RegExp(r"\?|\*"))){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched
@@ -63,6 +63,7 @@ List<List<JMdict>> sortJmdictList(
         matchIndices[ranked.item1].add(ranked.item3);
         lenDifferences[ranked.item1].add(ranked.item2);
       }
+    }
 
     // sort the results
     matches[0] = sortEntries(matches[0], matchIndices[0], lenDifferences[0]);
