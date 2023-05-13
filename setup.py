@@ -6,11 +6,14 @@ import re
 import sys
 
 
-repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tag/v"
+repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases"
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
 move_to_dict  = ["dict", "examples", "krad"]
-files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = ["audios.zip", 
+    "libmecab_x86.dll", "libmecab_arm64.dll"
+    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"
+]
 
 
 def exclude_files_per_platform():
@@ -18,14 +21,14 @@ def exclude_files_per_platform():
     """
 
     if(sys.platform.startswith("win32")):
-        files_to_exclude.append("libtensorflowlite_c-mac.so")
+        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
         files_to_exclude.append("libtensorflowlite_c-linux.so")
     elif(sys.platform.startswith("darwin")):
         files_to_exclude.append("libtensorflowlite_c-linux.so")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
         files_to_exclude.append("libmecab_x86.dll")
     elif(sys.platform.startswith("linux")):
-        files_to_exclude.append("libtensorflowlite_c-mac.so")
+        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
         files_to_exclude.append("libmecab_x86.dll")
 
@@ -33,27 +36,36 @@ def get_release_url() -> str:
     """ gets the url to the latest assets release of DaKanji
     """
 
+    # read version from pubspec.yaml
     version = None
     with open("pubspec.yaml", mode="r") as f:
         content = f.read()
         m = re.search(r'version: (.*)\+', content)
         version = m.group(1)
-        print("Downloading assets for version: ", version)
+        print(f"Downloading assets for version: {version}")
 
-    return repo_url + version
-
-def download_assets():
-    """ Downloads all assets for DaKanji
-    """
-
-    # get url to latest download
+    # get url to matching assets release
     req = urllib.request.Request(repo_url)
     asset_names, asset_urls = [], []
     with urllib.request.urlopen(req) as response:
         the_page = json.loads(response.read())
-        print(f"Using release: {the_page['name']}")
+        for release_json in the_page:
+            if(release_json["tag_name"] == f"v{version}"):
+                return release_json["assets_url"]
+
+def download_assets(url: str):
+    """ Downloads all assets for DaKanji from the given url
+
+    url : url to the assets release of DaKanji
+    """
+
+    # get url to latest download
+    req = urllib.request.Request(url)
+    asset_names, asset_urls = [], []
+    with urllib.request.urlopen(req) as response:
+        the_page = json.loads(response.read())
         #print(json.dumps(the_page, sort_keys=True, indent=4))
-        for i in the_page["assets"]:
+        for i in the_page:
             for k, v in i.items():
                 if(k == "browser_download_url"):
                     asset_urls.append(v)
@@ -81,9 +93,7 @@ if __name__ == "__main__":
     
     url = get_release_url()
 
-    """
-
-    download_assets()
+    download_assets(url)
 
     # move files to correct location
     print("Moving downloaded assets")
@@ -106,4 +116,3 @@ if __name__ == "__main__":
     # delete temp dir
     print("Deleting temporary folder")
     shutil.rmtree(tmp_dir)
-    """
