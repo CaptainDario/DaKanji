@@ -34,7 +34,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   /// The svg of the kana
   String kanaSvg = "";
   /// The svg of the kana's mnemonics
-  String mnemonicSvg = "";
+  String? mnemonicSvg;
   /// The svg of the dakuten
   String yoonSVG = "";
   /// The mnemonic of the kana
@@ -68,16 +68,19 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         );
       });
     });
-    // if there is a mnemonic for this kana
-    rootBundle.loadString(
-      "assets/images/kana/individuals/${widget.kana}.svg"
-    ).then((value) {
-      setState(() {
-        mnemonicSvg = themeMnemonicSvg(
-          value, Theme.of(context).brightness == Brightness.dark
-        );
+    // load the mnemonic if there is one for this kana
+    mnemonicSvg = null;
+    if((await rootBundle.loadString('AssetManifest.json')).contains("assets/images/kana/individuals/${widget.kana}.svg")) {
+      rootBundle.loadString(
+        "assets/images/kana/individuals/${widget.kana}.svg"
+      ).then((value) {
+        setState(() {
+          mnemonicSvg = themeMnemonicSvg(
+            value, Theme.of(context).brightness == Brightness.dark
+          );
+        });
       });
-    });
+    }
 
     // get the svg of the yoon kana if there is one
     if(widget.kana.length > 1){
@@ -121,11 +124,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       )
                     ),
                     // mnemonic (if there is one)
-                    if(widget.kana.length < 2 && mnemonicSvg != "")
+                    if(widget.kana.length < 2 && mnemonicSvg != null)
                       Expanded(
                         child: Center(
                           child: SvgPicture.string(
-                            mnemonicSvg,
+                            mnemonicSvg!,
                             height: MediaQuery.of(context).size.height * 0.2,
                           )
                         )
