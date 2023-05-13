@@ -663,6 +663,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
+                              await GetIt.I<DictionarySearch>().kill();
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
                               await restartApp(context);
                             },
