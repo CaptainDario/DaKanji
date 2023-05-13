@@ -24,7 +24,9 @@ class ResponsiveSliderTile extends StatefulWidget {
   /// The autoSizeGroup to use for the text
   final AutoSizeGroup? autoSizeGroup;
   /// callback which is executed when the user moves the slider
-  final Function (double value)? onSliderMoved;
+  final Function (double value)? onChanged;
+  /// callback which is executed when the user stops moving the slider
+  final Function (double value)? onChangeEnd;
   /// callback which will be execute when the icon button on the side is pressed
   final Function? onLeadingIconPressed;
 
@@ -38,7 +40,8 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.leadingIcon,
       this.infoText,
       this.autoSizeGroup,
-      this.onSliderMoved,
+      this.onChanged,
+      this.onChangeEnd,
       this.onLeadingIconPressed,
       Key? key
     }
@@ -75,7 +78,10 @@ class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
             label: widget.value.toInt().toString(),
             divisions: widget.divisions,
             onChanged: (double value) {
-              widget.onSliderMoved?.call(value);
+              widget.onChanged?.call(value);
+            },
+            onChangeEnd: (value) {
+              widget.onChangeEnd?.call(value);
             },
           ),
         ),

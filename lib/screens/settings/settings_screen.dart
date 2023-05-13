@@ -577,7 +577,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           text: LocaleKeys.SettingsScreen_misc_window_opacity.tr(),
                           value: settings.misc.windowOpacity,
                           min: 0.2,
-                          onSliderMoved: (double value) {
+                          onChanged: (double value) {
                             windowManager.setOpacity(value);
                             settings.misc.windowOpacity = value;
                             settings.save();
@@ -642,7 +642,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 )
                               )..show();
                             },
-                            onSliderMoved: (double value) {
+                            onChanged: (double value) {
                               setState(() {
                                 settings.advanced.noOfSearchIsolates = value.toInt();
                                 settings.save();
