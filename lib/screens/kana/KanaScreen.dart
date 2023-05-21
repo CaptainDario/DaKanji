@@ -34,8 +34,10 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
 
   /// Is the speed dial open
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  /// The table of kana selected from the user before applying responsivess-modifications
+  List<List<String>> baseKanaTable = hiragana;
   /// The table of kana to be displayed
-  List<List<String>> currentKanaTable = hiragana;
+  List<List<String>> kanaTable = hiragana;
   /// Are currently hiragana being shown
   bool isHiragana = true;
   /// Are romaji being shown
@@ -102,14 +104,16 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     
     
     /// The number of columns in the grid
-    int gridColumnCount = currentKanaTable[0].length;
+    int gridColumnCount = baseKanaTable[0].length;
     /// the number of rows in the grid
     /// +3 for the empty rows at the bottom
-    int gridRowCount = currentKanaTable.length + 3;
+    int gridRowCount = baseKanaTable.length + 3;
     /// the width of a cell in the grid
     double cellWidth = MediaQuery.of(context).size.width / gridColumnCount;
     /// the height of a cell in the grid
     double cellHeight = MediaQuery.of(context).size.height / gridRowCount;
+    /// the height of the action button (56 [height] + 20 [margin d])
+    double actionButtonHeigt = 56 + 20;
 
 
     return DaKanjiDrawer(
@@ -126,6 +130,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
             backgroundColor: g_Dakanji_green,
             activeBackgroundColor: g_Dakanji_red,
             spacing: 10,
+            
             children: [
               for (int i = 0; i < menuItems.length; i++)
                 SpeedDialChild(
@@ -152,12 +157,19 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
             double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
             double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
 
+            // add responsiveness
+            setResponsiveKanatable(constraints);
+
             return Stack(
               children: [
+                // main kana grid
                 Positioned.fill(
+                  bottom: actionButtonHeigt,
                   child: KanaGrid(
-                    currentKanaTable,
+                    kanaTable,
                     isPortrait,
+                    height: constraints.maxHeight-actionButtonHeigt,
+                    width: constraints.maxWidth,
                     showRomaji: showRomaji,
                     onTap: (String kana) async {
                       await kanaSoundPlayer.open(
@@ -179,9 +191,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                 ),
                 // gray background -> close popup
                 if(currentKana != null)
-                  Positioned(
-                    height: constraints.maxHeight,
-                    width: constraints.maxWidth,
+                  Positioned.fill(
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -233,11 +243,68 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     );
   }
 
+  /// based on the screen size, returns the current kana table
+  void setResponsiveKanatable(BoxConstraints constraints){
+
+    kanaTable = baseKanaTable.map((e) => List<String>.from(e)).toList();
+
+    // portrait
+    if(constraints.maxWidth < constraints.maxHeight){
+      // dakuten
+      if(constraints.maxHeight > 1000){
+        kanaTable.addAll(hiraDakuten.map((e) => List<String>.from(e)));
+        kanaTable.addAll(hiraHandakuten.map((e) => List<String>.from(e)));
+      }
+      // combinations (normal)
+      if(constraints.maxWidth > 800){
+        List<List<String>> yoon = hiraYoon;
+        if(constraints.maxHeight > 1000)
+          yoon += hiraYoonDakuten + hiraYoonHandakuten;
+
+        for (int i = 0; i < yoon.length; i++) {
+          kanaTable[i].addAll(yoon[i].where((e) => e != ""));
+        }
+      }
+      // combinations (special)
+      if(constraints.maxWidth > 1100){
+        for (int i = 0; i < hiraSpecial.length; i++) {
+          kanaTable[i].addAll(hiraSpecial[i].where((e) => e != ""));
+        }
+      }
+    }
+    // landscape
+    else {
+      // dakuten
+      if(constraints.maxWidth > 1000){
+        List<List<String>> dakuten = hiraDakuten;
+
+        for (int i = 0; i < dakuten[0].length; i++) {
+          kanaTable[i].addAll(dakuten.map((e) => e[i]));
+        }
+      }
+      // combinations (normal)
+      if(constraints.maxHeight > 800){
+        List<List<String>> kana = hiraYoon;
+        if(constraints.maxWidth > 1000){
+          kana +=
+            hiraYoonDakuten.map((rows) => rows.where((kana) => kana!="").toList()).toList() +
+            hiraYoonHandakuten.map((rows) => rows.where((kana) => kana!="").toList()).toList();
+        }
+        kanaTable.addAll(flipTable(kana));
+      }
+      // combinations (special)
+      if(constraints.maxHeight > 1100){
+        List<List<String>> kana = hiraSpecial;
+        kanaTable.addAll(flipTable(kana));
+      }
+    }
+  }
+
   /// Returns the x position of the kana in the kana table
   double getKanaX(String kana){
-    for(int i = 0; i < currentKanaTable.length; i++){
-      for(int j = 0; j < currentKanaTable[i].length; j++){
-        if(currentKanaTable[i][j] == kana){
+    for(int i = 0; i < kanaTable.length; i++){
+      for(int j = 0; j < kanaTable[i].length; j++){
+        if(kanaTable[i][j] == kana){
           return j.toDouble();
         }
       }
@@ -247,9 +314,9 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   
   /// Returns the y position of the kana in the kana table
   double getKanaY(String kana){
-    for(int i = 0; i < currentKanaTable.length; i++){
-      for(int j = 0; j < currentKanaTable[i].length; j++){
-        if(currentKanaTable[i][j] == kana){
+    for(int i = 0; i < kanaTable.length; i++){
+      for(int j = 0; j < kanaTable[i].length; j++){
+        if(kanaTable[i][j] == kana){
           return i.toDouble();
         }
       }
@@ -263,48 +330,51 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   void setCurrrentKanaTable(bool isPortrait){
     if(isHiragana){
       if(showYoon){
-        currentKanaTable = hiraYoon;
+        baseKanaTable = hiraYoon;
       }
       else if(showDaku){
-        currentKanaTable = hiraDaku;
+        baseKanaTable = hiraDaku;
       }
       else if(showSpecial){
-        currentKanaTable = hiraSpecial;
+        baseKanaTable = hiraSpecial;
       }
       else{
-        currentKanaTable = hiragana;
+        baseKanaTable = hiragana;
       }
     }
     else {
       if(showYoon){
-        currentKanaTable = kataYoon;
+        baseKanaTable = kataYoon;
       }
       else if(showDaku){
-        currentKanaTable = kataDaku;
+        baseKanaTable = kataDaku;
       }
       else if(showSpecial){
-        currentKanaTable = kataSpecial;
+        baseKanaTable = kataSpecial;
       }
       else{
-        currentKanaTable = katakana;
+        baseKanaTable = katakana;
       }
     }
 
     // check if kana table should be flipped, if so flip table
     if(isPortrait){
+      baseKanaTable = flipTable(baseKanaTable);
+    }
+  }
 
-      // flip `currentKanaTable` at the main diagonal by swapping the elements
-      List<List<String>> temp = List.generate(currentKanaTable[0].length, (index) => 
-        List.generate(currentKanaTable.length, (index) => "")
+  // flip `table` at the main diagonal by swapping the elements
+  List<List<String>> flipTable(List<List<String>> table){
+    List<List<String>> temp = List.generate(table[0].length, (index) => 
+        List.generate(table.length, (index) => "")
       );
-      for(int i = 0; i < currentKanaTable.length; i++){
-        for(int j = 0; j < currentKanaTable[i].length; j++){
-          temp[j][i] = currentKanaTable[i][j];
+      for(int i = 0; i < table.length; i++){
+        for(int j = 0; j < table[i].length; j++){
+          temp[j][i] = table[i][j];
         }
       }
-      
-      currentKanaTable = temp;
-    }
+
+    return temp;
   }
 
   /// Toggles between hiragana and katakana
