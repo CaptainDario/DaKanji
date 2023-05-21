@@ -443,8 +443,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
-    // only search in dictionary if the query is not empty
-    if(text == ""){
+    // only search in dictionary if the query is not empty (remove filters to check this)
+    if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
       context.read<DictSearch>().currentSearch = "";
       context.read<DictSearch>().searchResults = [];
       return;
