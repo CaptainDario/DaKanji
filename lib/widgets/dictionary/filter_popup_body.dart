@@ -45,7 +45,15 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
             for(var pair in zip([jmDictFieldsSorted.entries, jmDictPosSorted.entries]))
               for (var item in pair)
                 item.value != ""
-                  ? ElevatedButton(
+                  ? OutlinedButton(
+                    
+                    style: ButtonStyle(
+                      textStyle: MaterialStateProperty.all(
+                        TextStyle(
+                          fontSize: 14
+                        )
+                      ),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
