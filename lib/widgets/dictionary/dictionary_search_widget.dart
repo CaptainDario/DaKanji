@@ -285,7 +285,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         ).show();
                       },
                       icon: Icon(
-                        Icons.filter_alt_rounded,
+                        Icons.filter_alt_outlined,
                         size: 20,
                       ),
                     ),

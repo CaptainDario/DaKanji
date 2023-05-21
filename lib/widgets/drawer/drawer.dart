@@ -349,7 +349,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the word lists screen
                             if(kDebugMode)
                               DrawerElement(
-                                leading: Icons.list_alt_rounded,
+                                leading: Icons.list_outlined,
                                 leadingAlignment: Alignment(0, -0.1),
                                 title: LocaleKeys.WordListsScreen_title.tr(),
                                 route: "/word_lists",
@@ -368,7 +368,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             ),
                             // Drawer entry to go to the about screen
                             DrawerElement(
-                              leading: Icons.info_outline,
+                              leading: Icons.info,
                               title: LocaleKeys.AboutScreen_title.tr(),
                               route: "/about",
                               selected: widget.currentScreen == Screens.about,
