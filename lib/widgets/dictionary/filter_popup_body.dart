@@ -26,6 +26,10 @@ class FilterPopupBody extends StatefulWidget {
 }
 
 class _FilterPopupBodyState extends State<FilterPopupBody> {
+
+  /// List of all selected filters
+  List<String> selectedFilters = [];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,17 +63,31 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                       child: Text(
                         item.value,
                         style: TextStyle(
-                          fontSize: 14
+                          fontSize: 14,
+                          color: selectedFilters.contains(item.key)
+                            ? Colors.grey
+                            : Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      String newText = "#${item.key} ${widget.searchController.text}";
-                      setState(() {
-                        widget.searchController.text = newText;
-                        //updateSearchResults(newText, widget.allowDeconjugation);
-                      });
-                    },
+                    onPressed: selectedFilters.contains(item.key)
+                      ? () {
+                        widget.searchController.text = widget.searchController.text
+                          .replaceAll("#${item.key} ", "");
+                        setState(() {
+                          selectedFilters.remove(item.key);
+                        });
+                      }
+                      : () {
+                        String newText = "#${item.key} ${widget.searchController.text}";
+                        selectedFilters.add(item.key);
+                        setState(() {
+                          widget.searchController.text = newText;
+                          //updateSearchResults(newText, widget.allowDeconjugation);
+                        });
+                      },
                   )
                   : Container(),
           ]
