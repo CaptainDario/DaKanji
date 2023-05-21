@@ -34,6 +34,11 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
 
   /// Is the speed dial open
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  /// The functions to be called when the menu items are pressed
+  late List<Function> menuFunctions;  
+  /// The menu items to be displayed in the speed dial
+  late List<String> menuItems;
+
   /// The table of kana selected from the user before applying responsivess-modifications
   List<List<String>> baseKanaTable = hiragana;
   /// The table of kana to be displayed
@@ -55,10 +60,10 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   double currentKanaX = 0;
   /// The y position of the tappped kana
   double currentKanaY = 0;
+  /// the height of the action button (56 [height] + 20 [margin])
+  double actionButtonHeigt = 56 + 20;
   /// The animation controller for the kana info card
   late AnimationController _controller;
-  /// The functions to be called when the menu items are pressed
-  late List<Function> menuFunctions;  
   /// The player for the kana sound
   final Player kanaSoundPlayer = Player();
 
@@ -93,28 +98,13 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
 
-    /// The menu items to be displayed in the speed dial
-    List<String> menuItems = [
+    menuItems = [
       showDaku        ? "dakuten_on.svg"  : "dakuten_off.svg",
       showYoon        ? "yoon_on.svg"     : "yoon_off.svg",
       isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
       showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
       showSpecial     ? "special_on.svg"  : "special_off.svg", 
     ].map((e) => "assets/icons/kana/" + e).toList();
-    
-    
-    /// The number of columns in the grid
-    int gridColumnCount = baseKanaTable[0].length;
-    /// the number of rows in the grid
-    /// +3 for the empty rows at the bottom
-    int gridRowCount = baseKanaTable.length + 3;
-    /// the width of a cell in the grid
-    double cellWidth = MediaQuery.of(context).size.width / gridColumnCount;
-    /// the height of a cell in the grid
-    double cellHeight = MediaQuery.of(context).size.height / gridRowCount;
-    /// the height of the action button (56 [height] + 20 [margin d])
-    double actionButtonHeigt = 56 + 20;
-
 
     return DaKanjiDrawer(
       currentScreen: Screens.kana_chart,
@@ -150,15 +140,22 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {
-
             bool isPortrait = constraints.maxWidth < constraints.maxHeight;
-            setCurrrentKanaTable(!isPortrait);
+            setCurrrentKanaTable(isPortrait);
+            setResponsiveKanaTable(constraints);
 
             double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
             double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
 
-            // add responsiveness
-            setResponsiveKanatable(constraints);
+            /// The number of columns in the grid
+            int gridColumnCount = kanaTable[0].length;
+            /// the number of rows in the grid
+            /// +3 for the empty rows at the bottom
+            int gridRowCount = kanaTable.length;
+            /// the width of a cell in the grid
+            double cellWidth = MediaQuery.of(context).size.width / gridColumnCount;
+            /// the height of a cell in the grid
+            double cellHeight = MediaQuery.of(context).size.height / gridRowCount;
 
             return Stack(
               children: [
@@ -171,19 +168,17 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                     height: constraints.maxHeight-actionButtonHeigt,
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
-                    onTap: (String kana) async {
-                      await kanaSoundPlayer.open(
+                    onTap: (String kana) {
+                      kanaSoundPlayer.open(
                         Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
                         play: true
                       );
-
                       setState(() {
                         currentKana = kana;
-                        currentKanaX =
-                          constraints.maxWidth / gridColumnCount * getKanaX(kana)
-                          + cellWidth/2;
-                        currentKanaY = constraints.maxHeight / gridRowCount * getKanaY(kana)
-                          + cellHeight/2;
+                        currentKanaX = constraints.maxWidth /
+                          gridColumnCount * getKanaX(kana) + cellWidth/2;
+                        currentKanaY = (constraints.maxHeight-actionButtonHeigt) /
+                          gridRowCount * getKanaY(kana) + cellHeight/2;
                         _controller.forward(from: 0);
                       });
                     },
@@ -244,59 +239,86 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
   }
 
   /// based on the screen size, returns the current kana table
-  void setResponsiveKanatable(BoxConstraints constraints){
-
+  void setResponsiveKanaTable(BoxConstraints constraints){
+    // responsiveness only with base kana mode
+    if(![hiragana[0][0], katakana[0][0]].contains(baseKanaTable[0][0])){
+      kanaTable = baseKanaTable;
+      return;
+    }
+    // copy table to prevent modiyfing original table
     kanaTable = baseKanaTable.map((e) => List<String>.from(e)).toList();
 
     // portrait
     if(constraints.maxWidth < constraints.maxHeight){
-      // dakuten
-      if(constraints.maxHeight > 1000){
-        kanaTable.addAll(hiraDakuten.map((e) => List<String>.from(e)));
-        kanaTable.addAll(hiraHandakuten.map((e) => List<String>.from(e)));
-      }
-      // combinations (normal)
-      if(constraints.maxWidth > 800){
-        List<List<String>> yoon = hiraYoon;
-        if(constraints.maxHeight > 1000)
-          yoon += hiraYoonDakuten + hiraYoonHandakuten;
-
-        for (int i = 0; i < yoon.length; i++) {
-          kanaTable[i].addAll(yoon[i].where((e) => e != ""));
-        }
-      }
-      // combinations (special)
-      if(constraints.maxWidth > 1100){
-        for (int i = 0; i < hiraSpecial.length; i++) {
-          kanaTable[i].addAll(hiraSpecial[i].where((e) => e != ""));
-        }
-      }
+      this._setPortraiKanaTable(constraints);
     }
     // landscape
     else {
-      // dakuten
-      if(constraints.maxWidth > 1000){
-        List<List<String>> dakuten = hiraDakuten;
+      this._setLandscapeKanaTable(constraints); 
+    }
+  }
 
-        for (int i = 0; i < dakuten[0].length; i++) {
-          kanaTable[i].addAll(dakuten.map((e) => e[i]));
-        }
+  /// sets the kana table matching the available screen size if the app is
+  /// running portrait
+  void _setPortraiKanaTable(BoxConstraints constraints){
+    // dakuten
+    if(constraints.maxHeight > 1000){
+      List<List<String>> dakuten = isHiragana
+        ? hiraDakuten + hiraHandakuten
+        : kataDakuten + kataHandakuten;
+      kanaTable.addAll(dakuten.map((e) => List<String>.from(e)));
+    }
+    // combinations (normal)
+    if(constraints.maxWidth > 800){
+      List<List<String>> yoon = isHiragana ? hiraYoon : kataYoon;
+      if(constraints.maxHeight > 1000)
+        yoon += isHiragana
+          ? hiraYoonDakuten + hiraYoonHandakuten
+          : kataYoonDakuten + kataYoonHandakuten;
+
+      for (int i = 0; i < yoon.length; i++) {
+        kanaTable[i].addAll(yoon[i].where((e) => e != ""));
       }
-      // combinations (normal)
-      if(constraints.maxHeight > 800){
-        List<List<String>> kana = hiraYoon;
-        if(constraints.maxWidth > 1000){
-          kana +=
-            hiraYoonDakuten.map((rows) => rows.where((kana) => kana!="").toList()).toList() +
-            hiraYoonHandakuten.map((rows) => rows.where((kana) => kana!="").toList()).toList();
-        }
-        kanaTable.addAll(flipTable(kana));
+    }
+    // combinations (special)
+    if(constraints.maxWidth > 1100){
+      List<List<String>> special = isHiragana ? hiraSpecial : kataSpecial;
+      for (int i = 0; i < special.length; i++) {
+        kanaTable[i].addAll(special[i].where((e) => e != ""));
       }
-      // combinations (special)
-      if(constraints.maxHeight > 1100){
-        List<List<String>> kana = hiraSpecial;
-        kanaTable.addAll(flipTable(kana));
+    }
+  }
+
+  /// sets the kana table matching the available screen size if the app is
+  /// running landscape
+  void _setLandscapeKanaTable(BoxConstraints constraints){
+    // dakuten
+    if(constraints.maxWidth > 1000){
+      List<List<String>> dakuten = isHiragana
+        ? hiraDakuten + hiraHandakuten
+        : kataDakuten + kataHandakuten;
+
+      for (int i = 0; i < dakuten[0].length; i++) {
+        kanaTable[i].addAll(dakuten.map((e) => e[i]));
       }
+    }
+    // combinations (normal)
+    if(constraints.maxHeight > 600){
+      List<List<String>> yoon = isHiragana ? hiraYoon : kataYoon;
+
+      if(constraints.maxWidth > 1000){
+        yoon += isHiragana
+          ? (hiraYoonDakuten + hiraYoonHandakuten) 
+          : (kataYoonDakuten + kataYoonHandakuten) 
+          .map((rows) => rows.where((kana) => kana!="").toList()).toList();
+      }
+
+      kanaTable.addAll(flipTable(yoon));
+    }
+    // combinations (special)
+    if(constraints.maxHeight > 800){
+      List<List<String>> kana = isHiragana ? hiraSpecial : kataSpecial;
+      kanaTable.addAll(flipTable(kana));
     }
   }
 
@@ -358,7 +380,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     }
 
     // check if kana table should be flipped, if so flip table
-    if(isPortrait){
+    if(!isPortrait){
       baseKanaTable = flipTable(baseKanaTable);
     }
   }
@@ -408,6 +430,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     }
   }
 
+  /// Toggles between showing and not showing special characters
   void showSpecialDialPressed() {
     if(showSpecial){
       showSpecial = false;

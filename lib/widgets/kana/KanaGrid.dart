@@ -46,8 +46,9 @@ class _KanaGridState extends State<KanaGrid> {
 
   @override
   Widget build(BuildContext context) {
-
+    /// number of columns in the grid
     int columnCount = widget.kanaTable.map((e) => e.length).reduce(max);
+    /// number of rows in the grid
     int rowCount = widget.kanaTable.length;
 
     return GridView.count(
