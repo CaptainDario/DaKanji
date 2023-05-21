@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
@@ -126,7 +127,6 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
                 SpeedDialChild(
                   child: SvgPicture.asset(
                     menuItems[i],
-                    //color: Colors.white,
                     width: 35,
                     height: 35,
                   ),
@@ -281,11 +281,11 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       }
     }
     // combinations (special)
-    if(constraints.maxWidth > 1100){
+    if(constraints.maxWidth > 1100){/*
       List<List<String>> special = isHiragana ? hiraSpecial : kataSpecial;
       for (int i = 0; i < special.length; i++) {
         kanaTable[i].addAll(special[i].where((e) => e != ""));
-      }
+      }*/
     }
   }
 
@@ -309,8 +309,8 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
       if(constraints.maxWidth > 1000){
         yoon += isHiragana
           ? (hiraYoonDakuten + hiraYoonHandakuten) 
-          : (kataYoonDakuten + kataYoonHandakuten) 
-          .map((rows) => rows.where((kana) => kana!="").toList()).toList();
+          : (kataYoonDakuten + kataYoonHandakuten);
+        yoon = yoon.map((rows) => rows.where((k) => k!="").toList()).toList();
       }
 
       kanaTable.addAll(flipTable(yoon));
@@ -387,7 +387,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
 
   // flip `table` at the main diagonal by swapping the elements
   List<List<String>> flipTable(List<List<String>> table){
-    List<List<String>> temp = List.generate(table[0].length, (index) => 
+    List<List<String>> temp = List.generate(table.map((e) => e.length).reduce(max), (index) => 
         List.generate(table.length, (index) => "")
       );
       for(int i = 0; i < table.length; i++){
