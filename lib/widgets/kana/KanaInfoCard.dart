@@ -36,7 +36,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   /// The svg of the kana's mnemonics
   String? mnemonicSvg;
   /// The svg of the dakuten
-  String yoonSVG = "";
+  String? yoonSVG;
   /// The mnemonic of the kana
   String? mnemonic = null;
 
@@ -83,13 +83,14 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     }
 
     // get the svg of the yoon kana if there is one
+    yoonSVG = null;
     if(widget.kana.length > 1){
       yoonSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
         .characterEqualTo(widget.kana[1])
       .findFirstSync()!.svg;
       yoonSVG = modifyKanjiVGSvg(
-        yoonSVG,
-        strokeColor: SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+        yoonSVG!,
+        strokeColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black
       );
@@ -134,13 +135,13 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                         )
                       ),
                     // yoon if there are two kana
-                    if(widget.kana.length > 1)
+                    if(widget.kana.length > 1 && yoonSVG != null)
                       Expanded(
                         child: Transform.translate(
                           offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
                           child: Center(
                             child: SvgPicture.string(
-                              yoonSVG,
+                              yoonSVG!,
                               height: MediaQuery.of(context).size.height * 0.15,
                             )
                           ),
