@@ -111,6 +111,13 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         child: Center(
           child: Column(
             children: [
+              Text(
+                convertToRomaji(widget.kana),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                )
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
