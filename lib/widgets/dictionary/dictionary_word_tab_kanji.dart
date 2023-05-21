@@ -293,6 +293,10 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                               TextSpan(
                                 text: ": " + kanjiInfos.keys.toList()[i],
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey
+                                )
                               ),
                             ],
                           ),
