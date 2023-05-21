@@ -79,19 +79,19 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   void initState() {
     initData();
+    initDataAsync();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant DictionaryWordTab oldWidget) {
     initData();
+    initDataAsync();
     super.didUpdateWidget(oldWidget);
   }
 
   /// parses and initializes all data elements of this widget
-  void initData() async {
-
-    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+  void initData() {
 
     if(widget.entry != null){
       readingOrKanji = widget.entry!.kanjis.isEmpty
@@ -105,6 +105,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
+  }
+
+  void initDataAsync() async {
+    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
   }
 
   @override
