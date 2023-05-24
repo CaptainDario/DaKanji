@@ -10,7 +10,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   printing
   screen_retriever
   sentry_flutter
-  tflite_flutter_helper
   url_launcher_linux
   window_manager
 )

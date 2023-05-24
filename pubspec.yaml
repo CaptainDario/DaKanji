@@ -18,13 +18,13 @@ dependencies:
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
-  image: 3.2.0
+  image: 4.0.17
   flutter_markdown: 0.6.13
   get_it: 7.2.0
   provider: 6.0.3
-  universal_io: 2.0.4
+  universal_io: 2.2.0
   awesome_dialog: 3.0.2
-  easy_localization: 3.0.1
+  easy_localization: 3.0.2
   flutter_layout_grid: 1.0.3
   tuple: 2.0.1
   lottie: 1.2.1
@@ -35,7 +35,7 @@ dependencies:
   feedback: 2.5.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
-  xml: 6.2.0
+  xml: 6.3.0
   reorderables: 0.5.0
   archive: 3.3.2
   device_info_plus: 5.0.5
@@ -46,12 +46,12 @@ dependencies:
   sentry_flutter: 7.4.2
   animations: 2.0.7
   dio: 5.0.1
-  flutter_speed_dial: 6.2.0
+  flutter_speed_dial: 7.0.0
   # TODO : use non beta version for release
-  flutter_inappwebview: 6.0.0-beta.22   # android, iOS, (mac)
+  flutter_inappwebview: 6.0.0-beta.23   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  pdf: 3.8.4
-  printing: 5.9.3
+  pdf: 3.10.3
+  printing: 5.10.4
   media_kit: 0.0.7                              # Primary package.
   
   media_kit_video: 0.0.9                        # For video rendering.
@@ -92,16 +92,15 @@ dependencies:
   window_manager: 0.2.7           # desktop
 
   # utility 
-  flutter_launcher_icons: 0.11.0  # android, iOS, Linux, MacOS, windows
-  flutter_native_splash: 2.2.9   # android, iOS, web
+  flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
+  flutter_native_splash: 2.3.0   # android, iOS, web
 
 dependency_overrides:
-    tflite_flutter: # android, iOS, Linux, MacOS, windows
-      git:
-        url: https://github.com/CaptainDario/tflite_flutter_plugin
-    tflite_flutter_helper:
-      git:
-        url: https://github.com/CaptainDario/tflite_flutter_helper
+    tflite_flutter:  # android, iOS, Linux, MacOS, windows
+      path: ../../flutter-tflite
+    #tflite_flutter_helper:
+    #  git:
+    #    url: https://github.com/CaptainDario/tflite_flutter_helper
 
 msix_config:
   display_name: DaKanji
@@ -118,7 +117,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  msix: 3.6.6
+  msix: 3.13.2
   json_serializable: 6.6.1
   build_runner: 2.2.1
   isar_generator: any # included in dakanji dictionary
