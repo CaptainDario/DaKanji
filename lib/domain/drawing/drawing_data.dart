@@ -54,15 +54,18 @@ class DrawingData {
       width: inputImageWidth,
       interpolation: image.Interpolation.cubic
     );
-    resizedImage = image.gaussianBlur(resizedImage, 2);
+    /*resizedImage = image.gaussianBlur(resizedImage, 2);
     Uint8List resizedBytes = 
-      resizedImage.getBytes(format: image.Format.luminance);
+      resizedImage.getBytes(format: image.Format.luminance);*/
+    resizedImage = image.gaussianBlur(resizedImage, radius: 2);
+    final imgRgba8 = resizedImage.convert(numChannels: 1);
+    image.grayscale(imgRgba8);
 
     // convert image for inference into shape [1, height, width, 1]
     // also apply thresholding and normalization [0, 1]
     for (int x = 0; x < inputImageHeight; x++) {
       for (int y = 0; y < inputImageWidth; y++) {
-        double val = resizedBytes[(x * inputImageWidth) + y].toDouble();
+        double val = imgRgba8.getPixelIndex(y, x).toDouble();
         
         this.input[0][x][y][0] = val;
       }
