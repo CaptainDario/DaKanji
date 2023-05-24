@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:image/image.dart' as image;
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 
 
@@ -11,8 +10,6 @@ import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 /// * pre- / postprocessing of the data
 /// * Define how to run the interpreter
 class DrawingData {
-
-  ImageProcessor? imageProcessor;
 
   /// A list containing all labels that the model can detect
   final List<String> labels;
