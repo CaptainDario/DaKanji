@@ -96,8 +96,9 @@ dependencies:
   flutter_native_splash: 2.3.0   # android, iOS, web
 
 dependency_overrides:
-    tflite_flutter:  # android, iOS, Linux, MacOS, windows
-      path: ../../flutter-tflite
+  tflite_flutter:
+    git:
+      url: https://github.com/CaptainDario/tflite_flutter_plugin
     #tflite_flutter_helper:
     #  git:
     #    url: https://github.com/CaptainDario/tflite_flutter_helper

@@ -1345,10 +1345,12 @@ packages:
   tflite_flutter:
     dependency: "direct overridden"
     description:
-      path: "../../flutter-tflite"
-      relative: true
-    source: path
-    version: "0.10.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: c7cab8d65c76815e9c2699fc30edee7caacafbf1
+      url: "https://github.com/CaptainDario/tflite_flutter_plugin"
+    source: git
+    version: "0.9.0"
   time:
     dependency: transitive
     description:

@@ -40,8 +40,6 @@ PODS:
     - FlutterMacOS
   - shared_preferences_macos (0.0.1):
     - FlutterMacOS
-  - tflite_flutter_helper (0.0.1):
-    - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
   - window_manager (0.2.0):
@@ -59,13 +57,12 @@ DEPENDENCIES:
   - media_kit_native_event_loop (from `Flutter/ephemeral/.symlinks/plugins/media_kit_native_event_loop/macos`)
   - media_kit_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_video/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
-  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - printing (from `Flutter/ephemeral/.symlinks/plugins/printing/macos`)
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
-  - tflite_flutter_helper (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
@@ -99,7 +96,7 @@ EXTERNAL SOURCES:
   package_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
   path_provider_foundation:
-    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   printing:
     :path: Flutter/ephemeral/.symlinks/plugins/printing/macos
   screen_retriever:
@@ -110,8 +107,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/share_plus/macos
   shared_preferences_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos
-  tflite_flutter_helper:
-    :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter_helper/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
   window_manager:
@@ -131,14 +126,13 @@ SPEC CHECKSUMS:
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  printing: e4b7e232ff3d5d50a70b20d959aa71035a5c31f9
+  printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   Sentry: 16d46dd5ca10e7f4469a2611805a3de123188add
   sentry_flutter: 45124526f72f01bacc790d075443692cd490ee78
   SentryPrivate: 2bb4f8d9ff558b25ac70b66c1dedc58a7c43630b
   share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
   shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
-  tflite_flutter_helper: b9fb1f2880a784c6b4041f6592c351d631ebe55f
   url_launcher_macos: 5335912b679c073563f29d89d33d10d459f95451
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
