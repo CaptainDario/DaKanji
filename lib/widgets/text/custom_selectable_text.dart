@@ -132,8 +132,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   );
   /// Regex that matches a paragraph
   RegExp paragraphRegex = RegExp(
-    "(?:[^$anyWhiteSpace])+?(?:\\n|\$)",
-    multiLine: true
+    r"(.+?):?(\n\n|$)",
+    multiLine: false,
+    dotAll: true
   );
 
   /// the current split of ruby texts, this is used because when a text breaks
