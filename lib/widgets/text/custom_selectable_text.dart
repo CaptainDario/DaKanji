@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -187,7 +188,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     /// allow copying the text
     bindings = {
       LogicalKeySet.fromSet(
-        {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyC}
+        {
+          Platform.isMacOS ? LogicalKeyboardKey.metaLeft : LogicalKeyboardKey.controlLeft,
+          LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyC
+        }
       ) : () async => await Clipboard.setData(
         ClipboardData(
           text: words.join().substring(
@@ -197,7 +201,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         )
       ),
       LogicalKeySet.fromSet(
-        {LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyA}
+        {
+          Platform.isMacOS ? LogicalKeyboardKey.metaLeft : LogicalKeyboardKey.controlLeft,
+          LogicalKeyboardKey.keyA
+        }
       ) : () async => setState(() {
         _textSelection = TextSelection(
           baseOffset: 0, 
@@ -585,7 +592,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         child: MouseRegion(
           cursor: _cursor,
           child: Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topLeft,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
