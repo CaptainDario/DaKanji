@@ -289,6 +289,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   void _updateSelectionDisplay() {
+    if(!_textSelection.isValid)
+      return;
+
     setState(() {
       final selectionRects = _computeSelectionRects(_textSelection);
       _selectionRects
@@ -453,8 +456,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
       cnt += text.length;
     }
-    
-    _onUserSelectionChange(_textSelection);
+    if(_textSelection.isValid)
+      _onUserSelectionChange(_textSelection);
   }
 
   /// Selects the sentance in which the position the user tapped is located
@@ -470,7 +473,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         break;
       }
     }
-    _onUserSelectionChange(_textSelection);
+    if(_textSelection.isValid)
+      _onUserSelectionChange(_textSelection);
   }
 
   /// Selects the paragraph that contains the word where `event` happend
@@ -487,7 +491,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         break;
       }
     }
-    _onUserSelectionChange(_textSelection);
+    if(_textSelection.isValid)
+      _onUserSelectionChange(_textSelection);
   }
 
   @override
