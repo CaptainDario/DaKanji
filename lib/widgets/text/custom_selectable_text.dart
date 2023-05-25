@@ -228,7 +228,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   RenderParagraph? get _renderParagraph => 
-    _textKey.currentContext?.findRenderObject()  as RenderParagraph;
+    _textKey.currentContext?.findRenderObject() as RenderParagraph;
 
   void _scheduleTextLayoutUpdate() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -254,6 +254,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
+
     if(words.length == 0)
       return;
 
@@ -267,8 +268,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         baseOffset:   _textSelection.baseOffset,
         extentOffset: _getTextPositionAtOffset(details.localPosition).offset,
       );
-
-    print("dragging");
 
     setState(() {
       _onUserSelectionChange(_textSelection);
@@ -392,11 +391,27 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     );
   }
 
+  /// Returns the TextPosition of the character at the given offset
   TextPosition _getTextPositionAtOffset(Offset localOffset) {
+    // convert the localOffset to a TextPosition in the rendered text
     final myBox = context.findRenderObject();
     final textOffset = _renderParagraph!.globalToLocal(localOffset, ancestor: myBox);
+    // `getPositionForOffset` returns the position of the character that is
+    // closest to the given offset. This is measured from the left of 
+    // a character, therefore, if the offset is closer to the right side of
+    // the character, we need to return the previous character.
     TextPosition tP = _renderParagraph!.getPositionForOffset(textOffset);
-    bool isOverText = _isOffsetOverText(localOffset);
+    
+    // convert the TextPosition to a TextSelection
+    TextSelection tS = TextSelection(baseOffset: tP.offset, extentOffset: tP.offset+1);
+    // get the rendered box of the selected character
+    final selectedBox = _renderParagraph!.getBoxesForSelection(tS);
+    // if the offset is closer to the right side of the character
+    // return the previous character
+    if(!selectedBox.first.toRect().contains(textOffset))
+      tP = TextPosition(offset: tP.offset-1);
+    
+    //bool isOverText = _isOffsetOverText(localOffset);
     return tP;
   }
 
@@ -441,12 +456,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   /// Selects the word (PoS) where `event` happend
-  void selectWord(PointerDownEvent event){
+  void selectWord(TapDownDetails event){
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
 
     var cnt = 0;
     for (var text in words) {
-      if(cnt + text.length >= tapTextPos.offset){
+      if(cnt + text.length > tapTextPos.offset){
         _textSelection = TextSelection(
           baseOffset: cnt,
           extentOffset: cnt + text.length
@@ -461,7 +476,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   /// Selects the sentance in which the position the user tapped is located
-  void selectSentence(PointerDownEvent event){
+  void selectSentence(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
 
     for (var match in sentenceRegex.allMatches(words.join(""))) {
@@ -478,16 +493,15 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   /// Selects the paragraph that contains the word where `event` happend
-  void selectParagraph(PointerDownEvent event){
+  void selectParagraph(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
     
     for (var match in paragraphRegex.allMatches(words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
         _textSelection = TextSelection(
           baseOffset: match.start, 
-          extentOffset: match.end
+          extentOffset: match.end-1
         );
-        print("paragraph");
         break;
       }
     }
@@ -498,79 +512,81 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   Widget build(BuildContext context) {
 
-    return Listener(
-      onPointerDown: (event) {
-        // if the user tapped outside of the text, remove selection
-        if(!_isOffsetOverText(event.localPosition)){
-          setState(() => _selectionRects.clear());
-          
-          if(widget.onTapOutsideOfText != null)
-            widget.onTapOutsideOfText!(event.localPosition);
-          
-          return;
-        }
-
-        // assure that words are in the text fields AND 
-        if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
-    
-        tapped++; isTapped = true;
-    
-        if (multiTapTimer != null) {
-          multiTapTimer!.cancel();
-        }
-    
-        multiTapTimer = Timer(
-          const Duration(milliseconds: 200),
-          () {
-            if(_isDragging)return;
-            
-            if (tapped == 1 && !isTapped){
-              selectWord(event);
-              if(widget.onTap != null) widget.onTap!(_textSelection);
-            }
-            else if (tapped == 1 && isTapped){
-              selectWord(event);
-              if(widget.onLongPress != null) widget.onLongPress!(_textSelection);
-            }
-            else if (tapped == 2){
-              selectSentence(event);
-              if(widget.onDoubleTap != null) widget.onDoubleTap!(_textSelection);
-            }
-            else if (tapped >= 3){
-              selectParagraph(event);
-              if(widget.onTripleTap != null) widget.onTripleTap!(_textSelection);
-            }
-            tapped = 0;
+    return Focus(
+      focusNode: focuseNode,
+      canRequestFocus: true,
+      onKey: (node, event) {
+        KeyEventResult result = KeyEventResult.ignored;
+        // Activates all key bindings that match, returns handled if any handle it.
+        for (final ShortcutActivator activator in bindings.keys) {
+          if (activator.accepts(event, RawKeyboard.instance)) {
+            bindings[activator]!.call();
+            result = KeyEventResult.handled;
           }
-        );
+        }
+        return result;
       },
-      onPointerUp: (event) => isTapped = false,
-      child: Focus(
-        focusNode: focuseNode,
-        canRequestFocus: true,
-        onKey: (node, event) {
-          KeyEventResult result = KeyEventResult.ignored;
-          // Activates all key bindings that match, returns handled if any handle it.
-          for (final ShortcutActivator activator in bindings.keys) {
-            if (activator.accepts(event, RawKeyboard.instance)) {
-              bindings[activator]!.call();
-              result = KeyEventResult.handled;
-            }
+      child: GestureDetector(
+        onTapDown: (event) {
+          // if the user tapped outside of the text, remove selection
+          if(!_isOffsetOverText(event.localPosition)){
+            setState(() => _selectionRects.clear());
+            
+            if(widget.onTapOutsideOfText != null)
+              widget.onTapOutsideOfText!(event.localPosition);
+            
+            return;
           }
-          return result;
         },
+        behavior: HitTestBehavior.translucent,
         child: MouseRegion(
           cursor: _cursor,
-          child: GestureDetector(
-            onPanStart: widget.allowSelection ? _onDragStart : null,
-            onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
-            onPanEnd: widget.allowSelection ? _onDragEnd : null,
-            onTap: () {
-              focuseNode.requestFocus();
-            },
-            behavior: HitTestBehavior.translucent,
-            child: Align(
-              alignment: Alignment.topLeft,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: GestureDetector(
+              onTapDown: (event) {
+                focuseNode.requestFocus();
+          
+                // assure that words are in the text fields
+                if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
+            
+                tapped++; isTapped = true;
+            
+                if (multiTapTimer != null) {
+                  multiTapTimer!.cancel();
+                }
+            
+                multiTapTimer = Timer(
+                  const Duration(milliseconds: 200),
+                  () {
+                    if(_isDragging)return;
+                    
+                    if (tapped == 1 && !isTapped){
+                      selectWord(event);
+                      widget.onTap?.call(_textSelection);
+                    }
+                    else if (tapped == 1 && isTapped){
+                      selectWord(event);
+                      widget.onLongPress?.call(_textSelection);
+                    }
+                    else if (tapped == 2){
+                      selectSentence(event);
+                      widget.onDoubleTap?.call(_textSelection);
+                    }
+                    else if (tapped >= 3){
+                      selectParagraph(event);
+                      
+                      widget.onTripleTap?.call(_textSelection);
+                    }
+                    tapped = 0;
+                  }
+                );
+              },
+              onTapUp: (details) {isTapped = false;},
+              onPanStart: widget.allowSelection ? _onDragStart : null,
+              onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
+              onPanEnd: widget.allowSelection ? _onDragEnd : null,
+              behavior: HitTestBehavior.translucent,
               child: SingleChildScrollView(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -613,17 +629,16 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               for (int i = 0; i < words.length; i++) {
                                 ret.add(
                                   TextSpan(
-                                    text: words[i].replaceAll("█", " "),
+                                    text: words[i],
                                     style: TextStyle(
                                       // show the color if the user enabled it
                                       // and the color is not null
                                       // if spaces is enabled caculate index with cnt/2.floor()
                                       color: () {
-    
                                         int index = widget.addSpaces
                                           ? (cnt / 2).floor()
                                           : cnt;
-    
+          
                                         return widget.showColors
                                             && widget.wordColors != null
                                             && widget.wordColors![index] != null
@@ -685,10 +700,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               child: Container(
                                 height: 40,
                                 width:  40,
+                                clipBehavior: Clip.none,
                                 child: Center(
                                   child: Container(
                                     height: 20,
                                     width:  20,
+                                    clipBehavior: Clip.none,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(1000000)
