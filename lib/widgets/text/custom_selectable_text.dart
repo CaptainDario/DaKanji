@@ -190,7 +190,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       LogicalKeySet.fromSet(
         {
           Platform.isMacOS ? LogicalKeyboardKey.metaLeft : LogicalKeyboardKey.controlLeft,
-          LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.keyC
+          LogicalKeyboardKey.keyC
         }
       ) : () async => await Clipboard.setData(
         ClipboardData(
