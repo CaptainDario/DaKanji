@@ -79,6 +79,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the animation controller for scaling in the popup window
   late AnimationController popupAnimationController;
+  /// the tab controller for the tab bar of the popup
+  late TabController popupTabController;
   /// the animation for scaling in the popup window
   late final Animation<double> popupAnimation;
   /// the animation controller for animating maximizing the processed text widget
@@ -92,9 +94,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String selectedText = "";
   /// the text that is currently in the input field
   String inputText = "";
-
-
-
 
   
   @override
@@ -174,6 +173,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                 padding: 8.0,
                 constraints: constraints,
                 allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
+                onPopupInitialized: (tabController) {
+                  popupTabController = tabController;
+                },
                 children: [
                   // Text input
                   Focus(

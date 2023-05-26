@@ -19,6 +19,11 @@ class TextAnalysisStack extends StatefulWidget {
   final BoxConstraints constraints;
   /// Should the text be deconjugated
   final bool allowDeconjugation;
+  /// Callback that is executed when the text analysis stack is initialized
+  /// Provides:
+  /// * the [TabController] to control the tabs of the popup
+  /// as parameters
+  final Function(TabController tabController)? onPopupInitialized;
 
   const TextAnalysisStack(
     {
@@ -28,6 +33,7 @@ class TextAnalysisStack extends StatefulWidget {
       required this.constraints,
       this.allowDeconjugation=true,
       this.padding = 8.0,
+      this.onPopupInitialized,
       super.key
     }
   );
@@ -36,7 +42,7 @@ class TextAnalysisStack extends StatefulWidget {
   State<TextAnalysisStack> createState() => _TextAnalysisStackState();
 }
 
-class _TextAnalysisStackState extends State<TextAnalysisStack> {
+class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProviderStateMixin{
 
   /// the distance to the left window border of the popup
   double popupPositionLeft = 0.0;
@@ -51,6 +57,11 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> {
   /// the minimal height the popup can be
   double popupSizeHeightMin = 200;
 
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +108,9 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> {
                   scale: widget.poupAnimationController,
                   child: TextAnalysisPopup(
                     text: widget.textToAnalyze,
+                    onInitialized: (controller) {
+                      widget.onPopupInitialized?.call(controller);
+                    },
                     onMovedViaHeader: (event) {
                       setState(() {
                         // assure that the popup is not moved out of view
