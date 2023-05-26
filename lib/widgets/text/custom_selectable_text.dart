@@ -415,20 +415,29 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     TextSelection tS = TextSelection(baseOffset: tP.offset, extentOffset: tP.offset+1);
     // get the rendered box of the selected character
     final selectedBox = _renderParagraph!.getBoxesForSelection(tS);
-    // if the offset is closer to the right side of the character
-    // return the previous character
-    if(!selectedBox.first.toRect().contains(textOffset))
-      tP = TextPosition(offset: tP.offset-1);
     
-    //bool isOverText = _isOffsetOverText(localOffset);
+    // if the offset is outside of the text, return the previous character (at the end)
+    if(tP.offset >= words.join("").length)
+      tP = TextPosition(offset: words.join("").length);
+    // if the offset is closer to the right side of the character
+    // return the previous character 
+    else if(!selectedBox.first.toRect().contains(textOffset))
+      tP = TextPosition(offset: tP.offset-1);
+    // if the offset is outside of the text, return the previous character (at the beginning)
+    if(tP.offset < 0)
+      tP = TextPosition(offset: 0);
+    
     return tP;
   }
 
   // ignore: unused_element
   bool _isOffsetOverText(Offset localOffset) {
+    final myBox = context.findRenderObject();
+    Offset globalOffset = _renderParagraph!.globalToLocal(localOffset, ancestor: myBox);
+
     final rects = _computeAllTextBoxRects();
     for (final rect in rects) {
-      if (rect.contains(localOffset)) {
+      if (rect.contains(globalOffset)) {
         return true;
       }
     }
