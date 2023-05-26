@@ -317,13 +317,12 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               ),
                             // Drawer entry to go to the kana screen
                             DrawerElement(
-                              // TODO change to kana icon
                               leading: const IconData(
                                 0x304B,
-                                fontFamily: "kouzan"
+                                //fontFamily: "kouzan"
                               ),
-                              leadingSize: 0.7,
-                              leadingAlignment: Alignment(-1000, 0),
+                              leadingSize: 0.5,
+                              leadingAlignment: Alignment(1000, -0.7),
                               title: LocaleKeys.KanaChartScreen_title.tr(),
                               route: "/kana_chart",
                               selected: widget.currentScreen == Screens.kana_chart,
