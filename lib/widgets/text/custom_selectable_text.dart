@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
+
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
@@ -124,7 +126,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   static const String punctuations = "。|？|！|\\.|\\!|\\?";
   /// matches japanese ending parantheses
   static const String japaneseParantheses = "』|」";
-
+  /// matches any whitespace
   static const String anyWhiteSpace = "\\s|　";
   /// Regex that matches a sentence
   RegExp sentenceRegex = RegExp(
@@ -159,11 +161,18 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     _wordsWithSpaces.clear();
     for (var i = 0; i < _words.length; i++) {
       _wordsWithSpaces.add(_words[i]);
-      if (i < _words.length-1) {
-        _wordsWithSpaces.add("█");
+      if (i < _words.length-1 && _words[i] != "\n") {
+        _wordsWithSpaces.add(" ");
       }
     }
   }
+
+  /// The scroll controller group to keep text and handles in sync
+  LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
+  /// The scroll controller for the text
+  late ScrollController _textScrollController;
+  /// The scroll controller for the handles
+  late ScrollController _handlesScrollController;
   
   /// The screen X dimension during the last build
   double lastBuildScreenDimX = 0.0;
@@ -214,6 +223,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       }) 
       
     };
+  
+    _textScrollController = _scrollControllerGroup.addAndGet();
+    _textScrollController.addListener(() => setState(() {}));
+    _handlesScrollController = _scrollControllerGroup.addAndGet();
   }
 
   @override
@@ -497,7 +510,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void selectSentence(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
 
-    for (var match in sentenceRegex.allMatches(words.join(""))) {
+    for (var match in sentenceRegex.allMatches(_words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
         _textSelection = TextSelection(
           baseOffset: match.start, 
@@ -514,7 +527,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void selectParagraph(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
     
-    for (var match in paragraphRegex.allMatches(words.join(""))) {
+    for (var match in paragraphRegex.allMatches(_words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
         _textSelection = TextSelection(
           baseOffset: match.start, 
@@ -545,67 +558,21 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         return result;
       },
       child: GestureDetector(
-        onTapDown: (event) {
-          // if the user tapped outside of the text, remove selection
-          if(!_isOffsetOverText(event.localPosition)){
-            setState(() => _selectionRects.clear());
-            
-            if(widget.onTapOutsideOfText != null)
-              widget.onTapOutsideOfText!(event.localPosition);
-            
-            return;
-          }
-
-          focuseNode.requestFocus();
-          
-          // assure that words are in the text fields
-          if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
-      
-          tapped++; isTapped = true;
-      
-          if (multiTapTimer != null) {
-            multiTapTimer!.cancel();
-          }
-      
-          multiTapTimer = Timer(
-            const Duration(milliseconds: 200),
-            () {
-              if(_isDragging)return;
-              
-              if (tapped == 1 && !isTapped){
-                selectWord(event);
-                widget.onTap?.call(_textSelection);
-              }
-              else if (tapped == 1 && isTapped){
-                selectWord(event);
-                widget.onLongPress?.call(_textSelection);
-              }
-              else if (tapped == 2){
-                selectSentence(event);
-                widget.onDoubleTap?.call(_textSelection);
-              }
-              else if (tapped >= 3){
-                selectParagraph(event);
-                
-                widget.onTripleTap?.call(_textSelection);
-              }
-              tapped = 0;
-            }
-          );
-        },
+        onTapDown: onTap,
         onTapUp: (details) {isTapped = false;},
         onPanStart: widget.allowSelection ? _onDragStart : null,
         onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
         onPanEnd: widget.allowSelection ? _onDragEnd : null,
-        behavior: HitTestBehavior.translucent,
         child: MouseRegion(
           cursor: _cursor,
+          hitTestBehavior: HitTestBehavior.translucent,
           child: Align(
             alignment: Alignment.topLeft,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 SingleChildScrollView(
+                  controller: _textScrollController,
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       if(lastBuildScreenDimX != constraints.maxWidth ||
@@ -620,7 +587,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                           // text selection
                           CustomPaint(
                             painter: _SelectionPainter(
-                              color: widget.selectionColor,
+                              color: widget.selectionColor.withOpacity(0.6),
                               rects: _selectionRects,
                             ),
                           ),
@@ -656,7 +623,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                           int index = widget.addSpaces
                                             ? (cnt / 2).floor()
                                             : cnt;
-          
+                        
                                           return widget.showColors
                                               && widget.wordColors != null
                                               && widget.wordColors![index] != null
@@ -673,12 +640,13 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                             ),
                           ),
                           // the selection caret
-                          CustomPaint(
-                            painter: _SelectionPainter(
-                              color: widget.caretColor,
-                              rects: _caretRect != null ? [_caretRect!] : const [],
+                          if(_selectionRects.isNotEmpty)
+                            CustomPaint(
+                              painter: _SelectionPainter(
+                                color: widget.caretColor,
+                                rects: _caretRect != null ? [_caretRect!] : const [],
+                              ),
                             ),
-                          ),
                           // ruby texts
                           if(widget.showRubys)
                             ...List.generate(rubyPositions.length, ((index) {
@@ -707,70 +675,147 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 )
                               );
                             })),
+                          // the text selection handles (left, only the selection trigger)
+                          if(_selectionRects.isNotEmpty )//&& 
+                            //_selectionRects.first.top - _handlesScrollController.offset > 0)
+                            Positioned(
+                              left: _selectionRects.first.left - 20,
+                              top: _selectionRects.first.top - 20,
+                              child: Listener(
+                                behavior: HitTestBehavior.opaque,
+                                onPointerDown: (event) => _leftHandleSelected = true,
+                                onPointerUp: (event) => _leftHandleSelected = false,
+                                child: Container(
+                                  height: 40,
+                                  width:  40,
+                                ),
+                              ),
+                            ),
+                          // the text selection handles (right, only the selection trigger)
+                          if(_selectionRects.isNotEmpty && 
+                            _selectionRects.last.bottom - _handlesScrollController.offset > 0)
+                            Positioned(
+                              left: _selectionRects.last.right - 20,
+                              top: _selectionRects.last.bottom - 20,
+                              child: Listener(
+                                behavior: HitTestBehavior.opaque,
+                                onPointerDown: (event) => _rightHandleSelected = true,
+                                onPointerUp: (event) => _rightHandleSelected = false,
+                                child: Container(
+                                  height: 40,
+                                  width:  40,
+                                ),
+                              ),
+                            ),
                         ],
                       );
                     }
                   ),
                 ),
-                // the text selection handles (left)
-                if(_selectionRects.isNotEmpty)
-                  Positioned(
-                    left: _selectionRects.first.left - 20,
-                    top: _selectionRects.first.top - 20,
-                    child: Listener(
-                      onPointerDown: (event) => _leftHandleSelected = true,
-                      onPointerUp: (event) => _leftHandleSelected = false,
-                      child: Container(
-                        height: 40,
-                        width:  40,
-                        clipBehavior: Clip.none,
-                        child: Center(
-                          child: Container(
-                            height: 20,
-                            width:  20,
-                            clipBehavior: Clip.none,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(1000000)
+                IgnorePointer(
+                  child: SingleChildScrollView(
+                    controller: _handlesScrollController,
+                    clipBehavior: Clip.none,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(height: _textKey.currentContext == null ? 0 : _renderParagraph!.size.height,),
+                        // the text selection handles (left, only the graphics)
+                        if(_selectionRects.isNotEmpty && 
+                            _selectionRects.first.top - _handlesScrollController.offset > 0)
+                          Positioned(
+                            left: _selectionRects.first.left - 10,
+                            top: _selectionRects.first.top - 10,
+                            child: Container(
+                              height: 20,
+                              width:  20,
+                              clipBehavior: Clip.none,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(1000000)
+                                ),
+                                color: widget.selectionColor,
                               ),
-                              color: widget.selectionColor,
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                // the text selection handles (right)
-                if(_selectionRects.isNotEmpty)
-                  Positioned(
-                    left: _selectionRects.last.right - 20,
-                    top: _selectionRects.last.bottom - 20,
-                    child: Listener(
-                      onPointerDown: (event) => _rightHandleSelected = true,
-                      onPointerUp: (event) => _rightHandleSelected = false,
-                      child: Container(
-                        height: 40,
-                        width:  40,
-                        child: Center(
-                          child: Container(
-                            height: 20,
-                            width:  20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(1000000)
+                        // the text selection handles (right, only the graphics)
+                        if(_selectionRects.isNotEmpty && 
+                          _selectionRects.last.bottom - _handlesScrollController.offset > 0)
+                          Positioned(
+                            left: _selectionRects.last.right - 10,
+                            top: _selectionRects.last.bottom - 10,
+                            child: Container(
+                              height: 20,
+                              width:  20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(1000000)
+                                ),
+                                color: widget.selectionColor,
                               ),
-                              color: widget.selectionColor,
                             ),
                           ),
-                        ),
-                      ),
+                      ]
                     ),
                   ),
+                )
               ],
+            )
             ),
           ),
         ),
-      ),
+      );
+  }
+
+  void onTap(TapDownDetails event) {
+
+    if(_leftHandleSelected || _rightHandleSelected) return;
+
+    // if the user tapped outside of the text, remove selection
+    if(!_isOffsetOverText(event.localPosition)){
+      setState(() => _selectionRects.clear());
+      
+      if(widget.onTapOutsideOfText != null)
+        widget.onTapOutsideOfText!(event.localPosition);
+      
+      return;
+    }
+
+    focuseNode.requestFocus();
+    
+    // assure that words are in the text fields
+    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
+
+    tapped++; isTapped = true;
+
+    if (multiTapTimer != null) {
+      multiTapTimer!.cancel();
+    }
+
+    multiTapTimer = Timer(
+      const Duration(milliseconds: 200),
+      () {
+        if(_isDragging)return;
+        
+        if (tapped == 1 && !isTapped){
+          selectWord(event);
+          widget.onTap?.call(_textSelection);
+        }
+        else if (tapped == 1 && isTapped){
+          selectWord(event);
+          widget.onLongPress?.call(_textSelection);
+        }
+        else if (tapped == 2){
+          selectSentence(event);
+          widget.onDoubleTap?.call(_textSelection);
+        }
+        else if (tapped >= 3){
+          selectParagraph(event);
+          
+          widget.onTripleTap?.call(_textSelection);
+        }
+        tapped = 0;
+      }
     );
   }
 }
