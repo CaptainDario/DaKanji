@@ -333,7 +333,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       );
 
       // skip spaces
-      if(word == "█") {
+      if(word == " ") {
       
       } 
       else if(charRects.isEmpty || widget.rubys[i] == ""){
