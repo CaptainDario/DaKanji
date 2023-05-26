@@ -374,7 +374,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     String word = mecabSurfaces
       .join(addSpaces ? " " : "")
       .substring(start, end)
-      .replaceAll(" ", "");
+      .replaceAll(" ", "")
+      .replaceAll("\n ", "\n")
+      .replaceAll(" \n", "\n");
     setState(() {
       selectedText = word;
     });
