@@ -372,9 +372,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     int start = min(selection.baseOffset, selection.extentOffset);
     int end   = max(selection.baseOffset, selection.extentOffset);
     String word = mecabSurfaces
-      .join(addSpaces ? " " : "")
+      .join("")
       .substring(start, end)
-      .replaceAll(" ", "")
       .replaceAll("\n ", "\n")
       .replaceAll(" \n", "\n");
     setState(() {
@@ -394,7 +393,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         pos = posToTranslation(mecabPOS[i]) ?? "";
         break;
       }
-      cnt += (mecabSurfaces[i] + (addSpaces ? " " : "")).length;
+      cnt += mecabSurfaces[i].length;
     }
 
     if(pos == "")

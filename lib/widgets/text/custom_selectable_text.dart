@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -144,28 +145,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// lines in a word the rubys need to be split
   List<String> rubys = [];
   /// a list of all words
-  List<String> _words = [];
-  /// a list of all words with spaces between them
-  final List<String> _wordsWithSpaces = [];
-  /// a list of all words, when `widget.addSpaces == true` there are spaces
-  /// between all the words, otherwise not
-  List<String> get words {
-    if (!widget.addSpaces) {
-      return _words;
-    } else {
-      return _wordsWithSpaces;
-    }
-  }
-  set words (List<String> newWords){
-    _words = newWords;
-    _wordsWithSpaces.clear();
-    for (var i = 0; i < _words.length; i++) {
-      _wordsWithSpaces.add(_words[i]);
-      if (i < _words.length-1 && _words[i] != "\n") {
-        _wordsWithSpaces.add(" ");
-      }
-    }
-  }
+  List<String> words = [];
 
   /// The scroll controller group to keep text and handles in sync
   LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
@@ -510,7 +490,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void selectSentence(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
 
-    for (var match in sentenceRegex.allMatches(_words.join(""))) {
+    for (var match in sentenceRegex.allMatches(words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
         _textSelection = TextSelection(
           baseOffset: match.start, 
@@ -527,7 +507,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void selectParagraph(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
     
-    for (var match in paragraphRegex.allMatches(_words.join(""))) {
+    for (var match in paragraphRegex.allMatches(words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
         _textSelection = TextSelection(
           baseOffset: match.start, 
@@ -608,35 +588,31 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 fontSize: 20,
                                 height: widget.showRubys ? 2.0 : 1.4,
                               ),
-                              children: () {
-                                List<TextSpan> ret = [];
-                                int cnt = 0;
-                                for (int i = 0; i < words.length; i++) {
-                                  ret.add(
-                                    TextSpan(
-                                      text: words[i],
-                                      style: TextStyle(
-                                        // show the color if the user enabled it
-                                        // and the color is not null
-                                        // if spaces is enabled caculate index with cnt/2.floor()
-                                        color: () {
-                                          int index = widget.addSpaces
-                                            ? (cnt / 2).floor()
-                                            : cnt;
-                        
-                                          return widget.showColors
+                              children: 
+                              [
+                                for (int i = 0; i < words.length; i++)
+                                  ...[
+                                    if(words[i].characters.length > 1)
+                                      TextSpan(
+                                        text: words[i].substring(0, words[i].length-1),
+                                        style: TextStyle(
+                                          // show the color if the user enabled it
+                                          // and the color is not null
+                                          color: widget.showColors
                                               && widget.wordColors != null
-                                              && widget.wordColors![index] != null
-                                            ? widget.wordColors![index]
-                                            : widget.textColor;
-                                        } ()
+                                              && widget.wordColors![i] != null
+                                            ? widget.wordColors![i]
+                                            : widget.textColor
+                                        )
+                                      ),
+                                    TextSpan(
+                                      text: words[i].characters.last,
+                                      style: TextStyle(
+                                        letterSpacing: widget.addSpaces ? 10 : 0,
                                       )
                                     )
-                                  );
-                                  cnt++;
-                                }
-                                return ret;
-                              } ()
+                                  ]
+                              ]
                             ),
                           ),
                           // the selection caret
@@ -676,8 +652,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               );
                             })),
                           // the text selection handles (left, only the selection trigger)
-                          if(_selectionRects.isNotEmpty )//&& 
-                            //_selectionRects.first.top - _handlesScrollController.offset > 0)
+                          // debug / mobile only
+                          if(_selectionRects.isNotEmpty && 
+                            _selectionRects.first.top - _handlesScrollController.offset > 0 &&
+                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                             Positioned(
                               left: _selectionRects.first.left - 20,
                               top: _selectionRects.first.top - 20,
@@ -692,8 +670,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               ),
                             ),
                           // the text selection handles (right, only the selection trigger)
+                          // debug / mobile only
                           if(_selectionRects.isNotEmpty && 
-                            _selectionRects.last.bottom - _handlesScrollController.offset > 0)
+                            _selectionRects.last.bottom - _handlesScrollController.offset > 0 &&
+                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                             Positioned(
                               left: _selectionRects.last.right - 20,
                               top: _selectionRects.last.bottom - 20,
@@ -712,6 +692,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                     }
                   ),
                 ),
+                // graphics for the drag handles
                 IgnorePointer(
                   child: SingleChildScrollView(
                     controller: _handlesScrollController,
@@ -721,8 +702,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                       children: [
                         Container(height: _textKey.currentContext == null ? 0 : _renderParagraph!.size.height,),
                         // the text selection handles (left, only the graphics)
+                        // debug / mobile only
                         if(_selectionRects.isNotEmpty && 
-                            _selectionRects.first.top - _handlesScrollController.offset > 0)
+                            _selectionRects.first.top - _handlesScrollController.offset > 0 &&
+                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                           Positioned(
                             left: _selectionRects.first.left - 10,
                             top: _selectionRects.first.top - 10,
@@ -739,8 +722,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                             ),
                           ),
                         // the text selection handles (right, only the graphics)
+                        // debug / mobile only
                         if(_selectionRects.isNotEmpty && 
-                          _selectionRects.last.bottom - _handlesScrollController.offset > 0)
+                          _selectionRects.last.bottom - _handlesScrollController.offset > 0 &&
+                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                           Positioned(
                             left: _selectionRects.last.right - 10,
                             top: _selectionRects.last.bottom - 10,
