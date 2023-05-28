@@ -591,27 +591,32 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                               children: 
                               [
                                 for (int i = 0; i < words.length; i++)
-                                  ...[
-                                    if(words[i].characters.length > 1)
+                                  ... () {
+                                    Color? color = widget.showColors
+                                      && widget.wordColors != null
+                                      && widget.wordColors![i] != null
+                                    ? widget.wordColors![i]
+                                    : widget.textColor;
+
+                                    return [
+                                      if(words[i].characters.length > 1)
+                                        TextSpan(
+                                          text: words[i].substring(0, words[i].length-1),
+                                          style: TextStyle(
+                                            // show the color if the user enabled it
+                                            // and the color is not null
+                                            color: color
+                                          )
+                                        ),
                                       TextSpan(
-                                        text: words[i].substring(0, words[i].length-1),
+                                        text: words[i].characters.last,
                                         style: TextStyle(
-                                          // show the color if the user enabled it
-                                          // and the color is not null
-                                          color: widget.showColors
-                                              && widget.wordColors != null
-                                              && widget.wordColors![i] != null
-                                            ? widget.wordColors![i]
-                                            : widget.textColor
+                                          letterSpacing: widget.addSpaces ? 10 : 0,
+                                          color: color
                                         )
-                                      ),
-                                    TextSpan(
-                                      text: words[i].characters.last,
-                                      style: TextStyle(
-                                        letterSpacing: widget.addSpaces ? 10 : 0,
                                       )
-                                    )
-                                  ]
+                                    ];
+                                  } ()
                               ]
                             ),
                           ),
