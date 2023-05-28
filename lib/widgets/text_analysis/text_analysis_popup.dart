@@ -16,36 +16,44 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// text.
 class TextAnalysisPopup extends StatefulWidget {
   
-  const TextAnalysisPopup(
-    {
-      required this.text,
-      this.allowDeconjugation=true,
-      this.onMovedViaHeader,
-      this.onResizedViaCorner,
-      Key? key
-    }) : super(key: key);
-
   /// The text shown in this widget
   final String text;
-
+  /// Should the text be deconjugateble
   final bool allowDeconjugation;
   /// Callback that is executed when the popup was moved by dragging it at the 
   /// header
   final Function(PointerMoveEvent)? onMovedViaHeader;
   /// Callback that is executed when the popup is resized via its corner
   final Function(PointerMoveEvent)? onResizedViaCorner;
+  /// Callback that is executed when the popup is initialized
+  /// Provides:
+  /// * the [TabController] to control the tabs of the popup
+  /// as parameters
+  final Function(TabController tabController)? onInitialized;
+
+  const TextAnalysisPopup(
+    {
+      required this.text,
+      this.allowDeconjugation=true,
+      this.onMovedViaHeader,
+      this.onResizedViaCorner,
+      this.onInitialized,
+      Key? key
+    }) : super(key: key);
   
 
   @override
   State<TextAnalysisPopup> createState() => _TextAnalysisPopupState();
 }
 
-class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
+class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTickerProviderStateMixin {
   
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
-
+  /// controller for the webview
   InAppWebViewController? webController;
+  /// controller for the tabbar
+  late TabController popupTabController;
 
 
   @override
@@ -55,14 +63,16 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
     if(g_webViewSupported)
       tabNames.add("Deepl");
+
+    popupTabController = TabController(length: tabNames.length, vsync: this);
+    widget.onInitialized?.call(popupTabController);
   }
 
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
-    setState(() {
-      // load new URL
-      if(webController != null)
-        webController?.loadUrl(
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if(webController != null && oldWidget.text != widget.text)
+        await webController!.loadUrl(
           urlRequest: URLRequest(
             url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
           )
@@ -73,112 +83,116 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2 - (g_webViewSupported ? 0 : 1),
-      child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 20.0,
-                )
-              ]
-            ),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    
-                    // header
-                    Listener(
-                      behavior: HitTestBehavior.translucent,
-                      onPointerMove: (event) {
-                        if(widget.onMovedViaHeader != null) {
-                          widget.onMovedViaHeader!(event);
-                        }
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 20.0,
+              )
+            ]
+          ),
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  
+                  // header
+                  Listener(
+                    behavior: HitTestBehavior.translucent,
+                    onPointerMove: (event) {
+                      if(widget.onMovedViaHeader != null) {
+                        widget.onMovedViaHeader!(event);
+                      }
+                    },
+                    child: TabBar(
+                      controller: popupTabController,
+                      mouseCursor: SystemMouseCursors.move,
+                      labelColor: Theme.of(context).highlightColor,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: Theme.of(context).highlightColor,
+                      onTap: (tabNo){
+                        /*if(tabNames[tabNo] != "Deepl"){
+                          webController = null;
+                        }*/
                       },
-                      child: TabBar(
-                        mouseCursor: SystemMouseCursors.move,
-                        labelColor: Theme.of(context).highlightColor,
-                        unselectedLabelColor: Colors.grey,
-                        indicatorColor: Theme.of(context).highlightColor,
-                        onTap: (tabNo){
-                          if(tabNames[tabNo] != "Deepl"){
-                            webController = null;
-                          }
-                        },
-                        tabs: List.generate(tabNames.length, (index) =>
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              tabNames[index],
+                      tabs: List.generate(tabNames.length, (index) =>
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            tabNames[index],
+                          ),
+                        )
+                      ) 
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: popupTabController,
+                      children: [
+                        Dictionary(
+                          false, 
+                          initialSearch: widget.text,
+                          includeDrawButton: false,
+                          isExpanded: true,
+                          allowDeconjugation: widget.allowDeconjugation,
+                        ),
+                        if(g_webViewSupported)
+                          Card(
+                            child: InAppWebView(
+                              gestureRecognizers: 
+                                Set()..add(
+                                  Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                                ),
+                              initialUrlRequest: (
+                                URLRequest(
+                                  url: WebUri("$g_deepLUrl${widget.text}")  
+                                )
+                              ),
+                              onWebViewCreated: (controller) {
+                                webController = controller;
+
+                                webController!.loadUrl(
+                                  urlRequest: URLRequest(
+                                    url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
+                                  )
+                                );
+                              },
                             ),
                           )
-                        ) 
-                      ),
+                      ]
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          Dictionary(
-                            false, 
-                            initialSearch: widget.text,
-                            includeDrawButton: false,
-                            isExpanded: true,
-                            allowDeconjugation: widget.allowDeconjugation,
-                          ),
-                          if(g_webViewSupported)
-                            Card(
-                              child: InAppWebView(
-                                //key: Key(widget.text),
-                                gestureRecognizers: 
-                                  Set()..add(
-                                    Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                                  ),
-                                initialUrlRequest: (
-                                  URLRequest(
-                                    url: WebUri("$g_deepLUrl${widget.text}")  
-                                  )
-                                ),
-                                onWebViewCreated: (controller) {
-                                  webController = controller;
-                                },
-                              ),
-                            )
-                        ]
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-          Positioned(
-            right: 2,
-            bottom: 2,
-            height: 25,
-            width: 25,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.resizeDownRight,
-              child: Listener(
-                onPointerMove: (event) {
-                  if(widget.onResizedViaCorner != null) {
-                    widget.onResizedViaCorner!(event);
-                  }
-                },
-                child: SvgPicture.asset(
-                  "assets/icons/corner_resize.svg",
-                  color: Colors.grey,
-                ),
+        ),
+        Positioned(
+          right: 2,
+          bottom: 2,
+          height: 25,
+          width: 25,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.resizeDownRight,
+            child: Listener(
+              onPointerMove: (event) {
+                if(widget.onResizedViaCorner != null) {
+                  widget.onResizedViaCorner!(event);
+                }
+              },
+              child: SvgPicture.asset(
+                "assets/icons/corner_resize.svg",
+                color: Colors.grey,
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

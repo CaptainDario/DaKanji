@@ -34,9 +34,9 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   /// The svg of the kana
   String kanaSvg = "";
   /// The svg of the kana's mnemonics
-  String mnemonicSvg = "";
+  String? mnemonicSvg;
   /// The svg of the dakuten
-  String yoonSVG = "";
+  String? yoonSVG;
   /// The mnemonic of the kana
   String? mnemonic = null;
 
@@ -68,25 +68,29 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         );
       });
     });
-    // if there is a mnemonic for this kana
-    rootBundle.loadString(
-      "assets/images/kana/individuals/${widget.kana}.svg"
-    ).then((value) {
-      setState(() {
-        mnemonicSvg = themeMnemonicSvg(
-          value, Theme.of(context).brightness == Brightness.dark
-        );
+    // load the mnemonic if there is one for this kana
+    mnemonicSvg = null;
+    if((await rootBundle.loadString('AssetManifest.json')).contains("assets/images/kana/individuals/${widget.kana}.svg")) {
+      rootBundle.loadString(
+        "assets/images/kana/individuals/${widget.kana}.svg"
+      ).then((value) {
+        setState(() {
+          mnemonicSvg = themeMnemonicSvg(
+            value, Theme.of(context).brightness == Brightness.dark
+          );
+        });
       });
-    });
+    }
 
     // get the svg of the yoon kana if there is one
+    yoonSVG = null;
     if(widget.kana.length > 1){
       yoonSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
         .characterEqualTo(widget.kana[1])
       .findFirstSync()!.svg;
       yoonSVG = modifyKanjiVGSvg(
-        yoonSVG,
-        strokeColor: SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+        yoonSVG!,
+        strokeColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black
       );
@@ -107,6 +111,13 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         child: Center(
           child: Column(
             children: [
+              Text(
+                convertToRomaji(widget.kana),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                )
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,22 +132,26 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       )
                     ),
                     // mnemonic (if there is one)
-                    if(widget.kana.length < 2 && mnemonicSvg != "")
+                    if(widget.kana.length < 2 && mnemonicSvg != null)
                       Expanded(
                         child: Center(
                           child: SvgPicture.string(
-                            mnemonicSvg,
+                            mnemonicSvg!,
                             height: MediaQuery.of(context).size.height * 0.2,
                           )
                         )
                       ),
                     // yoon if there are two kana
-                    if(widget.kana.length > 1)
+                    if(widget.kana.length > 1 && yoonSVG != null)
                       Expanded(
-                        child: Center(
-                          child: SvgPicture.string(
-                            yoonSVG,
-                          )
+                        child: Transform.translate(
+                          offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                          child: Center(
+                            child: SvgPicture.string(
+                              yoonSVG!,
+                              height: MediaQuery.of(context).size.height * 0.15,
+                            )
+                          ),
                         )
                       )
                   ],
@@ -173,11 +188,4 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
     );
   }
 
-  /// Calculate text size
-  Size _calculateTextSize(String text, TextStyle style) {
-    final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
-      ..layout(minWidth: 0, maxWidth: double.infinity);
-    return textPainter.size;
-  }
 }

@@ -305,8 +305,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             // Drawer entry to go to the kanji screen
                             if(kDebugMode)
                               DrawerElement(
-                                leading: IconData(
-                                  0x6f22, fontFamily: "NotoSansJP"
+                                leading: const IconData(
+                                  0x6f22, fontFamily: "NotoSansJP",
                                 ),
                                 leadingAlignment: Alignment(-0.1, -0.65),
                                 title: LocaleKeys.KanjiScreen_title.tr(),
@@ -316,21 +316,18 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 drawerController: _drawerController,
                               ),
                             // Drawer entry to go to the kana screen
-                            if(kDebugMode)
-                              DrawerElement(
-                                // TODO change to kana icon
-                                leading: const IconData(
-                                  0x304B,
-                                  fontFamily: "kouzan"
-                                ),
-                                leadingSize: 0.7,
-                                leadingAlignment: Alignment(-1000, 0),
-                                title: LocaleKeys.KanaChartScreen_title.tr(),
-                                route: "/kana_chart",
-                                selected: widget.currentScreen == Screens.kana_chart,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
+                            DrawerElement(
+                              leading: const IconData(
+                                0x30AB, fontFamily: "NotoSansJP-Black"
                               ),
+                              leadingSize: 0.5,
+                              leadingAlignment: Alignment(1000, -0.7),
+                              title: LocaleKeys.KanaChartScreen_title.tr(),
+                              route: "/kana_chart",
+                              selected: widget.currentScreen == Screens.kana_chart,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                            ),
                             // Drawer entry to go to the kuzushiji screen
                             if(kDebugMode)
                               DrawerElement(

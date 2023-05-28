@@ -84,7 +84,7 @@ Color? posToColor(String pos){
   else if(pos.startsWith("その他"))
     c = interjectionColor;
   else{
-    print("$pos is an unknown POS");
+    //print("$pos is an unknown POS");
   }
   return c;
 }
