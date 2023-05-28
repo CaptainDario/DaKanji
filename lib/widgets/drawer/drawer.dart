@@ -316,18 +316,19 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 drawerController: _drawerController,
                               ),
                             // Drawer entry to go to the kana screen
-                            DrawerElement(
-                              leading: const IconData(
-                                0x30AB, fontFamily: "NotoSansJP-Black"
+                            if(!kReleaseMode)
+                              DrawerElement(
+                                leading: const IconData(
+                                  0x30AB, fontFamily: "NotoSansJP-Black"
+                                ),
+                                leadingSize: 0.5,
+                                leadingAlignment: Alignment(1000, -0.7),
+                                title: LocaleKeys.KanaChartScreen_title.tr(),
+                                route: "/kana_chart",
+                                selected: widget.currentScreen == Screens.kana_chart,
+                                drawerWidth: _drawerWidth,
+                                drawerController: _drawerController,
                               ),
-                              leadingSize: 0.5,
-                              leadingAlignment: Alignment(1000, -0.7),
-                              title: LocaleKeys.KanaChartScreen_title.tr(),
-                              route: "/kana_chart",
-                              selected: widget.currentScreen == Screens.kana_chart,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
                             // Drawer entry to go to the kuzushiji screen
                             if(kDebugMode)
                               DrawerElement(
