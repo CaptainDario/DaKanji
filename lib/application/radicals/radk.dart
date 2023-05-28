@@ -38,7 +38,7 @@ Map<int, List<String>> getRadicalsByStrokeOrder(Isar kradIsar) {
 List<String> getKanjisByRadical(List<String> radicals, Isar kradIsar){
 
   // get the kanjis that are use the selected radicals
-  List<List<String>> kanjis = kradIsar.krads.filter()
+  List<List<String>> kanjis = kradIsar.krads.where()
     .anyOf(radicals, (q, radical) => 
       q.characterEqualTo(radical)
     )
