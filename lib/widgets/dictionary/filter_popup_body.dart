@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 
 import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -37,9 +38,9 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
       child: GridView(
         clipBehavior: Clip.hardEdge,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: (MediaQuery.of(context).size.width+600) ~/ 600 * 2,
           childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 8),
+            (MediaQuery.of(context).size.height / 7),
           crossAxisSpacing: 4,
           mainAxisSpacing: 4
         ),
@@ -47,43 +48,50 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
           for(var pair in zip([jmDictFieldsSorted.entries, jmDictPosSorted.entries]))
             for (var item in pair)
               item.value != ""
-                ? OutlinedButton(
-                  style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(
-                      TextStyle(
-                        fontSize: 14
-                      )
+                ? Container(
+                  decoration: BoxDecoration(
+                    color: selectedFilters.contains(item.key)
+                      ? g_Dakanji_green.withOpacity(0.5)
+                      : null,
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.5),
                     ),
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                      item.value,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: selectedFilters.contains(item.key)
-                          ? Colors.grey
-                          : Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black
+                  child: InkWell(
+                    onTap: selectedFilters.contains(item.key)
+                      ? () {
+                        widget.searchController.text = widget.searchController.text
+                          .replaceAll("#${item.key} ", "");
+                        setState(() {
+                          selectedFilters.remove(item.key);
+                        });
+                      }
+                      : () {
+                        String newText = "#${item.key} ${widget.searchController.text}";
+                        selectedFilters.add(item.key);
+                        setState(() {
+                          widget.searchController.text = newText;
+                        });
+                      },
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          item.value,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: selectedFilters.contains(item.key)
+                              ? Colors.grey
+                              : Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  onPressed: selectedFilters.contains(item.key)
-                    ? () {
-                      widget.searchController.text = widget.searchController.text
-                        .replaceAll("#${item.key} ", "");
-                      setState(() {
-                        selectedFilters.remove(item.key);
-                      });
-                    }
-                    : () {
-                      String newText = "#${item.key} ${widget.searchController.text}";
-                      selectedFilters.add(item.key);
-                      setState(() {
-                        widget.searchController.text = newText;
-                      });
-                    },
                 )
                 : Container(),
         ]

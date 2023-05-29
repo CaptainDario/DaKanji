@@ -128,37 +128,50 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           (possibleRadicals.contains(krad.value[index]) ||
                           selectedRadicals.contains(krad.value[index]) ||
                           possibleRadicals.isEmpty))
-                          return OutlinedButton(
-                            onPressed: possibleRadicals.contains(krad.value[index]) ||
-                              selectedRadicals.contains(krad.value[index]) ||
-                              possibleRadicals.isEmpty
-                            ? () {
-                              // mark this chip as selected
-                              if(selectedRadicals.contains(krad.value[index]))
-                                selectedRadicals.remove(krad.value[index]);
-                              else
-                                selectedRadicals.add(krad.value[index]);
-
-                              // find all kanji that use this
-                              kanjisThatUseAllRadicals =
-                                radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
-
-                              possibleRadicals =
-                                radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
-
-                              setState(() {});
-                            }
-                            : null,
-                            child: Text(
-                              krad.value[index],
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: selectedRadicals.contains(krad.value[index])
-                                  ? Colors.grey
-                                  : Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black
-                              )
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: selectedRadicals.contains(krad.value[index])
+                                ? g_Dakanji_green.withOpacity(0.5)
+                                : null,
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.5),
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: InkWell(
+                              onTap: possibleRadicals.contains(krad.value[index]) ||
+                                selectedRadicals.contains(krad.value[index]) ||
+                                possibleRadicals.isEmpty
+                              ? () {
+                                // mark this chip as selected
+                                if(selectedRadicals.contains(krad.value[index]))
+                                  selectedRadicals.remove(krad.value[index]);
+                                else
+                                  selectedRadicals.add(krad.value[index]);
+                          
+                                // find all kanji that use this
+                                kanjisThatUseAllRadicals =
+                                  radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+                          
+                                possibleRadicals =
+                                  radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
+                          
+                                setState(() {});
+                              }
+                              : null,
+                              child: Center(
+                                child: Text(
+                                  krad.value[index],
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: selectedRadicals.contains(krad.value[index])
+                                      ? Colors.grey
+                                      : Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black
+                                  )
+                                ),
+                              ),
                             ),
                           );
                         return Container();
