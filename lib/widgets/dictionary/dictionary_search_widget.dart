@@ -308,10 +308,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
                               btnCancelOnPress: () {},
                               onDismissCallback: (dismissType) {
-                                updateSearchResults(
-                                  searchInputController.text,
-                                  widget.allowDeconjugation
-                                );
+                                setState(() {
+                                  updateSearchResults(
+                                    searchInputController.text,
+                                    widget.allowDeconjugation
+                                  );
+                                });
                               },
                               body: RadicalPopupBody(
                                 height: widget.expandedHeight,
