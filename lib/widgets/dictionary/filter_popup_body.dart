@@ -32,6 +32,18 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
   List<String> selectedFilters = [];
 
   @override
+  void initState() {
+    
+    // get current filters from search bar
+    selectedFilters = widget.searchController.text.split(" ")
+      .where((e) => e.startsWith("#"))
+      .map((e) => e.replaceAll("#", ""))
+      .toList();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: widget.height*3/4,
@@ -40,7 +52,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: (MediaQuery.of(context).size.width+600) ~/ 600 * 2,
           childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 7),
+            (MediaQuery.of(context).size.height / 6),
           crossAxisSpacing: 4,
           mainAxisSpacing: 4
         ),
@@ -80,8 +92,10 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           item.value,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: selectedFilters.contains(item.key)
                               ? Colors.grey
                               : Theme.of(context).brightness == Brightness.dark
