@@ -25,6 +25,8 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_kanji_tab = 'DictionaryScreen.kanji_tab';
   static const DictionaryScreen_search_filter_close = 'DictionaryScreen.search_filter_close';
   static const DictionaryScreen_search_radical_close = 'DictionaryScreen.search_radical_close';
+  static const DictionaryScreen_search_search_for = 'DictionaryScreen.search_search_for';
+  static const DictionaryScreen_search_searched = 'DictionaryScreen.search_searched';
   static const DictionaryScreen_title = 'DictionaryScreen.title';
   static const DictionaryScreen_tutorial_begin_text = 'DictionaryScreen.tutorial_begin_text';
   static const DictionaryScreen_tutorial_begin_title = 'DictionaryScreen.tutorial_begin_title';
