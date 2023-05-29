@@ -173,7 +173,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 children: [
                   // magnifying glass icon button
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                    padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
                     child: IconButton(
                       splashRadius: 20,
                       icon: Icon(searchBarExpanded && widget.canCollapse
@@ -221,111 +221,117 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       },
                     ),
                   ),
-                  // Copy / clear button
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
-                    child: IconButton(
-                      splashRadius: 20,
-                      onPressed: onClipboardButtonPressed,
-                      icon: Icon(
-                        searchInputController.text == ""
-                          ? Icons.paste
-                          : Icons.clear,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  // drawing screen button
-                  if(widget.includeDrawButton)
-                    Focus(
-                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                      child: IconButton(
-                        splashRadius: 20,
-                        icon: Icon(Icons.brush),
-                        onPressed: () {
-                          setState(() {
-                            searchBarExpanded = true;
-                          });
-                          GetIt.I<Settings>().drawing.selectedDictionary =
-                            GetIt.I<Settings>().drawing.inbuiltDictId;
-                          Navigator.pushNamedAndRemoveUntil(
-                            context, 
-                            "/drawing",
-                            (route) => true,
-                            arguments: NavigationArguments(
-                              false, drawSearchPrefix: searchInputController.text
-                            )
-                          );
-                        },
-                      ),
-                    ),
-                  // filter button 
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
-                    child: IconButton(
-                      splashRadius: 20,
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          alignment: Alignment.bottomCenter,
-                          dialogType: DialogType.noHeader,
-                          btnCancelColor: g_Dakanji_red,
-                          btnCancelOnPress: () {},
-                          btnCancelText: LocaleKeys.DictionaryScreen_search_filter_close.tr(),
-                          onDismissCallback: (dismissType) {
-                            updateSearchResults(
-                              searchInputController.text,
-                              widget.allowDeconjugation
-                            );
-                          },
-                          body: FilterPopupBody(
-                            height: widget.expandedHeight - 2.25*searchBarInputHeight,
-                            searchController: searchInputController,
-                          )
-                        ).show();
-                      },
-                      icon: Icon(
-                        Icons.filter_alt_outlined,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  // radical button 
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
-                    child: IconButton(
-                      splashRadius: 20,
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          alignment: Alignment.bottomCenter,
-                          dialogType: DialogType.noHeader,
-                          btnCancelColor: g_Dakanji_red,
-                          btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
-                          btnCancelOnPress: () {},
-                          onDismissCallback: (dismissType) {
-                            updateSearchResults(
-                              searchInputController.text,
-                              widget.allowDeconjugation
-                            );
-                          },
-                          body: RadicalPopupBody(
-                            height: widget.expandedHeight - 2.25*searchBarInputHeight,
-                            kradIsar: GetIt.I<Isars>().krad,
-                            searchController: searchInputController,
-                          )
-                        ).show();
-                      },
-                      icon: Transform.translate(
-                        offset: Offset(0, -3),
-                        child: Text(
-                          "部",
-                          style: TextStyle(
-                            fontSize: 20,
+                  Row(
+                    children: [
+                      // Copy / clear button
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
+                        child: IconButton(
+                          splashRadius: 20,
+                          onPressed: onClipboardButtonPressed,
+                          icon: Icon(
+                            searchInputController.text == ""
+                              ? Icons.paste
+                              : Icons.clear,
+                            size: 20,
                           ),
                         ),
-                      )
-                    ),
+                      ),
+                      // drawing screen button
+                      if(widget.includeDrawButton)
+                        Focus(
+                          focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                          child: IconButton(
+                            splashRadius: 20,
+                            constraints: BoxConstraints(minWidth: 0, maxWidth: 48),
+                            icon: Icon(Icons.brush),
+                            onPressed: () {
+                              setState(() {
+                                searchBarExpanded = true;
+                              });
+                              GetIt.I<Settings>().drawing.selectedDictionary =
+                                GetIt.I<Settings>().drawing.inbuiltDictId;
+                              Navigator.pushNamedAndRemoveUntil(
+                                context, 
+                                "/drawing",
+                                (route) => true,
+                                arguments: NavigationArguments(
+                                  false, drawSearchPrefix: searchInputController.text
+                                )
+                              );
+                            },
+                          ),
+                        ),
+                      // filter button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
+                        child: IconButton(
+                          splashRadius: 20,
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              //alignment: Alignment.bottomCenter,
+                              dialogType: DialogType.noHeader,
+                              btnCancelColor: g_Dakanji_red,
+                              btnCancelOnPress: () {},
+                              btnCancelText: LocaleKeys.DictionaryScreen_search_filter_close.tr(),
+                              onDismissCallback: (dismissType) {
+                                setState(() {
+                                  updateSearchResults(
+                                    searchInputController.text,
+                                    widget.allowDeconjugation
+                                  );
+                                },);
+                              },
+                              body: FilterPopupBody(
+                                height: widget.expandedHeight,
+                                searchController: searchInputController,
+                              )
+                            ).show();
+                          },
+                          icon: Icon(
+                            Icons.filter_alt_outlined,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                      // radical button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
+                        child: IconButton(
+                          splashRadius: 20,
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.noHeader,
+                              btnCancelColor: g_Dakanji_red,
+                              btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
+                              btnCancelOnPress: () {},
+                              onDismissCallback: (dismissType) {
+                                updateSearchResults(
+                                  searchInputController.text,
+                                  widget.allowDeconjugation
+                                );
+                              },
+                              body: RadicalPopupBody(
+                                height: widget.expandedHeight,
+                                kradIsar: GetIt.I<Isars>().krad,
+                                searchController: searchInputController,
+                              )
+                            ).show();
+                          },
+                          icon: Transform.translate(
+                            offset: Offset(0, -3),
+                            child: Text(
+                              "部",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          )
+                        ),
+                      ),
+                    ]
                   ),
                 ],
               ),
