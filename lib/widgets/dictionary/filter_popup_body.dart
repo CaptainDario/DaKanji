@@ -32,66 +32,61 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 4, 0 ,0),
-      child: Container(
-        height: widget.height,
-        child: GridView(
-          clipBehavior: Clip.hardEdge,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 8),
-            crossAxisSpacing: 4,
-            mainAxisSpacing: 4
-          ),
-          children: [
-            for(var pair in zip([jmDictFieldsSorted.entries, jmDictPosSorted.entries]))
-              for (var item in pair)
-                item.value != ""
-                  ? OutlinedButton(
-                    
-                    style: ButtonStyle(
-                      textStyle: MaterialStateProperty.all(
-                        TextStyle(
-                          fontSize: 14
-                        )
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        item.value,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: selectedFilters.contains(item.key)
-                            ? Colors.grey
-                            : Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black
-                        ),
-                      ),
-                    ),
-                    onPressed: selectedFilters.contains(item.key)
-                      ? () {
-                        widget.searchController.text = widget.searchController.text
-                          .replaceAll("#${item.key} ", "");
-                        setState(() {
-                          selectedFilters.remove(item.key);
-                        });
-                      }
-                      : () {
-                        String newText = "#${item.key} ${widget.searchController.text}";
-                        selectedFilters.add(item.key);
-                        setState(() {
-                          widget.searchController.text = newText;
-                          //updateSearchResults(newText, widget.allowDeconjugation);
-                        });
-                      },
-                  )
-                  : Container(),
-          ]
+    return Container(
+      height: widget.height*3/4,
+      child: GridView(
+        clipBehavior: Clip.hardEdge,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: MediaQuery.of(context).size.width /
+            (MediaQuery.of(context).size.height / 8),
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4
         ),
+        children: [
+          for(var pair in zip([jmDictFieldsSorted.entries, jmDictPosSorted.entries]))
+            for (var item in pair)
+              item.value != ""
+                ? OutlinedButton(
+                  style: ButtonStyle(
+                    textStyle: MaterialStateProperty.all(
+                      TextStyle(
+                        fontSize: 14
+                      )
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                      item.value,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: selectedFilters.contains(item.key)
+                          ? Colors.grey
+                          : Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black
+                      ),
+                    ),
+                  ),
+                  onPressed: selectedFilters.contains(item.key)
+                    ? () {
+                      widget.searchController.text = widget.searchController.text
+                        .replaceAll("#${item.key} ", "");
+                      setState(() {
+                        selectedFilters.remove(item.key);
+                      });
+                    }
+                    : () {
+                      String newText = "#${item.key} ${widget.searchController.text}";
+                      selectedFilters.add(item.key);
+                      setState(() {
+                        widget.searchController.text = newText;
+                      });
+                    },
+                )
+                : Container(),
+        ]
       ),
     );
   }
