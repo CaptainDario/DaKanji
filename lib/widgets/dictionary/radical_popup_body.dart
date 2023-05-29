@@ -39,113 +39,139 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   /// all kanjis that use all selected radicals
   List<String> kanjisThatUseAllRadicals = [];
 
+  late Map<int, List<String>> radicalsByStrokeOrder;
+
+  @override
+  void initState() {
+    
+    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.kradIsar);
+    
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: widget.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    return Container(
+      height: widget.height*3/4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// all kanjis that use the selected radicals
+          Container(
+            height: widget.height/4,
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: MediaQuery.of(context).size.width~/80,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8
+              ),
+              itemCount: kanjisThatUseAllRadicals.length,
+              itemBuilder: (context, index) {
+                return kanjisThatUseAllRadicals.length == 0 
+                  ? Container()
+                  : ElevatedButton(
+                    onPressed: () {
+                      widget.searchController.text += kanjisThatUseAllRadicals[index];
+                    },
+                    child: Text(
+                      kanjisThatUseAllRadicals[index],
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  );
+              },
+            ),
+          ),
 
-            /// all kanjis that use the selected radicals
-            Container(
-              height: widget.height/4,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+          SizedBox(height: 4),
+          Divider(),
+          SizedBox(height: 4),
+          
+          /// all radicals
+          Expanded(
+            child: ListView.builder(
+              
+              itemCount: radicalsByStrokeOrder.entries.length,
+              itemBuilder: (context, index) {
+
+                var krad = radicalsByStrokeOrder.entries.toList()[index];
+
+                return Column(
                   children: [
-                    for (String kanji in kanjisThatUseAllRadicals)
-                      ElevatedButton(
-                        onPressed: () {
-                          widget.searchController.text += kanji;
-                        },
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 6),
                         child: Text(
-                          kanji,
+                          krad.key.toString(),
                           style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold
                           ),
                         ),
-                      )
-                  ],
-                ),
-              ),
-            ),
+                      ),
+                    ),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: MediaQuery.of(context).size.width~/60,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8
+                      ),
+                      itemCount: krad.value.length,
+                      itemBuilder: (context, index) {
+                        if(krad.value.length > index &&
+                          (possibleRadicals.contains(krad.value[index]) ||
+                          selectedRadicals.contains(krad.value[index]) ||
+                          possibleRadicals.isEmpty))
+                          return OutlinedButton(
+                            onPressed: possibleRadicals.contains(krad.value[index]) ||
+                              selectedRadicals.contains(krad.value[index]) ||
+                              possibleRadicals.isEmpty
+                            ? () {
+                              // mark this chip as selected
+                              if(selectedRadicals.contains(krad.value[index]))
+                                selectedRadicals.remove(krad.value[index]);
+                              else
+                                selectedRadicals.add(krad.value[index]);
 
-            SizedBox(height: 8),
-            Divider(),
-            SizedBox(height: 8),
-            
-            /// all radicals
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (MapEntry krad in radk.getRadicalsByStrokeOrder(widget.kradIsar).entries)
-                      ...[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 4),
-                          child: Text(
-                            krad.key.toString(),
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
+                              // find all kanji that use this
+                              kanjisThatUseAllRadicals =
+                                radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+
+                              possibleRadicals =
+                                radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
+
+                              setState(() {});
+                            }
+                            : null,
+                            child: Text(
+                              krad.value[index],
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: selectedRadicals.contains(krad.value[index])
+                                  ? Colors.grey
+                                  : Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black
+                              )
                             ),
-                          ),
-                        ),
-                        Wrap(
-                          spacing: 4,
-                          runSpacing: 4,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          alignment: WrapAlignment.start,
-                          runAlignment: WrapAlignment.start,
-                          children: [
-                            for (String radical in krad.value)
-                              if(possibleRadicals.contains(radical) ||
-                                selectedRadicals.contains(radical) ||
-                                possibleRadicals.isEmpty)
-                                InputChip(
-                                  label: Text(radical),
-                                  selectedColor: g_Dakanji_green,
-                                  selected: selectedRadicals.contains(radical),
-                                  showCheckmark: false,
-                                  isEnabled: possibleRadicals.contains(radical) ||
-                                    selectedRadicals.contains(radical) ||
-                                    possibleRadicals.isEmpty,
-                                  disabledColor: Colors.grey[800],
-                                  onSelected: (bool value) {
-                                    // mark this chip as selected
-                                    if(selectedRadicals.contains(radical))
-                                      selectedRadicals.remove(radical);
-                                    else
-                                      selectedRadicals.add(radical);
-
-                                    // find all kanji that use this
-                                    kanjisThatUseAllRadicals =
-                                      radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
-
-                                    possibleRadicals =
-                                      radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
-
-                                    setState(() {});
-                                  },
-                                )
-                          ]
-                        ),
-                        SizedBox(height: 16)
-                      ]
-                  ],
-                ),
-              ),
+                          );
+                        return Container();
+                      },
+                    ),
+                    SizedBox(height: 16)
+                  ]
+                );
+              },
             ),
-          ],
-        )
-      ),
+          ),
+        ],
+      )
     );
   }
 }
