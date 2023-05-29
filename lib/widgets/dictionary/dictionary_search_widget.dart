@@ -484,7 +484,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             children: [
               Expanded(
                 child: Text(
-                  "Searched: $deconjugated",
+                  "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
                   overflow: TextOverflow.ellipsis
                 ),
               ),
@@ -496,7 +496,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     setState(() {});
                   },
                   child: Text(
-                    "Search for: $text",
+                    "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Theme.of(context).highlightColor
