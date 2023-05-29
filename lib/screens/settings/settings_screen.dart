@@ -670,6 +670,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
                               await GetIt.I<DictionarySearch>().kill();
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
+                              await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
                               await restartApp(context);
                             },
                           ),
