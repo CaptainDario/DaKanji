@@ -352,6 +352,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       )
                     ),
                   ),
+                  SizedBox(width: 4,)
                 ],
               ),
             ),
