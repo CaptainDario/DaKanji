@@ -521,6 +521,13 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   @override
+  void dispose() {
+    _textScrollController.dispose();
+    _handlesScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return Focus(
@@ -543,216 +550,219 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         onPanStart: widget.allowSelection ? _onDragStart : null,
         onPanUpdate: widget.allowSelection ? _onDragUpdate : null,
         onPanEnd: widget.allowSelection ? _onDragEnd : null,
-        child: MouseRegion(
-          cursor: _cursor,
-          hitTestBehavior: HitTestBehavior.translucent,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                SingleChildScrollView(
-                  controller: _textScrollController,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      if(lastBuildScreenDimX != constraints.maxWidth ||
-                        lastBuildScreenDimY != constraints.maxHeight){
-                        lastBuildScreenDimX = constraints.maxWidth;
-                        lastBuildScreenDimY = constraints.maxHeight;
-                        dimChanged = true;
-                      }
-                      return Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          // text selection
-                          CustomPaint(
-                            painter: _SelectionPainter(
-                              color: widget.selectionColor.withOpacity(0.6),
-                              rects: _selectionRects,
-                            ),
-                          ),
-                          // text boxes 
-                          if (widget.paintTextBoxes)
+        child: Container(
+          color: Colors.transparent,
+          child: MouseRegion(
+            cursor: _cursor,
+            hitTestBehavior: HitTestBehavior.translucent,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  SingleChildScrollView(
+                    controller: _textScrollController,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        if(lastBuildScreenDimX != constraints.maxWidth ||
+                          lastBuildScreenDimY != constraints.maxHeight){
+                          lastBuildScreenDimX = constraints.maxWidth;
+                          lastBuildScreenDimY = constraints.maxHeight;
+                          dimChanged = true;
+                        }
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            // text selection
                             CustomPaint(
                               painter: _SelectionPainter(
-                                color: widget.textBoxesColor,
-                                rects: _textBoxRects,
-                                fill: false,
+                                color: widget.selectionColor.withOpacity(0.6),
+                                rects: _selectionRects,
                               ),
                             ),
-                          // the actual text
-                          RichText(
-                            key: _textKey,
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 20,
-                                height: widget.showRubys ? 2.0 : 1.4,
+                            // text boxes 
+                            if (widget.paintTextBoxes)
+                              CustomPaint(
+                                painter: _SelectionPainter(
+                                  color: widget.textBoxesColor,
+                                  rects: _textBoxRects,
+                                  fill: false,
+                                ),
                               ),
-                              children: 
-                              [
-                                for (int i = 0; i < words.length; i++)
-                                  ... () {
-                                    Color? color = widget.showColors
-                                      && widget.wordColors != null
-                                      && widget.wordColors![i] != null
-                                    ? widget.wordColors![i]
-                                    : widget.textColor;
-
-                                    return [
-                                      if(words[i].characters.length > 1)
+                            // the actual text
+                            RichText(
+                              key: _textKey,
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  height: widget.showRubys ? 2.0 : 1.4,
+                                ),
+                                children: 
+                                [
+                                  for (int i = 0; i < words.length; i++)
+                                    ... () {
+                                      Color? color = widget.showColors
+                                        && widget.wordColors != null
+                                        && widget.wordColors![i] != null
+                                      ? widget.wordColors![i]
+                                      : widget.textColor;
+          
+                                      return [
+                                        if(words[i].characters.length > 1)
+                                          TextSpan(
+                                            text: words[i].substring(0, words[i].length-1),
+                                            style: TextStyle(
+                                              // show the color if the user enabled it
+                                              // and the color is not null
+                                              color: color
+                                            )
+                                          ),
                                         TextSpan(
-                                          text: words[i].substring(0, words[i].length-1),
+                                          text: words[i].characters.last,
                                           style: TextStyle(
-                                            // show the color if the user enabled it
-                                            // and the color is not null
+                                            letterSpacing: widget.addSpaces ? 10 : 0,
                                             color: color
                                           )
-                                        ),
-                                      TextSpan(
-                                        text: words[i].characters.last,
-                                        style: TextStyle(
-                                          letterSpacing: widget.addSpaces ? 10 : 0,
-                                          color: color
                                         )
-                                      )
-                                    ];
-                                  } ()
-                              ]
-                            ),
-                          ),
-                          // the selection caret
-                          if(_selectionRects.isNotEmpty)
-                            CustomPaint(
-                              painter: _SelectionPainter(
-                                color: widget.caretColor,
-                                rects: _caretRect != null ? [_caretRect!] : const [],
+                                      ];
+                                    } ()
+                                ]
                               ),
                             ),
-                          // ruby texts
-                          if(widget.showRubys)
-                            ...List.generate(rubyPositions.length, ((index) {
-                              return Positioned(
-                                width: rubyPositions[index].right - rubyPositions[index].left,
-                                top: rubyPositions[index].top -
-                                  (rubyPositions[index].bottom - rubyPositions[index].top)/1.75,
-                                left: rubyPositions[index].left,
-                                height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
-                                child: FittedBox(
-                                  child: Container(
-                                    decoration: widget.paintTextBoxes ? BoxDecoration(
-                                      border: Border.all(color: Colors.blueAccent)
-                                    ) : null,
-                                    child: Center(
-                                      child: Text(
-                                        rubys[index],
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          color: widget.textColor
+                            // the selection caret
+                            if(_selectionRects.isNotEmpty)
+                              CustomPaint(
+                                painter: _SelectionPainter(
+                                  color: widget.caretColor,
+                                  rects: _caretRect != null ? [_caretRect!] : const [],
+                                ),
+                              ),
+                            // ruby texts
+                            if(widget.showRubys)
+                              ...List.generate(rubyPositions.length, ((index) {
+                                return Positioned(
+                                  width: rubyPositions[index].right - rubyPositions[index].left,
+                                  top: rubyPositions[index].top -
+                                    (rubyPositions[index].bottom - rubyPositions[index].top)/1.75,
+                                  left: rubyPositions[index].left,
+                                  height: (rubyPositions[index].bottom - rubyPositions[index].top)/1.5,
+                                  child: FittedBox(
+                                    child: Container(
+                                      decoration: widget.paintTextBoxes ? BoxDecoration(
+                                        border: Border.all(color: Colors.blueAccent)
+                                      ) : null,
+                                      child: Center(
+                                        child: Text(
+                                          rubys[index],
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            color: widget.textColor
+                                          ),
                                         ),
                                       ),
                                     ),
+                                  )
+                                );
+                              })),
+                            // the text selection handles (left, only the selection trigger)
+                            // debug / mobile only
+                            if(_selectionRects.isNotEmpty && 
+                              _selectionRects.first.top - _handlesScrollController.offset > 0 &&
+                              (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
+                              Positioned(
+                                left: _selectionRects.first.left - 20,
+                                top: _selectionRects.first.top - 20,
+                                child: Listener(
+                                  behavior: HitTestBehavior.opaque,
+                                  onPointerDown: (event) => _leftHandleSelected = true,
+                                  onPointerUp: (event) => _leftHandleSelected = false,
+                                  child: Container(
+                                    height: 40,
+                                    width:  40,
                                   ),
-                                )
-                              );
-                            })),
-                          // the text selection handles (left, only the selection trigger)
+                                ),
+                              ),
+                            // the text selection handles (right, only the selection trigger)
+                            // debug / mobile only
+                            if(_selectionRects.isNotEmpty && 
+                              _selectionRects.last.bottom - _handlesScrollController.offset > 0 &&
+                              (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
+                              Positioned(
+                                left: _selectionRects.last.right - 20,
+                                top: _selectionRects.last.bottom - 20,
+                                child: Listener(
+                                  behavior: HitTestBehavior.opaque,
+                                  onPointerDown: (event) => _rightHandleSelected = true,
+                                  onPointerUp: (event) => _rightHandleSelected = false,
+                                  child: Container(
+                                    height: 40,
+                                    width:  40,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        );
+                      }
+                    ),
+                  ),
+                  // graphics for the drag handles
+                  IgnorePointer(
+                    child: SingleChildScrollView(
+                      controller: _handlesScrollController,
+                      clipBehavior: Clip.none,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(height: _textKey.currentContext == null ? 0 : _renderParagraph!.size.height,),
+                          // the text selection handles (left, only the graphics)
                           // debug / mobile only
                           if(_selectionRects.isNotEmpty && 
-                            _selectionRects.first.top - _handlesScrollController.offset > 0 &&
-                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
+                              _selectionRects.first.top - _handlesScrollController.offset > 0 &&
+                              (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                             Positioned(
-                              left: _selectionRects.first.left - 20,
-                              top: _selectionRects.first.top - 20,
-                              child: Listener(
-                                behavior: HitTestBehavior.opaque,
-                                onPointerDown: (event) => _leftHandleSelected = true,
-                                onPointerUp: (event) => _leftHandleSelected = false,
-                                child: Container(
-                                  height: 40,
-                                  width:  40,
+                              left: _selectionRects.first.left - 10,
+                              top: _selectionRects.first.top - 10,
+                              child: Container(
+                                height: 20,
+                                width:  20,
+                                clipBehavior: Clip.none,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1000000)
+                                  ),
+                                  color: widget.selectionColor,
                                 ),
                               ),
                             ),
-                          // the text selection handles (right, only the selection trigger)
+                          // the text selection handles (right, only the graphics)
                           // debug / mobile only
                           if(_selectionRects.isNotEmpty && 
                             _selectionRects.last.bottom - _handlesScrollController.offset > 0 &&
-                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
+                              (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                             Positioned(
-                              left: _selectionRects.last.right - 20,
-                              top: _selectionRects.last.bottom - 20,
-                              child: Listener(
-                                behavior: HitTestBehavior.opaque,
-                                onPointerDown: (event) => _rightHandleSelected = true,
-                                onPointerUp: (event) => _rightHandleSelected = false,
-                                child: Container(
-                                  height: 40,
-                                  width:  40,
+                              left: _selectionRects.last.right - 10,
+                              top: _selectionRects.last.bottom - 10,
+                              child: Container(
+                                height: 20,
+                                width:  20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1000000)
+                                  ),
+                                  color: widget.selectionColor,
                                 ),
                               ),
                             ),
-                        ],
-                      );
-                    }
-                  ),
-                ),
-                // graphics for the drag handles
-                IgnorePointer(
-                  child: SingleChildScrollView(
-                    controller: _handlesScrollController,
-                    clipBehavior: Clip.none,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(height: _textKey.currentContext == null ? 0 : _renderParagraph!.size.height,),
-                        // the text selection handles (left, only the graphics)
-                        // debug / mobile only
-                        if(_selectionRects.isNotEmpty && 
-                            _selectionRects.first.top - _handlesScrollController.offset > 0 &&
-                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
-                          Positioned(
-                            left: _selectionRects.first.left - 10,
-                            top: _selectionRects.first.top - 10,
-                            child: Container(
-                              height: 20,
-                              width:  20,
-                              clipBehavior: Clip.none,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(1000000)
-                                ),
-                                color: widget.selectionColor,
-                              ),
-                            ),
-                          ),
-                        // the text selection handles (right, only the graphics)
-                        // debug / mobile only
-                        if(_selectionRects.isNotEmpty && 
-                          _selectionRects.last.bottom - _handlesScrollController.offset > 0 &&
-                            (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
-                          Positioned(
-                            left: _selectionRects.last.right - 10,
-                            top: _selectionRects.last.bottom - 10,
-                            child: Container(
-                              height: 20,
-                              width:  20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(1000000)
-                                ),
-                                color: widget.selectionColor,
-                              ),
-                            ),
-                          ),
-                      ]
+                        ]
+                      ),
                     ),
-                  ),
-                )
-              ],
-            )
+                  )
+                ],
+              )
+              ),
             ),
-          ),
+        ),
         ),
       );
   }
