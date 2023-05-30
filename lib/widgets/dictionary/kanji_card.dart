@@ -282,7 +282,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       }
                       launchUrlString(
                         url,
-                        mode: LaunchMode.externalApplication,
+                        mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
                       );
                     },
                     itemBuilder: (context) => List.generate(
