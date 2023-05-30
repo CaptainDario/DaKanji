@@ -60,8 +60,6 @@ PODS:
     - TensorFlowLiteC (~> 2.11.0)
     - TensorFlowLiteC/CoreML (~> 2.11.0)
     - TensorFlowLiteC/Metal (~> 2.11.0)
-  - tflite_flutter_helper (0.0.1):
-    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -80,13 +78,12 @@ DEPENDENCIES:
   - media_kit_native_event_loop (from `.symlinks/plugins/media_kit_native_event_loop/ios`)
   - media_kit_video (from `.symlinks/plugins/media_kit_video/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - printing (from `.symlinks/plugins/printing/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
-  - tflite_flutter_helper (from `.symlinks/plugins/tflite_flutter_helper/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
@@ -126,7 +123,7 @@ EXTERNAL SOURCES:
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   printing:
     :path: ".symlinks/plugins/printing/ios"
   sentry_flutter:
@@ -137,8 +134,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   tflite_flutter:
     :path: ".symlinks/plugins/tflite_flutter/ios"
-  tflite_flutter_helper:
-    :path: ".symlinks/plugins/tflite_flutter_helper/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -150,7 +145,7 @@ SPEC CHECKSUMS:
   flutter_inappwebview: 4fe74e5e65809c3d363febfd9e2b21aa79bb0f1c
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
-  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  integration_test: 13825b8a9334a850581300559b8839134b124670
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   mecab_dart: 7491d01a31ed6c39b99c7c1c086d5c84a839e593
   media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
@@ -158,8 +153,8 @@ SPEC CHECKSUMS:
   media_kit_video: c6ae801433b484912087b519b45f1beac97b960b
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
-  printing: eafa00acb682c0ca029d4d98d0798f55a1e27102
+  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   Sentry: 16d46dd5ca10e7f4469a2611805a3de123188add
   sentry_flutter: 45124526f72f01bacc790d075443692cd490ee78
   SentryPrivate: 2bb4f8d9ff558b25ac70b66c1dedc58a7c43630b
@@ -167,7 +162,6 @@ SPEC CHECKSUMS:
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   TensorFlowLiteC: 8a8cb6fa20ad74dff29b5e490d02c36a14d48148
   tflite_flutter: 57bfede7ef02c24fb20d8cbc0c99259469fc5d7c
-  tflite_flutter_helper: 543b46b6bd064b21c92ea6e54bc0b29f1ce74cb5
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
 PODFILE CHECKSUM: 0581b9e6ff02b4c525750b68f2f8b3878821ab05
