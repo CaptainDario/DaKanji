@@ -661,6 +661,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
                               await clearPreferences();
+                              await restartApp(context);
                             },
                           ),
                           // Delete dict
