@@ -104,6 +104,7 @@ dependency_overrides:
 
 msix_config:
   display_name: DaKanji
+  protocol_activation: dakanji
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
   identity_name: 61015DaAppLab.DaKanji
