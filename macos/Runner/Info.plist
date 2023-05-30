@@ -41,7 +41,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<!-- your schemes -->
-				<string>dakanji://</string>
+				<string>dakanji</string>
 			</array>
 		</dict>
 	</array>
