@@ -67,51 +67,53 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
   @override
   Widget build(BuildContext context) {
 
-    return ExpansionTile(
-      textColor: Theme.of(context).highlightColor,
-      childrenPadding: EdgeInsets.all(16),
-      title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
-      children: [
-        TabBar(
-          labelColor: Theme.of(context).highlightColor,
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: Theme.of(context).highlightColor,
-          controller: tabController,
-          tabs: tabTitles.map((e) => 
-            Text(e)
-          ).toList()
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.5,
-          child: TabBarView(
+    return conjugationTitles.isEmpty
+      ? Container()
+      : ExpansionTile(
+        textColor: Theme.of(context).highlightColor,
+        childrenPadding: EdgeInsets.all(16),
+        title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
+        children: [
+          TabBar(
+            labelColor: Theme.of(context).highlightColor,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Theme.of(context).highlightColor,
             controller: tabController,
-            children: List.generate(tabTitles.length, (i) =>
-              SingleChildScrollView(
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  children: List.generate(_conjos[(i/2).floor()].length, (j) => 
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: VerbConjugationEntry(
-                        title: conjugationTitles[(i/2).floor()][j],
-                        explanation: conjugationExplanations[(i/2).floor()][j],
-                        conjugationType: i.isEven
-                          ? ConjugationType.plain
-                          : ConjugationType.polite,
-                        plainFormPositive: _conjos[(i/2).floor()][j][0],
-                        plainFormNegative: _conjos[(i/2).floor()][j][1],
-                        politeFormPositive: _conjos[(i/2).floor()][j][2], 
-                        politeFormNegative: _conjos[(i/2).floor()][j][3]
+            tabs: tabTitles.map((e) => 
+              Text(e)
+            ).toList()
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: TabBarView(
+              controller: tabController,
+              children: List.generate(tabTitles.length, (i) =>
+                SingleChildScrollView(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: List.generate(_conjos[(i/2).floor()].length, (j) => 
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: VerbConjugationEntry(
+                          title: conjugationTitles[(i/2).floor()][j],
+                          explanation: conjugationExplanations[(i/2).floor()][j],
+                          conjugationType: i.isEven
+                            ? ConjugationType.plain
+                            : ConjugationType.polite,
+                          plainFormPositive: _conjos[(i/2).floor()][j][0],
+                          plainFormNegative: _conjos[(i/2).floor()][j][1],
+                          politeFormPositive: _conjos[(i/2).floor()][j][2], 
+                          politeFormNegative: _conjos[(i/2).floor()][j][3]
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ).toList(),
-          ),
-        )
-      ]
-    );
+                )
+              ).toList(),
+            ),
+          )
+        ]
+      );
   }
 
   /// Conjugates the current word and stores the results in the class members

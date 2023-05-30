@@ -79,6 +79,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the animation controller for scaling in the popup window
   late AnimationController popupAnimationController;
+  /// the tab controller for the tab bar of the popup
+  late TabController popupTabController;
   /// the animation for scaling in the popup window
   late final Animation<double> popupAnimation;
   /// the animation controller for animating maximizing the processed text widget
@@ -92,9 +94,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String selectedText = "";
   /// the text that is currently in the input field
   String inputText = "";
-
-
-
 
   
   @override
@@ -174,6 +173,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                 padding: 8.0,
                 constraints: constraints,
                 allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
+                onPopupInitialized: (tabController) {
+                  popupTabController = tabController;
+                },
                 children: [
                   // Text input
                   Focus(
@@ -370,9 +372,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     int start = min(selection.baseOffset, selection.extentOffset);
     int end   = max(selection.baseOffset, selection.extentOffset);
     String word = mecabSurfaces
-      .join(addSpaces ? " " : "")
+      .join("")
       .substring(start, end)
-      .replaceAll(" ", "");
+      .replaceAll("\n ", "\n")
+      .replaceAll(" \n", "\n");
     setState(() {
       selectedText = word;
     });
@@ -390,7 +393,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         pos = posToTranslation(mecabPOS[i]) ?? "";
         break;
       }
-      cnt += (mecabSurfaces[i] + (addSpaces ? " " : "")).length;
+      cnt += mecabSurfaces[i].length;
     }
 
     if(pos == "")

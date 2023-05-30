@@ -151,7 +151,7 @@ const g_WikipediaJpUrl = "https://ja.wikipedia.org/wiki/";
 /// URL to english wikipedia
 const g_WikipediaEnUrl = "https://en.wikipedia.org/wiki/";
 /// URL to DBPedia
-const g_DbpediaUrl = "https://dbpedia.org/page/";
+const g_DbpediaUrl = "https://www.dbpedia.org/?s=";
 /// URL to Wiktionary
 const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
 /// URL to search on Massif.la
@@ -177,7 +177,8 @@ double g_MinFontSize = 8;
 /// Some japanese sample text
 const String g_SampleText = """東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
 
-慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
+慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。
+身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
 
 新海誠監督長編アニメーション『君の名は。』の世界を掘り下げる、スニーカー文庫だけの特別編。""";
 /// The header that is included in every KanjiVG file

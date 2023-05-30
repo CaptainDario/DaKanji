@@ -463,8 +463,8 @@ Future<Interpreter> _metalInterpreterIOS(String assetPath) async {
 
   final gpuDelegate = GpuDelegate(
     options: GpuDelegateOptions(
-      allowPrecisionLoss: true, 
-      waitType: TFLGpuDelegateWaitType.active),
+      allowPrecisionLoss: true,
+    ),
   );
   var interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegate);
   Interpreter i = await Interpreter.fromAsset(

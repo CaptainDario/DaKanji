@@ -57,7 +57,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "DBPedia", "Wiktionary", "Massif", "Forvo",
+    "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
     //"Add to List"
   ];
 
@@ -79,19 +79,19 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   void initState() {
     initData();
+    initDataAsync();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant DictionaryWordTab oldWidget) {
     initData();
+    initDataAsync();
     super.didUpdateWidget(oldWidget);
   }
 
   /// parses and initializes all data elements of this widget
-  void initData() async {
-
-    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+  void initData() {
 
     if(widget.entry != null){
       readingOrKanji = widget.entry!.kanjis.isEmpty
@@ -105,6 +105,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
+  }
+
+  void initDataAsync() async {
+    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
   }
 
   @override
@@ -214,27 +218,25 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         splashRadius: 25,
                         icon: const Icon(Icons.more_vert),
                         onSelected: (String selection) {
+                          String url = "";
                           // Wiki
                           if(selection == menuItems[0]) {
-                            launchUrlString(Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}"));
+                            url = Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}");
                           }
                           else if(selection == menuItems[1]) {
-                            launchUrlString(Uri.encodeFull("$g_WikipediaEnUrl${readingOrKanji}"));
+                            url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
                           }
                           else if(selection == menuItems[2]) {
-                            launchUrlString(Uri.encodeFull("$g_DbpediaUrl${readingOrKanji}"));
+                            url = Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}");
                           }
                           else if(selection == menuItems[3]) {
-                            launchUrlString(Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}"));
+                            url = Uri.encodeFull("$g_Massif${readingOrKanji}");
                           }
                           else if(selection == menuItems[4]) {
-                            launchUrlString(Uri.encodeFull("$g_Massif${readingOrKanji}"));
-                          }
-                          else if(selection == menuItems[5]) {
-                            launchUrlString(Uri.encodeFull("$g_forvo${readingOrKanji}"));
+                            url = Uri.encodeFull("$g_forvo${readingOrKanji}");
                           }
                           // add to word list
-                          else if(selection == menuItems[6]) {
+                          else if(selection == menuItems[5]) {
                             AwesomeDialog(
                               context: context,
                               headerAnimationLoop: false,
@@ -264,6 +266,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             )..show();
                           }
+
+                          if(url != "")
+                            launchUrlString(
+                              url,
+                              mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
+                            );
                         },
                         itemBuilder: (context) => List.generate(
                           menuItems.length,
@@ -311,9 +319,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                 height: MediaQuery.of(context).size.height / 4,
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DaKanjiLoadingIndicator(),
+                      SizedBox(height: 8,),
                       Text(
                         snapshot.data ?? ""
                       ),

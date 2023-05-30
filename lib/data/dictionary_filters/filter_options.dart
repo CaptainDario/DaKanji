@@ -179,29 +179,26 @@ Map<String, String> jmDictPos = {
 };
 
 /// All part of speech filters (sames as `jmDictPos`) but sorted alphabetically
-Map jmDictPosSorted = jmDictPosGeneral..addAll(
-  Map.fromEntries(
-    jmDictPos.entries.toList()..sort((a, b) => 
-      a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
-        .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
-    )
+Map<String, String> jmDictPosSorted = Map.fromEntries(
+  jmDictPos.entries.toList()..sort((a, b) => 
+    a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
+      .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
   )
 );
 
 /// All field filters (sames as `jmDictFields`) but sorted alphabetically
-Map jmDictFieldsSorted = Map.fromEntries(
+Map<String, String> jmDictFieldsSorted = Map.fromEntries(
   jmDictFields.entries.toList()..sort((a, b) => 
     a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
       .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
   )
 // add the entries from the dict that is longer
-)..addAll(
-  Map.fromIterable(
-    List.generate(jmDictPosSorted.length-jmDictFields.length, (index) => ""),
-    key: (element) => element,
-    value: (element) => element,
-  )
 );
 
 /// all filters that are available
-Map jmDictAllFilters = jmDictPos..addAll(jmDictFields)..addAll(jmDictPosGeneral);
+Map<String, String> jmDictAllFilters = jmDictPosGeneral..addAll(jmDictFields)..addAll(jmDictPos);
+
+/// all filters that are available (sorted)
+Map<String, String> jmDictAllFiltersSorted = jmDictPosGeneral
+  ..addAll(jmDictFieldsSorted)
+  ..addAll(jmDictPosSorted);

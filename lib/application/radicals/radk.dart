@@ -38,7 +38,7 @@ Map<int, List<String>> getRadicalsByStrokeOrder(Isar kradIsar) {
 List<String> getKanjisByRadical(List<String> radicals, Isar kradIsar){
 
   // get the kanjis that are use the selected radicals
-  List<List<String>> kanjis = kradIsar.krads.filter()
+  List<List<String>> kanjis = kradIsar.krads.where()
     .anyOf(radicals, (q, radical) => 
       q.characterEqualTo(radical)
     )
@@ -46,11 +46,12 @@ List<String> getKanjisByRadical(List<String> radicals, Isar kradIsar){
   .findAllSync();
 
   // find the kanjis that are in common
-  return kanjis
+  List<String> uniqueKanjis = kanjis
     .map((e) => e.toSet())
     .reduce((value, element) => value.intersection(element))
     .toList();
 
+  return uniqueKanjis;
 }
 
 /// Returns all radicals that can be used with the `radicals` to find other
@@ -59,14 +60,12 @@ List<String> getPossibleRadicals(List<String> radicals, Isar kradIsar){
 
   List<String> possibleKanjis = getKanjisByRadical(radicals, kradIsar);
 
-  // get the kanjis that are use the selected radicals
-  List<String> possiblRadicals = kradIsar.krads.filter()
-    .anyOf(possibleKanjis, (q, kanji) => 
-      q.kanjisElementContains(kanji)
-        .and()
-      .not()
-        .anyOf(radicals, (q, radical) => q.characterEqualTo(radical))
-    )
+  // get the kanjis that use the selected radicals
+  List<String> possiblRadicals = kradIsar.krads.where()
+      .anyOf(radicals, (q, radical) => q.characterNotEqualTo(radical))
+    .filter()
+      .anyOf(possibleKanjis, (q, kanji) => q.kanjisElementEqualTo(kanji))
+      
   .characterProperty()
   .findAllSync();
 

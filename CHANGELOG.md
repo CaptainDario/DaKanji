@@ -1,7 +1,7 @@
 
 # Da Kanji - changelog
 
-## v 3.0.0 - 辞書 ()
+## v 3.0.0 - 辞書 (4.6.2023)
 
 new Features:
 

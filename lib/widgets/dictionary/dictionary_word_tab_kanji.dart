@@ -269,7 +269,10 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                             ),
                             TextSpan(
                               text: ": " + readingInfos.keys.toList()[i],
-                              style: readingStyle
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey
+                              )
                             ),
                           ],
                         ),
@@ -293,6 +296,10 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                               TextSpan(
                                 text: ": " + kanjiInfos.keys.toList()[i],
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey
+                                )
                               ),
                             ],
                           ),
