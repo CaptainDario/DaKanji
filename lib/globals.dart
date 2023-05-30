@@ -151,7 +151,7 @@ const g_WikipediaJpUrl = "https://ja.wikipedia.org/wiki/";
 /// URL to english wikipedia
 const g_WikipediaEnUrl = "https://en.wikipedia.org/wiki/";
 /// URL to DBPedia
-const g_DbpediaUrl = "https://dbpedia.org/page/";
+const g_DbpediaUrl = "https://www.dbpedia.org/?s=";
 /// URL to Wiktionary
 const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
 /// URL to search on Massif.la
