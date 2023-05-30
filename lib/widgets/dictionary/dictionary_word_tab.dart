@@ -315,9 +315,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                 height: MediaQuery.of(context).size.height / 4,
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DaKanjiLoadingIndicator(),
+                      SizedBox(height: 8,),
                       Text(
                         snapshot.data ?? ""
                       ),
