@@ -196,7 +196,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     {
       await getAsset(
         asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
-        g_GithubApiDependenciesRelase, context, downloadAllowed
+        g_GithubApiDependenciesRelase, context, !downloadAllowed
       );
       downloadAllowed = true;
       GetIt.I<UserData>().dictVersionUsed = g_VersionNumber;
