@@ -23,7 +23,7 @@ class DaKanjiSplash extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          color: darkTheme.cardColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -54,16 +54,19 @@ class DaKanjiSplash extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20, width: 1,),
               const DaKanjiLoadingIndicator(),
               if(text != null)
-                Text(
-                  text!,
-                  style: const TextStyle(
-                    color: g_Dakanji_green,
-                    fontSize: 20,
+                ...[
+                  SizedBox(height: 8,),
+                  Text(
+                    text!,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
+                    ),
                   ),
-                ),
+                ]
             ],
           ),
         ),
