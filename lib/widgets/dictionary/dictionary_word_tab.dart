@@ -57,8 +57,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
-    //"Add to List"
+    "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo", "Add to List"
   ];
 
   /// Gesture recognizers for the webview to be scrollable
