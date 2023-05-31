@@ -344,16 +344,15 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 drawerController: _drawerController,
                               ),
                             // Drawer entry to go to the word lists screen
-                            if(kDebugMode)
-                              DrawerElement(
-                                leading: Icons.list_outlined,
-                                leadingAlignment: Alignment(0, -0.1),
-                                title: LocaleKeys.WordListsScreen_title.tr(),
-                                route: "/word_lists",
-                                selected: widget.currentScreen == Screens.word_lists,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
-                              ),
+                            DrawerElement(
+                              leading: Icons.list_outlined,
+                              leadingAlignment: Alignment(0, -0.1),
+                              title: LocaleKeys.WordListsScreen_title.tr(),
+                              route: "/word_lists",
+                              selected: widget.currentScreen == Screens.word_lists,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                            ),
                             // Drawer entry to go to the settings screen
                             DrawerElement(
                               leading: Icons.settings_applications,
