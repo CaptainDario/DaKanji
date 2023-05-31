@@ -121,6 +121,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                 ),
               ),
             );
+          return null;
         },
       ),
     );
