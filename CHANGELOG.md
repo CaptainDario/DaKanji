@@ -1,9 +1,20 @@
 
 # Da Kanji - changelog
 
+## v 3.1.0 - 仮名表 ()
+
+New Features:
+
+- Kana chart
+  - Includes all common (and not so common) kana
+  - Mnemonics for the main kana
+  - Sounds for all available kana
+
+-------------------------------------------------------------------------
+
 ## v 3.0.0 - 辞書 (4.6.2023)
 
-new Features:
+New Features:
 
 - Inbuilt dictionary
   - Search with kanji, kana or romaji
