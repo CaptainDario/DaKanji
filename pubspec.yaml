@@ -6,7 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 3.0.0+46
 
 environment:
-  sdk: ">=2.18.2"
+  sdk: ">=3.0.0"
   flutter: "3.10.2"
 
 dependencies:
@@ -120,7 +120,7 @@ dev_dependencies:
     sdk: flutter
   msix: 3.13.2
   json_serializable: 6.6.1
-  build_runner: 2.2.1
+  build_runner: 2.4.4
   isar_generator: any # included in dakanji dictionary
   
 flutter_icons:
