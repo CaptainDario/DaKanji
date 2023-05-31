@@ -48,6 +48,8 @@ String g_Version = "";
 const int g_MinTimesOpenedToAsknotShowRate = 401;
 /// How often does the app need to be opened to ask the user to rate the app
 const int g_AskRateAfterEach = 20;
+/// The amount of days to wait before asking the user to update the app again
+const int g_daysToWaitBeforeAskingForUpdate = 14;
 /// all versions which implemented new features for the drawing screen
 List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
 /// all versions which implemented new pages for the OnBoarding
@@ -87,6 +89,8 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+///
+const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
 const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
 

@@ -140,6 +140,10 @@
     "download_failed_popup_retry": "Reintentar",
     "download_failed_popup_text": "La descarga ha fallado, aseg\u00farese de que dispone de una conexi\u00f3n a Internet estable.",
     "download_popup_permission": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto s\u00f3lo ocurrir\u00e1 una vez.\nAseg\u00farate de tener una conexi\u00f3n a internet estable y no cierres la aplicaci\u00f3n mientras se est\u00e9 realizando la descarga.",
+    "new_version_available_heading": "Nueva versi\u00f3n disponible",
+    "new_version_available_text": "\u00a1Hay una nueva versi\u00f3n de DaKanji disponible!",
+    "new_version_comparison": "Est\u00e1 ejecutando {VERSION_NUMBER}, la versi\u00f3n m\u00e1s reciente es {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "#ERROR!",
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
   },

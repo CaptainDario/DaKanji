@@ -10,14 +10,17 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed = json['versionUsed'] as String? ?? ''
+  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
+  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
+  ..userRefusedUpdate = json['userRefusedUpdate'] == null
+      ? null
+      : DateTime.parse(json['userRefusedUpdate'] as String)
   ..showShowcaseDrawing = json['showShowcaseDrawing'] as bool? ?? true
   ..showShowcaseDictionary = json['showShowcaseDictionary'] as bool? ?? true
   ..showShowcaseText = json['showShowcaseText'] as bool? ?? true
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
   ..showRatePopup = json['showRatePopup'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
-  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
-  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
   ..drawingBackend =
       $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
 
@@ -25,14 +28,15 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
       'doNotShowRateAgain': instance.doNotShowRateAgain,
       'versionUsed': instance.versionUsed,
+      'dictVersionUsed': instance.dictVersionUsed,
+      'examplesVersionUsed': instance.examplesVersionUsed,
+      'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),
       'showShowcaseDrawing': instance.showShowcaseDrawing,
       'showShowcaseDictionary': instance.showShowcaseDictionary,
       'showShowcaseText': instance.showShowcaseText,
       'showOnboarding': instance.showOnboarding,
       'showRatePopup': instance.showRatePopup,
       'showChangelog': instance.showChangelog,
-      'dictVersionUsed': instance.dictVersionUsed,
-      'examplesVersionUsed': instance.examplesVersionUsed,
       'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
     };
 

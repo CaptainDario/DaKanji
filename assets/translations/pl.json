@@ -140,6 +140,10 @@
     "download_failed_popup_retry": "Pon\u00f3w",
     "download_failed_popup_text": "Pobieranie nie powiod\u0142o si\u0119, upewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe.",
     "download_popup_permission": "Zanim zaczniesz, musimy pobra\u0107 kilka plik\u00f3w. B\u0119dzie to mia\u0142o miejsce tylko raz.\nUpewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
+    "new_version_available_heading": "Nowa wersja dost\u0119pna!",
+    "new_version_available_text": "Dost\u0119pna jest nowa wersja DaKanji!",
+    "new_version_comparison": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Dost\u0119pne s\u0105 {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
   },

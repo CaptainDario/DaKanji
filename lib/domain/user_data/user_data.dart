@@ -29,6 +29,21 @@ class UserData{
   @JsonKey(defaultValue: "")
   String versionUsed = "";
 
+  /// Does the user use a new version for the first time
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool newVersionUsed = false;
+
+  /// The version of the dictionary that is currentl in the documents folder
+  @JsonKey(defaultValue: "")
+  String dictVersionUsed = "";
+
+  /// The version of the examples that is currently in the documents folder
+  @JsonKey(defaultValue: "")
+  String examplesVersionUsed = "";
+
+  @JsonKey(defaultValue: null)
+  DateTime? userRefusedUpdate;
+
   /// should the showcase of the draw screen be shown
   @JsonKey(defaultValue: true)
   bool showShowcaseDrawing = true;
@@ -52,18 +67,6 @@ class UserData{
   /// should the onboarding be shown
   @JsonKey(defaultValue: false)
   bool showChangelog = false;
-
-  /// Does the user use a new version for the first time
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool newVersionUsed = false;
-
-  /// The version of the dictionary that is currentl in the documents folder
-  @JsonKey(defaultValue: "")
-  String dictVersionUsed = "";
-
-  /// The version of the examples that is currently in the documents folder
-  @JsonKey(defaultValue: "")
-  String examplesVersionUsed = "";
 
   /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)

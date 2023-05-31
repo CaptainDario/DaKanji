@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
@@ -10,6 +12,7 @@ import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_popup.dart' as ratePopup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/application/releases/releases.dart';
 
 
 
@@ -51,6 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await initDocumentsServices(context);
 
+    if(GetIt.I<UserData>().userRefusedUpdate == null ||
+      DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
+      String? updates = await updateAvailable();
+      if(updates != null)
+        await showUpdatePopup(updates);
+    }
+
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
     }
@@ -88,6 +98,34 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return isTesting;
+  }
+
+  Future<void> showUpdatePopup(String changelog) async {
+    // show a popup with the changelog of the new version
+    await AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.noHeader,
+      btnOkColor: g_Dakanji_green,
+      btnOkText: "Download",
+      btnOkOnPress: () {
+        openStoreListing();
+      },
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () async {},
+      onDismissCallback: (dismisstype) async {
+        GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
+        await GetIt.I<UserData>().save();
+      },
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: SingleChildScrollView(
+          child: MarkdownBody(
+            data: changelog,
+          ),
+        ),
+      ),
+    ).show();
   }
 
   /// Shows a popup with the changelog of the current version

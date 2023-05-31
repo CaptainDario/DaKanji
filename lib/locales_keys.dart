@@ -135,6 +135,10 @@ abstract class  LocaleKeys {
   static const HomeScreen_download_failed_popup_retry = 'HomeScreen.download_failed_popup_retry';
   static const HomeScreen_download_failed_popup_text = 'HomeScreen.download_failed_popup_text';
   static const HomeScreen_download_popup_permission = 'HomeScreen.download_popup_permission';
+  static const HomeScreen_new_version_available_heading = 'HomeScreen.new_version_available_heading';
+  static const HomeScreen_new_version_available_text = 'HomeScreen.new_version_available_text';
+  static const HomeScreen_new_version_comparison = 'HomeScreen.new_version_comparison';
+  static const HomeScreen_new_versions_available_text = 'HomeScreen.new_versions_available_text';
   static const HomeScreen_rate_this_app = 'HomeScreen.rate_this_app';
   static const HomeScreen_whats_new = 'HomeScreen.whats_new';
   static const HomeScreen = 'HomeScreen';

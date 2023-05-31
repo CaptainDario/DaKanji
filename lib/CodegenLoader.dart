@@ -119,6 +119,10 @@ class CodegenLoader extends AssetLoader{
     "download_failed_popup_retry": "重试",
     "download_failed_popup_text": "下载失败，请确保你有一个稳定的网络连接。",
     "download_popup_permission": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
+    "new_version_available_heading": "新版本上市!",
+    "new_version_available_text": "大汉字》有了新的版本!",
+    "new_version_comparison": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+    "new_versions_available_text": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
     "rate_this_app": "速率",
     "whats_new": "最新信息"
   },
@@ -726,6 +730,50 @@ static const Map<String,dynamic> localizations = {
       "fr": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
       "es": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
       "pl": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe."
+    },
+    "new_version_available_heading": {
+      "en": "New version Available!",
+      "de": "Neue Version verfügbar!",
+      "ru": "Доступна новая версия!",
+      "ja": "新バージョンを公開しました！",
+      "zh": "新版本上市!",
+      "it": "Nuova versione disponibile!",
+      "fr": "Nouvelle version disponible !",
+      "es": "Nueva versión disponible",
+      "pl": "Nowa wersja dostępna!"
+    },
+    "new_versions_available_text": {
+      "en": "There are {NEW_VERSIONS} new versions of DaKanji available!",
+      "de": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
+      "ru": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
+      "ja": "大漢字の{NEW_VERSIONS}新バージョンが公開されています！",
+      "zh": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
+      "it": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
+      "fr": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
+      "es": "#ERROR!",
+      "pl": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!"
+    },
+    "new_version_available_text": {
+      "en": "There is a new version of DaKanji available!",
+      "de": "Es ist eine neue Version von DaKanji verfügbar!",
+      "ru": "Вышла новая версия DaKanji!",
+      "ja": "大漢字の新バージョンが発売されています！",
+      "zh": "大汉字》有了新的版本!",
+      "it": "È disponibile una nuova versione di DaKanji!",
+      "fr": "#ERROR!",
+      "es": "¡Hay una nueva versión de DaKanji disponible!",
+      "pl": "Dostępna jest nowa wersja DaKanji!"
+    },
+    "new_version_comparison": {
+      "en": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+      "de": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+      "ru": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+      "ja": "VERSION_NUMBER}を実行しており、最新バージョンは{NEW_VERSION_NUMBER}です。",
+      "zh": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+      "it": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+      "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+      "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+      "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
     }
   },
   "OnBoarding": {
@@ -2858,6 +2906,10 @@ static const Map<String,dynamic> ja = {
     "download_failed_popup_retry": "再試行",
     "download_failed_popup_text": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
     "download_popup_permission": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
+    "new_version_available_heading": "新バージョンを公開しました！",
+    "new_version_available_text": "大漢字の新バージョンが発売されています！",
+    "new_version_comparison": "VERSION_NUMBER}を実行しており、最新バージョンは{NEW_VERSION_NUMBER}です。",
+    "new_versions_available_text": "大漢字の{NEW_VERSIONS}新バージョンが公開されています！",
     "rate_this_app": "評価",
     "whats_new": "最新情報"
   },
@@ -3139,6 +3191,10 @@ static const Map<String,dynamic> de = {
     "download_failed_popup_retry": "Wiederholung",
     "download_failed_popup_text": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
     "download_popup_permission": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
+    "new_version_available_heading": "Neue Version verfügbar!",
+    "new_version_available_text": "Es ist eine neue Version von DaKanji verfügbar!",
+    "new_version_comparison": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+    "new_versions_available_text": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
@@ -3385,6 +3441,10 @@ static const Map<String,dynamic> ru = {
     "download_failed_popup_retry": "Повторная попытка",
     "download_failed_popup_text": "Загрузка не удалась, пожалуйста, убедитесь, что у вас стабильное интернет-соединение.",
     "download_popup_permission": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
+    "new_version_available_heading": "Доступна новая версия!",
+    "new_version_available_text": "Вышла новая версия DaKanji!",
+    "new_version_comparison": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
   },
@@ -3650,6 +3710,10 @@ static const Map<String,dynamic> pl = {
     "download_failed_popup_retry": "Ponów",
     "download_failed_popup_text": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe.",
     "download_popup_permission": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
+    "new_version_available_heading": "Nowa wersja dostępna!",
+    "new_version_available_text": "Dostępna jest nowa wersja DaKanji!",
+    "new_version_comparison": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
   },
@@ -3931,6 +3995,10 @@ static const Map<String,dynamic> en = {
     "download_failed_popup_retry": "Retry",
     "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
     "download_popup_permission": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
+    "new_version_available_heading": "New version Available!",
+    "new_version_available_text": "There is a new version of DaKanji available!",
+    "new_version_comparison": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+    "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
@@ -4177,6 +4245,10 @@ static const Map<String,dynamic> it = {
     "download_failed_popup_retry": "Riprova",
     "download_failed_popup_text": "Il download non è riuscito, assicurarsi di avere una connessione internet stabile.",
     "download_popup_permission": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
+    "new_version_available_heading": "Nuova versione disponibile!",
+    "new_version_available_text": "È disponibile una nuova versione di DaKanji!",
+    "new_version_comparison": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+    "new_versions_available_text": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
   },
@@ -4407,6 +4479,10 @@ static const Map<String,dynamic> fr = {
     "download_failed_popup_retry": "Réessayer",
     "download_failed_popup_text": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
     "download_popup_permission": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
+    "new_version_available_heading": "Nouvelle version disponible !",
+    "new_version_available_text": "#ERROR!",
+    "new_version_comparison": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
@@ -4637,6 +4713,10 @@ static const Map<String,dynamic> es = {
     "download_failed_popup_retry": "Reintentar",
     "download_failed_popup_text": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
     "download_popup_permission": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
+    "new_version_available_heading": "Nueva versión disponible",
+    "new_version_available_text": "¡Hay una nueva versión de DaKanji disponible!",
+    "new_version_comparison": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "#ERROR!",
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
   },

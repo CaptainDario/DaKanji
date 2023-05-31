@@ -480,6 +480,50 @@
       "fr": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
       "es": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
       "pl": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe."
+    },
+    "new_version_available_heading": {
+      "en": "New version Available!",
+      "de": "Neue Version verfügbar!",
+      "ru": "Доступна новая версия!",
+      "ja": "新バージョンを公開しました！",
+      "zh": "新版本上市!",
+      "it": "Nuova versione disponibile!",
+      "fr": "Nouvelle version disponible !",
+      "es": "Nueva versión disponible",
+      "pl": "Nowa wersja dostępna!"
+    },
+    "new_versions_available_text": {
+      "en": "There are {NEW_VERSIONS} new versions of DaKanji available!",
+      "de": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
+      "ru": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
+      "ja": "大漢字の{NEW_VERSIONS}新バージョンが公開されています！",
+      "zh": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
+      "it": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
+      "fr": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
+      "es": "#ERROR!",
+      "pl": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!"
+    },
+    "new_version_available_text": {
+      "en": "There is a new version of DaKanji available!",
+      "de": "Es ist eine neue Version von DaKanji verfügbar!",
+      "ru": "Вышла новая версия DaKanji!",
+      "ja": "大漢字の新バージョンが発売されています！",
+      "zh": "大汉字》有了新的版本!",
+      "it": "È disponibile una nuova versione di DaKanji!",
+      "fr": "#ERROR!",
+      "es": "¡Hay una nueva versión de DaKanji disponible!",
+      "pl": "Dostępna jest nowa wersja DaKanji!"
+    },
+    "new_version_comparison": {
+      "en": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+      "de": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+      "ru": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+      "ja": "VERSION_NUMBER}を実行しており、最新バージョンは{NEW_VERSION_NUMBER}です。",
+      "zh": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+      "it": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+      "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+      "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+      "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
     }
   },
   "OnBoarding": {

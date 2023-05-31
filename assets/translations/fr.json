@@ -140,6 +140,10 @@
     "download_failed_popup_retry": "R\u00e9essayer",
     "download_failed_popup_text": "Le t\u00e9l\u00e9chargement a \u00e9chou\u00e9, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
     "download_popup_permission": "Nous devons t\u00e9l\u00e9charger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le t\u00e9l\u00e9chargement est en cours.",
+    "new_version_available_heading": "Nouvelle version disponible !",
+    "new_version_available_text": "#ERROR!",
+    "new_version_comparison": "Vous utilisez {VERSION_NUMBER}, la version la plus r\u00e9cente est {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },

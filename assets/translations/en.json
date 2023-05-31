@@ -140,6 +140,10 @@
     "download_failed_popup_retry": "Retry",
     "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
     "download_popup_permission": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
+    "new_version_available_heading": "New version Available!",
+    "new_version_available_text": "There is a new version of DaKanji available!",
+    "new_version_comparison": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+    "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
