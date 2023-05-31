@@ -34,25 +34,39 @@ class WordListScreen extends StatefulWidget {
 }
 
 class _WordListScreenState extends State<WordListScreen> {
- 
+
   /// is this a default list
   bool isDefault = false;
+  /// all entries of this list
+  late List<JMdict?> entries;
+
 
   @override
   void initState() {
 
-    // if this list is the search history list, add all the search history
+    if(wordListDefaultTypes.contains(widget.node.value.type))
+      isDefault = true;
+
+    // search history (assure it is a default list and not a user created one)
     if(widget.node.value.name == WordListsDefaults.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
-      widget.node.value.wordIds.addAll(
-        GetIt.I<Isars>().searchHistory.searchHistorys.where()
-          .sortByDateSearchedDesc()
-          .dictEntryIdProperty()
-          .findAllSync()
+
+      List<int> searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
+        .anyId()
+        .sortByDateSearchedDesc()
+        .dictEntryIdProperty()
+        .findAllSync().toSet().toList();  
+      entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
+        searchHistoryIds
       );
     }
-    if(widget.node.value.type.name.contains("Default"))
-      isDefault = true;
+    }
+    // user list
+    else{
+      entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
+      widget.node.value.wordIds
+    );
+    }
 
     super.initState();
   }
@@ -70,15 +84,13 @@ class _WordListScreenState extends State<WordListScreen> {
           child: Text(widget.node.value.name)
         ),
       ),
-      body: widget.node.value.wordIds.isEmpty
+      body: entries.isEmpty
         ? Center(
           child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
         )
         : SearchResultList(
-          searchResults: GetIt.I<Isars>().dictionary.jmdict.where()
-            .anyOf(widget.node.value.wordIds, (q, element) => q.idEqualTo(element))
-            .findAllSync(),
-          onDismissed: isDefault
+          searchResults: entries,
+          onDismissed: isDefault 
             ? null
             : (direction, entry, listIndex) {
               setState(() {
