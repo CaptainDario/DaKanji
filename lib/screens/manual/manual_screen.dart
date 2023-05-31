@@ -35,10 +35,10 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    /*const IconData(
+    const IconData(
       0xe803,
       fontFamily: "Anki",
-    )*/
+    )
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
