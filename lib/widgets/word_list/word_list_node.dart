@@ -218,6 +218,11 @@ class _WordListNodeState extends State<WordListNode> {
                         focusNode: nameEditingFocus,
                         controller: _controller,
                         enabled: nameEditing,
+                        style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black
+                        ),
                         decoration: InputDecoration(
                           border: nameEditing ? null : InputBorder.none,
                           hintText: LocaleKeys.WordListsScreen_node_hint_text.tr()
