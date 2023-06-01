@@ -59,7 +59,7 @@ Future<String?> updateAvailable() async {
     }
   }
 
-  if (newVersions != 0){
+  if (newVersions.length != 0){
     if(ret == null){
       ret =  "# ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} \n\n";
       if(newVersions == 1)
