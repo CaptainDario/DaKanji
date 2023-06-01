@@ -90,6 +90,8 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_source_language = 'DictionaryScreen.word_source_language';
   static const DictionaryScreen_word_synonyms = 'DictionaryScreen.word_synonyms';
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
+  static const DictionaryScreen_word_tab_menu_add_to_list = 'DictionaryScreen.word_tab_menu_add_to_list';
+  static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
   static const DrawScreen_not_installed = 'DrawScreen.not_installed';

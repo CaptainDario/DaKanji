@@ -91,6 +91,8 @@
     "word_source_language": "\u30bd\u30fc\u30b9\u8a00\u8a9e\u3067\u3059\uff1a",
     "word_synonyms": "\u540c\u7fa9\u8a9e",
     "word_tab": "\u30ef\u30fc\u30c9",
+    "word_tab_menu_add_to_list": "\u30ea\u30b9\u30c8\u306b\u8ffd\u52a0\u3059\u308b",
+    "word_tab_menu_send_to_anki": "Anki\u306b\u9001\u4fe1\u3059\u308b",
     "word_wikipedia": "\u30a6\u30a3\u30ad\u30da\u30c7\u30a3\u30a2"
   },
   "DrawScreen": {

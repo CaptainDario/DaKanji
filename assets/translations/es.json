@@ -91,6 +91,8 @@
     "word_source_language": "Idioma de origen:",
     "word_synonyms": "Sin\u00f3nimos",
     "word_tab": "Palabra",
+    "word_tab_menu_add_to_list": "A\u00f1adir a la lista",
+    "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {

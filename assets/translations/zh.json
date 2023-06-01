@@ -91,6 +91,8 @@
     "word_source_language": "\u6e90\u8bed\u8a00\uff1a",
     "word_synonyms": "\u540c\u4e49\u8bcd",
     "word_tab": "\u8bcd\u8bed",
+    "word_tab_menu_add_to_list": "\u6dfb\u52a0\u5230\u5217\u8868",
+    "word_tab_menu_send_to_anki": "\u53d1\u9001\u5230Anki",
     "word_wikipedia": "\u7ef4\u57fa\u767e\u79d1"
   },
   "DrawScreen": {

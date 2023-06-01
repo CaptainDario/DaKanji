@@ -70,6 +70,8 @@ class CodegenLoader extends AssetLoader{
     "word_source_language": "源语言：",
     "word_synonyms": "同义词",
     "word_tab": "词语",
+    "word_tab_menu_add_to_list": "添加到列表",
+    "word_tab_menu_send_to_anki": "发送到Anki",
     "word_wikipedia": "维基百科"
   },
   "DrawScreen": {
@@ -1964,6 +1966,28 @@ static const Map<String,dynamic> localizations = {
       "es": "Palabra",
       "pl": "Słowo"
     },
+    "word_tab_menu_add_to_list": {
+      "en": "Add to list",
+      "de": "Zur Liste hinzufügen",
+      "ru": "Добавить в список",
+      "ja": "リストに追加する",
+      "zh": "添加到列表",
+      "it": "Aggiungi all'elenco",
+      "fr": "Ajouter à la liste",
+      "es": "Añadir a la lista",
+      "pl": "Dodaj do listy"
+    },
+    "word_tab_menu_send_to_anki": {
+      "en": "Send to Anki",
+      "de": "An Anki senden",
+      "ru": "Отправить в Anki",
+      "ja": "Ankiに送信する",
+      "zh": "发送到Anki",
+      "it": "Inviare ad Anki",
+      "fr": "Envoyer à Anki",
+      "es": "Enviar a Anki",
+      "pl": "Wyślij do Anki"
+    },
     "word_see_also": {
       "en": "See also:",
       "de": "Siehe auch:",
@@ -2857,6 +2881,8 @@ static const Map<String,dynamic> ja = {
     "word_source_language": "ソース言語です：",
     "word_synonyms": "同義語",
     "word_tab": "ワード",
+    "word_tab_menu_add_to_list": "リストに追加する",
+    "word_tab_menu_send_to_anki": "Ankiに送信する",
     "word_wikipedia": "ウィキペディア"
   },
   "DrawScreen": {
@@ -3142,6 +3168,8 @@ static const Map<String,dynamic> de = {
     "word_source_language": "Ursprungssprache:",
     "word_synonyms": "Synonyme:",
     "word_tab": "Wort",
+    "word_tab_menu_add_to_list": "Zur Liste hinzufügen",
+    "word_tab_menu_send_to_anki": "An Anki senden",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
@@ -3392,6 +3420,8 @@ static const Map<String,dynamic> ru = {
     "word_source_language": "Исходный язык:",
     "word_synonyms": "Синонимы",
     "word_tab": "Слово",
+    "word_tab_menu_add_to_list": "Добавить в список",
+    "word_tab_menu_send_to_anki": "Отправить в Anki",
     "word_wikipedia": "Википедия"
   },
   "DrawScreen": {
@@ -3661,6 +3691,8 @@ static const Map<String,dynamic> pl = {
     "word_source_language": "Język źródłowy:",
     "word_synonyms": "Synonimy",
     "word_tab": "Słowo",
+    "word_tab_menu_add_to_list": "Dodaj do listy",
+    "word_tab_menu_send_to_anki": "Wyślij do Anki",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
@@ -3946,6 +3978,8 @@ static const Map<String,dynamic> en = {
     "word_source_language": "Source language:",
     "word_synonyms": "Synonyms:",
     "word_tab": "Word",
+    "word_tab_menu_add_to_list": "Add to list",
+    "word_tab_menu_send_to_anki": "Send to Anki",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
@@ -4196,6 +4230,8 @@ static const Map<String,dynamic> it = {
     "word_source_language": "Lingua di partenza:",
     "word_synonyms": "Sinonimi",
     "word_tab": "Parola",
+    "word_tab_menu_add_to_list": "Aggiungi all'elenco",
+    "word_tab_menu_send_to_anki": "Inviare ad Anki",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
@@ -4430,6 +4466,8 @@ static const Map<String,dynamic> fr = {
     "word_source_language": "Langue source :",
     "word_synonyms": "Synonymes",
     "word_tab": "Word",
+    "word_tab_menu_add_to_list": "Ajouter à la liste",
+    "word_tab_menu_send_to_anki": "Envoyer à Anki",
     "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DrawScreen": {
@@ -4664,6 +4702,8 @@ static const Map<String,dynamic> es = {
     "word_source_language": "Idioma de origen:",
     "word_synonyms": "Sinónimos",
     "word_tab": "Palabra",
+    "word_tab_menu_add_to_list": "Añadir a la lista",
+    "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
