@@ -718,7 +718,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                           // the text selection handles (left, only the graphics)
                           // debug / mobile only
                           if(_selectionRects.isNotEmpty && 
-                              _selectionRects.first.top - _handlesScrollController.offset > 0 &&
+                              _selectionRects.first.top+10 - _handlesScrollController.offset > 0 &&
                               (!kReleaseMode || Platform.isAndroid || Platform.isIOS))
                             Positioned(
                               left: _selectionRects.first.left - 10,
