@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:quiver/iterables.dart';
 import 'package:dio/dio.dart';
@@ -37,7 +38,7 @@ Future<String?> updateAvailable() async {
   String? ret = null;
 
   Response response = await Dio().get(g_GithubReleasesApi);
-  List<Tuple3<int, int, int>> versions = (List<String?>.from(
+  List<Version> versions = (List<String?>.from(
     // extract tag name (version)
     response.data.map((e) => e["tag_name"])))
     // assure its a valid DaKanji version
@@ -47,32 +48,16 @@ Future<String?> updateAvailable() async {
     // assure its a valid version (not beta, etc.)
     .where((String element) => int.tryParse(element.replaceAll(".", "")) != null)
     // convert to a list of tuples
-    .map((e) => Tuple3(
-      int.parse(e.split(".")[0]),
-      int.parse(e.split(".")[1]),
-      int.parse(e.split(".")[2])
-    )).toList()
+    .map((e) => Version.fromString(e)).toList()
     // sort based on version number parts
-    ..sort((a, b) {
-      if(a.item1 != b.item1)
-        return b.item1.compareTo(a.item1);
-      else if(a.item2 != b.item2)
-        return b.item2.compareTo(a.item2);
-      else
-        return b.item3.compareTo(a.item3);
-    });
-  // split current version into parts
-  Tuple3<int, int, int> currentVersion = Tuple3.fromList(
-    g_VersionNumber.split(".").map((e) => int.parse(e)).toList()
-  );
+    ..sort();
+
   // check if the newest version on GH is newer than the current version
   List newVersions = [];
   for (var ghVersion in versions){
-    for (var versionPair in zip([currentVersion.toList(), ghVersion.toList()])) {
-      if(versionPair[0] < versionPair[1]){
-        newVersions.add(ghVersion);
-        break;
-      }
+    if(g_Version < ghVersion){
+      newVersions.add(ghVersion);
+      break;
     }
   }
 
@@ -84,8 +69,8 @@ Future<String?> updateAvailable() async {
       else
         ret += "${LocaleKeys.HomeScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ";
       ret += "${LocaleKeys.HomeScreen_new_version_comparison.tr()}\n\n\n\n"
-        .replaceAll("{NEW_VERSION_NUMBER}", versions.first.toList().join("."))
-        .replaceAll("{VERSION_NUMBER}", g_VersionNumber);
+        .replaceAll("{NEW_VERSION_NUMBER}", versions.first.toString())
+        .replaceAll("{VERSION_NUMBER}", g_Version.toString());
         
     }
 
