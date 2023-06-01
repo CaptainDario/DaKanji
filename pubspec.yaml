@@ -3,10 +3,10 @@ description: You are learning Japanese? Then you need to give "DaKanji" a try!
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+46
+version: 3.0.0+47
 
 environment:
-  sdk: ">=2.18.2"
+  sdk: ">3.0.0"
   flutter: "3.10.2"
 
 dependencies:
@@ -41,7 +41,7 @@ dependencies:
   device_info_plus: 5.0.5
   share_plus: 6.3.1
   cross_file: 0.3.3+2
-  json_annotation: 4.8.0
+  json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
   sentry_flutter: 7.4.2
   animations: 2.0.7
@@ -119,8 +119,8 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   msix: 3.13.2
-  json_serializable: 6.6.1
-  build_runner: 2.2.1
+  json_serializable: 6.7.0
+  build_runner: 2.4.4
   isar_generator: any # included in dakanji dictionary
   
 flutter_icons:
