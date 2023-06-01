@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,9 +77,7 @@ Future<void> clearPreferences() async {
 Future<void> initServices() async {
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   print("Starting DaKanji ${yaml['version']}");
-  g_Version = yaml['version'];
-  g_VersionNumber = g_Version.substring(0, g_Version.indexOf("+"));
-  g_BuildNumber = g_Version.substring(g_Version.indexOf("+")+1);
+  g_Version = Version.fromStringFull(yaml['version']);
 
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
 
@@ -180,29 +179,35 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   String documentsDir =
     p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
   print("documents directory: ${documentsDir.toString()}");
-  List<FileSystemEntity> assets = [
-    File("assets/dict/dictionary.isar"), File("assets/dict/examples.isar"), 
-    File("assets/dict/krad.isar"), Directory("assets/ipadic")
-  ];
 
   // copy assets from assets to documents directory, or download them from GH
   bool downloadAllowed = false;
-  for (FileSystemEntity asset in assets) {
-    
-    if((!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
-      !Directory(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync()) ||
-      (g_NewDictionary.contains(g_VersionNumber) && 
-        GetIt.I<UserData>().dictVersionUsed != g_VersionNumber))
-    {
+
+  List<FileSystemEntity> assets = [
+    "assets/dict/dictionary.isar", "assets/dict/examples.isar",
+    "assets/dict/krad.isar", "assets/ipadic"
+  ].map((f) => File(f)).toList();
+
+  for (var asset in assets) {
+    if(checkAssetExists(documentsDir, asset)
+      || asset.path == assets[0] && GetIt.I<UserData>().getNewDict //dict
+      || asset.path == assets[1] && GetIt.I<UserData>().getNewExamples //examples
+    ){
       await getAsset(
         asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
         g_GithubApiDependenciesRelase, context, !downloadAllowed
       );
       downloadAllowed = true;
-      GetIt.I<UserData>().dictVersionUsed = g_VersionNumber;
-      await GetIt.I<UserData>().save();
     }
   }
+
+}
+
+/// Checks if an `asset` exists in the `documentsDir`
+bool checkAssetExists(String documentsDir, FileSystemEntity asset){
+
+  return (!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
+    !Directory(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync());
 
 }
 

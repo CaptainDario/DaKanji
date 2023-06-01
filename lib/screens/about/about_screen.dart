@@ -117,7 +117,7 @@ class AboutScreen extends StatelessWidget {
                           showAboutDialog(
                             context: context,
                             applicationName: g_AppTitle,
-                            applicationVersion: g_Version,
+                            applicationVersion: g_Version.fullVersionString,
                             applicationIcon: const Image(
                               image: AssetImage("assets/images/dakanji/icon.png",),
                               width: 50,

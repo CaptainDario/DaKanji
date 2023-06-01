@@ -9,15 +9,14 @@ part of 'user_data.dart';
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
-  ..versionUsed = json['versionUsed'] as String? ?? ''
+  ..versionUsed =
+      json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
   ..showShowcaseDrawing = json['showShowcaseDrawing'] as bool? ?? true
   ..showShowcaseDictionary = json['showShowcaseDictionary'] as bool? ?? true
   ..showShowcaseText = json['showShowcaseText'] as bool? ?? true
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
   ..showRatePopup = json['showRatePopup'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
-  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
-  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
   ..drawingBackend =
       $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
 
@@ -31,8 +30,6 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'showOnboarding': instance.showOnboarding,
       'showRatePopup': instance.showRatePopup,
       'showChangelog': instance.showChangelog,
-      'dictVersionUsed': instance.dictVersionUsed,
-      'examplesVersionUsed': instance.examplesVersionUsed,
       'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
     };
 
