@@ -59,6 +59,11 @@ class Version{
 
   @override
   String toString() {
+    return versionString;
+  }
+
+  /// Returns the full version as string (includes build number)
+  String toStringFull() {
     return fullVersionString;
   }
 
