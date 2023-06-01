@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
-import 'package:da_kanji_mobile/widgets/word_list/add_to_word_list_dialog.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
