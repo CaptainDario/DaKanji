@@ -9,12 +9,8 @@ part of 'user_data.dart';
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
-  ..versionUsed = json['versionUsed'] as String? ?? ''
-  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
-  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
-  ..userRefusedUpdate = json['userRefusedUpdate'] == null
-      ? null
-      : DateTime.parse(json['userRefusedUpdate'] as String)
+  ..versionUsed =
+      json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
   ..showShowcaseDrawing = json['showShowcaseDrawing'] as bool? ?? true
   ..showShowcaseDictionary = json['showShowcaseDictionary'] as bool? ?? true
   ..showShowcaseText = json['showShowcaseText'] as bool? ?? true

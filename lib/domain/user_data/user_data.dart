@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
@@ -26,8 +27,20 @@ class UserData{
   bool doNotShowRateAgain = false;
 
   /// The version of the app which was used last time
-  @JsonKey(defaultValue: "")
-  String versionUsed = "";
+  @JsonKey(defaultValue: null)
+  Version? versionUsed;
+
+  /// Does the user use a new version for the first time
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool newVersionUsed = false;
+
+  /// Should new dictionary be downloaded / copied from the assets folder
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool getNewDict = false;
+
+  /// Should new examples be downloaded / copied from the assets folder
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool getNewExamples = false;
 
   /// Does the user use a new version for the first time
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -87,38 +100,35 @@ class UserData{
 
     appOpenedTimes++;
 
-    // TESTING
-    if(g_IsTestingAppStartupOnboardingNewFeatures){
-      versionUsed = "1.0.0+15";
-      g_Version = g_OnboardingNewPages[0] + "+1";
-      appOpenedTimes = 5;
-    }
-    if(g_IsTestingAppStartupDrawscreenNewFeatures){
-      versionUsed = "1.0.0+15";
-      g_Version = g_DrawingScreenNewFeatures[0] + "+1";
-      appOpenedTimes = 5;
-    }
-
-   print("The app was opened for the ${appOpenedTimes.toString()} time");
+    print("The app was opened for the ${appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-   print("used: $versionUsed now: $g_Version");
-    if(versionUsed != g_Version && appOpenedTimes > 1){
+    print("used: $versionUsed now: $g_Version");
+    if(versionUsed == null) 
+      versionUsed = Version(0, 0, 0);
+    if(versionUsed! < g_Version && appOpenedTimes > 1){
       newVersionUsed = true;print("New version installed");
       // show the changelog
       showChangelog = true;
-      versionUsed = g_Version;
-
-      String v = g_VersionNumber;
-      // this version has new features for drawing screen => show tutorial
-      if(g_DrawingScreenNewFeatures.contains(v)){
+      
+      // any version newer than `versionUsed` has new drawing tutorial steps
+      if(g_DrawingScreenNewFeatures.any((v) => v > versionUsed!)){
         showShowcaseDrawing = true;
       }
-
-      // this version has new onboarding pages
-      if(g_OnboardingNewPages.contains(v)){
+      // any version newer than `versionUsed` has new onboarding pages
+      if(g_OnboardingNewPages.any((v) => v > versionUsed!)){
         showOnboarding = true;
       }
+      // any version newer than `versionUsed` has a newer dictionary
+      if(g_NewDictionary.any((v) => v > versionUsed!)){
+        getNewDict = true;
+      }
+      // any version newer than `versionUsed` has newer examples
+      if(g_NewExamples.any((v) => v > versionUsed!)){
+        getNewExamples = true;
+      }
+
+      versionUsed = g_Version;
     }
 
     // this is the first start of the app

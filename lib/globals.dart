@@ -1,5 +1,6 @@
 library my_prj.globals;
 
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -37,12 +38,8 @@ bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
 StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
 
-/// just the version number of this app
-String g_VersionNumber = "";
-/// the build number of this app
-String g_BuildNumber = "";
 /// the complete version number of this app: version + build number
-String g_Version = "";
+Version g_Version = Version(0, 0, 0);
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
 const int g_MinTimesOpenedToAsknotShowRate = 401;
@@ -51,13 +48,21 @@ const int g_AskRateAfterEach = 20;
 /// The amount of days to wait before asking the user to update the app again
 const int g_daysToWaitBeforeAskingForUpdate = 14;
 /// all versions which implemented new features for the drawing screen
-List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
+List<Version> g_DrawingScreenNewFeatures = [
+  Version(0, 0, 1), Version(1, 0, 0), Version(1, 0, 0), Version(1, 1, 0), Version(2, 1, 0)
+];
 /// all versions which implemented new pages for the OnBoarding
-List<String> g_OnboardingNewPages = ["0.0.0", "2.0.0", "3.0.0"];
+List<Version> g_OnboardingNewPages = [
+  Version(0, 0, 0), Version(2, 0, 0), Version(3, 0, 0)
+];
 /// all versions that implemented new dictionary versions (ISAR DB)
-List<String> g_NewDictionary = ["3.0.0"];
+List<Version> g_NewDictionary = [
+  Version(3, 0, 0, build: 47)
+];
 /// all versions that implemented new examples versions (ISAR DB)
-List<String> g_NewExamples = ["3.0.0"];
+List<Version> g_NewExamples = [
+  Version(3, 0, 0, build: 47)
+];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform

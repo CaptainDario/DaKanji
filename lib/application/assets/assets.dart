@@ -99,7 +99,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   // iterate over the releases
   for (var release in response.data){
     // if the version number matches the current version
-    if(release["tag_name"] == "v" + g_VersionNumber){
+    if(release["tag_name"] == "v" + g_Version.versionString){
       // iterate over the assets in this release
       for (var element in release["assets"]) {
         if((element["name"] as String).startsWith(destination.uri.pathSegments.last.replaceAll(extension, ""))) {
