@@ -11,6 +11,11 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed =
       json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
+  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
+  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
+  ..userRefusedUpdate = json['userRefusedUpdate'] == null
+      ? null
+      : DateTime.parse(json['userRefusedUpdate'] as String)
   ..showShowcaseDrawing = json['showShowcaseDrawing'] as bool? ?? true
   ..showShowcaseDictionary = json['showShowcaseDictionary'] as bool? ?? true
   ..showShowcaseText = json['showShowcaseText'] as bool? ?? true
