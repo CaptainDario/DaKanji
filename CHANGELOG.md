@@ -1,6 +1,19 @@
 
 # Da Kanji - changelog
 
+## v 3.2.0 - 暗記 ()
+
+New Features:
+
+- Word lists
+  - Defaault lists: JLPT 1, 2, 3, 4, 5
+  - Create flash card sheets from lists
+- Anki integration: Send words and word lists to anki
+- Deep Links for Dictionary, Text, and more (details in manual)
+- Check for updates at app start
+
+-------------------------------------------------------------------------
+
 ## v 3.1.0 - 仮名表 ()
 
 New Features:
