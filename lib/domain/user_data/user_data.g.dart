@@ -11,8 +11,6 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed =
       json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
-  ..dictVersionUsed = json['dictVersionUsed'] as String? ?? ''
-  ..examplesVersionUsed = json['examplesVersionUsed'] as String? ?? ''
   ..userRefusedUpdate = json['userRefusedUpdate'] == null
       ? null
       : DateTime.parse(json['userRefusedUpdate'] as String)
@@ -29,8 +27,6 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
       'doNotShowRateAgain': instance.doNotShowRateAgain,
       'versionUsed': instance.versionUsed,
-      'dictVersionUsed': instance.dictVersionUsed,
-      'examplesVersionUsed': instance.examplesVersionUsed,
       'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),
       'showShowcaseDrawing': instance.showShowcaseDrawing,
       'showShowcaseDictionary': instance.showShowcaseDictionary,

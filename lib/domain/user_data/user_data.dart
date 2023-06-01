@@ -42,18 +42,6 @@ class UserData{
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool getNewExamples = false;
 
-  /// Does the user use a new version for the first time
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool newVersionUsed = false;
-
-  /// The version of the dictionary that is currentl in the documents folder
-  @JsonKey(defaultValue: "")
-  String dictVersionUsed = "";
-
-  /// The version of the examples that is currently in the documents folder
-  @JsonKey(defaultValue: "")
-  String examplesVersionUsed = "";
-
   @JsonKey(defaultValue: null)
   DateTime? userRefusedUpdate;
 
