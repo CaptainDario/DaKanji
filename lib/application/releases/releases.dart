@@ -48,7 +48,7 @@ Future<String?> updateAvailable() async {
     // convert to a list of tuples
     .map((e) => Version.fromString(e)).toList()
     // sort based on version number parts
-    ..sort();
+    ..sort(((a, b) => b.compareTo(a)));
 
   // check if the newest version on GH is newer than the current version
   List newVersions = [];
