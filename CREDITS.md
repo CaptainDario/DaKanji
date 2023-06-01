@@ -48,7 +48,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * Francesco S.
   * MacOS
     * ゆうか 田村村
-* Translations:
+* Another huge shout out to all current and past translators:
   * Polish
     * michalpatryk
   * Spanish
