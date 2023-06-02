@@ -14,17 +14,17 @@ import 'package:da_kanji_mobile/application/helper/reviews.dart';
 /// 
 /// The `context` should be the apps current context and `hasDoNotShowOption`
 /// enables the option for the user to not show the rate popup again.
-Future<void> showRatePopup(BuildContext context, bool hasDoNotShowOption) async {
+Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async {
 
-  await AwesomeDialog(
+  return AwesomeDialog(
     context: context,
     headerAnimationLoop: false,
     customHeader: Image.asset(
       "assets/images/dakanji/icon.png"
     ),
-    onDismissCallback: (type) => 
-      Navigator.pushNamedAndRemoveUntil(
-        context, "/home", (Route<dynamic> route) => false),
+    onDismissCallback: (type) async {
+      Navigator.pop(context);
+    },
     body: Center(
       child: Column(
         children: [
