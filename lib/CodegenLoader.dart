@@ -25,6 +25,9 @@ class CodegenLoader extends AssetLoader{
   "ChangelogScreen": {
     "title": "更新日志"
   },
+  "ClipboardScreen": {
+    "title": "剪贴板"
+  },
   "DictionaryScreen": {
     "example_tab": "例子",
     "examples_more": "显示更多的例子",
@@ -2623,6 +2626,19 @@ static const Map<String,dynamic> localizations = {
       "pl": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa."
     }
   },
+  "ClipboardScreen": {
+    "title": {
+      "en": "Clipboard",
+      "de": "Zwischenablage",
+      "ru": "Буфер обмена",
+      "ja": "クリップボード",
+      "zh": "剪贴板",
+      "it": "Appunti",
+      "fr": "Presse-papiers",
+      "es": "Portapapeles",
+      "pl": "Schowek"
+    }
+  },
   "KanjiScreen": {
     "title": {
       "en": "Kanji",
@@ -2813,6 +2829,9 @@ static const Map<String,dynamic> ja = {
   },
   "ChangelogScreen": {
     "title": "更新履歴"
+  },
+  "ClipboardScreen": {
+    "title": "クリップボード"
   },
   "DictionaryScreen": {
     "example_tab": "例",
@@ -3085,6 +3104,9 @@ static const Map<String,dynamic> de = {
   },
   "ChangelogScreen": {
     "title": "Änderungen"
+  },
+  "ClipboardScreen": {
+    "title": "Zwischenablage"
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
@@ -3375,6 +3397,9 @@ static const Map<String,dynamic> ru = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Буфер обмена"
+  },
   "DictionaryScreen": {
     "example_tab": "Пример",
     "examples_more": "Показать больше примеров",
@@ -3610,6 +3635,9 @@ static const Map<String,dynamic> pl = {
   },
   "ChangelogScreen": {
     "title": "Historia zmian"
+  },
+  "ClipboardScreen": {
+    "title": "Schowek"
   },
   "DictionaryScreen": {
     "example_tab": "Przykłady",
@@ -3895,6 +3923,9 @@ static const Map<String,dynamic> en = {
   },
   "ChangelogScreen": {
     "title": "Changelog"
+  },
+  "ClipboardScreen": {
+    "title": "Clipboard"
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
@@ -4185,6 +4216,9 @@ static const Map<String,dynamic> it = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Appunti"
+  },
   "DictionaryScreen": {
     "example_tab": "Esempio",
     "examples_more": "Mostra altri esempi",
@@ -4421,6 +4455,9 @@ static const Map<String,dynamic> fr = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Presse-papiers"
+  },
   "DictionaryScreen": {
     "example_tab": "Exemple",
     "examples_more": "Montrer plus d'exemples",
@@ -4656,6 +4693,9 @@ static const Map<String,dynamic> es = {
   },
   "ChangelogScreen": {
     "title": "Lista de cambios"
+  },
+  "ClipboardScreen": {
+    "title": "Portapapeles"
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",

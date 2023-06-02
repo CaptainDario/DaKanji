@@ -9,6 +9,9 @@
   "ChangelogScreen": {
     "title": "Historia zmian"
   },
+  "ClipboardScreen": {
+    "title": "Schowek"
+  },
   "DictionaryScreen": {
     "example_tab": "Przyk\u0142ady",
     "examples_more": "Poka\u017c wi\u0119cej przyk\u0142ad\u00f3w",

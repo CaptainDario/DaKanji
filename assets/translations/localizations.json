@@ -2386,6 +2386,19 @@
       "pl": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa."
     }
   },
+  "ClipboardScreen": {
+    "title": {
+      "en": "Clipboard",
+      "de": "Zwischenablage",
+      "ru": "Буфер обмена",
+      "ja": "クリップボード",
+      "zh": "剪贴板",
+      "it": "Appunti",
+      "fr": "Presse-papiers",
+      "es": "Portapapeles",
+      "pl": "Schowek"
+    }
+  },
   "KanjiScreen": {
     "title": {
       "en": "Kanji",

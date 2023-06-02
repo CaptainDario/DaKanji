@@ -26,6 +26,7 @@ import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
 
 
 
@@ -122,6 +123,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, true, 
               initialText: args.initialText,
             ));
+          case "/clipboard":
+            return switchScreen(ClipboardScreen(args.navigatedByDrawer));
           case "/kanji":
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/kana_chart":

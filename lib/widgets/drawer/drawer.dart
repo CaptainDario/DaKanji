@@ -302,6 +302,15 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the clipboard watcher screen
+                            DrawerElement(
+                              leading: Icons.copy,
+                              title: LocaleKeys.ClipboardScreen_title.tr(),
+                              route: "/clipboard",
+                              selected: widget.currentScreen == Screens.clipboard,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                            ),
                             // Drawer entry to go to the kanji screen
                             if(kDebugMode)
                               DrawerElement(
@@ -328,6 +337,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               drawerController: _drawerController,
                             ),
+                            // Drawer entry to go to the word lists screen
+                            DrawerElement(
+                              leading: Icons.list_outlined,
+                              leadingAlignment: Alignment(0, -0.1),
+                              title: LocaleKeys.WordListsScreen_title.tr(),
+                              route: "/word_lists",
+                              selected: widget.currentScreen == Screens.word_lists,
+                              drawerWidth: _drawerWidth,
+                              drawerController: _drawerController,
+                            ),
                             // Drawer entry to go to the kuzushiji screen
                             if(kDebugMode)
                               DrawerElement(
@@ -343,16 +362,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 drawerWidth: _drawerWidth,
                                 drawerController: _drawerController,
                               ),
-                            // Drawer entry to go to the word lists screen
-                            DrawerElement(
-                              leading: Icons.list_outlined,
-                              leadingAlignment: Alignment(0, -0.1),
-                              title: LocaleKeys.WordListsScreen_title.tr(),
-                              route: "/word_lists",
-                              selected: widget.currentScreen == Screens.word_lists,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
                             // Drawer entry to go to the settings screen
                             DrawerElement(
                               leading: Icons.settings_applications,

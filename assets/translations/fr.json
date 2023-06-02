@@ -9,6 +9,9 @@
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Presse-papiers"
+  },
   "DictionaryScreen": {
     "example_tab": "Exemple",
     "examples_more": "Montrer plus d'exemples",

@@ -9,6 +9,9 @@
   "ChangelogScreen": {
     "title": "\u00c4nderungen"
   },
+  "ClipboardScreen": {
+    "title": "Zwischenablage"
+  },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
     "examples_more": "Zeige mehr Beispiele.",

@@ -9,6 +9,9 @@
   "ChangelogScreen": {
     "title": "\u66f4\u65b0\u65e5\u5fd7"
   },
+  "ClipboardScreen": {
+    "title": "\u526a\u8d34\u677f"
+  },
   "DictionaryScreen": {
     "example_tab": "\u4f8b\u5b50",
     "examples_more": "\u663e\u793a\u66f4\u591a\u7684\u4f8b\u5b50",

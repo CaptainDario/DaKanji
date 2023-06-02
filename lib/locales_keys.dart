@@ -9,6 +9,8 @@ abstract class  LocaleKeys {
   static const AboutScreen = 'AboutScreen';
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
+  static const ClipboardScreen_title = 'ClipboardScreen.title';
+  static const ClipboardScreen = 'ClipboardScreen';
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';
   static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
   static const DictionaryScreen_kanji_alternatives = 'DictionaryScreen.kanji_alternatives';
