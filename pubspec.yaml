@@ -48,11 +48,29 @@ dependencies:
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
   linked_scroll_controller: 0.2.0
+  pdf: 3.10.3
+  printing: 5.10.4
+  app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
+  #kana_kit: any # included in dakanji dictionary
+  liquid_swipe:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: liquid_swipe_flutter
+  database_builder:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dictionary
+      path: database_builder
+      ref: 5131f22
+    #path: ../DaKanji-Dictionary/database_builder
+  
+
+  # Not all platforms supported
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.23   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  pdf: 3.10.3
-  printing: 5.10.4
+  clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
+
+  #media_kit: android, iOS, macos, windows, linux
   media_kit: 0.0.7                              # Primary package.
   
   media_kit_video: 0.0.9                        # For video rendering.
@@ -65,33 +83,22 @@ dependencies:
   media_kit_libs_windows_video: 1.0.2           # Windows package for video native libraries.
   media_kit_libs_linux: 1.0.2                   # GNU/Linux dependency package.
 
+  #isar: android, iOS, macos, windows, linux
   isar: any # included in dakanji dictionary
   isar_flutter_libs: any # included in dakanji dictionary
-  #kana_kit: any # included in dakanji dictionary
-
-  database_builder:
+  mecab_dart:                                   # android, iOS, macos, windows, linux
     git:
-      url: https://github.com/CaptainDario/DaKanji-Dictionary
-      path: database_builder
-      ref: 5131f22
-    #path: ../DaKanji-Dictionary/database_builder
+      url: https://github.com/CaptainDario/mecab_dart
+
+  # packages that should only target specific platforms
+  android_intent_plus: 3.0.2      # android
+  window_manager: 0.2.7           # desktop
   flutter_appavailability:        # android, iOS
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
       path: flutter_appavailability
-  mecab_dart:
-    git:
-      url: https://github.com/CaptainDario/mecab_dart
-  liquid_swipe:
-    git:
-      url: https://github.com/CaptainDario/DaKanji-Dependencies
-      path: liquid_swipe_flutter
 
-  app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
 
-  # packages which should only target specific platforms
-  android_intent_plus: 3.0.2      # android
-  window_manager: 0.2.7           # desktop
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows

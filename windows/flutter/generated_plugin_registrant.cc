@@ -7,6 +7,7 @@
 #include "generated_plugin_registrant.h"
 
 #include <app_links/app_links_plugin_c_api.h>
+#include <clipboard_watcher/clipboard_watcher_plugin.h>
 #include <isar_flutter_libs/isar_flutter_libs_plugin.h>
 #include <mecab_dart/mecab_dart_plugin_c_api.h>
 #include <media_kit_libs_windows_video/media_kit_libs_windows_video_plugin_c_api.h>
@@ -21,6 +22,8 @@
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   AppLinksPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("AppLinksPluginCApi"));
+  ClipboardWatcherPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ClipboardWatcherPlugin"));
   IsarFlutterLibsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("IsarFlutterLibsPlugin"));
   MecabDartPluginCApiRegisterWithRegistrar(
