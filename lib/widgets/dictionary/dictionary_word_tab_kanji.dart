@@ -213,7 +213,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               SizedBox(height: 5,),
 
               // pitch accent: 川蝦, 結構
-              Row(
+              Wrap(
                 children: [
                   for (int i = 0; i < widget.entry.readings.length; i++)
                     if(accents[i] != null)
