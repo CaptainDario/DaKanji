@@ -495,6 +495,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const Divider(),
                       */
 
+                      // #region - Clipboard header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.ClipboardScreen_title.tr(),
+                        Icons.paste,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialClipboard = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_misc_title.tr(),
