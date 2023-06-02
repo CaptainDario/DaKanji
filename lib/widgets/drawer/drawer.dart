@@ -304,7 +304,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                             ),
                             // Drawer entry to go to the clipboard watcher screen
                             DrawerElement(
-                              leading: Icons.copy,
+                              leading: Icons.paste,
                               title: LocaleKeys.ClipboardScreen_title.tr(),
                               route: "/clipboard",
                               selected: widget.currentScreen == Screens.clipboard,
