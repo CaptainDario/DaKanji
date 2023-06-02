@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:window_manager/window_manager.dart';
 import 'package:clipboard_watcher/clipboard_watcher.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
-import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 
 
@@ -41,6 +44,10 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   ClipboardData currentClipboard = ClipboardData(text: "");
   /// Timer that refreshes the UI every 1s (android only)
   late Timer refreshClipboardAndroid;
+  /// Is the app currently set to be always on top
+  bool? isAlwaysOnTop = null;
+  /// has the screen been initialized
+  bool initialized = false;
 
 
   /// when app comes back to foregorund update dict
@@ -73,7 +80,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     }
 
     // after first frame
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
       final OnboardingState? onboarding = Onboarding.of(context);
       // init tutorial
       if (onboarding != null && widget.includeTutorial && 
@@ -83,6 +90,13 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
           GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
         );
       }
+
+      // get current always on top state
+      isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
+
+      setState(() {
+        initialized = true;
+      });
     });
     
     super.initState();
@@ -99,6 +113,10 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       // stop watch
       clipboardWatcher.stop();
     }
+
+    // reset the state of the always on top option
+    WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+
     super.dispose();
   }
 
@@ -107,23 +125,59 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? ClipboardData(text: "");
     setState(() { });
   }
-
-  void onClipboardChangedString(String clipboard){
-    print(clipboard);
-  }
-
   
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: DaKanjiDrawer(
-        currentScreen: Screens.clipboard,
-        animationAtStart: !widget.openedByDrawer,
-        child: TextAnalysisPopup(
-          text: currentClipboard.text!,
-        )
-      ),
+
+    return ConditionalParentWidget(
+      condition: isAlwaysOnTop == null || !isAlwaysOnTop!,
+      conditionalBuilder: (child) {
+        return Scaffold(
+          body: DaKanjiDrawer(
+            currentScreen: Screens.clipboard,
+            animationAtStart: initialized ? true : !widget.openedByDrawer,
+            child: child
+          ),
+        );
+      },
+      child: Stack(
+        children: [
+          TextAnalysisPopup(
+            text: currentClipboard.text!,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if(isAlwaysOnTop != null)
+                IconButton(
+                  icon: Icon(isAlwaysOnTop! ? Icons.push_pin : Icons.push_pin_outlined),
+                  onPressed: () async {
+                    isAlwaysOnTop = !isAlwaysOnTop!;
+                    await windowManager.setAlwaysOnTop(isAlwaysOnTop!);
+
+                    if(isAlwaysOnTop!){
+                      await windowManager.setSize(Size(300, 300));
+                      await windowManager.setMinimumSize(Size(300, 300));
+                      await windowManager.setAsFrameless();
+                    }
+                    else {
+                      await windowManager.setSize(Size(
+                        GetIt.I<Settings>().misc.windowWidth.toDouble(),
+                        GetIt.I<Settings>().misc.windowHeight.toDouble()
+                      ));
+                      await windowManager.setMinimumSize(g_minDesktopWindowSize);
+
+                      await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
+                      await windowManager.setTitle(g_AppTitle);
+                    }
+                    setState(() {});
+                  }
+                ),
+            ],
+          )
+        ],
+      )
     );
   }
 
