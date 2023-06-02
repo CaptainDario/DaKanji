@@ -92,7 +92,7 @@ dependencies:
 
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
-  window_manager: 0.2.7           # desktop
+  window_manager: 0.3.4           # desktop
   flutter_appavailability:        # android, iOS
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
