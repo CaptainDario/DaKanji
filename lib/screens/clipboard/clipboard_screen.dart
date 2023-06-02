@@ -47,9 +47,11 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   /// Timer that refreshes the UI every 1s (android only)
   late Timer refreshClipboardAndroid;
   /// Is the app currently set to be always on top
-  bool? isAlwaysOnTop = null;
+  bool isAlwaysOnTop = false;
   /// has the screen been initialized
   bool initialized = false;
+  /// Should the tutorial be shown
+  bool showTutorial = false;
 
 
   /// when app comes back to foregorund update dict
@@ -87,6 +89,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       // init tutorial
       if (onboarding != null && widget.includeTutorial && 
         GetIt.I<UserData>().showTutorialClipboard) {
+        showTutorial = true;
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
           GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
@@ -96,9 +99,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       // get current always on top state
       isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
 
-      setState(() {
-        initialized = true;
-      });
+      initialized = true;
     });
     
     super.initState();
@@ -133,7 +134,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   Widget build(BuildContext context) {
 
     return ConditionalParentWidget(
-      condition: isAlwaysOnTop == null || !isAlwaysOnTop!,
+      condition: !isAlwaysOnTop,
       conditionalBuilder: (child) {
         return Scaffold(
           body: DaKanjiDrawer(
@@ -160,30 +161,34 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
                   onPressed: pinButtonPressed
                 ),
               ),
-
-                    if(isAlwaysOnTop!){
-                      await windowManager.setSize(Size(300, 300));
-                      await windowManager.setMinimumSize(Size(300, 300));
-                      await windowManager.setAsFrameless();
-                    }
-                    else {
-                      await windowManager.setSize(Size(
-                        GetIt.I<Settings>().misc.windowWidth.toDouble(),
-                        GetIt.I<Settings>().misc.windowHeight.toDouble()
-                      ));
-                      await windowManager.setMinimumSize(g_minDesktopWindowSize);
-
-                      await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
-                      await windowManager.setTitle(g_AppTitle);
-                    }
-                    setState(() {});
-                  }
-                ),
             ],
           )
         ],
       )
     );
+  }
+
+  /// Callback that is executed when the pin-button is pressed
+  Future<void> pinButtonPressed() async {
+    isAlwaysOnTop = !isAlwaysOnTop;
+    await windowManager.setAlwaysOnTop(isAlwaysOnTop);
+
+    if(isAlwaysOnTop){
+      await windowManager.setSize(Size(300, 300));
+      await windowManager.setMinimumSize(Size(300, 300));
+      await windowManager.setAsFrameless();
+    }
+    else {
+      await windowManager.setSize(Size(
+        GetIt.I<Settings>().misc.windowWidth.toDouble(),
+        GetIt.I<Settings>().misc.windowHeight.toDouble()
+      ));
+      await windowManager.setMinimumSize(g_minDesktopWindowSize);
+
+      await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
+      await windowManager.setTitle(g_AppTitle);
+    }
+    setState(() {});
   }
 
 }
