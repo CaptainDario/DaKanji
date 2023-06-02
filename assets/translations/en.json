@@ -10,7 +10,11 @@
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Clipboard"
+    "title": "Clipboard",
+    "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
+    "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
+    "tutorial_welcome": "Welcome to the clipboard screen!"
   },
   "DictionaryScreen": {
     "example_tab": "Examples",

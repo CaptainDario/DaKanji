@@ -10,7 +10,11 @@
     "title": "Lista de cambios"
   },
   "ClipboardScreen": {
-    "title": "Portapapeles"
+    "title": "Portapapeles",
+    "tutorial_android_limitation": "En Android, esta pantalla no puede leer autom\u00e1ticamente el portapapeles en segundo plano. Necesitas tener la aplicaci\u00f3n en primer plano. Disculpa las molestias.",
+    "tutorial_explanation": "S\u00f3lo tienes que copiar un texto y DaKanji te mostrar\u00e1 las entradas del diccionario y mucho m\u00e1s.",
+    "tutorial_introduction": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
+    "tutorial_welcome": "Bienvenido a la pantalla del portapapeles"
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",

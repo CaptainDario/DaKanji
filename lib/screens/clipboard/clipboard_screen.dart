@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +11,8 @@ import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 
 
@@ -16,9 +20,12 @@ class ClipboardScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
+  /// should the focus nodes for the tutorial be included
+  final bool includeTutorial;
 
   const ClipboardScreen(
     this.openedByDrawer,
+    this.includeTutorial,
     {
       super.key
     }
@@ -64,6 +71,19 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       // start watch
       clipboardWatcher.start();
     }
+
+    // after first frame
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+      final OnboardingState? onboarding = Onboarding.of(context);
+      // init tutorial
+      if (onboarding != null && widget.includeTutorial && 
+        GetIt.I<UserData>().showTutorialClipboard) {
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
+        );
+      }
+    });
     
     super.initState();
 

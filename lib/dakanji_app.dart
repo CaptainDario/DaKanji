@@ -67,22 +67,27 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   globalOnboarding: true,
                   autoSizeTexts: true,
                   steps: GetIt.I<Tutorials>().getSteps(),
-                  onChanged: (int index){
+                  onChanged: (int index) async {
                     print("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
                       print("DrawScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseDrawing = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialDrawing = false;
+                      await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
                       print("DictionaryScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseDictionary = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialDictionary = false;
+                      await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
                       print("TextScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseText = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialText = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!.last){
+                      print("Clipboard screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialClipboard = false;
+                      await GetIt.I<UserData>().save();
                     }
                   },
                   child: screen,
@@ -124,7 +129,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               initialText: args.initialText,
             ));
           case "/clipboard":
-            return switchScreen(ClipboardScreen(args.navigatedByDrawer));
+            return switchScreen(ClipboardScreen(args.navigatedByDrawer, true));
           case "/kanji":
             return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
           case "/kana_chart":

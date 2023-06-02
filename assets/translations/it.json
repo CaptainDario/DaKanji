@@ -10,7 +10,11 @@
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Appunti"
+    "title": "Appunti",
+    "tutorial_android_limitation": "Su Android, questa schermata non pu\u00f2 leggere automaticamente gli appunti in background. \u00c8 necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+    "tutorial_explanation": "Basta copiare un testo e DaKanji mostrer\u00e0 le voci del dizionario e molto altro!",
+    "tutorial_introduction": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
+    "tutorial_welcome": "Benvenuti nella schermata degli appunti!"
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",

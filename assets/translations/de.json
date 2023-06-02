@@ -10,7 +10,11 @@
     "title": "\u00c4nderungen"
   },
   "ClipboardScreen": {
-    "title": "Zwischenablage"
+    "title": "Zwischenablage",
+    "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie m\u00fcssen die App im Vordergrund haben. Entschuldigung f\u00fcr die Unannehmlichkeiten.",
+    "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt W\u00f6rterbucheintr\u00e4ge und mehr!",
+    "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen f\u00fcr ein besseres Verst\u00e4ndnis jedes Wortes in Ihrer Zwischenablage.",
+    "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",

@@ -10,7 +10,11 @@
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Presse-papiers"
+    "title": "Presse-papiers",
+    "tutorial_android_limitation": "Sur Android, cet \u00e9cran ne peut pas lire automatiquement votre presse-papiers en arri\u00e8re-plan. L'application doit \u00eatre au premier plan. D\u00e9sol\u00e9 pour la g\u00eane occasionn\u00e9e.",
+    "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entr\u00e9es du dictionnaire et bien plus encore !",
+    "tutorial_introduction": "Cet \u00e9cran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
+    "tutorial_welcome": "Bienvenue dans l'\u00e9cran du presse-papiers !"
   },
   "DictionaryScreen": {
     "example_tab": "Exemple",

@@ -132,16 +132,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       }
 
       // init tutorial
-      if(widget.includeTutorial){
-        final OnboardingState? onboarding = Onboarding.of(context);
-        if (onboarding != null && 
-          GetIt.I<UserData>().showShowcaseText) {
-
-          onboarding.showWithSteps(
-            GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
-            GetIt.I<Tutorials>().textScreenTutorial.indexes!
-          );
-        }
+      final OnboardingState? onboarding = Onboarding.of(context);
+      if(widget.includeTutorial && onboarding != null && 
+        GetIt.I<UserData>().showTutorialText) {
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().textScreenTutorial.indexes!
+        );
       }
     });
   }

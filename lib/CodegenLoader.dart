@@ -26,7 +26,11 @@ class CodegenLoader extends AssetLoader{
     "title": "更新日志"
   },
   "ClipboardScreen": {
-    "title": "剪贴板"
+    "title": "剪贴板",
+    "tutorial_android_limitation": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
+    "tutorial_explanation": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
+    "tutorial_introduction": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
+    "tutorial_welcome": "欢迎来到剪贴板屏幕!"
   },
   "DictionaryScreen": {
     "example_tab": "例子",
@@ -2637,6 +2641,50 @@ static const Map<String,dynamic> localizations = {
       "fr": "Presse-papiers",
       "es": "Portapapeles",
       "pl": "Schowek"
+    },
+    "tutorial_welcome": {
+      "en": "Welcome to the clipboard screen!",
+      "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
+      "ru": "Добро пожаловать на экран буфера обмена!",
+      "ja": "クリップボード画面へようこそ！",
+      "zh": "欢迎来到剪贴板屏幕!",
+      "it": "Benvenuti nella schermata degli appunti!",
+      "fr": "Bienvenue dans l'écran du presse-papiers !",
+      "es": "Bienvenido a la pantalla del portapapeles",
+      "pl": "Witamy na ekranie schowka!"
+    },
+    "tutorial_introduction": {
+      "en": "This screen gives you options for a better understanding of any word in your clipboard.",
+      "de": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
+      "ru": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
+      "ja": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
+      "zh": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
+      "it": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
+      "fr": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
+      "es": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
+      "pl": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku."
+    },
+    "tutorial_explanation": {
+      "en": "Just copy some text and DaKanji will show dictionary entries and more!",
+      "de": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
+      "ru": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
+      "ja": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
+      "zh": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
+      "it": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
+      "fr": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
+      "es": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
+      "pl": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!"
+    },
+    "tutorial_android_limitation": {
+      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
+      "ru": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
+      "ja": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
+      "zh": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
+      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
+      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
+      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności."
     }
   },
   "KanjiScreen": {
@@ -2831,7 +2879,11 @@ static const Map<String,dynamic> ja = {
     "title": "更新履歴"
   },
   "ClipboardScreen": {
-    "title": "クリップボード"
+    "title": "クリップボード",
+    "tutorial_android_limitation": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
+    "tutorial_explanation": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
+    "tutorial_introduction": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
+    "tutorial_welcome": "クリップボード画面へようこそ！"
   },
   "DictionaryScreen": {
     "example_tab": "例",
@@ -3106,7 +3158,11 @@ static const Map<String,dynamic> de = {
     "title": "Änderungen"
   },
   "ClipboardScreen": {
-    "title": "Zwischenablage"
+    "title": "Zwischenablage",
+    "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
+    "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
+    "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
+    "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
@@ -3398,7 +3454,11 @@ static const Map<String,dynamic> ru = {
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Буфер обмена"
+    "title": "Буфер обмена",
+    "tutorial_android_limitation": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
+    "tutorial_explanation": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
+    "tutorial_introduction": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
+    "tutorial_welcome": "Добро пожаловать на экран буфера обмена!"
   },
   "DictionaryScreen": {
     "example_tab": "Пример",
@@ -3637,7 +3697,11 @@ static const Map<String,dynamic> pl = {
     "title": "Historia zmian"
   },
   "ClipboardScreen": {
-    "title": "Schowek"
+    "title": "Schowek",
+    "tutorial_android_limitation": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności.",
+    "tutorial_explanation": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!",
+    "tutorial_introduction": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku.",
+    "tutorial_welcome": "Witamy na ekranie schowka!"
   },
   "DictionaryScreen": {
     "example_tab": "Przykłady",
@@ -3925,7 +3989,11 @@ static const Map<String,dynamic> en = {
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Clipboard"
+    "title": "Clipboard",
+    "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
+    "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
+    "tutorial_welcome": "Welcome to the clipboard screen!"
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
@@ -4217,7 +4285,11 @@ static const Map<String,dynamic> it = {
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Appunti"
+    "title": "Appunti",
+    "tutorial_android_limitation": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+    "tutorial_explanation": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
+    "tutorial_introduction": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
+    "tutorial_welcome": "Benvenuti nella schermata degli appunti!"
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",
@@ -4456,7 +4528,11 @@ static const Map<String,dynamic> fr = {
     "title": "Changelog"
   },
   "ClipboardScreen": {
-    "title": "Presse-papiers"
+    "title": "Presse-papiers",
+    "tutorial_android_limitation": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
+    "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
+    "tutorial_introduction": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
+    "tutorial_welcome": "Bienvenue dans l'écran du presse-papiers !"
   },
   "DictionaryScreen": {
     "example_tab": "Exemple",
@@ -4695,7 +4771,11 @@ static const Map<String,dynamic> es = {
     "title": "Lista de cambios"
   },
   "ClipboardScreen": {
-    "title": "Portapapeles"
+    "title": "Portapapeles",
+    "tutorial_android_limitation": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
+    "tutorial_explanation": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
+    "tutorial_introduction": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
+    "tutorial_welcome": "Bienvenido a la pantalla del portapapeles"
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",

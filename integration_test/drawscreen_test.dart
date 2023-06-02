@@ -36,7 +36,7 @@ void main() {
     GetIt.I<UserData>().showChangelog       = false;
     GetIt.I<UserData>().showOnboarding      = false;
     GetIt.I<UserData>().showRatePopup       = false;
-    GetIt.I<UserData>().showShowcaseDrawing = false;
+    GetIt.I<UserData>().showTutorialDrawing = false;
     GetIt.I<UserData>().save();
 
     await tester.pumpAndSettle(const Duration(seconds: 1));
