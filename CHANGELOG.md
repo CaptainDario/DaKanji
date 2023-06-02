@@ -11,6 +11,7 @@ New Features:
 - Anki integration
   - Send words and word lists to anki
 - Deep Links for Dictionary, Text, and more (details in manual)
+- Drawer elements reorderable
 - Check for updates at app start
 
 -------------------------------------------------------------------------
