@@ -285,57 +285,63 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  // spaces toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                    child: AnalysisOptionButton(
-                                      addSpaces,
-                                      svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {addSpaces = !addSpaces;})
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      // spaces toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          addSpaces,
+                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {addSpaces = !addSpaces;})
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  // furigana toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                    child: AnalysisOptionButton(
-                                      showRubys,
-                                      svgAssetPattern: "assets/icons/furigana_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {showRubys = !showRubys;})
+                                      // furigana toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                        child: AnalysisOptionButton(
+                                          showRubys,
+                                          svgAssetPattern: "assets/icons/furigana_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {showRubys = !showRubys;})
+                                          ),
+                                        )
                                       ),
-                                    )
-                                  ),
-                                  // button to colorize words matching POS
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                    child: AnalysisOptionButton(
-                                      colorizePos,
-                                      svgAssetPattern: "assets/icons/pos_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {colorizePos = !colorizePos;})
+                                      // button to colorize words matching POS
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          colorizePos,
+                                          svgAssetPattern: "assets/icons/pos_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {colorizePos = !colorizePos;})
+                                          ),
+                                        )
                                       ),
-                                    )
+                                      // full screen toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                        child: AnalysisOptionButton(
+                                          fullScreen,
+                                          onIcon: Icons.fullscreen,
+                                          offIcon: Icons.fullscreen_exit,
+                                          onPressed: onFullScreenButtonPress
+                                        )
+                                      ),
+                                    ],
                                   ),
-                                  // full screen toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                    child: AnalysisOptionButton(
-                                      fullScreen,
-                                      onIcon: Icons.fullscreen,
-                                      offIcon: Icons.fullscreen_exit,
-                                      onPressed: onFullScreenButtonPress
-                                    )
-                                  ),
-                                ],
+                                ),
                               )
                             ],
                           ),
