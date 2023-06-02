@@ -10,6 +10,7 @@ New Features:
   - Create flash card sheets from lists
 - Anki integration
   - Send words and word lists to anki
+- Clipboard screen to lookup words in the OS's clipboard
 - Deep Links for Dictionary, Text, and more (details in manual)
 - Check for updates at app start
 
