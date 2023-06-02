@@ -73,6 +73,11 @@ final bool g_desktopPlatform =
 /// browser user agent to fake a mobile device on desktop
 String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
 
+
+/// The minimum size of the desktop window in normal mode
+const Size g_minDesktopWindowSize = const Size(480, 720);
+
+
 /// is the app running to test the drawscreen
 bool g_IsTestingDrawscreen = false;
 /// is the app running to test the app startup situations
