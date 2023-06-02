@@ -19,6 +19,8 @@ import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
 
 
 
+/// Screen that listens to clipboard changes and displays them in
+/// [TextAnalysisPopup]
 class ClipboardScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
