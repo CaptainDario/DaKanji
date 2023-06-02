@@ -151,12 +151,15 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if(isAlwaysOnTop != null)
-                IconButton(
-                  icon: Icon(isAlwaysOnTop! ? Icons.push_pin : Icons.push_pin_outlined),
-                  onPressed: () async {
-                    isAlwaysOnTop = !isAlwaysOnTop!;
-                    await windowManager.setAlwaysOnTop(isAlwaysOnTop!);
+              Focus(
+                focusNode: showTutorial
+                  ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![4]
+                  : null,
+                child: IconButton(
+                  icon: Icon(isAlwaysOnTop ? Icons.push_pin : Icons.push_pin_outlined),
+                  onPressed: pinButtonPressed
+                ),
+              ),
 
                     if(isAlwaysOnTop!){
                       await windowManager.setSize(Size(300, 300));

@@ -2441,6 +2441,17 @@
       "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
       "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
       "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności."
+    },
+    "tutorial_pin_button": {
+      "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
+      "de": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
+      "ru": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
+      "ja": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
+      "zh": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
+      "it": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
+      "fr": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
+      "es": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
+      "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
     }
   },
   "KanjiScreen": {

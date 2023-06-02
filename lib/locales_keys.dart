@@ -13,6 +13,7 @@ abstract class  LocaleKeys {
   static const ClipboardScreen_tutorial_android_limitation = 'ClipboardScreen.tutorial_android_limitation';
   static const ClipboardScreen_tutorial_explanation = 'ClipboardScreen.tutorial_explanation';
   static const ClipboardScreen_tutorial_introduction = 'ClipboardScreen.tutorial_introduction';
+  static const ClipboardScreen_tutorial_pin_button = 'ClipboardScreen.tutorial_pin_button';
   static const ClipboardScreen_tutorial_welcome = 'ClipboardScreen.tutorial_welcome';
   static const ClipboardScreen = 'ClipboardScreen';
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';

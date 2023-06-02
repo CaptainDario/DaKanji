@@ -14,6 +14,7 @@
     "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie m\u00fcssen die App im Vordergrund haben. Entschuldigung f\u00fcr die Unannehmlichkeiten.",
     "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt W\u00f6rterbucheintr\u00e4ge und mehr!",
     "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen f\u00fcr ein besseres Verst\u00e4ndnis jedes Wortes in Ihrer Zwischenablage.",
+    "tutorial_pin_button": "Diese Schaltfl\u00e4che bewirkt, dass DaKanji immer \u00fcber anderen Fenstern angezeigt wird. Zus\u00e4tzlich wird die Gr\u00f6\u00dfe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe \u00fcber jeder anderen Anwendung verwendet werden.",
     "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
   },
   "DictionaryScreen": {

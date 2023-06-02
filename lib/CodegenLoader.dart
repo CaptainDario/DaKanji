@@ -30,6 +30,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_android_limitation": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
     "tutorial_explanation": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
     "tutorial_introduction": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
+    "tutorial_pin_button": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
     "tutorial_welcome": "欢迎来到剪贴板屏幕!"
   },
   "DictionaryScreen": {
@@ -2685,6 +2686,17 @@ static const Map<String,dynamic> localizations = {
       "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
       "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
       "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności."
+    },
+    "tutorial_pin_button": {
+      "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
+      "de": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
+      "ru": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
+      "ja": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
+      "zh": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
+      "it": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
+      "fr": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
+      "es": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
+      "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
     }
   },
   "KanjiScreen": {
@@ -2883,6 +2895,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_android_limitation": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
     "tutorial_explanation": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
     "tutorial_introduction": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
+    "tutorial_pin_button": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
     "tutorial_welcome": "クリップボード画面へようこそ！"
   },
   "DictionaryScreen": {
@@ -3162,6 +3175,7 @@ static const Map<String,dynamic> de = {
     "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
     "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
     "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
+    "tutorial_pin_button": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
     "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
   },
   "DictionaryScreen": {
@@ -3458,6 +3472,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_android_limitation": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
     "tutorial_explanation": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
     "tutorial_introduction": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
+    "tutorial_pin_button": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
     "tutorial_welcome": "Добро пожаловать на экран буфера обмена!"
   },
   "DictionaryScreen": {
@@ -3701,6 +3716,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_android_limitation": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności.",
     "tutorial_explanation": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!",
     "tutorial_introduction": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku.",
+    "tutorial_pin_button": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją.",
     "tutorial_welcome": "Witamy na ekranie schowka!"
   },
   "DictionaryScreen": {
@@ -3993,6 +4009,7 @@ static const Map<String,dynamic> en = {
     "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
     "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
     "tutorial_welcome": "Welcome to the clipboard screen!"
   },
   "DictionaryScreen": {
@@ -4289,6 +4306,7 @@ static const Map<String,dynamic> it = {
     "tutorial_android_limitation": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
     "tutorial_explanation": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
     "tutorial_introduction": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
+    "tutorial_pin_button": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
     "tutorial_welcome": "Benvenuti nella schermata degli appunti!"
   },
   "DictionaryScreen": {
@@ -4532,6 +4550,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_android_limitation": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
     "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
     "tutorial_introduction": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
+    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
     "tutorial_welcome": "Bienvenue dans l'écran du presse-papiers !"
   },
   "DictionaryScreen": {
@@ -4775,6 +4794,7 @@ static const Map<String,dynamic> es = {
     "tutorial_android_limitation": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
     "tutorial_explanation": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
     "tutorial_introduction": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
+    "tutorial_pin_button": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
     "tutorial_welcome": "Bienvenido a la pantalla del portapapeles"
   },
   "DictionaryScreen": {

@@ -14,6 +14,7 @@
     "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
     "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
     "tutorial_welcome": "Welcome to the clipboard screen!"
   },
   "DictionaryScreen": {

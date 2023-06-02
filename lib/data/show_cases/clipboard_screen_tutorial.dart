@@ -14,12 +14,14 @@ class ClipboardScreenTutorial extends Tutorial {
       "",
       "",
       "",
+      "",
     ];
     bodies = [
       LocaleKeys.ClipboardScreen_tutorial_welcome.tr(),
       LocaleKeys.ClipboardScreen_tutorial_introduction.tr(),
       LocaleKeys.ClipboardScreen_tutorial_explanation.tr(),
       LocaleKeys.ClipboardScreen_tutorial_android_limitation.tr(),
+      LocaleKeys.ClipboardScreen_tutorial_pin_button.tr()
     ];
 
     initTutorial();
