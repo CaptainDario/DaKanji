@@ -47,13 +47,15 @@ Feature overview:
 
 </br>
 
-<div class="row">
-  <img src="readme/phone_6_5_mockups_1.png" width="18%">
-  <img src="readme/phone_6_5_mockups_2.png" width="18%">
-  <img src="readme/phone_6_5_mockups_3.png" width="18%">
-  <img src="readme/phone_6_5_mockups_4.png" width="18%">
-  <img src="readme/phone_6_5_mockups_5.png" width="18%">
-<div>
+<p>
+  <img src="readme/phone_6_5_mockups_1.png" width="22%">
+  <img src="readme/phone_6_5_mockups_2.png" width="22%">
+  <img src="readme/phone_6_5_mockups_3.png" width="22%">
+  <img src="readme/phone_6_5_mockups_4.png" width="22%">
+</p>
+<p>
+  <img src="readme/phone_6_5_mockups_5.png" width="22%">
+</p>
 
 </br>
 
