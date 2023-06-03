@@ -47,6 +47,16 @@ Feature overview:
 
 </br>
 
+<div class="row">
+  <img src="readme/phone_6_5_mockups_1.png" width="18%">
+  <img src="readme/phone_6_5_mockups_2.png" width="18%">
+  <img src="readme/phone_6_5_mockups_3.png" width="18%">
+  <img src="readme/phone_6_5_mockups_4.png" width="18%">
+  <img src="readme/phone_6_5_mockups_5.png" width="18%">
+<div>
+
+</br>
+
 ## What the users say
 
 * "Your program is like magic! Thank you so much!" - saszai2
