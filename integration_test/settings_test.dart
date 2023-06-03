@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/view/drawing/drawing_canvas.dart';
+import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -8,8 +8,8 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/model/user_data.dart';
-import 'package:da_kanji_mobile/provider/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
