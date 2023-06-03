@@ -213,32 +213,36 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               SizedBox(height: 5,),
 
               // pitch accent: 川蝦, 結構
-              Wrap(
-                children: [
-                  for (int i = 0; i < widget.entry.readings.length; i++)
-                    if(accents[i] != null)
-                      for (var a = 0; a < accents[i]!.length; a++)
-                        ...[
-                          for (int r = 0; r < widget.entry.readings[i].length; r++)
-                            Container(
-                              decoration: getPitchAccentDecoration(
-                                accents[i]![a],
-                                widget.entry.readings[i],
-                                r 
-                              ),
-                              child: Text(
-                                widget.entry.readings[i][r],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  children: [
+                    for (int i = 0; i < widget.entry.readings.length; i++)
+                      if(accents[i] != null)
+                        for (var a = 0; a < accents[i]!.length; a++)
+                          ...[
+                            for (int r = 0; r < widget.entry.readings[i].length; r++)
+                              Container(
+                                decoration: getPitchAccentDecoration(
+                                  accents[i]![a],
+                                  widget.entry.readings[i],
+                                  r 
+                                ),
+                                child: Text(
+                                  widget.entry.readings[i][r],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey
+                                  ),
                                 ),
                               ),
-                            ),
-                          if(i + a != widget.entry.readings.length-1 +
-                            widget.entry.accents![i]!.attributes.length-1)
-                            Text("、"),
-                        ]
-                ]
+                            if(i + a != widget.entry.readings.length-1 +
+                              widget.entry.accents![i]!.attributes.length-1)
+                              Text("、"),
+                          ]
+                  ]
+                ),
               ),
           
               SizedBox(height: 5),
