@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
@@ -67,7 +68,61 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   late double _screenHeight;
   /// function to open/close the drawer (invoked when DrawerListener changed)
   late void Function() _handleDrawer; 
-  
+
+  List<Tuple4<IconData, String, String, Screens?>> drawerElementsData = [
+    Tuple4(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing),
+    Tuple4(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary),
+    Tuple4(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text),
+    Tuple4(const IconData(0x30AB, fontFamily: "NotoSansJP-Black"), LocaleKeys.KanaChartScreen_title.tr(), "/kana_chart", Screens.kana_chart),
+    Tuple4(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists),
+    Tuple4(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings),
+    Tuple4(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about),
+    Tuple4(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual),
+    Tuple4(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), "", null),
+    Tuple4(const IconData(0x6f22, fontFamily: "NotoSansJP-Black",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
+    Tuple4(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji),
+  ];
+  List<Tuple2<double?, Alignment>?> drawerElementsGeom = [
+    null,
+    null,
+    null,
+    Tuple2(0.5, Alignment(1000, -0.7)),
+    Tuple2(null, Alignment(0, -0.1)),
+    null,
+    null,
+    null,
+    null,
+    Tuple2(null, Alignment(-0.1, -0.65)),
+    Tuple2(0.7, Alignment(-1000, 0)),
+  ];
+  List<bool> includeTile = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    kDebugMode,
+    kDebugMode,
+  ];
+  List<Function?> onTaps = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    sendFeedback,
+    null,
+    null,
+  ];
+  late List<int> drawerElementsIndexOrder;
   
   @override
   void initState() { 
