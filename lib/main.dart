@@ -44,6 +44,7 @@ Future<void> main() async {
                 useOnlyLangCode: true,
                 assetLoader: const CodegenLoader(),
                 saveLocale: true,
+                startLocale: const Locale("en"),
                 child: BetterFeedback(
                   theme: FeedbackThemeData(
                     sheetIsDraggable: true
@@ -53,6 +54,7 @@ Future<void> main() async {
                       const Locale('en'): CustomFeedbackLocalizations()
                     },
                   ],
+                  localeOverride: const Locale("en"),
                   mode: FeedbackMode.navigate,
                   child: const DaKanjiApp(),
                 ),
