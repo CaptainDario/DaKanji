@@ -14,6 +14,7 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
     * [Flutter / dart](https://github.com/flutter/flutter)
     * [Tensorflow (Lite)](https://github.com/tensorflow/tensorflow)
     * [Mecab](https://github.com/taku910/mecab)
+    * [Isar](https://isar.dev)
 * Design
   * icon / banner
     * Thanks "Buddha, with kudos to 2ch/fl/ and HatNyan" for helping design the icon and the banner.
