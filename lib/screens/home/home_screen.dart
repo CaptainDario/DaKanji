@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
     }
-    if(GetIt.I<UserData>().showRateDialog){
+    if(GetIt.I<UserData>().showRatePopup){
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       await ratePopup.showRateDialog(context, true);
     }
 
-    GetIt.I<UserData>().showRateDialog = false;
+    GetIt.I<UserData>().showRatePopup = false;
     GetIt.I<UserData>().save();
   }
 
