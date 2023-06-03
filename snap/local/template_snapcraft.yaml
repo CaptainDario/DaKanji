@@ -1,10 +1,10 @@
 name: dakanji
 version: ${VERSION}
-summary: DaKanji helps you learn and use Japanese.
-description: DaKanji helps you learn and use Japanese.
+summary: Are you learning Japanese? Then you need to try DaKanji!
+description: Are you learning Japanese? Then you need to try DaKanji!
 
 confinement: strict
-base: core18
+base: core22
 grade: stable
 
 slots:
@@ -16,7 +16,7 @@ slots:
 apps:
   dakanji:
     command: DaKanji
-    extensions: [flutter-master]
+    extensions: [gnome]
     plugs:
     - network
     slots:

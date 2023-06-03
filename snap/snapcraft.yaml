@@ -1,10 +1,10 @@
 name: dakanji
 version: 3.0.0
-summary: You are learning Japanese? Then you need to give "DaKanji" a try!
-description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
+summary: Are you learning Japanese? Then you need to try DaKanji!
+description: Are you learning Japanese? Then you need to try DaKanji!
 
 confinement: strict
-base: core18
+base: core22
 grade: stable
 
 slots:
@@ -15,8 +15,8 @@ slots:
     
 apps:
   dakanji:
-    command: da_kanji_mobile
-    extensions: [flutter-master]
+    command: DaKanji
+    extensions: [gnome]
     plugs:
     - network
     slots:
