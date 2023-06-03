@@ -75,8 +75,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     Tuple4(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about),
     Tuple4(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual),
     Tuple4(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), "", null),
-    Tuple4(const IconData(0x6f22, fontFamily: "NotoSansJP",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
-    Tuple4(IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji),
+    Tuple4(const IconData(0x6f22, fontFamily: "NotoSansJP-Black",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
+    Tuple4(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji),
   ];
   List<Tuple2<double?, Alignment>?> drawerElementsGeom = [
     null,
