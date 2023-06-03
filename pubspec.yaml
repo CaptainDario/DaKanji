@@ -52,7 +52,7 @@ dependencies:
   flutter_inappwebview: 6.0.0-beta.23   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   pdf: 3.10.3
-  printing: 5.10.4
+  printing: 5.11.0
   media_kit: 0.0.7                              # Primary package.
   
   media_kit_video: 0.0.9                        # For video rendering.
