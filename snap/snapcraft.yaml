@@ -1,7 +1,7 @@
 name: dakanji
-version: 2.0.0
-summary: DaKanji helps you learn and use Japanese.
-description: DaKanji helps you learn and use Japanese.
+version: 3.0.0
+summary: You are learning Japanese? Then you need to give "DaKanji" a try!
+description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
 
 confinement: strict
 base: core18

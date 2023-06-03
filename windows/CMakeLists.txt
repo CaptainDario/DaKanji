@@ -96,5 +96,6 @@ install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
 
 install(
   FILES ${PROJECT_BUILD_DIR}/../blobs/libtensorflowlite_c-win.dll 
+  FILES ${PROJECT_BUILD_DIR}/../blobs/libmecab.dll 
   DESTINATION ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
 )

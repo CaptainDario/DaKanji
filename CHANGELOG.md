@@ -1,6 +1,56 @@
 
 # Da Kanji - changelog
 
+## v 3.0.0 - 辞書 (4.6.2023)
+
+new Features:
+
+- Inbuilt dictionary
+  - Search with kanji, kana or romaji
+  - Search Kanji by radical or draw them
+  - Multi-language support: English, German, French, Spanish, ...
+  - Conjugation of verbs, adjectives, copula
+  - Detailed information about Kanjis
+  - 6000+ audios
+  - Pitch accent
+  - Example sentences
+- Text processing screen
+  - Add furigana to any text
+  - Look up unknown words using the inbuilt dictionary
+  - Colorize words based on their Part of Speech
+  - Translate using DeepL
+- Easy way of providing feedback
+
+Changes:
+
+- updated to Flutter 3 (stable Linux, Mac)
+
+Fixed:
+
+- After tapping outside of the rate dialog stuck with a blank screen
+- Rate dialog "close"-button does not work
+- TF Lite not working on some SoCs
+- many more...
+
+-------------------------------------------------------------------------
+
+## v 2.1.0 - 仕上げ (19.7.2022)
+
+new Features:
+
+- improved character recognition
+- credits page
+- (desktop) set a startup window size
+- new languages supported: ru, ja, zh, it, fr
+
+Changes:
+
+- updated to Flutter 3 (stable Linux, Mac)
+
+Fixed:
+
+- Selecting an inference backend (iOS, Android)
+
 ## v 2.0.1 - 隈なく (24.04.2022)
 
 new Features:

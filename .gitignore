@@ -52,11 +52,23 @@ CNN_single_char.tflite
 # ignore LoC counter
 .VSCodeCounter/
 
-# force add tf lite desktop binaries
-!blobs/**
+# binaries in blob folder
+blobs/*
+!blobs/.gitkeep
 
+# ignore the dictionary files but keep the folder
+assets/dict/*
+!assets/dict/.gitkeep
+
+# ignore mecab files
+assets/ipadic
+assets/__MACOSX
+assets/ipadic.zip
+
+# plugins to ignore
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
+./plugins/kagome_dart/*
 
 # ignore all keys in keys folder
 keys/DaKanjiRecognizer.jks
@@ -68,3 +80,6 @@ snap/snapcraft.yaml
 # ignore ephemerals
 macos/Flutter/ephemeral/**
 linux/flutter/ephemeral/**
+
+# ios build files
+ios/build/**

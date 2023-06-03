@@ -1,13 +1,13 @@
 name: da_kanji_mobile
-description: A cross platform app for mobile and desktop to help learn and use the Japanese language.
+description: You are learning Japanese? Then you need to give "DaKanji" a try!
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.1+30
+version: 3.0.0+48
 
 environment:
-  sdk: ">=2.16.0"
-  flutter: 2.10.3
+  sdk: ">3.0.0"
+  flutter: "3.10.2"
 
 dependencies:
   flutter:
@@ -16,96 +16,160 @@ dependencies:
   # all platforms supported
   platform: 3.1.0
   shared_preferences: 2.0.13
-  url_launcher: 6.0.7
-  device_info_plus: 2.0.1
+  url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
-  image: 3.1.3
-  flutter_markdown: 0.6.2
+  image: 4.0.17
+  flutter_markdown: 0.6.13
   get_it: 7.2.0
-  provider: 6.0.0
-  universal_io: 2.0.4
-  awesome_dialog: 2.1.0
-  easy_localization: 3.0.1-dev
+  provider: 6.0.3
+  universal_io: 2.2.0
+  awesome_dialog: 3.0.2
+  easy_localization: 3.0.2
   flutter_layout_grid: 1.0.3
-  tuple: 2.0.0
+  tuple: 2.0.1
   lottie: 1.2.1
-  liquid_swipe:
-    path: ./plugins/liquid_swipe_flutter
-  flutter_svg: 1.0.3
-
-  onboarding_overlay : 3.0.0
+  flutter_svg: 1.1.6
+  onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
+  keybinder: 1.0.1
+  feedback: 2.5.0
+  flutter_staggered_animations: 1.1.1
+  graphview: 1.1.1
+  xml: 6.3.0
+  reorderables: 0.5.0
+  archive: 3.3.2
+  device_info_plus: 5.0.5
+  share_plus: 6.3.1
+  cross_file: 0.3.3+2
+  json_annotation: 4.8.1
+  flutter_spinkit: 5.1.0
+  sentry_flutter: 7.4.2
+  animations: 2.0.7
+  dio: 5.0.1
+  flutter_speed_dial: 7.0.0
+  linked_scroll_controller: 0.2.0
+  # TODO : use non beta version for release
+  flutter_inappwebview: 6.0.0-beta.23   # android, iOS, (mac)
+  in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
+  pdf: 3.10.3
+  printing: 5.10.4
+  media_kit: 0.0.7                              # Primary package.
+  
+  media_kit_video: 0.0.9                        # For video rendering.
+  
+  media_kit_native_event_loop: 1.0.3            # Support for higher number of concurrent instances & better performance.
+  
+  media_kit_libs_android_video: 1.0.2           # Android package for video native libraries.
+  media_kit_libs_ios_video: 1.0.4               # iOS package for video native libraries.
+  media_kit_libs_macos_video: 1.0.5             # macOS package for video native libraries.
+  media_kit_libs_windows_video: 1.0.2           # Windows package for video native libraries.
+  media_kit_libs_linux: 1.0.2                   # GNU/Linux dependency package.
 
+  isar: any # included in dakanji dictionary
+  isar_flutter_libs: any # included in dakanji dictionary
+  #kana_kit: any # included in dakanji dictionary
 
-  # do NOT support all target platforms
-  webview_flutter: 3.0.0          # android, iOS
-  in_app_review: 2.0.4            # android, iOS, MacOS, windows (limited)
-  tflite_flutter:                 # android, iOS, Linux, MacOS, windows
-    path: ./plugins/tflite_flutter_plugin
+  database_builder:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dictionary
+      path: database_builder
+      ref: 5131f22
+    #path: ../DaKanji-Dictionary/database_builder
   flutter_appavailability:        # android, iOS
-    path: ./plugins/flutter_appavailability
-  uni_links: 0.5.1                # android, iOS, web
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: flutter_appavailability
+  mecab_dart:
+    git:
+      url: https://github.com/CaptainDario/mecab_dart
+  liquid_swipe:
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dependencies
+      path: liquid_swipe_flutter
+
+  app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
 
   # packages which should only target specific platforms
   android_intent_plus: 3.0.2      # android
-  window_size:                     # desktop platforms
-    git:
-      url: https://github.com/google/flutter-desktop-embedding.git
-      path: plugins/window_size
-      ref: 03d957e
+  window_manager: 0.2.7           # desktop
 
   # utility 
-  flutter_launcher_icons: 0.9.2  # android, iOS, Linux, MacOS, windows
-  flutter_native_splash: 2.1.3+1   # android, iOS, web
+  flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
+  flutter_native_splash: 2.3.0   # android, iOS, web
+
+dependency_overrides:
+  tflite_flutter:
+    git:
+      url: https://github.com/CaptainDario/tflite_flutter_plugin
 
 msix_config:
   display_name: DaKanji
+  protocol_activation: dakanji
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
   identity_name: 61015DaAppLab.DaKanji
-  logo_path: ./assets/images/icons/icon.png
+  logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
   execution-alias: DaKanji
-  languages: en-us, de-de, pl-pl
+  languages: en-us, de-de, ru-ru, ja-ja, zh-zh, it-it, fr-fr, es-es, pl-pl
   
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  msix: 3.5.1
+  msix: 3.13.2
+  json_serializable: 6.7.0
+  build_runner: 2.4.4
+  isar_generator: any # included in dakanji dictionary
   
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  macos: true
-  windows: true 
-  remove_alpha_ios: true
-  image_path: "assets/images/icons/icon.png"
+  image_path_ios: "assets/images/dakanji/icon_white.png"
+  macos:
+    generate: true
+  windows:
+    generate: true 
+  
+  image_path: "assets/images/dakanji/icon.png"
 
 # The following section is specific to Flutter.
 flutter:
   
   fonts:
-    - family: NotoSans
+    - family: NotoSansJP
       fonts:
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Black.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Black.ttf
           weight: 900
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Bold.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Light.otf
-          weight: 300
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.otf
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.otf
-          style: italic
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Thin.ttf
+          weight: 100
+    - family: Theater
+      fonts:
+        - asset: assets/fonts/theater/Theater_Bold.otf
+          weight: 900
+    - family: kouzan
+      fonts:
+        - asset: assets/fonts/kouzan/KouzanGyousho.otf
+          weight: 900
+    - family: anki
+      fonts:
+        - asset: assets/icons/anki.ttf
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -114,15 +178,49 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/icons/icon.png
-    - assets/images/icons/banner.png
+    # DaKanji icons/images...
+    - assets/images/dakanji/icon.png
+    - assets/images/dakanji/banner.png
+    # draw screen
     - assets/images/ui/kanji_drawing_aid.png
+    # dictionary screen
+    - assets/dict/krad.zip
+    # onboarding graphics
     - assets/images/onboarding/onboarding_1_1.png
     - assets/images/onboarding/onboarding_1_2.png
     - assets/images/onboarding/onboarding_2_1.png
     - assets/images/onboarding/onboarding_2_2.png
+    - assets/images/onboarding/onboarding_3_1.png
+    - assets/images/onboarding/onboarding_3_2.png
     - assets/animations/
-    - assets/tflite_models/
-
+    # kana mnemonics / sounds
+    - assets/images/kana/individuals/
+    - assets/audios/kana/individuals/
+    # kanji drawing brush
+    - assets/images/brush.png
+    # icons
+    - assets/icons/
+    - assets/icons/kana/switch_hira.svg
+    - assets/icons/kana/switch_kata.svg
+    - assets/icons/kana/yoon_on.svg
+    - assets/icons/kana/yoon_off.svg
+    - assets/icons/kana/dakuten_on.svg
+    - assets/icons/kana/dakuten_off.svg
+    - assets/icons/kana/romaji_on.svg
+    - assets/icons/kana/romaji_off.svg
+    - assets/icons/kana/special_on.svg
+    - assets/icons/kana/special_off.svg
+    # misc
     - CHANGELOG.md
     - pubspec.yaml
+    - CREDITS.md
+
+    # large files
+    # tf lite models
+    - assets/tflite_models/
+
+    # can be downloaded
+    # mecab
+    - assets/ipadic.zip
+    # dictionary
+    - assets/dict/

@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/view/drawing/DrawingCanvas.dart';
-import 'package:da_kanji_mobile/view/drawing/PredictionButton.dart';
-import 'package:da_kanji_mobile/view/drawing/KanjiBufferWidget.dart';
-import 'package:da_kanji_mobile/model/DrawScreen/DrawScreenState.dart';
-import 'package:da_kanji_mobile/model/UserData.dart';
-import 'package:da_kanji_mobile/provider/Settings.dart';
+import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
+import 'package:da_kanji_mobile/widgets/drawing/prediction_button.dart';
+import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'drawscreen_test_util.dart';
 
@@ -24,7 +24,7 @@ void main() {
 
   testWidgets("DrawScreen test", (WidgetTester tester) async {
 
-    IS_TESTING_DRAWSCREEN = true;
+    g_IsTestingDrawscreen = true;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
@@ -39,7 +39,7 @@ void main() {
     GetIt.I<UserData>().showShowcaseDrawing = false;
     GetIt.I<UserData>().save();
 
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
 
     // check that the app does not show any predictions on start up
     List<String> preds = (tester.widgetList(find.byType(PredictionButton)))
@@ -51,7 +51,7 @@ void main() {
 
     // #region 1 - draw 囗 on the canvas
     await movePointer(tester, canvasCenter, kuchiStrokes, canvasSize/2);
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
     // check that the shown predictions are as expected
     preds = (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList();
@@ -62,25 +62,25 @@ void main() {
     // #region 2 - add one stroke (becomes 日) and check predictions
     await movePointer(tester, canvasCenter, nichiStroke, canvasSize/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], nichiPrediction);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 2");
     // #endregion
     
     // #region 3 - remove one stroke (becomes 囗)
     await tester.tap(find.byIcon(Icons.undo));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], kuchiPrediction);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 3");
     // #endregion
     
@@ -88,12 +88,12 @@ void main() {
     await movePointer(tester, canvasCenter, meStroke1, canvasSize/2);
     await movePointer(tester, canvasCenter, meStroke2, canvasSize/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], mePrediction);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 4");
     // #endregion
 
@@ -108,17 +108,17 @@ void main() {
     
     // #region 6 - remove one stroke (becomes 日)
     await tester.tap(find.byIcon(Icons.undo));
-    await tester.pump(Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.byIcon(Icons.undo));
-    await tester.pump(Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
     await movePointer(tester, canvasCenter, nichiStroke, canvasSize/2);
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], nichiPrediction);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 6");
     // #endregion
 
@@ -134,12 +134,12 @@ void main() {
     // #region 8 - remove one stroke (becomes 口)
     await tester.tap(find.byIcon(Icons.undo));
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList())){
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds[0], kuchiPrediction);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 8");
     // #endregion
     
@@ -157,33 +157,33 @@ void main() {
     while (listEquals(preds, (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList()))
       {
-      await tester.pumpAndSettle(Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
       print("waiting");
     }
     preds = (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 10");
     // #endregion
     
     // #region 11 - undo -> nothing (empty predictions)
     await tester.tap(find.byIcon(Icons.undo));
-    await tester.pumpAndSettle(Duration(milliseconds: 1000));
+    await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 11");
     // #endregion
 
     // #region 12 - clear all -> nothing (empty predictions)
     await tester.tap(find.byIcon(Icons.clear));
-    await tester.pumpAndSettle(Duration(milliseconds: 1000));
+    await tester.pumpAndSettle(const Duration(milliseconds: 1000));
     
     preds = (tester.widgetList(find.byType(PredictionButton))).map((e) => (e as PredictionButton).char).toList();
     expect(preds, List.generate(10, (index) => " "));
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     print("Passed step: 12");
     // #endregion
 
@@ -193,7 +193,7 @@ void main() {
       find.byType(KanjiBufferWidget),
       Offset(-kBWidth/2, 0)
     );
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     expect(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer, "目日");
     print("Passed step: 13");
     // #endregion

@@ -10,20 +10,25 @@ import os
 import subprocess
 import json
 import re
+import platform
+
+
 
 def main():
     # delete old localization files
     for f in os.listdir("assets/translations/"):
         if(f != "localizations.json"):
             os.remove(f"assets/translations/{f}")
-    os.remove("lib/CodegenLoader.dart")
-    os.remove("lib/locales_keys.dart")
+    if(os.path.exists("lib/CodegenLoader.dart")):
+        os.remove("lib/CodegenLoader.dart")
+    if(os.path.exists("lib/locales_keys.dart")):
+        os.remove("lib/locales_keys.dart")
 
     # create separate json files for every langauge
     with open("assets/translations/localizations.json", "r", encoding="utf8") as f:
         with open("lib/globals.dart", "r", encoding="utf8") as f_globals:
             languages = f_globals.read()
-            languages_filtered = re.search("SUPPORTED_LANGUAGES = (.*);", languages).groups()[0]
+            languages_filtered = re.search("g_DaKanjiLocalizations = (.*);", languages).groups()[0]
             print("found following supported languages:", languages_filtered)
             languages = eval(languages_filtered)
         f_content = f.read()
@@ -47,15 +52,15 @@ def main():
 
     # run the dart commands to generate the dart localizations files
     shared_args = ["flutter", "pub", "run", "easy_localization:generate", "-S", "assets/translations/", "-O", "./lib", "-o",]
-    subprocess.call([*shared_args, "locales_keys.dart", "-f", "keys"], shell=True)
-    subprocess.call([*shared_args, "CodegenLoader.dart", "-f", "json"], shell=True)
+    subprocess.call([*shared_args, "locales_keys.dart", "-f", "keys"], shell= True if platform.system() == "Windows" else False)
+    subprocess.call([*shared_args, "CodegenLoader.dart", "-f", "json"], shell= True if platform.system() == "Windows" else False)
 
 
     # remove empty translations
-    path = os.path.join(os.getcwd(), "lib", "CodegenLoader.dart")
+    path = os.path.join(os.getcwd(), "lib")
 
     f, f_without_empties = [], []
-    with open(path, encoding="utf8", mode="r") as file:
+    with open(os.path.join(path, "CodegenLoader.dart"), encoding="utf8", mode="r") as file:
         f = file.readlines()
         
         # remove all lines which have empty translations
@@ -64,7 +69,7 @@ def main():
                 f_without_empties.append(line)
 
     # save the files back to disk
-    with open(path, encoding="utf8", mode="w+") as file:
+    with open(os.path.join(path, "CodegenLoader.dart"), encoding="utf8", mode="w+") as file:
         file.write("".join(f_without_empties))
 
 if __name__ == "__main__":
