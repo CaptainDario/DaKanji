@@ -53,7 +53,8 @@ Future<bool> init() async {
   await initServices();
 
   // deep links
-  await initDeepLinksStream();
+  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows)
+    await initDeepLinksStream();
   
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
