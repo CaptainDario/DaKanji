@@ -398,10 +398,10 @@ packages:
     dependency: "direct main"
     description:
       name: feedback
-      sha256: "912ffe11317f88585410818885a5312d044f025bd9b5633eab18f5808d28ac54"
+      sha256: a3a18af1d490b1e172cc354f1270760d14d2d0d5bb65e2d3710565de88507f33
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   ffi:
     dependency: transitive
     description:
