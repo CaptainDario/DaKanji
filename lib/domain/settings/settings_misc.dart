@@ -116,6 +116,17 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Order of the items in the drawer
+  @JsonKey(defaultValue: const [])
+  List<int> _drawerItemOrder = [];
+  /// Order of the items in the drawer
+  List<int> get drawerItemOrder => _drawerItemOrder;
+  /// Order of the items in the drawer
+  set drawerItemOrder(List<int> newOrder){
+    _drawerItemOrder = newOrder;
+    notifyListeners();
+  }
+
 
   SettingsMisc (){
     selectedTheme = LocaleKeys.General_system;

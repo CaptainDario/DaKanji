@@ -63,7 +63,7 @@ class UserData{
 
   /// should the rate popup be shown
   @JsonKey(defaultValue: false)
-  bool showRatePopup = false;
+  bool showRateDialog = false;
 
   /// should the onboarding be shown
   @JsonKey(defaultValue: false)
@@ -128,7 +128,7 @@ class UserData{
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
      print("show rate dialogue");
-      showRatePopup = true;
+      showRateDialog = true;
     }
 
     // DEBUGGING: onboarding, changelog, rate popup
