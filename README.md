@@ -48,13 +48,13 @@ Feature overview:
 </br>
 
 <p>
-  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_6_5_mockups_1.png" width="22%">
-  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_6_5_mockups_2.png" width="22%">
-  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_6_5_mockups_3.png" width="22%">
-  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_6_5_mockups_4.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_1.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_2.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_3.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_4.png" width="22%">
 </p>
 <p>
-  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_6_5_mockups_5.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_5.png" width="22%">
 </p>
 
 </br>
