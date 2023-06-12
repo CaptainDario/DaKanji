@@ -9,6 +9,14 @@
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Presse-papiers",
+    "tutorial_android_limitation": "Sur Android, cet \u00e9cran ne peut pas lire automatiquement votre presse-papiers en arri\u00e8re-plan. L'application doit \u00eatre au premier plan. D\u00e9sol\u00e9 pour la g\u00eane occasionn\u00e9e.",
+    "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entr\u00e9es du dictionnaire et bien plus encore !",
+    "tutorial_introduction": "Cet \u00e9cran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
+    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fen\u00eatres. De plus, la taille est r\u00e9duite et le cadre et la barre d'application sont cach\u00e9s. Gr\u00e2ce \u00e0 cela, DaKanji peut \u00eatre utilis\u00e9 comme aide \u00e0 la lecture au-dessus de n'importe quelle autre application.",
+    "tutorial_welcome": "Bienvenue dans l'\u00e9cran du presse-papiers !"
+  },
   "DictionaryScreen": {
     "example_tab": "Exemple",
     "examples_more": "Montrer plus d'exemples",

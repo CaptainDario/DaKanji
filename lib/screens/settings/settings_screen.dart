@@ -167,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseDrawing = true;
+                          GetIt.I<UserData>().showTutorialDrawing = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -366,7 +366,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseDictionary = true;
+                          GetIt.I<UserData>().showTutorialDictionary = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -389,7 +389,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseText = true;
+                          GetIt.I<UserData>().showTutorialText = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -494,6 +494,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
                       */
+
+                      // #region - Clipboard header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.ClipboardScreen_title.tr(),
+                        Icons.paste,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialClipboard = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(

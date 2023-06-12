@@ -9,6 +9,14 @@
   "ChangelogScreen": {
     "title": "Lista de cambios"
   },
+  "ClipboardScreen": {
+    "title": "Portapapeles",
+    "tutorial_android_limitation": "En Android, esta pantalla no puede leer autom\u00e1ticamente el portapapeles en segundo plano. Necesitas tener la aplicaci\u00f3n en primer plano. Disculpa las molestias.",
+    "tutorial_explanation": "S\u00f3lo tienes que copiar un texto y DaKanji te mostrar\u00e1 las entradas del diccionario y mucho m\u00e1s.",
+    "tutorial_introduction": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
+    "tutorial_pin_button": "Este bot\u00f3n hace que DaKanji se muestre siempre encima de otras ventanas. Adem\u00e1s, se reduce el tama\u00f1o y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicaci\u00f3n.",
+    "tutorial_welcome": "Bienvenido a la pantalla del portapapeles"
+  },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",
     "examples_more": "Mostrar m\u00e1s ejemplos",

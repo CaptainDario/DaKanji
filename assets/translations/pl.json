@@ -9,6 +9,14 @@
   "ChangelogScreen": {
     "title": "Historia zmian"
   },
+  "ClipboardScreen": {
+    "title": "Schowek",
+    "tutorial_android_limitation": "W systemie Android ekran ten nie mo\u017ce automatycznie odczytywa\u0107 schowka w tle. Aplikacja musi dzia\u0142a\u0107 na pierwszym planie. Przepraszamy za niedogodno\u015bci.",
+    "tutorial_explanation": "Wystarczy skopiowa\u0107 tekst, a DaKanji wy\u015bwietli has\u0142a s\u0142ownikowe i nie tylko!",
+    "tutorial_introduction": "Ten ekran zapewnia opcje umo\u017cliwiaj\u0105ce lepsze zrozumienie dowolnego s\u0142owa w schowku.",
+    "tutorial_pin_button": "Ten przycisk sprawia, \u017ce DaKanji jest zawsze wy\u015bwietlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji s\u0105 ukryte. Dzi\u0119ki temu DaKanji mo\u017ce by\u0107 u\u017cywane jako pomoc w czytaniu nad dowoln\u0105 inn\u0105 aplikacj\u0105.",
+    "tutorial_welcome": "Witamy na ekranie schowka!"
+  },
   "DictionaryScreen": {
     "example_tab": "Przyk\u0142ady",
     "examples_more": "Poka\u017c wi\u0119cej przyk\u0142ad\u00f3w",

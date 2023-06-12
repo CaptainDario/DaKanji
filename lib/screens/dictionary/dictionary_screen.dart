@@ -67,7 +67,7 @@ class _DictionaryScreenState
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDictionary && widget.includeTutorial) {
+        GetIt.I<UserData>().showTutorialDictionary && widget.includeTutorial) {
 
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes![0],

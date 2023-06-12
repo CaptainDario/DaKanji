@@ -9,6 +9,13 @@ abstract class  LocaleKeys {
   static const AboutScreen = 'AboutScreen';
   static const ChangelogScreen_title = 'ChangelogScreen.title';
   static const ChangelogScreen = 'ChangelogScreen';
+  static const ClipboardScreen_title = 'ClipboardScreen.title';
+  static const ClipboardScreen_tutorial_android_limitation = 'ClipboardScreen.tutorial_android_limitation';
+  static const ClipboardScreen_tutorial_explanation = 'ClipboardScreen.tutorial_explanation';
+  static const ClipboardScreen_tutorial_introduction = 'ClipboardScreen.tutorial_introduction';
+  static const ClipboardScreen_tutorial_pin_button = 'ClipboardScreen.tutorial_pin_button';
+  static const ClipboardScreen_tutorial_welcome = 'ClipboardScreen.tutorial_welcome';
+  static const ClipboardScreen = 'ClipboardScreen';
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';
   static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
   static const DictionaryScreen_kanji_alternatives = 'DictionaryScreen.kanji_alternatives';

@@ -58,7 +58,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
-  bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showShowcaseDrawing;
+  bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showTutorialDrawing;
   /// Future that completes and returns true when the drawing interpreter 
   /// has been initialized
   Future<void>? initInterpter;
@@ -88,7 +88,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
+        GetIt.I<UserData>().showTutorialDrawing && widget.includeTutorial) {
 
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.indexes![0],

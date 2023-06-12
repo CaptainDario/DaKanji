@@ -1,6 +1,8 @@
 PODS:
   - app_links (1.0.0):
     - FlutterMacOS
+  - clipboard_watcher (0.0.1):
+    - FlutterMacOS
   - device_info_plus_macos (0.0.1):
     - FlutterMacOS
   - flutter_inappwebview (0.0.1):
@@ -47,6 +49,7 @@ PODS:
 
 DEPENDENCIES:
   - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
+  - clipboard_watcher (from `Flutter/ephemeral/.symlinks/plugins/clipboard_watcher/macos`)
   - device_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos`)
   - flutter_inappwebview (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
@@ -75,6 +78,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_links:
     :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
+  clipboard_watcher:
+    :path: Flutter/ephemeral/.symlinks/plugins/clipboard_watcher/macos
   device_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos
   flutter_inappwebview:
@@ -114,6 +119,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app_links: 4481ed4d71f384b0c3ae5016f4633aa73d32ff67
+  clipboard_watcher: a71da520051c24c1b969a411b3e152d4dcc93ca5
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
   flutter_inappwebview: 62e949df616a9f6e1b0366326381f208c7fcad37
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24

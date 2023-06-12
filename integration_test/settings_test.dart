@@ -31,8 +31,8 @@ void main() {
     GetIt.I<Settings>().save();
     GetIt.I<UserData>().showChangelog       = false;
     GetIt.I<UserData>().showOnboarding      = false;
-    GetIt.I<UserData>().showRateDialog       = false;
-    GetIt.I<UserData>().showShowcaseDrawing = false;
+    GetIt.I<UserData>().showRateDialog      = false;
+    GetIt.I<UserData>().showTutorialDrawing = false;
     GetIt.I<UserData>().save();
 
     await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -126,7 +126,7 @@ void main() {
 
     expect(find.byType(DrawingCanvas), findsOneWidget);
     expect(find.text("Obraz"), findsOneWidget);
-    expect(GetIt.I<UserData>().showShowcaseDrawing, true);
+    expect(GetIt.I<UserData>().showTutorialDrawing, true);
 
     print("Passed step: 4");
     await tester.pumpAndSettle(const Duration(seconds: 1));

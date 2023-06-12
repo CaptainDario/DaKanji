@@ -1,5 +1,6 @@
 
 
+import 'package:da_kanji_mobile/data/show_cases/clipboard_screen_tutorial.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 import 'package:da_kanji_mobile/data/show_cases/text_screen_tutorial.dart';
@@ -16,6 +17,8 @@ class Tutorials{
   late DictionaryScreenTutorial dictionaryScreenTutorial;
   /// the text screen tutorial
   late TextScreenTutorial textScreenTutorial;
+  /// the clipoard screen tutorial
+  late ClipboardScreenTutorial clipboardScreenTutorial;
 
 
 
@@ -34,11 +37,17 @@ class Tutorials{
     textScreenTutorial.indexes = textScreenTutorial.indexes!.map(
       (e) => e + dictionaryScreenTutorial.indexes!.last + 1
     ).toList();
+
+    clipboardScreenTutorial = ClipboardScreenTutorial();
+    clipboardScreenTutorial.indexes = clipboardScreenTutorial.indexes!.map(
+      (e) => e + textScreenTutorial.indexes!.last + 1
+    ).toList();
   }
 
   List<OnboardingStep> getSteps (){
     return drawScreenTutorial.steps! +
       dictionaryScreenTutorial.steps! +
-      textScreenTutorial.steps!;
+      textScreenTutorial.steps! + 
+      clipboardScreenTutorial.steps!;
   }
 }

@@ -132,16 +132,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       }
 
       // init tutorial
-      if(widget.includeTutorial){
-        final OnboardingState? onboarding = Onboarding.of(context);
-        if (onboarding != null && 
-          GetIt.I<UserData>().showShowcaseText) {
-
-          onboarding.showWithSteps(
-            GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
-            GetIt.I<Tutorials>().textScreenTutorial.indexes!
-          );
-        }
+      final OnboardingState? onboarding = Onboarding.of(context);
+      if(widget.includeTutorial && onboarding != null && 
+        GetIt.I<UserData>().showTutorialText) {
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().textScreenTutorial.indexes!
+        );
       }
     });
   }
@@ -285,57 +282,63 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  // spaces toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                    child: AnalysisOptionButton(
-                                      addSpaces,
-                                      svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {addSpaces = !addSpaces;})
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      // spaces toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          addSpaces,
+                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {addSpaces = !addSpaces;})
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  // furigana toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                    child: AnalysisOptionButton(
-                                      showRubys,
-                                      svgAssetPattern: "assets/icons/furigana_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {showRubys = !showRubys;})
+                                      // furigana toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                        child: AnalysisOptionButton(
+                                          showRubys,
+                                          svgAssetPattern: "assets/icons/furigana_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {showRubys = !showRubys;})
+                                          ),
+                                        )
                                       ),
-                                    )
-                                  ),
-                                  // button to colorize words matching POS
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                    child: AnalysisOptionButton(
-                                      colorizePos,
-                                      svgAssetPattern: "assets/icons/pos_*.svg",
-                                      onPressed: (() => 
-                                        setState(() {colorizePos = !colorizePos;})
+                                      // button to colorize words matching POS
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          colorizePos,
+                                          svgAssetPattern: "assets/icons/pos_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {colorizePos = !colorizePos;})
+                                          ),
+                                        )
                                       ),
-                                    )
+                                      // full screen toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                        child: AnalysisOptionButton(
+                                          fullScreen,
+                                          onIcon: Icons.fullscreen,
+                                          offIcon: Icons.fullscreen_exit,
+                                          onPressed: onFullScreenButtonPress
+                                        )
+                                      ),
+                                    ],
                                   ),
-                                  // full screen toggle
-                                  Focus(
-                                    focusNode: widget.includeTutorial ?
-                                      GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                    child: AnalysisOptionButton(
-                                      fullScreen,
-                                      onIcon: Icons.fullscreen,
-                                      offIcon: Icons.fullscreen_exit,
-                                      onPressed: onFullScreenButtonPress
-                                    )
-                                  ),
-                                ],
+                                ),
                               )
                             ],
                           ),

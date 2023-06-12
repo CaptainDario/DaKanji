@@ -35,8 +35,8 @@ void main() {
     GetIt.I<Settings>().save();
     GetIt.I<UserData>().showChangelog       = false;
     GetIt.I<UserData>().showOnboarding      = false;
-    GetIt.I<UserData>().showRateDialog       = false;
-    GetIt.I<UserData>().showShowcaseDrawing = false;
+    GetIt.I<UserData>().showRateDialog      = false;
+    GetIt.I<UserData>().showTutorialDrawing = false;
     GetIt.I<UserData>().save();
 
     await tester.pumpAndSettle(const Duration(seconds: 1));

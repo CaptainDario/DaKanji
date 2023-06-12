@@ -45,19 +45,23 @@ class UserData{
   @JsonKey(defaultValue: null)
   DateTime? userRefusedUpdate;
 
-  /// should the showcase of the draw screen be shown
+  /// should the tutorial of the draw screen be shown
   @JsonKey(defaultValue: true)
-  bool showShowcaseDrawing = true;
+  bool showTutorialDrawing = true;
 
-  /// should the showcase of the dictionary screen be shown
+  /// should the tutorial of the dictionary screen be shown
   @JsonKey(defaultValue: true)
-  bool showShowcaseDictionary = true;
+  bool showTutorialDictionary = true;
 
-  /// should the showcase of the text screen be shown
+  /// should the tutorial of the text screen be shown
   @JsonKey(defaultValue: true)
-  bool showShowcaseText = true;
+  bool showTutorialText = true;
 
-  /// should the onboarding be shown
+  /// should the tutorial of the clipboard screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialClipboard = true;
+
+  /// should the App's onboarding be shown
   @JsonKey(defaultValue: true)
   bool showOnboarding = true;
 
@@ -101,7 +105,7 @@ class UserData{
       
       // any version newer than `versionUsed` has new drawing tutorial steps
       if(g_DrawingScreenNewFeatures.any((v) => v > versionUsed!)){
-        showShowcaseDrawing = true;
+        showTutorialDrawing = true;
       }
       // any version newer than `versionUsed` has new onboarding pages
       if(g_OnboardingNewPages.any((v) => v > versionUsed!)){

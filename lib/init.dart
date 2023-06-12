@@ -217,7 +217,7 @@ void desktopWindowSetup() {
   
   if(kReleaseMode) windowManager.center();
 
-  windowManager.setMinimumSize(const Size(480, 720));
+  windowManager.setMinimumSize(g_minDesktopWindowSize);
   windowManager.setTitle(g_AppTitle);
   
   windowManager.setSize(Size(
