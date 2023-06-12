@@ -72,6 +72,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     Tuple4(const IconData(0x30AB, fontFamily: "NotoSansJP-Black"), LocaleKeys.KanaChartScreen_title.tr(), "/kana_chart", Screens.kana_chart),
     Tuple4(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists),
     Tuple4(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings),
+    Tuple4(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard),
     Tuple4(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about),
     Tuple4(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual),
     Tuple4(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), "", null),
@@ -84,6 +85,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     null,
     Tuple2(0.5, Alignment(1000, -0.7)),
     Tuple2(null, Alignment(0, -0.1)),
+    null,
     null,
     null,
     null,
@@ -101,10 +103,12 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     true,
     true,
     true,
+    true,
     kDebugMode,
     kDebugMode,
   ];
   List<Function?> onTaps = [
+    null,
     null,
     null,
     null,
@@ -325,7 +329,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         child: Column(
                           children: [
                             GestureDetector(
-                              key: Key("DrawerHeader"),
                               onLongPress: () {},
                               child: SafeArea(
                                 child: Align(
