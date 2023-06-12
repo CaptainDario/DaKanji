@@ -67,6 +67,14 @@ class Version implements Comparable<Version>{
     return fullVersionString;
   }
 
+  List<int> toListFull(){
+    return [this.major, this.minor, this.patch, this.build ?? -1];
+  }
+
+  List<int> toList(){
+    return [this.major, this.minor, this.patch];
+  }
+
   bool operator >(Version other){
     if(major > other.major){
       return true;
