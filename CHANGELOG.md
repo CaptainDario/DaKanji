@@ -6,18 +6,17 @@
 New Features:
 
 - Word lists
-  - Defaault lists: JLPT 1, 2, 3, 4, 5
+  - User defined
+  - Predefined lists: JLPT 1, 2, 3, 4, 5
   - Create flash card sheets from lists
 - Anki integration
   - Send words and word lists to anki
 - Clipboard screen to lookup words in the OS's clipboard
 - Deep Links for Dictionary, Text, and more (details in manual)
-- Drawer elements reorderable
-- Check for updates at app start
 
 -------------------------------------------------------------------------
 
-## v 3.1.0 - 仮名表 ()
+## v 3.1.0 - 仮名 ()
 
 New Features:
 
@@ -25,6 +24,8 @@ New Features:
   - Includes all common (and not so common) kana
   - Mnemonics for the main kana
   - Sounds for all available kana
+- Drawer elements reorderable
+- Check for updates at app start
 
 -------------------------------------------------------------------------
 
