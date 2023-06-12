@@ -124,7 +124,7 @@ class SettingsMisc with ChangeNotifier {
   /// Order of the items in the drawer
   set drawerItemOrder(List<int> newOrder){
     _drawerItemOrder = newOrder;
-    notifyListeners();
+    //notifyListeners();
   }
 
 
