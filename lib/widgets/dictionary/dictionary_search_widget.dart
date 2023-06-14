@@ -395,13 +395,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       btnCancelColor: g_Dakanji_red,
       btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
       btnCancelOnPress: () {},
-      onDismissCallback: (dismissType) {
-        setState(() {
-          updateSearchResults(
-            searchInputController.text,
-            widget.allowDeconjugation
-          );
-        });
+      onDismissCallback: (dismissType) async {
+        await updateSearchResults(
+          searchInputController.text,
+          widget.allowDeconjugation
+        );
       },
       body: RadicalPopupBody(
         height: widget.expandedHeight,
