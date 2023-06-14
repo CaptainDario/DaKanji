@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -26,7 +27,7 @@ Future<void> main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880';
+      options.dsn = kReleaseMode ? 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880' : "";
     },
     appRunner: () => runApp(
       Phoenix(
