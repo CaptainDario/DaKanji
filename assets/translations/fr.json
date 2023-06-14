@@ -126,7 +126,7 @@
   },
   "FeedbackScreen": {
     "draw": "dessiner",
-    "feedback_description_text": "Quel est le probl\u00e8me ? \u00c9crivez votre probl\u00e8me ci-dessous.",
+    "feedback_description_text": "Qu'est-ce qui ne va pas ? \u00c9crivez votre probl\u00e8me ci-dessous. Veuillez indiquer une adresse \u00e9lectronique pour que nous puissions vous contacter.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
     "title": "Commentaires"

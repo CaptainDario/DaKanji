@@ -126,7 +126,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'\u00e8 che non va? Scrivete il vostro problema qui sotto.",
+    "feedback_description_text": "Cosa c'\u00e8 che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
