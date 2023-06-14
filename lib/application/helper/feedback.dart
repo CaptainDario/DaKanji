@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:universal_io/io.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:feedback/feedback.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -13,25 +12,30 @@ import 'package:da_kanji_mobile/globals.dart';
 
 /// Opens an overlay to share feedback 
 void sendFeedback(BuildContext context) {
-    BetterFeedback.of(context).show((UserFeedback feedback) async {
-        
-      final screenshotFilePath = await writeImageToTmpStorage(feedback.screenshot);
-      final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
-      final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
 
-      String feedbackText = "Send to: daapplab\n" + feedback.text;
-      String feedbackSubject = "DaKanji $g_Version - feedback";
+  BetterFeedback.of(context).showAndUploadToSentry(
 
-      await Share.shareXFiles(
-        [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
-        text: Platform.isWindows ? feedbackSubject : feedbackText,
-        subject: Platform.isWindows ? feedbackText : feedbackSubject,
-        sharePositionOrigin: () {
-          RenderBox? box = context.findRenderObject() as RenderBox?;
-          return Rect.fromLTRB(0, 0, box!.size.height/2, box.size.width/2);
-        } (),
-      );
-    });
+  );
+
+  /*BetterFeedback.of(context).show((UserFeedback feedback) async {
+      
+    final screenshotFilePath = await writeImageToTmpStorage(feedback.screenshot);
+    final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
+    final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
+
+    String feedbackText = "Send to: daapplab\n" + feedback.text;
+    String feedbackSubject = "DaKanji $g_Version - feedback";
+
+    await Share.shareXFiles(
+      [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
+      text: Platform.isWindows ? feedbackSubject : feedbackText,
+      subject: Platform.isWindows ? feedbackText : feedbackSubject,
+      sharePositionOrigin: () {
+        RenderBox? box = context.findRenderObject() as RenderBox?;
+        return Rect.fromLTRB(0, 0, box!.size.height/2, box.size.width/2);
+      } (),
+    );
+  });*/
 }
 
 /// Saves the given Uint8List to the temporary directory of the device and 

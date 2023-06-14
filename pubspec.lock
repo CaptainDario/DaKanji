@@ -410,6 +410,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
+  feedback_sentry:
+    dependency: "direct main"
+    description:
+      name: feedback_sentry
+      sha256: "41b9a995355bd4bf3342cff8ba4b489680bf86d8d3740f12159de79194c0f3cc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   ffi:
     dependency: transitive
     description:
@@ -1149,18 +1157,18 @@ packages:
     dependency: transitive
     description:
       name: sentry
-      sha256: "9b005f502dfd84ca085dfa660dd4f16f7891c1b4b6300fda7c340330e61525d6"
+      sha256: "0316390446c6497664379b3d72d1bc1b6e4c5385cf6c1f6a02c5ab5a3ce179ce"
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.2"
+    version: "7.7.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: bb537f6fedbe4c634aaf1a430d5efce8329e355b57dc2e0c224d8a2a3e54c4ac
+      sha256: cca6f3bcfa00d327d85424a42e4cc3b3abe25e6a2d68c4ff64b0e2a606684666
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.2"
+    version: "7.7.0"
   share_plus:
     dependency: "direct main"
     description:

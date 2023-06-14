@@ -43,7 +43,8 @@ dependencies:
   cross_file: 0.3.3+2
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
-  sentry_flutter: 7.4.2
+  sentry_flutter: 7.7.0
+  feedback_sentry: 2.4.0
   animations: 2.0.7
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
