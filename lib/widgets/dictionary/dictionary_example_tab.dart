@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
@@ -35,10 +36,12 @@ class DictionaryExampleTab extends StatefulWidget {
 
 class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
-  /// A list of all example sentences that contain `widget.entry.kanjis.first`
+  /// A list of all example sentences that contain the given entry
   List<ExampleSentence> examples = [];
-
-  Future<List<ExampleSentence>>? dictSearch = null;
+  /// The future that searches for examples in an isolate
+  Future<List<ExampleSentence>>? examplesSearch = null;
+  /// A spans (start, end) that matched the current dict entry
+  List<List<Tuple2<int, int>>> matchSpans = [];
 
 
   @override
@@ -61,7 +64,6 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
-    
       List<String> kanjiSplits = widget.entry!.kanjis.map((e) => 
         GetIt.I<Mecab>().parse(e)
           .where((e) => e.features.length > 6)
@@ -70,7 +72,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       .expand((e) => e)
       .toList();
 
-      dictSearch = compute(searchExamples, Tuple7(
+      examplesSearch = (compute(searchExamples, Tuple7(
         selectedLangs,
         widget.entry!.kanjis,
         widget.entry!.readings,
@@ -78,9 +80,12 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         kanjiSplits,
         limit,
         GetIt.I<Isars>().examples.directory
-      )).then((value) => examples = value);
+      )).then((value) {
+        examples = value;
+        matchSpans = getMatchSpans();
+        return examples;
+      }));
     }    
-
   }
   
 
@@ -88,7 +93,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: dictSearch,
+      future: examplesSearch,
       builder: (context, snapshot) {
         // Is data loading
         if(snapshot.connectionState != ConnectionState.done){
@@ -123,7 +128,8 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
                 );
 
               return ExampleSentenceCard(
-                examples[no]
+                examples[no],
+                matchSpans[no]
               );
             }
           );
@@ -132,6 +138,32 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     );
 
     
+  }
+
+  List<List<Tuple2<int, int>>> getMatchSpans(){
+
+    List<List<Tuple2<int, int>>> matchSpans = [];
+
+    for (var i = 0; i < this.examples.length; i++) {
+      matchSpans.add([]);
+
+      List<TokenNode> example = GetIt.I<Mecab>().parse(examples[i].sentence);
+
+      // get index where the entry matches in the example
+      for (var elements in [widget.entry!.kanjis, widget.entry!.readings, widget.entry!.hiraganas]){
+        matchSpans.last.addAll(elements
+          .map((element) => 
+            example.indexWhere((e) => (e.features.length > 5 ? e.features[6] : "") == element)
+          ).where((element) => element != -1)
+          .map((e) {
+            int len = (example.sublist(0, e).map((e) => e.surface.length)).sum;
+            return Tuple2(len, len+example[e].surface.length);
+          }).toList()
+        );
+      }
+    }
+
+    return matchSpans;
   }
 }
 
@@ -176,6 +208,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
     .optional(limit != -1, (q) => q.limit(limit))
     .findAllSync();
 
+  /// if there are no examples try to match mecab base forms
   if(examples.isEmpty){
     examples = examplesIsar.exampleSentences
       .filter()

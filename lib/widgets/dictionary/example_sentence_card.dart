@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import "package:database_builder/database_builder.dart";
+import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
@@ -12,13 +13,18 @@ import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 
 /// A card that shows an example sentence
 class ExampleSentenceCard extends StatefulWidget {
-  const ExampleSentenceCard(
-    this.sentences,
-    {Key? key}
-  ) : super(key: key);
 
   /// the example sentence
   final ExampleSentence sentences;
+  /// Spans that matched
+  final List<Tuple2<int, int>> matchSpans;
+
+
+  const ExampleSentenceCard(
+    this.sentences,
+    this.matchSpans,
+    {Key? key}
+  ) : super(key: key);
 
   @override
   State<ExampleSentenceCard> createState() => _ExampleSentenceCardState();
@@ -87,8 +93,39 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SelectableText(
-                widget.sentences.sentence
+              SelectionArea(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      for (int i = 0; i < widget.matchSpans.length; i++)
+                        ...[
+                          if(widget.matchSpans[i].item1 != 0)
+                            TextSpan(
+                              text: widget.sentences.sentence.substring(
+                                0,
+                                widget.matchSpans[i].item1,
+                              ),
+                            ),
+                          TextSpan(
+                            text: widget.sentences.sentence.substring(
+                              widget.matchSpans[i].item1,
+                              widget.matchSpans[i].item2,
+                            ),
+                            style: TextStyle(
+                              fontFamily: "NotoSansJP",
+                              fontWeight: FontWeight.bold
+                            )
+                          )
+                        ],
+                      if(widget.matchSpans.last.item2 != widget.sentences.sentence)
+                        TextSpan(
+                          text: widget.sentences.sentence.substring(
+                            widget.matchSpans.last.item2,
+                          ),
+                        )
+                    ]
+                  )
+                )
               ),
               SizedBox(height: 10,),
               ...translations.map((e) => 
