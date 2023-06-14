@@ -10,6 +10,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   media_kit_libs_windows_video
   media_kit_video
   printing
+  rive_common
   screen_retriever
   sentry_flutter
   share_plus
