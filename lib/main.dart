@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import 'package:universal_io/io.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -44,7 +45,7 @@ Future<void> main() async {
                 useOnlyLangCode: true,
                 assetLoader: const CodegenLoader(),
                 saveLocale: true,
-                startLocale: const Locale("en"),
+                startLocale: Platform.isLinux ? const Locale("en") : null,
                 child: BetterFeedback(
                   theme: FeedbackThemeData(
                     sheetIsDraggable: true
