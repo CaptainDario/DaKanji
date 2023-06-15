@@ -25,7 +25,7 @@ New Features:
   - Sounds for all available kana
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
-- Check for updates at app start
+- Preiodically, check for updates at app start
 
 -------------------------------------------------------------------------
 
