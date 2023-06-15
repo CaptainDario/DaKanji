@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await initDocumentsServices(context);
 
-    if(GetIt.I<UserData>().userRefusedUpdate == null || true ||
+    if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
       List<String> updates = await updateAvailable();
       if(updates.isNotEmpty)
