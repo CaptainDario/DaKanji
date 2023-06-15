@@ -89,6 +89,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   List<int> searchHistoryIds = [];
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
+  /// Timer to wait during resize event until popup will be opened again
+  Timer? reopenPopupTimer;
+  /// is the radical popup open
+  bool radicalPopupOpen = false;
+  /// is the filter popup open
+  bool filterPopupOpen = false;
+  /// should the radical popup be openend when `reopenPopupTimer` finishes
+  bool reshowRadicalPopup = false;
+  /// should the filter popup be openend when `reopenPopupTimer` finishes
+  bool reshowFilterPopup = false;
 
   
   @override
@@ -117,6 +127,23 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     updateSearchHistoryIds();
     init();
+
+    if(radicalPopupOpen || filterPopupOpen){
+
+      reshowRadicalPopup = radicalPopupOpen;
+      reshowFilterPopup  = filterPopupOpen;
+
+      Navigator.of(context).pop();
+      reopenPopupTimer?.cancel();
+      reopenPopupTimer = Timer(Duration(seconds: 1), () {
+        if(reshowRadicalPopup)
+          showRadicalPopup();
+        if(reshowFilterPopup)
+          showFilterPopup();
+
+        reshowFilterPopup = false; reshowRadicalPopup = false;
+      });
+    }
 
     super.didUpdateWidget(oldWidget);
   }
@@ -366,6 +393,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// opens the filter popup and applies the selected filters if necessary
   Future showFilterPopup() async {
+
+    filterPopupOpen = true;
+
     await AwesomeDialog(
       context: widget.context,
       dialogType: DialogType.noHeader,
@@ -377,18 +407,20 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           searchInputController.text,
           widget.allowDeconjugation
         );
-        //setState(() { },);
+        filterPopupOpen = false;
       },
       body: FilterPopupBody(
         height: widget.expandedHeight,
         searchController: searchInputController,
       )
     ).show();
-    
   }
 
   /// opens the radical popup and applies the selected filters if necessary
   Future showRadicalPopup() async {
+
+    radicalPopupOpen = true;
+
     await AwesomeDialog(
       context: widget.context,
       dialogType: DialogType.noHeader,
@@ -400,6 +432,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           searchInputController.text,
           widget.allowDeconjugation
         );
+        radicalPopupOpen = false;
       },
       body: RadicalPopupBody(
         height: widget.expandedHeight,
