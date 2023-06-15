@@ -206,6 +206,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_dict_deconjugate = 'SettingsScreen.dict_deconjugate';
   static const SettingsScreen_dict_deconjugate_body = 'SettingsScreen.dict_deconjugate_body';
+  static const SettingsScreen_dict_disable_english_info = 'SettingsScreen.dict_disable_english_info';
   static const SettingsScreen_dict_kanaize = 'SettingsScreen.dict_kanaize';
   static const SettingsScreen_dict_kanaize_body = 'SettingsScreen.dict_kanaize_body';
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';

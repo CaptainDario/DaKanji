@@ -738,6 +738,17 @@
       "es": "Mostrar traducciones en (arrastre para reordenar)",
       "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
     },
+    "dict_disable_english_info": {
+      "en": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
+      "de": "Ein großer Teil des Wörterbuchs ist nur auf Englisch verfügbar. Wenn Sie es deaktivieren, werden alle diese Einträge ausgeblendet.",
+      "ru": "Значительная часть словаря доступна только на английском языке. Отключение этой функции скроет все эти словарные статьи.",
+      "ja": "辞書のかなりの部分は、英語でしか利用できません。無効にすると、それらの項目がすべて非表示になります。",
+      "zh": "词典的很大一部分只有英文版本。禁用它将隐藏所有这些条目。",
+      "it": "Una parte significativa del dizionario è disponibile solo in inglese. Disabilitandola, tutte queste voci verranno nascoste.",
+      "fr": "Une partie importante du dictionnaire n'est disponible qu'en anglais. En la désactivant, vous masquerez toutes ces entrées.",
+      "es": "Una parte importante del diccionario sólo está disponible en inglés. Si lo desactiva, se ocultarán todas esas entradas.",
+      "pl": "Znaczna część słownika jest dostępna tylko w języku angielskim. Wyłączenie tej opcji spowoduje ukrycie wszystkich tych haseł."
+    },
     "dict_show_word_freq": {
       "en": "Show word frequency",
       "de": "Zeige Wordfrequenz",

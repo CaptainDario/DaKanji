@@ -210,8 +210,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             (index) {
                               String lang = settings.dictionary.translationLanguageCodes[index];
                               return GestureDetector(
-                                onTap: () {
-                                  if(lang == iso639_1.en.name)
+                                onTap: () async {
+                                  if(lang == iso639_1.en.name &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    await AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.noHeader,
+                                      btnOkColor: g_Dakanji_green,
+                                      btnOkOnPress: (){
+
+                                      },
+                                      body: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            LocaleKeys.SettingsScreen_dict_disable_english_info.tr()
+                                          ),
+                                        )
+                                      )
+                                    ).show();
+
+                                  if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
                                     return;
 
                                   setState(() {
