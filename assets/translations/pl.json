@@ -126,7 +126,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz sw\u00f3j problem poni\u017cej.",
+    "feedback_description_text": "Co jest nie tak? Napisz sw\u00f3j problem poni\u017cej. Podaj adres e-mail, aby\u015bmy mogli si\u0119 z Tob\u0105 skontaktowa\u0107.",
     "navigate": "nawigacja",
     "submit": "wy\u015blij",
     "title": "Opinia"

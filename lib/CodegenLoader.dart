@@ -105,7 +105,7 @@ class CodegenLoader extends AssetLoader{
   },
   "FeedbackScreen": {
     "draw": "绘制",
-    "feedback_description_text": "有什么问题？把你的问题写在下面。",
+    "feedback_description_text": "有什么问题？请在下面写下你的问题。请包括一个电子邮件，以便能够与你联系。",
     "navigate": "导航",
     "submit": "提交",
     "title": "反馈信息"
@@ -1388,15 +1388,15 @@ static const Map<String,dynamic> localizations = {
       "pl": "rysuj"
     },
     "feedback_description_text": {
-      "en": "What's wrong? Write your issue below.",
-      "de": "Was stimmt nicht? Beschreibe dein Problem unten.",
-      "ru": "Что не так? Напишите свой вопрос ниже.",
-      "ja": "どんな問題がありましたか？\n下記に詳細を入力してください",
-      "zh": "有什么问题？把你的问题写在下面。",
-      "it": "Cosa c'è che non va? Scrivete il vostro problema qui sotto.",
-      "fr": "Quel est le problème ? Écrivez votre problème ci-dessous.",
-      "es": "¿Qué te ocurre? Escriba su problema a continuación.",
-      "pl": "Co jest nie tak? Napisz swój problem poniżej."
+      "en": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
+      "de": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren können.",
+      "ru": "Что не так? Напишите свою проблему ниже. Пожалуйста, укажите электронную почту, чтобы с вами можно было связаться.",
+      "ja": "何が問題なのか？あなたの問題を以下に書いてください。連絡の取れるメールアドレスをご記入ください。",
+      "zh": "有什么问题？请在下面写下你的问题。请包括一个电子邮件，以便能够与你联系。",
+      "it": "Cosa c'è che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
+      "fr": "Qu'est-ce qui ne va pas ? Écrivez votre problème ci-dessous. Veuillez indiquer une adresse électronique pour que nous puissions vous contacter.",
+      "es": "¿Qué te ocurre? Escriba su problema a continuación. Por favor, incluye un correo electrónico para poder contactar contigo.",
+      "pl": "Co jest nie tak? Napisz swój problem poniżej. Podaj adres e-mail, abyśmy mogli się z Tobą skontaktować."
     },
     "navigate": {
       "en": "navigate",
@@ -2992,7 +2992,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
-    "feedback_description_text": "どんな問題がありましたか？\n下記に詳細を入力してください",
+    "feedback_description_text": "何が問題なのか？あなたの問題を以下に書いてください。連絡の取れるメールアドレスをご記入ください。",
     "navigate": "操作",
     "submit": "送信",
     "title": "フィードバック"
@@ -3287,7 +3287,7 @@ static const Map<String,dynamic> de = {
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Was stimmt nicht? Beschreibe dein Problem unten.",
+    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren können.",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -3547,7 +3547,7 @@ static const Map<String,dynamic> ru = {
   },
   "FeedbackScreen": {
     "draw": "нарисовать",
-    "feedback_description_text": "Что не так? Напишите свой вопрос ниже.",
+    "feedback_description_text": "Что не так? Напишите свою проблему ниже. Пожалуйста, укажите электронную почту, чтобы с вами можно было связаться.",
     "navigate": "перейдите по ссылке",
     "submit": "отправить",
     "title": "Обратная связь"
@@ -3826,7 +3826,7 @@ static const Map<String,dynamic> pl = {
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz swój problem poniżej.",
+    "feedback_description_text": "Co jest nie tak? Napisz swój problem poniżej. Podaj adres e-mail, abyśmy mogli się z Tobą skontaktować.",
     "navigate": "nawigacja",
     "submit": "wyślij",
     "title": "Opinia"
@@ -4121,7 +4121,7 @@ static const Map<String,dynamic> en = {
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below.",
+    "feedback_description_text": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -4381,7 +4381,7 @@ static const Map<String,dynamic> it = {
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'è che non va? Scrivete il vostro problema qui sotto.",
+    "feedback_description_text": "Cosa c'è che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -4625,7 +4625,7 @@ static const Map<String,dynamic> fr = {
   },
   "FeedbackScreen": {
     "draw": "dessiner",
-    "feedback_description_text": "Quel est le problème ? Écrivez votre problème ci-dessous.",
+    "feedback_description_text": "Qu'est-ce qui ne va pas ? Écrivez votre problème ci-dessous. Veuillez indiquer une adresse électronique pour que nous puissions vous contacter.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
     "title": "Commentaires"
@@ -4869,7 +4869,7 @@ static const Map<String,dynamic> es = {
   },
   "FeedbackScreen": {
     "draw": "dibujar",
-    "feedback_description_text": "¿Qué te ocurre? Escriba su problema a continuación.",
+    "feedback_description_text": "¿Qué te ocurre? Escriba su problema a continuación. Por favor, incluye un correo electrónico para poder contactar contigo.",
     "navigate": "navegue por",
     "submit": "enviar",
     "title": "Comentarios"

@@ -78,7 +78,7 @@ class DrawerElement extends StatelessWidget {
               }
             }
             else{
-              onTap!();
+              onTap!(context);
             }
           },
           child: SizedBox(

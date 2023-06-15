@@ -126,7 +126,7 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below.",
+    "feedback_description_text": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"

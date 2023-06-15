@@ -126,7 +126,7 @@
   },
   "FeedbackScreen": {
     "draw": "dibujar",
-    "feedback_description_text": "\u00bfQu\u00e9 te ocurre? Escriba su problema a continuaci\u00f3n.",
+    "feedback_description_text": "\u00bfQu\u00e9 te ocurre? Escriba su problema a continuaci\u00f3n. Por favor, incluye un correo electr\u00f3nico para poder contactar contigo.",
     "navigate": "navegue por",
     "submit": "enviar",
     "title": "Comentarios"

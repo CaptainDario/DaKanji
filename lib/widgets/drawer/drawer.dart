@@ -117,7 +117,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     null,
     null,
     null,
-    null,
     sendFeedback,
     null,
     null,
