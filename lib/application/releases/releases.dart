@@ -31,16 +31,16 @@ void openStoreListing(){
 /// Checks if a new version of DaKanji is available on Github.
 /// Returns the changelog of the newest version if there is a new version,
 /// otherwise null.
-Future<String?> updateAvailable() async {
+Future<List<String>> updateAvailable() async {
 
-  String? ret = null;
+  List<String> ret = [];
 
   Response response;
   try {
     response = await Dio().get(g_GithubReleasesApi);
   } on DioError catch (e) {
     print("Could not check for new version $e");
-    return null;
+    return [];
   }
   List<Version> versions = (List<String?>.from(
     // extract tag name (version)
@@ -56,23 +56,21 @@ Future<String?> updateAvailable() async {
     // sort based on version number parts
     ..sort(((a, b) => b.compareTo(a)));
 
-  // check if the newest version on GH is newer than the current version
+  //  get all versions that are newer than the current one
   List newVersions = [];
   for (var ghVersion in versions){
     if(g_Version < ghVersion){
       newVersions.add(ghVersion);
-      break;
     }
   }
 
   if (newVersions.length != 0){
-    if(ret == null){
-      ret =  "# ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} \n\n";
-      if(newVersions == 1)
-        ret += "${LocaleKeys.HomeScreen_new_version_available_text.tr()} ";
+    if(ret.isEmpty){
+      if(newVersions.length == 1)
+        ret.add("${LocaleKeys.HomeScreen_new_version_available_text.tr()} ");
       else
-        ret += "${LocaleKeys.HomeScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ";
-      ret += "${LocaleKeys.HomeScreen_new_version_comparison.tr()}\n\n\n\n"
+        ret.add("${LocaleKeys.HomeScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ");
+      ret[0] += "${LocaleKeys.HomeScreen_new_version_comparison.tr()}\n\n\n\n"
         .replaceAll("{NEW_VERSION_NUMBER}", versions.first.toString())
         .replaceAll("{VERSION_NUMBER}", g_Version.toString());
         
@@ -82,7 +80,10 @@ Future<String?> updateAvailable() async {
       var release = response.data.firstWhere(
         (e) => e["tag_name"] == "v${version.toList().join(".")}"
       );
-      ret = (ret ?? "") + "\n\n\n\n ## ${release["name"]}\n\n${release['body']}\n\n";
+      String releaseNotes = "\n\n\n\n ## ${release["name"]}\n\n${release['body']}\n\n";
+      // remove the "Which release do I need?" from the release notes
+      releaseNotes = releaseNotes.substring(0, releaseNotes.indexOf("Which release do I need?")-2);
+      ret.add(releaseNotes);
     }
   }
 

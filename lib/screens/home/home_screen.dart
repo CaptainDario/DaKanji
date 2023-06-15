@@ -1,10 +1,11 @@
-
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
@@ -54,10 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await initDocumentsServices(context);
 
-    if(GetIt.I<UserData>().userRefusedUpdate == null ||
+    if(GetIt.I<UserData>().userRefusedUpdate == null || true ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
-      String? updates = await updateAvailable();
-      if(updates != null)
+      List<String> updates = await updateAvailable();
+      if(updates.isNotEmpty)
         await showUpdatePopup(updates);
     }
 
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return isTesting;
   }
 
-  Future<void> showUpdatePopup(String changelog) async {
+  Future<void> showUpdatePopup(List<String> changelog) async {
     // show a popup with the changelog of the new version
     await AwesomeDialog(
       context: context,
@@ -120,8 +121,23 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height * 0.5,
         child: SingleChildScrollView(
-          child: MarkdownBody(
-            data: changelog,
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  "🔥 ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} 🔥",
+                  style: TextStyle(
+                    fontSize: 24
+                  ),
+                )
+              ),
+              SizedBox(height: 8,),
+              Text(changelog.first.replaceAll("\n", "")),
+              SizedBox(height: 16,),
+              MarkdownBody(
+                data: changelog.sublist(1).join(),
+              ),
+            ],
           ),
         ),
       ),
