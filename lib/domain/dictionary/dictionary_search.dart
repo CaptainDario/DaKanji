@@ -19,8 +19,10 @@ class DictionarySearch {
   List<String> languages;
   /// list of all search isolats used for searching in the dictionary
   List<DictionarySearchIsolate> _searchIsolates = [];
-  /// Has this object been initialized
+  /// Has the dictionary search been initialized
   bool _initialized = false;
+  /// Has the dictionary search been initialized
+  get initialized => _initialized;
   /// The directory of the ISAR file of the dictionary
   String directory;
   /// The name of the ISAR file of the dictionary
