@@ -212,7 +212,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
 
               SizedBox(height: 5,),
 
-              // pitch accent: 川蝦, 結構
+              // pitch accent: 川蝦, 結構, 誕生日, 上機嫌
               Align(
                 alignment: Alignment.centerLeft,
                 child: Wrap(
