@@ -26,14 +26,13 @@ New Features:
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
 - Preiodically, check for updates at app start
+- Dictionary
+  - Mark the current word in example sentences (#31)
 
 Fixed:
 
-- #29: Pitch accent not correct for words that include 2 character mora
-
-Fixed:
-
-- #27 radical popup does not close
+- Pitch accent not correct for words that include 2 character mora (#29)
+- Radical popup does not close (#27)
 
 -------------------------------------------------------------------------
 
