@@ -60,6 +60,12 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
   @override
   Widget build(BuildContext context) {
+    // if this entry does not have any translation that the user has selected in the settings
+    if(!GetIt.I<Settings>().dictionary.selectedTranslationLanguages.any((selection) =>
+      widget.dictEntry.meanings.map((meaning) => isoToiso639_1[meaning.language]!.name)
+      .contains(selection)))
+      return Container();
+
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(5.0),
@@ -118,6 +124,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
                                 cnt += 1;
                               }
                             }
+                            // if there is no language selected that is available for this entry
+                            if(idx == -1)
+                              return Text("");
+
                             return Text(
                               widget.dictEntry.meanings[idx].meanings.length > index
                                 ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings[index].attributes.join(", ")}"

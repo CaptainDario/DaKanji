@@ -1,7 +1,5 @@
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/init.dart';
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -33,6 +31,10 @@ import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
 
 
@@ -210,19 +212,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             (index) {
                               String lang = settings.dictionary.translationLanguageCodes[index];
                               return GestureDetector(
-                                onTap: () {
-                                  if(lang == iso639_1.en.name)
+                                onTap: () async {
+                                  // do not allow removing the last dictionary
+                                  if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
                                     return;
 
-                                  setState(() {
-                                    if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
-                                      settings.dictionary.selectedTranslationLanguages.add(lang);
-                                    }
-                                    else{
-                                      settings.dictionary.selectedTranslationLanguages.remove(lang);
-                                    }
-                                    settings.save();
-                                  });
+                                  // when disabling english dictionary tell user
+                                  // that significant part of the dict is only in english
+                                  if(lang == iso639_1.en.name &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    await DisableEnglishDictPopup(context).show();
+
+                                  LoadingPopup(context).show();
+
+                                  await GetIt.I<DictionarySearch>().kill();
+                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                                    settings.dictionary.selectedTranslationLanguages = 
+                                      settings.dictionary.translationLanguageCodes.where((element) => 
+                                        [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
+                                      ).toList();
+                                  }
+                                  else
+                                    settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                  await settings.save();
+                                  await GetIt.I<DictionarySearch>().init();
+
+                                  Navigator.of(context).pop();
+
+                                  setState(() {});
                                 },
                                 child: Chip(
                                   backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
