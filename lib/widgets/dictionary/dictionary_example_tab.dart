@@ -96,7 +96,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       future: examplesSearch,
       builder: (context, snapshot) {
         // Is data loading
-        if(snapshot.connectionState != ConnectionState.done){
+        if(!snapshot.hasData){
           return Center(
             child: DaKanjiLoadingIndicator()
           );
@@ -140,6 +140,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     
   }
 
+  /// Get a list of lists of TextSpan that mark the entry's word in the example sentences
   List<List<Tuple2<int, int>>> getMatchSpans(){
 
     List<List<Tuple2<int, int>>> matchSpans = [];
@@ -147,22 +148,43 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     for (var i = 0; i < this.examples.length; i++) {
       matchSpans.add([]);
 
+      // parse example sentence and kanjis of this entry with mecab
       List<TokenNode> example = GetIt.I<Mecab>().parse(examples[i].sentence);
+      List<List<String>> kanjiSplits = widget.entry!.kanjis
+        .map((e) => (GetIt.I<Mecab>().parse(e))
+          .map((e) => e.surface).toList()..removeLast())
+        .toList();
 
       // get index where the entry matches in the example
-      for (var elements in [widget.entry!.kanjis, widget.entry!.readings, widget.entry!.hiraganas]){
-        matchSpans.last.addAll(elements
-          .map((element) => 
-            example.indexWhere((e) => (e.features.length > 5 ? e.features[6] : "") == element)
-          ).where((element) => element != -1)
-          .map((e) {
-            int len = (example.sublist(0, e).map((e) => e.surface.length)).sum;
-            return Tuple2(len, len+example[e].surface.length);
-          }).toList()
-        );
+      for (int i = 0; i < example.length; i++){
+        if(example[i].features.length > 5){
+
+          int lengthToCurrentWord = example.sublist(0, i).map((e) => e.surface).join("").length;
+
+          if(widget.entry!.kanjis.contains(example[i].features[6])){
+            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
+          }
+          else if(widget.entry!.readings.contains(example[i].features[6])){
+            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
+          }
+          else if(widget.entry!.hiraganas.contains(example[i].features[6])){
+            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
+          }
+          for (List<String> kanjiSplit in kanjiSplits){
+            if(i+kanjiSplit.length < example.length &&
+              kanjiSplit.join("") == example.sublist(i, i+kanjiSplit.length).map((e) => e.surface).join()){
+              matchSpans.last.add(Tuple2(
+                lengthToCurrentWord,
+                lengthToCurrentWord+
+                  example.sublist(lengthToCurrentWord, kanjiSplit.length)
+                  .map((e) => e.surface).join("")
+                  .length
+              ));
+            }
+          }
+        }
       }
     }
-
     return matchSpans;
   }
 }
