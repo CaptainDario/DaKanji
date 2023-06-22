@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -69,14 +70,14 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     Tuple4(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing),
     Tuple4(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary),
     Tuple4(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text),
-    Tuple4(const IconData(0x30AB, fontFamily: "NotoSansJP-Black"), LocaleKeys.KanaChartScreen_title.tr(), "/kana_chart", Screens.kana_chart),
+    Tuple4(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaChartScreen_title.tr(), "/kana_chart", Screens.kana_chart),
     Tuple4(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists),
     Tuple4(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings),
     Tuple4(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard),
     Tuple4(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about),
     Tuple4(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual),
     Tuple4(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), "", null),
-    Tuple4(const IconData(0x6f22, fontFamily: "NotoSansJP-Black",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
+    Tuple4(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
     Tuple4(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji),
   ];
   List<Tuple2<double?, Alignment>?> drawerElementsGeom = [

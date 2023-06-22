@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -92,7 +93,7 @@ class _PredictionButtonState extends State<PredictionButton>
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 600,
-                fontFamily: "NotoSansJP"
+                fontFamily: g_japaneseFontFamily
               ),
             )
           )
