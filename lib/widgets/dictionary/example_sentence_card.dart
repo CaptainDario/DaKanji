@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import "package:database_builder/database_builder.dart";
 import 'package:tuple/tuple.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
@@ -112,7 +113,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                               widget.matchSpans[i].item2,
                             ),
                             style: TextStyle(
-                              fontFamily: "NotoSansJP",
+                              fontFamily: g_japaneseFontFamily,
                               fontWeight: FontWeight.bold
                             )
                           )
