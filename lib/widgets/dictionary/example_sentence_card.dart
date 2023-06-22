@@ -96,36 +96,43 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
             children: [
               SelectionArea(
                 child: Text.rich(
-                  TextSpan(
-                    children: [
-                      for (int i = 0; i < widget.matchSpans.length; i++)
-                        ...[
-                          if(widget.matchSpans[i].item1 != 0)
-                            TextSpan(
-                              text: widget.sentences.sentence.substring(
-                                0,
-                                widget.matchSpans[i].item1,
-                              ),
-                            ),
+                    TextSpan(
+                      children: [
+                        if(widget.matchSpans.isNotEmpty)
+                          ...[  
+                            for (int i = 0; i < widget.matchSpans.length; i++)
+                              ...[
+                                if(widget.matchSpans[i].item1 != 0)
+                                  TextSpan(
+                                    text: widget.sentences.sentence.substring(
+                                      0,
+                                      widget.matchSpans[i].item1,
+                                    ),
+                                  ),
+                                TextSpan(
+                                  text: widget.sentences.sentence.substring(
+                                    widget.matchSpans[i].item1,
+                                    widget.matchSpans[i].item2,
+                                  ),
+                                  style: TextStyle(
+                                    fontFamily: g_japaneseFontFamily,
+                                    fontWeight: FontWeight.bold
+                                  )
+                                )
+                              ],
+                            if(widget.matchSpans.last.item2 != widget.sentences.sentence)
+                              TextSpan(
+                                text: widget.sentences.sentence.substring(
+                                  widget.matchSpans.last.item2,
+                                ),
+                              )
+                          ]
+                        else
                           TextSpan(
-                            text: widget.sentences.sentence.substring(
-                              widget.matchSpans[i].item1,
-                              widget.matchSpans[i].item2,
-                            ),
-                            style: TextStyle(
-                              fontFamily: g_japaneseFontFamily,
-                              fontWeight: FontWeight.bold
-                            )
+                            text: widget.sentences.sentence
                           )
-                        ],
-                      if(widget.matchSpans.last.item2 != widget.sentences.sentence)
-                        TextSpan(
-                          text: widget.sentences.sentence.substring(
-                            widget.matchSpans.last.item2,
-                          ),
-                        )
-                    ]
-                  )
+                      ]
+                    )
                 )
               ),
               SizedBox(height: 10,),
