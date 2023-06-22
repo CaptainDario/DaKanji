@@ -1,8 +1,10 @@
+import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:collection/collection.dart';
+
 import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/application/kana/kana.dart';
 
 
 class DictionaryWordTabKanji extends StatefulWidget {
@@ -43,8 +45,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     fontSize: 14,
     color: Colors.grey
   );
-
   
+  /// A list of kana that are not mora on their own
+  List<String> nonMora = ["ゃ", "ゅ", "ょ", "ャ", "ュ", "ョ"];
   /// List of pitch accent and if available info
   List<List<int>?> accents = [];
   /// the regex to find the accent pattern
@@ -221,26 +224,39 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                     for (int i = 0; i < widget.entry.readings.length; i++)
                       if(accents[i] != null)
                         for (var a = 0; a < accents[i]!.length; a++)
-                          ...[
-                            for (int r = 0; r < widget.entry.readings[i].length; r++)
-                              Container(
-                                decoration: getPitchAccentDecoration(
-                                  accents[i]![a],
-                                  widget.entry.readings[i],
-                                  r 
-                                ),
-                                child: Text(
-                                  widget.entry.readings[i][r],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
+                          ...() {
+                            List<Widget> ret = [];
+                            String readingWoNonMora = 
+                              widget.entry.readings[i].replaceAll(RegExp(nonMora.join("|")), "");
+
+                            for (int r = 0; r < readingWoNonMora.length; r++){
+                              ret.add(
+                                Container(
+                                  decoration: getPitchAccentDecoration(
+                                    accents[i]![a],
+                                    readingWoNonMora,
+                                    r 
+                                  ),
+                                  child: Text(
+                                    readingWoNonMora[r] +
+                                      (r < widget.entry.readings[i].length-1 &&
+                                      hiraSmall.contains(widget.entry.readings[i][r+1])
+                                        ? widget.entry.readings[i][r+1]
+                                        : ""),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey
+                                    ),
                                   ),
                                 ),
-                              ),
+                              );
+                            }
                             if(i + a != widget.entry.readings.length-1 +
                               widget.entry.accents![i]!.attributes.length-1)
-                              Text("、"),
-                          ]
+                              ret.add(Text("、"));
+
+                            return ret;
+                          } ()
                   ]
                 ),
               ),
@@ -336,7 +352,6 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
       width: 1.5,
       
     );
-
     BoxDecoration falling = BoxDecoration(
       border: Border(
         left: empty,
@@ -388,6 +403,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
       )
     );
 
+
     // 平板 
     if(pitchAccent == 0){
       if(at == 0)
@@ -418,7 +434,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
       }
     }
     // 尾高
-    else if(pitchAccent == reading.length)
+    else if(pitchAccent == reading.length){
       if(at == 0){
         if(reading.length == 1)
           return falling;
@@ -431,6 +447,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
         return falling;
       else
         return low;
+    }
     else
       throw Exception("Invalid pitch accent");
 
