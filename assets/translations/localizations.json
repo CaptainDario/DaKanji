@@ -617,6 +617,17 @@
       "es": "reinicia la app",
       "pl": "restart aplikacji"
     },
+    "requires_restart": {
+      "en": "requires restart",
+      "de": "erfordert Neustart",
+      "ru": "требует перезапуска",
+      "ja": "再起動が必要",
+      "zh": "需要重新启动",
+      "it": "richiede il riavvio",
+      "fr": "nécessite un redémarrage",
+      "es": "requiere reinicio",
+      "pl": "wymaga ponownego uruchomienia"
+    },
     "show_tutorial": {
       "en": "Reshow tutorials (@:SettingsScreen.restarts_app)",
       "de": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
@@ -1036,15 +1047,15 @@
       "pl": "Ok"
     },
     "advanced_settings_number_search_procs": {
-      "en": "Number of search processes  (requires restart)",
-      "de": "Anzahl der Suchprozesse (erfordert Neustart)",
-      "ru": "Количество процессов поиска (требуется перезапуск)",
-      "ja": "検索プロセス数（再起動が必要）",
-      "zh": "搜索进程的数量（需要重新启动）。",
-      "it": "Numero di processi di ricerca (richiede il riavvio)",
-      "fr": "Nombre de processus de recherche (nécessite un redémarrage)",
-      "es": "Número de procesos de búsqueda (requiere reinicio)",
-      "pl": "Liczba procesów wyszukiwania (wymaga ponownego uruchomienia)"
+      "en": "Number of search processes",
+      "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
+      "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
+      "ja": "検索プロセスの数 (@:SettingsScreen.requires_restart)",
+      "zh": "搜索进程的数量（@:SettingsScreen.required_restart）。",
+      "it": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
+      "fr": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
+      "es": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
+      "pl": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)"
     },
     "advanced_settings_number_search_procs_body": {
       "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -1729,7 +1740,7 @@
       "en": "Add to list",
       "de": "Zur Liste hinzufügen",
       "ru": "Добавить в список",
-      "ja": "リストに追加する",
+      "ja": "リストに追加",
       "zh": "添加到列表",
       "it": "Aggiungi all'elenco",
       "fr": "Ajouter à la liste",
@@ -1740,7 +1751,7 @@
       "en": "Send to Anki",
       "de": "An Anki senden",
       "ru": "Отправить в Anki",
-      "ja": "Ankiに送信する",
+      "ja": "杏樹に送る",
       "zh": "发送到Anki",
       "it": "Inviare ad Anki",
       "fr": "Envoyer à Anki",

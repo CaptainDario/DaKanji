@@ -228,6 +228,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_misc_title = 'SettingsScreen.misc_title';
   static const SettingsScreen_misc_window_on_top = 'SettingsScreen.misc_window_on_top';
   static const SettingsScreen_misc_window_opacity = 'SettingsScreen.misc_window_opacity';
+  static const SettingsScreen_requires_restart = 'SettingsScreen.requires_restart';
   static const SettingsScreen_restarts_app = 'SettingsScreen.restarts_app';
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
   static const SettingsScreen_title = 'SettingsScreen.title';

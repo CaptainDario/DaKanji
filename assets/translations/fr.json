@@ -201,7 +201,7 @@
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
     "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inf\u00e9rence (n\u00e9cessite un red\u00e9marrage)",
-    "advanced_settings_number_search_procs": "Nombre de processus de recherche (n\u00e9cessite un red\u00e9marrage)",
+    "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de donn\u00e9es, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de donn\u00e9es standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de donn\u00e9es, essayez d'utiliser plus de processus.",
     "advanced_settings_optimize_cancel": "Annuler",
     "advanced_settings_optimize_nn": "Optimiser les r\u00e9seaux neuronaux",
@@ -240,6 +240,7 @@
     "misc_title": "Divers",
     "misc_window_on_top": "L'application doit-elle toujours \u00eatre en t\u00eate",
     "misc_window_opacity": "La transparence de l'application",
+    "requires_restart": "n\u00e9cessite un red\u00e9marrage",
     "restarts_app": "red\u00e9marre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "title": "Param\u00e8tres"

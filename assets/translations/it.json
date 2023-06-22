@@ -201,7 +201,7 @@
     "advanced_settings_delete_dict": "Elimina i file del dizionario.",
     "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
-    "advanced_settings_number_search_procs": "Numero di processi di ricerca (richiede il riavvio)",
+    "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza pi\u00f9 processi. Di solito, 2 \u00e8 un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare pi\u00f9 processi.",
     "advanced_settings_optimize_cancel": "Annullamento",
     "advanced_settings_optimize_nn": "Ottimizzare le reti neurali",
@@ -240,6 +240,7 @@
     "misc_title": "Varie",
     "misc_window_on_top": "L'applicazione deve essere sempre in cima",
     "misc_window_opacity": "La trasparenza dell'applicazione",
+    "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "title": "Impostazioni"
