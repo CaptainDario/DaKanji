@@ -227,8 +227,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   LoadingPopup(context).show();
 
                                   await GetIt.I<DictionarySearch>().kill();
-                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang))
-                                    settings.dictionary.selectedTranslationLanguages.add(lang);
+                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                                    settings.dictionary.selectedTranslationLanguages = 
+                                      settings.dictionary.translationLanguageCodes.where((element) => 
+                                        [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
+                                      ).toList();
+                                  }
                                   else
                                     settings.dictionary.selectedTranslationLanguages.remove(lang);
                                   await settings.save();
