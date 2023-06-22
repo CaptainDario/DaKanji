@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,6 +46,8 @@ class DictionarySearchWidget extends StatefulWidget {
   /// should queries be deconjugated
   final bool allowDeconjugation;
 
+  final BuildContext context;
+
   const DictionarySearchWidget(
     {
       this.initialSearch = "",
@@ -52,6 +56,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.canCollapse = true,
       this.includeDrawButton = true,
       this.allowDeconjugation = true,
+      required this.context,
       super.key
     }
   );
@@ -84,10 +89,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   List<int> searchHistoryIds = [];
   /// A list containing all searches the user made
   late List<JMdict?> searchHistory;
-  
-  
+  /// Timer to wait during resize event until popup will be opened again
+  Timer? reopenPopupTimer;
+  /// is the radical popup open
+  bool radicalPopupOpen = false;
+  /// is the filter popup open
+  bool filterPopupOpen = false;
+  /// should the radical popup be openend when `reopenPopupTimer` finishes
+  bool reshowRadicalPopup = false;
+  /// should the filter popup be openend when `reopenPopupTimer` finishes
+  bool reshowFilterPopup = false;
 
-  
   
   @override
   void initState() {
@@ -112,15 +124,33 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   @override
   void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
-    
+
     updateSearchHistoryIds();
     init();
+
+    if(radicalPopupOpen || filterPopupOpen){
+
+      reshowRadicalPopup = radicalPopupOpen;
+      reshowFilterPopup  = filterPopupOpen;
+
+      Navigator.of(context).pop();
+      reopenPopupTimer?.cancel();
+      reopenPopupTimer = Timer(Duration(seconds: 1), () {
+        if(reshowRadicalPopup)
+          showRadicalPopup();
+        if(reshowFilterPopup)
+          showFilterPopup();
+
+        reshowFilterPopup = false; reshowRadicalPopup = false;
+      });
+    }
 
     super.didUpdateWidget(oldWidget);
   }
 
   /// init this widget on init or rebuild
   void init(){
+
     if(widget.isExpanded){
       searchBarExpanded = true;
       searchBarAnimationController.value = 1.0;
@@ -131,7 +161,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       searchBarInputHeight = r.size.height;
 
       // check if there is an initial query or if it was update
-      if(widget.initialSearch != initialSearch){
+      if(widget.initialSearch != initialSearch && searchInputController.text.isEmpty){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, widget.allowDeconjugation);
@@ -252,7 +282,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           GetIt.I<Settings>().drawing.selectedDictionary =
                             GetIt.I<Settings>().drawing.inbuiltDictId;
                           Navigator.pushNamedAndRemoveUntil(
-                            context, 
+                            widget.context, 
                             "/drawing",
                             (route) => true,
                             arguments: NavigationArguments(
@@ -272,28 +302,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(1000000),
-                      onTap: () {
-                        AwesomeDialog(
-                          context: context,
-                          //alignment: Alignment.bottomCenter,
-                          dialogType: DialogType.noHeader,
-                          btnCancelColor: g_Dakanji_red,
-                          btnCancelOnPress: () {},
-                          btnCancelText: LocaleKeys.DictionaryScreen_search_filter_close.tr(),
-                          onDismissCallback: (dismissType) {
-                            setState(() {
-                              updateSearchResults(
-                                searchInputController.text,
-                                widget.allowDeconjugation
-                              );
-                            },);
-                          },
-                          body: FilterPopupBody(
-                            height: widget.expandedHeight,
-                            searchController: searchInputController,
-                          )
-                        ).show();
-                      },
+                      onTap: showFilterPopup,
                       child: Container(
                         height: 30,
                         width: 30,
@@ -309,28 +318,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
                     child: InkWell(
                     borderRadius: BorderRadius.circular(1000000),
-                      onTap: () {
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.noHeader,
-                          btnCancelColor: g_Dakanji_red,
-                          btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
-                          btnCancelOnPress: () {},
-                          onDismissCallback: (dismissType) {
-                            setState(() {
-                              updateSearchResults(
-                                searchInputController.text,
-                                widget.allowDeconjugation
-                              );
-                            });
-                          },
-                          body: RadicalPopupBody(
-                            height: widget.expandedHeight,
-                            kradIsar: GetIt.I<Isars>().krad,
-                            searchController: searchInputController,
-                          )
-                        ).show();
-                      },
+                      onTap: showRadicalPopup,
                       child: Container(
                         height: 30,
                         width: 30,
@@ -367,10 +355,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 },
                 child: Stack(
                   children: [
-                    context.read<DictSearch>().currentSearch != ""
+                    widget.context.read<DictSearch>().currentSearch != ""
                       // search results if the user entered text
                       ? SearchResultList(
-                        searchResults: context.watch<DictSearch>().searchResults,
+                        searchResults: widget.context.watch<DictSearch>().searchResults,
                         onSearchResultPressed: onSearchResultPressed,
                         showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                       )
@@ -403,6 +391,57 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     );
   }
 
+  /// opens the filter popup and applies the selected filters if necessary
+  Future showFilterPopup() async {
+
+    filterPopupOpen = true;
+
+    await AwesomeDialog(
+      context: widget.context,
+      dialogType: DialogType.noHeader,
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () { },
+      btnCancelText: LocaleKeys.DictionaryScreen_search_filter_close.tr(),
+      onDismissCallback: (dismissType) async {
+        await updateSearchResults(
+          searchInputController.text,
+          widget.allowDeconjugation
+        );
+        filterPopupOpen = false;
+      },
+      body: FilterPopupBody(
+        height: widget.expandedHeight,
+        searchController: searchInputController,
+      )
+    ).show();
+  }
+
+  /// opens the radical popup and applies the selected filters if necessary
+  Future showRadicalPopup() async {
+
+    radicalPopupOpen = true;
+
+    await AwesomeDialog(
+      context: widget.context,
+      dialogType: DialogType.noHeader,
+      btnCancelColor: g_Dakanji_red,
+      btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
+      btnCancelOnPress: () {},
+      onDismissCallback: (dismissType) async {
+        await updateSearchResults(
+          searchInputController.text,
+          widget.allowDeconjugation
+        );
+        radicalPopupOpen = false;
+      },
+      body: RadicalPopupBody(
+        height: widget.expandedHeight,
+        kradIsar: GetIt.I<Isars>().krad,
+        searchController: searchInputController,
+      )
+    ).show();
+  }
+
   /// updates the search history
   void updateSearchHistoryIds(){
     searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
@@ -421,7 +460,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// callback that is executed when the user presses on a search result
   void onSearchResultPressed(JMdict entry) async {
     // update search variables
-    context.read<DictSearch>().selectedResult = entry;
+    widget.context.read<DictSearch>().selectedResult = entry;
 
     // store new search in search history
     var isar = GetIt.I<Isars>().searchHistory;
@@ -450,8 +489,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void onClipboardButtonPressed() async {
     if(searchInputController.text != ""){
       searchInputController.text = "";
-      context.read<DictSearch>().currentSearch = "";
-      context.read<DictSearch>().searchResults = [];
+      widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().searchResults = [];
       searchTextFieldFocusNode.requestFocus();
     }
     else{
@@ -470,8 +509,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
     // only search in dictionary if the query is not empty (remove filters to check this)
     if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
-      context.read<DictSearch>().currentSearch = "";
-      context.read<DictSearch>().searchResults = [];
+      widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().searchResults = [];
       return;
     }
 
@@ -493,8 +532,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(deconjugated != "" && deconjugated != text){
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(widget.context).clearSnackBars();
+      ScaffoldMessenger.of(widget.context).showSnackBar(
         SnackBar(
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -510,13 +549,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 child: InkWell(
                   onTap: () async {
                     await updateSearchResults(text, false);
-                    setState(() {});
                   },
                   child: Text(
                     "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).highlightColor
+                      color: Theme.of(widget.context).highlightColor
                     ),                
                   ),
                 ),
@@ -531,8 +569,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     }
 
     // update search variables and search
-    context.read<DictSearch>().currentSearch = deconjugated;
-    context.read<DictSearch>().searchResults =
+    widget.context.read<DictSearch>().currentSearch = deconjugated;
+    widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().query(deconjugated) ?? [];
   }
 }

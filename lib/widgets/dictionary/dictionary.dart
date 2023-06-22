@@ -119,7 +119,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 isExpanded: true,
                                 canCollapse: false,
                                 includeDrawButton: widget.includeDrawButton,
-                                allowDeconjugation: widget.allowDeconjugation
+                                allowDeconjugation: widget.allowDeconjugation,
+                                context: context,
                               ),
                             ),
                           ),
@@ -244,7 +245,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
                       includeDrawButton: widget.includeDrawButton,
-                      allowDeconjugation: widget.allowDeconjugation
+                      allowDeconjugation: widget.allowDeconjugation,
+                      context: context,
                     ),
                   ),
                 ),

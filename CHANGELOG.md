@@ -31,6 +31,10 @@ Fixed:
 
 - #29: Pitch accent not correct for words that include 2 character mora
 
+Fixed:
+
+- #27 radical popup does not close
+
 -------------------------------------------------------------------------
 
 ## v 3.0.0 - 辞書 (4.6.2023)
