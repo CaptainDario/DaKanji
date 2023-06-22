@@ -27,6 +27,10 @@ New Features:
 - Drawer elements reorderable
 - Preiodically, check for updates at app start
 
+Fixed:
+
+- #29: Pitch accent not correct for words that include 2 character mora
+
 -------------------------------------------------------------------------
 
 ## v 3.0.0 - 辞書 (4.6.2023)
