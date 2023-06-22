@@ -27,6 +27,10 @@ New Features:
 - Drawer elements reorderable
 - Check for updates at app start
 
+Fixed:
+
+- #27 radical popup does not close
+
 -------------------------------------------------------------------------
 
 ## v 3.0.0 - 辞書 (4.6.2023)
