@@ -308,11 +308,9 @@ packages:
   database_builder:
     dependency: "direct main"
     description:
-      path: database_builder
-      ref: "5131f22"
-      resolved-ref: "5131f22982d726192df93d0176b142ad43667345"
-      url: "https://github.com/CaptainDario/DaKanji-Dictionary"
-    source: git
+      path: "../DaKanji-Dictionary/database_builder"
+      relative: true
+    source: path
     version: "1.0.0"
   device_info_plus:
     dependency: "direct main"

@@ -141,6 +141,10 @@ Future<void> initDocumentsServices(BuildContext context) async {
         [KradSchema], directory: isarPath,
         name: "krad", maxSizeMiB: 512
       ),
+      radk: Isar.getInstance("radk") ?? Isar.openSync(
+        [RadkSchema], directory: isarPath,
+        name: "radk", maxSizeMiB: 512
+      ),
     )
   );
 
@@ -186,7 +190,8 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
   List<FileSystemEntity> assets = [
     "assets/dict/dictionary.isar", "assets/dict/examples.isar",
-    "assets/dict/krad.isar", "assets/ipadic"
+    "assets/dict/krad.isar", "assets/dict/radk.isar",
+    "assets/ipadic"
   ].map((f) => File(f)).toList();
 
   for (var asset in assets) {

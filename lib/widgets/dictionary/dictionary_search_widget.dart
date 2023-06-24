@@ -434,7 +434,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       },
       body: RadicalPopupBody(
         height: widget.expandedHeight - searchBarInputHeight*1.1,
-        kradIsar: GetIt.I<Isars>().krad,
+        kradIsar: GetIt.I<Isars>().krad.krads,
+        radkIsar: GetIt.I<Isars>().radk.radks,
         searchController: searchInputController,
       )
     ).show();

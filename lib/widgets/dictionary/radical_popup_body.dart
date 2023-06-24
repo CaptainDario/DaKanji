@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:isar/isar.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/application/radicals/radk.dart' as radk;
@@ -15,14 +16,17 @@ class RadicalPopupBody extends StatefulWidget {
 
   /// height of the popup
   final double height;
-  /// the isar instance with the radicals data
-  final Isar kradIsar;
+  /// the isar instance with the kanji -> radicals data
+  final IsarCollection<Radk> radkIsar;
+  /// the isar instace with the radical -> kanji data
+  final IsarCollection<Krad> kradIsar;
   /// the text controller of the search bar
   final TextEditingController searchController;
   
   const RadicalPopupBody(
     {
       required this.height,
+      required this.radkIsar,
       required this.kradIsar,
       required this.searchController,
       super.key
@@ -47,7 +51,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   @override
   void initState() {
     
-    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.kradIsar);
+    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.radkIsar);
     
     super.initState();
   }
@@ -158,10 +162,10 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           
                                 // find all kanji that use this
                                 kanjisThatUseAllRadicals =
-                                  radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+                                  radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
                           
                                 possibleRadicals =
-                                  radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
+                                  radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
                           
                                 setState(() {});
                               }
@@ -232,16 +236,16 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       onPressed: () async {
                         // get radicals in clipboard
                         String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
-                        List<String> availableRadicals = radk.getRadicalsString(widget.kradIsar);
+                        List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
                         List<String> bufferRadicals = buffer.split("")
                           .where((b) => availableRadicals.contains(b)).toList();
                         
                         // set new selection
                         selectedRadicals = bufferRadicals;
                         kanjisThatUseAllRadicals =
-                          radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+                          radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
                         possibleRadicals =
-                          radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
+                          radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
                         
                         setState(() {});
                       },

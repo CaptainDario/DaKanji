@@ -711,6 +711,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await GetIt.I<DictionarySearch>().kill();
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
+                              await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
                               await restartApp(context);
                             },
                           ),
