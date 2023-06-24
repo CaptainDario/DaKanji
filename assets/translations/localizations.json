@@ -1692,6 +1692,17 @@
       "es": "Cerrar",
       "pl": "Zamknij"
     },
+    "search_filter_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "オッケー",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
+    },
     "search_radical_close": {
       "en": "Close",
       "de": "Schließen",
@@ -1702,6 +1713,17 @@
       "fr": "Fermer",
       "es": "Cerrar",
       "pl": "Zamknij"
+    },
+    "search_radical_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "オッケー",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
     },
     "search_searched": {
       "en": "Searched:",

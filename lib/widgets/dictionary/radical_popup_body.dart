@@ -1,9 +1,11 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 import 'package:isar/isar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/application/radicals/radk.dart' as radk;
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -51,17 +53,21 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
 
   @override
   Widget build(BuildContext context) {
+
+    int noKanjiButtons = MediaQuery.of(context).size.width~/80;
+
     return Container(
-      height: widget.height*3/4,
+      height: widget.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8,),
           /// all kanjis that use the selected radicals
           Container(
-            height: widget.height/4,
+            height: (MediaQuery.of(context).size.width-(noKanjiButtons)*8) / noKanjiButtons,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).size.width~/80,
+                crossAxisCount: noKanjiButtons,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8
               ),
@@ -76,10 +82,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     child: Text(
                       kanjisThatUseAllRadicals[index],
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 28,
                         fontFamily: g_japaneseFontFamily,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold
                       ),
                     ),
                   );
@@ -194,6 +199,29 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 );
               },
             ),
+          ),
+        
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  height: 24,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: g_Dakanji_green,
+                    borderRadius: BorderRadius.circular(5000)
+                  ),
+                  child: Center(
+                    child: Text(
+                      LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.paste)),
+            ],
           ),
         ],
       )
