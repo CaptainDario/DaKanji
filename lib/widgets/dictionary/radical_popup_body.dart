@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:isar/isar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -228,14 +229,21 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // get radicals in clipboard
+                        String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
+                        List<String> availableRadicals = radk.getRadicalsString(widget.kradIsar);
+                        List<String> bufferRadicals = buffer.split("")
+                          .where((b) => availableRadicals.contains(b)).toList();
                         
-                      },
-                      icon: Icon(Icons.paste)
-                    ),
-                    IconButton(
-                      onPressed: () {
+                        // set new selection
+                        selectedRadicals = bufferRadicals;
+                        kanjisThatUseAllRadicals =
+                          radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+                        possibleRadicals =
+                          radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
                         
+                        setState(() {});
                       },
                       icon: Icon(Icons.paste)
                     ),
