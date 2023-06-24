@@ -77,6 +77,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       kanjisThatUseAllRadicals[index],
                       style: TextStyle(
                         fontSize: 24,
+                        fontFamily: g_japaneseFontFamily,
                         color: Colors.white,
                         fontWeight: FontWeight.bold
                       ),
@@ -164,6 +165,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                   krad.value[index],
                                   style: TextStyle(
                                     fontSize: 18,
+                                    fontFamily: g_japaneseFontFamily,
                                     color: selectedRadicals.contains(krad.value[index])
                                       ? Colors.grey
                                       : Theme.of(context).brightness == Brightness.dark
