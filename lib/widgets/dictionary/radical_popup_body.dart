@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/application/radicals/radk.dart' as radk;
+import 'package:da_kanji_mobile/application/radicals/radicals.dart' as radk;
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 
