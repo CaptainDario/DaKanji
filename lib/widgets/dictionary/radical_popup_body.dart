@@ -201,26 +201,51 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
             ),
           ),
         
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // ok / clear / paste buttons
+          Stack(
+            alignment: Alignment.center,
             children: [
               Center(
-                child: Container(
-                  height: 24,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: g_Dakanji_green,
-                    borderRadius: BorderRadius.circular(5000)
-                  ),
-                  child: Center(
-                    child: Text(
-                      LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    height: 30,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: g_Dakanji_green,
+                      borderRadius: BorderRadius.circular(5000)
+                    ),
+                    child: Center(
+                      child: Text(
+                        LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                      ),
                     ),
                   ),
                 ),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.paste)),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        
+                      },
+                      icon: Icon(Icons.paste)
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          kanjisThatUseAllRadicals.clear();
+                          possibleRadicals.clear();
+                          selectedRadicals.clear();
+                        });
+                      },
+                      icon: Icon(Icons.clear)
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
