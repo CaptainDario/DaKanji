@@ -235,6 +235,12 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     ),
                     IconButton(
                       onPressed: () {
+                        
+                      },
+                      icon: Icon(Icons.paste)
+                    ),
+                    IconButton(
+                      onPressed: () {
                         setState(() {
                           kanjisThatUseAllRadicals.clear();
                           possibleRadicals.clear();
