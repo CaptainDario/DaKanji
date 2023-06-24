@@ -176,7 +176,17 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                               ),
                             ),
                           );
-                        return Container();
+                        // radical that cannot be selected because there are no 
+                        // kanjis that use this one + all selected
+                        else
+                          return Container(
+                            child: Center(
+                              child: Text(
+                                krad.value[index],
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            )
+                          );
                       },
                     ),
                     SizedBox(height: 16)
