@@ -50,109 +50,111 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
 
     int crossAxisCount = max([MediaQuery.of(context).size.width ~/ 200, 1])!;
 
-    return Column(
-      children: [
-        SizedBox(height: 8,),
-        Container(
-          height: widget.height,
-            child: GridView.builder(
-              clipBehavior: Clip.hardEdge,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                childAspectRatio: (MediaQuery.of(context).size.width / crossAxisCount) /
-                  (MediaQuery.of(context).size.height / 10),
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4
-              ),
-              itemCount: jmDictAllFiltersSorted.length+1,
-              itemBuilder: (context, index) {
-
-                MapEntry<String, String> item = MapEntry("", "");
-
-                int cnt = 0;
-                for (MapEntry<String, String> i in jmDictAllFiltersSorted.entries) {
-                  if (cnt == index) {
-                    item = i;
-                    break;
+    return Container(
+      height: widget.height,
+      child: Column(
+        children: [
+          SizedBox(height: 8,),
+          Expanded(
+              child: GridView.builder(
+                clipBehavior: Clip.hardEdge,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio: (MediaQuery.of(context).size.width / crossAxisCount) /
+                    (MediaQuery.of(context).size.height / 10),
+                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 4
+                ),
+                itemCount: jmDictAllFiltersSorted.length+1,
+                itemBuilder: (context, index) {
+    
+                  MapEntry<String, String> item = MapEntry("", "");
+    
+                  int cnt = 0;
+                  for (MapEntry<String, String> i in jmDictAllFiltersSorted.entries) {
+                    if (cnt == index) {
+                      item = i;
+                      break;
+                    }
+                    cnt++;
                   }
-                  cnt++;
-                }
-
-                if(item.value != "")
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: selectedFilters.contains(item.key)
-                        ? g_Dakanji_green.withOpacity(0.5)
-                        : null,
-                      border: Border.all(
-                        color: Colors.grey.withOpacity(0.5),
+    
+                  if(item.value != "")
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: selectedFilters.contains(item.key)
+                          ? g_Dakanji_green.withOpacity(0.5)
+                          : null,
+                        border: Border.all(
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: InkWell(
-                      onTap: selectedFilters.contains(item.key)
-                        ? () {
-                          widget.searchController.text = widget.searchController.text
-                            .replaceAll("#${item.key} ", "");
-                          setState(() {
-                            selectedFilters.remove(item.key);
-                          });
-                        }
-                        : () {
-                          String newText = "#${item.key} ${widget.searchController.text}";
-                          selectedFilters.add(item.key);
-                          setState(() {
-                            widget.searchController.text = newText;
-                          });
-                        },
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            item.value,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: selectedFilters.contains(item.key)
-                                ? Colors.grey
-                                : Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black
+                      child: InkWell(
+                        onTap: selectedFilters.contains(item.key)
+                          ? () {
+                            widget.searchController.text = widget.searchController.text
+                              .replaceAll("#${item.key} ", "");
+                            setState(() {
+                              selectedFilters.remove(item.key);
+                            });
+                          }
+                          : () {
+                            String newText = "#${item.key} ${widget.searchController.text}";
+                            selectedFilters.add(item.key);
+                            setState(() {
+                              widget.searchController.text = newText;
+                            });
+                          },
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              item.value,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: selectedFilters.contains(item.key)
+                                  ? Colors.grey
+                                  : Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                return null;
-              },
-            ),
-            
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              height: 24,
-              width: 100,
-              decoration: BoxDecoration(
-                color: g_Dakanji_green,
-                borderRadius: BorderRadius.circular(5000)
+                    );
+                  return null;
+                },
               ),
-              child: Center(
-                child: Text(
-                  LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+              
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: 24,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: g_Dakanji_green,
+                  borderRadius: BorderRadius.circular(5000)
+                ),
+                child: Center(
+                  child: Text(
+                    LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
