@@ -399,9 +399,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     await AwesomeDialog(
       context: widget.context,
       dialogType: DialogType.noHeader,
-      btnCancelColor: g_Dakanji_red,
-      btnCancelOnPress: () { },
-      btnCancelText: LocaleKeys.DictionaryScreen_search_filter_close.tr(),
+      bodyHeaderDistance: 0,
+      alignment: Alignment.bottomCenter,
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
@@ -410,7 +409,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         filterPopupOpen = false;
       },
       body: FilterPopupBody(
-        height: widget.expandedHeight,
+        height: widget.expandedHeight - searchBarInputHeight*1.1,
         searchController: searchInputController,
       )
     ).show();
@@ -424,9 +423,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     await AwesomeDialog(
       context: widget.context,
       dialogType: DialogType.noHeader,
-      btnCancelColor: g_Dakanji_red,
-      btnCancelText: LocaleKeys.DictionaryScreen_search_radical_close.tr(),
-      btnCancelOnPress: () {},
+      bodyHeaderDistance: 0,
+      alignment: Alignment.bottomCenter,
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
@@ -435,7 +433,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         radicalPopupOpen = false;
       },
       body: RadicalPopupBody(
-        height: widget.expandedHeight,
+        height: widget.expandedHeight - searchBarInputHeight*1.1,
         kradIsar: GetIt.I<Isars>().krad,
         searchController: searchInputController,
       )
