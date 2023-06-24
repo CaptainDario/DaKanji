@@ -14,6 +14,18 @@ List<Krad> getRadicals(Isar kradIsar) {
 
 }
 
+/// Returns all radicals (as String) from the krad isar, sorted by the number of strokes.
+List<String> getRadicalsString(Isar kradIsar) {
+
+  List<String> radicals = kradIsar.krads.where()
+    .characterNotEqualTo("")
+    .characterProperty()
+  .findAllSync();
+
+  return radicals;
+
+}
+
 /// Finds all radicals, sorts them by stroke order and returns a map of this
 Map<int, List<String>> getRadicalsByStrokeOrder(Isar kradIsar) {
 
