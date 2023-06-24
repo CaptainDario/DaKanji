@@ -67,7 +67,15 @@ List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radk
     .reduce((value, element) => value.intersection(element))
     .toList();
 
-  return uniqueKanjis;
+  // sort by stroke order
+  List<String> kanjiByStrokeOrder = GetIt.I<Isars>().dictionary.kanjidic2s
+    .where()
+      .anyOf(uniqueKanjis, (q, kanji) => q.characterEqualTo(kanji))
+    .sortByStrokeCount()
+    .characterProperty()
+    .findAllSync();
+
+  return kanjiByStrokeOrder;
 }
 
 /// Returns all radicals that can be used with the `radicals` to find other
