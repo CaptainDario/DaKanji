@@ -119,7 +119,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: MediaQuery.of(context).size.width~/60,
+                        crossAxisCount: MediaQuery.of(context).size.width~/50,
                         crossAxisSpacing: 8,
                         mainAxisSpacing: 8
                       ),
@@ -164,7 +164,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                 child: Text(
                                   krad.value[index],
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontFamily: g_japaneseFontFamily,
                                     color: selectedRadicals.contains(krad.value[index])
                                       ? Colors.grey
