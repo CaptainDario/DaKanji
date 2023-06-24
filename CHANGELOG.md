@@ -1,5 +1,5 @@
 
-# Da Kanji - changelog
+# DaKanji - changelog
 
 ## v 3.2.0 - 暗記 ()
 
@@ -25,9 +25,16 @@ New Features:
   - Sounds for all available kana
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
-- Preiodically, check for updates at app start
+- Periodically, check for updates at app start
 - Dictionary
   - Mark the current word in example sentences (#31)
+  - English dictionary can be disabled (#30)
+  - Radical lookup
+    - Clear selection
+    - Selection from clipboard
+    - Sort kanji by stroke order
+    - More understandable radical rendering
+    - UI improvments
 
 Fixed:
 
