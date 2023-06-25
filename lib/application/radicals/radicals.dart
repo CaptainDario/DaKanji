@@ -5,8 +5,28 @@ import 'package:isar/isar.dart';
 
 
 
+/// Finds all radicals used in the given `kanji` and returns them sorted by
+/// stroke number
+List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, IsarCollection<Radk> radkIsar){
+
+  // get all kanji
+  List<String> radicals = kradIsar
+    .where()
+      .kanjiEqualTo(kanji)
+    .radicalsProperty()
+    .findAllSync()
+    .first;
+
+  // sort radicals by stroke order
+  return radkIsar.where()
+    .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
+  .sortByStrokeCount()
+  .radicalProperty()
+  .findAllSync();
+}
+
 /// Returns all radicals from the krad isar, sorted by the number of strokes.
-List<Radk> getRadicals(IsarCollection<Radk> radkIsar) {
+List<Radk> getAllRadicals(IsarCollection<Radk> radkIsar) {
 
   List<Radk> radicals = radkIsar.where()
     .radicalNotEqualTo("")
@@ -31,7 +51,7 @@ List<String> getRadicalsString(IsarCollection<Radk> radkIsar) {
 /// Finds all radicals, sorts them by stroke order and returns a map of this
 Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
-  List<Radk> rads = getRadicals(radkIsar)
+  List<Radk> rads = getAllRadicals(radkIsar)
     ..sort((a, b) => a.strokeCount.compareTo(b.strokeCount));
 
   Map<int, List<String>> radicalsByStrokeOrder = {};

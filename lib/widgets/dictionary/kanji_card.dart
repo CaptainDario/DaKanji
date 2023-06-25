@@ -21,9 +21,22 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// Card to show a kanji and all important attribtues of it. This includes
 /// a tree to show the different groups.
 class DictionaryScreenKanjiCard extends StatefulWidget {
+
+  /// The kanji that should be shown in this card as a svg string
+  final KanjiSVG kanjiVG;
+  /// List of all kanjidict entries 
+  final Kanjidic2 kanjidic2entry;
+  /// A list containing all radicals
+  final List<String> radicals;
+  /// String denoting the target language
+  final List<String> targetLanguages;
+  /// Alternative versions of this kanji
+  final List<KanjiSVG>? alternatives;
+
   const DictionaryScreenKanjiCard(
     this.kanjiVG,
     this.kanjidic2entry,
+    this.radicals,
     this.targetLanguages,
     {
       this.alternatives,
@@ -31,14 +44,6 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
     }
   ) : super(key: key);
 
-  /// The kanji that should be shown in this card as a svg string
-  final KanjiSVG kanjiVG;
-  /// List of all kanjidict entries 
-  final Kanjidic2 kanjidic2entry;
-  /// String denoting the target language
-  final List<String> targetLanguages;
-  /// Alternative versions of this kanji
-  final List<KanjiSVG>? alternatives;
 
   @override
   State<DictionaryScreenKanjiCard> createState() => _DictionaryScreenKanjiCardState();
@@ -52,8 +57,6 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   List<String> kunReadings = [];
   /// List containing all readings in the target language
   Map<String, List<String>> meanings = {};
-  /// The stroke count information extracted from the KanjiVG data
-  int strokeCount = -1;
   /// the menu elements of the more-popup-menu
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
@@ -103,12 +106,6 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
         );
       }
     }
-
-    // get stroke count from kanjiVG
-    final document = XmlDocument.parse(widget.kanjiVG.svg);
-    strokeCount = document.root.findAllElements('text').map(
-      (e) => int.parse(e.children.first.text)
-    ).toList().reduce(max);
   }
 
   @override
@@ -160,7 +157,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
-                              Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("$strokeCount"),
+                              Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
 
                               if(widget.kanjidic2entry.grade != -1)
                                 ...[
