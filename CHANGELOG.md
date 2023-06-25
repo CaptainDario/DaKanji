@@ -21,6 +21,7 @@ New Features:
     - Sort kanji by stroke order
     - More understandable radical rendering
     - UI improvments
+- Sentry for feedback collection
 
 Fixed:
 
