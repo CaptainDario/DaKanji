@@ -69,7 +69,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
           SizedBox(height: 8,),
           /// all kanjis that use the selected radicals
           Container(
-            height: (MediaQuery.of(context).size.width-(noKanjiButtons)*8) / noKanjiButtons,
+            height: (MediaQuery.of(context).size.width-(noKanjiButtons*6)) / noKanjiButtons,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: noKanjiButtons,
