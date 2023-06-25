@@ -42,6 +42,10 @@ class UserData{
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool getNewExamples = false;
 
+  /// Should new examples be downloaded / copied from the assets folder
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool getNewRadicals = false;
+
   @JsonKey(defaultValue: null)
   DateTime? userRefusedUpdate;
 
@@ -119,9 +123,12 @@ class UserData{
       if(g_NewExamples.any((v) => v > versionUsed!)){
         getNewExamples = true;
       }
-
-      versionUsed = g_Version;
+      // any version newer than `versionUsed` has newer radicals data
+      if(g_NewRadicals.any((v) => v > versionUsed!)){
+        getNewRadicals = true;
+      }
     }
+    versionUsed = g_Version;
 
     // this is the first start of the app
     if (appOpenedTimes == 1){

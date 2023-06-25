@@ -196,8 +196,8 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
   for (var asset in assets) {
     if(checkAssetExists(documentsDir, asset)
-      || asset.path == assets[0] && GetIt.I<UserData>().getNewDict //dict
-      || asset.path == assets[1] && GetIt.I<UserData>().getNewExamples //examples
+      || asset == assets[2] && GetIt.I<UserData>().getNewRadicals // krad
+      || asset == assets[3] && GetIt.I<UserData>().getNewRadicals // radk
     ){
       await getAsset(
         asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
