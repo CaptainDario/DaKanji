@@ -64,7 +64,13 @@ class ManualDictionary extends StatelessWidget {
 
           SizedBox(height: 10),
           
-          Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
+          Row(
+            children: [
+              Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
+              SizedBox(width: 8,),
+              Icon(Icons.paste, size: 18,),
+            ]
+          ),
           SizedBox(height: 5),
           Text(LocaleKeys.ManualScreen_dict_radicals_paste_text.tr()),
         ]
