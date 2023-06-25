@@ -189,13 +189,17 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   bool downloadAllowed = false;
 
   List<FileSystemEntity> assets = [
-    "assets/dict/dictionary.isar", "assets/dict/examples.isar",
-    "assets/dict/krad.isar", "assets/dict/radk.isar",
+    "assets/dict/dictionary.isar",
+    "assets/dict/examples.isar",
+    "assets/dict/krad.isar",
+    "assets/dict/radk.isar",
     "assets/ipadic"
   ].map((f) => File(f)).toList();
 
   for (var asset in assets) {
     if(checkAssetExists(documentsDir, asset)
+      || asset == assets[0] && GetIt.I<UserData>().getNewDict //dict
+      || asset == assets[1] && GetIt.I<UserData>().getNewExamples //examples
       || asset == assets[2] && GetIt.I<UserData>().getNewRadicals // krad
       || asset == assets[3] && GetIt.I<UserData>().getNewRadicals // radk
     ){
