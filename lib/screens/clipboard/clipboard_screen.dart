@@ -85,8 +85,9 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
-      final OnboardingState? onboarding = Onboarding.of(context);
+
       // init tutorial
+      final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && widget.includeTutorial && 
         GetIt.I<UserData>().showTutorialClipboard) {
         showTutorial = true;
@@ -99,7 +100,6 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       // get current always on top state
       isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
 
-      initialized = true;
     });
     
     super.initState();
@@ -139,7 +139,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         return Scaffold(
           body: DaKanjiDrawer(
             currentScreen: Screens.clipboard,
-            animationAtStart: initialized ? true : !widget.openedByDrawer,
+            animationAtStart: !widget.openedByDrawer,
             child: child
           ),
         );
@@ -153,7 +153,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Focus(
-                focusNode: showTutorial
+                focusNode: widget.includeTutorial
                   ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![4]
                   : null,
                 child: IconButton(
