@@ -350,6 +350,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               physics: const NeverScrollableScrollPhysics(),
                               padding: EdgeInsets.zero,
                               onReorder: (oldIndex, newIndex) async {
+                                if(newIndex > oldIndex)
+                                  newIndex -= 1;
                                 int old = drawerElementsIndexOrder.removeAt(oldIndex);
                                 drawerElementsIndexOrder.insert(newIndex, old);
                                 GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
