@@ -33,6 +33,7 @@ class ManualDictionary extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Kanji
           Text(LocaleKeys.ManualScreen_dict_kanji_title.tr(), style: heading_1,),
 
           SizedBox(height: 10),
@@ -41,15 +42,37 @@ class ManualDictionary extends StatelessWidget {
           SizedBox(height: 5),
           Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_text.tr()),
 
+
           SizedBox(height: 15),
 
+
+          // Examples
           Text(LocaleKeys.ManualScreen_dict_examples_title.tr(), style: heading_1,),
 
           SizedBox(height: 10),
           
           Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_title.tr(), style: heading_2,),
           SizedBox(height: 5),
-          Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_text.tr())
+          Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_text.tr()),
+
+
+          SizedBox(height: 15,),
+
+
+          // Radical popup
+          Text(LocaleKeys.ManualScreen_dict_radicals_title.tr(), style: heading_1,),
+
+          SizedBox(height: 10),
+          
+          Row(
+            children: [
+              Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
+              SizedBox(width: 8,),
+              Icon(Icons.paste, size: 18,),
+            ]
+          ),
+          SizedBox(height: 5),
+          Text(LocaleKeys.ManualScreen_dict_radicals_paste_text.tr()),
         ]
       ),
     );

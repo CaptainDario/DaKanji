@@ -1,19 +1,5 @@
 
-# Da Kanji - changelog
-
-## v 3.2.0 - 暗記 ()
-
-New Features:
-
-- Word lists
-  - User defined
-  - Predefined lists: JLPT 1, 2, 3, 4, 5
-  - Create flash card sheets from lists
-- Anki integration
-  - Send words and word lists to anki
-- Deep Links for Dictionary, Text, and more (details in manual)
-
--------------------------------------------------------------------------
+# DaKanji - changelog
 
 ## v 3.1.0 - 仮名 ()
 
@@ -25,9 +11,16 @@ New Features:
   - Sounds for all available kana
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
-- Preiodically, check for updates at app start
+- Periodically, check for updates at app start
 - Dictionary
   - Mark the current word in example sentences (#31)
+  - English dictionary can be disabled (#30)
+  - Radical lookup
+    - Clear selection
+    - Selection from clipboard
+    - Sort kanji by stroke order
+    - More understandable radical rendering
+    - UI improvments
 
 Fixed:
 

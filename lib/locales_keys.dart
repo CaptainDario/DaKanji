@@ -31,7 +31,9 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_kanji_strokes = 'DictionaryScreen.kanji_strokes';
   static const DictionaryScreen_kanji_tab = 'DictionaryScreen.kanji_tab';
   static const DictionaryScreen_search_filter_close = 'DictionaryScreen.search_filter_close';
+  static const DictionaryScreen_search_filter_ok = 'DictionaryScreen.search_filter_ok';
   static const DictionaryScreen_search_radical_close = 'DictionaryScreen.search_radical_close';
+  static const DictionaryScreen_search_radical_ok = 'DictionaryScreen.search_radical_ok';
   static const DictionaryScreen_search_search_for = 'DictionaryScreen.search_search_for';
   static const DictionaryScreen_search_searched = 'DictionaryScreen.search_searched';
   static const DictionaryScreen_title = 'DictionaryScreen.title';
@@ -174,6 +176,9 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_kanji_search_kanji_group_text = 'ManualScreen.dict_kanji_search_kanji_group_text';
   static const ManualScreen_dict_kanji_search_kanji_group_title = 'ManualScreen.dict_kanji_search_kanji_group_title';
   static const ManualScreen_dict_kanji_title = 'ManualScreen.dict_kanji_title';
+  static const ManualScreen_dict_radicals_paste_text = 'ManualScreen.dict_radicals_paste_text';
+  static const ManualScreen_dict_radicals_paste_title = 'ManualScreen.dict_radicals_paste_title';
+  static const ManualScreen_dict_radicals_title = 'ManualScreen.dict_radicals_title';
   static const ManualScreen_dict_text_examples_analyze_text = 'ManualScreen.dict_text_examples_analyze_text';
   static const ManualScreen_dict_text_examples_analyze_title = 'ManualScreen.dict_text_examples_analyze_title';
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';

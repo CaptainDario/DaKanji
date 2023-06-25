@@ -1,9 +1,13 @@
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:isar/isar.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/application/radicals/radk.dart' as radk;
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/application/radicals/radicals.dart' as radk;
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
@@ -12,14 +16,17 @@ class RadicalPopupBody extends StatefulWidget {
 
   /// height of the popup
   final double height;
-  /// the isar instance with the radicals data
-  final Isar kradIsar;
+  /// the isar instance with the kanji -> radicals data
+  final IsarCollection<Radk> radkIsar;
+  /// the isar instace with the radical -> kanji data
+  final IsarCollection<Krad> kradIsar;
   /// the text controller of the search bar
   final TextEditingController searchController;
   
   const RadicalPopupBody(
     {
       required this.height,
+      required this.radkIsar,
       required this.kradIsar,
       required this.searchController,
       super.key
@@ -44,24 +51,28 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   @override
   void initState() {
     
-    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.kradIsar);
+    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.radkIsar);
     
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    int noKanjiButtons = MediaQuery.of(context).size.width~/80;
+
     return Container(
-      height: widget.height*3/4,
+      height: widget.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8,),
           /// all kanjis that use the selected radicals
           Container(
-            height: widget.height/4,
+            height: (MediaQuery.of(context).size.width-(noKanjiButtons*6)) / noKanjiButtons,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).size.width~/80,
+                crossAxisCount: noKanjiButtons,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8
               ),
@@ -76,9 +87,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     child: Text(
                       kanjisThatUseAllRadicals[index],
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 28,
+                        fontFamily: g_japaneseFontFamily,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold
                       ),
                     ),
                   );
@@ -118,7 +129,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: MediaQuery.of(context).size.width~/60,
+                        crossAxisCount: MediaQuery.of(context).size.width~/50,
                         crossAxisSpacing: 8,
                         mainAxisSpacing: 8
                       ),
@@ -151,10 +162,10 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           
                                 // find all kanji that use this
                                 kanjisThatUseAllRadicals =
-                                  radk.getKanjisByRadical(selectedRadicals, widget.kradIsar);
+                                  radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
                           
                                 possibleRadicals =
-                                  radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
+                                  radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
                           
                                 setState(() {});
                               }
@@ -163,7 +174,8 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                 child: Text(
                                   krad.value[index],
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 14,
+                                    fontFamily: g_japaneseFontFamily,
                                     color: selectedRadicals.contains(krad.value[index])
                                       ? Colors.grey
                                       : Theme.of(context).brightness == Brightness.dark
@@ -174,7 +186,17 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                               ),
                             ),
                           );
-                        return Container();
+                        // radical that cannot be selected because there are no 
+                        // kanjis that use this one + all selected
+                        else
+                          return Container(
+                            child: Center(
+                              child: Text(
+                                krad.value[index],
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            )
+                          );
                       },
                     ),
                     SizedBox(height: 16)
@@ -182,6 +204,67 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 );
               },
             ),
+          ),
+        
+          // ok / clear / paste buttons
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    height: 30,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: g_Dakanji_green,
+                      borderRadius: BorderRadius.circular(5000)
+                    ),
+                    child: Center(
+                      child: Text(
+                        LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () async {
+                        // get radicals in clipboard
+                        String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
+                        List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
+                        List<String> bufferRadicals = buffer.split("")
+                          .where((b) => availableRadicals.contains(b)).toList();
+                        
+                        // set new selection
+                        selectedRadicals = bufferRadicals;
+                        kanjisThatUseAllRadicals =
+                          radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
+                        possibleRadicals =
+                          radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
+                        
+                        setState(() {});
+                      },
+                      icon: Icon(Icons.paste)
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          kanjisThatUseAllRadicals.clear();
+                          possibleRadicals.clear();
+                          selectedRadicals.clear();
+                        });
+                      },
+                      icon: Icon(Icons.clear)
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       )

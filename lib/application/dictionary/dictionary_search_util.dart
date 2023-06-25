@@ -158,28 +158,6 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
   return combined.map((e) => e.item1).toList();
 }
 
-/// Searches in KanjiVG the matching entries to `kanjis` and returns them
-List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
-
-  if(kanjis.isEmpty)
-    return [];
-  
-  return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-  ).findAllSync().toList();
-}
-
-/// Searches in KanjiVG the matching entries to `kanjis` and returns them
-List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
-  
-  if(kanjis.isEmpty)
-    return [];
-    
-  return GetIt.I<Isars>().dictionary.kanjidic2s.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-  ).findAllSync().toList();
-}
-
 ///  Builds a search query for the JMDict database in ISAR
 /// 
 /// Searches in the given `isar` for entries with an id between `idRangeStart`

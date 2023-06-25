@@ -1372,15 +1372,15 @@
       "pl": "Wyszukaj grupę Kanji"
     },
     "dict_kanji_search_kanji_group_text": {
-      "en": "When a Kanji group can be searched in the dictionary it has a green border around it. Long pressing such a Kanji group will search for it in the dictionary.",
-      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, hat sie einen grünen Rahmen. Wenn Sie eine solche Kanji-Gruppe lange drücken, wird sie im Wörterbuch gesucht.",
-      "ru": "Когда группа кандзи может быть найдена в словаре, она обведена зеленой рамкой. Долгое нажатие на такую группу кандзи приведет к ее поиску в словаре.",
-      "ja": "検索可能な漢字グループには、緑色の枠が表示されます。漢字グループを長押しすると辞書で検索できます。",
-      "zh": "当一个汉字组可以在字典中搜索时，它周围有一个绿色的边框。长按这样的汉字组可以在字典中搜索到它。",
-      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, è circondato da un bordo verde. Premendo a lungo tale gruppo di Kanji, lo si cercherà nel dizionario.",
-      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'un cadre vert. Un appui long sur un tel groupe de Kanji permet de le rechercher dans le dictionnaire.",
-      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde a su alrededor. Si mantienes pulsado un grupo kanji, lo buscarás en el diccionario.",
-      "pl": "Kiedy grupa Kanji może być wyszukiwana w słowniku, ma wokół siebie zieloną obwódkę. Długie naciśnięcie takiej grupy Kanji spowoduje wyszukanie jej w słowniku."
+      "en": "When a Kanji group can be searched in the dictionary it has a green border. Long pressing will search for it in the dictionary and double tapping will copy it to the clipboard.",
+      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen versehen. Durch langes Drücken wird sie im Wörterbuch gesucht und durch doppeltes Tippen wird sie in die Zwischenablage kopiert.",
+      "ru": "Когда группа кандзи может быть найдена в словаре, она имеет зеленую рамку. При длительном нажатии на кнопку она будет найдена в словаре, а при двойном нажатии - скопирована в буфер обмена.",
+      "ja": "辞書で検索できる漢字グループには緑色の枠が表示されます。長押しで辞書検索、ダブルタップでクリップボードにコピーできます。",
+      "zh": "当一个汉字组可以在字典中搜索时，它有一个绿色的边框。长按会在字典中搜索到它，双击会把它复制到剪贴板上。",
+      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde. Premendo a lungo lo si cerca nel dizionario e toccando due volte lo si copia negli appunti.",
+      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'une bordure verte. Un appui long permet de le rechercher dans le dictionnaire et un double appui permet de le copier dans le presse-papiers.",
+      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
+      "pl": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka."
     },
     "dict_examples_title": {
       "en": "Examples",
@@ -1414,6 +1414,39 @@
       "fr": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
       "es": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
       "pl": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie."
+    },
+    "dict_radicals_title": {
+      "en": "Radicals",
+      "de": "Radikale",
+      "ru": "Радикалы",
+      "ja": "ラディカルズ",
+      "zh": "激进主义者",
+      "it": "Radicali",
+      "fr": "Radicaux",
+      "es": "Radicales",
+      "pl": "Radykałowie"
+    },
+    "dict_radicals_paste_title": {
+      "en": "Pasting radicals",
+      "de": "Radikale einfügen",
+      "ru": "Пастообразные радикалы",
+      "ja": "ラジカルの貼り付け",
+      "zh": "粘贴基点",
+      "it": "Incollare i radicali",
+      "fr": "Collage de radicaux",
+      "es": "Pegar radicales",
+      "pl": "Wklejanie rodników"
+    },
+    "dict_radicals_paste_text": {
+      "en": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
+      "de": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
+      "ru": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
+      "ja": "右下の貼り付けボタンを押すと、システムのクリップボードからラジカルを検索し、現在の選択範囲として使用します。",
+      "zh": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
+      "it": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
+      "fr": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
+      "es": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
+      "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
     }
   },
   "KanaChartScreen": {
@@ -1692,6 +1725,17 @@
       "es": "Cerrar",
       "pl": "Zamknij"
     },
+    "search_filter_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "オッケー",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
+    },
     "search_radical_close": {
       "en": "Close",
       "de": "Schließen",
@@ -1702,6 +1746,17 @@
       "fr": "Fermer",
       "es": "Cerrar",
       "pl": "Zamknij"
+    },
+    "search_radical_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "オッケー",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
     },
     "search_searched": {
       "en": "Searched:",

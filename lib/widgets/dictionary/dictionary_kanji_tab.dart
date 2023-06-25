@@ -1,14 +1,17 @@
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:provider/provider.dart';
 
-import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanjidic2.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
+import 'package:da_kanji_mobile/application/radicals/radicals.dart';
 
 
 
@@ -35,6 +38,8 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   List<KanjiSVG> kanjiVGs = [];
   /// list of all entries from kanji dic 2 that should be shown
   List<Kanjidic2> kanjiDic2s = [];
+  /// list of lists of all radicals that kanjis use 
+  List<List<String>> radicals = [];
   /// List of KanjiSVG alternatives
   Map<String, List<KanjiSVG>> alternatives = {};
   
@@ -65,6 +70,9 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
       removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
     kanjiVGs = findMatchingKanjiSVG(kanjis);
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
+    radicals = kanjiDic2s.map((e) => 
+      getRadicalsOf(e.character, GetIt.I<Isars>().krad.krads, GetIt.I<Isars>().radk.radks)
+    ).toList();
 
     lastKanjiVGs = []; kanjiVGs = []; alternatives = {};
 
@@ -108,6 +116,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
               kanjiVGs[i],
               kanjiDic2s[i],
               GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
+              radicals[i],
               // if there are alternative writings for this kanji
               alternatives: alternatives.containsKey(kanjiVGs[i].character)
                 ? alternatives[kanjiVGs[i].character]
