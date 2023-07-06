@@ -22,6 +22,7 @@ New Features:
     - More understandable radical rendering
     - UI improvments
 - Sentry for feedback collection
+- Matrix
 
 Fixed:
 
