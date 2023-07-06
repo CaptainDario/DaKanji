@@ -22,7 +22,6 @@ import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 
