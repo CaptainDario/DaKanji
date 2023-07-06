@@ -1,6 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+import 'package:database_builder/database_builder.dart';
 
 
 
@@ -8,7 +8,22 @@ import 'package:flutter/material.dart';
 class FloatingWord {
 
   /// Dicitonary entry of this word
-  String entry;
+  JMdict entry;
+  /// 
+  get entryString {
+    return entry.kanjis.isNotEmpty ? entry.kanjis.first : entry.readings.first;
+  }
+  /// Splits either the first kanji or reading of `entry` so that it is a vertical
+  /// text
+  get entryVerticalString {
+
+    String word = (entry.kanjis.isNotEmpty ? entry.kanjis.first : entry.readings.first);
+
+    if (word.runes.length > 1)
+      word = word.toString().split("").join("\n");
+
+    return word;
+  }
   /// Position of this word
   Offset position;
 
