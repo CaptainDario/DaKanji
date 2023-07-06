@@ -92,6 +92,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   @override
   Widget build(BuildContext context) {
 
+    if(widget.entry == null)
+      return Container();
+
     return FutureBuilder(
       future: examplesSearch,
       builder: (context, snapshot) {
