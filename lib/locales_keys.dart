@@ -215,6 +215,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_dict_kanaize = 'SettingsScreen.dict_kanaize';
   static const SettingsScreen_dict_kanaize_body = 'SettingsScreen.dict_kanaize_body';
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
+  static const SettingsScreen_dict_matrix_word_levels = 'SettingsScreen.dict_matrix_word_levels';
   static const SettingsScreen_dict_show_wikipedia_definitions = 'SettingsScreen.dict_show_wikipedia_definitions';
   static const SettingsScreen_dict_show_word_freq = 'SettingsScreen.dict_show_word_freq';
   static const SettingsScreen_dict_show_word_freq_body = 'SettingsScreen.dict_show_word_freq_body';

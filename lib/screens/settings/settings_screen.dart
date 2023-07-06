@@ -386,7 +386,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
-                            LocaleKeys.SettingsScreen_dict_languages.tr(),
+                            LocaleKeys.SettingsScreen_dict_matrix_word_levels.tr(),
                             group: g_SettingsAutoSizeGroup,
                           )
                         ),
