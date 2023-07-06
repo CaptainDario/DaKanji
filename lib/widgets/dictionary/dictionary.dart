@@ -153,17 +153,20 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                           Expanded(
                             child: Focus(
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FloatingWordStack(
-                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                  hide: search.selectedResult != null,
-                                  onTap: (FloatingWord entry) {
-                                    search.selectedResult =
-                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                                  },
-                                  bottom: DictionaryKanjiTab(
-                                    context.read<DictSearch>().selectedResult
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: FloatingWordStack(
+                                    levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                                    hide: search.selectedResult != null,
+                                    onTap: (FloatingWord entry) {
+                                      search.selectedResult =
+                                        GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                                    },
+                                    bottom: DictionaryKanjiTab(
+                                      context.read<DictSearch>().selectedResult
+                                    ),
                                   ),
                                 ),
                               ),
