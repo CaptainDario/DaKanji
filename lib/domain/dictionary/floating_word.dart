@@ -18,6 +18,8 @@ class FloatingWord {
   get entryVerticalString {
 
     String word = (entry.kanjis.isNotEmpty ? entry.kanjis.first : entry.readings.first);
+  
+    word = word.replaceAll("ー", "｜");
 
     if (word.runes.length > 1)
       word = word.toString().split("").join("\n");

@@ -1,12 +1,14 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:database_builder/database_builder.dart';
+
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
+
 
 
 
