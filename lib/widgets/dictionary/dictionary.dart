@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:database_builder/database_builder.dart';
 
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_search_widget.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
@@ -108,7 +111,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                   Expanded(
                     child: Row(
                       children: [
-                        // search
+                        // search bar spanning maxium 2 tabs
                         if(tabsSideBySide > 2)
                           Expanded(
                             child: Padding(
@@ -131,8 +134,16 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
                               child: Padding(
                                 padding: EdgeInsets.all(8),
-                                child: DictionaryWordTab(
-                                  context.watch<DictSearch>().selectedResult,
+                                child: FloatingWordStack(
+                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                                  hide: search.selectedResult != null,
+                                  onTap: (FloatingWord entry) {
+                                    search.selectedResult =
+                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                                  },
+                                  bottom: DictionaryWordTab(
+                                    context.watch<DictSearch>().selectedResult,
+                                  ),
                                 ),
                               ),
                             ),
@@ -144,8 +155,16 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: DictionaryKanjiTab(
-                                  context.read<DictSearch>().selectedResult
+                                child: FloatingWordStack(
+                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                                  hide: search.selectedResult != null,
+                                  onTap: (FloatingWord entry) {
+                                    search.selectedResult =
+                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                                  },
+                                  bottom: DictionaryKanjiTab(
+                                    context.read<DictSearch>().selectedResult
+                                  ),
                                 ),
                               ),
                             ),
@@ -157,8 +176,16 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: DictionaryExampleTab(
-                                  context.watch<DictSearch>().selectedResult
+                                child: FloatingWordStack(
+                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                                  hide: search.selectedResult != null,
+                                  onTap: (FloatingWord entry) {
+                                    search.selectedResult =
+                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                                  },
+                                  bottom: DictionaryExampleTab(
+                                    context.watch<DictSearch>().selectedResult
+                                  ),
                                 ),
                               ),
                             ),
@@ -206,21 +233,29 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TabBarView(
-                                        children: [
-                                          if(tabsSideBySide < 2)
-                                            DictionaryWordTab(
-                                              context.watch<DictSearch>().selectedResult,
-                                            ),
-                                          if(tabsSideBySide < 4) 
-                                            DictionaryKanjiTab(
-                                              context.watch<DictSearch>().selectedResult
-                                            ),
-                                          if(tabsSideBySide < 4)
-                                            DictionaryExampleTab(
-                                              context.watch<DictSearch>().selectedResult
-                                            ),
-                                        ],
+                                      child: FloatingWordStack(
+                                        levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                                        hide: search.selectedResult != null,
+                                        onTap: (FloatingWord entry) {
+                                          search.selectedResult =
+                                            GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                                        },
+                                        bottom: TabBarView(
+                                          children: [
+                                            if(tabsSideBySide < 2)
+                                              DictionaryWordTab(
+                                                context.watch<DictSearch>().selectedResult,
+                                              ),
+                                            if(tabsSideBySide < 4) 
+                                              DictionaryKanjiTab(
+                                                context.watch<DictSearch>().selectedResult
+                                              ),
+                                            if(tabsSideBySide < 4)
+                                              DictionaryExampleTab(
+                                                context.watch<DictSearch>().selectedResult
+                                              ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -250,6 +285,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+            
             ],
           );
         })
