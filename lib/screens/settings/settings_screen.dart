@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -379,6 +380,59 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
+                      // Floating words selection
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        child: Align(
+                          alignment: Alignment.centerLeft, 
+                          child: AutoSizeText(
+                            LocaleKeys.SettingsScreen_dict_matrix_word_levels.tr(),
+                            group: g_SettingsAutoSizeGroup,
+                          )
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          child: Wrap(
+                            spacing: 8.0,
+                            runSpacing: 4.0,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            alignment: WrapAlignment.start,
+                            
+                            runAlignment: WrapAlignment.start,
+                            children: List.generate(
+                              SettingsDictionary.d_fallingWordsLevels.length,
+                              (index) {
+                                String level = SettingsDictionary.d_fallingWordsLevels[index];
+                                return GestureDetector(
+                                  onTap: () async {
+                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level))
+                                      settings.dictionary.selectedFallingWordsLevels.remove(level);
+                                    else
+                                      settings.dictionary.selectedFallingWordsLevels.add(level);
+                                    await settings.save();
+                                    setState(() {});
+                                  },
+                                  child: Chip(
+                                    backgroundColor: settings.dictionary.selectedFallingWordsLevels.contains(level)
+                                      ? Theme.of(context).highlightColor
+                                      : null,
+                                    label: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(level),
+                                      ],
+                                    )
+                                  ),
+                                );
+                              }
+                            ),
+                          ),
+                        ),
+                      ),
+
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),

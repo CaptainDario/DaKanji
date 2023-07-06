@@ -8,7 +8,8 @@ part 'settings_dictionary.g.dart';
 
 /// Class to store all settings in the drawing settings '
 /// 
-/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
+/// To update the toJson code run
+/// `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class SettingsDictionary with ChangeNotifier {
 
@@ -64,6 +65,16 @@ class SettingsDictionary with ChangeNotifier {
   /// Should the search term be converted to kana if it is written in romaji
   /// before searching
   bool convertToHiragana = d_convertToHiragana;
+
+  /// The deafult value for `selectedFallingWordsLevels`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  static const List<String> d_fallingWordsLevels = [
+    "N5", "N4", "N3", "N2", "N1",
+  ];
+  /// All levels that can be selected for the falling words in the dictionary
+  @JsonKey(defaultValue: const ["N5", "N4", "N3"])
+  List<String> selectedFallingWordsLevels = ["N5", "N4", "N3"];
+
 
 
   SettingsDictionary();
