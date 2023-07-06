@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -16,12 +15,18 @@ class FloatingWordStack extends StatefulWidget {
 
   /// The widget that should be rendered below the floating words
   final Widget? bottom;
+  /// A list of JLPT levels to include
+  final List<String> levels;
+  /// Should the falling words be hidden
+  final bool hide;
   /// Callback that is executed when the user taps on a floating word
   final Function(FloatingWord entry)? onTap;
 
   const FloatingWordStack(
     {
       this.bottom,
+      required this.levels,
+      this.hide = false,
       this.onTap,
       super.key
     }
@@ -36,13 +41,17 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
   /// the size of the widget (available after first build)
   Size? widgetSize;
+  /// A list of all dict entries that are floating
+  List<JMdict> dictEntries = [];
+  /// offset to select the next entry from `dictEntries`
+  int dictEntryOffset = 0;
   /// the font size of the floating words
   double entryTextStyleFontSize = 18;
   /// the text height of the floating words
   double entryTextStyleHeight = 1.05;
   /// The MINIMUM seconds for an entry to travel to the bottom, total travel
   /// time is also based on the parallax
-  int entryToBttomSeconds = 10;
+  int entryToBttomSeconds = 20;
   /// how long to wait till the first word spawns
   int secondsTillFirstWord = 0;
   /// List of all floating words
@@ -67,7 +76,16 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   }
 
   void init(){
+    
+    if(widget.levels.isEmpty || widget.hide)
+      return;
+
+    dictEntries = getDictEntries();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      for (FloatingWord entry in entries) {
+        entry.animationController.dispose();
+      }
       entries.clear();
 
       initEntries();
@@ -76,14 +94,14 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     });
   }
 
-  List<JMdict> getDictEntry(int offset, {int amount = 1}){
+  /// Get entries matching the settings
+  List<JMdict> getDictEntries(){
 
     List<JMdict> entries = GetIt.I<Isars>().dictionary.jmdict
       .filter()
-        .jlptLevelElementContains("3")
-        .offset(offset)
-        .limit(amount)
-        .findAllSync();
+        .anyOf(widget.levels, (q, element) => q.jlptLevelElementContains(element))
+      .findAllSync()
+      ..shuffle();
 
     return entries;
 
@@ -102,18 +120,9 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     double widthSlice  = widgetSize!.width/noEntriesX;
     double heightSlice = widgetSize!.height/noEntriesY;
 
-    List<JMdict> dictEntries = getDictEntry(0, amount: noEntriesY*noEntriesY);
-
     for (var y = 0; y < noEntriesY; y++) {
       for (var x = 0; x < noEntriesX; x++) {
       
-        final e = dictEntries[y*noEntriesX+x];
-        String word = (e.kanjis.isNotEmpty
-          ? e.kanjis.first
-          : e.readings.first);
-        if (word.runes.length > 1)
-          word = word.toString().split("").join("\n");
-
         Offset position = Offset(
           (x*widthSlice)+(rand.nextDouble() * (widthSlice-(x==noEntriesX-1?t.width:0))),
           (y*heightSlice+((rand.nextDouble()*0.5-1)*heightSlice))-widgetSize!.height
@@ -132,7 +141,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
           parent: controller, 
           curve: Curves.easeInOut
         );
-        final entry = FloatingWord(word, position, parallax, controller, anim);
+        final entry = FloatingWord(dictEntries[dictEntryOffset++], position, parallax, controller, anim);
         controller.addStatusListener((status) {
           // when the animation has finished
           if(status == AnimationStatus.completed){
@@ -140,9 +149,11 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
               (x*widthSlice)+(rand.nextDouble() * (widthSlice-(x==noEntriesX-1?t.width:0))),
               (y*heightSlice+((rand.nextDouble()*0.5-1)*heightSlice))-widgetSize!.height
             );
+            entry.entry = dictEntries[dictEntryOffset++];
             //entry.parallax = (rand.nextDouble()*0.5)+0.5;
             entry.animationController.value = 0;
             entry.animationController.forward();
+
             setState(() {});
           }
         });
@@ -151,6 +162,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
       }
     }
+    entries.sort((a, b) => a.parallax.compareTo(b.parallax));
   }
 
 
@@ -176,6 +188,14 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
+
+    // if no level selection is made or the widget should be hidden return `widget.bottom`
+    if(widget.levels.isEmpty || widget.hide){
+      if(widget.bottom != null)
+        return widget.bottom!;
+      else
+        return SizedBox();
+    }
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -207,35 +227,34 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                 )
               ),
               
-              for (int i = 0; i < entries.length; i++)
+              for (FloatingWord entry in entries)
                 AnimatedBuilder(
-                  animation: entries[i].animation,
+                  animation: entry.animation,
                   builder: (context, child) {
         
                     return Positioned(
-                      left: entries[i].position.dx,
+                      left: entry.position.dx,
                       // interpolate the current position between the start position
                       // and the height of the available space
                       // *1.02 is important so there is no visible overlap as the cleanup
                       // is not run every frame
-                      top: entries[i].position.dy +
-                        ((widgetSize?.height ?? 0)-(entries[i].position.dy*1.02)) *
-                          (entries[i].animationController.value),
+                      top: entry.position.dy +
+                        ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
+                          (entry.animationController.value),
                       child: GestureDetector(
                         onTap: () {
-                          widget.onTap?.call(entries[i]);
-                          print(entries[i].entry);
+                          widget.onTap?.call(entry);
                         },
                         child: Text(
-                          entries[i].entry,
+                          entry.entryVerticalString,
                           style: TextStyle(
-                            fontSize: entryTextStyleFontSize * min(1, entries[i].parallax*1.25),
+                            fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
                             height: entryTextStyleHeight,
                             fontFamily: g_japaneseFontFamily,
                             color: (Theme.of(context).brightness == Brightness.light
                               ? Colors.black
                               : Colors.white
-                            ).withOpacity(entries[i].parallax)
+                            ).withOpacity(entry.parallax)
                           ),
                         ),
                       )
