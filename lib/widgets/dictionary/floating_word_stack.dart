@@ -21,6 +21,8 @@ class FloatingWordStack extends StatefulWidget {
   final List<String> levels;
   /// Should the falling words be hidden
   final bool hide;
+  /// how long to wait till the first word spawns
+  final int secondsTillFirstWord;
   /// Callback that is executed when the user taps on a floating word
   final Function(FloatingWord entry)? onTap;
 
@@ -29,6 +31,7 @@ class FloatingWordStack extends StatefulWidget {
       this.bottom,
       required this.levels,
       this.hide = false,
+      this.secondsTillFirstWord = 5,
       this.onTap,
       super.key
     }
@@ -46,18 +49,27 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   /// A list of all dict entries that are floating
   List<JMdict> dictEntries = [];
   /// offset to select the next entry from `dictEntries`
-  int dictEntryOffset = 0;
+  int _dictEntryOffset = 0;
+  set dictEntryOffset (int newOffset){
+    if(newOffset > dictEntries.length-1){
+      _dictEntryOffset = 0;
+      return;
+    }
+    
+    _dictEntryOffset = newOffset;
+  }
+  int get dictEntryOffset {
+    return _dictEntryOffset;
+  }
   /// the font size of the floating words
   double entryTextStyleFontSize = 18;
   /// the text height of the floating words
   double entryTextStyleHeight = 1.05;
   /// The MINIMUM seconds for an entry to travel to the bottom, total travel
   /// time is also based on the parallax
-  int entryToBttomSeconds = 20;
-  /// how long to wait till the first word spawns
-  int secondsTillFirstWord = 0;
+  int entryToBttomSeconds = 20; 
   /// List of all floating words
-  List<FloatingWord> entries = [];
+  List<FloatingWord> floatingWords = [];
   /// List of entries that finished their animations and thus should be removed
   List<FloatingWord> removeAtNextBuild = [];
 
@@ -77,22 +89,28 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     super.didUpdateWidget(oldWidget);
   }
 
-  void init(){
+  void init() async {
     
-    if(widget.levels.isEmpty || widget.hide)
+    if(widget.levels.isEmpty || widget.hide){
+      floatingWords = [];
       return;
+    }
 
-    dictEntries = getDictEntries();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      for (FloatingWord entry in entries) {
-        entry.animationController.dispose();
-      }
-      entries.clear();
-
-      initEntries();
-
+    // delete current entries and wait to spawn new ones
+    for (FloatingWord entry in floatingWords) {
+      entry.animationController.dispose();
+    }
+    floatingWords.clear();
+    setState(() {});
+    Future.delayed(Duration(seconds: widget.secondsTillFirstWord))
+    .then((value) {
+      dictEntries = getDictEntries();
       setState(() {});
+
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        initEntries();
+        setState(() {});
+      });
     });
   }
 
@@ -160,11 +178,11 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
           }
         });
         controller.forward();
-        entries.add(entry);
+        floatingWords.add(entry);
 
       }
     }
-    entries.sort((a, b) => a.parallax.compareTo(b.parallax));
+    floatingWords.sort((a, b) => a.parallax.compareTo(b.parallax));
   }
 
 
@@ -182,8 +200,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
   @override
   void dispose() {
-    for (var i = 0; i < entries.length; i++) {
-      entries[i].animationController.dispose();
+    for (var i = 0; i < floatingWords.length; i++) {
+      floatingWords[i].animationController.dispose();
     }
     super.dispose();
   }
@@ -206,7 +224,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
         return GestureDetector(
           onPanUpdate: (update) {
-            for (var entry in entries) {
+            for (var entry in floatingWords) {
               if(widgetSize == null) return;
 
               if(update.delta.dy > 0)
@@ -229,7 +247,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                 )
               ),
               
-              for (FloatingWord entry in entries)
+              for (FloatingWord entry in floatingWords)
                 AnimatedBuilder(
                   animation: entry.animation,
                   builder: (context, child) {
