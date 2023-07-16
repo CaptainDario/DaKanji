@@ -90,18 +90,16 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   }
 
   void init() async {
-    
-    if(widget.levels.isEmpty || widget.hide){
-      floatingWords = [];
-      return;
-    }
 
-    // delete current entries and wait to spawn new ones
     for (FloatingWord entry in floatingWords) {
       entry.animationController.dispose();
     }
     floatingWords.clear();
     setState(() {});
+    
+    if(widget.levels.isEmpty || widget.hide) return;
+
+    // delete current entries and wait to spawn new ones
     Future.delayed(Duration(seconds: widget.secondsTillFirstWord))
     .then((value) {
       dictEntries = getDictEntries();
