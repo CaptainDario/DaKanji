@@ -1360,6 +1360,72 @@
       "es": "Diccionario",
       "pl": "Słownik"
     },
+    "dict_search_results_title": {
+      "en": "Search results",
+      "de": "Suchergebnisse",
+      "ru": "Результаты поиска",
+      "ja": "検索結果",
+      "zh": "搜索结果",
+      "it": "Risultati della ricerca",
+      "fr": "Résultats de la recherche",
+      "es": "Resultados de la búsqueda",
+      "pl": "Wyniki wyszukiwania"
+    },
+    "dict_search_results_navigate_title": {
+      "en": "Navigate",
+      "de": "Navigieren",
+      "ru": "Перейдите по ссылке",
+      "ja": "ナビゲート",
+      "zh": "导航",
+      "it": "Navigare",
+      "fr": "Naviguer",
+      "es": "Navegue por",
+      "pl": "Nawigacja"
+    },
+    "dict_search_results_navigate_text": {
+      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
+    },
+    "dict_search_history_title": {
+      "en": "Search history",
+      "de": "Suchverlauf",
+      "ru": "История поиска",
+      "ja": "検索履歴",
+      "zh": "搜索历史",
+      "it": "Storia della ricerca",
+      "fr": "Historique de la recherche",
+      "es": "Historial de búsqueda",
+      "pl": "Historia wyszukiwania"
+    },
+    "dict_search_history_delete_title": {
+      "en": "Delete",
+      "de": "Löschen",
+      "ru": "Удалить",
+      "ja": "削除",
+      "zh": "删除",
+      "it": "Cancellare",
+      "fr": "Supprimer",
+      "es": "Borrar",
+      "pl": "Usuń"
+    },
+    "dict_search_history_delete_text": {
+      "en": "You can delete elements from the search history by swiping left on them.",
+      "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+      "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+      "ja": "検索履歴の要素を左にスワイプして削除することができます。",
+      "zh": "您可以通过向左滑动从搜索历史中删除元素。",
+      "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+      "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+      "es": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+      "pl": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo."
+    },
     "dict_kanji_title": {
       "en": "Kanji",
       "de": "Kanji",
