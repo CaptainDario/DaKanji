@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v 3.1.0 - 仮名 ()
+## v 3.1.0 - 辞書開発 ()
 
 New Features:
 
