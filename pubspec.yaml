@@ -48,7 +48,7 @@ dependencies:
   animations: 2.0.7
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
-  linked_scroll_controller: 0.2.0
+  scrollable_positioned_list: 0.3.8
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
   #kana_kit: any # included in dakanji dictionary
   liquid_swipe:
@@ -129,6 +129,7 @@ dev_dependencies:
   msix: 3.13.2
   json_serializable: 6.7.0
   build_runner: 2.4.4
+  dependency_validator: 3.2.2
   isar_generator: any # included in dakanji dictionary
   
 flutter_icons:

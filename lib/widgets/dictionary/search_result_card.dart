@@ -10,15 +10,6 @@ import 'package:da_kanji_mobile/domain/settings/settings.dart';
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
-  const SearchResultCard(
-    {
-      required this.dictEntry,
-      required this.resultIndex,
-      this.showWordFrequency = false,
-      this.onPressed,
-      Key? key
-    }
-  ) : super(key: key);
 
   /// The reading that should be displayed in this card
   final JMdict dictEntry;
@@ -26,9 +17,22 @@ class SearchResultCard extends StatefulWidget {
   final bool showWordFrequency;
   /// The index of this result in the search results
   final int resultIndex;
+
+  final FocusNode? focusNode;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
   final Function(JMdict selection)? onPressed;
+
+  const SearchResultCard(
+    {
+      required this.dictEntry,
+      required this.resultIndex,
+      this.showWordFrequency = false,
+      this.focusNode,
+      this.onPressed,
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
@@ -68,6 +72,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
     return Card(
       child: InkWell(
+        focusNode: widget.focusNode,
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
           if(widget.onPressed != null) {

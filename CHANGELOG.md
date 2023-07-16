@@ -21,6 +21,7 @@ New Features:
     - Sort kanji by stroke order
     - More understandable radical rendering
     - UI improvments
+  - Navigate search results with keyboard
 - Sentry for feedback collection
 - Matrix
 

@@ -312,6 +312,14 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  dependency_validator:
+    dependency: "direct dev"
+    description:
+      name: dependency_validator
+      sha256: "08349175533ed0bd06eb9b6043cde66c45b2bfc7ebc222a7542cdb1324f1bf03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.2"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -749,14 +757,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  linked_scroll_controller:
-    dependency: "direct main"
-    description:
-      name: linked_scroll_controller
-      sha256: e6020062bcf4ffc907ee7fd090fa971e65d8dfaac3c62baf601a3ced0b37986a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   liquid_swipe:
     dependency: "direct main"
     description:
@@ -1159,6 +1159,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.6"
+  scrollable_positioned_list:
+    dependency: "direct main"
+    description:
+      name: scrollable_positioned_list
+      sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.8"
   sentry:
     dependency: transitive
     description:
