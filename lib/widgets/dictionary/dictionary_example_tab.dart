@@ -1,6 +1,6 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
@@ -148,42 +148,44 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
     List<List<Tuple2<int, int>>> matchSpans = [];
 
-    for (var i = 0; i < this.examples.length; i++) {
+    for (var e = 0; e < this.examples.length; e++) {
       matchSpans.add([]);
 
       // parse example sentence and kanjis of this entry with mecab
-      List<TokenNode> example = GetIt.I<Mecab>().parse(examples[i].sentence);
-      List<List<String>> kanjiSplits = widget.entry!.kanjis
-        .map((e) => (GetIt.I<Mecab>().parse(e))
-          .map((e) => e.surface).toList()..removeLast())
-        .toList();
+      String example = examples[e].sentence;
+      List<TokenNode> parsedExample = GetIt.I<Mecab>().parse(example);
 
-      // get index where the entry matches in the example
-      for (int i = 0; i < example.length; i++){
-        if(example[i].features.length > 5){
+      for (List<String> items in [widget.entry!.kanjis, widget.entry!.readings, widget.entry!.hiraganas]){
+        for (int k = 0; k < items.length; k++){
+          String item = items[k];
 
-          int lengthToCurrentWord = example.sublist(0, i).map((e) => e.surface).join("").length;
+          // does the kanji of the entry match
+          int match = example.indexOf(item);
+          while(match != -1) {
+            matchSpans.last.add(Tuple2(match, match+item.length));
+            match = example.indexOf(item, min(match+1, example.length));
+          }
+        }
+      }
+      
+      for (int i = 0; i < parsedExample.length; i++){
+        if(parsedExample[i].features.length > 5){
 
-          if(widget.entry!.kanjis.contains(example[i].features[6])){
-            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
+          int lengthToCurrentWord = parsedExample.sublist(0, i).map((e) => e.surface).join("").length;
+
+          // get the current span and check if a highlight has already been added for it
+          Tuple2<int, int> currentSpan = Tuple2(lengthToCurrentWord, lengthToCurrentWord+parsedExample[i].surface.length);
+          if(matchSpans.last.contains(currentSpan))
+            continue;
+
+          if(widget.entry!.kanjis.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
           }
-          else if(widget.entry!.readings.contains(example[i].features[6])){
-            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
+          else if(widget.entry!.readings.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
           }
-          else if(widget.entry!.hiraganas.contains(example[i].features[6])){
-            matchSpans.last.add(Tuple2(lengthToCurrentWord, lengthToCurrentWord+example[i].surface.length));
-          }
-          for (List<String> kanjiSplit in kanjiSplits){
-            if(i+kanjiSplit.length < example.length &&
-              kanjiSplit.join("") == example.sublist(i, i+kanjiSplit.length).map((e) => e.surface).join()){
-              matchSpans.last.add(Tuple2(
-                lengthToCurrentWord,
-                lengthToCurrentWord+
-                  example.sublist(lengthToCurrentWord, kanjiSplit.length)
-                  .map((e) => e.surface).join("")
-                  .length
-              ));
-            }
+          else if(widget.entry!.hiraganas.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
           }
         }
       }
@@ -202,9 +204,6 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   List<String> kanjiSplits = query.item5;
   int limit = query.item6;
   String isarPath = query.item7;
-
-  print(selectedLangs);
-
   
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
@@ -216,29 +215,32 @@ List<ExampleSentence> searchExamples(Tuple7 query){
       // any kanji matches
         .anyOf(kanjis, (q, element) => q.mecabBaseFormsElementEqualTo(element))
       .or()
-      // any reading matches
+        // any reading matches
         .anyOf(readings, (q, element) => q.mecabBaseFormsElementEqualTo(element))
       .or()
       // any hiragana matches
         .anyOf(hiraganas, (q, element) => q.mecabBaseFormsElementEqualTo(element))
-      
     .filter()
-      // exclude examples that do not contain any translation in any of the
-      // selected languages
+      // exclude examples that do not contain any translation in any of the selected languages
       .translationsElement((q) => 
-        q.anyOf(
-          selectedLangs,
-          (q, element) => q.languageEqualTo(isoToiso639_3[element]!.name))
+        q.anyOf(selectedLangs, (q, element) => 
+          q.languageEqualTo(isoToiso639_3[element]!.name))
       )
     .optional(limit != -1, (q) => q.limit(limit))
     .findAllSync();
 
-  /// if there are no examples try to match mecab base forms
-  if(examples.isEmpty){
+  /// if there are no examples try to match the word with sentence (no mecab transforms)
+  if(examples.isEmpty && kanjis.isNotEmpty){
     examples = examplesIsar.exampleSentences
       .filter()
-        // mecab splits of all kanjis must match
-        .allOf(kanjiSplits, (q, e) => q.mecabBaseFormsElementEqualTo(e))
+        .anyOf(kanjis, (q, kanji) => q.sentenceContains(kanji))
+      .or()
+        .anyOf(readings, (q, reading) => q.sentenceContains(reading))
+        // apply language filters
+        .translationsElement((q) => 
+          q.anyOf(selectedLangs, (q, element) => 
+            q.languageEqualTo(isoToiso639_3[element]!.name))
+        )
       .optional(limit != -1, (q) => q.limit(limit))
       .findAllSync();
   }
@@ -257,6 +259,5 @@ List<ExampleSentence> searchExamples(Tuple7 query){
     return bScore - aScore;
   });
 
-  print(examples.length);
   return examples;
 }
