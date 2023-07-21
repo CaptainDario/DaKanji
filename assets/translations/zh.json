@@ -102,7 +102,7 @@
     "word_synonyms": "\u540c\u4e49\u8bcd",
     "word_tab": "\u8bcd\u8bed",
     "word_tab_menu_add_to_list": "\u6dfb\u52a0\u5230\u5217\u8868",
-    "word_tab_menu_send_to_anki": "\u53d1\u9001\u5230Anki",
+    "word_tab_menu_send_to_anki": "\u53d1\u9001\u5230 Anki",
     "word_wikipedia": "\u7ef4\u57fa\u767e\u79d1"
   },
   "DrawScreen": {
@@ -159,11 +159,17 @@
     "rate_this_app": "\u901f\u7387",
     "whats_new": "\u6700\u65b0\u4fe1\u606f"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "\u5047\u540d\u56fe"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "\u5361\u7eb3\u684c"
+  },
+  "KanjiTableScreen": {
+    "title": "\u6c49\u5b57\u8868"
+  },
+  "KanjiTrainerScreen": {
+    "title": "\u6c49\u5b57\u8bad\u7ec3\u5668"
   },
   "KuzushijiScreen": {
     "title": ""
@@ -189,6 +195,12 @@
     "dict_radicals_paste_text": "\u6309\u53f3\u4e0b\u89d2\u7684\u7c98\u8d34\u6309\u94ae\uff0c\u5c06\u5728\u4f60\u7684\u7cfb\u7edf\u526a\u8d34\u677f\u4e2d\u641c\u7d22\u57fa\u70b9\uff0c\u5e76\u5c06\u5176\u4f5c\u4e3a\u5f53\u524d\u9009\u62e9\u3002",
     "dict_radicals_paste_title": "\u7c98\u8d34\u57fa\u70b9",
     "dict_radicals_title": "\u6fc0\u8fdb\u4e3b\u4e49\u8005",
+    "dict_search_history_delete_text": "\u60a8\u53ef\u4ee5\u901a\u8fc7\u5411\u5de6\u6ed1\u52a8\u4ece\u641c\u7d22\u5386\u53f2\u4e2d\u5220\u9664\u5143\u7d20\u3002",
+    "dict_search_history_delete_title": "\u5220\u9664",
+    "dict_search_history_title": "\u641c\u7d22\u5386\u53f2",
+    "dict_search_results_navigate_text": "\u60a8\u53ef\u4ee5\u4f7f\u7528\u4e0a\u4e0b\u7bad\u5934\u952e\u6d4f\u89c8\u641c\u7d22\u7ed3\u679c\u3002\u5982\u679c\u60a8\u60f3\u6253\u5f00\u67d0\u4e2a\u8bcd\u5178\u6761\u76ee\uff0c\u8bf7\u5728\u8be5\u6761\u76ee\u7a81\u51fa\u663e\u793a\u65f6\u6309\u56de\u8f66\u952e\u3002",
+    "dict_search_results_navigate_title": "\u5bfc\u822a",
+    "dict_search_results_title": "\u641c\u7d22\u7ed3\u679c",
     "dict_text_examples_analyze_text": "\u8bcd\u5178\u4e2d\u7684\u4f8b\u5b50\u53ef\u4ee5\u5728\u6587\u672c\u5904\u7406\u5c4f\u5e55\u4e0a\u901a\u8fc7\u53cc\u51fb\u6765\u6253\u5f00\u3002",
     "dict_text_examples_analyze_title": "\u5728\u6587\u672c\u5c4f\u5e55\u4e2d\u6253\u5f00\u4f8b\u5b50",
     "dict_title": "\u8bcd\u5178",

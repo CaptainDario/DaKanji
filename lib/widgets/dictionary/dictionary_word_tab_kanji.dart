@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 

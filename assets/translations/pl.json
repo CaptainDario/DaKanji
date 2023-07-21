@@ -159,11 +159,17 @@
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Wykres kana"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "St\u00f3\u0142 Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabela kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": ""
@@ -189,6 +195,12 @@
     "dict_radicals_paste_text": "Naci\u015bni\u0119cie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodnik\u00f3w w schowku systemowym i u\u017cycie ich jako bie\u017c\u0105cego zaznaczenia.",
     "dict_radicals_paste_title": "Wklejanie rodnik\u00f3w",
     "dict_radicals_title": "Radyka\u0142owie",
+    "dict_search_history_delete_text": "Elementy mo\u017cna usuwa\u0107 z historii wyszukiwania, przesuwaj\u0105c po nich palcem w lewo.",
+    "dict_search_history_delete_title": "Usu\u0144",
+    "dict_search_history_title": "Historia wyszukiwania",
+    "dict_search_results_navigate_text": "Wyniki wyszukiwania mo\u017cna przegl\u0105da\u0107 za pomoc\u0105 przycisk\u00f3w strza\u0142ek w g\u00f3r\u0119 i w d\u00f3\u0142. Aby otworzy\u0107 has\u0142o s\u0142ownikowe, naci\u015bnij klawisz Enter, gdy jest ono pod\u015bwietlone.",
+    "dict_search_results_navigate_title": "Nawigacja",
+    "dict_search_results_title": "Wyniki wyszukiwania",
     "dict_text_examples_analyze_text": "Przyk\u0142ady ze s\u0142ownika mo\u017cna otworzy\u0107 na ekranie przetwarzania tekstu poprzez dwukrotne stukni\u0119cie w nie.",
     "dict_text_examples_analyze_title": "Otwieranie przyk\u0142ad\u00f3w na ekranie Tekst",
     "dict_title": "S\u0142ownik",

@@ -10,17 +10,17 @@ import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/kana/KanaInfoCard.dart';
-import 'package:da_kanji_mobile/widgets/kana/KanaGrid.dart';
+import 'package:da_kanji_mobile/widgets/kana_table/KanaInfoCard.dart';
+import 'package:da_kanji_mobile/widgets/kana_table/KanaGrid.dart';
 
 
 
-class KanaScreen extends StatefulWidget {
+class KanaTableScreen extends StatefulWidget {
   
   /// If the screen was navigated by the drawer
   final bool navigatedByDrawer;
   
-  const KanaScreen(
+  const KanaTableScreen(
     this.navigatedByDrawer,
     {
       super.key
@@ -28,10 +28,10 @@ class KanaScreen extends StatefulWidget {
   );
 
   @override
-  State<KanaScreen> createState() => _KanaScreenState();
+  State<KanaTableScreen> createState() => _KanaTableScreenState();
 }
 
-class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateMixin {
+class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProviderStateMixin {
 
   /// Is the speed dial open
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
@@ -108,7 +108,7 @@ class _KanaScreenState extends State<KanaScreen> with SingleTickerProviderStateM
     ].map((e) => "assets/icons/kana/" + e).toList();
 
     return DaKanjiDrawer(
-      currentScreen: Screens.kana_chart,
+      currentScreen: Screens.kana_table,
       animationAtStart: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(

@@ -159,11 +159,17 @@
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Kana chart"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTrainerScreen": {
+    "title": "Kana Table"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji Table"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
@@ -189,6 +195,12 @@
     "dict_radicals_paste_text": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
     "dict_radicals_paste_title": "Pasting radicals",
     "dict_radicals_title": "Radicals",
+    "dict_search_history_delete_text": "You can delete elements from the search history by swiping left on them.",
+    "dict_search_history_delete_title": "Delete",
+    "dict_search_history_title": "Search history",
+    "dict_search_results_navigate_text": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+    "dict_search_results_navigate_title": "Navigate",
+    "dict_search_results_title": "Search results",
     "dict_text_examples_analyze_text": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_examples_analyze_title": "Opening examples in the Text screen",
     "dict_title": "Dictionary",

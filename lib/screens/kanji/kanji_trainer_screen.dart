@@ -7,14 +7,14 @@ import '../../widgets/kanji/kanji_drawing.dart';
 
 
 /// The screen for all kanji related functionalities
-class KanjiScreen extends StatefulWidget {
+class KanjiTrainerScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
 
-  const KanjiScreen(
+  const KanjiTrainerScreen(
     this.openedByDrawer,
     this.includeTutorial,
     {
@@ -23,17 +23,17 @@ class KanjiScreen extends StatefulWidget {
   );
 
   @override
-  State<KanjiScreen> createState() => _KanjiScreenState();
+  State<KanjiTrainerScreen> createState() => _KanjiTrainerScreenState();
 }
 
-class _KanjiScreenState extends State<KanjiScreen> {
+class _KanjiTrainerScreenState extends State<KanjiTrainerScreen> {
 
 
 
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
-      currentScreen: Screens.kanji,
+      currentScreen: Screens.kanji_trainer,
       animationAtStart: !widget.openedByDrawer,
       child: KanjiDrawingWidget(
     

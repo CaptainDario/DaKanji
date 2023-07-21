@@ -81,7 +81,7 @@ class CodegenLoader extends AssetLoader{
     "word_synonyms": "同义词",
     "word_tab": "词语",
     "word_tab_menu_add_to_list": "添加到列表",
-    "word_tab_menu_send_to_anki": "发送到Anki",
+    "word_tab_menu_send_to_anki": "发送到 Anki",
     "word_wikipedia": "维基百科"
   },
   "DrawScreen": {
@@ -138,10 +138,17 @@ class CodegenLoader extends AssetLoader{
     "rate_this_app": "速率",
     "whats_new": "最新信息"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "假名图"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "卡纳桌"
+  },
+  "KanjiTableScreen": {
+    "title": "汉字表"
+  },
+  "KanjiTrainerScreen": {
+    "title": "汉字训练器"
   },
   "KuzushijiScreen": {
   },
@@ -166,6 +173,12 @@ class CodegenLoader extends AssetLoader{
     "dict_radicals_paste_text": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
     "dict_radicals_paste_title": "粘贴基点",
     "dict_radicals_title": "激进主义者",
+    "dict_search_history_delete_text": "您可以通过向左滑动从搜索历史中删除元素。",
+    "dict_search_history_delete_title": "删除",
+    "dict_search_history_title": "搜索历史",
+    "dict_search_results_navigate_text": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+    "dict_search_results_navigate_title": "导航",
+    "dict_search_results_title": "搜索结果",
     "dict_text_examples_analyze_text": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
     "dict_text_examples_analyze_title": "在文本屏幕中打开例子",
     "dict_title": "词典",
@@ -1628,6 +1641,72 @@ static const Map<String,dynamic> localizations = {
       "es": "Diccionario",
       "pl": "Słownik"
     },
+    "dict_search_results_title": {
+      "en": "Search results",
+      "de": "Suchergebnisse",
+      "ru": "Результаты поиска",
+      "ja": "検索結果",
+      "zh": "搜索结果",
+      "it": "Risultati della ricerca",
+      "fr": "Résultats de la recherche",
+      "es": "Resultados de la búsqueda",
+      "pl": "Wyniki wyszukiwania"
+    },
+    "dict_search_results_navigate_title": {
+      "en": "Navigate",
+      "de": "Navigieren",
+      "ru": "Перейдите по ссылке",
+      "ja": "ナビゲート",
+      "zh": "导航",
+      "it": "Navigare",
+      "fr": "Naviguer",
+      "es": "Navegue por",
+      "pl": "Nawigacja"
+    },
+    "dict_search_results_navigate_text": {
+      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
+    },
+    "dict_search_history_title": {
+      "en": "Search history",
+      "de": "Suchverlauf",
+      "ru": "История поиска",
+      "ja": "検索履歴",
+      "zh": "搜索历史",
+      "it": "Storia della ricerca",
+      "fr": "Historique de la recherche",
+      "es": "Historial de búsqueda",
+      "pl": "Historia wyszukiwania"
+    },
+    "dict_search_history_delete_title": {
+      "en": "Delete",
+      "de": "Löschen",
+      "ru": "Удалить",
+      "ja": "削除",
+      "zh": "删除",
+      "it": "Cancellare",
+      "fr": "Supprimer",
+      "es": "Borrar",
+      "pl": "Usuń"
+    },
+    "dict_search_history_delete_text": {
+      "en": "You can delete elements from the search history by swiping left on them.",
+      "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+      "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+      "ja": "検索履歴の要素を左にスワイプして削除することができます。",
+      "zh": "您可以通过向左滑动从搜索历史中删除元素。",
+      "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+      "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+      "es": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+      "pl": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo."
+    },
     "dict_kanji_title": {
       "en": "Kanji",
       "de": "Kanji",
@@ -1728,7 +1807,33 @@ static const Map<String,dynamic> localizations = {
       "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
     }
   },
-  "KanaChartScreen": {
+  "KanjiTableScreen": {
+    "title": {
+      "en": "Kanji Table",
+      "de": "Kanji-Tabelle",
+      "ru": "Таблица кандзи",
+      "ja": "漢字表",
+      "zh": "汉字表",
+      "it": "Tabella Kanji",
+      "fr": "Tableau des Kanji",
+      "es": "Tabla de Kanji",
+      "pl": "Tabela kanji"
+    }
+  },
+  "KanjiTrainerScreen": {
+    "title": {
+      "en": "Kanji Trainer",
+      "de": "Kanji-Trainer",
+      "ru": "Тренажер по кандзи",
+      "ja": "漢字トレーナー",
+      "zh": "汉字训练器",
+      "it": "Allenatore di kanji",
+      "fr": "Entraîneur de kanji",
+      "es": "Entrenador de Kanji",
+      "pl": "Kanji Trainer"
+    }
+  },
+  "KanaTableScreen": {
     "title": {
       "en": "Kana chart",
       "de": "Kana Tabelle",
@@ -1739,6 +1844,19 @@ static const Map<String,dynamic> localizations = {
       "fr": "Graphique Kana",
       "es": "Tabla de kanas",
       "pl": "Wykres kana"
+    }
+  },
+  "KanaTrainerScreen": {
+    "title": {
+      "en": "Kana Table",
+      "de": "Kana-Tabelle",
+      "ru": "Стол Kana",
+      "ja": "カナ・テーブル",
+      "zh": "卡纳桌",
+      "it": "Tavolo Kana",
+      "fr": "Table Kana",
+      "es": "Mesa Kana",
+      "pl": "Stół Kana"
     }
   },
   "TextScreen": {
@@ -2086,7 +2204,7 @@ static const Map<String,dynamic> localizations = {
       "de": "An Anki senden",
       "ru": "Отправить в Anki",
       "ja": "Ankiに送信",
-      "zh": "发送到Anki",
+      "zh": "发送到 Anki",
       "it": "Inviare ad Anki",
       "fr": "Envoyer à Anki",
       "es": "Enviar a Anki",
@@ -2795,12 +2913,6 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
     }
   },
-  "KanjiScreen": {
-    "title": {
-      "en": "Kanji",
-      "de": "Kanji"
-    }
-  },
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
@@ -3121,10 +3233,17 @@ static const Map<String,dynamic> ja = {
     "rate_this_app": "評価",
     "whats_new": "最新情報"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "かな一覧表"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "カナ・テーブル"
+  },
+  "KanjiTableScreen": {
+    "title": "漢字表"
+  },
+  "KanjiTrainerScreen": {
+    "title": "漢字トレーナー"
   },
   "KuzushijiScreen": {
   },
@@ -3149,6 +3268,12 @@ static const Map<String,dynamic> ja = {
     "dict_radicals_paste_text": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
     "dict_radicals_paste_title": "部首の貼り付け",
     "dict_radicals_title": "部首",
+    "dict_search_history_delete_text": "検索履歴の要素を左にスワイプして削除することができます。",
+    "dict_search_history_delete_title": "削除",
+    "dict_search_history_title": "検索履歴",
+    "dict_search_results_navigate_text": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+    "dict_search_results_navigate_title": "ナビゲート",
+    "dict_search_results_title": "検索結果",
     "dict_text_examples_analyze_text": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
     "dict_text_examples_analyze_title": "テキスト画面で例を開く",
     "dict_title": "辞書",
@@ -3424,11 +3549,17 @@ static const Map<String,dynamic> de = {
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Kana Tabelle"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTrainerScreen": {
+    "title": "Kana-Tabelle"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji-Tabelle"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji-Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
@@ -3454,6 +3585,12 @@ static const Map<String,dynamic> de = {
     "dict_radicals_paste_text": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
     "dict_radicals_paste_title": "Radikale einfügen",
     "dict_radicals_title": "Radikale",
+    "dict_search_history_delete_text": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+    "dict_search_history_delete_title": "Löschen",
+    "dict_search_history_title": "Suchverlauf",
+    "dict_search_results_navigate_text": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+    "dict_search_results_navigate_title": "Navigieren",
+    "dict_search_results_title": "Suchergebnisse",
     "dict_text_examples_analyze_text": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
     "dict_text_examples_analyze_title": "Beispiele im Bildschirm \"Text\" öffnen",
     "dict_title": "Wörterbuch",
@@ -3692,10 +3829,17 @@ static const Map<String,dynamic> ru = {
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Диаграмма Кана"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "Стол Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Таблица кандзи"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Тренажер по кандзи"
   },
   "KuzushijiScreen": {
   },
@@ -3720,6 +3864,12 @@ static const Map<String,dynamic> ru = {
     "dict_radicals_paste_text": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
     "dict_radicals_paste_title": "Пастообразные радикалы",
     "dict_radicals_title": "Радикалы",
+    "dict_search_history_delete_text": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+    "dict_search_history_delete_title": "Удалить",
+    "dict_search_history_title": "История поиска",
+    "dict_search_results_navigate_text": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+    "dict_search_results_navigate_title": "Перейдите по ссылке",
+    "dict_search_results_title": "Результаты поиска",
     "dict_text_examples_analyze_text": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
     "dict_text_examples_analyze_title": "Открытие примеров на экране \"Текст",
     "dict_title": "Словарь",
@@ -3979,10 +4129,17 @@ static const Map<String,dynamic> pl = {
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Wykres kana"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "Stół Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabela kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
   },
@@ -4007,6 +4164,12 @@ static const Map<String,dynamic> pl = {
     "dict_radicals_paste_text": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia.",
     "dict_radicals_paste_title": "Wklejanie rodników",
     "dict_radicals_title": "Radykałowie",
+    "dict_search_history_delete_text": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo.",
+    "dict_search_history_delete_title": "Usuń",
+    "dict_search_history_title": "Historia wyszukiwania",
+    "dict_search_results_navigate_text": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone.",
+    "dict_search_results_navigate_title": "Nawigacja",
+    "dict_search_results_title": "Wyniki wyszukiwania",
     "dict_text_examples_analyze_text": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie.",
     "dict_text_examples_analyze_title": "Otwieranie przykładów na ekranie Tekst",
     "dict_title": "Słownik",
@@ -4282,11 +4445,17 @@ static const Map<String,dynamic> en = {
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Kana chart"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTrainerScreen": {
+    "title": "Kana Table"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji Table"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
@@ -4312,6 +4481,12 @@ static const Map<String,dynamic> en = {
     "dict_radicals_paste_text": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
     "dict_radicals_paste_title": "Pasting radicals",
     "dict_radicals_title": "Radicals",
+    "dict_search_history_delete_text": "You can delete elements from the search history by swiping left on them.",
+    "dict_search_history_delete_title": "Delete",
+    "dict_search_history_title": "Search history",
+    "dict_search_results_navigate_text": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+    "dict_search_results_navigate_title": "Navigate",
+    "dict_search_results_title": "Search results",
     "dict_text_examples_analyze_text": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_examples_analyze_title": "Opening examples in the Text screen",
     "dict_title": "Dictionary",
@@ -4550,10 +4725,17 @@ static const Map<String,dynamic> it = {
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Grafico Kana"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "Tavolo Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabella Kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Allenatore di kanji"
   },
   "KuzushijiScreen": {
   },
@@ -4578,6 +4760,12 @@ static const Map<String,dynamic> it = {
     "dict_radicals_paste_text": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
     "dict_radicals_paste_title": "Incollare i radicali",
     "dict_radicals_title": "Radicali",
+    "dict_search_history_delete_text": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+    "dict_search_history_delete_title": "Cancellare",
+    "dict_search_history_title": "Storia della ricerca",
+    "dict_search_results_navigate_text": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+    "dict_search_results_navigate_title": "Navigare",
+    "dict_search_results_title": "Risultati della ricerca",
     "dict_text_examples_analyze_text": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
     "dict_text_examples_analyze_title": "Apertura di esempi nella schermata Testo",
     "dict_title": "Dizionario",
@@ -4802,10 +4990,17 @@ static const Map<String,dynamic> fr = {
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Graphique Kana"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "Table Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tableau des Kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entraîneur de kanji"
   },
   "KuzushijiScreen": {
   },
@@ -4830,6 +5025,12 @@ static const Map<String,dynamic> fr = {
     "dict_radicals_paste_text": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
     "dict_radicals_paste_title": "Collage de radicaux",
     "dict_radicals_title": "Radicaux",
+    "dict_search_history_delete_text": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+    "dict_search_history_delete_title": "Supprimer",
+    "dict_search_history_title": "Historique de la recherche",
+    "dict_search_results_navigate_text": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+    "dict_search_results_navigate_title": "Naviguer",
+    "dict_search_results_title": "Résultats de la recherche",
     "dict_text_examples_analyze_text": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
     "dict_text_examples_analyze_title": "Ouvrir des exemples dans l'écran Texte",
     "dict_title": "Dictionnaire",
@@ -5054,10 +5255,17 @@ static const Map<String,dynamic> es = {
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Tabla de kanas"
   },
-  "KanjiScreen": {
+  "KanaTrainerScreen": {
+    "title": "Mesa Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabla de Kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entrenador de Kanji"
   },
   "KuzushijiScreen": {
   },
@@ -5082,6 +5290,12 @@ static const Map<String,dynamic> es = {
     "dict_radicals_paste_text": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
     "dict_radicals_paste_title": "Pegar radicales",
     "dict_radicals_title": "Radicales",
+    "dict_search_history_delete_text": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+    "dict_search_history_delete_title": "Borrar",
+    "dict_search_history_title": "Historial de búsqueda",
+    "dict_search_results_navigate_text": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+    "dict_search_results_navigate_title": "Navegue por",
+    "dict_search_results_title": "Resultados de la búsqueda",
     "dict_text_examples_analyze_text": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
     "dict_text_examples_analyze_title": "Abrir ejemplos en la pantalla Texto",
     "dict_title": "Diccionario",

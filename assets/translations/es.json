@@ -159,11 +159,17 @@
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
   },
-  "KanaChartScreen": {
+  "KanaTableScreen": {
     "title": "Tabla de kanas"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "Mesa Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabla de Kanji"
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entrenador de Kanji"
   },
   "KuzushijiScreen": {
     "title": ""
@@ -189,6 +195,12 @@
     "dict_radicals_paste_text": "Pulsando el bot\u00f3n de pegar en la esquina inferior derecha, buscar\u00e1 radicales en el portapapeles de su sistema y los utilizar\u00e1 como selecci\u00f3n actual.",
     "dict_radicals_paste_title": "Pegar radicales",
     "dict_radicals_title": "Radicales",
+    "dict_search_history_delete_text": "Puedes eliminar elementos del historial de b\u00fasqueda deslizando el dedo hacia la izquierda sobre ellos.",
+    "dict_search_history_delete_title": "Borrar",
+    "dict_search_history_title": "Historial de b\u00fasqueda",
+    "dict_search_results_navigate_text": "Puedes navegar por los resultados de la b\u00fasqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras est\u00e9 resaltada.",
+    "dict_search_results_navigate_title": "Navegue por",
+    "dict_search_results_title": "Resultados de la b\u00fasqueda",
     "dict_text_examples_analyze_text": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
     "dict_text_examples_analyze_title": "Abrir ejemplos en la pantalla Texto",
     "dict_title": "Diccionario",
