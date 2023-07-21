@@ -4,10 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_table/KanaTableScreen.dart';
+import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji/kanji_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
@@ -137,6 +138,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
           case "/kana_table":
             return switchScreen(KanaTableScreen(args.navigatedByDrawer));
+          case "/kana_trainer":
+            return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/word_lists":

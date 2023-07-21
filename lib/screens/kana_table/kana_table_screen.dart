@@ -10,8 +10,8 @@ import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/kana_table/KanaInfoCard.dart';
-import 'package:da_kanji_mobile/widgets/kana_table/KanaGrid.dart';
+import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
+import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
 
 
 

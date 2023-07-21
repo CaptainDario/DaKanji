@@ -1554,21 +1554,8 @@
   },
   "KanaTableScreen": {
     "title": {
-      "en": "Kana chart",
-      "de": "Kana Tabelle",
-      "ru": "Диаграмма Кана",
-      "ja": "かな一覧表",
-      "zh": "假名图",
-      "it": "Grafico Kana",
-      "fr": "Graphique Kana",
-      "es": "Tabla de kanas",
-      "pl": "Wykres kana"
-    }
-  },
-  "KanaTrainerScreen": {
-    "title": {
       "en": "Kana Table",
-      "de": "Kana-Tabelle",
+      "de": "Kana Tabelle",
       "ru": "Стол Kana",
       "ja": "カナ・テーブル",
       "zh": "卡纳桌",
@@ -1576,6 +1563,19 @@
       "fr": "Table Kana",
       "es": "Mesa Kana",
       "pl": "Stół Kana"
+    }
+  },
+  "KanaTrainerScreen": {
+    "title": {
+      "en": "Kana Trainer",
+      "de": "Kana Trainer",
+      "ru": "Инструктор Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
     }
   },
   "TextScreen": {

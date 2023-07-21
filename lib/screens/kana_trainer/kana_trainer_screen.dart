@@ -1,38 +1,34 @@
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_table.dart';
 import 'package:flutter/material.dart';
 
+import 'package:da_kanji_mobile/widgets/kana_trainer/kana_trainer.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 
 
 
-class KanjiTableScreen extends StatefulWidget {
-  
+class KanaTrainerScreen extends StatefulWidget {
+
   /// If the screen was navigated by the drawer
   final bool navigatedByDrawer;
-  /// Should the tutorial be included
-  final bool includeTutorial;
 
-  const KanjiTableScreen(
+  const KanaTrainerScreen(
     this.navigatedByDrawer,
-    this.includeTutorial,
     {
       super.key
     }
   );
 
   @override
-  State<KanjiTableScreen> createState() => _KanjiTableScreenState();
+  State<KanaTrainerScreen> createState() => _KanaTrainerScreenState();
 }
 
-class _KanjiTableScreenState extends State<KanjiTableScreen> {
+class _KanaTrainerScreenState extends State<KanaTrainerScreen> {
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
-      currentScreen: Screens.kanji_table,
+      currentScreen: Screens.kana_trainer,
       animationAtStart: !widget.navigatedByDrawer,
-      child: KanjiTable(
-      )
+      child: KanaTrainer()
     );
   }
 }

@@ -139,10 +139,10 @@ class CodegenLoader extends AssetLoader{
     "whats_new": "最新信息"
   },
   "KanaTableScreen": {
-    "title": "假名图"
+    "title": "卡纳桌"
   },
   "KanaTrainerScreen": {
-    "title": "卡纳桌"
+    "title": "卡纳培训师"
   },
   "KanjiTableScreen": {
     "title": "汉字表"
@@ -1835,21 +1835,8 @@ static const Map<String,dynamic> localizations = {
   },
   "KanaTableScreen": {
     "title": {
-      "en": "Kana chart",
-      "de": "Kana Tabelle",
-      "ru": "Диаграмма Кана",
-      "ja": "かな一覧表",
-      "zh": "假名图",
-      "it": "Grafico Kana",
-      "fr": "Graphique Kana",
-      "es": "Tabla de kanas",
-      "pl": "Wykres kana"
-    }
-  },
-  "KanaTrainerScreen": {
-    "title": {
       "en": "Kana Table",
-      "de": "Kana-Tabelle",
+      "de": "Kana Tabelle",
       "ru": "Стол Kana",
       "ja": "カナ・テーブル",
       "zh": "卡纳桌",
@@ -1857,6 +1844,19 @@ static const Map<String,dynamic> localizations = {
       "fr": "Table Kana",
       "es": "Mesa Kana",
       "pl": "Stół Kana"
+    }
+  },
+  "KanaTrainerScreen": {
+    "title": {
+      "en": "Kana Trainer",
+      "de": "Kana Trainer",
+      "ru": "Инструктор Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
     }
   },
   "TextScreen": {
@@ -3234,10 +3234,10 @@ static const Map<String,dynamic> ja = {
     "whats_new": "最新情報"
   },
   "KanaTableScreen": {
-    "title": "かな一覧表"
+    "title": "カナ・テーブル"
   },
   "KanaTrainerScreen": {
-    "title": "カナ・テーブル"
+    "title": "カナ・トレーナー"
   },
   "KanjiTableScreen": {
     "title": "漢字表"
@@ -3553,7 +3553,7 @@ static const Map<String,dynamic> de = {
     "title": "Kana Tabelle"
   },
   "KanaTrainerScreen": {
-    "title": "Kana-Tabelle"
+    "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
     "title": "Kanji-Tabelle"
@@ -3830,10 +3830,10 @@ static const Map<String,dynamic> ru = {
     "whats_new": "что нового"
   },
   "KanaTableScreen": {
-    "title": "Диаграмма Кана"
+    "title": "Стол Kana"
   },
   "KanaTrainerScreen": {
-    "title": "Стол Kana"
+    "title": "Инструктор Кана"
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи"
@@ -4130,10 +4130,10 @@ static const Map<String,dynamic> pl = {
     "whats_new": "co nowego"
   },
   "KanaTableScreen": {
-    "title": "Wykres kana"
+    "title": "Stół Kana"
   },
   "KanaTrainerScreen": {
-    "title": "Stół Kana"
+    "title": "Trener Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji"
@@ -4446,10 +4446,10 @@ static const Map<String,dynamic> en = {
     "whats_new": "what's new"
   },
   "KanaTableScreen": {
-    "title": "Kana chart"
+    "title": "Kana Table"
   },
   "KanaTrainerScreen": {
-    "title": "Kana Table"
+    "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
     "title": "Kanji Table"
@@ -4726,10 +4726,10 @@ static const Map<String,dynamic> it = {
     "whats_new": "cosa c'è di nuovo"
   },
   "KanaTableScreen": {
-    "title": "Grafico Kana"
+    "title": "Tavolo Kana"
   },
   "KanaTrainerScreen": {
-    "title": "Tavolo Kana"
+    "title": "Allenatore Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji"
@@ -4991,10 +4991,10 @@ static const Map<String,dynamic> fr = {
     "whats_new": "Quoi de neuf ?"
   },
   "KanaTableScreen": {
-    "title": "Graphique Kana"
+    "title": "Table Kana"
   },
   "KanaTrainerScreen": {
-    "title": "Table Kana"
+    "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji"
@@ -5256,10 +5256,10 @@ static const Map<String,dynamic> es = {
     "whats_new": "qué hay de nuevo"
   },
   "KanaTableScreen": {
-    "title": "Tabla de kanas"
+    "title": "Mesa Kana"
   },
   "KanaTrainerScreen": {
-    "title": "Mesa Kana"
+    "title": "Entrenador Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji"

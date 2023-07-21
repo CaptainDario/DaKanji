@@ -38,9 +38,9 @@ class DaKanjiDrawer extends StatefulWidget{
 
   const DaKanjiDrawer(
     {
+      required this.currentScreen,
       required this.child,
       this.useBackArrowAppBar = false,
-      required this.currentScreen,
       this.animationAtStart = true,
       Key? key, 
     }
@@ -79,8 +79,8 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       true, null),
     DrawerEntry(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
       null, Alignment(-0.1, -0.65),
-      kDebugMode, null),
-    DrawerEntry(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black",), LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji", Screens.kanji_trainer,
+      true, null),
+    DrawerEntry(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black",), LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
       null, Alignment(-0.1, -0.65),
       kDebugMode, null),
     DrawerEntry(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
@@ -88,7 +88,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       true, null),
     DrawerEntry(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
       0.5, Alignment(1000, -0.7),
-      true, null),
+      kDebugMode, null),
     DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
       null, Alignment(0, -0.1),
       kDebugMode, null),
