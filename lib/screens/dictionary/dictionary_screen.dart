@@ -51,8 +51,6 @@ class _DictionaryScreenState
   int noTabs = -1;
   /// Function that is executed when the tab was changed
   late void Function() changeTab;
-  /// Current search in the dictionary
-  DictSearch search = DictSearch();
   /// A list containing all kanjiVGs that match the selected dict entry
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
@@ -60,7 +58,6 @@ class _DictionaryScreenState
 
   @override
   void initState() {
-    search.currentSearch = widget.initialSearch;
     super.initState();
 
     // init tutorial
