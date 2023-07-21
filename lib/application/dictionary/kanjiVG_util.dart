@@ -19,8 +19,8 @@ List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
     return [];
   
   return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-  ).findAllSync().toList();
+    .anyOf(kanjis, (q, element) => q.characterEqualTo(element))
+  .findAllSync().toList();
 }
 
 /// Parses a KanjiVG entry `kanjiVGEntry` and adds it to the given `graph`
