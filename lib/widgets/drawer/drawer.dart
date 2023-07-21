@@ -337,35 +337,35 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 ),
                               ),
                             ),
-                            ReorderableListView(
-                              shrinkWrap: true,
-                              buildDefaultDragHandles: false,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              onReorder: (oldIndex, newIndex) async {
-                                if(newIndex > oldIndex)
-                                  newIndex -= 1;
-                                int old = drawerElementsIndexOrder.removeAt(oldIndex);
-                                drawerElementsIndexOrder.insert(newIndex, old);
-                                GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
-                                await GetIt.I<Settings>().save();
-                                setState(() {});
-                              },
-                              children: <Widget>[
-                                // DaKanji Logo at the top
-                                for (final (j, i) in drawerElementsIndexOrder.indexed)
-                                  DrawerElement(
-                                    leading: drawerEntries[i].icon,
-                                    title: drawerEntries[i].title,
-                                    route: drawerEntries[i].route,
-                                    selected: widget.currentScreen == drawerEntries[i].screen,
-                                    leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
-                                    drawerWidth: _drawerWidth,
-                                    index: j,
-                                    drawerController: _drawerController,
-                                    onTap: drawerEntries[i].onTap,
-                                  )       
-                              ],
+                            Expanded(
+                              child: ReorderableListView(
+                                buildDefaultDragHandles: false,
+                                padding: EdgeInsets.zero,
+                                onReorder: (oldIndex, newIndex) async {
+                                  if(newIndex > oldIndex)
+                                    newIndex -= 1;
+                                  int old = drawerElementsIndexOrder.removeAt(oldIndex);
+                                  drawerElementsIndexOrder.insert(newIndex, old);
+                                  GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
+                                  await GetIt.I<Settings>().save();
+                                  setState(() {});
+                                },
+                                children: <Widget>[
+                                  // DaKanji Logo at the top
+                                  for (final (j, i) in drawerElementsIndexOrder.indexed)
+                                    DrawerElement(
+                                      leading: drawerEntries[i].icon,
+                                      title: drawerEntries[i].title,
+                                      route: drawerEntries[i].route,
+                                      selected: widget.currentScreen == drawerEntries[i].screen,
+                                      leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
+                                      drawerWidth: _drawerWidth,
+                                      index: j,
+                                      drawerController: _drawerController,
+                                      onTap: drawerEntries[i].onTap,
+                                    )       
+                                ],
+                              ),
                             ),
                           ],
                         ),
