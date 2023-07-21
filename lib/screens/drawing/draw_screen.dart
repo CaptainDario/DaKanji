@@ -32,7 +32,7 @@ class DrawScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// A prefix that is prepended to every search query
   final String searchPrefix;
-  /// A prefix that is appended to every search query
+  /// A postfix that is appended to every search query
   final String searchPostfix;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;

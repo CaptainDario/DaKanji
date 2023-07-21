@@ -111,7 +111,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                   Expanded(
                     child: Row(
                       children: [
-                        // search bar spanning maxium 2 tabs
+                        // search bar spanning maxium 2 tabs (no function)
                         if(tabsSideBySide > 2)
                           Expanded(
                             child: Padding(
@@ -271,7 +271,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-              // the actual search bar (rendered on top of the fake)
+              // the actual search bar (rendered on top of non functional)
               if(tabsSideBySide <= 2)
                 Positioned(
                   width: constraints.maxWidth,
