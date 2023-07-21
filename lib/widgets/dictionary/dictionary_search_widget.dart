@@ -220,7 +220,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 child: Row(
                   key: searchTextInputKey,
                   children: [
-                    // magnifying glass icon button
+                    // magnifying glass / arrow back icon button
                     Padding(
                       padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
                       child: IconButton(
@@ -370,7 +370,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     return Container(
                       height: (widget.expandedHeight - searchBarInputHeight)
                         * searchBarAnimation.value,
-                      child: child 
+                      child: child,
                     );
                   },
                   child: Stack(
@@ -388,11 +388,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         // otherwise the search history
                         : SearchResultList(
                           searchResults: searchHistory,
-                          onSearchResultPressed: onSearchResultPressed,
                           showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                           init:(controller) {
                             dictSearchResultController = controller;
                           },
+                          onSearchResultPressed: onSearchResultPressed,
                           onDismissed: (direction, entry, idx) async {
                             int id = searchHistoryIds.removeAt(
                               (idx).toInt()
@@ -486,7 +486,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// callback that is executed when the user presses on a search result
   void onSearchResultPressed(JMdict entry) async {
     // update search variables
-    widget.context.read<DictSearch>().selectedResult = entry;
+    context.read<DictSearch>().selectedResult = entry;
 
     // store new search in search history
     var isar = GetIt.I<Isars>().searchHistory;
@@ -501,10 +501,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     // collapse the search bar
     if(widget.canCollapse){
-      setState(() {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         searchBarExpanded = false;
-        searchBarAnimationController.reverse();
-      });
+        searchBarAnimationController.reverse(from: 1.0);
+      }); 
     }
 
     // close the keyboard
