@@ -75,9 +75,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
         focusNode: widget.focusNode,
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
-          if(widget.onPressed != null) {
-            widget.onPressed!(widget.dictEntry);
-          }
+          widget.onPressed?.call(widget.dictEntry);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

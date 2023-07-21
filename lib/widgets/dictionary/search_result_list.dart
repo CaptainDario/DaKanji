@@ -122,8 +122,7 @@ class _SearchResultListState extends State<SearchResultList> {
             showWordFrequency: widget.showWordFrequency,
             focusNode: dictSearchResultController.searchResultsFocusses[i],
             onPressed: (selection) {
-              if(widget.onSearchResultPressed != null)
-                widget.onSearchResultPressed!(selection);
+              widget.onSearchResultPressed?.call(selection);
             } 
           ),
         );
