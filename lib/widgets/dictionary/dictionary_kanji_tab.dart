@@ -68,7 +68,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     // update search results
     List<String> kanjis =
       removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
-    kanjiVGs = findMatchingKanjiSVG(kanjis);
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
     radicals = kanjiDic2s.map((e) => 
       getRadicalsOf(e.character, GetIt.I<Isars>().krad.krads, GetIt.I<Isars>().radk.radks)
@@ -78,22 +77,14 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
 
     // kanjiVG includes alternate writings of kanji therefore
     // those alternatives need to be added to the `alternatives` list
-    // and removed from `widget.kanjiVGs`
-    KanjiSVG? last = null;
-    for (int i = 0; i < findMatchingKanjiSVG(kanjis).length; i++) {
-      // if the current and last key are the same add current to alternatives
-      if(last?.character == findMatchingKanjiSVG(kanjis)[i].character){
-        alternatives.putIfAbsent(findMatchingKanjiSVG(kanjis)[i].character, () => []);
-        alternatives[findMatchingKanjiSVG(kanjis)[i].character]!.add(findMatchingKanjiSVG(kanjis)[i]);
-      }
-      else
-        kanjiVGs.add(findMatchingKanjiSVG(kanjis)[i]);
-      
-      last = findMatchingKanjiSVG(kanjis)[i];
-      
+    for (String kanji in kanjis) {
+
+      List<KanjiSVG> _kanjiVGs = findMatchingKanjiSVG([kanji])..sort(
+        (KanjiSVG a, KanjiSVG b) => a.kanjiVGId.length.compareTo(a.kanjiVGId.length)
+      );
+      kanjiVGs.add(_kanjiVGs.first);
+      alternatives[kanji] = _kanjiVGs.length == 1 ? [] : _kanjiVGs.sublist(1);
     }
-    
-    lastKanjiVGs = findMatchingKanjiSVG(kanjis);
   }
 
   @override
