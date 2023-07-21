@@ -160,6 +160,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         List.generate(drawerEntries.length-drawerElementsIndexOrder.length, 
           (index) => index+drawerElementsIndexOrder.length)
       );
+    // elements have been removed from the drawer -> reset all values
+    if(drawerElementsIndexOrder.length > drawerEntries.length)
+      drawerElementsIndexOrder = List.generate(drawerEntries.length, (i) => i);
+
     GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
     GetIt.I<Settings>().save();
   }
