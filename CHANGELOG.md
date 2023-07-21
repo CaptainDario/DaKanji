@@ -29,6 +29,7 @@ Fixed:
 
 - Pitch accent not correct for words that include 2 character mora (#29)
 - Radical popup does not close (#27)
+- Navigating dictionary -> drawing -> dictionary
 
 -------------------------------------------------------------------------
 
