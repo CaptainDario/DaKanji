@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:math';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:xml/xml.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,8 +24,6 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   final KanjiSVG kanjiVG;
   /// List of all kanjidict entries 
   final Kanjidic2 kanjidic2entry;
-  /// A list containing all radicals
-  final List<String> radicals;
   /// String denoting the target language
   final List<String> targetLanguages;
   /// Alternative versions of this kanji
@@ -36,7 +32,6 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
   const DictionaryScreenKanjiCard(
     this.kanjiVG,
     this.kanjidic2entry,
-    this.radicals,
     this.targetLanguages,
     {
       this.alternatives,
