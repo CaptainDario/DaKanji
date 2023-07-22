@@ -239,7 +239,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           ),
                         ]
                       ),
-                    if(this.widget.alternatives != null && this.widget.alternatives != [])
+                    if(this.widget.alternatives != null && this.widget.alternatives!.isNotEmpty)
                       ExpansionTile(
                         title: Text(LocaleKeys.DictionaryScreen_kanji_alternatives.tr()),
                         children: [
