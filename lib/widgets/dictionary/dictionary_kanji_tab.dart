@@ -61,13 +61,13 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   /// Initializes this widget by searching aternatives in the passsed Kanjis
   void init(){
 
-    if(context.read<DictSearch>().selectedResult == null){
+    if(widget.entry == null){
       return;
     }
 
     // update search results
     List<String> kanjis =
-      removeAllButKanji(context.read<DictSearch>().selectedResult!.kanjis);
+      removeAllButKanji(widget.entry!.kanjis);
     kanjiVGs = findMatchingKanjiSVG(kanjis);
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
     radicals = kanjiDic2s.map((e) => 
@@ -99,7 +99,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(context.read<DictSearch>().selectedResult == null){
+    if(widget.entry == null){
       return Container();
     }
     if(kanjiVGs.isEmpty){
@@ -116,7 +116,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
               kanjiVGs[i],
               kanjiDic2s[i],
               GetIt.I<Settings>().dictionary.selectedTranslationLanguages,
-              radicals[i],
               // if there are alternative writings for this kanji
               alternatives: alternatives.containsKey(kanjiVGs[i].character)
                 ? alternatives[kanjiVGs[i].character]
