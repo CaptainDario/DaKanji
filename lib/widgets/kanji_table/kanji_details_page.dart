@@ -1,0 +1,70 @@
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+
+
+
+
+
+class KanjiDetailsPage extends StatefulWidget {
+
+
+  const KanjiDetailsPage(
+    {
+      super.key
+    }
+  );
+
+  @override
+  State<KanjiDetailsPage> createState() => _KanjiDetailsPageState();
+}
+
+class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
+
+  late KanjiSVG kanjiSVG;
+
+  late Kanjidic2 kanjidic2;
+
+
+  @override
+  void initState() {
+    
+    kanjiSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
+      .characterEqualTo("口")
+    .findAllSync().first;
+
+    kanjidic2 = GetIt.I<Isars>().dictionary.kanjidic2s.where()
+      .characterEqualTo("口")
+    .findAllSync().first;
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        //title: const Text("asd"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: DictionaryScreenKanjiCard(
+                kanjiSVG,
+                kanjidic2,
+                ["en"],
+                alternatives: [],
+              ),
+            ),
+          ],
+        ),
+      )
+    );
+  }
+}
