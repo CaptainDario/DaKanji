@@ -1,11 +1,12 @@
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
@@ -73,6 +74,9 @@ class _KanjiTableState extends State<KanjiTable> {
   List<DropdownMenuItem> sortingDropDowns = [];
   /// The currently selected sorting order
   KanjiSorting sortingSelection = KanjiSorting.STROKES_ASC;
+  
+
+  bool changedCategories = false;
 
 
   @override
@@ -125,7 +129,10 @@ class _KanjiTableState extends State<KanjiTable> {
         throw Exception("Illegal category");
     }
     categoryLevels = query.findAllSync()..sort((b, a) => a.compareTo(b));
-    categoryLevelSelection = categoryLevels.first;
+    if(changedCategories){
+      categoryLevelSelection = categoryLevels.first;
+      changedCategories = false;
+    }
   }
 
   /// Init the dropdowns for filtering / sorting the kanji tables
@@ -157,6 +164,7 @@ class _KanjiTableState extends State<KanjiTable> {
 
   @override
   Widget build(BuildContext context) {
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -179,6 +187,7 @@ class _KanjiTableState extends State<KanjiTable> {
                 onChanged: (value) {
                   setState(() {
                     categorySelection = value;
+                    changedCategories = true;
                     updateKanjisAndCategories();
                     initDropDowns();
                   });
@@ -229,35 +238,46 @@ class _KanjiTableState extends State<KanjiTable> {
             ]
           ),
         ),
-        SliverGrid.builder(
-          itemCount: kanjis.length,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 60
-          ),
-          itemBuilder: (context, i) {
-            return Card(
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => 
-                      const KanjiDetailsPage()
-                    )
-                  );
-                },
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      kanjis[i].character,
-                      style: TextStyle(
-                        fontSize: 500,
-                        fontFamily: g_japaneseFontFamily
+
+        AnimationLimiter(
+          key: UniqueKey(),
+          child: SliverGrid.builder(
+            itemCount: kanjis.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 60
+            ),
+            itemBuilder: (context, i) {
+              return AnimationConfiguration.staggeredGrid(
+                columnCount: (MediaQuery.of(context).size.width / 60).ceil(),
+                position: i,
+                duration: Duration(milliseconds: 300),
+                child: ScaleAnimation(
+                  child: Card(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => 
+                            const KanjiDetailsPage()
+                          )
+                        );
+                      },
+                      child: Center(
+                        child: FittedBox(
+                          child: Text(
+                            kanjis[i].character,
+                            style: TextStyle(
+                              fontSize: 500,
+                              fontFamily: g_japaneseFontFamily
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }
+              );
+            }
+          ),
         ),
           
       ],
