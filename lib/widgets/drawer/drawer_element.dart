@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
