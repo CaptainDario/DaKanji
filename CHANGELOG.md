@@ -5,16 +5,16 @@
 
 New Features:
 
-- Kana chart
-  - Includes all common (and not so common) kana
-  - Mnemonics for the main kana
-  - Sounds for all available kana
+- Kanji charts: filter and sort kanjis by categories such as JLPT, 漢検, KLC and more
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
 - Periodically, check for updates at app start
 - Dictionary
   - Mark the current word in example sentences (#31)
   - English dictionary can be disabled (#30)
+  - Show more kanji information
+    - KLC, new JLPT, RTK, 漢検
+    - antonyms, synonyms, lookalikes
   - Radical lookup
     - Clear selection
     - Selection from clipboard
