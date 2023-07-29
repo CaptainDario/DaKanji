@@ -147,7 +147,11 @@ class CodegenLoader extends AssetLoader{
     "title": "卡纳培训师"
   },
   "KanjiTableScreen": {
-    "title": "汉字表"
+    "title": "汉字表",
+    "tutorial_filter": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+    "tutorial_kanji_amount": "该数字表示当前显示的汉字数量。",
+    "tutorial_sort": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
+    "tutorial_welcome": "欢迎来到汉字表屏幕！"
   },
   "KanjiTrainerScreen": {
     "title": "汉字训练器"
@@ -1820,6 +1824,50 @@ static const Map<String,dynamic> localizations = {
       "fr": "Tableau des Kanji",
       "es": "Tabla de Kanji",
       "pl": "Tabela kanji"
+    },
+    "tutorial_welcome": {
+      "en": "Welcome to the kanji table screen!",
+      "de": "Willkommen auf dem Bildschirm der Kanji-Tabelle!",
+      "ru": "Добро пожаловать на экран таблицы кандзи!",
+      "ja": "漢字表画面へようこそ！",
+      "zh": "欢迎来到汉字表屏幕！",
+      "it": "Benvenuti nella schermata della tabella dei kanji!",
+      "fr": "Bienvenue sur l'écran de la table des kanji !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
+      "pl": "Witamy na ekranie tabeli kanji!"
+    },
+    "tutorial_filter": {
+      "en": "This dropdown lets you select a category of kanji that should be shown.",
+      "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+      "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+      "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+      "zh": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+      "it": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+      "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+      "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+      "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
+    },
+    "tutorial_sort": {
+      "en": "This dropdown lets you select an order for the shown kanji.",
+      "de": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
+      "ru": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
+      "ja": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
+      "zh": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
+      "it": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
+      "fr": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
+      "es": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
+      "pl": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
+    },
+    "tutorial_kanji_amount": {
+      "en": "This number indicates how many kanji are currently being shown.",
+      "de": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
+      "ru": "Это число показывает, сколько кандзи отображается в данный момент.",
+      "ja": "この数字は、現在表示されている漢字の数を示す。",
+      "zh": "该数字表示当前显示的汉字数量。",
+      "it": "Questo numero indica il numero di kanji attualmente visualizzati.",
+      "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
+      "es": "Este número indica cuántos kanji se están mostrando actualmente.",
+      "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
     }
   },
   "KanjiTrainerScreen": {
@@ -1853,7 +1901,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Инструктор Кана",
-      "ja": "#ERROR!",
+      "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -3263,10 +3311,14 @@ static const Map<String,dynamic> ja = {
     "title": "カナ・テーブル"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "カナ・トレーナー"
   },
   "KanjiTableScreen": {
-    "title": "漢字表"
+    "title": "漢字表",
+    "tutorial_filter": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+    "tutorial_kanji_amount": "この数字は、現在表示されている漢字の数を示す。",
+    "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
+    "tutorial_welcome": "漢字表画面へようこそ！"
   },
   "KanjiTrainerScreen": {
     "title": "漢字トレーナー"
@@ -3584,7 +3636,11 @@ static const Map<String,dynamic> de = {
     "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
-    "title": "Kanji Tabelle"
+    "title": "Kanji Tabelle",
+    "tutorial_filter": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+    "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
+    "tutorial_sort": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
+    "tutorial_welcome": "Willkommen auf dem Bildschirm der Kanji-Tabelle!"
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -3866,7 +3922,11 @@ static const Map<String,dynamic> ru = {
     "title": "Инструктор Кана"
   },
   "KanjiTableScreen": {
-    "title": "Таблица кандзи"
+    "title": "Таблица кандзи",
+    "tutorial_filter": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+    "tutorial_kanji_amount": "Это число показывает, сколько кандзи отображается в данный момент.",
+    "tutorial_sort": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
+    "tutorial_welcome": "Добро пожаловать на экран таблицы кандзи!"
   },
   "KanjiTrainerScreen": {
     "title": "Тренажер по кандзи"
@@ -4168,7 +4228,11 @@ static const Map<String,dynamic> pl = {
     "title": "Trener Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tabela kanji"
+    "title": "Tabela kanji",
+    "tutorial_filter": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane.",
+    "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych.",
+    "tutorial_sort": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji.",
+    "tutorial_welcome": "Witamy na ekranie tabeli kanji!"
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -4486,7 +4550,11 @@ static const Map<String,dynamic> en = {
     "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
-    "title": "Kanji Table"
+    "title": "Kanji Table",
+    "tutorial_filter": "This dropdown lets you select a category of kanji that should be shown.",
+    "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji.",
+    "tutorial_welcome": "Welcome to the kanji table screen!"
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -4768,7 +4836,11 @@ static const Map<String,dynamic> it = {
     "title": "Allenatore Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tabella Kanji"
+    "title": "Tabella Kanji",
+    "tutorial_filter": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+    "tutorial_kanji_amount": "Questo numero indica il numero di kanji attualmente visualizzati.",
+    "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
+    "tutorial_welcome": "Benvenuti nella schermata della tabella dei kanji!"
   },
   "KanjiTrainerScreen": {
     "title": "Allenatore di kanji"
@@ -5035,7 +5107,11 @@ static const Map<String,dynamic> fr = {
     "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tableau des Kanji"
+    "title": "Tableau des Kanji",
+    "tutorial_filter": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+    "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affichés.",
+    "tutorial_sort": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
+    "tutorial_welcome": "Bienvenue sur l'écran de la table des kanji !"
   },
   "KanjiTrainerScreen": {
     "title": "Entraîneur de kanji"
@@ -5302,7 +5378,11 @@ static const Map<String,dynamic> es = {
     "title": "Entrenador Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tabla de Kanji"
+    "title": "Tabla de Kanji",
+    "tutorial_filter": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+    "tutorial_kanji_amount": "Este número indica cuántos kanji se están mostrando actualmente.",
+    "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
+    "tutorial_welcome": "¡Bienvenido a la pantalla de la tabla de kanji!"
   },
   "KanjiTrainerScreen": {
     "title": "Entrenador de Kanji"

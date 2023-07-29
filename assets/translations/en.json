@@ -168,7 +168,11 @@
     "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
-    "title": "Kanji Table"
+    "title": "Kanji Table",
+    "tutorial_filter": "This dropdown lets you select a category of kanji that should be shown.",
+    "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji.",
+    "tutorial_welcome": "Welcome to the kanji table screen!"
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"

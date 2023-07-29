@@ -160,6 +160,10 @@ abstract class  LocaleKeys {
   static const KanaTrainerScreen_title = 'KanaTrainerScreen.title';
   static const KanaTrainerScreen = 'KanaTrainerScreen';
   static const KanjiTableScreen_title = 'KanjiTableScreen.title';
+  static const KanjiTableScreen_tutorial_filter = 'KanjiTableScreen.tutorial_filter';
+  static const KanjiTableScreen_tutorial_kanji_amount = 'KanjiTableScreen.tutorial_kanji_amount';
+  static const KanjiTableScreen_tutorial_sort = 'KanjiTableScreen.tutorial_sort';
+  static const KanjiTableScreen_tutorial_welcome = 'KanjiTableScreen.tutorial_welcome';
   static const KanjiTableScreen = 'KanjiTableScreen';
   static const KanjiTrainerScreen_title = 'KanjiTrainerScreen.title';
   static const KanjiTrainerScreen = 'KanjiTrainerScreen';

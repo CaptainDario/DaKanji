@@ -168,7 +168,11 @@
     "title": "Entrenador Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tabla de Kanji"
+    "title": "Tabla de Kanji",
+    "tutorial_filter": "Este men\u00fa desplegable te permite seleccionar la categor\u00eda de kanji que debe mostrarse.",
+    "tutorial_kanji_amount": "Este n\u00famero indica cu\u00e1ntos kanji se est\u00e1n mostrando actualmente.",
+    "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
+    "tutorial_welcome": "\u00a1Bienvenido a la pantalla de la tabla de kanji!"
   },
   "KanjiTrainerScreen": {
     "title": "Entrenador de Kanji"

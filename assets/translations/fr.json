@@ -168,7 +168,11 @@
     "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
-    "title": "Tableau des Kanji"
+    "title": "Tableau des Kanji",
+    "tutorial_filter": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner une cat\u00e9gorie de kanji \u00e0 afficher.",
+    "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affich\u00e9s.",
+    "tutorial_sort": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner un ordre pour les kanji affich\u00e9s.",
+    "tutorial_welcome": "Bienvenue sur l'\u00e9cran de la table des kanji !"
   },
   "KanjiTrainerScreen": {
     "title": "Entra\u00eeneur de kanji"
