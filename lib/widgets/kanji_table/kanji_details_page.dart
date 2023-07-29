@@ -11,8 +11,11 @@ import 'package:isar/isar.dart';
 
 class KanjiDetailsPage extends StatefulWidget {
 
+  /// The kanji that should be shown in this page
+  final String kanji;
 
   const KanjiDetailsPage(
+    this.kanji,
     {
       super.key
     }
@@ -33,11 +36,11 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
   void initState() {
     
     kanjiSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-      .characterEqualTo("口")
+      .characterEqualTo(widget.kanji)
     .findAllSync().first;
 
     kanjidic2 = GetIt.I<Isars>().dictionary.kanjidic2s.where()
-      .characterEqualTo("口")
+      .characterEqualTo(widget.kanji)
     .findAllSync().first;
 
     super.initState();
@@ -51,18 +54,20 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: DictionaryScreenKanjiCard(
-                kanjiSVG,
-                kanjidic2,
-                ["en"],
-                alternatives: [],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: DictionaryScreenKanjiCard(
+                  kanjiSVG,
+                  kanjidic2,
+                  ["en"],
+                  alternatives: [],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       )
     );
