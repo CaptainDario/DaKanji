@@ -171,15 +171,6 @@ class _KanjiTableState extends State<KanjiTable> {
           floating: true,
           title: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Show: "
-                  ),
-                ),
-              ),
               // category ie: JLPT, RTK, etc
               DropdownButton(
                 value: categorySelection,
@@ -204,16 +195,6 @@ class _KanjiTableState extends State<KanjiTable> {
                   });
                 },
               ),
-              // second level of sorting defaults to stroke oder based sorting
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Sort: "
-                  ),
-                ),
-              ),
               // the way of sorting the shown kanji
               DropdownButton(
                 value: sortingSelection,
@@ -225,13 +206,14 @@ class _KanjiTableState extends State<KanjiTable> {
                   });
                 },
               ),
+              Spacer(),
               // Amount of kanji in the current selection
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "No.: ${kanjis.length}"
+                    "${kanjis.length}"
                   ),
                 ),
               ),
@@ -257,7 +239,7 @@ class _KanjiTableState extends State<KanjiTable> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => 
-                            const KanjiDetailsPage()
+                            KanjiDetailsPage(kanjis[i].character)
                           )
                         );
                       },
