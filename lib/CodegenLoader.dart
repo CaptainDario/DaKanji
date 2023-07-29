@@ -37,6 +37,7 @@ class CodegenLoader extends AssetLoader{
     "example_tab": "例子",
     "examples_more": "显示更多的例子",
     "kanji_alternatives": "替代品",
+    "kanji_copied": "已复制：",
     "kanji_frequency": "频率。",
     "kanji_grade": "等级",
     "kanji_groups": "汉字组",
@@ -48,6 +49,7 @@ class CodegenLoader extends AssetLoader{
     "kanji_skip": "SKIP",
     "kanji_strokes": "中风",
     "kanji_tab": "汉字",
+    "kanji_to_clipboard": "到剪贴板",
     "search_filter_close": "关闭",
     "search_filter_ok": "好的",
     "search_radical_close": "关闭",
@@ -1810,7 +1812,7 @@ static const Map<String,dynamic> localizations = {
   "KanjiTableScreen": {
     "title": {
       "en": "Kanji Table",
-      "de": "Kanji-Tabelle",
+      "de": "Kanji Tabelle",
       "ru": "Таблица кандзи",
       "ja": "漢字表",
       "zh": "汉字表",
@@ -1823,7 +1825,7 @@ static const Map<String,dynamic> localizations = {
   "KanjiTrainerScreen": {
     "title": {
       "en": "Kanji Trainer",
-      "de": "Kanji-Trainer",
+      "de": "Kanji Trainer",
       "ru": "Тренажер по кандзи",
       "ja": "漢字トレーナー",
       "zh": "汉字训练器",
@@ -1851,7 +1853,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Инструктор Кана",
-      "ja": "カナ・トレーナー",
+      "ja": "#ERROR!",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -2701,6 +2703,28 @@ static const Map<String,dynamic> localizations = {
       "es": "Alternativas",
       "pl": "Alternatywy"
     },
+    "kanji_copied": {
+      "en": "Copied:",
+      "de": "Kopiert:",
+      "ru": "Копирование:",
+      "ja": "コピーした：",
+      "zh": "已复制：",
+      "it": "Copiato:",
+      "fr": "Copié :",
+      "es": "Copiado:",
+      "pl": "Skopiowane:"
+    },
+    "kanji_to_clipboard": {
+      "en": "to clipboard",
+      "de": "in die Zwischenablage",
+      "ru": "в буфер обмена",
+      "ja": "クリップボードへ",
+      "zh": "到剪贴板",
+      "it": "agli appunti",
+      "fr": "vers le presse-papiers",
+      "es": "al portapapeles",
+      "pl": "do schowka"
+    },
     "example_tab": {
       "en": "Examples",
       "de": "Beispiele",
@@ -3110,6 +3134,7 @@ static const Map<String,dynamic> ja = {
     "example_tab": "例",
     "examples_more": "その他の例",
     "kanji_alternatives": "その他の字体",
+    "kanji_copied": "コピーした：",
     "kanji_frequency": "頻度",
     "kanji_grade": "学習学年",
     "kanji_groups": "漢字グループ",
@@ -3121,6 +3146,7 @@ static const Map<String,dynamic> ja = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "画数",
     "kanji_tab": "漢字",
+    "kanji_to_clipboard": "クリップボードへ",
     "search_filter_close": "閉じる",
     "search_filter_ok": "OK",
     "search_radical_close": "閉じる",
@@ -3237,7 +3263,7 @@ static const Map<String,dynamic> ja = {
     "title": "カナ・テーブル"
   },
   "KanaTrainerScreen": {
-    "title": "カナ・トレーナー"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "漢字表"
@@ -3411,6 +3437,7 @@ static const Map<String,dynamic> de = {
     "example_tab": "Beispiele",
     "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
+    "kanji_copied": "Kopiert:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
@@ -3422,6 +3449,7 @@ static const Map<String,dynamic> de = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "in die Zwischenablage",
     "search_filter_close": "Schließen",
     "search_filter_ok": "Ok",
     "search_radical_close": "Schließen",
@@ -3556,10 +3584,10 @@ static const Map<String,dynamic> de = {
     "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
-    "title": "Kanji-Tabelle"
+    "title": "Kanji Tabelle"
   },
   "KanjiTrainerScreen": {
-    "title": "Kanji-Trainer"
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
@@ -3728,6 +3756,7 @@ static const Map<String,dynamic> ru = {
     "example_tab": "Пример",
     "examples_more": "Показать больше примеров",
     "kanji_alternatives": "Альтернативы",
+    "kanji_copied": "Копирование:",
     "kanji_frequency": "Частота.",
     "kanji_grade": "Класс",
     "kanji_groups": "Группы кандзи",
@@ -3739,6 +3768,7 @@ static const Map<String,dynamic> ru = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Инсульты",
     "kanji_tab": "Кандзи",
+    "kanji_to_clipboard": "в буфер обмена",
     "search_filter_close": "Закрыть",
     "search_filter_ok": "Хорошо",
     "search_radical_close": "Закрыть",
@@ -3993,6 +4023,7 @@ static const Map<String,dynamic> pl = {
     "example_tab": "Przykłady",
     "examples_more": "Pokaż więcej przykładów",
     "kanji_alternatives": "Alternatywy",
+    "kanji_copied": "Skopiowane:",
     "kanji_frequency": "Częstotliowść",
     "kanji_grade": "Stopień",
     "kanji_groups": "Grupy kanji",
@@ -4004,6 +4035,7 @@ static const Map<String,dynamic> pl = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Pociągnięcia pędzla",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "do schowka",
     "search_filter_close": "Zamknij",
     "search_filter_ok": "Ok",
     "search_radical_close": "Zamknij",
@@ -4307,6 +4339,7 @@ static const Map<String,dynamic> en = {
     "example_tab": "Examples",
     "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
+    "kanji_copied": "Copied:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Kanji groups",
@@ -4318,6 +4351,7 @@ static const Map<String,dynamic> en = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "to clipboard",
     "search_filter_close": "Close",
     "search_filter_ok": "Ok",
     "search_radical_close": "Close",
@@ -4624,6 +4658,7 @@ static const Map<String,dynamic> it = {
     "example_tab": "Esempio",
     "examples_more": "Mostra altri esempi",
     "kanji_alternatives": "Alternative",
+    "kanji_copied": "Copiato:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
@@ -4635,6 +4670,7 @@ static const Map<String,dynamic> it = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Ictus",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "agli appunti",
     "search_filter_close": "Chiudere",
     "search_filter_ok": "Ok",
     "search_radical_close": "Chiudere",
@@ -4889,6 +4925,7 @@ static const Map<String,dynamic> fr = {
     "example_tab": "Exemple",
     "examples_more": "Montrer plus d'exemples",
     "kanji_alternatives": "Alternatives",
+    "kanji_copied": "Copié :",
     "kanji_frequency": "Fréq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Groupes de kanji",
@@ -4900,6 +4937,7 @@ static const Map<String,dynamic> fr = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "vers le presse-papiers",
     "search_filter_close": "Fermer",
     "search_filter_ok": "Ok",
     "search_radical_close": "Fermer",
@@ -5154,6 +5192,7 @@ static const Map<String,dynamic> es = {
     "example_tab": "Ejemplo",
     "examples_more": "Mostrar más ejemplos",
     "kanji_alternatives": "Alternativas",
+    "kanji_copied": "Copiado:",
     "kanji_frequency": "Frec.",
     "kanji_grade": "Grado",
     "kanji_groups": "Grupos de kanji",
@@ -5165,6 +5204,7 @@ static const Map<String,dynamic> es = {
     "kanji_skip": "SKIP",
     "kanji_strokes": "Trazos",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "al portapapeles",
     "search_filter_close": "Cerrar",
     "search_filter_ok": "Ok",
     "search_radical_close": "Cerrar",

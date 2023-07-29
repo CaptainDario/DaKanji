@@ -21,6 +21,7 @@
     "example_tab": "\u4f8b",
     "examples_more": "\u305d\u306e\u4ed6\u306e\u4f8b",
     "kanji_alternatives": "\u305d\u306e\u4ed6\u306e\u5b57\u4f53",
+    "kanji_copied": "\u30b3\u30d4\u30fc\u3057\u305f\uff1a",
     "kanji_frequency": "\u983b\u5ea6",
     "kanji_grade": "\u5b66\u7fd2\u5b66\u5e74",
     "kanji_groups": "\u6f22\u5b57\u30b0\u30eb\u30fc\u30d7",
@@ -32,6 +33,7 @@
     "kanji_skip": "SKIP",
     "kanji_strokes": "\u753b\u6570",
     "kanji_tab": "\u6f22\u5b57",
+    "kanji_to_clipboard": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078",
     "search_filter_close": "\u9589\u3058\u308b",
     "search_filter_ok": "OK",
     "search_radical_close": "\u9589\u3058\u308b",
@@ -163,7 +165,7 @@
     "title": "\u30ab\u30ca\u30fb\u30c6\u30fc\u30d6\u30eb"
   },
   "KanaTrainerScreen": {
-    "title": "\u30ab\u30ca\u30fb\u30c8\u30ec\u30fc\u30ca\u30fc"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "\u6f22\u5b57\u8868"

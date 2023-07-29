@@ -1529,7 +1529,7 @@
   "KanjiTableScreen": {
     "title": {
       "en": "Kanji Table",
-      "de": "Kanji-Tabelle",
+      "de": "Kanji Tabelle",
       "ru": "Таблица кандзи",
       "ja": "漢字表",
       "zh": "汉字表",
@@ -1542,7 +1542,7 @@
   "KanjiTrainerScreen": {
     "title": {
       "en": "Kanji Trainer",
-      "de": "Kanji-Trainer",
+      "de": "Kanji Trainer",
       "ru": "Тренажер по кандзи",
       "ja": "漢字トレーナー",
       "zh": "汉字训练器",
@@ -1570,7 +1570,7 @@
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Инструктор Кана",
-      "ja": "カナ・トレーナー",
+      "ja": "#ERROR!",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -2434,6 +2434,28 @@
       "fr": "Alternatives",
       "es": "Alternativas",
       "pl": "Alternatywy"
+    },
+    "kanji_copied": {
+      "en": "Copied:",
+      "de": "Kopiert:",
+      "ru": "Копирование:",
+      "ja": "コピーした：",
+      "zh": "已复制：",
+      "it": "Copiato:",
+      "fr": "Copié :",
+      "es": "Copiado:",
+      "pl": "Skopiowane:"
+    },
+    "kanji_to_clipboard": {
+      "en": "to clipboard",
+      "de": "in die Zwischenablage",
+      "ru": "в буфер обмена",
+      "ja": "クリップボードへ",
+      "zh": "到剪贴板",
+      "it": "agli appunti",
+      "fr": "vers le presse-papiers",
+      "es": "al portapapeles",
+      "pl": "do schowka"
     },
     "example_tab": {
       "en": "Examples",

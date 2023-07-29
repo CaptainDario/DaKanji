@@ -21,6 +21,7 @@
     "example_tab": "Beispiele",
     "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
+    "kanji_copied": "Kopiert:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
@@ -32,6 +33,7 @@
     "kanji_skip": "SKIP",
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "in die Zwischenablage",
     "search_filter_close": "Schlie\u00dfen",
     "search_filter_ok": "Ok",
     "search_radical_close": "Schlie\u00dfen",
@@ -166,10 +168,10 @@
     "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
-    "title": "Kanji-Tabelle"
+    "title": "Kanji Tabelle"
   },
   "KanjiTrainerScreen": {
-    "title": "Kanji-Trainer"
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"

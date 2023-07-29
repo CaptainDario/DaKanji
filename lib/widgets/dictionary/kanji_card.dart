@@ -96,6 +96,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       )) {
         if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
           meanings[widget.kanjidic2entry.meanings[i].language!] = [];
+
         meanings[widget.kanjidic2entry.meanings[i].language]!.add(
           widget.kanjidic2entry.meanings[i].meaning!
         );
@@ -128,7 +129,10 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: const Duration(seconds: 1),
-                                content: Text("copied " + widget.kanjidic2entry.character + " to clipboard"),
+                                content: Text(
+                                  LocaleKeys.DictionaryScreen_kanji_copied.tr() +
+                                  widget.kanjidic2entry.character +
+                                  LocaleKeys.DictionaryScreen_kanji_to_clipboard.tr()),
                               )
                             );
                           },
