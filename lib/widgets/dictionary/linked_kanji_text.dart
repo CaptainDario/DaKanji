@@ -25,7 +25,7 @@ class LinkedKanjiText extends StatelessWidget {
         children: [
           for (String s in kanji)
             TextSpan(
-              text: s,
+              text: s + (s != kanji.last ? ",  " : ""),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   Navigator.of(context).push(

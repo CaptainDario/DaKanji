@@ -22,7 +22,6 @@
     "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
     "kanji_copied": "Kopiert:",
-    "kanji_dissimilar": "Ungleiche",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
@@ -32,7 +31,6 @@
     "kanji_lookalikes": "Verwechselungsgefahr",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radikale",
-    "kanji_similar": "\u00c4hnlich",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
@@ -55,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "Sie k\u00f6nnen ? verwenden, um ein einzelnes Zeichen zu finden, und Sie k\u00f6nnen * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
     "tutorial_search_radical_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie Filter auf Ihre Suche anwenden.",
     "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprachen der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
-    "word_antonyms": "Antonyme:",
+    "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
     "word_conj_adj_conditional": "Konditional 2",
@@ -104,7 +102,7 @@
     "word_restricted_to": "Eingeschr\u00e4nkt auf:",
     "word_see_also": "Siehe auch:",
     "word_source_language": "Ursprungssprache:",
-    "word_synonyms": "Synonyme:",
+    "word_synonyms": "Synonyme",
     "word_tab": "Wort",
     "word_tab_menu_add_to_list": "Zur Liste hinzuf\u00fcgen",
     "word_tab_menu_send_to_anki": "An Anki senden",
@@ -149,6 +147,10 @@
     "skip": "\u00dcberspingen",
     "system": "System",
     "web": "Web"
+  },
+  "GrammarScreen": {
+    "import_dojg": null,
+    "title": null
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
@@ -224,6 +226,18 @@
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzuf\u00fcgen oder den ganzen Satz zu \u00fcbersetzen.",
     "Onboarding_3_title": "Du wei\u00dft nicht wie man einen  Satz liest?"
   },
+  "Overview": {
+    "": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "ja": "",
+    "pl": "",
+    "ru": "",
+    "zh": ""
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "L\u00f6scht die W\u00f6rterbuchdateien.",
     "advanced_settings_delete_history": "L\u00f6scht den Suchverlauf.",
@@ -272,6 +286,24 @@
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
+  },
+  "Stores": {
+    "long_description": null,
+    "mockup_10": null,
+    "mockup_1_1": null,
+    "mockup_1_2": null,
+    "mockup_2_1": null,
+    "mockup_2_2": null,
+    "mockup_3": null,
+    "mockup_4_1": null,
+    "mockup_4_2": null,
+    "mockup_5": null,
+    "mockup_6": null,
+    "mockup_7": null,
+    "mockup_8": null,
+    "mockup_9": null,
+    "short_description": null,
+    "shortest_description": null
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
@@ -323,5 +355,8 @@
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
+  },
+  "_example": {
+    "draw": "zeichnen"
   }
 }

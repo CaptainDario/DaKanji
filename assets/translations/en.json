@@ -22,7 +22,6 @@
     "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
     "kanji_copied": "Copied:",
-    "kanji_dissimilar": "Dissimilar",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Kanji groups",
@@ -32,7 +31,6 @@
     "kanji_lookalikes": "Lookalikes",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals",
-    "kanji_similar": "Similar",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
@@ -55,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "You can use ? to match any single character and you can use * to match 0 to infinite characters.",
     "tutorial_search_radical_text": "This button lets you apply filter to your search.",
     "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
-    "word_antonyms": "Antonyms:",
+    "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
     "word_conj_adj_conditional": "Conditional",
@@ -104,7 +102,7 @@
     "word_restricted_to": "Restricted to:",
     "word_see_also": "See also:",
     "word_source_language": "Source language:",
-    "word_synonyms": "Synonyms:",
+    "word_synonyms": "Synonyms",
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_send_to_anki": "Send to Anki",
@@ -149,6 +147,10 @@
     "skip": "skip",
     "system": "system",
     "web": "web"
+  },
+  "GrammarScreen": {
+    "import_dojg": "Tap to import the DoJG deck",
+    "title": "Grammar"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
@@ -224,6 +226,18 @@
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
+  "Overview": {
+    "": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "ja": "",
+    "pl": "",
+    "ru": "",
+    "zh": ""
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
     "advanced_settings_delete_history": "Delete search history.",
@@ -272,6 +286,24 @@
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
+  },
+  "Stores": {
+    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
+    "mockup_10": null,
+    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
+    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
+    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
+    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
+    "mockup_3": "Read texts by adding Furigana, translations and more!",
+    "mockup_4_1": "Use it on all your devices!",
+    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
+    "mockup_5": null,
+    "mockup_6": null,
+    "mockup_7": null,
+    "mockup_8": null,
+    "mockup_9": null,
+    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
+    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
@@ -323,5 +355,8 @@
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "title": "Word lists"
+  },
+  "_example": {
+    "draw": "draw"
   }
 }

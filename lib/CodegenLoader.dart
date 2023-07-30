@@ -38,7 +38,6 @@ class CodegenLoader extends AssetLoader{
     "examples_more": "显示更多的例子",
     "kanji_alternatives": "替代品",
     "kanji_copied": "已复制：",
-    "kanji_dissimilar": "不相似",
     "kanji_frequency": "频率。",
     "kanji_grade": "等级",
     "kanji_groups": "汉字组",
@@ -48,7 +47,6 @@ class CodegenLoader extends AssetLoader{
     "kanji_lookalikes": "外观相似",
     "kanji_on_reading": "在",
     "kanji_radicals": "激进主义者",
-    "kanji_similar": "类似",
     "kanji_skip": "SKIP",
     "kanji_strokes": "中风",
     "kanji_tab": "汉字",
@@ -71,7 +69,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_search_input_wildcards_text": "你可以用?来匹配任何单个字符，你可以用*来匹配0到无限个字符。",
     "tutorial_search_radical_text": "这个按钮让你在搜索中应用过滤器。",
     "tutorial_word_tab": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
-    "word_antonyms": "反义词：",
+    "word_antonyms": "反义词",
     "word_conjugation": "共轭法",
     "word_dialect": "方言：",
     "word_field": "领域：",
@@ -128,6 +126,8 @@ class CodegenLoader extends AssetLoader{
     "skip": "跳过",
     "system": "系统",
     "web": "网络"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "不要再问了",
@@ -202,6 +202,8 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_3_text": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
     "Onboarding_3_title": "不知道如何读懂一个句子？"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "删除字典文件。",
     "advanced_settings_delete_history": "删除搜索历史。",
@@ -251,6 +253,8 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "title": "设置"
   },
+  "Stores": {
+  },
   "TextScreen": {
     "input_text_here": "在这里输入文字...",
     "title": "文本",
@@ -287,9 +291,146 @@ class CodegenLoader extends AssetLoader{
     "search_history": "搜索历史",
     "send_to_anki": "发送到anki",
     "title": "词表"
+  },
+  "_example": {
+    "draw": "绘制"
   }
 };
 static const Map<String,dynamic> localizations = {
+  "Overview": {
+    "": {
+      "A cell has a red background when there is no translation": "Stores",
+      "A cell has a yellow background when the reference (English) localization was updated.": "AboutScreen",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "ChangelogScreen"
+    },
+    "en": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "de": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "ru": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 2",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "ja": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "zh": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "it": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "fr": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
+    },
+    "es": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 1",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    },
+    "pl": {
+      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
+      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
+      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
+    }
+  },
+  "_example": {
+    "draw": {
+      "en": "draw",
+      "de": "zeichnen",
+      "ru": "нарисовать",
+      "ja": "ドロー",
+      "zh": "绘制",
+      "it": "sorteggio",
+      "fr": "tirage au sort",
+      "es": "dibujar",
+      "pl": "losowanie"
+    }
+  },
+  "Stores": {
+    "shortest_description": {
+      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
+      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
+      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
+    },
+    "short_description": {
+      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
+      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
+      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
+    },
+    "long_description": {
+      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
+      "ja": "日本語を勉強しているあなた！DaKanjiを試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？DaKanjiはそんなあなたのためにあります。アプリが手書きの漢字をデジタルに変換します。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。また、Dakanjiは文章を読むときにも使えます。読みたい文章にふりがなやスペースを付けたり、単語を調べることもできます。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します\n* ウェブやアプリの辞書を利用して、オフラインで漢字や単語を翻訳することができます\n* 文章にふりがなやスペースなどを追加します\n* 全てのデバイスで使用可能です",
+      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
+      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
+    },
+    "mockup_1_1": {
+      "en": "Use the built-in dictionary to lookup words offline.",
+      "ja": "内臓の辞書で単語を調べることができます",
+      "es": "Traduce con diccionarios",
+      "pl": "Tłumacz za pomocą słownika"
+    },
+    "mockup_1_2": {
+      "en": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
+      "ja": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
+    },
+    "mockup_2_1": {
+      "en": "Don't know a Kanji?\nJust draw it!",
+      "ja": "漢字が読めない？まずは書いてみましょう！",
+      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
+      "pl": "Nie znasz Kanji? Po prostu je namaluj!"
+    },
+    "mockup_2_2": {
+      "en": "Find 6500+ characters, not even the stroke order matters!",
+      "ja": "書き順を知らなくても大丈夫！",
+      "es": "Ni siquiera importa el orden de los trazos.",
+      "pl": "Kolejność malowania znaków nie ma znaczenia."
+    },
+    "mockup_3": {
+      "en": "Read texts by adding Furigana, translations and more!",
+      "ja": "翻訳したり、ふりがなを振って文章を理解しよう！",
+      "pl": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!"
+    },
+    "mockup_4_1": {
+      "en": "Use it on all your devices!",
+      "ja": "全てのデバイスで使用することができます！",
+      "pl": "Używaj na wszystkich swoich urządzeniach!"
+    },
+    "mockup_4_2": {
+      "en": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
+      "ja": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
+      "pl": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie."
+    },
+    "mockup_5": {
+    },
+    "mockup_6": {
+    },
+    "mockup_7": {
+    },
+    "mockup_8": {
+    },
+    "mockup_9": {
+    },
+    "mockup_10": {
+    }
+  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -1404,6 +1545,14 @@ static const Map<String,dynamic> localizations = {
       "pl": "Usuwa historię wyszukiwania."
     }
   },
+  "GrammarScreen": {
+    "title": {
+      "en": "Grammar",
+    },
+    "import_dojg": {
+      "en": "Tap to import the DoJG deck",
+    }
+  },
   "WebviewScreen": {
     "loading": {
       "en": "Searching",
@@ -2375,8 +2524,8 @@ static const Map<String,dynamic> localizations = {
       "pl": "Przysłowia"
     },
     "word_synonyms": {
-      "en": "Synonyms:",
-      "de": "Synonyme:",
+      "en": "Synonyms",
+      "de": "Synonyme",
       "ru": "Синонимы",
       "ja": "同義語",
       "zh": "同义词",
@@ -2386,15 +2535,15 @@ static const Map<String,dynamic> localizations = {
       "pl": "Synonimy"
     },
     "word_antonyms": {
-      "en": "Antonyms:",
-      "de": "Antonyme:",
-      "ru": "Антонимы:",
-      "ja": "反意語：",
-      "zh": "反义词：",
-      "it": "Anonimi:",
-      "fr": "Antonymes :",
-      "es": "#ERROR!",
-      "pl": "Antony:"
+      "en": "Antonyms",
+      "de": "Antonyme",
+      "ru": "Антонимы",
+      "ja": "反意語",
+      "zh": "反义词",
+      "it": "Anonimi",
+      "fr": "Antonymes",
+      "es": "Antónimos",
+      "pl": "Antonimy"
     },
     "word_images": {
       "en": "Images",
@@ -2744,28 +2893,6 @@ static const Map<String,dynamic> localizations = {
       "es": "Kun",
       "pl": "Kun"
     },
-    "kanji_similar": {
-      "en": "Similar",
-      "de": "Ähnlich",
-      "ru": "Похожие",
-      "ja": "同様",
-      "zh": "类似",
-      "it": "Simile",
-      "fr": "Semblable",
-      "es": "Similar",
-      "pl": "Podobne"
-    },
-    "kanji_dissimilar": {
-      "en": "Dissimilar",
-      "de": "Ungleiche",
-      "ru": "Разнородные",
-      "ja": "異質",
-      "zh": "不相似",
-      "it": "Dissimile",
-      "fr": "Dissemblables",
-      "es": "Disímiles",
-      "pl": "Niepodobny"
-    },
     "kanji_lookalikes": {
       "en": "Lookalikes",
       "de": "Verwechselungsgefahr",
@@ -3036,7 +3163,7 @@ static const Map<String,dynamic> localizations = {
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji"
+      "de": "Kuzushiji",
     }
   },
   "WordListsScreen": {
@@ -3231,7 +3358,6 @@ static const Map<String,dynamic> ja = {
     "examples_more": "その他の例",
     "kanji_alternatives": "その他の字体",
     "kanji_copied": "コピーした：",
-    "kanji_dissimilar": "異質",
     "kanji_frequency": "頻度",
     "kanji_grade": "学習学年",
     "kanji_groups": "漢字グループ",
@@ -3241,7 +3367,6 @@ static const Map<String,dynamic> ja = {
     "kanji_lookalikes": "そっくりさん",
     "kanji_on_reading": "音読み",
     "kanji_radicals": "部首",
-    "kanji_similar": "同様",
     "kanji_skip": "SKIP",
     "kanji_strokes": "画数",
     "kanji_tab": "漢字",
@@ -3264,7 +3389,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_search_input_wildcards_text": "？を使えば任意の1文字に、*を使えば0～無限大の文字にマッチします。",
     "tutorial_search_radical_text": "検索にフィルターをかけることができます",
     "tutorial_word_tab": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます",
-    "word_antonyms": "反意語：",
+    "word_antonyms": "反意語",
     "word_conj_adj_causative": "使役形",
     "word_conj_adj_conditional": "条件形",
     "word_conj_adj_non_past": "現在形（未来）",
@@ -3344,6 +3469,8 @@ static const Map<String,dynamic> ja = {
     "system": "システム",
     "web": "ウェブ"
   },
+  "GrammarScreen": {
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
@@ -3417,6 +3544,8 @@ static const Map<String,dynamic> ja = {
     "Onboarding_3_text": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
     "Onboarding_3_title": "文章の読み方がわからない？"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルの削除",
     "advanced_settings_delete_history": "検索履歴の削除",
@@ -3465,6 +3594,18 @@ static const Map<String,dynamic> ja = {
     "restarts_app": "アプリを再起動する",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "title": "設定"
+  },
+  "Stores": {
+    "long_description": "日本語を勉強しているあなた！DaKanjiを試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？DaKanjiはそんなあなたのためにあります。アプリが手書きの漢字をデジタルに変換します。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。また、Dakanjiは文章を読むときにも使えます。読みたい文章にふりがなやスペースを付けたり、単語を調べることもできます。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します\n* ウェブやアプリの辞書を利用して、オフラインで漢字や単語を翻訳することができます\n* 文章にふりがなやスペースなどを追加します\n* 全てのデバイスで使用可能です",
+    "mockup_1_1": "内臓の辞書で単語を調べることができます",
+    "mockup_1_2": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
+    "mockup_2_1": "漢字が読めない？まずは書いてみましょう！",
+    "mockup_2_2": "書き順を知らなくても大丈夫！",
+    "mockup_3": "翻訳したり、ふりがなを振って文章を理解しよう！",
+    "mockup_4_1": "全てのデバイスで使用することができます！",
+    "mockup_4_2": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
+    "short_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
+    "shortest_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！"
   },
   "TextScreen": {
     "input_text_here": "ここにテキストを入力...",
@@ -3516,6 +3657,9 @@ static const Map<String,dynamic> ja = {
     "search_history": "検索履歴",
     "send_to_anki": "ankiに送る",
     "title": "単語リスト"
+  },
+  "_example": {
+    "draw": "ドロー"
   }
 };
 static const Map<String,dynamic> de = {
@@ -3542,7 +3686,6 @@ static const Map<String,dynamic> de = {
     "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
     "kanji_copied": "Kopiert:",
-    "kanji_dissimilar": "Ungleiche",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
@@ -3552,7 +3695,6 @@ static const Map<String,dynamic> de = {
     "kanji_lookalikes": "Verwechselungsgefahr",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radikale",
-    "kanji_similar": "Ähnlich",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
@@ -3575,7 +3717,7 @@ static const Map<String,dynamic> de = {
     "tutorial_search_input_wildcards_text": "Sie können ? verwenden, um ein einzelnes Zeichen zu finden, und Sie können * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
     "tutorial_search_radical_text": "Mit dieser Schaltfläche können Sie Filter auf Ihre Suche anwenden.",
     "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
-    "word_antonyms": "Antonyme:",
+    "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
     "word_conj_adj_conditional": "Konditional 2",
@@ -3624,7 +3766,7 @@ static const Map<String,dynamic> de = {
     "word_restricted_to": "Eingeschränkt auf:",
     "word_see_also": "Siehe auch:",
     "word_source_language": "Ursprungssprache:",
-    "word_synonyms": "Synonyme:",
+    "word_synonyms": "Synonyme",
     "word_tab": "Wort",
     "word_tab_menu_add_to_list": "Zur Liste hinzufügen",
     "word_tab_menu_send_to_anki": "An Anki senden",
@@ -3669,6 +3811,8 @@ static const Map<String,dynamic> de = {
     "skip": "Überspingen",
     "system": "System",
     "web": "Web"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
@@ -3744,6 +3888,8 @@ static const Map<String,dynamic> de = {
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
     "Onboarding_3_title": "Du weißt nicht wie man einen  Satz liest?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
     "advanced_settings_delete_history": "Löscht den Suchverlauf.",
@@ -3792,6 +3938,8 @@ static const Map<String,dynamic> de = {
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
+  },
+  "Stores": {
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
@@ -3843,6 +3991,9 @@ static const Map<String,dynamic> de = {
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
+  },
+  "_example": {
+    "draw": "zeichnen"
   }
 };
 static const Map<String,dynamic> ru = {
@@ -3869,7 +4020,6 @@ static const Map<String,dynamic> ru = {
     "examples_more": "Показать больше примеров",
     "kanji_alternatives": "Альтернативы",
     "kanji_copied": "Копирование:",
-    "kanji_dissimilar": "Разнородные",
     "kanji_frequency": "Частота.",
     "kanji_grade": "Класс",
     "kanji_groups": "Группы кандзи",
@@ -3879,7 +4029,6 @@ static const Map<String,dynamic> ru = {
     "kanji_lookalikes": "Lookalikes",
     "kanji_on_reading": "На сайте",
     "kanji_radicals": "Радикалы",
-    "kanji_similar": "Похожие",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Инсульты",
     "kanji_tab": "Кандзи",
@@ -3902,7 +4051,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_search_input_wildcards_text": "Вы можете использовать ? для соответствия любому отдельному символу, а * - от 0 до бесконечного количества символов.",
     "tutorial_search_radical_text": "Эта кнопка позволяет применить фильтр к поиску.",
     "tutorial_word_tab": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
-    "word_antonyms": "Антонимы:",
+    "word_antonyms": "Антонимы",
     "word_conjugation": "Спряжение",
     "word_dialect": "Диалект:",
     "word_field": "Поле:",
@@ -3959,6 +4108,8 @@ static const Map<String,dynamic> ru = {
     "skip": "пропустить",
     "system": "система",
     "web": "веб-сайт"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
@@ -4033,6 +4184,8 @@ static const Map<String,dynamic> ru = {
     "Onboarding_3_text": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
     "Onboarding_3_title": "Не умеете читать предложения?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Удаляет файлы словарей.",
     "advanced_settings_delete_history": "Удаляет историю поиска.",
@@ -4082,6 +4235,8 @@ static const Map<String,dynamic> ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "title": "Настройки"
   },
+  "Stores": {
+  },
   "TextScreen": {
     "input_text_here": "Введите текст здесь...",
     "title": "Текст",
@@ -4118,6 +4273,9 @@ static const Map<String,dynamic> ru = {
     "search_history": "История поиска",
     "send_to_anki": "Отправить в anki",
     "title": "Списки слов"
+  },
+  "_example": {
+    "draw": "нарисовать"
   }
 };
 static const Map<String,dynamic> pl = {
@@ -4144,7 +4302,6 @@ static const Map<String,dynamic> pl = {
     "examples_more": "Pokaż więcej przykładów",
     "kanji_alternatives": "Alternatywy",
     "kanji_copied": "Skopiowane:",
-    "kanji_dissimilar": "Niepodobny",
     "kanji_frequency": "Częstotliowść",
     "kanji_grade": "Stopień",
     "kanji_groups": "Grupy kanji",
@@ -4154,7 +4311,6 @@ static const Map<String,dynamic> pl = {
     "kanji_lookalikes": "Podobieństwa",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals (metoda kluczy)",
-    "kanji_similar": "Podobne",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Pociągnięcia pędzla",
     "kanji_tab": "Kanji",
@@ -4177,7 +4333,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_search_input_wildcards_text": "Możesz użyć ? aby dopasować dowolny pojedynczy znak i możesz użyć * aby dopasować 0 do nieskończonych znaków.",
     "tutorial_search_radical_text": "Ten przycisk pozwala zastosować filtr do wyszukiwania.",
     "tutorial_word_tab": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach.",
-    "word_antonyms": "Antony:",
+    "word_antonyms": "Antonimy",
     "word_conj_adj_causative": "Przyczynowy",
     "word_conj_adj_causative_m": "Zrób kogoś [nie]",
     "word_conj_adj_conditional": "Warunkowy",
@@ -4270,6 +4426,8 @@ static const Map<String,dynamic> pl = {
     "system": "system",
     "web": "web"
   },
+  "GrammarScreen": {
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!",
@@ -4343,6 +4501,8 @@ static const Map<String,dynamic> pl = {
     "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie.",
     "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
     "advanced_settings_delete_history": "Usuwa historię wyszukiwania.",
@@ -4391,6 +4551,17 @@ static const Map<String,dynamic> pl = {
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
+  },
+  "Stores": {
+    "long_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa",
+    "mockup_1_1": "Tłumacz za pomocą słownika",
+    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
+    "mockup_2_2": "Kolejność malowania znaków nie ma znaczenia.",
+    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!",
+    "mockup_4_1": "Używaj na wszystkich swoich urządzeniach!",
+    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie.",
+    "short_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki.",
+    "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Wprowadź tekst tutaj...",
@@ -4442,6 +4613,9 @@ static const Map<String,dynamic> pl = {
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wyślij do anki",
     "title": "Listy słowne"
+  },
+  "_example": {
+    "draw": "losowanie"
   }
 };
 static const Map<String,dynamic> en = {
@@ -4468,7 +4642,6 @@ static const Map<String,dynamic> en = {
     "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
     "kanji_copied": "Copied:",
-    "kanji_dissimilar": "Dissimilar",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Kanji groups",
@@ -4478,7 +4651,6 @@ static const Map<String,dynamic> en = {
     "kanji_lookalikes": "Lookalikes",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals",
-    "kanji_similar": "Similar",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
@@ -4501,7 +4673,7 @@ static const Map<String,dynamic> en = {
     "tutorial_search_input_wildcards_text": "You can use ? to match any single character and you can use * to match 0 to infinite characters.",
     "tutorial_search_radical_text": "This button lets you apply filter to your search.",
     "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
-    "word_antonyms": "Antonyms:",
+    "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
     "word_conj_adj_conditional": "Conditional",
@@ -4550,7 +4722,7 @@ static const Map<String,dynamic> en = {
     "word_restricted_to": "Restricted to:",
     "word_see_also": "See also:",
     "word_source_language": "Source language:",
-    "word_synonyms": "Synonyms:",
+    "word_synonyms": "Synonyms",
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_send_to_anki": "Send to Anki",
@@ -4595,6 +4767,10 @@ static const Map<String,dynamic> en = {
     "skip": "skip",
     "system": "system",
     "web": "web"
+  },
+  "GrammarScreen": {
+    "import_dojg": "Tap to import the DoJG deck",
+    "title": "Grammar"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
@@ -4670,6 +4846,8 @@ static const Map<String,dynamic> en = {
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
     "advanced_settings_delete_history": "Delete search history.",
@@ -4718,6 +4896,18 @@ static const Map<String,dynamic> en = {
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
+  },
+  "Stores": {
+    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
+    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
+    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
+    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
+    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
+    "mockup_3": "Read texts by adding Furigana, translations and more!",
+    "mockup_4_1": "Use it on all your devices!",
+    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
+    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
+    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
@@ -4769,6 +4959,9 @@ static const Map<String,dynamic> en = {
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "title": "Word lists"
+  },
+  "_example": {
+    "draw": "draw"
   }
 };
 static const Map<String,dynamic> it = {
@@ -4795,7 +4988,6 @@ static const Map<String,dynamic> it = {
     "examples_more": "Mostra altri esempi",
     "kanji_alternatives": "Alternative",
     "kanji_copied": "Copiato:",
-    "kanji_dissimilar": "Dissimile",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
@@ -4805,7 +4997,6 @@ static const Map<String,dynamic> it = {
     "kanji_lookalikes": "Somiglianze",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicali",
-    "kanji_similar": "Simile",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Ictus",
     "kanji_tab": "Kanji",
@@ -4828,7 +5019,7 @@ static const Map<String,dynamic> it = {
     "tutorial_search_input_wildcards_text": "È possibile utilizzare ? per abbinare qualsiasi singolo carattere e * per abbinare da 0 a infiniti caratteri.",
     "tutorial_search_radical_text": "Questo pulsante consente di applicare un filtro alla ricerca.",
     "tutorial_word_tab": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
-    "word_antonyms": "Anonimi:",
+    "word_antonyms": "Anonimi",
     "word_conjugation": "Coniugazione",
     "word_dialect": "Dialetto:",
     "word_field": "Campo:",
@@ -4885,6 +5076,8 @@ static const Map<String,dynamic> it = {
     "skip": "saltare",
     "system": "sistema",
     "web": "web"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
@@ -4959,6 +5152,8 @@ static const Map<String,dynamic> it = {
     "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
     "Onboarding_3_title": "Non sapete leggere una frase?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Elimina i file del dizionario.",
     "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
@@ -5008,6 +5203,8 @@ static const Map<String,dynamic> it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "title": "Impostazioni"
   },
+  "Stores": {
+  },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
     "title": "Testo",
@@ -5044,6 +5241,9 @@ static const Map<String,dynamic> it = {
     "search_history": "Storia della ricerca",
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole"
+  },
+  "_example": {
+    "draw": "sorteggio"
   }
 };
 static const Map<String,dynamic> fr = {
@@ -5070,7 +5270,6 @@ static const Map<String,dynamic> fr = {
     "examples_more": "Montrer plus d'exemples",
     "kanji_alternatives": "Alternatives",
     "kanji_copied": "Copié :",
-    "kanji_dissimilar": "Dissemblables",
     "kanji_frequency": "Fréq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Groupes de kanji",
@@ -5080,7 +5279,6 @@ static const Map<String,dynamic> fr = {
     "kanji_lookalikes": "Sosies",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicaux",
-    "kanji_similar": "Semblable",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
@@ -5103,7 +5301,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_search_input_wildcards_text": "Vous pouvez utiliser ? pour faire correspondre n'importe quel caractère et vous pouvez utiliser * pour faire correspondre de 0 à une infinité de caractères.",
     "tutorial_search_radical_text": "Ce bouton vous permet d'appliquer un filtre à votre recherche.",
     "tutorial_word_tab": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
-    "word_antonyms": "Antonymes :",
+    "word_antonyms": "Antonymes",
     "word_conjugation": "Conjugaison",
     "word_dialect": "Dialecte :",
     "word_field": "Domaine :",
@@ -5160,6 +5358,8 @@ static const Map<String,dynamic> fr = {
     "skip": "sauter",
     "system": "système",
     "web": "web"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
@@ -5234,6 +5434,8 @@ static const Map<String,dynamic> fr = {
     "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
     "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
     "advanced_settings_delete_history": "Supprime l'historique des recherches.",
@@ -5283,6 +5485,8 @@ static const Map<String,dynamic> fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "title": "Paramètres"
   },
+  "Stores": {
+  },
   "TextScreen": {
     "input_text_here": "Entrez le texte ici...",
     "title": "Texte",
@@ -5319,6 +5523,9 @@ static const Map<String,dynamic> fr = {
     "search_history": "Historique de la recherche",
     "send_to_anki": "Envoyer à anki",
     "title": "Listes de mots"
+  },
+  "_example": {
+    "draw": "tirage au sort"
   }
 };
 static const Map<String,dynamic> es = {
@@ -5345,7 +5552,6 @@ static const Map<String,dynamic> es = {
     "examples_more": "Mostrar más ejemplos",
     "kanji_alternatives": "Alternativas",
     "kanji_copied": "Copiado:",
-    "kanji_dissimilar": "Disímiles",
     "kanji_frequency": "Frec.",
     "kanji_grade": "Grado",
     "kanji_groups": "Grupos de kanji",
@@ -5355,7 +5561,6 @@ static const Map<String,dynamic> es = {
     "kanji_lookalikes": "Parecidos",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicales",
-    "kanji_similar": "Similar",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Trazos",
     "kanji_tab": "Kanji",
@@ -5378,7 +5583,7 @@ static const Map<String,dynamic> es = {
     "tutorial_search_input_wildcards_text": "Puede utilizar ? para que coincida con cualquier carácter y puede utilizar * para que coincida de 0 a infinitos caracteres.",
     "tutorial_search_radical_text": "Este botón le permite aplicar filtros a su búsqueda.",
     "tutorial_word_tab": "Esta pestaña incluye diversa información sobre el resultado de búsqueda seleccionado, como la conjugación y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
-    "word_antonyms": "#ERROR!",
+    "word_antonyms": "Antónimos",
     "word_conjugation": "Conjugación",
     "word_dialect": "Dialecto:",
     "word_field": "Campo:",
@@ -5435,6 +5640,8 @@ static const Map<String,dynamic> es = {
     "skip": "omitir",
     "system": "sistema",
     "web": "web"
+  },
+  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
@@ -5509,6 +5716,8 @@ static const Map<String,dynamic> es = {
     "Onboarding_3_text": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
     "Onboarding_3_title": "¿No sabe leer una frase?"
   },
+  "Overview": {
+  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
     "advanced_settings_delete_history": "Borra el historial de búsqueda.",
@@ -5558,6 +5767,14 @@ static const Map<String,dynamic> es = {
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ajustes"
   },
+  "Stores": {
+    "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
+    "mockup_1_1": "Traduce con diccionarios",
+    "mockup_2_1": "¿No sabes un Kanji? ¡Solo dibújalo!",
+    "mockup_2_2": "Ni siquiera importa el orden de los trazos.",
+    "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
+    "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
+  },
   "TextScreen": {
     "input_text_here": "Introduzca aquí el texto...",
     "title": "Texto",
@@ -5594,6 +5811,9 @@ static const Map<String,dynamic> es = {
     "search_history": "Historial de búsqueda",
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras"
+  },
+  "_example": {
+    "draw": "dibujar"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};

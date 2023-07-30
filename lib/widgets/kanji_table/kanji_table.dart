@@ -5,7 +5,9 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:isar/isar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
@@ -76,7 +78,7 @@ class _KanjiTableState extends State<KanjiTable> {
   /// the available sorting orders
   Map<KanjiSorting, String> KanjiSortingToString = {
     KanjiSorting.STROKES_ASC : "Strokes ↑", KanjiSorting.STROKES_DSC : "Strokes ↓",
-    KanjiSorting.FREQ_ASC    : "Freq. ↑"  , KanjiSorting.FREQ_DSC : "Freq. ↓",
+    KanjiSorting.FREQ_ASC    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.FREQ_DSC : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
     KanjiSorting.RTK_ASC     : "RTK ↑"    , KanjiSorting.RTK_DSC : "RTK ↓",
     KanjiSorting.KLC_ASC     : "KLC ↑"    , KanjiSorting.KLC_DSC : "KLC ↓"
   };

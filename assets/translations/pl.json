@@ -22,7 +22,6 @@
     "examples_more": "Poka\u017c wi\u0119cej przyk\u0142ad\u00f3w",
     "kanji_alternatives": "Alternatywy",
     "kanji_copied": "Skopiowane:",
-    "kanji_dissimilar": "Niepodobny",
     "kanji_frequency": "Cz\u0119stotliow\u015b\u0107",
     "kanji_grade": "Stopie\u0144",
     "kanji_groups": "Grupy kanji",
@@ -32,7 +31,6 @@
     "kanji_lookalikes": "Podobie\u0144stwa",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals (metoda kluczy)",
-    "kanji_similar": "Podobne",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Poci\u0105gni\u0119cia p\u0119dzla",
     "kanji_tab": "Kanji",
@@ -55,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "Mo\u017cesz u\u017cy\u0107 ? aby dopasowa\u0107 dowolny pojedynczy znak i mo\u017cesz u\u017cy\u0107 * aby dopasowa\u0107 0 do niesko\u0144czonych znak\u00f3w.",
     "tutorial_search_radical_text": "Ten przycisk pozwala zastosowa\u0107 filtr do wyszukiwania.",
     "tutorial_word_tab": "Ta zak\u0142adka zawiera r\u00f3\u017cne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i t\u0142umaczenia. J\u0119zyk t\u0142umacze\u0144 mo\u017cna wybra\u0107 w ustawieniach.",
-    "word_antonyms": "Antony:",
+    "word_antonyms": "Antonimy",
     "word_conj_adj_causative": "Przyczynowy",
     "word_conj_adj_causative_m": "Zr\u00f3b kogo\u015b [nie]",
     "word_conj_adj_conditional": "Warunkowy",
@@ -73,9 +71,9 @@
     "word_conj_polite": "Uprzejmy",
     "word_conj_verb": "Czasownik",
     "word_conj_verb_causative": "Przyczynowy",
-    "word_conj_verb_causative_m": "",
+    "word_conj_verb_causative_m": null,
     "word_conj_verb_causative_passive": "Przyczynowy pasywny",
-    "word_conj_verb_causative_passive_m": "",
+    "word_conj_verb_causative_passive_m": null,
     "word_conj_verb_conditional": "Warunkowy",
     "word_conj_verb_conditional_m": "Je\u017celi X by [nie] zrobi\u0142, je\u017celi X by [nie] by\u0142",
     "word_conj_verb_imperative": "Rozkazuj\u0105cy",
@@ -150,6 +148,10 @@
     "system": "system",
     "web": "web"
   },
+  "GrammarScreen": {
+    "import_dojg": null,
+    "title": null
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
@@ -182,7 +184,7 @@
     "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
-    "title": ""
+    "title": null
   },
   "ManualScreen": {
     "anki_connection_test": "Aby przetestowa\u0107 czy DaKanji mo\u017ce dotrze\u0107 do Anki mo\u017cesz nacisn\u0105\u0107 przycisk poni\u017cej.",
@@ -223,6 +225,18 @@
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "U\u017cyj narz\u0119dzi analizy tekstu DaKanji, aby doda\u0107 furigan\u0119, spacje i inne, lub przet\u0142umacz ca\u0142e zdanie.",
     "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?"
+  },
+  "Overview": {
+    "": "",
+    "de": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "it": "",
+    "ja": "",
+    "pl": "",
+    "ru": "",
+    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki s\u0142ownikowe.",
@@ -272,6 +286,24 @@
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
+  },
+  "Stores": {
+    "long_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\n\nCzy pr\u00f3bowa\u0142e\u015b kiedy\u015b przeczyta\u0107 tekst po japo\u0144sku ale nie wiedzia\u0142e\u015b jak przeczyta\u0107 niekt\u00f3re Kanji? DaKanji jest tutaj \u017ceby Ci z tym pom\u00f3c. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz zna\u0107 kolejno\u015bci pisania! Maluj znaki i buduj s\u0142owa kt\u00f3re mo\u017cesz p\u00f3\u017aniej t\u0142umaczy\u0107, a to wszystko kompletnie offline.\n\nFunkcjonalno\u015bci:\n* Rozpoznawanie 6500+ Kanji i ca\u0142ej Kany offline\n* U\u017cywaj s\u0142ownik\u00f3w internetowych oraz aplikacji aby t\u0142umaczy\u0107 znaki i s\u0142owa",
+    "mockup_10": null,
+    "mockup_1_1": "T\u0142umacz za pomoc\u0105 s\u0142ownika",
+    "mockup_1_2": null,
+    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
+    "mockup_2_2": "Kolejno\u015b\u0107 malowania znak\u00f3w nie ma znaczenia.",
+    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, t\u0142umaczenia i wiele wi\u0119cej!",
+    "mockup_4_1": "U\u017cywaj na wszystkich swoich urz\u0105dzeniach!",
+    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji dzia\u0142a wsz\u0119dzie.",
+    "mockup_5": null,
+    "mockup_6": null,
+    "mockup_7": null,
+    "mockup_8": null,
+    "mockup_9": null,
+    "short_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\nZa pomoc\u0105 malowania mo\u017cesz odnajdowa\u0107 i t\u0142umaczy\u0107 znaki.",
+    "shortest_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Wprowad\u017a tekst tutaj...",
@@ -323,5 +355,8 @@
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wy\u015blij do anki",
     "title": "Listy s\u0142owne"
+  },
+  "_example": {
+    "draw": "losowanie"
   }
 }

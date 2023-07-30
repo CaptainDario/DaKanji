@@ -217,12 +217,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
                         if(widget.kanjidic2entry.antonyms != null)
                           ...[
-                            Text("${LocaleKeys.DictionaryScreen_kanji_dissimilar.tr()}: ", style: headerStyle),
+                            Text("${LocaleKeys.DictionaryScreen_word_antonyms.tr()}: ", style: headerStyle),
                             LinkedKanjiText(widget.kanjidic2entry.antonyms!)
                           ],
                         if(widget.kanjidic2entry.synonyms != null)
                           ...[
-                            Text("${LocaleKeys.DictionaryScreen_kanji_similar.tr()}: ", style: headerStyle),
+                            Text("${LocaleKeys.DictionaryScreen_word_synonyms.tr()}: ", style: headerStyle),
                             LinkedKanjiText(widget.kanjidic2entry.synonyms!)
                           ],
                         if(widget.kanjidic2entry.lookalikes != null)
