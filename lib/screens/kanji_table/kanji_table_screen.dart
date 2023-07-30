@@ -32,6 +32,7 @@ class _KanjiTableScreenState extends State<KanjiTableScreen> {
       currentScreen: Screens.kanji_table,
       animationAtStart: !widget.navigatedByDrawer,
       child: KanjiTable(
+        widget.includeTutorial
       )
     );
   }
