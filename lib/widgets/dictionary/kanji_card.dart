@@ -176,7 +176,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),
                                   Text("N${widget.kanjidic2entry.jlptNew}"),
                                 ],
-                              if(widget.kanjidic2entry.kanken != "")
+                              if(widget.kanjidic2entry.kanken != -1)
                                 ...[
                                   Text("漢検: ", style: headerStyle),
                                   Text("${widget.kanjidic2entry.kanken}"),
