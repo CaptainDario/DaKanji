@@ -170,6 +170,7 @@
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
     "tutorial_filter": "In dieser Dropdown-Liste k\u00f6nnen Sie eine Kategorie von Kanji ausw\u00e4hlen, die angezeigt werden soll.",
+    "tutorial_filter_sub_group": "In diesem Men\u00fc k\u00f6nnen Sie einen Unterfilter ausw\u00e4hlen, der der Auswahl im vorherigen Men\u00fc entspricht.",
     "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
     "tutorial_sort": "In dieser Dropdown-Liste k\u00f6nnen Sie eine Reihenfolge f\u00fcr die angezeigten Kanji ausw\u00e4hlen.",
     "tutorial_welcome": "Willkommen auf dem Bildschirm der Kanji-Tabelle!"

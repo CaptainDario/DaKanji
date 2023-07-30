@@ -149,6 +149,7 @@ class CodegenLoader extends AssetLoader{
   "KanjiTableScreen": {
     "title": "汉字表",
     "tutorial_filter": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+    "tutorial_filter_sub_group": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
     "tutorial_kanji_amount": "该数字表示当前显示的汉字数量。",
     "tutorial_sort": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
     "tutorial_welcome": "欢迎来到汉字表屏幕！"
@@ -1837,7 +1838,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Witamy na ekranie tabeli kanji!"
     },
     "tutorial_filter": {
-      "en": "This dropdown lets you select a category of kanji that should be shown.",
+      "en": "This dropdown lets you select a way of filtering Kanji.",
       "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
       "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
       "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
@@ -1846,6 +1847,17 @@ static const Map<String,dynamic> localizations = {
       "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
       "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
       "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
+    },
+    "tutorial_filter_sub_group": {
+      "en": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+      "de": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
+      "ru": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
+      "ja": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
+      "zh": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
+      "it": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+      "fr": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
+      "es": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
+      "pl": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu."
     },
     "tutorial_sort": {
       "en": "This dropdown lets you select an order for the shown kanji.",
@@ -3316,6 +3328,7 @@ static const Map<String,dynamic> ja = {
   "KanjiTableScreen": {
     "title": "漢字表",
     "tutorial_filter": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+    "tutorial_filter_sub_group": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
     "tutorial_kanji_amount": "この数字は、現在表示されている漢字の数を示す。",
     "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
     "tutorial_welcome": "漢字表画面へようこそ！"
@@ -3638,6 +3651,7 @@ static const Map<String,dynamic> de = {
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
     "tutorial_filter": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+    "tutorial_filter_sub_group": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
     "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
     "tutorial_sort": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
     "tutorial_welcome": "Willkommen auf dem Bildschirm der Kanji-Tabelle!"
@@ -3924,6 +3938,7 @@ static const Map<String,dynamic> ru = {
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
     "tutorial_filter": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+    "tutorial_filter_sub_group": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
     "tutorial_kanji_amount": "Это число показывает, сколько кандзи отображается в данный момент.",
     "tutorial_sort": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
     "tutorial_welcome": "Добро пожаловать на экран таблицы кандзи!"
@@ -4230,6 +4245,7 @@ static const Map<String,dynamic> pl = {
   "KanjiTableScreen": {
     "title": "Tabela kanji",
     "tutorial_filter": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane.",
+    "tutorial_filter_sub_group": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu.",
     "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych.",
     "tutorial_sort": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji.",
     "tutorial_welcome": "Witamy na ekranie tabeli kanji!"
@@ -4551,7 +4567,8 @@ static const Map<String,dynamic> en = {
   },
   "KanjiTableScreen": {
     "title": "Kanji Table",
-    "tutorial_filter": "This dropdown lets you select a category of kanji that should be shown.",
+    "tutorial_filter": "This dropdown lets you select a way of filtering Kanji.",
+    "tutorial_filter_sub_group": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
     "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
     "tutorial_sort": "This dropdown lets you select an order for the shown kanji.",
     "tutorial_welcome": "Welcome to the kanji table screen!"
@@ -4838,6 +4855,7 @@ static const Map<String,dynamic> it = {
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
     "tutorial_filter": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+    "tutorial_filter_sub_group": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
     "tutorial_kanji_amount": "Questo numero indica il numero di kanji attualmente visualizzati.",
     "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
     "tutorial_welcome": "Benvenuti nella schermata della tabella dei kanji!"
@@ -5109,6 +5127,7 @@ static const Map<String,dynamic> fr = {
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_filter": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+    "tutorial_filter_sub_group": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
     "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affichés.",
     "tutorial_sort": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
     "tutorial_welcome": "Bienvenue sur l'écran de la table des kanji !"
@@ -5380,6 +5399,7 @@ static const Map<String,dynamic> es = {
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
     "tutorial_filter": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+    "tutorial_filter_sub_group": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
     "tutorial_kanji_amount": "Este número indica cuántos kanji se están mostrando actualmente.",
     "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
     "tutorial_welcome": "¡Bienvenido a la pantalla de la tabla de kanji!"

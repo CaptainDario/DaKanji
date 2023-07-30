@@ -1550,7 +1550,7 @@
       "pl": "Witamy na ekranie tabeli kanji!"
     },
     "tutorial_filter": {
-      "en": "This dropdown lets you select a category of kanji that should be shown.",
+      "en": "This dropdown lets you select a way of filtering Kanji.",
       "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
       "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
       "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
@@ -1559,6 +1559,17 @@
       "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
       "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
       "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
+    },
+    "tutorial_filter_sub_group": {
+      "en": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+      "de": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
+      "ru": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
+      "ja": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
+      "zh": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
+      "it": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+      "fr": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
+      "es": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
+      "pl": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu."
     },
     "tutorial_sort": {
       "en": "This dropdown lets you select an order for the shown kanji.",

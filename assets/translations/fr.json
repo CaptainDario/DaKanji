@@ -170,6 +170,7 @@
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_filter": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner une cat\u00e9gorie de kanji \u00e0 afficher.",
+    "tutorial_filter_sub_group": "Ce menu permet de s\u00e9lectionner un sous-filtre correspondant \u00e0 la s\u00e9lection du menu pr\u00e9c\u00e9dent.",
     "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affich\u00e9s.",
     "tutorial_sort": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner un ordre pour les kanji affich\u00e9s.",
     "tutorial_welcome": "Bienvenue sur l'\u00e9cran de la table des kanji !"

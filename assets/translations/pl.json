@@ -170,6 +170,7 @@
   "KanjiTableScreen": {
     "title": "Tabela kanji",
     "tutorial_filter": "Ta lista rozwijana pozwala wybra\u0107 kategori\u0119 kanji, kt\u00f3re maj\u0105 by\u0107 wy\u015bwietlane.",
+    "tutorial_filter_sub_group": "To menu pozwala wybra\u0107 filtr podrz\u0119dny odpowiadaj\u0105cy wyborowi w poprzednim menu.",
     "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wy\u015bwietlanych.",
     "tutorial_sort": "Ta lista rozwijana pozwala wybra\u0107 kolejno\u015b\u0107 dla wy\u015bwietlanego kanji.",
     "tutorial_welcome": "Witamy na ekranie tabeli kanji!"
