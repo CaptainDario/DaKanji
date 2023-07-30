@@ -91,6 +91,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                       GetIt.I<UserData>().showTutorialClipboard = false;
                       await GetIt.I<UserData>().save();
                     }
+                    else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
+                      print("Kanji table screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialKanjiTable = false;
+                      await GetIt.I<UserData>().save();
+                    }
                   },
                   child: screen,
                 );
