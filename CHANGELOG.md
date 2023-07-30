@@ -5,10 +5,6 @@
 
 New Features:
 
-- Kana chart
-  - Includes all common (and not so common) kana
-  - Mnemonics for the main kana
-  - Sounds for all available kana
 - Clipboard screen to lookup words that are in the OS's clipboard
 - Drawer elements reorderable
 - Periodically, check for updates at app start
