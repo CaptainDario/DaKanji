@@ -12,26 +12,29 @@
   "ClipboardScreen": {
     "title": "Clipboard",
     "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the clipboard screen!",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
-    "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
-    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
-    "tutorial_welcome": "Welcome to the clipboard screen!"
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application."
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
     "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
+    "kanji_copied": "Copied:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Kanji groups",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Lookalikes",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "to clipboard",
     "search_filter_close": "Close",
     "search_filter_ok": "Ok",
     "search_radical_close": "Close",
@@ -50,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "You can use ? to match any single character and you can use * to match 0 to infinite characters.",
     "tutorial_search_radical_text": "This button lets you apply filter to your search.",
     "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
-    "word_antonyms": "Antonyms:",
+    "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
     "word_conj_adj_causative_m": "Make somebody [not]",
     "word_conj_adj_conditional": "Conditional",
@@ -99,7 +102,7 @@
     "word_restricted_to": "Restricted to:",
     "word_see_also": "See also:",
     "word_source_language": "Source language:",
-    "word_synonyms": "Synonyms:",
+    "word_synonyms": "Synonyms",
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_send_to_anki": "Send to Anki",
@@ -128,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
+    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -159,11 +162,24 @@
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
-  "KanaChartScreen": {
-    "title": "Kana chart"
+  "KanaTableScreen": {
+    "title": "Kana Table"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTrainerScreen": {
+    "title": "Kana Trainer"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji table screen!",
+    "tutorial_filter": "This dropdown lets you select a way of filtering Kanji.",
+    "tutorial_filter_sub_group": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+    "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
+    "tutorial_kanjis": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"

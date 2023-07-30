@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
+import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
+import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji/kanji_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
@@ -89,6 +91,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                       GetIt.I<UserData>().showTutorialClipboard = false;
                       await GetIt.I<UserData>().save();
                     }
+                    else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
+                      print("Kanji table screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialKanjiTable = false;
+                      await GetIt.I<UserData>().save();
+                    }
                   },
                   child: screen,
                 );
@@ -130,10 +137,14 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
             ));
           case "/clipboard":
             return switchScreen(ClipboardScreen(args.navigatedByDrawer, true));
-          case "/kanji":
-            return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
-          case "/kana_chart":
-            return switchScreen(KanaScreen(args.navigatedByDrawer));
+          case "/kanji_trainer":
+            return switchScreen(KanjiTrainerScreen(args.navigatedByDrawer, true));
+          case "/kanji_table":
+            return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
+          case "/kana_table":
+            return switchScreen(KanaTableScreen(args.navigatedByDrawer));
+          case "/kana_trainer":
+            return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/word_lists":

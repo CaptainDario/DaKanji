@@ -1,8 +1,9 @@
 
 
-import 'package:da_kanji_mobile/data/show_cases/clipboard_screen_tutorial.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/data/show_cases/clipboard_screen_tutorial.dart';
+import 'package:da_kanji_mobile/data/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/text_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/dictionary_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/draw_screen_tutorial.dart';
@@ -19,6 +20,8 @@ class Tutorials{
   late TextScreenTutorial textScreenTutorial;
   /// the clipoard screen tutorial
   late ClipboardScreenTutorial clipboardScreenTutorial;
+  /// the kanji table screen tutorial
+  late KanjiTableScreenTutorial kanjiTableScreenTutorial;
 
 
 
@@ -42,12 +45,20 @@ class Tutorials{
     clipboardScreenTutorial.indexes = clipboardScreenTutorial.indexes!.map(
       (e) => e + textScreenTutorial.indexes!.last + 1
     ).toList();
+
+    kanjiTableScreenTutorial = KanjiTableScreenTutorial();
+    kanjiTableScreenTutorial.indexes = kanjiTableScreenTutorial.indexes!.map(
+      (e) => e + clipboardScreenTutorial.indexes!.last + 1
+    ).toList();
+
+
   }
 
   List<OnboardingStep> getSteps (){
     return drawScreenTutorial.steps! +
       dictionaryScreenTutorial.steps! +
       textScreenTutorial.steps! + 
-      clipboardScreenTutorial.steps!;
+      clipboardScreenTutorial.steps! +
+      kanjiTableScreenTutorial.steps!;
   }
 }

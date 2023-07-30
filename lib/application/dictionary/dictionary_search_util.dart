@@ -1,12 +1,9 @@
 
 
 import 'package:collection/collection.dart';
-import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
-
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
 

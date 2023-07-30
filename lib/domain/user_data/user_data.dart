@@ -65,6 +65,10 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialClipboard = true;
 
+  /// should the tutorial of the kanji table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialKanjiTable = true;
+
   /// should the App's onboarding be shown
   @JsonKey(defaultValue: true)
   bool showOnboarding = true;

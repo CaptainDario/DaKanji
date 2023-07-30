@@ -12,26 +12,29 @@
   "ClipboardScreen": {
     "title": "Appunti",
     "tutorial_android_limitation": "Su Android, questa schermata non pu\u00f2 leggere automaticamente gli appunti in background. \u00c8 necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata degli appunti!",
     "tutorial_explanation": "Basta copiare un testo e DaKanji mostrer\u00e0 le voci del dizionario e molto altro!",
-    "tutorial_introduction": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
-    "tutorial_pin_button": "Questo pulsante fa s\u00ec che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji pu\u00f2 essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
-    "tutorial_welcome": "Benvenuti nella schermata degli appunti!"
+    "tutorial_pin_button": "Questo pulsante fa s\u00ec che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji pu\u00f2 essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione."
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",
     "examples_more": "Mostra altri esempi",
     "kanji_alternatives": "Alternative",
+    "kanji_copied": "Copiato:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Somiglianze",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicali",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Ictus",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "agli appunti",
     "search_filter_close": "Chiudere",
     "search_filter_ok": "Ok",
     "search_radical_close": "Chiudere",
@@ -50,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "\u00c8 possibile utilizzare ? per abbinare qualsiasi singolo carattere e * per abbinare da 0 a infiniti caratteri.",
     "tutorial_search_radical_text": "Questo pulsante consente di applicare un filtro alla ricerca.",
     "tutorial_word_tab": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni pu\u00f2 essere scelta nelle impostazioni.",
-    "word_antonyms": "Anonimi:",
+    "word_antonyms": "Anonimi",
     "word_conj_adj_causative": "",
     "word_conj_adj_causative_m": "",
     "word_conj_adj_conditional": "",
@@ -128,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'\u00e8 che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
+    "feedback_description_text": "Cosa c'\u00e8 che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -159,11 +162,24 @@
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'\u00e8 di nuovo"
   },
-  "KanaChartScreen": {
-    "title": "Grafico Kana"
+  "KanaTableScreen": {
+    "title": "Tavolo Kana"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "Allenatore Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabella Kanji",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tabella dei kanji!",
+    "tutorial_filter": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+    "tutorial_filter_sub_group": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+    "tutorial_kanji_amount": "Questo numero indica il numero di kanji attualmente visualizzati.",
+    "tutorial_kanjis": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+    "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Allenatore di kanji"
   },
   "KuzushijiScreen": {
     "title": ""

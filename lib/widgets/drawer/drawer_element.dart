@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -23,7 +22,7 @@ class DrawerElement extends StatelessWidget {
   /// The title of this tile
   final String title;
   /// The route to which will be navigated once the user taps on this tile
-  final String route;
+  final String? route;
   /// if this tile is selected or not
   final bool selected;
   /// The width of the drawer
@@ -65,10 +64,10 @@ class DrawerElement extends StatelessWidget {
       child: Material(
         child: InkWell(
           onTap: () {
-            if(onTap == null){
+            if(onTap == null && route != null){
               if(ModalRoute.of(context)!.settings.name != route){
                 Navigator.pushNamedAndRemoveUntil(
-                  context, route,
+                  context, route!,
                   (Route<dynamic> route) => false,
                   arguments: NavigationArguments(true)
                 );

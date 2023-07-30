@@ -1,12 +1,10 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
@@ -15,6 +13,8 @@ import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/application/drawer/drawer_entries.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -38,9 +38,9 @@ class DaKanjiDrawer extends StatefulWidget{
 
   const DaKanjiDrawer(
     {
+      required this.currentScreen,
       required this.child,
       this.useBackArrowAppBar = false,
-      required this.currentScreen,
       this.animationAtStart = true,
       Key? key, 
     }
@@ -66,62 +66,52 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   /// function to open/close the drawer (invoked when DrawerListener changed)
   late void Function() _handleDrawer; 
 
-  List<Tuple4<IconData, String, String, Screens?>> drawerElementsData = [
-    Tuple4(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing),
-    Tuple4(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary),
-    Tuple4(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text),
-    Tuple4(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaChartScreen_title.tr(), "/kana_chart", Screens.kana_chart),
-    Tuple4(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists),
-    Tuple4(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings),
-    Tuple4(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard),
-    Tuple4(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about),
-    Tuple4(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual),
-    Tuple4(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), "", null),
-    Tuple4(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black",), LocaleKeys.KanjiScreen_title.tr(), "/kanji", Screens.kanji),
-    Tuple4(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji),
+
+  List<DrawerEntry> drawerEntries = [
+    DrawerEntry(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
+      null, null,
+      true, null),
+    DrawerEntry(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+      null, Alignment(-0.1, -0.65),
+      true, null),
+    DrawerEntry(const IconData(0x6f22, fontFamily: "kouzan",), LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+      0.6, Alignment(-1000, 0),
+      kDebugMode, null),
+    DrawerEntry(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+      0.5, Alignment(1000, -0.7),
+      true, null),
+    DrawerEntry(const IconData(0x30AB, fontFamily: "kouzan"), LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+      0.7, Alignment(1000, -0.6),
+      kDebugMode, null),
+    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
+      null, Alignment(0, -0.1),
+      kDebugMode, null),
+    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,
+      null, null,
+      true, sendFeedback),
+    DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
+      0.7, Alignment(-1000, 0),
+      kDebugMode, null),
   ];
-  List<Tuple2<double?, Alignment>?> drawerElementsGeom = [
-    null,
-    null,
-    null,
-    Tuple2(0.5, Alignment(1000, -0.7)),
-    Tuple2(null, Alignment(0, -0.1)),
-    null,
-    null,
-    null,
-    null,
-    null,
-    Tuple2(null, Alignment(-0.1, -0.65)),
-    Tuple2(0.7, Alignment(-1000, 0)),
-  ];
-  List<bool> includeTile = [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    kDebugMode,
-    kDebugMode,
-  ];
-  List<Function?> onTaps = [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    sendFeedback,
-    null,
-    null,
-  ];
+
   late List<int> drawerElementsIndexOrder;
   
   @override
@@ -160,13 +150,17 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     drawerElementsIndexOrder = GetIt.I<Settings>().misc.drawerItemOrder;
     // no order was ever defined
     if(drawerElementsIndexOrder.isEmpty)
-      drawerElementsIndexOrder = List.generate(drawerElementsData.length, (index) => index);
+      drawerElementsIndexOrder = List.generate(drawerEntries.length, (index) => index);
     // there are new elements in the drawer (migrate old safed values)
-    if(drawerElementsIndexOrder.length < drawerElementsData.length)
+    if(drawerElementsIndexOrder.length < drawerEntries.length)
       drawerElementsIndexOrder.addAll(
-        List.generate(drawerElementsData.length-drawerElementsIndexOrder.length, 
+        List.generate(drawerEntries.length-drawerElementsIndexOrder.length, 
           (index) => index+drawerElementsIndexOrder.length)
       );
+    // elements have been removed from the drawer -> reset all values
+    if(drawerElementsIndexOrder.length > drawerEntries.length)
+      drawerElementsIndexOrder = List.generate(drawerEntries.length, (i) => i);
+
     GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
     GetIt.I<Settings>().save();
   }
@@ -344,35 +338,36 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 ),
                               ),
                             ),
-                            ReorderableListView(
-                              shrinkWrap: true,
-                              buildDefaultDragHandles: false,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              onReorder: (oldIndex, newIndex) async {
-                                if(newIndex > oldIndex)
-                                  newIndex -= 1;
-                                int old = drawerElementsIndexOrder.removeAt(oldIndex);
-                                drawerElementsIndexOrder.insert(newIndex, old);
-                                GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
-                                await GetIt.I<Settings>().save();
-                                setState(() {});
-                              },
-                              children: <Widget>[
-                                // DaKanji Logo at the top
-                                for (final (j, i) in drawerElementsIndexOrder.indexed)
-                                  DrawerElement(
-                                    leading: drawerElementsData[i].item1,
-                                    title: drawerElementsData[i].item2,
-                                    route: drawerElementsData[i].item3,
-                                    selected: widget.currentScreen == drawerElementsData[i].item4,
-                                    leadingAlignment: drawerElementsGeom[i]?.item2 ?? Alignment.center,
-                                    drawerWidth: _drawerWidth,
-                                    index: j,
-                                    drawerController: _drawerController,
-                                    onTap: onTaps[i],
-                                  )       
-                              ],
+                            Expanded(
+                              child: ReorderableListView(
+                                buildDefaultDragHandles: false,
+                                padding: EdgeInsets.zero,
+                                onReorder: (oldIndex, newIndex) async {
+                                  if(newIndex > oldIndex)
+                                    newIndex -= 1;
+                                  int old = drawerElementsIndexOrder.removeAt(oldIndex);
+                                  drawerElementsIndexOrder.insert(newIndex, old);
+                                  GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
+                                  await GetIt.I<Settings>().save();
+                                  setState(() {});
+                                },
+                                children: <Widget>[
+                                  // DaKanji Logo at the top
+                                  for (final (j, i) in drawerElementsIndexOrder.indexed)
+                                    DrawerElement(
+                                      leading: drawerEntries[i].icon,
+                                      title: drawerEntries[i].title,
+                                      route: drawerEntries[i].route,
+                                      selected: widget.currentScreen == drawerEntries[i].screen,
+                                      leadingSize: drawerEntries[i].iconSize ?? 0.5,
+                                      leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
+                                      drawerWidth: _drawerWidth,
+                                      index: j,
+                                      drawerController: _drawerController,
+                                      onTap: drawerEntries[i].onTap,
+                                    )       
+                                ],
+                              ),
                             ),
                           ],
                         ),

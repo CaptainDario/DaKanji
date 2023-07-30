@@ -12,26 +12,29 @@
   "ClipboardScreen": {
     "title": "Schowek",
     "tutorial_android_limitation": "W systemie Android ekran ten nie mo\u017ce automatycznie odczytywa\u0107 schowka w tle. Aplikacja musi dzia\u0142a\u0107 na pierwszym planie. Przepraszamy za niedogodno\u015bci.",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie schowka!",
     "tutorial_explanation": "Wystarczy skopiowa\u0107 tekst, a DaKanji wy\u015bwietli has\u0142a s\u0142ownikowe i nie tylko!",
-    "tutorial_introduction": "Ten ekran zapewnia opcje umo\u017cliwiaj\u0105ce lepsze zrozumienie dowolnego s\u0142owa w schowku.",
-    "tutorial_pin_button": "Ten przycisk sprawia, \u017ce DaKanji jest zawsze wy\u015bwietlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji s\u0105 ukryte. Dzi\u0119ki temu DaKanji mo\u017ce by\u0107 u\u017cywane jako pomoc w czytaniu nad dowoln\u0105 inn\u0105 aplikacj\u0105.",
-    "tutorial_welcome": "Witamy na ekranie schowka!"
+    "tutorial_pin_button": "Ten przycisk sprawia, \u017ce DaKanji jest zawsze wy\u015bwietlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji s\u0105 ukryte. Dzi\u0119ki temu DaKanji mo\u017ce by\u0107 u\u017cywane jako pomoc w czytaniu nad dowoln\u0105 inn\u0105 aplikacj\u0105."
   },
   "DictionaryScreen": {
     "example_tab": "Przyk\u0142ady",
     "examples_more": "Poka\u017c wi\u0119cej przyk\u0142ad\u00f3w",
     "kanji_alternatives": "Alternatywy",
+    "kanji_copied": "Skopiowane:",
     "kanji_frequency": "Cz\u0119stotliow\u015b\u0107",
     "kanji_grade": "Stopie\u0144",
     "kanji_groups": "Grupy kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Podobie\u0144stwa",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals (metoda kluczy)",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Poci\u0105gni\u0119cia p\u0119dzla",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "do schowka",
     "search_filter_close": "Zamknij",
     "search_filter_ok": "Ok",
     "search_radical_close": "Zamknij",
@@ -50,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "Mo\u017cesz u\u017cy\u0107 ? aby dopasowa\u0107 dowolny pojedynczy znak i mo\u017cesz u\u017cy\u0107 * aby dopasowa\u0107 0 do niesko\u0144czonych znak\u00f3w.",
     "tutorial_search_radical_text": "Ten przycisk pozwala zastosowa\u0107 filtr do wyszukiwania.",
     "tutorial_word_tab": "Ta zak\u0142adka zawiera r\u00f3\u017cne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i t\u0142umaczenia. J\u0119zyk t\u0142umacze\u0144 mo\u017cna wybra\u0107 w ustawieniach.",
-    "word_antonyms": "Antony:",
+    "word_antonyms": "Antonimy",
     "word_conj_adj_causative": "Przyczynowy",
     "word_conj_adj_causative_m": "Zr\u00f3b kogo\u015b [nie]",
     "word_conj_adj_conditional": "Warunkowy",
@@ -128,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz sw\u00f3j problem poni\u017cej. Podaj adres e-mail, aby\u015bmy mogli si\u0119 z Tob\u0105 skontaktowa\u0107.",
+    "feedback_description_text": "Co jest nie tak? Opisz sw\u00f3j problem poni\u017cej. Je\u015bli chcesz, abym m\u00f3g\u0142 odpowiedzie\u0107 na Twoj\u0105 pro\u015bb\u0119, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wy\u015blij",
     "title": "Opinia"
@@ -159,11 +162,24 @@
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
   },
-  "KanaChartScreen": {
-    "title": "Wykres kana"
+  "KanaTableScreen": {
+    "title": "St\u00f3\u0142 Kana"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "Trener Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabela kanji",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kanji!",
+    "tutorial_filter": "Ta lista rozwijana pozwala wybra\u0107 kategori\u0119 kanji, kt\u00f3re maj\u0105 by\u0107 wy\u015bwietlane.",
+    "tutorial_filter_sub_group": "To menu pozwala wybra\u0107 filtr podrz\u0119dny odpowiadaj\u0105cy wyborowi w poprzednim menu.",
+    "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wy\u015bwietlanych.",
+    "tutorial_kanjis": "Ten ekran wy\u015bwietla tabel\u0119 kanji pasuj\u0105cych do r\u00f3\u017cnych ustawie\u0144. Stukni\u0119cie jednego z kanji spowoduje wy\u015bwietlenie jego szczeg\u00f3\u0142\u00f3w.",
+    "tutorial_sort": "Ta lista rozwijana pozwala wybra\u0107 kolejno\u015b\u0107 dla wy\u015bwietlanego kanji."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": ""

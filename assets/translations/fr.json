@@ -12,26 +12,29 @@
   "ClipboardScreen": {
     "title": "Presse-papiers",
     "tutorial_android_limitation": "Sur Android, cet \u00e9cran ne peut pas lire automatiquement votre presse-papiers en arri\u00e8re-plan. L'application doit \u00eatre au premier plan. D\u00e9sol\u00e9 pour la g\u00eane occasionn\u00e9e.",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue dans l'\u00e9cran du presse-papiers !",
     "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entr\u00e9es du dictionnaire et bien plus encore !",
-    "tutorial_introduction": "Cet \u00e9cran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
-    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fen\u00eatres. De plus, la taille est r\u00e9duite et le cadre et la barre d'application sont cach\u00e9s. Gr\u00e2ce \u00e0 cela, DaKanji peut \u00eatre utilis\u00e9 comme aide \u00e0 la lecture au-dessus de n'importe quelle autre application.",
-    "tutorial_welcome": "Bienvenue dans l'\u00e9cran du presse-papiers !"
+    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fen\u00eatres. De plus, la taille est r\u00e9duite et le cadre et la barre d'application sont cach\u00e9s. Gr\u00e2ce \u00e0 cela, DaKanji peut \u00eatre utilis\u00e9 comme aide \u00e0 la lecture au-dessus de n'importe quelle autre application."
   },
   "DictionaryScreen": {
     "example_tab": "Exemple",
     "examples_more": "Montrer plus d'exemples",
     "kanji_alternatives": "Alternatives",
+    "kanji_copied": "Copi\u00e9 :",
     "kanji_frequency": "Fr\u00e9q.",
     "kanji_grade": "Grade",
     "kanji_groups": "Groupes de kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Sosies",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicaux",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "kanji_to_clipboard": "vers le presse-papiers",
     "search_filter_close": "Fermer",
     "search_filter_ok": "Ok",
     "search_radical_close": "Fermer",
@@ -50,7 +53,7 @@
     "tutorial_search_input_wildcards_text": "Vous pouvez utiliser ? pour faire correspondre n'importe quel caract\u00e8re et vous pouvez utiliser * pour faire correspondre de 0 \u00e0 une infinit\u00e9 de caract\u00e8res.",
     "tutorial_search_radical_text": "Ce bouton vous permet d'appliquer un filtre \u00e0 votre recherche.",
     "tutorial_word_tab": "Cet onglet comprend diverses informations sur le r\u00e9sultat de recherche s\u00e9lectionn\u00e9, telles que la conjugaison et les traductions. La langue des traductions peut \u00eatre choisie dans les param\u00e8tres.",
-    "word_antonyms": "Antonymes :",
+    "word_antonyms": "Antonymes",
     "word_conj_adj_causative": "",
     "word_conj_adj_causative_m": "",
     "word_conj_adj_conditional": "",
@@ -128,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "dessiner",
-    "feedback_description_text": "Qu'est-ce qui ne va pas ? \u00c9crivez votre probl\u00e8me ci-dessous. Veuillez indiquer une adresse \u00e9lectronique pour que nous puissions vous contacter.",
+    "feedback_description_text": "Qu'est-ce qui ne va pas ? D\u00e9crivez votre probl\u00e8me ci-dessous. Si vous souhaitez que je donne suite \u00e0 votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
     "title": "Commentaires"
@@ -159,11 +162,24 @@
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
-  "KanaChartScreen": {
-    "title": "Graphique Kana"
+  "KanaTableScreen": {
+    "title": "Table Kana"
   },
-  "KanjiScreen": {
-    "title": ""
+  "KanaTrainerScreen": {
+    "title": "Formateur Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tableau des Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran de la table des kanji !",
+    "tutorial_filter": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner une cat\u00e9gorie de kanji \u00e0 afficher.",
+    "tutorial_filter_sub_group": "Ce menu permet de s\u00e9lectionner un sous-filtre correspondant \u00e0 la s\u00e9lection du menu pr\u00e9c\u00e9dent.",
+    "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affich\u00e9s.",
+    "tutorial_kanjis": "Cet \u00e9cran affiche un tableau de kanji correspondant \u00e0 diff\u00e9rents param\u00e8tres. En tapant sur l'un des kanji, vous obtiendrez des informations d\u00e9taill\u00e9es.",
+    "tutorial_sort": "Cette liste d\u00e9roulante vous permet de s\u00e9lectionner un ordre pour les kanji affich\u00e9s."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entra\u00eeneur de kanji"
   },
   "KuzushijiScreen": {
     "title": ""

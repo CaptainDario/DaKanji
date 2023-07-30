@@ -472,6 +472,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
+                      // #region - Text header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.KanjiTableScreen_title.tr(),
+                        const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black"),
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialKanjiTable = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
+
                       // #region - Anki header
                       /* TODO - add anki settings
                       ResponsiveHeaderTile(

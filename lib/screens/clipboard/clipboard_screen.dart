@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +8,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:clipboard_watcher/clipboard_watcher.dart';
 
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
@@ -154,7 +154,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
             children: [
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![4]
+                  ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![3]
                   : null,
                 child: IconButton(
                   icon: Icon(isAlwaysOnTop ? Icons.push_pin : Icons.push_pin_outlined),
