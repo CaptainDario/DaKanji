@@ -24,7 +24,10 @@ enum KanjiCategory {
 }
 
 enum KanjiSorting{
-  STROKES_ASC, STROKES_DSC
+  STROKES_ASC, STROKES_DSC,
+  FREQ_ASC, FREQ_DSC,
+  RTK_ASC, RTK_DSC,
+  KLC_ASC, KLC_DSC
 }
 
 
@@ -72,7 +75,10 @@ class _KanjiTableState extends State<KanjiTable> {
   String categoryLevelSelection = "5";
   /// the available sorting orders
   Map<KanjiSorting, String> KanjiSortingToString = {
-    KanjiSorting.STROKES_ASC : "Strokes ↑", KanjiSorting.STROKES_DSC : "Strokes ↓"
+    KanjiSorting.STROKES_ASC : "Strokes ↑", KanjiSorting.STROKES_DSC : "Strokes ↓",
+    KanjiSorting.FREQ_ASC    : "Freq. ↑"  , KanjiSorting.FREQ_DSC : "Freq. ↓",
+    KanjiSorting.RTK_ASC     : "RTK ↑"    , KanjiSorting.RTK_DSC : "RTK ↓",
+    KanjiSorting.KLC_ASC     : "KLC ↑"    , KanjiSorting.KLC_DSC : "KLC ↓"
   };
   /// [DropdownMenuItem]s for the sorting selction
   List<DropdownMenuItem> sortingDropDowns = [];
@@ -176,6 +182,12 @@ class _KanjiTableState extends State<KanjiTable> {
     // apply sorting
     .optional(sortingSelection == KanjiSorting.STROKES_ASC, (q) => q.sortByStrokeCount())
     .optional(sortingSelection == KanjiSorting.STROKES_DSC, (q) => q.thenByStrokeCountDesc())
+    .optional(sortingSelection == KanjiSorting.FREQ_ASC,    (q) => q.thenByFrequency())
+    .optional(sortingSelection == KanjiSorting.FREQ_DSC,    (q) => q.thenByFrequencyDesc())
+    .optional(sortingSelection == KanjiSorting.RTK_ASC,     (q) => q.thenByRtkNew())
+    .optional(sortingSelection == KanjiSorting.RTK_DSC,     (q) => q.thenByRtkNewDesc())
+    .optional(sortingSelection == KanjiSorting.KLC_ASC,     (q) => q.thenByKlc())
+    .optional(sortingSelection == KanjiSorting.KLC_DSC,     (q) => q.thenByKlcDesc())
     .findAllSync();
   }
 
