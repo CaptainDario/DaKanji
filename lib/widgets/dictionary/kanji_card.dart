@@ -8,6 +8,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
@@ -217,17 +218,17 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                         if(widget.kanjidic2entry.antonyms != null)
                           ...[
                             Text("${LocaleKeys.DictionaryScreen_kanji_dissimilar.tr()}: ", style: headerStyle),
-                            SelectableText(widget.kanjidic2entry.antonyms!.join(",  ")),
+                            LinkedKanjiText(widget.kanjidic2entry.antonyms!)
                           ],
                         if(widget.kanjidic2entry.synonyms != null)
                           ...[
                             Text("${LocaleKeys.DictionaryScreen_kanji_similar.tr()}: ", style: headerStyle),
-                            SelectableText(widget.kanjidic2entry.synonyms!.join(",  ")),
+                            LinkedKanjiText(widget.kanjidic2entry.synonyms!)
                           ],
                         if(widget.kanjidic2entry.lookalikes != null)
                           ...[
                             Text("${LocaleKeys.DictionaryScreen_kanji_lookalikes.tr()}: ", style: headerStyle),
-                            SelectableText(widget.kanjidic2entry.lookalikes!.join(",  ")),
+                            LinkedKanjiText(widget.kanjidic2entry.lookalikes!)
                           ],
                       ],
                     ),
