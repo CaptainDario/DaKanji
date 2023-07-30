@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
@@ -13,24 +14,9 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/kanji_table/kanji_category.dart';
+import 'package:da_kanji_mobile/domain/kanji_table/kanji_sorting.dart';
 
-
-enum KanjiCategory {
-  JLPT,
-  RTK,
-  SCHOOL,
-  FREQ,
-  KLC,
-  KENTEI,
-  WANIKANI
-}
-
-enum KanjiSorting{
-  STROKES_ASC, STROKES_DSC,
-  FREQ_ASC, FREQ_DSC,
-  RTK_ASC, RTK_DSC,
-  KLC_ASC, KLC_DSC
-}
 
 
 class KanjiTable extends StatefulWidget {
@@ -92,10 +78,13 @@ class _KanjiTableState extends State<KanjiTable> {
 
   @override
   void initState() {
+    // load settings
+    categorySelection      = GetIt.I<Settings>().kanjiTable.kanjiCategory;
+    categoryLevelSelection = GetIt.I<Settings>().kanjiTable.kanjiCategoryLevel;
+    sortingSelection       = GetIt.I<Settings>().kanjiTable.kanjiSorting;
+
     init();
     super.initState();
-
-    
   }
 
   @override
@@ -220,6 +209,15 @@ class _KanjiTableState extends State<KanjiTable> {
     );
   }
 
+  ///
+  Future<void> saveCurrentConfig() async {
+    GetIt.I<Settings>().kanjiTable.kanjiCategory      = categorySelection;
+    GetIt.I<Settings>().kanjiTable.kanjiCategoryLevel = categoryLevelSelection;
+    GetIt.I<Settings>().kanjiTable.kanjiSorting       = sortingSelection;
+    GetIt.I<Settings>().save();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -232,50 +230,53 @@ class _KanjiTableState extends State<KanjiTable> {
               // category ie: JLPT, RTK, etc
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![1]
+                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![2]
                   : null,
                 child: DropdownButton(
                   value: categorySelection,
                   items: categoryDropDowns,
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     setState(() {
                       categorySelection = value;
                       changedCategories = true;
                       updateKanjisAndCategories();
                       initDropDowns();
                     });
+                    await saveCurrentConfig();
                   },
                 ),
               ),
               // actual level from the category ie.: JLPT 1, 2, 3, 4, 5, ...
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![2]
+                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![3]
                   : null,
                 child: DropdownButton(
                   value: categoryLevelSelection,
                   items: categoryLevelDropDowns,
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     setState(() {
                       categoryLevelSelection = value;
                       updateKanjisAndCategories();
                     });
+                    await saveCurrentConfig();
                   },
                 ),
               ),
               // the way of sorting the shown kanji
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![3]
+                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![4]
                   : null,
                 child: DropdownButton(
                   value: sortingSelection,
                   items: sortingDropDowns,
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     setState(() {
                       sortingSelection = value;
                       updateKanjisAndCategories();
                     });
+                    await saveCurrentConfig();
                   },
                 ),
               ),
@@ -283,7 +284,7 @@ class _KanjiTableState extends State<KanjiTable> {
               // Amount of kanji in the current selection
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![4]
+                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![5]
                   : null,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

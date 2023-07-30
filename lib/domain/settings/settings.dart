@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_advanced.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_misc.dart';
@@ -24,6 +25,8 @@ class Settings with ChangeNotifier {
   late SettingsDictionary _dictionary;
   /// All settings related to the anki integration
   late SettingsAnki _anki;
+  /// All settings related to the 
+  late SettingsKanjiTable _kanjiTable;
 
 
   Settings(){
@@ -32,6 +35,7 @@ class Settings with ChangeNotifier {
     _advanced   = SettingsAdvanced();
     _dictionary = SettingsDictionary();
     _anki       = SettingsAnki();
+    _kanjiTable = SettingsKanjiTable();
   }
 
 
@@ -55,6 +59,10 @@ class Settings with ChangeNotifier {
     return _anki;
   }
 
+  SettingsKanjiTable get kanjiTable {
+    return _kanjiTable;
+  }
+
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
     // obtain shared preferences
@@ -66,6 +74,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsAdvanced', json.encode(advanced.toJson()));
     prefs.setString('settingsDictionary', json.encode(dictionary.toJson()));
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
+    prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -126,6 +135,17 @@ class Settings with ChangeNotifier {
       _anki = SettingsAnki();
     }
     _anki.addListener(() => notifyListeners());
+
+    // KANJI TABLE SETTINGS
+    try{
+      String tmp = prefs.getString('settingsKanjiTable') ?? "";
+      if(tmp != "") {_kanjiTable = SettingsKanjiTable.fromJson(json.decode(tmp));}
+      else {_kanjiTable = SettingsKanjiTable();}
+    }
+    catch (e) {
+      _kanjiTable = SettingsKanjiTable();
+    }
+    _kanjiTable.addListener(() => notifyListeners());
   }
 }
 
