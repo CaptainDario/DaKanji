@@ -14,6 +14,7 @@ import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
 
 
 
@@ -21,21 +22,15 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// a tree to show the different groups.
 class DictionaryScreenKanjiCard extends StatefulWidget {
 
-  /// The kanji that should be shown in this card as a svg string
-  final KanjiSVG kanjiVG;
   /// List of all kanjidict entries 
   final Kanjidic2 kanjidic2entry;
   /// String denoting the target language
   final List<String> targetLanguages;
-  /// Alternative versions of this kanji
-  final List<KanjiSVG>? alternatives;
 
   const DictionaryScreenKanjiCard(
-    this.kanjiVG,
     this.kanjidic2entry,
     this.targetLanguages,
     {
-      this.alternatives,
       Key? key
     }
   ) : super(key: key);
@@ -47,6 +42,8 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
 
 class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
+  /// The kanji that should be shown in this card as a svg string
+  List<KanjiSVG> kanjiVGs = [];
   /// List containing all on readings of this kanji
   List<String> onReadings = [];
   /// List containing all kun readings of this kanji
@@ -76,6 +73,12 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   /// parses and initializes all data elements of this widget
   void initData(){
 
+    // find alternatives
+    kanjiVGs = (findMatchingKanjiSVG([widget.kanjidic2entry.character])
+      ..sort((a, b) => a.kanjiVGId.length.compareTo(b.kanjiVGId.length)))
+      .sublist(1);
+
+    // get on / kun / meanings
     onReadings = []; kunReadings = []; meanings = {};
 
     for (var i = 0; i < widget.kanjidic2entry.readings.length; i++) {
@@ -104,6 +107,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -137,12 +141,24 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               )
                             );
                           },
-                          child: KanjiVGWidget(
-                            widget.kanjiVG.svg,
-                            constrains.maxWidth * 0.5,
-                            constrains.maxWidth * 0.5,
-                            colorize: true,
-                          ),
+                          child: Container(
+                            child: SizedBox(
+                              width: constrains.maxWidth * 0.5,
+                              height: constrains.maxWidth * 0.5,
+                              child: kanjiVGs.isNotEmpty
+                                ? KanjiVGWidget(
+                                  kanjiVGs.first.svg,
+                                  constrains.maxWidth * 0.5,
+                                  constrains.maxWidth * 0.5,
+                                  colorize: true,
+                                )
+                                : FittedBox(
+                                  child: Text(
+                                    widget.kanjidic2entry.character,
+                                  ),
+                                ),
+                            ),
+                          )
                         ),
                         
                         const SizedBox(width: 8,),
@@ -153,7 +169,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             columnGap: 0.1,
                             rowSizes: List.generate(11, (index) => auto),
                             children: [
-                              Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")),
+                              if(kanjiVGs.isNotEmpty)
+                                Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(kanjiVGs.first.radicals.join(", ")),
                               
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
@@ -259,24 +276,25 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     const SizedBox(height: 16,),
 
                     // Kanji groups
-                    if((kanjiGroupsRe.allMatches(widget.kanjiVG.svg)).length > 1)
+                    if(kanjiVGs.isNotEmpty &&
+                      (kanjiGroupsRe.allMatches(kanjiVGs.first.svg)).length > 1)
                       ExpansionTile(
                         title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
                         children:
                         [
                           KanjiGroupWidget(
-                            widget.kanjiVG.svg,
+                            kanjiVGs.first.svg,
                             constrains.maxWidth - 16,
                             constrains.maxWidth - 16
                           ),
                         ]
                       ),
-                    if(this.widget.alternatives != null && this.widget.alternatives!.isNotEmpty)
+                    if(kanjiVGs.isNotEmpty)
                       ExpansionTile(
                         title: Text(LocaleKeys.DictionaryScreen_kanji_alternatives.tr()),
                         children: [
                           Wrap(
-                            children: widget.alternatives!.map((alternative) => 
+                            children: kanjiVGs.sublist(1).map((alternative) => 
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: KanjiVGWidget(

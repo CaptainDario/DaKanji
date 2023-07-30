@@ -34,10 +34,6 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
 
   @override
   void initState() {
-    
-    kanjiSVG = GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-      .characterEqualTo(widget.kanji)
-    .findAllSync().first;
 
     kanjidic2 = GetIt.I<Isars>().dictionary.kanjidic2s.where()
       .characterEqualTo(widget.kanji)
@@ -49,9 +45,7 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //title: const Text("asd"),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -60,10 +54,8 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
               Align(
                 alignment: Alignment.topCenter,
                 child: DictionaryScreenKanjiCard(
-                  kanjiSVG,
                   kanjidic2,
                   ["en"],
-                  alternatives: [],
                 ),
               ),
             ],
