@@ -12,10 +12,10 @@
   "ClipboardScreen": {
     "title": "Zwischenablage",
     "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie m\u00fcssen die App im Vordergrund haben. Entschuldigung f\u00fcr die Unannehmlichkeiten.",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Zwischenablage!",
     "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt W\u00f6rterbucheintr\u00e4ge und mehr!",
-    "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen f\u00fcr ein besseres Verst\u00e4ndnis jedes Wortes in Ihrer Zwischenablage.",
-    "tutorial_pin_button": "Diese Schaltfl\u00e4che bewirkt, dass DaKanji immer \u00fcber anderen Fenstern angezeigt wird. Zus\u00e4tzlich wird die Gr\u00f6\u00dfe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe \u00fcber jeder anderen Anwendung verwendet werden.",
-    "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
+    "tutorial_pin_button": "Diese Schaltfl\u00e4che bewirkt, dass DaKanji immer \u00fcber anderen Fenstern angezeigt wird. Zus\u00e4tzlich wird die Gr\u00f6\u00dfe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe \u00fcber jeder anderen Anwendung verwendet werden."
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
@@ -131,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren k\u00f6nnen.",
+    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie m\u00f6chten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -147,10 +147,6 @@
     "skip": "\u00dcberspingen",
     "system": "System",
     "web": "Web"
-  },
-  "GrammarScreen": {
-    "import_dojg": null,
-    "title": null
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
@@ -174,11 +170,13 @@
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen zu den Kanji-Tabellen!",
     "tutorial_filter": "In dieser Dropdown-Liste k\u00f6nnen Sie eine Kategorie von Kanji ausw\u00e4hlen, die angezeigt werden soll.",
     "tutorial_filter_sub_group": "In diesem Men\u00fc k\u00f6nnen Sie einen Unterfilter ausw\u00e4hlen, der der Auswahl im vorherigen Men\u00fc entspricht.",
     "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
-    "tutorial_sort": "In dieser Dropdown-Liste k\u00f6nnen Sie eine Reihenfolge f\u00fcr die angezeigten Kanji ausw\u00e4hlen.",
-    "tutorial_welcome": "Willkommen auf dem Bildschirm der Kanji-Tabelle!"
+    "tutorial_kanjis": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+    "tutorial_sort": "In dieser Dropdown-Liste k\u00f6nnen Sie eine Reihenfolge f\u00fcr die angezeigten Kanji ausw\u00e4hlen."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -225,18 +223,6 @@
     "Onboarding_2_title": "Schlage Zeichen und W\u00f6rter nach",
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzuf\u00fcgen oder den ganzen Satz zu \u00fcbersetzen.",
     "Onboarding_3_title": "Du wei\u00dft nicht wie man einen  Satz liest?"
-  },
-  "Overview": {
-    "": "",
-    "de": "",
-    "en": "",
-    "es": "",
-    "fr": "",
-    "it": "",
-    "ja": "",
-    "pl": "",
-    "ru": "",
-    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "L\u00f6scht die W\u00f6rterbuchdateien.",
@@ -286,24 +272,6 @@
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
-  },
-  "Stores": {
-    "long_description": null,
-    "mockup_10": null,
-    "mockup_1_1": null,
-    "mockup_1_2": null,
-    "mockup_2_1": null,
-    "mockup_2_2": null,
-    "mockup_3": null,
-    "mockup_4_1": null,
-    "mockup_4_2": null,
-    "mockup_5": null,
-    "mockup_6": null,
-    "mockup_7": null,
-    "mockup_8": null,
-    "mockup_9": null,
-    "short_description": null,
-    "shortest_description": null
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
@@ -355,8 +323,5 @@
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
-  },
-  "_example": {
-    "draw": "zeichnen"
   }
 }

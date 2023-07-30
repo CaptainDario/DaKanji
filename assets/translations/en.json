@@ -12,10 +12,10 @@
   "ClipboardScreen": {
     "title": "Clipboard",
     "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the clipboard screen!",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
-    "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
-    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
-    "tutorial_welcome": "Welcome to the clipboard screen!"
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application."
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
@@ -131,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
+    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -147,10 +147,6 @@
     "skip": "skip",
     "system": "system",
     "web": "web"
-  },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
@@ -174,11 +170,13 @@
   },
   "KanjiTableScreen": {
     "title": "Kanji Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji table screen!",
     "tutorial_filter": "This dropdown lets you select a way of filtering Kanji.",
     "tutorial_filter_sub_group": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
     "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
-    "tutorial_sort": "This dropdown lets you select an order for the shown kanji.",
-    "tutorial_welcome": "Welcome to the kanji table screen!"
+    "tutorial_kanjis": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -225,18 +223,6 @@
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
     "Onboarding_3_title": "Do not know how to read a sentence?"
-  },
-  "Overview": {
-    "": "",
-    "de": "",
-    "en": "",
-    "es": "",
-    "fr": "",
-    "it": "",
-    "ja": "",
-    "pl": "",
-    "ru": "",
-    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
@@ -286,24 +272,6 @@
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
-  },
-  "Stores": {
-    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
-    "mockup_10": null,
-    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
-    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
-    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
-    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
-    "mockup_3": "Read texts by adding Furigana, translations and more!",
-    "mockup_4_1": "Use it on all your devices!",
-    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
-    "mockup_5": null,
-    "mockup_6": null,
-    "mockup_7": null,
-    "mockup_8": null,
-    "mockup_9": null,
-    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
@@ -355,8 +323,5 @@
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "title": "Word lists"
-  },
-  "_example": {
-    "draw": "draw"
   }
 }

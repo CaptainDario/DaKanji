@@ -1,247 +1,4 @@
 {
-  "Overview": {
-    "": {
-      "A cell has a red background when there is no translation": "Stores",
-      "A cell has a yellow background when the reference (English) localization was updated.": "AboutScreen",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "ChangelogScreen"
-    },
-    "en": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "de": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "ru": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 2",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "ja": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "zh": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "it": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "fr": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "es": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 1",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "pl": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    }
-  },
-  "_example": {
-    "draw": {
-      "en": "draw",
-      "de": "zeichnen",
-      "ru": "нарисовать",
-      "ja": "ドロー",
-      "zh": "绘制",
-      "it": "sorteggio",
-      "fr": "tirage au sort",
-      "es": "dibujar",
-      "pl": "losowanie"
-    }
-  },
-  "Stores": {
-    "shortest_description": {
-      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
-      "de": null,
-      "ru": null,
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
-    },
-    "short_description": {
-      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-      "de": null,
-      "ru": null,
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
-    },
-    "long_description": {
-      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
-      "de": null,
-      "ru": null,
-      "ja": "日本語を勉強しているあなた！DaKanjiを試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？DaKanjiはそんなあなたのためにあります。アプリが手書きの漢字をデジタルに変換します。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。また、Dakanjiは文章を読むときにも使えます。読みたい文章にふりがなやスペースを付けたり、単語を調べることもできます。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します\n* ウェブやアプリの辞書を利用して、オフラインで漢字や単語を翻訳することができます\n* 文章にふりがなやスペースなどを追加します\n* 全てのデバイスで使用可能です",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
-    },
-    "mockup_1_1": {
-      "en": "Use the built-in dictionary to lookup words offline.",
-      "de": null,
-      "ru": null,
-      "ja": "内臓の辞書で単語を調べることができます",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "Traduce con diccionarios",
-      "pl": "Tłumacz za pomocą słownika"
-    },
-    "mockup_1_2": {
-      "en": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
-      "de": null,
-      "ru": null,
-      "ja": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_2_1": {
-      "en": "Don't know a Kanji?\nJust draw it!",
-      "de": null,
-      "ru": null,
-      "ja": "漢字が読めない？まずは書いてみましょう！",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
-      "pl": "Nie znasz Kanji? Po prostu je namaluj!"
-    },
-    "mockup_2_2": {
-      "en": "Find 6500+ characters, not even the stroke order matters!",
-      "de": null,
-      "ru": null,
-      "ja": "書き順を知らなくても大丈夫！",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": "Ni siquiera importa el orden de los trazos.",
-      "pl": "Kolejność malowania znaków nie ma znaczenia."
-    },
-    "mockup_3": {
-      "en": "Read texts by adding Furigana, translations and more!",
-      "de": null,
-      "ru": null,
-      "ja": "翻訳したり、ふりがなを振って文章を理解しよう！",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!"
-    },
-    "mockup_4_1": {
-      "en": "Use it on all your devices!",
-      "de": null,
-      "ru": null,
-      "ja": "全てのデバイスで使用することができます！",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": "Używaj na wszystkich swoich urządzeniach!"
-    },
-    "mockup_4_2": {
-      "en": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
-      "de": null,
-      "ru": null,
-      "ja": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie."
-    },
-    "mockup_5": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_6": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_7": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_8": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_9": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "mockup_10": {
-      "en": null,
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    }
-  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -1356,30 +1113,6 @@
       "pl": "Usuwa historię wyszukiwania."
     }
   },
-  "GrammarScreen": {
-    "title": {
-      "en": "Grammar",
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    },
-    "import_dojg": {
-      "en": "Tap to import the DoJG deck",
-      "de": null,
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
-    }
-  },
   "WebviewScreen": {
     "loading": {
       "en": "Searching",
@@ -1428,15 +1161,15 @@
       "pl": "rysuj"
     },
     "feedback_description_text": {
-      "en": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
-      "de": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren können.",
-      "ru": "Что не так? Напишите свою проблему ниже. Пожалуйста, укажите электронную почту, чтобы с вами можно было связаться.",
-      "ja": "起きた問題を以下にご記入ください。ご連絡可能なメールアドレスも合わせてお書きください。",
-      "zh": "有什么问题？请在下面写下你的问题。请包括一个电子邮件，以便能够与你联系。",
-      "it": "Cosa c'è che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
-      "fr": "Qu'est-ce qui ne va pas ? Écrivez votre problème ci-dessous. Veuillez indiquer une adresse électronique pour que nous puissions vous contacter.",
-      "es": "¿Qué te ocurre? Escriba su problema a continuación. Por favor, incluye un correo electrónico para poder contactar contigo.",
-      "pl": "Co jest nie tak? Napisz swój problem poniżej. Podaj adres e-mail, abyśmy mogli się z Tobą skontaktować."
+      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+      "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
+      "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
+      "ja": "何が問題ですか？以下にあなたの問題を記述してください。フォローアップをご希望の場合は、Eメールもご記入ください。",
+      "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
+      "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
+      "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
+      "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
+      "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
     },
     "navigate": {
       "en": "navigate",
@@ -1805,9 +1538,9 @@
       "es": "Tabla de Kanji",
       "pl": "Tabela kanji"
     },
-    "tutorial_welcome": {
+    "tutorial_begin_title": {
       "en": "Welcome to the kanji table screen!",
-      "de": "Willkommen auf dem Bildschirm der Kanji-Tabelle!",
+      "de": "Willkommen zu den Kanji-Tabellen!",
       "ru": "Добро пожаловать на экран таблицы кандзи!",
       "ja": "漢字表画面へようこそ！",
       "zh": "欢迎来到汉字表屏幕！",
@@ -1815,6 +1548,28 @@
       "fr": "Bienvenue sur l'écran de la table des kanji !",
       "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
       "pl": "Witamy na ekranie tabeli kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kanjis": {
+      "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+      "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+      "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+      "ja": "この画面では、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細が表示されます。",
+      "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+      "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+      "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+      "es": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+      "pl": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów."
     },
     "tutorial_filter": {
       "en": "This dropdown lets you select a way of filtering Kanji.",
@@ -2058,155 +1813,85 @@
     "pos_suffix": {
       "en": "suffix",
       "de": "Suffix",
-      "ru": null,
       "ja": "接尾辞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przyrostek"
     },
     "pos_na_adj": {
       "en": "na-adjective",
       "de": "na-Adjektiv",
-      "ru": null,
       "ja": "な形容詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przymiotnik na-"
     },
     "pos_noun": {
       "en": "noun",
       "de": "Substantiv",
-      "ru": null,
       "ja": "名詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "rzeczownik"
     },
     "pos_prefix": {
       "en": "prefix",
       "de": "Präfix",
-      "ru": null,
       "ja": "接頭辞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przedrostek"
     },
     "pos_verb": {
       "en": "verb",
       "de": "Verb",
-      "ru": null,
       "ja": "動詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "czasownik"
     },
     "pos_i_adjective": {
       "en": "i-adjective",
       "de": "i-Adjektiv",
-      "ru": null,
       "ja": "い形容詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przymiotnik i-"
     },
     "pos_adverb": {
       "en": "adverb",
       "de": "Adverb",
-      "ru": null,
       "ja": "副詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przysłowek"
     },
     "pos_adnominal": {
       "en": "adnominal",
       "de": "Adnominal",
-      "ru": null,
       "ja": "連体詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "przydawka"
     },
     "pos_conjunction": {
       "en": "conjunction",
       "de": "Konjunktion",
-      "ru": null,
       "ja": "接続詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "spójnik"
     },
     "pos_particle": {
       "en": "particle",
       "de": "Partikel",
-      "ru": null,
       "ja": "助詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "partykuła"
     },
     "pos_auxillary_verb": {
       "en": "auxilary verb",
       "de": "Hilfsverb",
-      "ru": null,
       "ja": "助動詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "czasownik pomocniczy"
     },
     "pos_exclamation": {
       "en": "exclamation",
       "de": "Ausruf",
-      "ru": null,
       "ja": "感嘆詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "wykrzyknienie"
     },
     "pos_filler": {
       "en": "filler",
       "de": "Füller",
-      "ru": null,
       "ja": "つなぎ言葉",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "wypełniacz"
     },
     "pos_interjection": {
       "en": "interjection",
       "de": "Zwischenruf",
-      "ru": null,
       "ja": "間投詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "wyraz cząstkowy"
     }
   },
@@ -2467,408 +2152,221 @@
     "word_conj_verb": {
       "en": "Verb",
       "de": "Verb",
-      "ru": null,
       "ja": "動詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Czasownik"
     },
     "word_conj_adjective": {
       "en": "Adjective",
       "de": "Adjektiv",
-      "ru": null,
       "ja": "形容詞",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przymiotnik"
     },
     "word_conj_copula": {
       "en": "Copula",
       "de": "Kopula",
-      "ru": null,
       "ja": "コピュラ",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Lącznik"
     },
     "word_conj_plain": {
       "en": "Plain",
       "de": "Einfach",
-      "ru": null,
       "ja": "普通体",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Nieformalny"
     },
     "word_conj_polite": {
       "en": "Polite",
       "de": "Höflich",
-      "ru": null,
       "ja": "丁寧体",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Uprzejmy"
     },
     "word_conj_verb_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ru": null,
       "ja": "現在形（未来）",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_verb_non_past_m": {
       "en": "Will [not] do",
       "de": "Macht [nicht]",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] Zrobić"
     },
     "word_conj_verb_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ru": null,
       "ja": "過去形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przeszły"
     },
     "word_conj_verb_past_m": {
       "en": "Did [not] do",
       "de": "Hat [nicht] gemacht",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] Zrobił"
     },
     "word_conj_verb_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ru": null,
       "ja": "て形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Forma て"
     },
     "word_conj_verb_volitional": {
       "en": "Volitional",
       "de": "Intentional",
-      "ru": null,
       "ja": "意向形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Wolicjonalny"
     },
     "word_conj_verb_volitional_m": {
       "en": "Let's [not] do!",
       "de": "Lass [nicht] machen!",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] róbmy!"
     },
     "word_conj_verb_imperative": {
       "en": "Imperative",
       "de": "Imperativ",
-      "ru": null,
       "ja": "命令形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Rozkazujący"
     },
     "word_conj_verb_imperative_m": {
       "en": "Do [not] do!",
       "de": "Mach [nicht]!",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] rób!"
     },
     "word_conj_verb_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ru": null,
       "ja": "仮定形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Provisional"
     },
     "word_conj_verb_provisional_m": {
       "en": "If X does [not do], if X is [not]",
       "de": "Wenn X [nicht] macht, wenn X [nicht] ist",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Jeżeli X [nie] zrobi, jeżeli X [nie] jest"
     },
     "word_conj_verb_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ru": null,
       "ja": "条件形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Warunkowy"
     },
     "word_conj_verb_conditional_m": {
       "en": "If X were [not] to do, when X does [not] do",
       "de": "Wenn X [nicht] machen würde, falls X [nicht] macht",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Jeżeli X by [nie] zrobił, jeżeli X by [nie] był"
     },
     "word_conj_verb_potential": {
       "en": "Potential",
       "de": "Potential",
-      "ru": null,
       "ja": "可能形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Potencjalny"
     },
     "word_conj_verb_potential_m": {
       "en": "[Not] be able to do, can [not] do",
       "de": "Kann [nicht] machen",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] jest w stanie, [nie] może"
     },
     "word_conj_verb_passive": {
       "en": "Passive, Respectful",
       "de": "Passiv, Respektvoll",
-      "ru": null,
       "ja": "受動形、尊敬語",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Pasywny, z szacunkiem"
     },
     "word_conj_verb_passive_m": {
       "en": "Is [not] done (by ...), will [not] be done (by ...)",
       "de": "Wird (von...) [nicht] gemacht",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] jest zrobione (przez...), [nie] zostanie zropione (przez...)"
     },
     "word_conj_verb_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ru": null,
       "ja": "使役形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przyczynowy"
     },
     "word_conj_verb_causative_m": {
       "en": "Does [not] / will [not] make, let (someone) do",
       "de": "Macht [nicht] / Wird [nicht] machen, jmd. machen lassen",
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
+      "ja": null
     },
     "word_conj_verb_causative_passive": {
       "en": "Causative passive",
       "de": "Kausativ passiv",
-      "ru": null,
       "ja": "受動形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przyczynowy pasywny"
     },
     "word_conj_verb_causative_passive_m": {
       "en": "Is [not] made / will [not] be made to do (by someone)",
       "de": "Wird [nicht] gemacht / Wird [nicht] dazu gebracht zu machen (von jmd.)",
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
+      "ja": null
     },
     "word_conj_adj_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ru": null,
       "ja": "現在形（未来）",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_adj_non_past_m": {
       "en": "Is [not]",
       "de": "Ist [nicht]",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] jest"
     },
     "word_conj_adj_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ru": null,
       "ja": "過去形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przeszły"
     },
     "word_conj_adj_past_m": {
       "en": "was [not]",
       "de": "War [nicht]",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "[nie] był"
     },
     "word_conj_adj_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ru": null,
       "ja": "て形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "forma て"
     },
     "word_conj_adj_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ru": null,
       "ja": "仮定形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Provisional"
     },
     "word_conj_adj_provisional_m": {
       "en": "If it is [not]",
       "de": "Wenn X [nicht] ist",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Jeżeli [nie] jest"
     },
     "word_conj_adj_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ru": null,
       "ja": "条件形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Warunkowy"
     },
     "word_conj_adj_conditional_m": {
       "en": "When/if it is [not]",
       "de": "Falls X [nicht] ist",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Kiedy/jeśli to [nie] jest"
     },
     "word_conj_adj_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ru": null,
       "ja": "使役形",
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Przyczynowy"
     },
     "word_conj_adj_causative_m": {
       "en": "Make somebody [not]",
       "de": "Jmd. [nicht] machen",
-      "ru": null,
       "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
       "pl": "Zrób kogoś [nie]"
     },
     "word_wikipedia": {
@@ -3203,7 +2701,7 @@
       "es": "Portapapeles",
       "pl": "Schowek"
     },
-    "tutorial_welcome": {
+    "tutorial_begin_title": {
       "en": "Welcome to the clipboard screen!",
       "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
       "ru": "Добро пожаловать на экран буфера обмена!",
@@ -3214,16 +2712,16 @@
       "es": "Bienvenido a la pantalla del portapapeles",
       "pl": "Witamy na ekranie schowka!"
     },
-    "tutorial_introduction": {
-      "en": "This screen gives you options for a better understanding of any word in your clipboard.",
-      "de": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
-      "ru": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
-      "ja": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
-      "zh": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
-      "it": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
-      "fr": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
-      "es": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
-      "pl": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku."
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     },
     "tutorial_explanation": {
       "en": "Just copy some text and DaKanji will show dictionary entries and more!",
@@ -3262,14 +2760,7 @@
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji",
-      "ru": null,
-      "ja": null,
-      "zh": null,
-      "it": null,
-      "fr": null,
-      "es": null,
-      "pl": null
+      "de": "Kuzushiji"
     }
   },
   "WordListsScreen": {

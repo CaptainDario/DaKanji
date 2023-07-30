@@ -307,27 +307,32 @@ class _KanjiTableState extends State<KanjiTable> {
               maxCrossAxisExtent: 60
             ),
             itemBuilder: (context, i) {
-              return AnimationConfiguration.staggeredGrid(
-                columnCount: (MediaQuery.of(context).size.width / 60).ceil(),
-                position: i,
-                duration: Duration(milliseconds: 300),
-                child: ScaleAnimation(
-                  child: Card(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => 
-                            KanjiDetailsPage(kanjis[i].character)
-                          )
-                        );
-                      },
-                      child: Center(
-                        child: FittedBox(
-                          child: Text(
-                            kanjis[i].character,
-                            style: TextStyle(
-                              fontSize: 500,
-                              fontFamily: g_japaneseFontFamily
+              return Focus(
+                focusNode: widget.includeTutorial && i == 0
+                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![1]
+                  : null,
+                child: AnimationConfiguration.staggeredGrid(
+                  columnCount: (MediaQuery.of(context).size.width / 60).ceil(),
+                  position: i,
+                  duration: Duration(milliseconds: 300),
+                  child: ScaleAnimation(
+                    child: Card(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => 
+                              KanjiDetailsPage(kanjis[i].character)
+                            )
+                          );
+                        },
+                        child: Center(
+                          child: FittedBox(
+                            child: Text(
+                              kanjis[i].character,
+                              style: TextStyle(
+                                fontSize: 500,
+                                fontFamily: g_japaneseFontFamily
+                              ),
                             ),
                           ),
                         ),

@@ -11,10 +11,10 @@ abstract class  LocaleKeys {
   static const ChangelogScreen = 'ChangelogScreen';
   static const ClipboardScreen_title = 'ClipboardScreen.title';
   static const ClipboardScreen_tutorial_android_limitation = 'ClipboardScreen.tutorial_android_limitation';
+  static const ClipboardScreen_tutorial_begin_text = 'ClipboardScreen.tutorial_begin_text';
+  static const ClipboardScreen_tutorial_begin_title = 'ClipboardScreen.tutorial_begin_title';
   static const ClipboardScreen_tutorial_explanation = 'ClipboardScreen.tutorial_explanation';
-  static const ClipboardScreen_tutorial_introduction = 'ClipboardScreen.tutorial_introduction';
   static const ClipboardScreen_tutorial_pin_button = 'ClipboardScreen.tutorial_pin_button';
-  static const ClipboardScreen_tutorial_welcome = 'ClipboardScreen.tutorial_welcome';
   static const ClipboardScreen = 'ClipboardScreen';
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';
   static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
@@ -143,9 +143,6 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
-  static const GrammarScreen_import_dojg = 'GrammarScreen.import_dojg';
-  static const GrammarScreen_title = 'GrammarScreen.title';
-  static const GrammarScreen = 'GrammarScreen';
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
   static const HomeScreen_complete_log = 'HomeScreen.complete_log';
@@ -164,11 +161,13 @@ abstract class  LocaleKeys {
   static const KanaTrainerScreen_title = 'KanaTrainerScreen.title';
   static const KanaTrainerScreen = 'KanaTrainerScreen';
   static const KanjiTableScreen_title = 'KanjiTableScreen.title';
+  static const KanjiTableScreen_tutorial_begin_text = 'KanjiTableScreen.tutorial_begin_text';
+  static const KanjiTableScreen_tutorial_begin_title = 'KanjiTableScreen.tutorial_begin_title';
   static const KanjiTableScreen_tutorial_filter = 'KanjiTableScreen.tutorial_filter';
   static const KanjiTableScreen_tutorial_filter_sub_group = 'KanjiTableScreen.tutorial_filter_sub_group';
   static const KanjiTableScreen_tutorial_kanji_amount = 'KanjiTableScreen.tutorial_kanji_amount';
+  static const KanjiTableScreen_tutorial_kanjis = 'KanjiTableScreen.tutorial_kanjis';
   static const KanjiTableScreen_tutorial_sort = 'KanjiTableScreen.tutorial_sort';
-  static const KanjiTableScreen_tutorial_welcome = 'KanjiTableScreen.tutorial_welcome';
   static const KanjiTableScreen = 'KanjiTableScreen';
   static const KanjiTrainerScreen_title = 'KanjiTrainerScreen.title';
   static const KanjiTrainerScreen = 'KanjiTrainerScreen';
@@ -212,17 +211,6 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_text = 'OnBoarding.Onboarding_3_text';
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
-  static const Overview_ = 'Overview.';
-  static const Overview_de = 'Overview.de';
-  static const Overview_en = 'Overview.en';
-  static const Overview_es = 'Overview.es';
-  static const Overview_fr = 'Overview.fr';
-  static const Overview_it = 'Overview.it';
-  static const Overview_ja = 'Overview.ja';
-  static const Overview_pl = 'Overview.pl';
-  static const Overview_ru = 'Overview.ru';
-  static const Overview_zh = 'Overview.zh';
-  static const Overview = 'Overview';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
@@ -271,23 +259,6 @@ abstract class  LocaleKeys {
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
   static const SettingsScreen_title = 'SettingsScreen.title';
   static const SettingsScreen = 'SettingsScreen';
-  static const Stores_long_description = 'Stores.long_description';
-  static const Stores_mockup_10 = 'Stores.mockup_10';
-  static const Stores_mockup_1_1 = 'Stores.mockup_1_1';
-  static const Stores_mockup_1_2 = 'Stores.mockup_1_2';
-  static const Stores_mockup_2_1 = 'Stores.mockup_2_1';
-  static const Stores_mockup_2_2 = 'Stores.mockup_2_2';
-  static const Stores_mockup_3 = 'Stores.mockup_3';
-  static const Stores_mockup_4_1 = 'Stores.mockup_4_1';
-  static const Stores_mockup_4_2 = 'Stores.mockup_4_2';
-  static const Stores_mockup_5 = 'Stores.mockup_5';
-  static const Stores_mockup_6 = 'Stores.mockup_6';
-  static const Stores_mockup_7 = 'Stores.mockup_7';
-  static const Stores_mockup_8 = 'Stores.mockup_8';
-  static const Stores_mockup_9 = 'Stores.mockup_9';
-  static const Stores_short_description = 'Stores.short_description';
-  static const Stores_shortest_description = 'Stores.shortest_description';
-  static const Stores = 'Stores';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';
   static const TextScreen_pos_adnominal = 'TextScreen.pos_adnominal';
   static const TextScreen_pos_adverb = 'TextScreen.pos_adverb';
@@ -336,7 +307,5 @@ abstract class  LocaleKeys {
   static const WordListsScreen_send_to_anki = 'WordListsScreen.send_to_anki';
   static const WordListsScreen_title = 'WordListsScreen.title';
   static const WordListsScreen = 'WordListsScreen';
-  static const _example_draw = '_example.draw';
-  static const _example = '_example';
 
 }

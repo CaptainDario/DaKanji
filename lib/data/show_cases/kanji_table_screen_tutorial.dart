@@ -10,14 +10,16 @@ class KanjiTableScreenTutorial extends Tutorial {
 
   KanjiTableScreenTutorial() {
     titles = [
-      LocaleKeys.KanjiTableScreen_title.tr(),
+      LocaleKeys.KanjiTableScreen_tutorial_begin_title.tr(),
+      "",
       "",
       "",
       "",
       "",
     ];
     bodies = [
-      LocaleKeys.KanjiTableScreen_tutorial_welcome.tr(),
+      LocaleKeys.KanjiTableScreen_tutorial_begin_text.tr(),
+      LocaleKeys.KanjiTableScreen_tutorial_kanjis.tr(),
       LocaleKeys.KanjiTableScreen_tutorial_filter.tr(),
       LocaleKeys.KanjiTableScreen_tutorial_filter_sub_group.tr(),
       LocaleKeys.KanjiTableScreen_tutorial_sort.tr(),

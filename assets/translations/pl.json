@@ -12,10 +12,10 @@
   "ClipboardScreen": {
     "title": "Schowek",
     "tutorial_android_limitation": "W systemie Android ekran ten nie mo\u017ce automatycznie odczytywa\u0107 schowka w tle. Aplikacja musi dzia\u0142a\u0107 na pierwszym planie. Przepraszamy za niedogodno\u015bci.",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie schowka!",
     "tutorial_explanation": "Wystarczy skopiowa\u0107 tekst, a DaKanji wy\u015bwietli has\u0142a s\u0142ownikowe i nie tylko!",
-    "tutorial_introduction": "Ten ekran zapewnia opcje umo\u017cliwiaj\u0105ce lepsze zrozumienie dowolnego s\u0142owa w schowku.",
-    "tutorial_pin_button": "Ten przycisk sprawia, \u017ce DaKanji jest zawsze wy\u015bwietlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji s\u0105 ukryte. Dzi\u0119ki temu DaKanji mo\u017ce by\u0107 u\u017cywane jako pomoc w czytaniu nad dowoln\u0105 inn\u0105 aplikacj\u0105.",
-    "tutorial_welcome": "Witamy na ekranie schowka!"
+    "tutorial_pin_button": "Ten przycisk sprawia, \u017ce DaKanji jest zawsze wy\u015bwietlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji s\u0105 ukryte. Dzi\u0119ki temu DaKanji mo\u017ce by\u0107 u\u017cywane jako pomoc w czytaniu nad dowoln\u0105 inn\u0105 aplikacj\u0105."
   },
   "DictionaryScreen": {
     "example_tab": "Przyk\u0142ady",
@@ -71,9 +71,9 @@
     "word_conj_polite": "Uprzejmy",
     "word_conj_verb": "Czasownik",
     "word_conj_verb_causative": "Przyczynowy",
-    "word_conj_verb_causative_m": null,
+    "word_conj_verb_causative_m": "",
     "word_conj_verb_causative_passive": "Przyczynowy pasywny",
-    "word_conj_verb_causative_passive_m": null,
+    "word_conj_verb_causative_passive_m": "",
     "word_conj_verb_conditional": "Warunkowy",
     "word_conj_verb_conditional_m": "Je\u017celi X by [nie] zrobi\u0142, je\u017celi X by [nie] by\u0142",
     "word_conj_verb_imperative": "Rozkazuj\u0105cy",
@@ -131,7 +131,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz sw\u00f3j problem poni\u017cej. Podaj adres e-mail, aby\u015bmy mogli si\u0119 z Tob\u0105 skontaktowa\u0107.",
+    "feedback_description_text": "Co jest nie tak? Opisz sw\u00f3j problem poni\u017cej. Je\u015bli chcesz, abym m\u00f3g\u0142 odpowiedzie\u0107 na Twoj\u0105 pro\u015bb\u0119, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wy\u015blij",
     "title": "Opinia"
@@ -147,10 +147,6 @@
     "skip": "pomi\u0144",
     "system": "system",
     "web": "web"
-  },
-  "GrammarScreen": {
-    "import_dojg": null,
-    "title": null
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
@@ -174,17 +170,19 @@
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kanji!",
     "tutorial_filter": "Ta lista rozwijana pozwala wybra\u0107 kategori\u0119 kanji, kt\u00f3re maj\u0105 by\u0107 wy\u015bwietlane.",
     "tutorial_filter_sub_group": "To menu pozwala wybra\u0107 filtr podrz\u0119dny odpowiadaj\u0105cy wyborowi w poprzednim menu.",
     "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wy\u015bwietlanych.",
-    "tutorial_sort": "Ta lista rozwijana pozwala wybra\u0107 kolejno\u015b\u0107 dla wy\u015bwietlanego kanji.",
-    "tutorial_welcome": "Witamy na ekranie tabeli kanji!"
+    "tutorial_kanjis": "Ten ekran wy\u015bwietla tabel\u0119 kanji pasuj\u0105cych do r\u00f3\u017cnych ustawie\u0144. Stukni\u0119cie jednego z kanji spowoduje wy\u015bwietlenie jego szczeg\u00f3\u0142\u00f3w.",
+    "tutorial_sort": "Ta lista rozwijana pozwala wybra\u0107 kolejno\u015b\u0107 dla wy\u015bwietlanego kanji."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
-    "title": null
+    "title": ""
   },
   "ManualScreen": {
     "anki_connection_test": "Aby przetestowa\u0107 czy DaKanji mo\u017ce dotrze\u0107 do Anki mo\u017cesz nacisn\u0105\u0107 przycisk poni\u017cej.",
@@ -225,18 +223,6 @@
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "U\u017cyj narz\u0119dzi analizy tekstu DaKanji, aby doda\u0107 furigan\u0119, spacje i inne, lub przet\u0142umacz ca\u0142e zdanie.",
     "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?"
-  },
-  "Overview": {
-    "": "",
-    "de": "",
-    "en": "",
-    "es": "",
-    "fr": "",
-    "it": "",
-    "ja": "",
-    "pl": "",
-    "ru": "",
-    "zh": ""
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki s\u0142ownikowe.",
@@ -286,24 +272,6 @@
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
-  },
-  "Stores": {
-    "long_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\n\nCzy pr\u00f3bowa\u0142e\u015b kiedy\u015b przeczyta\u0107 tekst po japo\u0144sku ale nie wiedzia\u0142e\u015b jak przeczyta\u0107 niekt\u00f3re Kanji? DaKanji jest tutaj \u017ceby Ci z tym pom\u00f3c. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz zna\u0107 kolejno\u015bci pisania! Maluj znaki i buduj s\u0142owa kt\u00f3re mo\u017cesz p\u00f3\u017aniej t\u0142umaczy\u0107, a to wszystko kompletnie offline.\n\nFunkcjonalno\u015bci:\n* Rozpoznawanie 6500+ Kanji i ca\u0142ej Kany offline\n* U\u017cywaj s\u0142ownik\u00f3w internetowych oraz aplikacji aby t\u0142umaczy\u0107 znaki i s\u0142owa",
-    "mockup_10": null,
-    "mockup_1_1": "T\u0142umacz za pomoc\u0105 s\u0142ownika",
-    "mockup_1_2": null,
-    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
-    "mockup_2_2": "Kolejno\u015b\u0107 malowania znak\u00f3w nie ma znaczenia.",
-    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, t\u0142umaczenia i wiele wi\u0119cej!",
-    "mockup_4_1": "U\u017cywaj na wszystkich swoich urz\u0105dzeniach!",
-    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji dzia\u0142a wsz\u0119dzie.",
-    "mockup_5": null,
-    "mockup_6": null,
-    "mockup_7": null,
-    "mockup_8": null,
-    "mockup_9": null,
-    "short_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\nZa pomoc\u0105 malowania mo\u017cesz odnajdowa\u0107 i t\u0142umaczy\u0107 znaki.",
-    "shortest_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Wprowad\u017a tekst tutaj...",
@@ -355,8 +323,5 @@
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wy\u015blij do anki",
     "title": "Listy s\u0142owne"
-  },
-  "_example": {
-    "draw": "losowanie"
   }
 }

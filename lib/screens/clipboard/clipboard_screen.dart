@@ -154,7 +154,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
             children: [
               Focus(
                 focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![4]
+                  ? GetIt.I<Tutorials>().clipboardScreenTutorial.focusNodes![3]
                   : null,
                 child: IconButton(
                   icon: Icon(isAlwaysOnTop ? Icons.push_pin : Icons.push_pin_outlined),

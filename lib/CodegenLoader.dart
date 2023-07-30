@@ -28,10 +28,10 @@ class CodegenLoader extends AssetLoader{
   "ClipboardScreen": {
     "title": "剪贴板",
     "tutorial_android_limitation": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到剪贴板屏幕!",
     "tutorial_explanation": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
-    "tutorial_introduction": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
-    "tutorial_pin_button": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
-    "tutorial_welcome": "欢迎来到剪贴板屏幕!"
+    "tutorial_pin_button": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。"
   },
   "DictionaryScreen": {
     "example_tab": "例子",
@@ -110,7 +110,7 @@ class CodegenLoader extends AssetLoader{
   },
   "FeedbackScreen": {
     "draw": "绘制",
-    "feedback_description_text": "有什么问题？请在下面写下你的问题。请包括一个电子邮件，以便能够与你联系。",
+    "feedback_description_text": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
     "navigate": "导航",
     "submit": "提交",
     "title": "反馈信息"
@@ -126,8 +126,6 @@ class CodegenLoader extends AssetLoader{
     "skip": "跳过",
     "system": "系统",
     "web": "网络"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "不要再问了",
@@ -151,11 +149,13 @@ class CodegenLoader extends AssetLoader{
   },
   "KanjiTableScreen": {
     "title": "汉字表",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到汉字表屏幕！",
     "tutorial_filter": "通过该下拉菜单，您可以选择应显示的汉字类别。",
     "tutorial_filter_sub_group": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
     "tutorial_kanji_amount": "该数字表示当前显示的汉字数量。",
-    "tutorial_sort": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
-    "tutorial_welcome": "欢迎来到汉字表屏幕！"
+    "tutorial_kanjis": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+    "tutorial_sort": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。"
   },
   "KanjiTrainerScreen": {
     "title": "汉字训练器"
@@ -201,8 +201,6 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_2_title": "查询字符和单词",
     "Onboarding_3_text": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
     "Onboarding_3_title": "不知道如何读懂一个句子？"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "删除字典文件。",
@@ -253,8 +251,6 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "title": "设置"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "在这里输入文字...",
     "title": "文本",
@@ -291,146 +287,9 @@ class CodegenLoader extends AssetLoader{
     "search_history": "搜索历史",
     "send_to_anki": "发送到anki",
     "title": "词表"
-  },
-  "_example": {
-    "draw": "绘制"
   }
 };
 static const Map<String,dynamic> localizations = {
-  "Overview": {
-    "": {
-      "A cell has a red background when there is no translation": "Stores",
-      "A cell has a yellow background when the reference (English) localization was updated.": "AboutScreen",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "ChangelogScreen"
-    },
-    "en": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "de": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "ru": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 2",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "ja": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "zh": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "it": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "fr": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 4",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 1"
-    },
-    "es": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 1 ; 1",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    },
-    "pl": {
-      "A cell has a red background when there is no translation": "0 ; 0 ; 0",
-      "A cell has a yellow background when the reference (English) localization was updated.": "0 ; 0 ; 0",
-      "A cell has a blue background when the translation was made by DeepL (and not checked)": "0 ; 0 ; 0"
-    }
-  },
-  "_example": {
-    "draw": {
-      "en": "draw",
-      "de": "zeichnen",
-      "ru": "нарисовать",
-      "ja": "ドロー",
-      "zh": "绘制",
-      "it": "sorteggio",
-      "fr": "tirage au sort",
-      "es": "dibujar",
-      "pl": "losowanie"
-    }
-  },
-  "Stores": {
-    "shortest_description": {
-      "en": "You are learning Japanese? Then you need to give \"DaKanji\" a try!",
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
-    },
-    "short_description": {
-      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-      "ja": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki."
-    },
-    "long_description": {
-      "en": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
-      "ja": "日本語を勉強しているあなた！DaKanjiを試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？DaKanjiはそんなあなたのためにあります。アプリが手書きの漢字をデジタルに変換します。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。また、Dakanjiは文章を読むときにも使えます。読みたい文章にふりがなやスペースを付けたり、単語を調べることもできます。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します\n* ウェブやアプリの辞書を利用して、オフラインで漢字や単語を翻訳することができます\n* 文章にふりがなやスペースなどを追加します\n* 全てのデバイスで使用可能です",
-      "es": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-      "pl": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa"
-    },
-    "mockup_1_1": {
-      "en": "Use the built-in dictionary to lookup words offline.",
-      "ja": "内臓の辞書で単語を調べることができます",
-      "es": "Traduce con diccionarios",
-      "pl": "Tłumacz za pomocą słownika"
-    },
-    "mockup_1_2": {
-      "en": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
-      "ja": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
-    },
-    "mockup_2_1": {
-      "en": "Don't know a Kanji?\nJust draw it!",
-      "ja": "漢字が読めない？まずは書いてみましょう！",
-      "es": "¿No sabes un Kanji? ¡Solo dibújalo!",
-      "pl": "Nie znasz Kanji? Po prostu je namaluj!"
-    },
-    "mockup_2_2": {
-      "en": "Find 6500+ characters, not even the stroke order matters!",
-      "ja": "書き順を知らなくても大丈夫！",
-      "es": "Ni siquiera importa el orden de los trazos.",
-      "pl": "Kolejność malowania znaków nie ma znaczenia."
-    },
-    "mockup_3": {
-      "en": "Read texts by adding Furigana, translations and more!",
-      "ja": "翻訳したり、ふりがなを振って文章を理解しよう！",
-      "pl": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!"
-    },
-    "mockup_4_1": {
-      "en": "Use it on all your devices!",
-      "ja": "全てのデバイスで使用することができます！",
-      "pl": "Używaj na wszystkich swoich urządzeniach!"
-    },
-    "mockup_4_2": {
-      "en": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
-      "ja": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
-      "pl": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie."
-    },
-    "mockup_5": {
-    },
-    "mockup_6": {
-    },
-    "mockup_7": {
-    },
-    "mockup_8": {
-    },
-    "mockup_9": {
-    },
-    "mockup_10": {
-    }
-  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -1545,14 +1404,6 @@ static const Map<String,dynamic> localizations = {
       "pl": "Usuwa historię wyszukiwania."
     }
   },
-  "GrammarScreen": {
-    "title": {
-      "en": "Grammar",
-    },
-    "import_dojg": {
-      "en": "Tap to import the DoJG deck",
-    }
-  },
   "WebviewScreen": {
     "loading": {
       "en": "Searching",
@@ -1601,15 +1452,15 @@ static const Map<String,dynamic> localizations = {
       "pl": "rysuj"
     },
     "feedback_description_text": {
-      "en": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
-      "de": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren können.",
-      "ru": "Что не так? Напишите свою проблему ниже. Пожалуйста, укажите электронную почту, чтобы с вами можно было связаться.",
-      "ja": "起きた問題を以下にご記入ください。ご連絡可能なメールアドレスも合わせてお書きください。",
-      "zh": "有什么问题？请在下面写下你的问题。请包括一个电子邮件，以便能够与你联系。",
-      "it": "Cosa c'è che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
-      "fr": "Qu'est-ce qui ne va pas ? Écrivez votre problème ci-dessous. Veuillez indiquer une adresse électronique pour que nous puissions vous contacter.",
-      "es": "¿Qué te ocurre? Escriba su problema a continuación. Por favor, incluye un correo electrónico para poder contactar contigo.",
-      "pl": "Co jest nie tak? Napisz swój problem poniżej. Podaj adres e-mail, abyśmy mogli się z Tobą skontaktować."
+      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+      "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
+      "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
+      "ja": "何が問題ですか？以下にあなたの問題を記述してください。フォローアップをご希望の場合は、Eメールもご記入ください。",
+      "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
+      "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
+      "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
+      "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
+      "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
     },
     "navigate": {
       "en": "navigate",
@@ -1978,9 +1829,9 @@ static const Map<String,dynamic> localizations = {
       "es": "Tabla de Kanji",
       "pl": "Tabela kanji"
     },
-    "tutorial_welcome": {
+    "tutorial_begin_title": {
       "en": "Welcome to the kanji table screen!",
-      "de": "Willkommen auf dem Bildschirm der Kanji-Tabelle!",
+      "de": "Willkommen zu den Kanji-Tabellen!",
       "ru": "Добро пожаловать на экран таблицы кандзи!",
       "ja": "漢字表画面へようこそ！",
       "zh": "欢迎来到汉字表屏幕！",
@@ -1988,6 +1839,28 @@ static const Map<String,dynamic> localizations = {
       "fr": "Bienvenue sur l'écran de la table des kanji !",
       "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
       "pl": "Witamy na ekranie tabeli kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kanjis": {
+      "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+      "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+      "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+      "ja": "この画面では、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細が表示されます。",
+      "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+      "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+      "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+      "es": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+      "pl": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów."
     },
     "tutorial_filter": {
       "en": "This dropdown lets you select a way of filtering Kanji.",
@@ -3104,7 +2977,7 @@ static const Map<String,dynamic> localizations = {
       "es": "Portapapeles",
       "pl": "Schowek"
     },
-    "tutorial_welcome": {
+    "tutorial_begin_title": {
       "en": "Welcome to the clipboard screen!",
       "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
       "ru": "Добро пожаловать на экран буфера обмена!",
@@ -3115,16 +2988,16 @@ static const Map<String,dynamic> localizations = {
       "es": "Bienvenido a la pantalla del portapapeles",
       "pl": "Witamy na ekranie schowka!"
     },
-    "tutorial_introduction": {
-      "en": "This screen gives you options for a better understanding of any word in your clipboard.",
-      "de": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
-      "ru": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
-      "ja": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
-      "zh": "这个屏幕为你提供选项，以便更好地了解剪贴板中的任何单词。",
-      "it": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
-      "fr": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
-      "es": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
-      "pl": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku."
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     },
     "tutorial_explanation": {
       "en": "Just copy some text and DaKanji will show dictionary entries and more!",
@@ -3163,7 +3036,7 @@ static const Map<String,dynamic> localizations = {
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji",
+      "de": "Kuzushiji"
     }
   },
   "WordListsScreen": {
@@ -3348,10 +3221,10 @@ static const Map<String,dynamic> ja = {
   "ClipboardScreen": {
     "title": "クリップボード",
     "tutorial_android_limitation": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "クリップボード画面へようこそ！",
     "tutorial_explanation": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
-    "tutorial_introduction": "この画面では、クリップボードにある任意の単語をより深く理解するためのオプションを提供します。",
-    "tutorial_pin_button": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
-    "tutorial_welcome": "クリップボード画面へようこそ！"
+    "tutorial_pin_button": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。"
   },
   "DictionaryScreen": {
     "example_tab": "例",
@@ -3452,7 +3325,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
-    "feedback_description_text": "起きた問題を以下にご記入ください。ご連絡可能なメールアドレスも合わせてお書きください。",
+    "feedback_description_text": "何が問題ですか？以下にあなたの問題を記述してください。フォローアップをご希望の場合は、Eメールもご記入ください。",
     "navigate": "操作",
     "submit": "送信",
     "title": "フィードバック"
@@ -3468,8 +3341,6 @@ static const Map<String,dynamic> ja = {
     "skip": "スキップ",
     "system": "システム",
     "web": "ウェブ"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "二度と表示しない",
@@ -3493,11 +3364,13 @@ static const Map<String,dynamic> ja = {
   },
   "KanjiTableScreen": {
     "title": "漢字表",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "漢字表画面へようこそ！",
     "tutorial_filter": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
     "tutorial_filter_sub_group": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
     "tutorial_kanji_amount": "この数字は、現在表示されている漢字の数を示す。",
-    "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
-    "tutorial_welcome": "漢字表画面へようこそ！"
+    "tutorial_kanjis": "この画面では、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細が表示されます。",
+    "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。"
   },
   "KanjiTrainerScreen": {
     "title": "漢字トレーナー"
@@ -3543,8 +3416,6 @@ static const Map<String,dynamic> ja = {
     "Onboarding_2_title": "漢字や単語を調べる",
     "Onboarding_3_text": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
     "Onboarding_3_title": "文章の読み方がわからない？"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルの削除",
@@ -3594,18 +3465,6 @@ static const Map<String,dynamic> ja = {
     "restarts_app": "アプリを再起動する",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "title": "設定"
-  },
-  "Stores": {
-    "long_description": "日本語を勉強しているあなた！DaKanjiを試してみませんか？\n\n日本語の文章を読んで、漢字の読み方がわからなかったことはありませんか？DaKanjiはそんなあなたのためにあります。アプリが手書きの漢字をデジタルに変換します。書き順を知らなくても大丈夫です。単語や熟語の検索、翻訳まで全てオフラインで可能です。また、Dakanjiは文章を読むときにも使えます。読みたい文章にふりがなやスペースを付けたり、単語を調べることもできます。\n\n機能の概要\n* オフラインで6500字の漢字と仮名を認識します\n* ウェブやアプリの辞書を利用して、オフラインで漢字や単語を翻訳することができます\n* 文章にふりがなやスペースなどを追加します\n* 全てのデバイスで使用可能です",
-    "mockup_1_1": "内臓の辞書で単語を調べることができます",
-    "mockup_1_2": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
-    "mockup_2_1": "漢字が読めない？まずは書いてみましょう！",
-    "mockup_2_2": "書き順を知らなくても大丈夫！",
-    "mockup_3": "翻訳したり、ふりがなを振って文章を理解しよう！",
-    "mockup_4_1": "全てのデバイスで使用することができます！",
-    "mockup_4_2": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
-    "short_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
-    "shortest_description": "日本語を勉強していますか？それなら「DaKanji」を試してみてください！"
   },
   "TextScreen": {
     "input_text_here": "ここにテキストを入力...",
@@ -3657,9 +3516,6 @@ static const Map<String,dynamic> ja = {
     "search_history": "検索履歴",
     "send_to_anki": "ankiに送る",
     "title": "単語リスト"
-  },
-  "_example": {
-    "draw": "ドロー"
   }
 };
 static const Map<String,dynamic> de = {
@@ -3676,10 +3532,10 @@ static const Map<String,dynamic> de = {
   "ClipboardScreen": {
     "title": "Zwischenablage",
     "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Zwischenablage!",
     "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
-    "tutorial_introduction": "Dieser Bildschirm bietet Ihnen Optionen für ein besseres Verständnis jedes Wortes in Ihrer Zwischenablage.",
-    "tutorial_pin_button": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
-    "tutorial_welcome": "Willkommen auf dem Bildschirm der Zwischenablage!"
+    "tutorial_pin_button": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden."
   },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
@@ -3795,7 +3651,7 @@ static const Map<String,dynamic> de = {
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten und geben Sie eine E-Mail-Adresse an, damit wir Sie kontaktieren können.",
+    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -3811,8 +3667,6 @@ static const Map<String,dynamic> de = {
     "skip": "Überspingen",
     "system": "System",
     "web": "Web"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
@@ -3836,11 +3690,13 @@ static const Map<String,dynamic> de = {
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen zu den Kanji-Tabellen!",
     "tutorial_filter": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
     "tutorial_filter_sub_group": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
     "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
-    "tutorial_sort": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
-    "tutorial_welcome": "Willkommen auf dem Bildschirm der Kanji-Tabelle!"
+    "tutorial_kanjis": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+    "tutorial_sort": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -3887,8 +3743,6 @@ static const Map<String,dynamic> de = {
     "Onboarding_2_title": "Schlage Zeichen und Wörter nach",
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
     "Onboarding_3_title": "Du weißt nicht wie man einen  Satz liest?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
@@ -3938,8 +3792,6 @@ static const Map<String,dynamic> de = {
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "input_text_here": "Text hier eingeben...",
@@ -3991,9 +3843,6 @@ static const Map<String,dynamic> de = {
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten"
-  },
-  "_example": {
-    "draw": "zeichnen"
   }
 };
 static const Map<String,dynamic> ru = {
@@ -4010,10 +3859,10 @@ static const Map<String,dynamic> ru = {
   "ClipboardScreen": {
     "title": "Буфер обмена",
     "tutorial_android_limitation": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран буфера обмена!",
     "tutorial_explanation": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
-    "tutorial_introduction": "Этот экран предоставляет вам возможности для лучшего понимания любого слова в вашем буфере обмена.",
-    "tutorial_pin_button": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
-    "tutorial_welcome": "Добро пожаловать на экран буфера обмена!"
+    "tutorial_pin_button": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения."
   },
   "DictionaryScreen": {
     "example_tab": "Пример",
@@ -4092,7 +3941,7 @@ static const Map<String,dynamic> ru = {
   },
   "FeedbackScreen": {
     "draw": "нарисовать",
-    "feedback_description_text": "Что не так? Напишите свою проблему ниже. Пожалуйста, укажите электронную почту, чтобы с вами можно было связаться.",
+    "feedback_description_text": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
     "navigate": "перейдите по ссылке",
     "submit": "отправить",
     "title": "Обратная связь"
@@ -4108,8 +3957,6 @@ static const Map<String,dynamic> ru = {
     "skip": "пропустить",
     "system": "система",
     "web": "веб-сайт"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
@@ -4133,11 +3980,13 @@ static const Map<String,dynamic> ru = {
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран таблицы кандзи!",
     "tutorial_filter": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
     "tutorial_filter_sub_group": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
     "tutorial_kanji_amount": "Это число показывает, сколько кандзи отображается в данный момент.",
-    "tutorial_sort": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
-    "tutorial_welcome": "Добро пожаловать на экран таблицы кандзи!"
+    "tutorial_kanjis": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+    "tutorial_sort": "В этом выпадающем списке можно выбрать порядок отображения кандзи."
   },
   "KanjiTrainerScreen": {
     "title": "Тренажер по кандзи"
@@ -4183,8 +4032,6 @@ static const Map<String,dynamic> ru = {
     "Onboarding_2_title": "Поиск символов и слов",
     "Onboarding_3_text": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
     "Onboarding_3_title": "Не умеете читать предложения?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Удаляет файлы словарей.",
@@ -4235,8 +4082,6 @@ static const Map<String,dynamic> ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "title": "Настройки"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Введите текст здесь...",
     "title": "Текст",
@@ -4273,9 +4118,6 @@ static const Map<String,dynamic> ru = {
     "search_history": "История поиска",
     "send_to_anki": "Отправить в anki",
     "title": "Списки слов"
-  },
-  "_example": {
-    "draw": "нарисовать"
   }
 };
 static const Map<String,dynamic> pl = {
@@ -4292,10 +4134,10 @@ static const Map<String,dynamic> pl = {
   "ClipboardScreen": {
     "title": "Schowek",
     "tutorial_android_limitation": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności.",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie schowka!",
     "tutorial_explanation": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!",
-    "tutorial_introduction": "Ten ekran zapewnia opcje umożliwiające lepsze zrozumienie dowolnego słowa w schowku.",
-    "tutorial_pin_button": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją.",
-    "tutorial_welcome": "Witamy na ekranie schowka!"
+    "tutorial_pin_button": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
   },
   "DictionaryScreen": {
     "example_tab": "Przykłady",
@@ -4409,7 +4251,7 @@ static const Map<String,dynamic> pl = {
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz swój problem poniżej. Podaj adres e-mail, abyśmy mogli się z Tobą skontaktować.",
+    "feedback_description_text": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wyślij",
     "title": "Opinia"
@@ -4425,8 +4267,6 @@ static const Map<String,dynamic> pl = {
     "skip": "pomiń",
     "system": "system",
     "web": "web"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
@@ -4450,11 +4290,13 @@ static const Map<String,dynamic> pl = {
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kanji!",
     "tutorial_filter": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane.",
     "tutorial_filter_sub_group": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu.",
     "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych.",
-    "tutorial_sort": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji.",
-    "tutorial_welcome": "Witamy na ekranie tabeli kanji!"
+    "tutorial_kanjis": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów.",
+    "tutorial_sort": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -4500,8 +4342,6 @@ static const Map<String,dynamic> pl = {
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie.",
     "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
@@ -4551,17 +4391,6 @@ static const Map<String,dynamic> pl = {
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
-  },
-  "Stores": {
-    "long_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa",
-    "mockup_1_1": "Tłumacz za pomocą słownika",
-    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
-    "mockup_2_2": "Kolejność malowania znaków nie ma znaczenia.",
-    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!",
-    "mockup_4_1": "Używaj na wszystkich swoich urządzeniach!",
-    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie.",
-    "short_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki.",
-    "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
   "TextScreen": {
     "input_text_here": "Wprowadź tekst tutaj...",
@@ -4613,9 +4442,6 @@ static const Map<String,dynamic> pl = {
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wyślij do anki",
     "title": "Listy słowne"
-  },
-  "_example": {
-    "draw": "losowanie"
   }
 };
 static const Map<String,dynamic> en = {
@@ -4632,10 +4458,10 @@ static const Map<String,dynamic> en = {
   "ClipboardScreen": {
     "title": "Clipboard",
     "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the clipboard screen!",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
-    "tutorial_introduction": "This screen gives you options for a better understanding of any word in your clipboard.",
-    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
-    "tutorial_welcome": "Welcome to the clipboard screen!"
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application."
   },
   "DictionaryScreen": {
     "example_tab": "Examples",
@@ -4751,7 +4577,7 @@ static const Map<String,dynamic> en = {
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below. Please include an email to be able to contact you.",
+    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -4767,10 +4593,6 @@ static const Map<String,dynamic> en = {
     "skip": "skip",
     "system": "system",
     "web": "web"
-  },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
@@ -4794,11 +4616,13 @@ static const Map<String,dynamic> en = {
   },
   "KanjiTableScreen": {
     "title": "Kanji Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji table screen!",
     "tutorial_filter": "This dropdown lets you select a way of filtering Kanji.",
     "tutorial_filter_sub_group": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
     "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
-    "tutorial_sort": "This dropdown lets you select an order for the shown kanji.",
-    "tutorial_welcome": "Welcome to the kanji table screen!"
+    "tutorial_kanjis": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji."
   },
   "KanjiTrainerScreen": {
     "title": "Kanji Trainer"
@@ -4845,8 +4669,6 @@ static const Map<String,dynamic> en = {
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
     "Onboarding_3_title": "Do not know how to read a sentence?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
@@ -4896,18 +4718,6 @@ static const Map<String,dynamic> en = {
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
-  },
-  "Stores": {
-    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!",
-    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
-    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
-    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
-    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
-    "mockup_3": "Read texts by adding Furigana, translations and more!",
-    "mockup_4_1": "Use it on all your devices!",
-    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
-    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-    "shortest_description": "You are learning Japanese? Then you need to give \"DaKanji\" a try!"
   },
   "TextScreen": {
     "input_text_here": "Input text here...",
@@ -4959,9 +4769,6 @@ static const Map<String,dynamic> en = {
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "title": "Word lists"
-  },
-  "_example": {
-    "draw": "draw"
   }
 };
 static const Map<String,dynamic> it = {
@@ -4978,10 +4785,10 @@ static const Map<String,dynamic> it = {
   "ClipboardScreen": {
     "title": "Appunti",
     "tutorial_android_limitation": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata degli appunti!",
     "tutorial_explanation": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
-    "tutorial_introduction": "Questa schermata offre opzioni per una migliore comprensione di qualsiasi parola presente negli appunti.",
-    "tutorial_pin_button": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
-    "tutorial_welcome": "Benvenuti nella schermata degli appunti!"
+    "tutorial_pin_button": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione."
   },
   "DictionaryScreen": {
     "example_tab": "Esempio",
@@ -5060,7 +4867,7 @@ static const Map<String,dynamic> it = {
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'è che non va? Scrivete il vostro problema qui sotto. Si prega di includere un'e-mail per potervi contattare.",
+    "feedback_description_text": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -5076,8 +4883,6 @@ static const Map<String,dynamic> it = {
     "skip": "saltare",
     "system": "sistema",
     "web": "web"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
@@ -5101,11 +4906,13 @@ static const Map<String,dynamic> it = {
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tabella dei kanji!",
     "tutorial_filter": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
     "tutorial_filter_sub_group": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
     "tutorial_kanji_amount": "Questo numero indica il numero di kanji attualmente visualizzati.",
-    "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
-    "tutorial_welcome": "Benvenuti nella schermata della tabella dei kanji!"
+    "tutorial_kanjis": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+    "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati."
   },
   "KanjiTrainerScreen": {
     "title": "Allenatore di kanji"
@@ -5151,8 +4958,6 @@ static const Map<String,dynamic> it = {
     "Onboarding_2_title": "Ricerca di caratteri e parole",
     "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
     "Onboarding_3_title": "Non sapete leggere una frase?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Elimina i file del dizionario.",
@@ -5203,8 +5008,6 @@ static const Map<String,dynamic> it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "title": "Impostazioni"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Inserire il testo qui...",
     "title": "Testo",
@@ -5241,9 +5044,6 @@ static const Map<String,dynamic> it = {
     "search_history": "Storia della ricerca",
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole"
-  },
-  "_example": {
-    "draw": "sorteggio"
   }
 };
 static const Map<String,dynamic> fr = {
@@ -5260,10 +5060,10 @@ static const Map<String,dynamic> fr = {
   "ClipboardScreen": {
     "title": "Presse-papiers",
     "tutorial_android_limitation": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans l'écran du presse-papiers !",
     "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
-    "tutorial_introduction": "Cet écran vous offre des options pour mieux comprendre n'importe quel mot dans votre presse-papiers.",
-    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
-    "tutorial_welcome": "Bienvenue dans l'écran du presse-papiers !"
+    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application."
   },
   "DictionaryScreen": {
     "example_tab": "Exemple",
@@ -5342,7 +5142,7 @@ static const Map<String,dynamic> fr = {
   },
   "FeedbackScreen": {
     "draw": "dessiner",
-    "feedback_description_text": "Qu'est-ce qui ne va pas ? Écrivez votre problème ci-dessous. Veuillez indiquer une adresse électronique pour que nous puissions vous contacter.",
+    "feedback_description_text": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
     "title": "Commentaires"
@@ -5358,8 +5158,6 @@ static const Map<String,dynamic> fr = {
     "skip": "sauter",
     "system": "système",
     "web": "web"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
@@ -5383,11 +5181,13 @@ static const Map<String,dynamic> fr = {
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la table des kanji !",
     "tutorial_filter": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
     "tutorial_filter_sub_group": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
     "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affichés.",
-    "tutorial_sort": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
-    "tutorial_welcome": "Bienvenue sur l'écran de la table des kanji !"
+    "tutorial_kanjis": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+    "tutorial_sort": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés."
   },
   "KanjiTrainerScreen": {
     "title": "Entraîneur de kanji"
@@ -5433,8 +5233,6 @@ static const Map<String,dynamic> fr = {
     "Onboarding_2_title": "Recherche de caractères et de mots",
     "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
     "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
@@ -5485,8 +5283,6 @@ static const Map<String,dynamic> fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "title": "Paramètres"
   },
-  "Stores": {
-  },
   "TextScreen": {
     "input_text_here": "Entrez le texte ici...",
     "title": "Texte",
@@ -5523,9 +5319,6 @@ static const Map<String,dynamic> fr = {
     "search_history": "Historique de la recherche",
     "send_to_anki": "Envoyer à anki",
     "title": "Listes de mots"
-  },
-  "_example": {
-    "draw": "tirage au sort"
   }
 };
 static const Map<String,dynamic> es = {
@@ -5542,10 +5335,10 @@ static const Map<String,dynamic> es = {
   "ClipboardScreen": {
     "title": "Portapapeles",
     "tutorial_android_limitation": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla del portapapeles",
     "tutorial_explanation": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
-    "tutorial_introduction": "Esta pantalla le ofrece opciones para comprender mejor cualquier palabra de su portapapeles.",
-    "tutorial_pin_button": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
-    "tutorial_welcome": "Bienvenido a la pantalla del portapapeles"
+    "tutorial_pin_button": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación."
   },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",
@@ -5624,7 +5417,7 @@ static const Map<String,dynamic> es = {
   },
   "FeedbackScreen": {
     "draw": "dibujar",
-    "feedback_description_text": "¿Qué te ocurre? Escriba su problema a continuación. Por favor, incluye un correo electrónico para poder contactar contigo.",
+    "feedback_description_text": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
     "navigate": "navegue por",
     "submit": "enviar",
     "title": "Comentarios"
@@ -5640,8 +5433,6 @@ static const Map<String,dynamic> es = {
     "skip": "omitir",
     "system": "sistema",
     "web": "web"
-  },
-  "GrammarScreen": {
   },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
@@ -5665,11 +5456,13 @@ static const Map<String,dynamic> es = {
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de la tabla de kanji!",
     "tutorial_filter": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
     "tutorial_filter_sub_group": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
     "tutorial_kanji_amount": "Este número indica cuántos kanji se están mostrando actualmente.",
-    "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
-    "tutorial_welcome": "¡Bienvenido a la pantalla de la tabla de kanji!"
+    "tutorial_kanjis": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+    "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados."
   },
   "KanjiTrainerScreen": {
     "title": "Entrenador de Kanji"
@@ -5715,8 +5508,6 @@ static const Map<String,dynamic> es = {
     "Onboarding_2_title": "Busca caracteres y palabras",
     "Onboarding_3_text": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
     "Onboarding_3_title": "¿No sabe leer una frase?"
-  },
-  "Overview": {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
@@ -5767,14 +5558,6 @@ static const Map<String,dynamic> es = {
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ajustes"
   },
-  "Stores": {
-    "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-    "mockup_1_1": "Traduce con diccionarios",
-    "mockup_2_1": "¿No sabes un Kanji? ¡Solo dibújalo!",
-    "mockup_2_2": "Ni siquiera importa el orden de los trazos.",
-    "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-    "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
-  },
   "TextScreen": {
     "input_text_here": "Introduzca aquí el texto...",
     "title": "Texto",
@@ -5811,9 +5594,6 @@ static const Map<String,dynamic> es = {
     "search_history": "Historial de búsqueda",
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras"
-  },
-  "_example": {
-    "draw": "dibujar"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};
