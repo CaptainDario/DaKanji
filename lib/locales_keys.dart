@@ -20,14 +20,17 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
   static const DictionaryScreen_kanji_alternatives = 'DictionaryScreen.kanji_alternatives';
   static const DictionaryScreen_kanji_copied = 'DictionaryScreen.kanji_copied';
+  static const DictionaryScreen_kanji_dissimilar = 'DictionaryScreen.kanji_dissimilar';
   static const DictionaryScreen_kanji_frequency = 'DictionaryScreen.kanji_frequency';
   static const DictionaryScreen_kanji_grade = 'DictionaryScreen.kanji_grade';
   static const DictionaryScreen_kanji_groups = 'DictionaryScreen.kanji_groups';
   static const DictionaryScreen_kanji_heisig = 'DictionaryScreen.kanji_heisig';
   static const DictionaryScreen_kanji_jlpt = 'DictionaryScreen.kanji_jlpt';
   static const DictionaryScreen_kanji_kun_reading = 'DictionaryScreen.kanji_kun_reading';
+  static const DictionaryScreen_kanji_lookalikes = 'DictionaryScreen.kanji_lookalikes';
   static const DictionaryScreen_kanji_on_reading = 'DictionaryScreen.kanji_on_reading';
   static const DictionaryScreen_kanji_radicals = 'DictionaryScreen.kanji_radicals';
+  static const DictionaryScreen_kanji_similar = 'DictionaryScreen.kanji_similar';
   static const DictionaryScreen_kanji_skip = 'DictionaryScreen.kanji_skip';
   static const DictionaryScreen_kanji_strokes = 'DictionaryScreen.kanji_strokes';
   static const DictionaryScreen_kanji_tab = 'DictionaryScreen.kanji_tab';

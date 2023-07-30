@@ -150,7 +150,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           child: LayoutGrid(
                             columnSizes: [auto, 1.fr],
                             columnGap: 0.1,
-                            rowSizes: List.generate(7, (index) => auto),
+                            rowSizes: List.generate(11, (index) => auto),
                             children: [
                               Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle), SelectableText(widget.kanjiVG.radicals.join(", ")),
                               
@@ -158,28 +158,44 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
 
+                              if(widget.kanjidic2entry.frequency != -1)
+                                ...[
+                                  Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
+                                  Text("${widget.kanjidic2entry.frequency}"),
+                                ],
+
                               if(widget.kanjidic2entry.grade != -1)
                                 ...[
                                   Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle), 
                                   Text("${widget.kanjidic2entry.grade}"),
                                 ],
 
-                              if(widget.kanjidic2entry.jlpt != -1)
+                              if(widget.kanjidic2entry.jlptNew != -1)
                                 ...[
                                   Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),
-                                  Text("N${widget.kanjidic2entry.jlpt}"),
+                                  Text("N${widget.kanjidic2entry.jlptNew}"),
                                 ],
-                              // TODO : add heisig
-                              //Text("${LocaleKeys.DictionaryScreen_kanji_heisig.tr()}: ", style: headerStyle),  Text("NONE"),
-                              // TODO : add KLC
-                              // TODO : add WaniKani
-                              // TODO : add SKIP
-                              //Text("${LocaleKeys.DictionaryScreen_kanji_skip.tr()}: ", style: headerStyle),    Text("NONE"),
-                              if(widget.kanjidic2entry.frequency != -1)
+                              if(widget.kanjidic2entry.kanken != "")
                                 ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
-                                  Text("${widget.kanjidic2entry.frequency}"),
+                                  Text("漢検: ", style: headerStyle),
+                                  Text("${widget.kanjidic2entry.kanken}"),
                                 ],
+                              if(widget.kanjidic2entry.wanikani != -1)
+                                ...[
+                                  Text("Wanikani: ", style: headerStyle),
+                                  Text(widget.kanjidic2entry.wanikani.toString()),
+                                ],
+                              if(widget.kanjidic2entry.klc != -1)
+                                ...[
+                                  Text("KLC: ", style: headerStyle),
+                                  Text(widget.kanjidic2entry.klc.toString()),
+                                ],
+                              if(widget.kanjidic2entry.rtkNew != -1)
+                                ...[
+                                  Text("RTK: ", style: headerStyle),
+                                  Text(widget.kanjidic2entry.rtkNew.toString()),
+                                ],
+                              
                             ],
                           ),
                         ),
@@ -191,12 +207,28 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     // On / Kun readings
                     LayoutGrid(
                       columnSizes: [auto, 1.fr],
-                      rowSizes: List.generate(4, (index) => auto),
+                      rowSizes: List.generate(10, (index) => auto),
                       children: [
                         Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),
                         SelectableText(onReadings.join(",  ")),
                         Text("${LocaleKeys.DictionaryScreen_kanji_kun_reading.tr()}: ", style: headerStyle),
                         SelectableText(kunReadings.join(",  ")),
+
+                        if(widget.kanjidic2entry.antonyms != null)
+                          ...[
+                            Text("${LocaleKeys.DictionaryScreen_kanji_dissimilar.tr()}: ", style: headerStyle),
+                            SelectableText(widget.kanjidic2entry.antonyms!.join(",  ")),
+                          ],
+                        if(widget.kanjidic2entry.synonyms != null)
+                          ...[
+                            Text("${LocaleKeys.DictionaryScreen_kanji_similar.tr()}: ", style: headerStyle),
+                            SelectableText(widget.kanjidic2entry.synonyms!.join(",  ")),
+                          ],
+                        if(widget.kanjidic2entry.lookalikes != null)
+                          ...[
+                            Text("${LocaleKeys.DictionaryScreen_kanji_lookalikes.tr()}: ", style: headerStyle),
+                            SelectableText(widget.kanjidic2entry.lookalikes!.join(",  ")),
+                          ],
                       ],
                     ),
 

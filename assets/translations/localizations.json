@@ -2468,6 +2468,39 @@
       "es": "Kun",
       "pl": "Kun"
     },
+    "kanji_similar": {
+      "en": "Similar",
+      "de": "Ähnlich",
+      "ru": "Похожие",
+      "ja": "同様",
+      "zh": "类似",
+      "it": "Simile",
+      "fr": "Semblable",
+      "es": "Similar",
+      "pl": "Podobne"
+    },
+    "kanji_dissimilar": {
+      "en": "Dissimilar",
+      "de": "Ungleiche",
+      "ru": "Разнородные",
+      "ja": "異質",
+      "zh": "不相似",
+      "it": "Dissimile",
+      "fr": "Dissemblables",
+      "es": "Disímiles",
+      "pl": "Niepodobny"
+    },
+    "kanji_lookalikes": {
+      "en": "Lookalikes",
+      "de": "Verwechselungsgefahr",
+      "ru": "Lookalikes",
+      "ja": "そっくりさん",
+      "zh": "外观相似",
+      "it": "Somiglianze",
+      "fr": "Sosies",
+      "es": "Parecidos",
+      "pl": "Podobieństwa"
+    },
     "kanji_frequency": {
       "en": "Freq.",
       "de": "Freq.",
