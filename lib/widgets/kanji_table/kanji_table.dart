@@ -128,25 +128,28 @@ class _KanjiTableState extends State<KanjiTable> {
         query = k.where().distinctByJlptNew().jlptNewProperty();
         break;
       case KanjiCategory.RTK:
-        categoryLevels = List.generate(25, (i) => "${1+i*100}-${i*100+100}");
+        categoryLevels = List.generate(30, (i) => "${1+i*100}-${i*100+100}");
         break;
       case KanjiCategory.SCHOOL:
         query = k.where().distinctByGrade().gradeProperty();
         break;
       case KanjiCategory.FREQ:
-        throw Exception("Illegal category");
-        query = k.where().distinctByFrequency().frequencyProperty();
+        categoryLevels = List.generate(26, (i) => "${1+i*100}-${i*100+100}");
+        break;
       case KanjiCategory.KLC:
-        throw Exception("Illegal category");
+        categoryLevels = List.generate(23, (i) => "${1+i*100}-${i*100+100}");
+        break;
       case KanjiCategory.KENTEI:
-        throw Exception("Illegal category");
-        //query = k.where().distinctByKanken().kankenProperty();
+        categoryLevels = ["1", "1.5", "2", "2.5", "3", "4", "5", "6", "7", "8", "9", "10"];
         break;
       case KanjiCategory.WANIKANI:
-        throw Exception("Illegal category");
+        query = k.where().distinctByWanikani().wanikaniProperty();
+        break;
     }
-    if(query != null)
+    if(query != null){
       categoryLevels = (query.findAllSync()..sort((b, a) => a.compareTo(b))).map((e) => e.toString()).toList();
+      categoryLevels.remove(-1);
+    }
     if(changedCategories){
       categoryLevelSelection = categoryLevels.first;
       changedCategories = false;
@@ -160,6 +163,16 @@ class _KanjiTableState extends State<KanjiTable> {
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
       .optional(categorySelection == KanjiCategory.SCHOOL, (q) => q.gradeEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.FREQ, (q) => q.frequencyBetween(
+        int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
+        int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
+      ))
+      .optional(categorySelection == KanjiCategory.KLC, (q) => q.klcBetween(
+        int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
+        int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
+      ))
+      .optional(categorySelection == KanjiCategory.KENTEI, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.WANIKANI, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
     // apply sorting
     .optional(sortingSelection == KanjiSorting.STROKES_ASC, (q) => q.sortByStrokeCount())
     .optional(sortingSelection == KanjiSorting.STROKES_DSC, (q) => q.thenByStrokeCountDesc())
