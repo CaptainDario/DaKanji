@@ -175,9 +175,9 @@ flutter:
       fonts:
         - asset: assets/fonts/kouzan/KouzanGyousho.otf
           weight: 900
-    - family: anki
+    - family: DaKanjiIcons
       fonts:
-        - asset: assets/icons/anki.ttf
+        - asset: assets/icons/svg_to_font/fluttericon.com/fonts/DaKanjiIcons.ttf
 
 
   # The following line ensures that the Material Icons font is

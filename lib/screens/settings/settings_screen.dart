@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -15,6 +14,8 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
 
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
@@ -476,7 +477,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.KanjiTableScreen_title.tr(),
-                        const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black"),
+                        DaKanjiIcons.kanji_table,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // reshow tutorial
@@ -499,10 +500,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       /* TODO - add anki settings
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
-                        const IconData(
-                          0xe803,
-                          fontFamily: 'Anki',
-                        ),
+                        DaKanjiIcons.anki,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // the default deck to add cards to

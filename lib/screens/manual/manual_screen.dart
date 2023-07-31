@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
@@ -35,10 +36,7 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    const IconData(
-      0xe803,
-      fontFamily: "Anki",
-    )
+    DaKanjiIcons.anki
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;

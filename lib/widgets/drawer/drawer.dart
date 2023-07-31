@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,7 +15,6 @@ import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/application/drawer/drawer_entries.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -77,17 +77,17 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
       null, null,
       true, null),
-    DrawerEntry(const IconData(0x6f22, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
-      null, Alignment(-0.1, -0.65),
+    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+      null, null,
       true, null),
-    DrawerEntry(const IconData(0x6f22, fontFamily: "kouzan",), LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
-      0.6, Alignment(-1000, 0),
+    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+      null, null,
       kDebugMode, null),
-    DrawerEntry(const IconData(0x30AB, fontFamily: "$g_japaneseFontFamily-Black"), LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
-      0.5, Alignment(1000, -0.7),
-      true, null),
-    DrawerEntry(const IconData(0x30AB, fontFamily: "kouzan"), LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
-      0.7, Alignment(1000, -0.6),
+    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+      null, null,
+      kDebugMode, null),
+    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+      null, null,
       kDebugMode, null),
     DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
       null, Alignment(0, -0.1),
