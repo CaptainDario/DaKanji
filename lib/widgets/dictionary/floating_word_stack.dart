@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -73,6 +74,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   /// List of entries that finished their animations and thus should be removed
   List<FloatingWord> removeAtNextBuild = [];
 
+  late Timer spawnEntriesTimer;
+
  
   
   @override
@@ -100,8 +103,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     if(widget.levels.isEmpty || widget.hide) return;
 
     // delete current entries and wait to spawn new ones
-    Future.delayed(Duration(seconds: widget.secondsTillFirstWord))
-    .then((value) {
+    spawnEntriesTimer = Timer(Duration(seconds: widget.secondsTillFirstWord), () {
       dictEntries = getDictEntries();
       setState(() {});
 
@@ -183,7 +185,6 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     floatingWords.sort((a, b) => a.parallax.compareTo(b.parallax));
   }
 
-
   /// Calculates the size of the given `text` with `textStyle` if given
   Size calculateTextSize(String text, {TextStyle? textStyle}){
 
@@ -201,6 +202,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     for (var i = 0; i < floatingWords.length; i++) {
       floatingWords[i].animationController.dispose();
     }
+    if(spawnEntriesTimer.isActive) spawnEntriesTimer.cancel();
+    
     super.dispose();
   }
 
