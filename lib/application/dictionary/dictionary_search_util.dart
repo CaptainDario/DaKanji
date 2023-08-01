@@ -191,8 +191,34 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
         )
       )
     )
-    .sortByFrequencyDesc()
-    .limit(200 ~/ noIsolates);
+    // filter matches that do not match in an active language
+    .optional(true, (q) =>
+      // does any meaning
+      q.meaningsElement((lMeanings) => 
+        // match an
+        lMeanings.anyOf(langs, (lMeaning, lang) =>
+          // 
+          lMeaning.languageEqualTo(lang)
+            .and()
+          .optional(!containsWildcard, (q) => 
+            q.meaningsElement((meaning) => 
+              meaning.attributesElementStartsWith(query)
+            )
+          )
+          .and()
+          .optional(containsWildcard, (q) => 
+            q.meaningsElement((meaning) => 
+              meaning.attributesElementMatches(query)
+            )
+          )
+        )
+      )
+    )
+    // limit this process to one chunk of size (entries.length / num_processes)
+    .idBetween(idRangeStart, idRangeEnd)
+  // filter out entries 
+  .sortByFrequencyDesc()
+  .limit(200 ~/ noIsolates);
 }
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
@@ -206,8 +232,6 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
     .meaningsIndexesElementStartsWith(query)
 
   .filter()
-    // limit this process to one chunk of size (entries.length / num_processes)
-    .idBetween(idRangeStart, idRangeEnd)
   ;
 }
 
