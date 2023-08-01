@@ -96,6 +96,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                       GetIt.I<UserData>().showTutorialKanjiTable = false;
                       await GetIt.I<UserData>().save();
                     }
+                    else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
+                      print("Kana table screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialKanaTable = false;
+                      await GetIt.I<UserData>().save();
+                    }
                   },
                   child: screen,
                 );
@@ -142,7 +147,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/kanji_table":
             return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
           case "/kana_table":
-            return switchScreen(KanaTableScreen(args.navigatedByDrawer));
+            return switchScreen(KanaTableScreen(args.navigatedByDrawer, true));
           case "/kana_trainer":
             return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
           case "/kuzushiji":

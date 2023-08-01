@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -473,7 +474,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Text header
+                      // #region - Kanji table header
 
                       ResponsiveHeaderTile(
                         LocaleKeys.KanjiTableScreen_title.tr(),
@@ -496,8 +497,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Anki header
-                      /* TODO - add anki settings
+                      // #region - Kana table header TODO: v3.2 enable kana table
+                      if(kDebugMode)
+                        ...[
+                          ResponsiveHeaderTile(
+                            LocaleKeys.KanaTableScreen_title.tr(),
+                            DaKanjiIcons.kana_table,
+                            autoSizeGroup: g_SettingsAutoSizeGroup
+                          ),
+                          // reshow tutorial
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                            icon: Icons.replay_outlined,
+                            onButtonPressed: () {
+                              GetIt.I<UserData>().showTutorialKanaTable = true;
+                              settings.save();
+                              Phoenix.rebirth(context);
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                          // move down between enreegon and region anki header
+                          const Divider(),
+                        ],
+
+                      // #endregion
+
+                      
+
+                      // #region - Anki header : TODO - v3.3 enableanki settings
+                      /*
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
                         DaKanjiIcons.anki,

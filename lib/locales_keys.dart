@@ -157,6 +157,15 @@ abstract class  LocaleKeys {
   static const HomeScreen_whats_new = 'HomeScreen.whats_new';
   static const HomeScreen = 'HomeScreen';
   static const KanaTableScreen_title = 'KanaTableScreen.title';
+  static const KanaTableScreen_tutorial_begin_text = 'KanaTableScreen.tutorial_begin_text';
+  static const KanaTableScreen_tutorial_begin_title = 'KanaTableScreen.tutorial_begin_title';
+  static const KanaTableScreen_tutorial_kana_table = 'KanaTableScreen.tutorial_kana_table';
+  static const KanaTableScreen_tutorial_speed_dial = 'KanaTableScreen.tutorial_speed_dial';
+  static const KanaTableScreen_tutorial_speed_dial_dakuten = 'KanaTableScreen.tutorial_speed_dial_dakuten';
+  static const KanaTableScreen_tutorial_speed_dial_kana = 'KanaTableScreen.tutorial_speed_dial_kana';
+  static const KanaTableScreen_tutorial_speed_dial_romaji = 'KanaTableScreen.tutorial_speed_dial_romaji';
+  static const KanaTableScreen_tutorial_speed_dial_yoon = 'KanaTableScreen.tutorial_speed_dial_yoon';
+  static const KanaTableScreen_tutorial_speed_dial_yoon_special = 'KanaTableScreen.tutorial_speed_dial_yoon_special';
   static const KanaTableScreen = 'KanaTableScreen';
   static const KanaTrainerScreen_title = 'KanaTrainerScreen.title';
   static const KanaTrainerScreen = 'KanaTrainerScreen';

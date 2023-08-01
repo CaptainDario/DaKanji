@@ -163,7 +163,16 @@
     "whats_new": "co nowego"
   },
   "KanaTableScreen": {
-    "title": "St\u00f3\u0142 Kana"
+    "title": "St\u00f3\u0142 Kana",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kana!",
+    "tutorial_kana_table": "Dotknij dowolnego kana, aby wy\u015bwietli\u0107 wi\u0119cej szczeg\u00f3\u0142\u00f3w na jego temat i us\u0142ysze\u0107 jego wymow\u0119.",
+    "tutorial_speed_dial": "Za pomoc\u0105 tego przycisku mo\u017cna zmieni\u0107 wy\u015bwietlane kany.",
+    "tutorial_speed_dial_dakuten": "Przycisk ten s\u0142u\u017cy do w\u0142\u0105czania i wy\u0142\u0105czania Dakutenu.",
+    "tutorial_speed_dial_kana": "Ten przycisk prze\u0142\u0105cza mi\u0119dzy Katakan\u0105 i Hiragan\u0105.",
+    "tutorial_speed_dial_romaji": "Ten przycisk w\u0142\u0105cza lub wy\u0142\u0105cza funkcj\u0119 Romaji.",
+    "tutorial_speed_dial_yoon": "Ten przycisk w\u0142\u0105cza i wy\u0142\u0105cza znaki Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ten przycisk w\u0142\u0105cza lub wy\u0142\u0105cza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Trener Kana"

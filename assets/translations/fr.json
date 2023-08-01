@@ -163,7 +163,16 @@
     "whats_new": "Quoi de neuf ?"
   },
   "KanaTableScreen": {
-    "title": "Table Kana"
+    "title": "Table Kana",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran de la table kana !",
+    "tutorial_kana_table": "Tapez sur un Kana pour afficher plus de d\u00e9tails sur ce Kana et entendre sa prononciation.",
+    "tutorial_speed_dial": "Ce bouton permet de modifier les Kana affich\u00e9s.",
+    "tutorial_speed_dial_dakuten": "Ce bouton permet d'activer ou de d\u00e9sactiver Dakuten.",
+    "tutorial_speed_dial_kana": "Ce bouton permet de passer des Katakana aux Hiragana.",
+    "tutorial_speed_dial_romaji": "Ce bouton permet d'activer ou de d\u00e9sactiver la fonction Romaji.",
+    "tutorial_speed_dial_yoon": "Ce bouton permet d'activer et de d\u00e9sactiver les caract\u00e8res Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de d\u00e9sactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Formateur Kana"

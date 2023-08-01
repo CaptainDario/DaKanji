@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
@@ -17,11 +21,15 @@ import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
 
 class KanaTableScreen extends StatefulWidget {
   
+
   /// If the screen was navigated by the drawer
   final bool navigatedByDrawer;
+  /// Should the tutorial be included
+  final bool includeTutorial;
   
   const KanaTableScreen(
     this.navigatedByDrawer,
+    this.includeTutorial,
     {
       super.key
     }
@@ -86,6 +94,32 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     );
 
     super.initState();
+
+    // after first frame
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
+
+      // init tutorial
+      final OnboardingState? onboarding = Onboarding.of(context);
+      
+      if (onboarding != null && widget.includeTutorial && 
+        GetIt.I<UserData>().showTutorialKanaTable) {
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!
+        );
+        onboarding.controller.addListener(() => tutorialToggleSpeedDial(onboarding));
+      }
+    });
+  }
+
+  void tutorialToggleSpeedDial(OnboardingState onboarding) {
+    if(onboarding.controller.currentIndex == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![1]){
+      isDialOpen.value = true;
+    }
+    if(onboarding.controller.currentIndex == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
+      isDialOpen.value = false;
+      onboarding.controller.removeListener(() => tutorialToggleSpeedDial(onboarding));
+    }
   }
 
   @override
@@ -114,28 +148,39 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
         floatingActionButton: FloatingActionButton(
           focusColor: g_Dakanji_green,
           onPressed: () => isDialOpen.value = !isDialOpen.value,
-          child: SpeedDial(
-            icon: Icons.settings,
-            activeIcon: Icons.close,
-            iconTheme: IconThemeData(color: Colors.white),
-            backgroundColor: g_Dakanji_green,
-            activeBackgroundColor: g_Dakanji_red,
-            spacing: 10,
-            
-            children: [
-              for (int i = 0; i < menuItems.length; i++)
-                SpeedDialChild(
-                  child: SvgPicture.asset(
-                    menuItems[i],
-                    width: 35,
-                    height: 35,
-                  ),
-                  backgroundColor: g_Dakanji_green,
-                  onTap: () {
-                    setState(() => menuFunctions[i]());
-                  },
-                )
-            ],
+          child: Focus(
+            focusNode: widget.includeTutorial
+              ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![2]
+              : null,
+            child: SpeedDial(
+              icon: Icons.settings,
+              openCloseDial: isDialOpen,
+              activeIcon: Icons.close,
+              iconTheme: IconThemeData(color: Colors.white),
+              backgroundColor: g_Dakanji_green,
+              activeBackgroundColor: g_Dakanji_red,
+              spacing: 10,
+              
+              children: [
+                for (int i = 0; i < menuItems.length; i++)
+                  SpeedDialChild(
+                    child: Focus(
+                      focusNode: widget.includeTutorial
+                        ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![3+i]
+                        : null,
+                      child: SvgPicture.asset(
+                        menuItems[i],
+                        width: 35,
+                        height: 35,
+                      ),
+                    ),
+                    backgroundColor: g_Dakanji_green,
+                    onTap: () {
+                      setState(() => menuFunctions[i]());
+                    },
+                  )
+              ],
+            ),
           )
         ),
         body: LayoutBuilder(
@@ -143,10 +188,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
             bool isPortrait = constraints.maxWidth < constraints.maxHeight;
             setCurrrentKanaTable(isPortrait);
             setResponsiveKanaTable(constraints);
-
+        
             double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
             double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
-
+        
             /// The number of columns in the grid
             int gridColumnCount = kanaTable[0].length;
             /// the number of rows in the grid
@@ -156,7 +201,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
             double cellWidth = MediaQuery.of(context).size.width / gridColumnCount;
             /// the height of a cell in the grid
             double cellHeight = MediaQuery.of(context).size.height / gridRowCount;
-
+        
             return Stack(
               children: [
                 // main kana grid

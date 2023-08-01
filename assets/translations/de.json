@@ -163,7 +163,16 @@
     "whats_new": "Was gibt's neues"
   },
   "KanaTableScreen": {
-    "title": "Kana Tabelle"
+    "title": "Kana Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+    "tutorial_kana_table": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu h\u00f6ren.",
+    "tutorial_speed_dial": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie \u00e4ndern, welche Kana angezeigt werden.",
+    "tutorial_speed_dial_dakuten": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+    "tutorial_speed_dial_kana": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+    "tutorial_speed_dial_romaji": "Diese Taste schaltet Romaji ein oder aus.",
+    "tutorial_speed_dial_yoon": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+    "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
     "title": "Kana Trainer"

@@ -163,7 +163,16 @@
     "whats_new": "what's new"
   },
   "KanaTableScreen": {
-    "title": "Kana Table"
+    "title": "Kana Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kana table screen!",
+    "tutorial_kana_table": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+    "tutorial_speed_dial": "This button can be used to change which Kana are shown.",
+    "tutorial_speed_dial_dakuten": "This button toggles between Dakuten on and off.",
+    "tutorial_speed_dial_kana": "This button switches between Katakana and Hiragana.",
+    "tutorial_speed_dial_romaji": "This button toggles Romaji on or off.",
+    "tutorial_speed_dial_yoon": "This button toggles Yoon characters on and off.",
+    "tutorial_speed_dial_yoon_special": "This button toggles between rare Yoon characters on or off."
   },
   "KanaTrainerScreen": {
     "title": "Kana Trainer"

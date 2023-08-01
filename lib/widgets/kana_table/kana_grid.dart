@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -76,6 +78,9 @@ class _KanaGridState extends State<KanaGrid> {
             key: Key("${currentKana}_${widget.showRomaji}_${widget.isPortrait}"),
             child: ScaleAnimation(
               child: TextButton(
+                focusNode: index == 0
+                  ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![1]
+                  : null,
                 onPressed: () {
                   widget.onTap?.call("${currentKana}");
                 },

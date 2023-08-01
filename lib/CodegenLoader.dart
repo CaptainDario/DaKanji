@@ -142,7 +142,16 @@ class CodegenLoader extends AssetLoader{
     "whats_new": "最新信息"
   },
   "KanaTableScreen": {
-    "title": "卡纳桌"
+    "title": "卡纳桌",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到假名表屏幕！",
+    "tutorial_kana_table": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
+    "tutorial_speed_dial": "该按钮可用于更改显示的假名。",
+    "tutorial_speed_dial_dakuten": "该按钮可在打开和关闭 Dakuten 之间切换。",
+    "tutorial_speed_dial_kana": "该按钮可在片假名和平假名之间切换。",
+    "tutorial_speed_dial_romaji": "此按钮可打开或关闭罗马字。",
+    "tutorial_speed_dial_yoon": "此按钮可打开或关闭 \"尹 \"字符。",
+    "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
   },
   "KanaTrainerScreen": {
     "title": "卡纳培训师"
@@ -1455,7 +1464,7 @@ static const Map<String,dynamic> localizations = {
       "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
       "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
       "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
-      "ja": "何が問題ですか？以下にあなたの問題を記述してください。フォローアップをご希望の場合は、Eメールもご記入ください。",
+      "ja": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
       "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
       "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
       "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
@@ -1710,7 +1719,7 @@ static const Map<String,dynamic> localizations = {
       "en": "You can delete elements from the search history by swiping left on them.",
       "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
       "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
-      "ja": "検索履歴の要素を左にスワイプして削除することができます。",
+      "ja": "左にスワイプして検索履歴を削除できます",
       "zh": "您可以通过向左滑动从搜索历史中删除元素。",
       "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
       "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
@@ -1855,7 +1864,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
       "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
       "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
-      "ja": "この画面では、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細が表示されます。",
+      "ja": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
       "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
       "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
       "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
@@ -1899,7 +1908,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This number indicates how many kanji are currently being shown.",
       "de": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
       "ru": "Это число показывает, сколько кандзи отображается в данный момент.",
-      "ja": "この数字は、現在表示されている漢字の数を示す。",
+      "ja": "現在表示されている漢字の数を示します",
       "zh": "该数字表示当前显示的汉字数量。",
       "it": "Questo numero indica il numero di kanji attualmente visualizzati.",
       "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
@@ -1925,12 +1934,111 @@ static const Map<String,dynamic> localizations = {
       "en": "Kana Table",
       "de": "Kana Tabelle",
       "ru": "Стол Kana",
-      "ja": "カナ・テーブル",
+      "ja": "かな一覧表",
       "zh": "卡纳桌",
       "it": "Tavolo Kana",
       "fr": "Table Kana",
       "es": "Mesa Kana",
       "pl": "Stół Kana"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kana table screen!",
+      "de": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+      "ru": "Добро пожаловать на экран таблицы kana!",
+      "ja": "かな一覧表画面へようこそ！",
+      "zh": "欢迎来到假名表屏幕！",
+      "it": "Benvenuti nella schermata della tavola kana!",
+      "fr": "Bienvenue sur l'écran de la table kana !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kana!",
+      "pl": "Witamy na ekranie tabeli kana!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kana_table": {
+      "en": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+      "de": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
+      "ru": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
+      "ja": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
+      "zh": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
+      "it": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+      "fr": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
+      "es": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
+      "pl": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę."
+    },
+    "tutorial_speed_dial": {
+      "en": "This button can be used to change which Kana are shown.",
+      "de": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
+      "ru": "С помощью этой кнопки можно изменить отображение каны.",
+      "ja": "このボタンを使って、表示する「かな」を変更することができます。",
+      "zh": "该按钮可用于更改显示的假名。",
+      "it": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+      "fr": "Ce bouton permet de modifier les Kana affichés.",
+      "es": "Este botón permite cambiar los kana que se muestran.",
+      "pl": "Za pomocą tego przycisku można zmienić wyświetlane kany."
+    },
+    "tutorial_speed_dial_dakuten": {
+      "en": "This button toggles between Dakuten on and off.",
+      "de": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+      "ru": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
+      "ja": "ダクテンのオン／オフを切り替えるボタン。",
+      "zh": "该按钮可在打开和关闭 Dakuten 之间切换。",
+      "it": "Questo pulsante consente di attivare e disattivare Dakuten.",
+      "fr": "Ce bouton permet d'activer ou de désactiver Dakuten.",
+      "es": "Este botón activa y desactiva el Dakuten.",
+      "pl": "Przycisk ten służy do włączania i wyłączania Dakutenu."
+    },
+    "tutorial_speed_dial_yoon": {
+      "en": "This button toggles Yoon characters on and off.",
+      "de": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка включает и выключает символы Юн.",
+      "ja": "このボタンでユン文字のオン／オフを切り替える。",
+      "zh": "此按钮可打开或关闭 \"尹 \"字符。",
+      "it": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+      "fr": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
+      "es": "Este botón activa y desactiva los caracteres Yoon.",
+      "pl": "Ten przycisk włącza i wyłącza znaki Yoon."
+    },
+    "tutorial_speed_dial_kana": {
+      "en": "This button switches between Katakana and Hiragana.",
+      "de": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+      "ru": "Эта кнопка переключает между катаканой и хираганой.",
+      "ja": "カタカナとひらがなを切り替えるボタンです。",
+      "zh": "该按钮可在片假名和平假名之间切换。",
+      "it": "Questo pulsante consente di passare da Katakana a Hiragana.",
+      "fr": "Ce bouton permet de passer des Katakana aux Hiragana.",
+      "es": "Este botón alterna entre Katakana e Hiragana.",
+      "pl": "Ten przycisk przełącza między Katakaną i Hiraganą."
+    },
+    "tutorial_speed_dial_romaji": {
+      "en": "This button toggles Romaji on or off.",
+      "de": "Diese Taste schaltet Romaji ein oder aus.",
+      "ru": "Эта кнопка включает или выключает режим Romaji.",
+      "ja": "ローマ字入力のオン・オフを切り替えます。",
+      "zh": "此按钮可打开或关闭罗马字。",
+      "it": "Questo pulsante attiva o disattiva il Romaji.",
+      "fr": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
+      "es": "Este botón activa o desactiva Romaji.",
+      "pl": "Ten przycisk włącza lub wyłącza funkcję Romaji."
+    },
+    "tutorial_speed_dial_yoon_special": {
+      "en": "This button toggles between rare Yoon characters on or off.",
+      "de": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка позволяет включать или выключать редкие символы Юна.",
+      "ja": "このボタンでレアなユン文字のオン・オフが切り替わる。",
+      "zh": "该按钮可切换稀有尹氏角色的开启或关闭。",
+      "it": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon.",
+      "fr": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon.",
+      "es": "Este botón activa o desactiva los personajes raros de Yoon.",
+      "pl": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
     }
   },
   "KanaTrainerScreen": {
@@ -2281,7 +2389,7 @@ static const Map<String,dynamic> localizations = {
       "ru": "Добавить в список",
       "ja": "リストに追加",
       "zh": "添加到列表",
-      "it": "Aggiungi all'elenco",
+      "it": "Aggiungi alla lista",
       "fr": "Ajouter à la liste",
       "es": "Añadir a la lista",
       "pl": "Dodaj do listy"
@@ -2770,7 +2878,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Lookalikes",
       "de": "Verwechselungsgefahr",
       "ru": "Lookalikes",
-      "ja": "そっくりさん",
+      "ja": "類語",
       "zh": "外观相似",
       "it": "Somiglianze",
       "fr": "Sosies",
@@ -2803,7 +2911,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Copied:",
       "de": "Kopiert:",
       "ru": "Копирование:",
-      "ja": "コピーした：",
+      "ja": "コピー：",
       "zh": "已复制：",
       "it": "Copiato:",
       "fr": "Copié :",
@@ -3055,7 +3163,7 @@ static const Map<String,dynamic> localizations = {
       "en": "No entries in this word list",
       "de": "Keine Einträge in dieser Liste",
       "ru": "Нет записей в этом списке слов",
-      "ja": "この単語リストにはありません",
+      "ja": "まだ単語がありません",
       "zh": "该词表中没有条目",
       "it": "Nessuna voce in questo elenco di parole",
       "fr": "Aucune entrée dans cette liste de mots",
@@ -3230,14 +3338,14 @@ static const Map<String,dynamic> ja = {
     "example_tab": "例",
     "examples_more": "その他の例",
     "kanji_alternatives": "その他の字体",
-    "kanji_copied": "コピーした：",
+    "kanji_copied": "コピー：",
     "kanji_frequency": "頻度",
     "kanji_grade": "学習学年",
     "kanji_groups": "漢字グループ",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "訓読み",
-    "kanji_lookalikes": "そっくりさん",
+    "kanji_lookalikes": "類語",
     "kanji_on_reading": "音読み",
     "kanji_radicals": "部首",
     "kanji_skip": "SKIP",
@@ -3325,7 +3433,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
-    "feedback_description_text": "何が問題ですか？以下にあなたの問題を記述してください。フォローアップをご希望の場合は、Eメールもご記入ください。",
+    "feedback_description_text": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
     "navigate": "操作",
     "submit": "送信",
     "title": "フィードバック"
@@ -3357,7 +3465,16 @@ static const Map<String,dynamic> ja = {
     "whats_new": "最新情報"
   },
   "KanaTableScreen": {
-    "title": "カナ・テーブル"
+    "title": "かな一覧表",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "かな一覧表画面へようこそ！",
+    "tutorial_kana_table": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
+    "tutorial_speed_dial": "このボタンを使って、表示する「かな」を変更することができます。",
+    "tutorial_speed_dial_dakuten": "ダクテンのオン／オフを切り替えるボタン。",
+    "tutorial_speed_dial_kana": "カタカナとひらがなを切り替えるボタンです。",
+    "tutorial_speed_dial_romaji": "ローマ字入力のオン・オフを切り替えます。",
+    "tutorial_speed_dial_yoon": "このボタンでユン文字のオン／オフを切り替える。",
+    "tutorial_speed_dial_yoon_special": "このボタンでレアなユン文字のオン・オフが切り替わる。"
   },
   "KanaTrainerScreen": {
     "title": "カナ・トレーナー"
@@ -3368,8 +3485,8 @@ static const Map<String,dynamic> ja = {
     "tutorial_begin_title": "漢字表画面へようこそ！",
     "tutorial_filter": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
     "tutorial_filter_sub_group": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
-    "tutorial_kanji_amount": "この数字は、現在表示されている漢字の数を示す。",
-    "tutorial_kanjis": "この画面では、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細が表示されます。",
+    "tutorial_kanji_amount": "現在表示されている漢字の数を示します",
+    "tutorial_kanjis": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
     "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。"
   },
   "KanjiTrainerScreen": {
@@ -3398,7 +3515,7 @@ static const Map<String,dynamic> ja = {
     "dict_radicals_paste_text": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
     "dict_radicals_paste_title": "部首の貼り付け",
     "dict_radicals_title": "部首",
-    "dict_search_history_delete_text": "検索履歴の要素を左にスワイプして削除することができます。",
+    "dict_search_history_delete_text": "左にスワイプして検索履歴を削除できます",
     "dict_search_history_delete_title": "削除",
     "dict_search_history_title": "検索履歴",
     "dict_search_results_navigate_text": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
@@ -3507,7 +3624,7 @@ static const Map<String,dynamic> ja = {
     "delete": "削除",
     "new_folder": "新規フォルダ",
     "new_list": "新規リスト",
-    "no_entries": "この単語リストにはありません",
+    "no_entries": "まだ単語がありません",
     "node_hint_text": "名前",
     "of": "の",
     "ok": "ok",
@@ -3683,7 +3800,16 @@ static const Map<String,dynamic> de = {
     "whats_new": "Was gibt's neues"
   },
   "KanaTableScreen": {
-    "title": "Kana Tabelle"
+    "title": "Kana Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+    "tutorial_kana_table": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
+    "tutorial_speed_dial": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
+    "tutorial_speed_dial_dakuten": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+    "tutorial_speed_dial_kana": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+    "tutorial_speed_dial_romaji": "Diese Taste schaltet Romaji ein oder aus.",
+    "tutorial_speed_dial_yoon": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+    "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
@@ -3973,7 +4099,16 @@ static const Map<String,dynamic> ru = {
     "whats_new": "что нового"
   },
   "KanaTableScreen": {
-    "title": "Стол Kana"
+    "title": "Стол Kana",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран таблицы kana!",
+    "tutorial_kana_table": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
+    "tutorial_speed_dial": "С помощью этой кнопки можно изменить отображение каны.",
+    "tutorial_speed_dial_dakuten": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
+    "tutorial_speed_dial_kana": "Эта кнопка переключает между катаканой и хираганой.",
+    "tutorial_speed_dial_romaji": "Эта кнопка включает или выключает режим Romaji.",
+    "tutorial_speed_dial_yoon": "Эта кнопка включает и выключает символы Юн.",
+    "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
     "title": "Инструктор Кана"
@@ -4283,7 +4418,16 @@ static const Map<String,dynamic> pl = {
     "whats_new": "co nowego"
   },
   "KanaTableScreen": {
-    "title": "Stół Kana"
+    "title": "Stół Kana",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kana!",
+    "tutorial_kana_table": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę.",
+    "tutorial_speed_dial": "Za pomocą tego przycisku można zmienić wyświetlane kany.",
+    "tutorial_speed_dial_dakuten": "Przycisk ten służy do włączania i wyłączania Dakutenu.",
+    "tutorial_speed_dial_kana": "Ten przycisk przełącza między Katakaną i Hiraganą.",
+    "tutorial_speed_dial_romaji": "Ten przycisk włącza lub wyłącza funkcję Romaji.",
+    "tutorial_speed_dial_yoon": "Ten przycisk włącza i wyłącza znaki Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Trener Kana"
@@ -4609,7 +4753,16 @@ static const Map<String,dynamic> en = {
     "whats_new": "what's new"
   },
   "KanaTableScreen": {
-    "title": "Kana Table"
+    "title": "Kana Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kana table screen!",
+    "tutorial_kana_table": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+    "tutorial_speed_dial": "This button can be used to change which Kana are shown.",
+    "tutorial_speed_dial_dakuten": "This button toggles between Dakuten on and off.",
+    "tutorial_speed_dial_kana": "This button switches between Katakana and Hiragana.",
+    "tutorial_speed_dial_romaji": "This button toggles Romaji on or off.",
+    "tutorial_speed_dial_yoon": "This button toggles Yoon characters on and off.",
+    "tutorial_speed_dial_yoon_special": "This button toggles between rare Yoon characters on or off."
   },
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
@@ -4840,7 +4993,7 @@ static const Map<String,dynamic> it = {
     "word_source_language": "Lingua di partenza:",
     "word_synonyms": "Sinonimi",
     "word_tab": "Parola",
-    "word_tab_menu_add_to_list": "Aggiungi all'elenco",
+    "word_tab_menu_add_to_list": "Aggiungi alla lista",
     "word_tab_menu_send_to_anki": "Inviare ad Anki",
     "word_wikipedia": "Wikipedia"
   },
@@ -4899,7 +5052,16 @@ static const Map<String,dynamic> it = {
     "whats_new": "cosa c'è di nuovo"
   },
   "KanaTableScreen": {
-    "title": "Tavolo Kana"
+    "title": "Tavolo Kana",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tavola kana!",
+    "tutorial_kana_table": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+    "tutorial_speed_dial": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+    "tutorial_speed_dial_dakuten": "Questo pulsante consente di attivare e disattivare Dakuten.",
+    "tutorial_speed_dial_kana": "Questo pulsante consente di passare da Katakana a Hiragana.",
+    "tutorial_speed_dial_romaji": "Questo pulsante attiva o disattiva il Romaji.",
+    "tutorial_speed_dial_yoon": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+    "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Allenatore Kana"
@@ -5174,7 +5336,16 @@ static const Map<String,dynamic> fr = {
     "whats_new": "Quoi de neuf ?"
   },
   "KanaTableScreen": {
-    "title": "Table Kana"
+    "title": "Table Kana",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la table kana !",
+    "tutorial_kana_table": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
+    "tutorial_speed_dial": "Ce bouton permet de modifier les Kana affichés.",
+    "tutorial_speed_dial_dakuten": "Ce bouton permet d'activer ou de désactiver Dakuten.",
+    "tutorial_speed_dial_kana": "Ce bouton permet de passer des Katakana aux Hiragana.",
+    "tutorial_speed_dial_romaji": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
+    "tutorial_speed_dial_yoon": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Formateur Kana"
@@ -5449,7 +5620,16 @@ static const Map<String,dynamic> es = {
     "whats_new": "qué hay de nuevo"
   },
   "KanaTableScreen": {
-    "title": "Mesa Kana"
+    "title": "Mesa Kana",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de la tabla de kana!",
+    "tutorial_kana_table": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
+    "tutorial_speed_dial": "Este botón permite cambiar los kana que se muestran.",
+    "tutorial_speed_dial_dakuten": "Este botón activa y desactiva el Dakuten.",
+    "tutorial_speed_dial_kana": "Este botón alterna entre Katakana e Hiragana.",
+    "tutorial_speed_dial_romaji": "Este botón activa o desactiva Romaji.",
+    "tutorial_speed_dial_yoon": "Este botón activa y desactiva los caracteres Yoon.",
+    "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"

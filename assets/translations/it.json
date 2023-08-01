@@ -104,7 +104,7 @@
     "word_source_language": "Lingua di partenza:",
     "word_synonyms": "Sinonimi",
     "word_tab": "Parola",
-    "word_tab_menu_add_to_list": "Aggiungi all'elenco",
+    "word_tab_menu_add_to_list": "Aggiungi alla lista",
     "word_tab_menu_send_to_anki": "Inviare ad Anki",
     "word_wikipedia": "Wikipedia"
   },
@@ -163,7 +163,16 @@
     "whats_new": "cosa c'\u00e8 di nuovo"
   },
   "KanaTableScreen": {
-    "title": "Tavolo Kana"
+    "title": "Tavolo Kana",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tavola kana!",
+    "tutorial_kana_table": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+    "tutorial_speed_dial": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+    "tutorial_speed_dial_dakuten": "Questo pulsante consente di attivare e disattivare Dakuten.",
+    "tutorial_speed_dial_kana": "Questo pulsante consente di passare da Katakana a Hiragana.",
+    "tutorial_speed_dial_romaji": "Questo pulsante attiva o disattiva il Romaji.",
+    "tutorial_speed_dial_yoon": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+    "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Allenatore Kana"

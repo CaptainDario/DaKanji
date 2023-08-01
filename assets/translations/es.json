@@ -163,7 +163,16 @@
     "whats_new": "qu\u00e9 hay de nuevo"
   },
   "KanaTableScreen": {
-    "title": "Mesa Kana"
+    "title": "Mesa Kana",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de la tabla de kana!",
+    "tutorial_kana_table": "Pulse sobre cualquier kana para ver m\u00e1s detalles sobre ella y escuchar su pronunciaci\u00f3n.",
+    "tutorial_speed_dial": "Este bot\u00f3n permite cambiar los kana que se muestran.",
+    "tutorial_speed_dial_dakuten": "Este bot\u00f3n activa y desactiva el Dakuten.",
+    "tutorial_speed_dial_kana": "Este bot\u00f3n alterna entre Katakana e Hiragana.",
+    "tutorial_speed_dial_romaji": "Este bot\u00f3n activa o desactiva Romaji.",
+    "tutorial_speed_dial_yoon": "Este bot\u00f3n activa y desactiva los caracteres Yoon.",
+    "tutorial_speed_dial_yoon_special": "Este bot\u00f3n activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"
