@@ -73,6 +73,10 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialKanaTable = true;
 
+  /// should the tutorial of the kana table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialWordLists = true;
+
   /// should the App's onboarding be shown
   @JsonKey(defaultValue: true)
   bool showOnboarding = true;

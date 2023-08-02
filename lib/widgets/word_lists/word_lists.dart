@@ -1,9 +1,10 @@
 import 'dart:math';
-
 import 'package:collection/collection.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:ui';
-
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -13,6 +14,8 @@ import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
 
 
@@ -59,6 +62,26 @@ class _WordListsState extends State<WordLists> {
   /// The controller for the list view
   ScrollController scrollController = ScrollController();
 
+
+  @override
+  void initState() {
+    // after first frame
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
+
+      // init tutorial
+      final OnboardingState? onboarding = Onboarding.of(context);
+      if (onboarding != null && widget.includeTutorial && 
+        GetIt.I<UserData>().showTutorialWordLists) {
+        onboarding.showWithSteps(
+          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes![0],
+          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!
+        );
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -94,7 +117,7 @@ class _WordListsState extends State<WordLists> {
             children: [
               Column(
                 children: [
-                  // hear with tools 
+                  // header with tools 
                   Container(
                     child: DragTarget<TreeNode<WordListsData>>(
                       hitTestBehavior: HitTestBehavior.opaque,
@@ -116,18 +139,28 @@ class _WordListsState extends State<WordLists> {
                           children: [
                             Expanded(child: SizedBox()),
                             // add new list button
-                            IconButton(
-                              onPressed: () {
-                                addNewWordListNode(WordListNodeType.wordList);
-                              },
-                              icon: Icon(Icons.format_list_bulleted_add)
+                            Focus(
+                              focusNode: widget.includeTutorial
+                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
+                                : null,
+                              child: IconButton(
+                                onPressed: () {
+                                  addNewWordListNode(WordListNodeType.wordList);
+                                },
+                                icon: Icon(Icons.format_list_bulleted_add)
+                              ),
                             ), 
                             // add new folder button
-                            IconButton(
-                              onPressed: () {
-                                addNewWordListNode(WordListNodeType.folder);
-                              },
-                              icon: Icon(Icons.create_new_folder)
+                            Focus(
+                              focusNode: widget.includeTutorial
+                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
+                                : null,
+                              child: IconButton(
+                                onPressed: () {
+                                  addNewWordListNode(WordListNodeType.folder);
+                                },
+                                icon: Icon(Icons.create_new_folder)
+                              ),
                             ), 
                           ],
                         );
@@ -145,44 +178,52 @@ class _WordListsState extends State<WordLists> {
                           if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded) &&
                             (widget.showDefaults || !childrenDFS[i].value.type.toString().contains("Default")))
                             ...[
-                              WordListNode(
-                                childrenDFS[i],
-                                i,
-                                onTap: (TreeNode<WordListsData> node) {
-                                  // if the node is a word list, navigate to the word list screen
-                                  if(wordListListypes.contains(node.value.type)){
-                                    Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(builder: (context) => 
-                                        WordListScreen(
-                                          node,
-                                        )
-                                      ),
-                                    );
-                                  }
-                                  // if the node is a folder, toggle the expanded state
-                                  else if(wordListFolderTypes.contains(node.value.type)) {
+                              Focus(
+                                focusNode: widget.includeTutorial && [0, 1].contains(i)
+                                  ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![1+i]
+                                  : null,
+                                child: WordListNode(
+                                  // if the tutorial should be shown, open the default lists
+                                  i == 0 && widget.includeTutorial
+                                    ? (childrenDFS[i]..value.isExpanded=true)
+                                    : childrenDFS[i],
+                                  i,
+                                  onTap: (TreeNode<WordListsData> node) {
+                                    // if the node is a word list, navigate to the word list screen
+                                    if(wordListListypes.contains(node.value.type)){
+                                      Navigator.push(
+                                        context, 
+                                        MaterialPageRoute(builder: (context) => 
+                                          WordListScreen(
+                                            node,
+                                          )
+                                        ),
+                                      );
+                                    }
+                                    // if the node is a folder, toggle the expanded state
+                                    else if(wordListFolderTypes.contains(node.value.type)) {
+                                      setState(() {
+                                        node.value.isExpanded = !node.value.isExpanded;
+                                      });
+                                    }
+                                  },
+                                  onDragAccept: (destinationNode, thisNode) {
                                     setState(() {
-                                      node.value.isExpanded = !node.value.isExpanded;
+                                  
                                     });
-                                  }
-                                },
-                                onDragAccept: (destinationNode, thisNode) {
-                                  setState(() {
-                                
-                                  });
-                                },
-                                onDeletePressed: (TreeNode node) {
-                                  setState(() {
-                                    node.parent!.removeChild(node);
-                                  });
-                                },
-                                onFolderPressed: (node) => setState(() {}),
-                                onSelectedToggled: widget.onSelectionConfirmed == null
-                                  ? null
-                                  : (thisNode) => setState(() {}),
-                                key: Key('$i'),
-                                editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
+                                  },
+                                  onDeletePressed: (TreeNode node) {
+                                    setState(() {
+                                      node.parent!.removeChild(node);
+                                    });
+                                  },
+                                  onFolderPressed: (node) => setState(() {}),
+                                  onSelectedToggled: widget.onSelectionConfirmed == null
+                                    ? null
+                                    : (thisNode) => setState(() {}),
+                                  key: Key('$i'),
+                                  editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
+                                ),
                               ),
                               
                               // if this is not the last element in the list and
