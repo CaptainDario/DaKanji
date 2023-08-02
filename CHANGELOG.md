@@ -19,7 +19,7 @@ New Features:
     - Clear selection
     - Selection from clipboard
     - Sort kanji by stroke order
-    - More understandable radical rendering
+    - Improved radical rendering
     - UI improvments
   - Navigate search results with keyboard
 - Sentry for feedback collection
