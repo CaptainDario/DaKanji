@@ -497,7 +497,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Kana table header TODO: v3.2 enable kana table
+                      // #region - Kana table header TODO: v3.2 enable
                       if(kDebugMode)
                         ...[
                           ResponsiveHeaderTile(
@@ -522,7 +522,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion
 
-                      
+                      // #region - word lists header TODO: v3.3 enable
+                      if(kDebugMode)
+                        ...[
+                          ResponsiveHeaderTile(
+                            LocaleKeys.WordListsScreen_title.tr(),
+                            Icons.list,
+                            autoSizeGroup: g_SettingsAutoSizeGroup
+                          ),
+                          // reshow tutorial
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                            icon: Icons.replay_outlined,
+                            onButtonPressed: () {
+                              GetIt.I<UserData>().showTutorialWordLists = true;
+                              settings.save();
+                              Phoenix.rebirth(context);
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                          // move down between enreegon and region anki header
+                          const Divider(),
+                        ],
+
+                      // #endregion        
 
                       // #region - Anki header : TODO - v3.3 enableanki settings
                       /*
@@ -636,6 +659,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
 
                       // #endregion
+
+                      const Divider(),
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
