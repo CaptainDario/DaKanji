@@ -192,34 +192,56 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       )
     )
     // filter matches that do not match in an active language
-    .optional(true, (q) =>
-      // does any meaning
-      q.meaningsElement((lMeanings) => 
-        // match an
+    .group((q) => 
+      // allow kanji / hiragana matches without wildcard
+      q.optional(true, (q) =>
+        q.optional(!containsWildcard, (q) => 
+          q.group((q) => 
+            q.kanjiIndexesElementStartsWith(query)
+              .or()
+            .hiraganasElementStartsWith(kanaizedQuery ?? query)
+          )
+        )
+      .or()
+      // allow kanji / hiragana matches without wildcard  
+      .optional(containsWildcard, (q) => 
+        q.group((q) => 
+          q.kanjisElementMatches(query)
+            .or()
+          .hiraganasElementMatches(kanaizedQuery ?? query)
+        )
+      )
+      .or()
+      // of any meaning ...
+      .meaningsElement((lMeanings) => 
+        // does any ...
         lMeanings.anyOf(langs, (lMeaning, lang) =>
-          // 
+          // active language ...
           lMeaning.languageEqualTo(lang)
             .and()
-          .optional(!containsWildcard, (q) => 
-            q.meaningsElement((meaning) => 
-              meaning.attributesElementStartsWith(query)
+          .group((q) => 
+            q
+            .optional(!containsWildcard, (q) => 
+              q.meaningsElement((meaning) => 
+                meaning.attributesElementStartsWith(query)
+              )
             )
-          )
-          .and()
-          .optional(containsWildcard, (q) => 
-            q.meaningsElement((meaning) => 
-              meaning.attributesElementMatches(query)
+            .or()
+            .optional(containsWildcard, (q) => 
+              q.meaningsElement((meaning) => 
+                meaning.attributesElementMatches(query)
+              )
             )
           )
         )
       )
     )
-    // limit this process to one chunk of size (entries.length / num_processes)
-    .idBetween(idRangeStart, idRangeEnd)
+  )
   // filter out entries 
   .sortByFrequencyDesc()
   .limit(200 ~/ noIsolates);
 }
+
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
   Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
@@ -230,8 +252,9 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
     .hiraganasElementStartsWith(kanaizedQuery ?? query)
       .or()
     .meaningsIndexesElementStartsWith(query)
-
   .filter()
+    // limit this process to one chunk of size (entries.length / num_processes)
+    .idBetween(idRangeStart, idRangeEnd)
   ;
 }
 
