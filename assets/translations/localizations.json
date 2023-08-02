@@ -2089,7 +2089,7 @@
       "ru": "Добавить в список",
       "ja": "リストに追加",
       "zh": "添加到列表",
-      "it": "Aggiungi alla lista",
+      "it": "Aggiungi all'elenco",
       "fr": "Ajouter à la liste",
       "es": "Añadir a la lista",
       "pl": "Dodaj do listy"
@@ -2633,16 +2633,16 @@
       "es": "Copiado:",
       "pl": "Skopiowane:"
     },
-    "kanji_to_clipboard": {
-      "en": "to clipboard",
-      "de": "in die Zwischenablage",
-      "ru": "в буфер обмена",
-      "ja": "クリップボードへ",
-      "zh": "到剪贴板",
-      "it": "agli appunti",
-      "fr": "vers le presse-papiers",
-      "es": "al portapapeles",
-      "pl": "do schowka"
+    "kanji_appended": {
+      "en": "Apended:",
+      "de": "Angehängt:",
+      "ru": "Принято:",
+      "ja": "追記",
+      "zh": "已更正：",
+      "it": "In allegato:",
+      "fr": "Approuvé :",
+      "es": "Aplazado:",
+      "pl": "Dodano:"
     },
     "example_tab": {
       "en": "Examples",

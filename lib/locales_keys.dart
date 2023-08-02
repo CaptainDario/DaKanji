@@ -19,6 +19,7 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_example_tab = 'DictionaryScreen.example_tab';
   static const DictionaryScreen_examples_more = 'DictionaryScreen.examples_more';
   static const DictionaryScreen_kanji_alternatives = 'DictionaryScreen.kanji_alternatives';
+  static const DictionaryScreen_kanji_appended = 'DictionaryScreen.kanji_appended';
   static const DictionaryScreen_kanji_copied = 'DictionaryScreen.kanji_copied';
   static const DictionaryScreen_kanji_frequency = 'DictionaryScreen.kanji_frequency';
   static const DictionaryScreen_kanji_grade = 'DictionaryScreen.kanji_grade';
@@ -32,7 +33,6 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_kanji_skip = 'DictionaryScreen.kanji_skip';
   static const DictionaryScreen_kanji_strokes = 'DictionaryScreen.kanji_strokes';
   static const DictionaryScreen_kanji_tab = 'DictionaryScreen.kanji_tab';
-  static const DictionaryScreen_kanji_to_clipboard = 'DictionaryScreen.kanji_to_clipboard';
   static const DictionaryScreen_search_filter_close = 'DictionaryScreen.search_filter_close';
   static const DictionaryScreen_search_filter_ok = 'DictionaryScreen.search_filter_ok';
   static const DictionaryScreen_search_radical_close = 'DictionaryScreen.search_radical_close';
