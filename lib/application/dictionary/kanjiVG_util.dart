@@ -100,30 +100,32 @@ String preprocessKanjiVGString(String kanjiVGEntry){
   
   _preprocessKanjiVGStringRemoveDuplicateElements(mergedParts);
 
-  _preprocessKanjiVGStringInserModifiedParts(firstElem, mergedParts);
+  _preprocessKanjiVGStringInsertModifiedParts(firstElem, mergedParts);
 
   return document.toXmlString(pretty: true);
 }
 
 /// Merges all <g> elements that are not a complete kanji,
 /// i.E. all <g> elements that have a `kvg:part` attribute
-Map<String, XmlElement> _preprocessKanjiVGStringMergeKvgParts(XmlElement firstElem)
-{
+Map<String, XmlElement> _preprocessKanjiVGStringMergeKvgParts(XmlElement firstElem){
   Map<String, XmlElement> mergedParts = {};
 
-  // search for `kvg:part` int the XML document with breadth first search
-  for (XmlElement childElement in firstElem.findAllElements('g').where(
+  // search for `kvg:part` in the XML document with breadth first search
+  List<XmlElement> split = firstElem.findAllElements('g').where(
     (element) => element.attributes.any((p0) => p0.name.qualified == "kvg:part")
-  ).toList()) 
+  ).toList();
+  for (XmlElement childElement in split) 
   {
-    if(!mergedParts.containsKey(childElement.getAttribute("kvg:element")!)){
+    String  kvgE  = childElement.getAttribute("kvg:element")!;
+    String? kvgNo = childElement.getAttribute("kvg:number");
+    String  key = kvgE + (kvgNo==null ? "" : kvgNo);
+    if(!mergedParts.containsKey(key)){
       var elem = XmlElement(XmlName("g"));
-      elem.attributes.add(XmlAttribute(XmlName("kvg:element"), childElement.getAttribute("kvg:element")!));
-      mergedParts[childElement.getAttribute("kvg:element")!] = elem;
+      elem.attributes.add(XmlAttribute(XmlName("kvg:element"), kvgE));
+      mergedParts[key] = elem;
     }
     XmlNode node = childElement.copy();
-    mergedParts[childElement.getAttribute("kvg:element")!]!
-      .children.add(node);
+    mergedParts[key]!.children.add(node);
   }
 
   // remove all part / element definitions from the collected `XmlElements`
@@ -164,7 +166,7 @@ void _preprocessKanjiVGStringRemoveDuplicateElements(Map<String, XmlElement> mer
 
 /// Modifies the XML document given by `firstElem` by inserting the modified
 /// parts `mergedParts` into the document
-void _preprocessKanjiVGStringInserModifiedParts(
+void _preprocessKanjiVGStringInsertModifiedParts(
   XmlElement firstElem, Map<String, XmlElement> mergedParts)
 {
   // insert the modified parts into the original document
@@ -181,11 +183,11 @@ void _preprocessKanjiVGStringInserModifiedParts(
 
         // if this element is a part of a kanji-element 
         if(childElement.getAttribute("kvg:part") != null){
+          String  kvgE  = childElement.getAttribute("kvg:element")!;
+          String? kvgNo = childElement.getAttribute("kvg:number");
           // replace it if it is the first one
-          if(mergedParts.containsKey(childElement.getAttribute("kvg:element")!)){
-            childElement.replace(
-              mergedParts.remove(childElement.getAttribute("kvg:element")!)!
-            );
+          if(mergedParts.containsKey(kvgE+(kvgNo==null ? "" : kvgNo))){
+            childElement.replace(mergedParts.remove(kvgE+(kvgNo==null ? "" : kvgNo))!);
           }
           // otherwise add it to the list of elements to remove
           else toRemove.add(childElement);
