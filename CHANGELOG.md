@@ -23,7 +23,7 @@ New Features:
     - UI improvments
   - Navigate search results with keyboard
 - Sentry for feedback collection
-- マトリックス
+- マトリックス (#39)
 
 Fixed:
 
