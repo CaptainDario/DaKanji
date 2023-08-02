@@ -547,7 +547,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion        
 
-                      // #region - Anki header : TODO - v3.3 enableanki settings
+                      // #region - Anki header : TODO - v3.4 enable anki settings
                       /*
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
