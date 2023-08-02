@@ -1459,6 +1459,28 @@
       "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
       "pl": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka."
     },
+    "dict_kanji_copy_radicals_title": {
+      "en": "Copying radicals",
+      "de": "Kopieren von Radikalen",
+      "ru": "Копирование радикалов",
+      "ja": "ラジカルのコピー",
+      "zh": "复制自由基",
+      "it": "Copiare i radicali",
+      "fr": "Copier des radicaux",
+      "es": "Copiar radicales",
+      "pl": "Kopiowanie rodników"
+    },
+    "dict_kanji_copy_radicals_text": {
+      "en": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
+      "de": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
+      "ru": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
+      "ja": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
+      "zh": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
+      "it": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
+      "fr": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
+      "es": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
+      "pl": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka."
+    },
     "dict_examples_title": {
       "en": "Examples",
       "de": "Beispiele",
@@ -2633,7 +2655,7 @@
       "es": "Copiado:",
       "pl": "Skopiowane:"
     },
-    "kanji_appended": {
+    "kanji_apended": {
       "en": "Apended:",
       "de": "Angehängt:",
       "ru": "Принято:",

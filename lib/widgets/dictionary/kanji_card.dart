@@ -197,7 +197,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_appended.tr()} ${text}${radical}"
+                                                        "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} ${text}${radical}"
                                                       )
                                                     )
                                                   );

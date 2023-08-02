@@ -28,7 +28,7 @@ class _ManualScreenState extends State<ManualScreen>
     //"Drawing",
     "Dictionary", 
     //"Text",
-    "Anki"
+    //"Anki"
   ];
   /// the icons that are shown on the ManualButtons
   List<IconData> buttonIcons = [
@@ -36,7 +36,7 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    DaKanjiIcons.anki
+    //DaKanjiIcons.anki
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
@@ -53,7 +53,7 @@ class _ManualScreenState extends State<ManualScreen>
     List<Widget> manualTexts = [
       ManualDictionary(),
       //ManualTextScreen(),
-      ManualAnki()
+      //ManualAnki()
     ];
 
     
