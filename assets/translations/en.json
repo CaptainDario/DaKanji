@@ -333,6 +333,12 @@
     "rename": "Rename",
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
-    "title": "Word lists"
+    "title": "Word lists",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the word lists screen!",
+    "tutorial_create_folder": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+    "tutorial_create_list": "Using this button you can create a new wordlist.",
+    "tutorial_folder": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+    "tutorial_list": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats."
   }
 }

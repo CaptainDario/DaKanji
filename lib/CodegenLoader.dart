@@ -297,7 +297,13 @@ class CodegenLoader extends AssetLoader{
     "rename": "重命名",
     "search_history": "搜索历史",
     "send_to_anki": "发送到anki",
-    "title": "词表"
+    "title": "词表",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
+    "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
+    "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
+    "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
+    "tutorial_list": "这是一个单词表。点击即可查看其内容。"
   }
 };
 static const Map<String,dynamic> localizations = {
@@ -3336,6 +3342,72 @@ static const Map<String,dynamic> localizations = {
       "fr": "Créer un PDF",
       "es": "Crear PDF",
       "pl": "Utwórz PDF"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the word lists screen!",
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "ru": "Добро пожаловать на экран списков слов!",
+      "ja": "単語リスト画面へようこそ！",
+      "zh": "欢迎来到单词列表屏幕！",
+      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "fr": "Bienvenue dans l'écran des listes de mots !",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "pl": "Witamy na ekranie list słów!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_folder": {
+      "en": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+      "de": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
+      "ru": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
+      "ja": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
+      "zh": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
+      "it": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
+      "fr": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
+      "es": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
+      "pl": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp."
+    },
+    "tutorial_list": {
+      "en": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats.",
+      "de": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen.",
+      "ru": "Это список слов. Нажав на него, можно увидеть его содержимое.",
+      "ja": "これは単語リストです。タップすると内容を見ることができます。",
+      "zh": "这是一个单词表。点击即可查看其内容。",
+      "it": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto.",
+      "fr": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu.",
+      "es": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido.",
+      "pl": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
+    },
+    "tutorial_create_folder": {
+      "en": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+      "de": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
+      "ru": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
+      "ja": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
+      "zh": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
+      "it": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
+      "fr": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
+      "es": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
+      "pl": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je."
+    },
+    "tutorial_create_list": {
+      "en": "Using this button you can create a new wordlist.",
+      "de": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
+      "ru": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
+      "ja": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
+      "zh": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
+      "it": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
+      "fr": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
+      "es": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
+      "pl": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów."
     }
   }
 };
@@ -3658,7 +3730,13 @@ static const Map<String,dynamic> ja = {
     "rename": "名前変更",
     "search_history": "検索履歴",
     "send_to_anki": "ankiに送る",
-    "title": "単語リスト"
+    "title": "単語リスト",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
+    "tutorial_create_folder": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
+    "tutorial_create_list": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
+    "tutorial_folder": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
+    "tutorial_list": "これは単語リストです。タップすると内容を見ることができます。"
   }
 };
 static const Map<String,dynamic> de = {
@@ -3996,7 +4074,13 @@ static const Map<String,dynamic> de = {
     "rename": "Umbennen",
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
-    "title": "Wortlisten"
+    "title": "Wortlisten",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+    "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
+    "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
+    "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
+    "tutorial_list": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen."
   }
 };
 static const Map<String,dynamic> ru = {
@@ -4282,7 +4366,13 @@ static const Map<String,dynamic> ru = {
     "rename": "Переименовать",
     "search_history": "История поиска",
     "send_to_anki": "Отправить в anki",
-    "title": "Списки слов"
+    "title": "Списки слов",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
+    "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
+    "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
+    "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
+    "tutorial_list": "Это список слов. Нажав на него, можно увидеть его содержимое."
   }
 };
 static const Map<String,dynamic> pl = {
@@ -4617,7 +4707,13 @@ static const Map<String,dynamic> pl = {
     "rename": "Zmień nazwę",
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wyślij do anki",
-    "title": "Listy słowne"
+    "title": "Listy słowne",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie list słów!",
+    "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
+    "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
+    "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
+    "tutorial_list": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
   }
 };
 static const Map<String,dynamic> en = {
@@ -4955,7 +5051,13 @@ static const Map<String,dynamic> en = {
     "rename": "Rename",
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
-    "title": "Word lists"
+    "title": "Word lists",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the word lists screen!",
+    "tutorial_create_folder": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+    "tutorial_create_list": "Using this button you can create a new wordlist.",
+    "tutorial_folder": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+    "tutorial_list": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats."
   }
 };
 static const Map<String,dynamic> it = {
@@ -5241,7 +5343,13 @@ static const Map<String,dynamic> it = {
     "rename": "Rinominare",
     "search_history": "Storia della ricerca",
     "send_to_anki": "Invia ad anki",
-    "title": "Elenchi di parole"
+    "title": "Elenchi di parole",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
+    "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
+    "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
+    "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
+    "tutorial_list": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto."
   }
 };
 static const Map<String,dynamic> fr = {
@@ -5527,7 +5635,13 @@ static const Map<String,dynamic> fr = {
     "rename": "Renommer",
     "search_history": "Historique de la recherche",
     "send_to_anki": "Envoyer à anki",
-    "title": "Listes de mots"
+    "title": "Listes de mots",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
+    "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
+    "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
+    "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
+    "tutorial_list": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu."
   }
 };
 static const Map<String,dynamic> es = {
@@ -5813,7 +5927,13 @@ static const Map<String,dynamic> es = {
     "rename": "Cambie el nombre de",
     "search_history": "Historial de búsqueda",
     "send_to_anki": "Enviar a anki",
-    "title": "Listas de palabras"
+    "title": "Listas de palabras",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
+    "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
+    "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
+    "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
+    "tutorial_list": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido."
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};

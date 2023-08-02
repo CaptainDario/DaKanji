@@ -317,6 +317,12 @@ abstract class  LocaleKeys {
   static const WordListsScreen_search_history = 'WordListsScreen.search_history';
   static const WordListsScreen_send_to_anki = 'WordListsScreen.send_to_anki';
   static const WordListsScreen_title = 'WordListsScreen.title';
+  static const WordListsScreen_tutorial_begin_text = 'WordListsScreen.tutorial_begin_text';
+  static const WordListsScreen_tutorial_begin_title = 'WordListsScreen.tutorial_begin_title';
+  static const WordListsScreen_tutorial_create_folder = 'WordListsScreen.tutorial_create_folder';
+  static const WordListsScreen_tutorial_create_list = 'WordListsScreen.tutorial_create_list';
+  static const WordListsScreen_tutorial_folder = 'WordListsScreen.tutorial_folder';
+  static const WordListsScreen_tutorial_list = 'WordListsScreen.tutorial_list';
   static const WordListsScreen = 'WordListsScreen';
 
 }
