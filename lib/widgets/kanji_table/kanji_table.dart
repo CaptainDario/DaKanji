@@ -85,19 +85,6 @@ class _KanjiTableState extends State<KanjiTable> {
 
     init();
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant KanjiTable oldWidget) {
-    init();
-    super.didUpdateWidget(oldWidget);
-  }
-
-  void init() {
-
-    updateKanjisAndCategories();
-    
-    initDropDowns();
 
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
@@ -112,6 +99,19 @@ class _KanjiTableState extends State<KanjiTable> {
         );
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant KanjiTable oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init() {
+
+    updateKanjisAndCategories();
+    
+    initDropDowns();
 
   }
 
