@@ -194,16 +194,15 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
     // filter matches that do not match in an active language
     .group((q) => 
       // allow kanji / hiragana matches without wildcard
-      q.optional(true, (q) =>
-        q.optional(!containsWildcard, (q) => 
-          q.group((q) => 
-            q.kanjiIndexesElementStartsWith(query)
-              .or()
-            .hiraganasElementStartsWith(kanaizedQuery ?? query)
-          )
+      q.optional(!containsWildcard, (q) => 
+        q.group((q) => 
+          q.kanjiIndexesElementStartsWith(query)
+            .or()
+          .hiraganasElementStartsWith(kanaizedQuery ?? query)
         )
+      )
       .or()
-      // allow kanji / hiragana matches without wildcard  
+      // allow kanji / hiragana matches with wildcard  
       .optional(containsWildcard, (q) => 
         q.group((q) => 
           q.kanjisElementMatches(query)
@@ -236,7 +235,6 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
         )
       )
     )
-  )
   // filter out entries 
   .sortByFrequencyDesc()
   .limit(200 ~/ noIsolates);
