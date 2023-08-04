@@ -26,12 +26,15 @@ class Dictionary extends StatefulWidget {
   final bool includeTutorial;
   /// the term that should be searched when this screen was opened
   final String initialSearch;
+  /// The id of the entry that should be shown when the dict is opened
+  final int? initialEntryId;
+  /// Should the falling words be included or not
+  final bool includeFallingWords;
   /// should the button for opening the drawing screen be included
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
   final bool isExpanded; 
-  /// The id of the entry that should be shown when the dict is opened
-  final int? initialEntryId;
+  
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
 
@@ -40,6 +43,7 @@ class Dictionary extends StatefulWidget {
     {
       this.initialSearch = "",
       this.initialEntryId,
+      required this.includeFallingWords,
       this.includeDrawButton = true,
       this.isExpanded = false,
       this.allowDeconjugation=true,
@@ -136,7 +140,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 padding: EdgeInsets.all(8),
                                 child: FloatingWordStack(
                                   levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                  hide: search.selectedResult != null,
+                                  hide: search.selectedResult != null || !widget.includeFallingWords,
                                   onTap: (FloatingWord entry) {
                                     search.selectedResult =
                                       GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
@@ -159,7 +163,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.all(8.0),
                                   child: FloatingWordStack(
                                     levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                    hide: search.selectedResult != null,
+                                    hide: search.selectedResult != null || !widget.includeFallingWords,
                                     onTap: (FloatingWord entry) {
                                       search.selectedResult =
                                         GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
@@ -181,7 +185,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.all(8.0),
                                 child: FloatingWordStack(
                                   levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                  hide: search.selectedResult != null,
+                                  hide: search.selectedResult != null || !widget.includeFallingWords,
                                   onTap: (FloatingWord entry) {
                                     search.selectedResult =
                                       GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
@@ -238,7 +242,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                       padding: const EdgeInsets.all(8.0),
                                       child: FloatingWordStack(
                                         levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                        hide: search.selectedResult != null,
+                                        hide: search.selectedResult != null || !widget.includeFallingWords,
                                         onTap: (FloatingWord entry) {
                                           search.selectedResult =
                                             GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);

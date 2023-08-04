@@ -137,6 +137,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         Dictionary(
                           false, 
                           initialSearch: widget.text,
+                          includeFallingWords: false,
                           includeDrawButton: false,
                           isExpanded: true,
                           allowDeconjugation: widget.allowDeconjugation,

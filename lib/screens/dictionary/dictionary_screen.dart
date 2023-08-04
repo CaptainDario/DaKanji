@@ -83,6 +83,7 @@ class _DictionaryScreenState
       child: Dictionary(
         widget.includeTutorial,
         initialSearch: widget.initialSearch,
+        includeFallingWords: true,
         isExpanded: widget.initialSearch != "",
         initialEntryId: widget.initialEntryId,
         allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
