@@ -163,7 +163,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       searchBarInputHeight = r.size.height;
 
       // check if there is an initial query or if it was update
-      if(widget.initialSearch != initialSearch && searchInputController.text.isEmpty){
+      if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, widget.allowDeconjugation);
