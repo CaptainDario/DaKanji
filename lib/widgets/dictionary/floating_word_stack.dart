@@ -73,8 +73,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   List<FloatingWord> floatingWords = [];
   /// List of entries that finished their animations and thus should be removed
   List<FloatingWord> removeAtNextBuild = [];
-
-  late Timer spawnEntriesTimer;
+  /// The timer to start spawning the fallingowrds
+  Timer? spawnEntriesTimer;
 
  
   
@@ -103,6 +103,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     if(widget.levels.isEmpty || widget.hide) return;
 
     // delete current entries and wait to spawn new ones
+    if(spawnEntriesTimer != null) spawnEntriesTimer!.cancel();
     spawnEntriesTimer = Timer(Duration(seconds: widget.secondsTillFirstWord), () {
       dictEntries = getDictEntries();
       setState(() {});
@@ -199,11 +200,12 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
   @override
   void dispose() {
+    spawnEntriesTimer?.cancel();
+
     for (var i = 0; i < floatingWords.length; i++) {
       floatingWords[i].animationController.dispose();
     }
-    if(spawnEntriesTimer.isActive) spawnEntriesTimer.cancel();
-    
+        
     super.dispose();
   }
 
