@@ -5,9 +5,9 @@ import 'package:isar/isar.dart';
 
 
 
-/// Finds all radicals used in the given `kanji` and returns them sorted by
-/// stroke number
-List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, IsarCollection<Radk> radkIsar){
+/// Finds all radicals used in the given `kanji` and returns them. Optionally
+/// if `radkIsar` si given, sorts the radicals by stroke number.
+List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCollection<Radk>? radkIsar}){
 
   // get all kanji
   List<String> radicals = kradIsar
@@ -18,11 +18,14 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, IsarColl
     .first;
 
   // sort radicals by stroke order
-  return radkIsar.where()
-    .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
-  .sortByStrokeCount()
-  .radicalProperty()
-  .findAllSync();
+  if(radkIsar != null)
+    radicals = radkIsar.where()
+        .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
+      .sortByStrokeCount()
+      .radicalProperty()
+      .findAllSync();
+  
+  return radicals;
 }
 
 /// Returns all radicals from the krad isar, sorted by the number of strokes.
