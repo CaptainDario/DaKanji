@@ -8,6 +8,8 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:da_kanji_mobile/application/radicals/radicals.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
@@ -44,6 +46,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
 
   /// The kanji that should be shown in this card as a svg string
   List<KanjiSVG> kanjiVGs = [];
+  /// A list of radicals use in this kanji
+  List<String> radicals = [];
   /// List containing all on readings of this kanji
   List<String> onReadings = [];
   /// List containing all kun readings of this kanji
@@ -76,6 +80,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
     // find alternatives
     kanjiVGs = (findMatchingKanjiSVG([widget.kanjidic2entry.character])
       ..sort((a, b) => a.kanjiVGId.length.compareTo(b.kanjiVGId.length)));
+
+    radicals = getRadicalsOf(widget.kanjidic2entry.character, GetIt.I<Isars>().krad.krads);
 
     // get on / kun / meanings
     onReadings = []; kunReadings = []; meanings = {};
@@ -174,7 +180,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   Text.rich(
                                     TextSpan(
                                       children: [
-                                        for (String radical in kanjiVGs.first.radicals)
+                                        for (String radical in radicals)
                                           ...[
                                             WidgetSpan(
                                               child: GestureDetector(
@@ -205,7 +211,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                 child: Text(radical),
                                               )
                                             ),
-                                            if(radical != kanjiVGs.first.radicals.last)
+                                            if(radical != radicals.last)
                                               TextSpan(
                                                 text: ","
                                               )

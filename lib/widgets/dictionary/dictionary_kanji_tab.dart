@@ -61,7 +61,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     List<String> kanjis = removeAllButKanji(widget.entry!.kanjis);
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
     radicals = kanjiDic2s.map((e) => 
-      getRadicalsOf(e.character, GetIt.I<Isars>().krad.krads, GetIt.I<Isars>().radk.radks)
+      getRadicalsOf(e.character, GetIt.I<Isars>().krad.krads, radkIsar: GetIt.I<Isars>().radk.radks)
     ).toList();
 
   }

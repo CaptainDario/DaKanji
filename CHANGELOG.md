@@ -31,6 +31,7 @@ Fixed:
 - Radical popup does not close (#27)
 - Navigating dictionary -> drawing -> dictionary
 - Some Searches lead to seemingly incorrect results (#49)
+- Sometimes radicals were missing
 
 -------------------------------------------------------------------------
 
