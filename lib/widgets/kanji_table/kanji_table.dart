@@ -145,12 +145,12 @@ class _KanjiTableState extends State<KanjiTable> {
     }
     if(query != null){
       categoryLevels = (query.findAllSync()..sort((b, a) => a.compareTo(b))).map((e) => e.toString()).toList();
-      categoryLevels.remove(-1);
     }
     if(changedCategories){
       categoryLevelSelection = categoryLevels.first;
       changedCategories = false;
     }
+    categoryLevels.remove("-1");
 
     // find all kanji for the current selection
     kanjis = GetIt.I<Isars>().dictionary.kanjidic2s.filter()
