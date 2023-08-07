@@ -188,7 +188,7 @@ class _KanjiTableState extends State<KanjiTable> {
     categoryDropDowns = List.generate(KanjiCategory.values.length, (index) => 
       DropdownMenuItem<KanjiCategory>(
         value: KanjiCategory.values[index],
-        child: Text("${kanjiCategoryToString[KanjiCategory.values[index]]}")
+        child: Text("${kanjiCategoryToString[KanjiCategory.values[index]]}",)
       )
     );
 
@@ -209,7 +209,7 @@ class _KanjiTableState extends State<KanjiTable> {
     );
   }
 
-  ///
+  /// Save the current settings to disk
   Future<void> saveCurrentConfig() async {
     GetIt.I<Settings>().kanjiTable.kanjiCategory      = categorySelection;
     GetIt.I<Settings>().kanjiTable.kanjiCategoryLevel = categoryLevelSelection;
@@ -235,6 +235,9 @@ class _KanjiTableState extends State<KanjiTable> {
                 child: DropdownButton(
                   value: categorySelection,
                   items: categoryDropDowns,
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
                   onChanged: (value) async {
                     setState(() {
                       categorySelection = value;
@@ -243,6 +246,17 @@ class _KanjiTableState extends State<KanjiTable> {
                       initDropDowns();
                     });
                     await saveCurrentConfig();
+                  },
+                  selectedItemBuilder: (context) {
+                    return KanjiCategory.values.map<Widget>((KanjiCategory item) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          kanjiCategoryToString[item]!,
+                          style: const TextStyle(color: Colors.white,),
+                        ),
+                      );
+                    }).toList();
                   },
                 ),
               ),
@@ -261,6 +275,18 @@ class _KanjiTableState extends State<KanjiTable> {
                     });
                     await saveCurrentConfig();
                   },
+                  selectedItemBuilder: (context) {
+                    return categoryLevels.map<Widget>((String item) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        constraints: const BoxConstraints(minWidth: 50),
+                        child: Text(
+                          item,
+                          style: const TextStyle(color: Colors.white,),
+                        ),
+                      );
+                    }).toList();
+                  },
                 ),
               ),
               // the way of sorting the shown kanji
@@ -277,6 +303,17 @@ class _KanjiTableState extends State<KanjiTable> {
                       updateKanjisAndCategories();
                     });
                     await saveCurrentConfig();
+                  },
+                  selectedItemBuilder: (context) {
+                    return KanjiSorting.values.map<Widget>((KanjiSorting item) {
+                    return Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        KanjiSortingToString[item]!,
+                        style: const TextStyle(color: Colors.white,),
+                      ),
+                    );
+                  }).toList();
                   },
                 ),
               ),
