@@ -45,8 +45,11 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   List<String> possibleRadicals = [];
   /// all kanjis that use all selected radicals
   List<String> kanjisThatUseAllRadicals = [];
-
+  /// radicals sorted by stroke order and returns a map of this
   late Map<int, List<String>> radicalsByStrokeOrder;
+  /// Is the kanji part of the popup larger
+  bool kanjiIsFullscreen = false;
+
 
   @override
   void initState() {
@@ -68,8 +71,11 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
         children: [
           SizedBox(height: 8,),
           /// all kanjis that use the selected radicals
-          Container(
-            height: (MediaQuery.of(context).size.width-(noKanjiButtons*6)) / noKanjiButtons,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: !kanjiIsFullscreen
+              ? (MediaQuery.of(context).size.width-(noKanjiButtons*6)) / noKanjiButtons
+              : widget.height * 3/5,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: noKanjiButtons,
@@ -223,6 +229,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     child: Center(
                       child: Text(
                         LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
                       ),
                     ),
                   ),
@@ -232,6 +241,14 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 right: 0,
                 child: Row(
                   children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          kanjiIsFullscreen = !kanjiIsFullscreen;
+                        });
+                      },
+                      icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
+                    ),
                     IconButton(
                       onPressed: () async {
                         // get radicals in clipboard
