@@ -79,8 +79,16 @@ Map<String, String> jmDictFields = {
 /// general part of speech filters that apply to many specific filters
 Map<String, String> jmDictPosGeneral = {
   "adj" : "adjective",
+  "adv" : "adverb (fukushi)",
+  "aux" : "auxiliary",
+  "ctr" : "counter",
   "noun" : "noun",
   "verb" : "verb",
+  "proverb" : "proverb",
+  "pn" : "pronoun",
+  "pref" : "prefix",
+  "prt" : "particle",
+  "suf" : "suffix",
 };
 
 /// part of speech filteres as defined in JMDict
@@ -196,7 +204,7 @@ Map<String, String> jmDictFieldsSorted = Map.fromEntries(
 );
 
 /// all filters that are available
-Map<String, String> jmDictAllFilters = jmDictPosGeneral..addAll(jmDictFields)..addAll(jmDictPos);
+Map<String, String> jmDictAllFilters = jmDictFields..addAll(jmDictPos);
 
 /// all filters that are available (sorted)
 Map<String, String> jmDictAllFiltersSorted = jmDictPosGeneral
