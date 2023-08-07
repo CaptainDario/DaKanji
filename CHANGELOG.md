@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v 3.1.0 - 辞書開発 (5.8.2023)
+## v 3.1.0 - 辞書開発 (8.8.2023)
 
 New Features:
 
@@ -32,6 +32,7 @@ Fixed:
 - Navigating dictionary -> drawing -> dictionary
 - Some Searches lead to seemingly incorrect results (#49)
 - Sometimes radicals were missing
+- JLPT data for some entries wrong
 
 -------------------------------------------------------------------------
 
