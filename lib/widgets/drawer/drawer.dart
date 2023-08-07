@@ -80,22 +80,26 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
       null, null,
       true, null),
+    if(kDebugMode)
     DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
       null, null,
       kDebugMode, null),
+    if(kDebugMode)
     DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
       null, null,
       kDebugMode, null),
+    if(kDebugMode)
     DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
       null, null,
       kDebugMode, null),
+    if(kDebugMode)
     DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
       null, Alignment(0, -0.1),
       kDebugMode, null),
-    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
+    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
       null, null,
       true, null),
-    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
       null, null,
       true, null),
     DrawerEntry(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about,
@@ -107,6 +111,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,
       null, null,
       true, sendFeedback),
+    if(kDebugMode)
     DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
       0.7, Alignment(-1000, 0),
       kDebugMode, null),
@@ -115,7 +120,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   late List<int> drawerElementsIndexOrder;
   
   @override
-  void initState() { 
+  void initState() {
+    // remove debug only items
+    //drawerEntries.removeWhere((e) => !e.include);
+
     super.initState();
     _drawerController = AnimationController(
       duration: const Duration(milliseconds: 250),
@@ -354,18 +362,19 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 children: <Widget>[
                                   // DaKanji Logo at the top
                                   for (final (j, i) in drawerElementsIndexOrder.indexed)
-                                    DrawerElement(
-                                      leading: drawerEntries[i].icon,
-                                      title: drawerEntries[i].title,
-                                      route: drawerEntries[i].route,
-                                      selected: widget.currentScreen == drawerEntries[i].screen,
-                                      leadingSize: drawerEntries[i].iconSize ?? 0.5,
-                                      leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
-                                      drawerWidth: _drawerWidth,
-                                      index: j,
-                                      drawerController: _drawerController,
-                                      onTap: drawerEntries[i].onTap,
-                                    )       
+                                    if(drawerEntries[i].include)
+                                      DrawerElement(
+                                        leading: drawerEntries[i].icon,
+                                        title: drawerEntries[i].title,
+                                        route: drawerEntries[i].route,
+                                        selected: widget.currentScreen == drawerEntries[i].screen,
+                                        leadingSize: drawerEntries[i].iconSize ?? 0.5,
+                                        leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
+                                        drawerWidth: _drawerWidth,
+                                        index: j,
+                                        drawerController: _drawerController,
+                                        onTap: drawerEntries[i].onTap,
+                                      )
                                 ],
                               ),
                             ),
