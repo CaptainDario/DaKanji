@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "DaKanji" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "da_kanji_mobile" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 com.DaAppLab. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.DaAppLab. All rights reserved." "\0"
             VALUE "OriginalFilename", "da_kanji_mobile.exe" "\0"
             VALUE "ProductName", "DaKanji" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
