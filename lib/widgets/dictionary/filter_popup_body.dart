@@ -177,8 +177,8 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                         setState(() {
                           showMore = !showMore;
                           currentFilter = showMore
-                            ? jmDictAllFilters
-                            : jmDictPosGeneral;
+                            ? jmDictAllFiltersSorted
+                            : jmDictPosGeneralSorted;
                         });
                       },
                       icon: Icon(showMore ? Icons.expand_less : Icons.expand_more)
