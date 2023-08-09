@@ -109,108 +109,16 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
           
           /// all radicals
           Expanded(
-            child: ListView.builder(
-              
-              itemCount: radicalsByStrokeOrder.entries.length,
-              itemBuilder: (context, index) {
-
-                var krad = radicalsByStrokeOrder.entries.toList()[index];
-
-                return Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 6),
-                        child: Text(
-                          krad.key.toString(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                    ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: MediaQuery.of(context).size.width~/50,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8
-                      ),
-                      itemCount: krad.value.length,
-                      itemBuilder: (context, index) {
-                        if(krad.value.length > index &&
-                          (possibleRadicals.contains(krad.value[index]) ||
-                          selectedRadicals.contains(krad.value[index]) ||
-                          possibleRadicals.isEmpty))
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: selectedRadicals.contains(krad.value[index])
-                                ? g_Dakanji_green.withOpacity(0.5)
-                                : null,
-                              border: Border.all(
-                                color: Colors.grey.withOpacity(0.5),
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: InkWell(
-                              onTap: possibleRadicals.contains(krad.value[index]) ||
-                                selectedRadicals.contains(krad.value[index]) ||
-                                possibleRadicals.isEmpty
-                              ? () {
-                                // mark this chip as selected
-                                if(selectedRadicals.contains(krad.value[index]))
-                                  selectedRadicals.remove(krad.value[index]);
-                                else
-                                  selectedRadicals.add(krad.value[index]);
-                          
-                                // find all kanji that use this
-                                kanjisThatUseAllRadicals =
-                                  radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
-                          
-                                possibleRadicals =
-                                  radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
-                          
-                                setState(() {});
-                              }
-                              : null,
-                              child: Center(
-                                child: Text(
-                                  krad.value[index],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: g_japaneseFontFamily,
-                                    color: selectedRadicals.contains(krad.value[index])
-                                      ? Colors.grey
-                                      : Theme.of(context).brightness == Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black
-                                  )
-                                ),
-                              ),
-                            ),
-                          );
-                        // radical that cannot be selected because there are no 
-                        // kanjis that use this one + all selected
-                        else
-                          return Container(
-                            child: Center(
-                              child: Text(
-                                krad.value[index],
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            )
-                          );
-                      },
-                    ),
-                    SizedBox(height: 16)
-                  ]
-                );
-              },
-            ),
-          ),
+                                          fontFamily: g_japaneseFontFamily,
+                                          color: selectedRadicals.contains(krad.value[index])
+                                            ? Theme.of(context).brightness == Brightness.dark
+                                              ? Colors.white.withOpacity(0.5)
+                                              : Colors.black.withOpacity(0.5)
+                                            : Theme.of(context).brightness == Brightness.dark
+                                              ? Colors.white
+                                              : Colors.black
+                                        )
+                                      ),
         
           // ok / clear / paste buttons
           Stack(
