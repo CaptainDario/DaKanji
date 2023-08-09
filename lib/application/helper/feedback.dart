@@ -60,7 +60,7 @@ Future<String> writeTextToTmpStorage(String text, String fileName) async {
 
 /// Returns a String containing details about the system the app is running on
 Future<String> getDeviceInfoText(BuildContext context) async {
-  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
+  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).data;
 
   String deviceInfo = """System / App info:
     I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
