@@ -20,7 +20,7 @@ New Features:
     - Selection from clipboard
     - Sort kanji by stroke order
     - Improved radical rendering
-    - UI improvments
+    - UI improvements
   - Navigate search results with keyboard
 - Sentry for feedback collection
 - マトリックス (#39)
