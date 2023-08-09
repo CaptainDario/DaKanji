@@ -497,7 +497,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Kana table header TODO: v3.2 enable
+                      // #region - Kana table header TODO: v Kana table - enable
                       if(kDebugMode)
                         ...[
                           ResponsiveHeaderTile(
@@ -522,7 +522,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion
 
-                      // #region - word lists header TODO: v3.3 enable
+                      // #region - word lists header TODO: v word lists - enable
                       if(kDebugMode)
                         ...[
                           ResponsiveHeaderTile(
@@ -547,7 +547,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // #endregion        
 
-                      // #region - Anki header : TODO - v3.4 enable anki settings
+                      // #region - Anki header : TODO - v word lists - enable anki settings
                       /*
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),

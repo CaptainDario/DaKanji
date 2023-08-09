@@ -57,7 +57,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
-    // TODO v3.4 reenable
+    // TODO v word lists - reenable
     //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
     //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr()
   ];

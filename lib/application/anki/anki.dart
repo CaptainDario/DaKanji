@@ -75,13 +75,13 @@ void _addNoteDesktop(AnkiNote note) async {
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`
 void _addNoteIos(AnkiNote note) async {
-  // TODO implement iOS
+  // TODO v word lists - implement iOS
   throw Exception("Not implemented");
 }
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`
 void _addNoteAndroid(AnkiNote note) async {
-  // TODO implement android
+  // TODO v word lists - implement android
   throw Exception("Not implemented");
 }
 
@@ -130,7 +130,7 @@ Future<bool> _daKanjiModelExistsDesktop() async {
 /// `daKanjiModelExists`
 Future<bool> _daKanjiModelExistsAndroid() async {
 
-  // TODO implement android
+  // TODO v word lists - implement android
 
   return false;
 
@@ -140,7 +140,7 @@ Future<bool> _daKanjiModelExistsAndroid() async {
 /// `daKanjiModelExists`
 Future<bool> _daKanjiModelExistsIOS() async {
 
-  // TODO implement iOS
+  // TODO v word lists - implement iOS
 
   return false;
 }
@@ -204,14 +204,14 @@ Future<void> _addDaKanjiModelDesktop() async {
 /// Platform specific (android via ankidroid) implementation of
 /// `addDaKanjiCardType`
 Future<void> _addDaKanjiModelAndroid() async {
-  // TODO implement android
+  // TODO v word lists - implement android
   throw Exception("Not implemented");
 }
 
 /// Platform specific (iOS via anki mobile) implementation of
 /// `addDaKanjiCardType`
 Future<void> _addDaKanjiModelIOS() async {
-  // TODO implement iOS
+  // TODO v word lists implement iOS
   throw Exception("Not implemented");
 }
 
@@ -254,13 +254,13 @@ Future<void> _addDeckDesktop(String deckName) async {
 
 /// Platform specific (android via ankidroid) implementation of `addDeck`
 Future<void> _addDeckAndroid(String deckName) async {
-  // TODO implement android
+  // TODO v word lists implement android
   throw Exception("Not implemented");
 }
 
 /// Platform specific (iOS via ankimobile) implementation of `addDeck`
 Future<void> _addDeckIOS(String deckName) async {
-  // TODO implement iOS
+  // TODO v word lists implement iOS
   throw Exception("Not implemented");
 }
 
@@ -298,13 +298,13 @@ Future<List<String>> _getDeckNamesDesktop() async {
 
 /// Platform specific (android via ankidroid) implementation of `getDeckNames`
 Future<List<String>> _getDeckNamesAndroid() async {
-  // TODO implement android
+  // TODO v word lists implement android
   throw Exception("Not implemented");
 }
 
 /// Platform specific (iOS via ankimobile) implementation of `getDeckNames`
 Future<List<String>> _getDeckNamesIOS() async {
-  // TODO implement iOS
+  // TODO v word lists implement iOS
   throw Exception("Not implemented");
 }
 
@@ -349,7 +349,7 @@ Future<bool> _checkAnkiConnectAvailable() async {
 Future<bool> _checkAnkidroidAvailable() async {
   bool _isRunning = false;
 
-  // TODO implement android
+  // TODO v word lists implement android
   throw Exception("Not implemented");
 
   return _isRunning;
@@ -360,7 +360,7 @@ Future<bool> _checkAnkidroidAvailable() async {
 Future<bool> _checkAnkiMobileRunning() async {
   bool _isRunning = false;
 
-  // TODO implement iOS
+  // TODO v word lists implement iOS
   throw Exception("Not implemented");
 
   return _isRunning;
