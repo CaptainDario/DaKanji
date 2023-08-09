@@ -194,6 +194,14 @@ Map<String, String> jmDictPosSorted = Map.fromEntries(
   )
 );
 
+/// All part of speech filters (sames as `jmDictPos`) but sorted alphabetically
+Map<String, String> jmDictPosGeneralSorted = Map.fromEntries(
+  jmDictPosGeneral.entries.toList()..sort((a, b) => 
+    a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
+      .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
+  )
+);
+
 /// All field filters (sames as `jmDictFields`) but sorted alphabetically
 Map<String, String> jmDictFieldsSorted = Map.fromEntries(
   jmDictFields.entries.toList()..sort((a, b) => 
@@ -204,9 +212,12 @@ Map<String, String> jmDictFieldsSorted = Map.fromEntries(
 );
 
 /// all filters that are available
-Map<String, String> jmDictAllFilters = jmDictFields..addAll(jmDictPos);
+Map<String, String> jmDictAllFilters = jmDictPosGeneral..addAll(jmDictFields)..addAll(jmDictPos);
 
 /// all filters that are available (sorted)
-Map<String, String> jmDictAllFiltersSorted = jmDictPosGeneral
-  ..addAll(jmDictFieldsSorted)
-  ..addAll(jmDictPosSorted);
+Map<String, String> jmDictAllFiltersSorted = Map.fromEntries(
+  jmDictAllFilters.entries.toList()..sort((a, b) => 
+    a.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase()
+      .compareTo(b.value.replaceAll(RegExp(r"[^a-zA-Z]+"), "").toLowerCase())
+  )
+);
