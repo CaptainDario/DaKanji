@@ -2754,7 +2754,7 @@
       "es": "Este botón abre una pantalla en la que puedes dibujar un Kanji para buscarlo rápidamente.",
       "pl": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać."
     },
-    "tutorial_search_filter_text": {
+    "tutorial_search_radical_text": {
       "en": "This button lets you search kanji by radical.",
       "de": "Mit dieser Schaltfläche können Sie Kanji nach Radikalen suchen.",
       "ru": "Эта кнопка позволяет искать кандзи по радикалу.",
@@ -2765,7 +2765,7 @@
       "es": "Este botón te permite buscar kanji por radical.",
       "pl": "Ten przycisk pozwala na wyszukiwanie kanji według radykałów."
     },
-    "tutorial_search_radical_text": {
+    "tutorial_search_filter_text": {
       "en": "This button lets you apply filter to your search.",
       "de": "Mit dieser Schaltfläche können Sie Filter auf Ihre Suche anwenden.",
       "ru": "Эта кнопка позволяет применить фильтр к поиску.",
