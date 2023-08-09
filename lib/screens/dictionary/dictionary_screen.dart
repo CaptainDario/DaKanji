@@ -6,7 +6,6 @@ import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';

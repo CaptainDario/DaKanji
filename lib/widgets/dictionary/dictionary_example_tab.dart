@@ -201,7 +201,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   List<String> kanjis = query.item2;
   List<String> readings = query.item3;
   List<String> hiraganas = query.item4;
-  List<String> kanjiSplits = query.item5;
+  //List<String> kanjiSplits = query.item5;
   int limit = query.item6;
   String isarPath = query.item7;
   
