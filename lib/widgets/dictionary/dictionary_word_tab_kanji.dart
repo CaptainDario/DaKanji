@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 
 import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/application/kana/kana.dart';
 
 
 class DictionaryWordTabKanji extends StatefulWidget {
@@ -224,8 +223,11 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           List<Widget> ret = [];
                           String readingWoNonMora = 
                             widget.entry.readings[i].replaceAll(RegExp(nonMora.join("|")), "");
+                          String reading = widget.entry.readings[i];
 
                           for (int r = 0; r < readingWoNonMora.length; r++){
+                            int moraTillR = reading.substring(0,r).characters
+                              .where((p0) => nonMora.contains(p0)).length;
                             ret.add(
                               Container(
                                 decoration: getPitchAccentDecoration(
@@ -235,9 +237,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                 ),
                                 child: Text(
                                   readingWoNonMora[r] +
-                                    (r < widget.entry.readings[i].length-1 &&
-                                    hiraSmall.contains(widget.entry.readings[i][r+1])
-                                      ? widget.entry.readings[i][r+1]
+                                    (r+moraTillR+1 < reading.length-1 &&
+                                    nonMora.contains(reading[r+moraTillR+1])
+                                      ? reading[r+moraTillR+1]
                                       : ""),
                                   style: TextStyle(
                                     fontSize: 14,
@@ -247,6 +249,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                             );
                           }
+                          // add "," to separate pitch readingss
                           if(i + a != widget.entry.readings.length-1 +
                             widget.entry.accents![i]!.attributes.length-1)
                             ret.add(Text("、"));
