@@ -29,6 +29,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 
 
@@ -57,6 +58,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       navigatorKey: g_NavigatorKey,
+      navigatorObservers: [
+        SentryNavigatorObserver()
+      ],
       
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
