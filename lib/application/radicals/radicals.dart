@@ -9,21 +9,25 @@ import 'package:isar/isar.dart';
 /// if `radkIsar` si given, sorts the radicals by stroke number.
 List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCollection<Radk>? radkIsar}){
 
-  // get all kanji
-  List<String> radicals = kradIsar
+  // get all radicals of this kanji using krad
+  List<List<String>> kanjis = kradIsar
     .where()
       .kanjiEqualTo(kanji)
     .radicalsProperty()
-    .findAllSync()
-    .first;
+    .findAllSync();
 
-  // sort radicals by stroke order
-  if(radkIsar != null)
-    radicals = radkIsar.where()
-        .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
-      .sortByStrokeCount()
-      .radicalProperty()
-      .findAllSync();
+  List<String> radicals = [];
+  if(!kanjis.isEmpty) {
+    radicals = kanjis.first;
+
+    // sort radicals by stroke order
+    if(radkIsar != null)
+      radicals = radkIsar.where()
+          .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
+        .sortByStrokeCount()
+        .radicalProperty()
+        .findAllSync();
+  }
   
   return radicals;
 }
