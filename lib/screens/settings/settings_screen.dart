@@ -474,6 +474,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
+                      // #region - DoJG header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.DojgScreen_tile.tr(),
+                        Icons.text_fields_sharp,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialDojg = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
+
                       // #region - Kanji table header
 
                       ResponsiveHeaderTile(
