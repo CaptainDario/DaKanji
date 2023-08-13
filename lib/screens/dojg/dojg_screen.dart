@@ -12,6 +12,7 @@ import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
 
 class DoJGScreen extends StatefulWidget {
+
   /// should the tutorial for this scren be included
   final bool includeTutorial;
 
@@ -35,20 +36,30 @@ class _DoJGScreenState extends State<DoJGScreen> {
      
     super.initState();
 
+    showTutorialCallback();
+
+  }
+
+  @override
+  void didUpdateWidget(covariant DoJGScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void showTutorialCallback() {
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
 
       // init tutorial
       final OnboardingState? onboarding = Onboarding.of(context);
       if(widget.includeTutorial && onboarding != null && 
-        GetIt.I<UserData>().showTutorialDojg) {
+        GetIt.I<UserData>().showTutorialDojg &&
+        GetIt.I<UserData>().dojgImported) {
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().dojgScreenTutorial.indexes![0],
           GetIt.I<Tutorials>().dojgScreenTutorial.indexes!
         );
       }
     });
-
   }
 
 
@@ -57,28 +68,37 @@ class _DoJGScreenState extends State<DoJGScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       currentScreen: Screens.dojg,
-      child: dojgImported
+      child: GetIt.I<UserData>().dojgImported
         ? DoJGWidget()
         : GestureDetector(
-          onTap: () {
-            setState(() {
-              dojgImported = true;
-            });
+          onTap: () async {
+
+            await importDoJGDeck();
+            
+            GetIt.I<UserData>().dojgImported = (await checkDojgImported());
+            GetIt.I<UserData>().dojgWithMediaImported = (await checkDojgWithMediaImported());
+            await GetIt.I<UserData>().save();
+            
+            if(GetIt.I<UserData>().showTutorialDojg)
+              showTutorialCallback();
+            
+            setState(() {});
           },
           child: Container(
             constraints: BoxConstraints.expand(),
-            //color: Colors.amber,
+            color: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.add_circle_outline),
+                Icon(Icons.download),
                 SizedBox(width: 10.0),
                 Text("Tap to import DoJG Deck")
               ],
             ),
           ),
-        ),
+        )
     );
   }
+
 }
