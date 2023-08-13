@@ -14,6 +14,8 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path/path.dart' as p;
 
 import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
@@ -477,7 +479,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #region - DoJG header
 
                       ResponsiveHeaderTile(
-                        LocaleKeys.DojgScreen_tile.tr(),
+                        LocaleKeys.DojgScreen_title.tr(),
                         Icons.text_fields_sharp,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
@@ -864,6 +866,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
                               await restartApp(context);
+                            },
+                          ),
+                          // Delete dojg
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_doj.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+
+                              Directory dojgDir = Directory(p.join(
+                                (await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji", "dojg"
+                              ));
+                              if(dojgDir.existsSync()){
+                                dojgDir.delete(recursive: true);
+                                GetIt.I<UserData>().dojgImported = false;
+                                GetIt.I<UserData>().dojgWithMediaImported = false;
+                                GetIt.I<UserData>().save();
+
+                                await restartApp(context);
+                              }
                             },
                           ),
                           // delete search history
