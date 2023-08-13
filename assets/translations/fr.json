@@ -109,6 +109,8 @@
     "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DojgScreen": {
+    "import_dojg": "Tapez pour importer le Deck DoJG",
+    "refer_to_manual": "Pour plus de d\u00e9tails, voir le manuel",
     "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
     "tutorial_begin_title": "Bienvenue sur l'\u00e9cran du Dictionnaire de grammaire japonaise (DoJG) !"
@@ -242,7 +244,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
-    "advanced_settings_delete_doj": "Supprimer les fichiers DoJG.",
+    "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG.",
     "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inf\u00e9rence (n\u00e9cessite un red\u00e9marrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
@@ -270,6 +272,8 @@
     "dict_show_wikipedia_definitions": "Afficher les d\u00e9finitions de wikipedia",
     "dict_show_word_freq": "Afficher la fr\u00e9quence des mots",
     "dict_show_word_freq_body": "Le DaKanji utilise la fr\u00e9quence des mots pour classer les entr\u00e9es de son dictionnaire. Cette fr\u00e9quence de mots est une estimation de l'utilisation d'un mot et est bas\u00e9e sur diff\u00e9rentes sources de donn\u00e9es :\n\n* Wikip\u00e9dia, qui repr\u00e9sente un texte encyclop\u00e9dique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, \u00e0 partir d'OSCAR\n* Twitter, qui repr\u00e9sente les m\u00e9dias sociaux de courte dur\u00e9e\n* Reddit, repr\u00e9sentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqu\u00e9 dans DaKanji est une variante de la fr\u00e9quence r\u00e9elle des mots appel\u00e9e [fr\u00e9quence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise \u00e0 restituer la fr\u00e9quence des mots sur une \u00e9chelle logarithmique conviviale. La fr\u00e9quence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il appara\u00eet par milliard de mots. Un mot ayant une valeur de Zipf de 6 appara\u00eet une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 appara\u00eet une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par d\u00e9faut pour les mots qui n'apparaissent pas dans les sources de donn\u00e9es, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG import\u00e9",
+    "dojg_media_imported": "DoJG avec les m\u00e9dias import\u00e9s",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",
     "draw_custom_url_format": "Format d'URL personnalis\u00e9",
     "draw_custom_url_hint": "URL de votre dictionnaire",

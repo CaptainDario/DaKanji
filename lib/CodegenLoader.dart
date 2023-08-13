@@ -88,6 +88,8 @@ class CodegenLoader extends AssetLoader{
     "word_wikipedia": "维基百科"
   },
   "DojgScreen": {
+    "import_dojg": "点按导入 DoJG 资料集",
+    "refer_to_manual": "详情请参阅手册",
     "title": "DoJG",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎访问《日语语法词典》（DoJG）屏幕！"
@@ -220,7 +222,7 @@ class CodegenLoader extends AssetLoader{
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "删除字典文件。",
-    "advanced_settings_delete_doj": "删除 DoJG 文件。",
+    "advanced_settings_delete_dojg": "删除 DoJG 文件。",
     "advanced_settings_delete_history": "删除搜索历史。",
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
     "advanced_settings_number_search_procs": "搜索进程的数量（@:SettingsScreen.required_restart）。",
@@ -248,6 +250,8 @@ class CodegenLoader extends AssetLoader{
     "dict_show_wikipedia_definitions": "显示来自维基百科的定义",
     "dict_show_word_freq": "显示词频",
     "dict_show_word_freq_body": "大汉字》使用词频对其词典条目进行排名。这个词频是对一个词的用法的估计，是基于不同的数据来源：\n\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短篇的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n\nDaKanji中显示的数字是实际词频的一种变体，称为[Zipf频率](https://en.wikipedia.org/wiki/Zipf%27s_law)，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。对于没有出现在数据源中的词，我们使用0作为默认的Zipf值，尽管它应该意味着每十亿字中出现一次。\n[阅读全文...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "进口的 DoJG",
+    "dojg_media_imported": "司法部与进口媒体",
     "draw_browser_for_online_dict": "为网络字典使用网络视图",
     "draw_custom_url_format": "自定义URL格式",
     "draw_custom_url_hint": "你的字典的URL",
@@ -346,6 +350,28 @@ static const Map<String,dynamic> localizations = {
       "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "refer_to_manual": {
+      "en": "For details refer to the manual",
+      "de": "Einzelheiten finden Sie im Handbuch",
+      "ru": "Более подробная информация приведена в руководстве",
+      "ja": "詳細はマニュアルを参照",
+      "zh": "详情请参阅手册",
+      "it": "Per i dettagli, consultare il manuale",
+      "fr": "Pour plus de détails, voir le manuel",
+      "es": "Para más detalles, consulte el manual",
+      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
+    },
+    "import_dojg": {
+      "en": "Tap to import the DoJG Deck",
+      "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+      "ru": "Нажмите, чтобы импортировать DoJG Deck",
+      "ja": "タップしてDoJGデッキをインポートする",
+      "zh": "点按导入 DoJG 资料集",
+      "it": "Toccare per importare il mazzo DoJG",
+      "fr": "Tapez pour importer le Deck DoJG",
+      "es": "Pulse para importar la cubierta DoJG",
+      "pl": "Stuknij, aby zaimportować DoJG Deck"
     }
   },
   "AboutScreen": {
@@ -1241,6 +1267,28 @@ static const Map<String,dynamic> localizations = {
       "es": "Número de traducciones en los billetes",
       "pl": "Liczba tłumaczeń na notach"
     },
+    "dojg_imported": {
+      "en": "DoJG imported",
+      "de": "DoJG importiert",
+      "ru": "DoJG импортный",
+      "ja": "輸入されたDoJG",
+      "zh": "进口的 DoJG",
+      "it": "DoJG importato",
+      "fr": "DoJG importé",
+      "es": "DoJG importado",
+      "pl": "Import DoJG"
+    },
+    "dojg_media_imported": {
+      "en": "DoJG with media imported",
+      "de": "DoJG mit Medien importiert",
+      "ru": "DoJG с импортными СМИ",
+      "ja": "メディアから輸入されたDoJG",
+      "zh": "司法部与进口媒体",
+      "it": "DoJG con i media importati",
+      "fr": "DoJG avec les médias importés",
+      "es": "DoJG con medios de comunicación importados",
+      "pl": "DoJG z zaimportowanymi mediami"
+    },
     "misc_title": {
       "en": "Miscellaneous",
       "de": "Verschiedenes",
@@ -1461,7 +1509,7 @@ static const Map<String,dynamic> localizations = {
       "es": "Borra el historial de búsqueda.",
       "pl": "Usuwa historię wyszukiwania."
     },
-    "advanced_settings_delete_doj": {
+    "advanced_settings_delete_dojg": {
       "en": "Delete the DoJG files.",
       "de": "Löscht die DoJG-Dateien.",
       "ru": "Удалите файлы DoJG.",
@@ -3559,6 +3607,8 @@ static const Map<String,dynamic> ja = {
     "word_wikipedia": "ウィキペディア"
   },
   "DojgScreen": {
+    "import_dojg": "タップしてDoJGデッキをインポートする",
+    "refer_to_manual": "詳細はマニュアルを参照",
     "title": "DoJG",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "日本語文法辞典（DoJG）の画面へようこそ！"
@@ -3691,7 +3741,7 @@ static const Map<String,dynamic> ja = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルの削除",
-    "advanced_settings_delete_doj": "DoJGファイルを削除する。",
+    "advanced_settings_delete_dojg": "DoJGファイルを削除する。",
     "advanced_settings_delete_history": "検索履歴の削除",
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
     "advanced_settings_number_search_procs": "検索プロセス数 (@:SettingsScreen.requires_restart)",
@@ -3719,6 +3769,8 @@ static const Map<String,dynamic> ja = {
     "dict_show_wikipedia_definitions": "wikipedia上の定義を表示",
     "dict_show_word_freq": "単語の使用頻度を表示",
     "dict_show_word_freq_body": "Dakanjiでは、辞書エントリーのランク付けに単語頻度を使用しています。この単語頻度は、単語の使用頻度を推定したもので、さまざまなデータソースに基づくものです：\n\n* ウィキペディア\n* OPUS OpenSubtitles 2018およびSUBTLEXの字幕\n* ウェブテキスト、OSCAR\n* Twitter\n* Reddit\n\nDakanjiで表示される数値は、実際の単語頻度のバリエーションとして、[Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law)という、人間に優しい対数スケールで単語頻度を返すことを目指したものです。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10進数対数のことを指します。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現します。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。データソースにない単語のZipf値は、10億語に1回出現することを意味するはずですが、デフォルトで0を使用しています。\n[もっと読む...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "輸入されたDoJG",
+    "dojg_media_imported": "メディアから輸入されたDoJG",
     "draw_browser_for_online_dict": "ウェブビューでウェブ辞書を開く",
     "draw_custom_url_format": "カスタムURL",
     "draw_custom_url_hint": "使用したい辞書のURL",
@@ -3908,6 +3960,8 @@ static const Map<String,dynamic> de = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+    "refer_to_manual": "Einzelheiten finden Sie im Handbuch",
     "title": "DoJG",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!"
@@ -4041,7 +4095,7 @@ static const Map<String,dynamic> de = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
-    "advanced_settings_delete_doj": "Löscht die DoJG-Dateien.",
+    "advanced_settings_delete_dojg": "Löscht die DoJG-Dateien.",
     "advanced_settings_delete_history": "Löscht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
@@ -4069,6 +4123,8 @@ static const Map<String,dynamic> de = {
     "dict_show_wikipedia_definitions": "Definitionen von wikipedia anzeigen",
     "dict_show_word_freq": "Zeige Wordfrequenz",
     "dict_show_word_freq_body": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
+    "dojg_imported": "DoJG importiert",
+    "dojg_media_imported": "DoJG mit Medien importiert",
     "draw_browser_for_online_dict": "Benutze einen webview für web Wörterbücher",
     "draw_custom_url_format": "Benutzerdefiniertes URL format",
     "draw_custom_url_hint": "URL von dem Wörterbuch das benutzt werden soll",
@@ -4221,6 +4277,8 @@ static const Map<String,dynamic> ru = {
     "word_wikipedia": "Википедия"
   },
   "DojgScreen": {
+    "import_dojg": "Нажмите, чтобы импортировать DoJG Deck",
+    "refer_to_manual": "Более подробная информация приведена в руководстве",
     "title": "DoJG",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать на экран словаря японской грамматики (DoJG)!"
@@ -4353,7 +4411,7 @@ static const Map<String,dynamic> ru = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Удаляет файлы словарей.",
-    "advanced_settings_delete_doj": "Удалите файлы DoJG.",
+    "advanced_settings_delete_dojg": "Удалите файлы DoJG.",
     "advanced_settings_delete_history": "Удаляет историю поиска.",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
     "advanced_settings_number_search_procs": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
@@ -4381,6 +4439,8 @@ static const Map<String,dynamic> ru = {
     "dict_show_wikipedia_definitions": "Показать определения из Википедии",
     "dict_show_word_freq": "Показать частоту слов",
     "dict_show_word_freq_body": "DaKanji использует частоту слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова и основана на различных источниках данных:\n\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете\n\nЧисло, показанное в DaKanji, является вариацией фактической частоты слов, называемой [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law), целью которой является возвращение частоты слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в источниках данных, хотя это должно означать одно появление на миллиард слов.\n[Read more...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG импортный",
+    "dojg_media_imported": "DoJG с импортными СМИ",
     "draw_browser_for_online_dict": "Использование веб-просмотра для веб-словарей",
     "draw_custom_url_format": "Пользовательский формат URL",
     "draw_custom_url_hint": "URL вашего словаря",
@@ -4554,6 +4614,8 @@ static const Map<String,dynamic> pl = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Stuknij, aby zaimportować DoJG Deck",
+    "refer_to_manual": "Szczegółowe informacje można znaleźć w instrukcji obsługi",
     "title": "DoJG",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
@@ -4686,7 +4748,7 @@ static const Map<String,dynamic> pl = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
-    "advanced_settings_delete_doj": "Usuń pliki DoJG.",
+    "advanced_settings_delete_dojg": "Usuń pliki DoJG.",
     "advanced_settings_delete_history": "Usuwa historię wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)",
@@ -4714,6 +4776,8 @@ static const Map<String,dynamic> pl = {
     "dict_show_wikipedia_definitions": "Pokaż definicje z wikipedii",
     "dict_show_word_freq": "Pokaż częstość występowania słów",
     "dict_show_word_freq_body": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "Import DoJG",
+    "dojg_media_imported": "DoJG z zaimportowanymi mediami",
     "draw_browser_for_online_dict": "Użyj webview dla słowników internetowych",
     "draw_custom_url_format": "Niestandardowy format URL",
     "draw_custom_url_hint": "URL twojego słownika",
@@ -4903,6 +4967,8 @@ static const Map<String,dynamic> en = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Tap to import the DoJG Deck",
+    "refer_to_manual": "For details refer to the manual",
     "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
@@ -5036,7 +5102,7 @@ static const Map<String,dynamic> en = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
-    "advanced_settings_delete_doj": "Delete the DoJG files.",
+    "advanced_settings_delete_dojg": "Delete the DoJG files.",
     "advanced_settings_delete_history": "Delete search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
@@ -5064,6 +5130,8 @@ static const Map<String,dynamic> en = {
     "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
     "dict_show_word_freq": "Show word frequency",
     "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG imported",
+    "dojg_media_imported": "DoJG with media imported",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
     "draw_custom_url_format": "Custom URL format",
     "draw_custom_url_hint": "URL of your dictionary",
@@ -5216,6 +5284,8 @@ static const Map<String,dynamic> it = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Toccare per importare il mazzo DoJG",
+    "refer_to_manual": "Per i dettagli, consultare il manuale",
     "title": "DoJG",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!"
@@ -5348,7 +5418,7 @@ static const Map<String,dynamic> it = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Elimina i file del dizionario.",
-    "advanced_settings_delete_doj": "Eliminare i file DoJG.",
+    "advanced_settings_delete_dojg": "Eliminare i file DoJG.",
     "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
@@ -5376,6 +5446,8 @@ static const Map<String,dynamic> it = {
     "dict_show_wikipedia_definitions": "Mostra le definizioni da wikipedia",
     "dict_show_word_freq": "Mostra la frequenza delle parole",
     "dict_show_word_freq_body": "DaKanji utilizza la frequenza delle parole per classificare le voci del suo dizionario. La frequenza delle parole è una stima dell'uso di una parola e si basa su diverse fonti di dati:\n\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\n\nIl numero mostrato in DaKanji è una variante della frequenza effettiva delle parole, chiamata [frequenza Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law), che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nelle fonti di dati, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.\n[Per saperne di più...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG importato",
+    "dojg_media_imported": "DoJG con i media importati",
     "draw_browser_for_online_dict": "Utilizzare una webview per i dizionari web",
     "draw_custom_url_format": "Formato URL personalizzato",
     "draw_custom_url_hint": "URL del vostro dizionario",
@@ -5514,6 +5586,8 @@ static const Map<String,dynamic> fr = {
     "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DojgScreen": {
+    "import_dojg": "Tapez pour importer le Deck DoJG",
+    "refer_to_manual": "Pour plus de détails, voir le manuel",
     "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !"
@@ -5646,7 +5720,7 @@ static const Map<String,dynamic> fr = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
-    "advanced_settings_delete_doj": "Supprimer les fichiers DoJG.",
+    "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG.",
     "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
@@ -5674,6 +5748,8 @@ static const Map<String,dynamic> fr = {
     "dict_show_wikipedia_definitions": "Afficher les définitions de wikipedia",
     "dict_show_word_freq": "Afficher la fréquence des mots",
     "dict_show_word_freq_body": "Le DaKanji utilise la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'utilisation d'un mot et est basée sur différentes sources de données :\n\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, qui représente les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqué dans DaKanji est une variante de la fréquence réelle des mots appelée [fréquence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans les sources de données, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG importé",
+    "dojg_media_imported": "DoJG avec les médias importés",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",
     "draw_custom_url_format": "Format d'URL personnalisé",
     "draw_custom_url_hint": "URL de votre dictionnaire",
@@ -5812,6 +5888,8 @@ static const Map<String,dynamic> es = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Pulse para importar la cubierta DoJG",
+    "refer_to_manual": "Para más detalles, consulte el manual",
     "title": "DoJG",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG)."
@@ -5944,7 +6022,7 @@ static const Map<String,dynamic> es = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
-    "advanced_settings_delete_doj": "Borra los archivos DoJG.",
+    "advanced_settings_delete_dojg": "Borra los archivos DoJG.",
     "advanced_settings_delete_history": "Borra el historial de búsqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
@@ -5972,6 +6050,8 @@ static const Map<String,dynamic> es = {
     "dict_show_wikipedia_definitions": "Mostrar definiciones de wikipedia",
     "dict_show_word_freq": "Mostrar frecuencia de palabras",
     "dict_show_word_freq_body": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG importado",
+    "dojg_media_imported": "DoJG con medios de comunicación importados",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",

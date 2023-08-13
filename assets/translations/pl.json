@@ -109,6 +109,8 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Stuknij, aby zaimportowa\u0107 DoJG Deck",
+    "refer_to_manual": "Szczeg\u00f3\u0142owe informacje mo\u017cna znale\u017a\u0107 w instrukcji obs\u0142ugi",
     "title": "DoJG",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!"
@@ -242,7 +244,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki s\u0142ownikowe.",
-    "advanced_settings_delete_doj": "Usu\u0144 pliki DoJG.",
+    "advanced_settings_delete_dojg": "Usu\u0144 pliki DoJG.",
     "advanced_settings_delete_history": "Usuwa histori\u0119 wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba proces\u00f3w wyszukiwania (@:SettingsScreen.requires_restart)",
@@ -270,6 +272,8 @@
     "dict_show_wikipedia_definitions": "Poka\u017c definicje z wikipedii",
     "dict_show_word_freq": "Poka\u017c cz\u0119sto\u015b\u0107 wyst\u0119powania s\u0142\u00f3w",
     "dict_show_word_freq_body": "DaKanji u\u017cywa cz\u0119stotliwo\u015bci s\u0142\u00f3w, aby uszeregowa\u0107 swoje has\u0142a s\u0142ownikowe. Ta cz\u0119stotliwo\u015b\u0107 jest szacunkow\u0105 ocen\u0105 u\u017cycia s\u0142owa i jest oparta na r\u00f3\u017cnych \u017ar\u00f3d\u0142ach danych:\n\n* Wikipedia, reprezentuj\u0105ca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentuj\u0105cy media spo\u0142eczno\u015bciowe o kr\u00f3tkiej formie\n* Reddit, reprezentuj\u0105cy potencjalnie d\u0142u\u017csze komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacj\u0105 na temat rzeczywistej cz\u0119stotliwo\u015bci s\u0142\u00f3w zwan\u0105 [Cz\u0119stotliwo\u015b\u0107 Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), kt\u00f3ra ma na celu zwr\u00f3cenie cz\u0119stotliwo\u015bci s\u0142\u00f3w w przyjaznej dla cz\u0142owieka skali logarytmicznej. Cz\u0119stotliwo\u015b\u0107 Zipfa dla danego s\u0142owa jest logarytmem podstawy 10 z liczby jego wyst\u0105pie\u0144 na miliard s\u0142\u00f3w. Na przyk\u0142ad s\u0142owo o warto\u015bci Zipf 6 pojawia si\u0119 raz na tysi\u0105c s\u0142\u00f3w, a s\u0142owo o warto\u015bci Zipf 3 pojawia si\u0119 raz na milion s\u0142\u00f3w.\nRozs\u0105dne warto\u015bci Zipf s\u0105 pomi\u0119dzy 0 a 8, ale minimalna warto\u015b\u0107 Zipf wyst\u0119puj\u0105ca w DaKanji to 1.0. U\u017cywamy 0 jako domy\u015blnej warto\u015bci Zipf dla s\u0142\u00f3w, kt\u00f3re nie pojawiaj\u0105 si\u0119 w \u017ar\u00f3d\u0142ach danych, chocia\u017c powinno to oznacza\u0107 jedno wyst\u0105pienie na miliard s\u0142\u00f3w.\n[Czytaj wi\u0119cej...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "Import DoJG",
+    "dojg_media_imported": "DoJG z zaimportowanymi mediami",
     "draw_browser_for_online_dict": "U\u017cyj webview dla s\u0142ownik\u00f3w internetowych",
     "draw_custom_url_format": "Niestandardowy format URL",
     "draw_custom_url_hint": "URL twojego s\u0142ownika",

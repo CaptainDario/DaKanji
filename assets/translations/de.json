@@ -109,6 +109,8 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+    "refer_to_manual": "Einzelheiten finden Sie im Handbuch",
     "title": "DoJG",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen auf dem Bildschirm des W\u00f6rterbuchs der japanischen Grammatik (DoJG)!"
@@ -242,7 +244,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "L\u00f6scht die W\u00f6rterbuchdateien.",
-    "advanced_settings_delete_doj": "L\u00f6scht die DoJG-Dateien.",
+    "advanced_settings_delete_dojg": "L\u00f6scht die DoJG-Dateien.",
     "advanced_settings_delete_history": "L\u00f6scht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
@@ -270,6 +272,8 @@
     "dict_show_wikipedia_definitions": "Definitionen von wikipedia anzeigen",
     "dict_show_word_freq": "Zeige Wordfrequenz",
     "dict_show_word_freq_body": "DaKanji verwendet ein Ma\u00df f\u00fcr die Worth\u00e4ufigkeit, um seine W\u00f6rterbucheintr\u00e4ge zu bewerten. Diese Worth\u00e4ufigkeit ist eine Sch\u00e4tzung der Verwendung eines Wortes. Diese Sch\u00e4tzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklop\u00e4dischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend f\u00fcr soziale Medien in Kurzform\nReddit, repr\u00e4sentiert potenziell l\u00e4ngere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worth\u00e4ufigkeit, die Zipf-H\u00e4ufigkeit, die darauf abzielt, die Worth\u00e4ufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-H\u00e4ufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde W\u00f6rter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend W\u00f6rter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million W\u00f6rter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert f\u00fcr W\u00f6rter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde W\u00f6rter bedeuten sollte.",
+    "dojg_imported": "DoJG importiert",
+    "dojg_media_imported": "DoJG mit Medien importiert",
     "draw_browser_for_online_dict": "Benutze einen webview f\u00fcr web W\u00f6rterb\u00fccher",
     "draw_custom_url_format": "Benutzerdefiniertes URL format",
     "draw_custom_url_hint": "URL von dem W\u00f6rterbuch das benutzt werden soll",

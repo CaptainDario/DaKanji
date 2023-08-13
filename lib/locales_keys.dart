@@ -106,6 +106,8 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
+  static const DojgScreen_import_dojg = 'DojgScreen.import_dojg';
+  static const DojgScreen_refer_to_manual = 'DojgScreen.refer_to_manual';
   static const DojgScreen_title = 'DojgScreen.title';
   static const DojgScreen_tutorial_begin_text = 'DojgScreen.tutorial_begin_text';
   static const DojgScreen_tutorial_begin_title = 'DojgScreen.tutorial_begin_title';
@@ -227,7 +229,7 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
-  static const SettingsScreen_advanced_settings_delete_doj = 'SettingsScreen.advanced_settings_delete_doj';
+  static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
@@ -255,6 +257,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_dict_show_wikipedia_definitions = 'SettingsScreen.dict_show_wikipedia_definitions';
   static const SettingsScreen_dict_show_word_freq = 'SettingsScreen.dict_show_word_freq';
   static const SettingsScreen_dict_show_word_freq_body = 'SettingsScreen.dict_show_word_freq_body';
+  static const SettingsScreen_dojg_imported = 'SettingsScreen.dojg_imported';
+  static const SettingsScreen_dojg_media_imported = 'SettingsScreen.dojg_media_imported';
   static const SettingsScreen_draw_browser_for_online_dict = 'SettingsScreen.draw_browser_for_online_dict';
   static const SettingsScreen_draw_custom_url_format = 'SettingsScreen.draw_custom_url_format';
   static const SettingsScreen_draw_custom_url_hint = 'SettingsScreen.draw_custom_url_hint';

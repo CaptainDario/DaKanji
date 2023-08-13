@@ -109,6 +109,8 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
+    "import_dojg": "Pulse para importar la cubierta DoJG",
+    "refer_to_manual": "Para m\u00e1s detalles, consulte el manual",
     "title": "DoJG",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gram\u00e1tica japonesa (DoJG)."
@@ -242,7 +244,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
-    "advanced_settings_delete_doj": "Borra los archivos DoJG.",
+    "advanced_settings_delete_dojg": "Borra los archivos DoJG.",
     "advanced_settings_delete_history": "Borra el historial de b\u00fasqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "N\u00famero de procesos de b\u00fasqueda (@:SettingsScreen.requires_restart)",
@@ -270,6 +272,8 @@
     "dict_show_wikipedia_definitions": "Mostrar definiciones de wikipedia",
     "dict_show_word_freq": "Mostrar frecuencia de palabras",
     "dict_show_word_freq_body": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimaci\u00f3n del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclop\u00e9dico.\n* Subt\u00edtulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente m\u00e1s largos\n\nEl n\u00famero que se muestra en DaKanji es una variaci\u00f3n de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logar\u00edtmica de f\u00e1cil comprensi\u00f3n. La frecuencia Zipf de una palabra es el logaritmo en base 10 del n\u00famero de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada mill\u00f3n de palabras.\nLos valores Zipf razonables est\u00e1n entre 0 y 8, pero el valor Zipf m\u00ednimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque deber\u00eda significar una aparici\u00f3n por cada mil millones de palabras.\n[Leer m\u00e1s...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG importado",
+    "dojg_media_imported": "DoJG con medios de comunicaci\u00f3n importados",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",

@@ -32,6 +32,28 @@
       "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "refer_to_manual": {
+      "en": "For details refer to the manual",
+      "de": "Einzelheiten finden Sie im Handbuch",
+      "ru": "Более подробная информация приведена в руководстве",
+      "ja": "詳細はマニュアルを参照",
+      "zh": "详情请参阅手册",
+      "it": "Per i dettagli, consultare il manuale",
+      "fr": "Pour plus de détails, voir le manuel",
+      "es": "Para más detalles, consulte el manual",
+      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
+    },
+    "import_dojg": {
+      "en": "Tap to import the DoJG Deck",
+      "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+      "ru": "Нажмите, чтобы импортировать DoJG Deck",
+      "ja": "タップしてDoJGデッキをインポートする",
+      "zh": "点按导入 DoJG 资料集",
+      "it": "Toccare per importare il mazzo DoJG",
+      "fr": "Tapez pour importer le Deck DoJG",
+      "es": "Pulse para importar la cubierta DoJG",
+      "pl": "Stuknij, aby zaimportować DoJG Deck"
     }
   },
   "AboutScreen": {
@@ -926,6 +948,28 @@
       "fr": "Nombre de traductions sur les notes",
       "es": "Número de traducciones en los billetes",
       "pl": "Liczba tłumaczeń na notach"
+    },
+    "dojg_imported": {
+      "en": "DoJG imported",
+      "de": "DoJG importiert",
+      "ru": "DoJG импортный",
+      "ja": "輸入されたDoJG",
+      "zh": "进口的 DoJG",
+      "it": "DoJG importato",
+      "fr": "DoJG importé",
+      "es": "DoJG importado",
+      "pl": "Import DoJG"
+    },
+    "dojg_media_imported": {
+      "en": "DoJG with media imported",
+      "de": "DoJG mit Medien importiert",
+      "ru": "DoJG с импортными СМИ",
+      "ja": "メディアから輸入されたDoJG",
+      "zh": "司法部与进口媒体",
+      "it": "DoJG con i media importati",
+      "fr": "DoJG avec les médias importés",
+      "es": "DoJG con medios de comunicación importados",
+      "pl": "DoJG z zaimportowanymi mediami"
     },
     "misc_title": {
       "en": "Miscellaneous",
