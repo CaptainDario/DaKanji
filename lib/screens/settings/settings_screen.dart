@@ -483,6 +483,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Icons.text_fields_sharp,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
+                      // has dojg w/o media been imported
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dojg_imported.tr(),
+                        value: GetIt.I<UserData>().dojgImported
+                      ),
+                      // has dojg w/o media been imported
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dojg_media_imported.tr(),
+                        value: GetIt.I<UserData>().dojgWithMediaImported
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
