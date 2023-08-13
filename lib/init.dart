@@ -50,6 +50,8 @@ Future<bool> init() async {
   if(g_desktopPlatform)
     await windowManager.ensureInitialized();
 
+  await initPaths();
+
   await initServices();
 
   // deep links
