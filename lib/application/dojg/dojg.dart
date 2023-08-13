@@ -40,17 +40,17 @@ Future<void> deleteDojg() async {
 
 }
 
-Future<bool> checkDojgImported() async {
+bool checkDojgImported() {
 
   String dojgPath = p.join(
     g_documentsDirectory.path, "DaKanji", "dojg", "collection.anki2"
   );
   
-  return await File(dojgPath).existsSync();
+  return File(dojgPath).existsSync();
 
 }
 
-Future<bool> checkDojgWithMediaImported() async {
+bool checkDojgWithMediaImported() {
 
   String dojgPath = p.join(
     g_documentsDirectory.path, "DaKanji", "dojg", "1"
