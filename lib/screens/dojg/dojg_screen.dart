@@ -30,6 +30,9 @@ class DoJGScreen extends StatefulWidget {
 
 class _DoJGScreenState extends State<DoJGScreen> {
 
+  /// Is the dojg deck currently being imported
+  bool importing = false;
+
 
   @override
   void initState() {
@@ -72,6 +75,9 @@ class _DoJGScreenState extends State<DoJGScreen> {
         ? DoJGWidget()
         : GestureDetector(
           onTap: () async {
+            if (importing) return;
+
+            importing = true;
 
             await importDoJGDeck();
             
@@ -83,6 +89,8 @@ class _DoJGScreenState extends State<DoJGScreen> {
               showTutorialCallback();
             
             setState(() {});
+
+            importing = false;
           },
           child: Container(
             constraints: BoxConstraints.expand(),
