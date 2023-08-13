@@ -157,9 +157,14 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   constrains.maxWidth * 0.5,
                                   colorize: true,
                                 )
-                                : FittedBox(
-                                  child: Text(
-                                    widget.kanjidic2entry.character,
+                                : Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                  ),
+                                  child: FittedBox(
+                                    child: Text(
+                                      widget.kanjidic2entry.character,
+                                    ),
                                   ),
                                 ),
                             ),
