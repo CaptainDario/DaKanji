@@ -109,7 +109,7 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
   },
@@ -242,9 +242,10 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
+    "advanced_settings_delete_doj": "Delete the DoJG files.",
     "advanced_settings_delete_history": "Delete search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
-    "advanced_settings_number_search_procs": "Number of search processes",
+    "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",

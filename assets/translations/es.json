@@ -109,7 +109,7 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gram\u00e1tica japonesa (DoJG)."
   },
@@ -242,6 +242,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
+    "advanced_settings_delete_doj": "Borra los archivos DoJG.",
     "advanced_settings_delete_history": "Borra el historial de b\u00fasqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "N\u00famero de procesos de b\u00fasqueda (@:SettingsScreen.requires_restart)",

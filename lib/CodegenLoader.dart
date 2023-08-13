@@ -88,7 +88,7 @@ class CodegenLoader extends AssetLoader{
     "word_wikipedia": "维基百科"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎访问《日语语法词典》（DoJG）屏幕！"
   },
@@ -220,6 +220,7 @@ class CodegenLoader extends AssetLoader{
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "删除字典文件。",
+    "advanced_settings_delete_doj": "删除 DoJG 文件。",
     "advanced_settings_delete_history": "删除搜索历史。",
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
     "advanced_settings_number_search_procs": "搜索进程的数量（@:SettingsScreen.required_restart）。",
@@ -313,7 +314,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> localizations = {
   "DojgScreen": {
-    "tile": {
+    "title": {
       "en": "DoJG",
       "de": "DoJG",
       "ru": "DoJG",
@@ -1406,7 +1407,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Ok"
     },
     "advanced_settings_number_search_procs": {
-      "en": "Number of search processes",
+      "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
       "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
       "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
       "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
@@ -1459,6 +1460,17 @@ static const Map<String,dynamic> localizations = {
       "fr": "Supprime l'historique des recherches.",
       "es": "Borra el historial de búsqueda.",
       "pl": "Usuwa historię wyszukiwania."
+    },
+    "advanced_settings_delete_doj": {
+      "en": "Delete the DoJG files.",
+      "de": "Löscht die DoJG-Dateien.",
+      "ru": "Удалите файлы DoJG.",
+      "ja": "DoJGファイルを削除する。",
+      "zh": "删除 DoJG 文件。",
+      "it": "Eliminare i file DoJG.",
+      "fr": "Supprimer les fichiers DoJG.",
+      "es": "Borra los archivos DoJG.",
+      "pl": "Usuń pliki DoJG."
     }
   },
   "WebviewScreen": {
@@ -3547,7 +3559,7 @@ static const Map<String,dynamic> ja = {
     "word_wikipedia": "ウィキペディア"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "日本語文法辞典（DoJG）の画面へようこそ！"
   },
@@ -3679,6 +3691,7 @@ static const Map<String,dynamic> ja = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルの削除",
+    "advanced_settings_delete_doj": "DoJGファイルを削除する。",
     "advanced_settings_delete_history": "検索履歴の削除",
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
     "advanced_settings_number_search_procs": "検索プロセス数 (@:SettingsScreen.requires_restart)",
@@ -3895,7 +3908,7 @@ static const Map<String,dynamic> de = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!"
   },
@@ -4028,6 +4041,7 @@ static const Map<String,dynamic> de = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
+    "advanced_settings_delete_doj": "Löscht die DoJG-Dateien.",
     "advanced_settings_delete_history": "Löscht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
@@ -4207,7 +4221,7 @@ static const Map<String,dynamic> ru = {
     "word_wikipedia": "Википедия"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать на экран словаря японской грамматики (DoJG)!"
   },
@@ -4339,6 +4353,7 @@ static const Map<String,dynamic> ru = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Удаляет файлы словарей.",
+    "advanced_settings_delete_doj": "Удалите файлы DoJG.",
     "advanced_settings_delete_history": "Удаляет историю поиска.",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
     "advanced_settings_number_search_procs": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
@@ -4539,7 +4554,7 @@ static const Map<String,dynamic> pl = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
   },
@@ -4671,6 +4686,7 @@ static const Map<String,dynamic> pl = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
+    "advanced_settings_delete_doj": "Usuń pliki DoJG.",
     "advanced_settings_delete_history": "Usuwa historię wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)",
@@ -4887,7 +4903,7 @@ static const Map<String,dynamic> en = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
   },
@@ -5020,9 +5036,10 @@ static const Map<String,dynamic> en = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Delete dictionary files.",
+    "advanced_settings_delete_doj": "Delete the DoJG files.",
     "advanced_settings_delete_history": "Delete search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
-    "advanced_settings_number_search_procs": "Number of search processes",
+    "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",
@@ -5199,7 +5216,7 @@ static const Map<String,dynamic> it = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!"
   },
@@ -5331,6 +5348,7 @@ static const Map<String,dynamic> it = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Elimina i file del dizionario.",
+    "advanced_settings_delete_doj": "Eliminare i file DoJG.",
     "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
@@ -5496,7 +5514,7 @@ static const Map<String,dynamic> fr = {
     "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !"
   },
@@ -5628,6 +5646,7 @@ static const Map<String,dynamic> fr = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
+    "advanced_settings_delete_doj": "Supprimer les fichiers DoJG.",
     "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
@@ -5793,7 +5812,7 @@ static const Map<String,dynamic> es = {
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG)."
   },
@@ -5925,6 +5944,7 @@ static const Map<String,dynamic> es = {
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
+    "advanced_settings_delete_doj": "Borra los archivos DoJG.",
     "advanced_settings_delete_history": "Borra el historial de búsqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",

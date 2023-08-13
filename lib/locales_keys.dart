@@ -106,7 +106,7 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
-  static const DojgScreen_tile = 'DojgScreen.tile';
+  static const DojgScreen_title = 'DojgScreen.title';
   static const DojgScreen_tutorial_begin_text = 'DojgScreen.tutorial_begin_text';
   static const DojgScreen_tutorial_begin_title = 'DojgScreen.tutorial_begin_title';
   static const DojgScreen = 'DojgScreen';
@@ -227,6 +227,7 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
+  static const SettingsScreen_advanced_settings_delete_doj = 'SettingsScreen.advanced_settings_delete_doj';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';

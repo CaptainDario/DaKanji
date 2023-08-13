@@ -109,7 +109,7 @@
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
-    "tile": "DoJG",
+    "title": "DoJG",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!"
   },
@@ -242,6 +242,7 @@
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Usuwa pliki s\u0142ownikowe.",
+    "advanced_settings_delete_doj": "Usu\u0144 pliki DoJG.",
     "advanced_settings_delete_history": "Usuwa histori\u0119 wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba proces\u00f3w wyszukiwania (@:SettingsScreen.requires_restart)",

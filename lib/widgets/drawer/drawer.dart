@@ -77,7 +77,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
       null, null,
       true, null),
-    DrawerEntry(Icons.battery_0_bar, LocaleKeys.DojgScreen_tile.tr(), "/dojg", Screens.dojg,
+    DrawerEntry(Icons.battery_0_bar, LocaleKeys.DojgScreen_title.tr(), "/dojg", Screens.dojg,
       null, null,
       true, null),
     DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,

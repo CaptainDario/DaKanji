@@ -1093,7 +1093,7 @@
       "pl": "Ok"
     },
     "advanced_settings_number_search_procs": {
-      "en": "Number of search processes",
+      "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
       "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
       "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
       "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
@@ -1146,6 +1146,17 @@
       "fr": "Supprime l'historique des recherches.",
       "es": "Borra el historial de búsqueda.",
       "pl": "Usuwa historię wyszukiwania."
+    },
+    "advanced_settings_delete_dojg": {
+      "en": "Delete the DoJG files.",
+      "de": "Löscht die DoJG-Dateien.",
+      "ru": "Удалите файлы DoJG.",
+      "ja": "DoJGファイルを削除する。",
+      "zh": "删除 DoJG 文件。",
+      "it": "Eliminare i file DoJG.",
+      "fr": "Supprimer les fichiers DoJG.",
+      "es": "Borra los archivos DoJG.",
+      "pl": "Usuń pliki DoJG."
     }
   },
   "WebviewScreen": {
