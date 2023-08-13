@@ -151,7 +151,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               initialEntryId: args.initialEntryId,
             ));
           case "/dojg":
-            return switchScreen(DoJGScreen(includeTutorial: true,));
+            return switchScreen(DoJGScreen(true, true,));
           case "/text":
             return switchScreen(TextScreen(
               args.navigatedByDrawer, true, 
