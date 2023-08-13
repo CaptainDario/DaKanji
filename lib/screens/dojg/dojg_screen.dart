@@ -102,13 +102,26 @@ class _DoJGScreenState extends State<DoJGScreen> {
           child: Container(
             constraints: BoxConstraints.expand(),
             color: Colors.transparent,
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.download),
-                SizedBox(width: 10.0),
-                Text("Tap to import DoJG Deck")
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.download),
+                    SizedBox(width: 10.0),
+                    Text(LocaleKeys.DojgScreen_import_dojg.tr()),
+                  ],
+                ),
+                SizedBox(height: 4,),
+                Text(
+                  LocaleKeys.DojgScreen_refer_to_manual.tr(),
+                  textScaleFactor: 0.9,
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                )
               ],
             ),
           ),
