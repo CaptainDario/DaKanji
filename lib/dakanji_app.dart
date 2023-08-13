@@ -25,6 +25,7 @@ import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/screens/about/about_screen.dart';
 import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';

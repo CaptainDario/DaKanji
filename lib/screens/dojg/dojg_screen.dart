@@ -1,9 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/model/screens.dart';
-import 'package:da_kanji_mobile/view/drawer/drawer.dart';
-import 'package:da_kanji_mobile/view/dojg/dojg_widget.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg_widget.dart';
 
 
 
