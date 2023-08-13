@@ -26,10 +26,9 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   BuildContext context, bool askToDownload) async
 {
   // Search and create db file destination folder if not exist
-  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
 
   // if the file already exists delete it
-  final file = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
+  final file = File(p.joinAll([g_documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
   if (file.existsSync()) {
     file.deleteSync();
     print("Deleted ${asset.uri.pathSegments.last}");

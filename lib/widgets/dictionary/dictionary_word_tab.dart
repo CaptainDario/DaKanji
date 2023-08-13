@@ -109,7 +109,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   }
 
   void initDataAsync() async {
-    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+    audioFilesDir = Directory(p.join(g_documentsDirectory.path, "DaKanji", "audios"));
   }
 
   @override
@@ -278,7 +278,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       dismissable: true,
       btnOkOnPress: () async {
         downloadAssetFromGithubRelease(
-          File(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios")),
+          File(p.join(g_documentsDirectory.path, "DaKanji", "audios")),
           g_GithubApiDependenciesRelase,
         ).then((value) {
           Navigator.of(context).pop();

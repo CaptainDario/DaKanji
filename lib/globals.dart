@@ -100,6 +100,11 @@ bool g_IsTestingAppStartupOnboardingNewFeatures = false;
 bool g_IsTestingAppStartupDrawscreenNewFeatures = false;
 
 
+// PATHS
+/// path to the documents directory
+late final Directory g_documentsDirectory;
+
+
 //about page
 /// link to the github repo
 const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";

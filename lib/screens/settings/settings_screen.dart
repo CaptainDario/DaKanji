@@ -875,7 +875,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
 
                               Directory dojgDir = Directory(p.join(
-                                (await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji", "dojg"
+                                g_documentsDirectory.path, "DaKanji", "dojg"
                               ));
                               if(dojgDir.existsSync()){
                                 dojgDir.delete(recursive: true);

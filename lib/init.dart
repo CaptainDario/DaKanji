@@ -73,6 +73,13 @@ Future<void> clearPreferences() async {
  print("CLEARED PREFERENCES AT APP START.");
 }
 
+/// Initializes all the path varaibles that daanji uses 
+Future<void> initPaths() async {
+
+  g_documentsDirectory = (await path_provider.getApplicationDocumentsDirectory());
+
+}
+
 /// Loads all services from disk that DO NOT dpend on data in the documents
 /// directory.
 Future<void> initServices() async {
@@ -120,8 +127,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir =
-    (await path_provider.getApplicationDocumentsDirectory()).path;
+  String documentsDir = g_documentsDirectory.path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
   GetIt.I.registerSingleton<Isars>(
     Isars(
@@ -181,8 +187,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir =
-    p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
+  String documentsDir = p.join(g_documentsDirectory.path, "DaKanji");
   print("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
