@@ -60,14 +60,18 @@ Future<bool> checkDojgWithMediaImported() async {
 
 }
 
-Future<List<List<String>>> getAllEntries() async {
+List<List<String>> getAllEntries() {
 
   Database dojgDb = sqlite3.open(
     p.join(g_documentsDirectory.path, "DaKanji", "dojg", "collection.anki2")
   );
 
-  ResultSet r = dojgDb.select("SELECT 'tags', 'flds', 'sfld' FROM 'notes' LIMIT 0,30");
+  ResultSet r = dojgDb.select("SELECT \"tags\", \"flds\", \"sfld\" FROM \"notes\" LIMIT 0,30");
 
-  return r.rows as List<List<String>>;
+  return r.rows.map((row) => 
+    row.map((e) => 
+      e.toString()
+    ).toList()
+  ).toList();
 
 }
