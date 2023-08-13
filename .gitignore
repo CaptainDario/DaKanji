@@ -41,6 +41,9 @@ keys/**
 
 # python
 python
+.venv/**
+
+# keys
 android/app/key.jks
 
 # ignore none mock tflite models

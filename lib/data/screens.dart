@@ -1,0 +1,20 @@
+enum Screens{
+  about,
+  changelog,
+  drawing,
+  dictionary,
+  dojg,
+  text,
+  clipboard,
+  kanji_trainer,
+  kanji_table,
+  kana_table,
+  kana_trainer,
+  kuzushiji,
+  word_lists,
+  home,
+  settings,
+  onboarding,
+  webviewDict,
+  manual
+}

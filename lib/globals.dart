@@ -1,5 +1,7 @@
 library my_prj.globals;
 
+import 'package:da_kanji_mobile/domain/releases/version.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -24,36 +26,51 @@ const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
+/// The font for Japanese text
+const String g_japaneseFontFamily = "NotoSansJP";
+
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
+
 // INITIALIZE APP
-/// If the user pressed the ok-button in the download popup, this will be set to
-/// true.
-bool g_userAllowedToDownload = false;
+/// global init function feature that needs to complete before the app can be
+/// started
+var g_initApp = init();
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
-StreamController<String> g_initTextStream = StreamController<String>.broadcast();
+StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
 
-/// just the version number of this app
-String g_VersionNumber = "";
-/// the build number of this app
-String g_BuildNumber = "";
 /// the complete version number of this app: version + build number
-String g_Version = "";
+Version g_Version = Version(0, 0, 0);
 /// Minimum number of app starts until the user gets the option to never show
 /// the rate dialogue again
 const int g_MinTimesOpenedToAsknotShowRate = 401;
 /// How often does the app need to be opened to ask the user to rate the app
 const int g_AskRateAfterEach = 20;
+/// The amount of days to wait before asking the user to update the app again
+const int g_daysToWaitBeforeAskingForUpdate = 14;
 /// all versions which implemented new features for the drawing screen
-List<String> g_DrawingScreenNewFeatures = ["0.0.1", "1.0.0", "1.1.0", "2.1.0"];
+List<Version> g_DrawingScreenNewFeatures = [
+  Version(0, 0, 1), Version(1, 0, 0), Version(1, 0, 0), Version(1, 1, 0), Version(2, 1, 0)
+];
 /// all versions which implemented new pages for the OnBoarding
-List<String> g_OnboardingNewPages = ["0.0.0", "2.0.0", "3.0.0"];
+List<Version> g_OnboardingNewPages = [
+  Version(0, 0, 0), Version(2, 0, 0), Version(3, 0, 0)
+];
 /// all versions that implemented new dictionary versions (ISAR DB)
-List<String> g_NewDictionary = ["3.0.0"];
+List<Version> g_NewDictionary = [
+  Version(3, 0, 0, build: 47), Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52),
+  Version(3, 1, 0, build: 53)
+];
 /// all versions that implemented new examples versions (ISAR DB)
-List<String> g_NewExamples = ["3.0.0"];
+List<Version> g_NewExamples = [
+  Version(3, 0, 0, build: 47)
+];
+/// all versions that implemented new radiclas data (ISAR DB)
+List<Version> g_NewRadicals = [
+  Version(3, 1, 0)
+];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform
@@ -63,6 +80,11 @@ final bool g_desktopPlatform =
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 /// browser user agent to fake a mobile device on desktop
 String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
+
+
+/// The minimum size of the desktop window in normal mode
+const Size g_minDesktopWindowSize = const Size(480, 720);
+
 
 /// is the app running to test the drawscreen
 bool g_IsTestingDrawscreen = false;
@@ -85,6 +107,8 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+///
+const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
 const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
 
@@ -149,7 +173,7 @@ const g_WikipediaJpUrl = "https://ja.wikipedia.org/wiki/";
 /// URL to english wikipedia
 const g_WikipediaEnUrl = "https://en.wikipedia.org/wiki/";
 /// URL to DBPedia
-const g_DbpediaUrl = "https://dbpedia.org/page/";
+const g_DbpediaUrl = "https://www.dbpedia.org/?s=";
 /// URL to Wiktionary
 const g_WiktionaryUrl = "https://en.wiktionary.org/wiki/";
 /// URL to search on Massif.la
@@ -175,7 +199,8 @@ double g_MinFontSize = 8;
 /// Some japanese sample text
 const String g_SampleText = """東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
 
-慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
+慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。
+身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
 
 新海誠監督長編アニメーション『君の名は。』の世界を掘り下げる、スニーカー文庫だけの特別編。""";
 /// The header that is included in every KanjiVG file

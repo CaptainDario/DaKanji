@@ -2,22 +2,55 @@ import os
 import json
 import urllib.request
 import shutil
-import zipfile
+import re
+import sys
 
 
-repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/latest"
+repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
-move_to_dict  = ["dict", "examples"]
+move_to_dict  = ["dict", "examples", "krad", "radk"]
+files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+
+release_url = None
+assets_version = None
 
 
+def exclude_files_per_platform():
+    """ Excludes files that are not needed for the current platform
+    """
 
-def download_latest():
+    if(sys.platform.startswith("win32")):
+        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
+        files_to_exclude.append("libtensorflowlite_c-linux.so")
+    elif(sys.platform.startswith("darwin")):
+        files_to_exclude.append("libtensorflowlite_c-linux.so")
+        files_to_exclude.append("libtensorflowlite_c-win.dll")
+        files_to_exclude.append("libmecab_x86.dll")
+    elif(sys.platform.startswith("linux")):
+        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
+        files_to_exclude.append("libtensorflowlite_c-win.dll")
+        files_to_exclude.append("libmecab_x86.dll")
+
+def get_release_url():
+    """ gets the url to the latest assets release of DaKanji
+    """
+
+    with open("pubspec.yaml", mode="r") as f:
+        content = f.read()
+        m = re.search(r'version: (.*)\+', content)
+        assets_version = m.group(1)
+        print("Downloading assets for version: ", assets_version)
+
+    return repo_url + "v" + assets_version
+
+
+def download_assets():
     """ Downloads all assets for DaKanji
     """
 
     # get url to latest download
-    req = urllib.request.Request(repo_url)
+    req = urllib.request.Request(release_url)
     asset_names, asset_urls = [], []
     with urllib.request.urlopen(req) as response:
         the_page = json.loads(response.read())
@@ -34,6 +67,8 @@ def download_latest():
     if not os.path.exists(tmp_dir):
         os.mkdir(tmp_dir)
     for name, url in zip(asset_names, asset_urls):
+        if(name in files_to_exclude):
+            continue
         print(f"Downloading: {name}")
         urllib.request.urlretrieve(url, f"{tmp_dir}/{name}")
 
@@ -41,29 +76,39 @@ def move_assets():
     """ Moves the downloaded assets to their destination
     """
 
-if __name__ == "__main__":
-
-    print("Setting up DaKanji")
-    download_latest()
-
     # move files to correct location
     print("Moving downloaded assets")
     for f in os.listdir(tmp_dir):
 
         # move dynamic libraries to blobs
         if(f.startswith(tuple(move_to_blobs))):
-            shutil.move(f"{tmp_dir}/{f}", "blobs/")
+            shutil.copy(f"{tmp_dir}/{f}", "blobs/")
         
-        # move ipadic to assets and unpack
+        # move ipadic assets
         if(f.startswith("ipadic")):
-            shutil.move(f"{tmp_dir}/ipadic.zip", "assets/")
+            shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
 
-        # move the dictionary database to assets
+        # move the dictionary related assets
         if(f.startswith(tuple(move_to_dict))):
-            shutil.move(f"{tmp_dir}/{f}", "assets/dict/")
-
-        
+            shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
 
     # delete temp dir
     print("Deleting temporary folder")
     shutil.rmtree(tmp_dir)
+
+
+
+if __name__ == "__main__":
+
+    print("Setting up DaKanji")
+
+    exclude_files_per_platform()
+    
+    release_url = get_release_url()
+
+    download_assets()        
+
+    move_assets()
+
+    print("Setup done! Run: \n flutter run")
+    

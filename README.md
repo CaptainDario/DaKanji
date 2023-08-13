@@ -1,7 +1,7 @@
 <img src="./assets/images/dakanji/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
-    <a href='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'>
+    <a href='https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer'>
       <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  height="50"/>
     </a>
    <tr/>
@@ -29,17 +29,33 @@
 
 ## What is this
 
-"You are learning Japanese? Then you need to give "DaKanji" a try!
-
-Did you ever try to read a Japanese text but did not know some Kanji? "DaKanji" is here to help you. Draw a Kanji and the app will convert it to a digital character. You do not even need to know the stroke order! Write characters and build words to translate them, and all of that completely offline.
-But DaKanji can also help you read texts. Use the inbuilt tools to add furigana to texts, lookup words, add spaces and more.
+You are learning Japanese? Then you need to try DaKanji! <br>
+Use the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!
 
 Feature overview:
 
-* Recognize 6500+ Kanji and all Kana offline
-* Use the inbuilt dictionary to lookup words offline
-* Add furigana, spaces and more to texts with the text analysis tools
-* Use it on all your devices"
+* Recognize 6500+ Kanji and all Kana offline by just drawing them
+* Use the inbuilt dictionary to look up words offline
+  * Multi-language support: en, es, de, fr, ...
+  * Detailed information about words: pitch accent, related words, ...
+  * Detailed information about Kanji: radicals, JLPT, ...
+  * Example sentences
+  * Drawing or radical-based kanji lookup
+  * 6000+ audios
+* Read any text with ease by adding furigana, spaces, and more to texts
+* Use it on all your devices: Android, Windows, Mac, iOS, or Linux it doesn't matter!
+
+</br>
+
+<p>
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_1.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_2.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_3.png" width="22%">
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_4.png" width="22%">
+</p>
+<p>
+  <img src="https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_5.png" width="22%">
+</p>
 
 </br>
 
@@ -54,17 +70,17 @@ Feature overview:
 <a href="https://discord.gg/gdqaux3r4P"><img src="https://discordapp.com/api/guilds/852915748300783636/widget.png?style=banner2" width="25%"></a>
 
 All contributions are welcome!
-Here is a list of a few things which would help this project:
+Here is a list of things that would help this project:
 
-* For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
+* Testing! You cannot believe how much this helps out, DaKanji became quite a big project and many things go unnoticed. For testing (beta) releases please join the [discord server](https://discord.gg/cYTcpFStbs) and ask in the "become a tester"-channel (or take a look at the release section there could be a pre-release available). All testing is much appreciated!
 * If you have ideas how to improve this app or you found a bug please [open an issue](https://github.com/CaptainDario/DaKanji-Mobile/issues).
 * Of course you can become involved in this project, head over to discord and ask what a great feature to work on would be or take a look at [issues labeled as 'good first issue'](https://github.com/CaptainDario/DaKanji/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
-* Or if you like this project, giving it a star or rating it on the store of your platform would also help
+* Or if you like this project, giving it a star or rating it on the store of your platform would also help immensely
 
 ## Credits
 
 I want to thank all the people involved in this project, without you the project would not be where it's right now!
 
-But a special thanks goes to michalpatryk.
+But a special thanks goes to [michalpatryk](https://github.com/michalpatryk).
 
 Please take the time and read the full [credits.](CREDITS.md)

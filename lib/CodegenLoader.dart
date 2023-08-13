@@ -10,7 +10,7 @@ class CodegenLoader extends AssetLoader{
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -25,33 +25,67 @@ class CodegenLoader extends AssetLoader{
   "ChangelogScreen": {
     "title": "更新日志"
   },
+  "ClipboardScreen": {
+    "title": "剪贴板",
+    "tutorial_android_limitation": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到剪贴板屏幕!",
+    "tutorial_explanation": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
+    "tutorial_pin_button": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。"
+  },
   "DictionaryScreen": {
     "example_tab": "例子",
+    "examples_more": "显示更多的例子",
     "kanji_alternatives": "替代品",
+    "kanji_apended": "已更正：",
+    "kanji_copied": "已复制：",
     "kanji_frequency": "频率。",
     "kanji_grade": "等级",
     "kanji_groups": "汉字组",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
+    "kanji_kun_reading": "坤",
+    "kanji_lookalikes": "外观相似",
+    "kanji_on_reading": "在",
     "kanji_radicals": "激进主义者",
     "kanji_skip": "SKIP",
     "kanji_strokes": "中风",
     "kanji_tab": "汉字",
+    "search_filter_close": "关闭",
+    "search_filter_ok": "好的",
+    "search_radical_close": "关闭",
+    "search_radical_ok": "好的",
+    "search_search_for": "搜索：",
+    "search_searched": "搜索到的：",
     "title": "词典",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎使用字典!",
     "tutorial_examples_tab": "最后，例子标签向你展示了一些使用所选单词的例句。",
     "tutorial_kanji_tab": "汉字标签包括关于单词中使用的汉字的信息。这包括笔画的数量和顺序以及含义。",
+    "tutorial_search_filter_text": "这个按钮让你在搜索中应用过滤器。",
     "tutorial_search_input_clear_text": "这个按钮可以清除输入或从剪贴板上复制文本。",
     "tutorial_search_input_draw_text": "这个按钮可以打开一个屏幕，使用时可以画出一个汉字来快速查询。",
     "tutorial_search_input_text": "这是搜索输入字段，只要点击它就可以输入你想搜索的任何单词。",
+    "tutorial_search_input_wildcards_text": "你可以用?来匹配任何单个字符，你可以用*来匹配0到无限个字符。",
+    "tutorial_search_radical_text": "这个按钮可以让你按部就班地搜索汉字。",
     "tutorial_word_tab": "这个选项卡包括关于所选搜索结果的各种信息，如变体和翻译。翻译的语言可以在设置中选择。",
     "word_antonyms": "反义词",
     "word_conjugation": "共轭法",
+    "word_dialect": "方言：",
+    "word_field": "领域：",
     "word_images": "图片",
+    "word_info": "信息：",
+    "word_meanings_more": "更多...",
     "word_proverbs": "谚语",
+    "word_reading": "阅读：",
+    "word_restricted_to": "限于：1：",
+    "word_see_also": "另见：",
+    "word_source_language": "源语言：",
     "word_synonyms": "同义词",
-    "word_tab": "词语"
+    "word_tab": "词语",
+    "word_tab_menu_add_to_list": "添加到列表",
+    "word_tab_menu_send_to_anki": "发送到 Anki",
+    "word_wikipedia": "维基百科"
   },
   "DrawScreen": {
     "not_installed": "未安装{DICTIONARY}。",
@@ -76,7 +110,7 @@ class CodegenLoader extends AssetLoader{
   },
   "FeedbackScreen": {
     "draw": "绘制",
-    "feedback_description_text": "有什么问题？把你的问题写在下面。",
+    "feedback_description_text": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
     "navigate": "导航",
     "submit": "提交",
     "title": "反馈信息"
@@ -100,16 +134,75 @@ class CodegenLoader extends AssetLoader{
     "download_failed_popup_retry": "重试",
     "download_failed_popup_text": "下载失败，请确保你有一个稳定的网络连接。",
     "download_popup_permission": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
+    "new_version_available_heading": "新版本上市!",
+    "new_version_available_text": "大汉字》有了新的版本!",
+    "new_version_comparison": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+    "new_versions_available_text": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
     "rate_this_app": "速率",
     "whats_new": "最新信息"
   },
-  "KanjiScreen": {
-    "title": "汉字"
+  "KanaTableScreen": {
+    "title": "卡纳桌",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到假名表屏幕！",
+    "tutorial_kana_table": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
+    "tutorial_speed_dial": "该按钮可用于更改显示的假名。",
+    "tutorial_speed_dial_dakuten": "该按钮可在打开和关闭 Dakuten 之间切换。",
+    "tutorial_speed_dial_kana": "该按钮可在片假名和平假名之间切换。",
+    "tutorial_speed_dial_romaji": "此按钮可打开或关闭罗马字。",
+    "tutorial_speed_dial_yoon": "此按钮可打开或关闭 \"尹 \"字符。",
+    "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
+  },
+  "KanaTrainerScreen": {
+    "title": "卡纳培训师"
+  },
+  "KanjiTableScreen": {
+    "title": "汉字表",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到汉字表屏幕！",
+    "tutorial_filter": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+    "tutorial_filter_sub_group": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
+    "tutorial_kanji_amount": "该数字表示当前显示的汉字数量。",
+    "tutorial_kanjis": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+    "tutorial_sort": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。"
+  },
+  "KanjiTrainerScreen": {
+    "title": "汉字训练器"
   },
   "KuzushijiScreen": {
-    "title": "库兹吉"
   },
   "ManualScreen": {
+    "anki_connection_test": "要测试DaKanji是否能到达Anki，你可以按下面的按钮。",
+    "anki_setup_android_text": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
+    "anki_setup_android_title": "安卓",
+    "anki_setup_desktop_text": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
+    "anki_setup_desktop_title": "桌面",
+    "anki_setup_intro": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。",
+    "anki_setup_ios_text": "在iOS上的设置超级简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在询问时授予DaKanji权限。",
+    "anki_setup_ios_title": "基础设施",
+    "anki_setup_title": "设置",
+    "anki_test_connection": "测试与Anki的连接",
+    "anki_test_connection_fail": "你没有连接到Anki!😢",
+    "anki_test_connection_success": "你已连接到Anki!🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "实例",
+    "dict_kanji_copy_radicals_text": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
+    "dict_kanji_copy_radicals_title": "复制自由基",
+    "dict_kanji_search_kanji_group_text": "当一个汉字组可以在字典中搜索时，它有一个绿色的边框。长按会在字典中搜索到它，双击会把它复制到剪贴板上。",
+    "dict_kanji_search_kanji_group_title": "搜索汉字组",
+    "dict_kanji_title": "汉字",
+    "dict_radicals_paste_text": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
+    "dict_radicals_paste_title": "粘贴基点",
+    "dict_radicals_title": "激进主义者",
+    "dict_search_history_delete_text": "您可以通过向左滑动从搜索历史中删除元素。",
+    "dict_search_history_delete_title": "删除",
+    "dict_search_history_title": "搜索历史",
+    "dict_search_results_navigate_text": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+    "dict_search_results_navigate_title": "导航",
+    "dict_search_results_title": "搜索结果",
+    "dict_text_examples_analyze_text": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
+    "dict_text_examples_analyze_title": "在文本屏幕中打开例子",
+    "dict_title": "词典",
     "title": "手册"
   },
   "OnBoarding": {
@@ -121,24 +214,34 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_3_title": "不知道如何读懂一个句子？"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "删除字典文件。",
+    "advanced_settings_delete_history": "删除搜索历史。",
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
-    "advanced_settings_number_search_procs": "搜索过程的数量",
+    "advanced_settings_number_search_procs": "搜索进程的数量（@:SettingsScreen.required_restart）。",
     "advanced_settings_number_search_procs_body": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
     "advanced_settings_optimize_cancel": "取消",
     "advanced_settings_optimize_nn": "优化神经网络",
     "advanced_settings_optimize_ok": "好的",
     "advanced_settings_optimizing": "正在优化...\n请不要关闭该应用程序。",
     "advanced_settings_optimze_warning": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
+    "advanced_settings_reset_settings": "重置设置。",
     "advanced_settings_snap": "我是不可避免的...",
     "advanced_settings_title": "高级设置",
+    "anki_default_deck": "默认甲板",
+    "anki_default_no_langs": "笔记上的语言数量",
+    "anki_default_no_translations": "笔记上的翻译数量",
+    "anki_title": "Anki",
     "custom_url_explanation": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
     "dict_deconjugate": "将输入转换为基本形式",
     "dict_deconjugate_body": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
+    "dict_disable_english_info": "词典的很大一部分只有英文版本。禁用它将隐藏所有这些条目。",
     "dict_kanaize": "将搜索词转换为假名",
-    "dict_kanaize_body": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
+    "dict_kanaize_body": "当启用此设置时，DaKanji会在查找前将任何搜索词转换为统一的假名表示。这意味着查询 \"taberu \"将被转换为たべる，并能找到食べる，但这也可能导致非预期的匹配。\n\n例如，搜索'man'会被转换为まん，因此会匹配到万和英文单词'man'。",
     "dict_languages": "显示翻译在（拖动以重新排序）。",
+    "dict_matrix_word_levels": "矩阵词使用JLPT水平",
+    "dict_show_wikipedia_definitions": "显示来自维基百科的定义",
     "dict_show_word_freq": "显示词频",
-    "dict_show_word_freq_body": "DaKanji使用词频测量法对其字典条目进行排名。这个词频是对一个词的用法的估计。这种估计是基于不同的数据来源：\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短形式的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n所显示的数字是实际词频的一种变化，称为Zipf频率，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。我们使用0作为默认的Zipf值，用于不出现在给定词表中的词，尽管它应该意味着每十亿个词中出现一次。",
+    "dict_show_word_freq_body": "大汉字》使用词频对其词典条目进行排名。这个词频是对一个词的用法的估计，是基于不同的数据来源：\n\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短篇的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n\nDaKanji中显示的数字是实际词频的一种变体，称为[Zipf频率](https://en.wikipedia.org/wiki/Zipf%27s_law)，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。对于没有出现在数据源中的词，我们使用0作为默认的Zipf值，尽管它应该意味着每十亿字中出现一次。\n[阅读全文...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "为网络字典使用网络视图",
     "draw_custom_url_format": "自定义URL格式",
     "draw_custom_url_hint": "你的字典的URL",
@@ -154,6 +257,7 @@ class CodegenLoader extends AssetLoader{
     "misc_title": "杂项",
     "misc_window_on_top": "应用程序是否应该总是在上面",
     "misc_window_opacity": "应用程序的透明度",
+    "requires_restart": "需要重新启动",
     "restarts_app": "重新启动应用程序",
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "title": "设置"
@@ -179,7 +283,27 @@ class CodegenLoader extends AssetLoader{
     "title": "网页浏览"
   },
   "WordListsScreen": {
-    "title": "词表"
+    "add": "增加",
+    "create_pdf": "创建PDF",
+    "defaults": "违约",
+    "delete": "删除",
+    "new_folder": "新文件夹",
+    "new_list": "新名单",
+    "no_entries": "该词表中没有条目",
+    "node_hint_text": "命名",
+    "of": "的",
+    "ok": "好的",
+    "page": "页",
+    "rename": "重命名",
+    "search_history": "搜索历史",
+    "send_to_anki": "发送到anki",
+    "title": "词表",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
+    "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
+    "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
+    "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
+    "tutorial_list": "这是一个单词表。点击即可查看其内容。"
   }
 };
 static const Map<String,dynamic> localizations = {
@@ -199,7 +323,7 @@ static const Map<String,dynamic> localizations = {
       "en": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
       "de": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App oder Verbesserungsvorschläge hast , bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder nutze das Feedback widget um einen annotierten screenshot zu schicken.\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
       "ru": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
-      "ja": "「DaKanji」は、日本語学習者、日本語使用者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認できます。",
+      "ja": "「DaKanji」は、日本語学習者、日本語話者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) でご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認いただけます。",
       "zh": "\"DaKanji\"帮助日语学生和使用日语的人。\n\"DaKanji\"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
       "it": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
       "fr": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
@@ -664,6 +788,50 @@ static const Map<String,dynamic> localizations = {
       "fr": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
       "es": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
       "pl": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe."
+    },
+    "new_version_available_heading": {
+      "en": "New version Available!",
+      "de": "Neue Version verfügbar!",
+      "ru": "Доступна новая версия!",
+      "ja": "新バージョンを公開しました！",
+      "zh": "新版本上市!",
+      "it": "Nuova versione disponibile!",
+      "fr": "Nouvelle version disponible !",
+      "es": "Nueva versión disponible",
+      "pl": "Nowa wersja dostępna!"
+    },
+    "new_versions_available_text": {
+      "en": "There are {NEW_VERSIONS} new versions of DaKanji available!",
+      "de": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
+      "ru": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
+      "ja": "Dakanjiの{NEW_VERSIONS}新バージョンを公開しました！",
+      "zh": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
+      "it": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
+      "fr": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
+      "es": "#ERROR!",
+      "pl": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!"
+    },
+    "new_version_available_text": {
+      "en": "There is a new version of DaKanji available!",
+      "de": "Es ist eine neue Version von DaKanji verfügbar!",
+      "ru": "Вышла новая версия DaKanji!",
+      "ja": "Dakanjiの新バージョンを公開しました！",
+      "zh": "大汉字》有了新的版本!",
+      "it": "È disponibile una nuova versione di DaKanji!",
+      "fr": "#ERROR!",
+      "es": "¡Hay una nueva versión de DaKanji disponible!",
+      "pl": "Dostępna jest nowa wersja DaKanji!"
+    },
+    "new_version_comparison": {
+      "en": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+      "de": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+      "ru": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+      "ja": "現在{VERSION_NUMBER}をお使いですが、最新バージョンは{NEW_VERSION_NUMBER}です。",
+      "zh": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+      "it": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+      "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+      "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+      "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
     }
   },
   "OnBoarding": {
@@ -757,6 +925,17 @@ static const Map<String,dynamic> localizations = {
       "es": "reinicia la app",
       "pl": "restart aplikacji"
     },
+    "requires_restart": {
+      "en": "requires restart",
+      "de": "erfordert Neustart",
+      "ru": "требует перезапуска",
+      "ja": "再起動が必要です",
+      "zh": "需要重新启动",
+      "it": "richiede il riavvio",
+      "fr": "nécessite un redémarrage",
+      "es": "requiere reinicio",
+      "pl": "wymaga ponownego uruchomienia"
+    },
     "show_tutorial": {
       "en": "Reshow tutorials (@:SettingsScreen.restarts_app)",
       "de": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
@@ -825,9 +1004,9 @@ static const Map<String,dynamic> localizations = {
     },
     "draw_long_press_opens": {
       "en": "Dictionary selection",
-      "de": "Auswahl des Wörterbuchs",
+      "de": "Wörterbuch Auswahl",
       "ru": "Выбор словаря",
-      "ja": "辞書を選択",
+      "ja": "辞書の選択",
       "zh": "词典选择",
       "it": "Selezione del dizionario",
       "fr": "Sélection de dictionnaires",
@@ -878,11 +1057,22 @@ static const Map<String,dynamic> localizations = {
       "es": "Mostrar traducciones en (arrastre para reordenar)",
       "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
     },
+    "dict_disable_english_info": {
+      "en": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
+      "de": "Ein großer Teil des Wörterbuchs ist nur auf Englisch verfügbar. Wenn Sie es deaktivieren, werden alle diese Einträge ausgeblendet.",
+      "ru": "Значительная часть словаря доступна только на английском языке. Отключение этой функции скроет все эти словарные статьи.",
+      "ja": "辞書の大部分は、英語でしか利用できません。無効にすると、それらの項目がすべて非表示になります。",
+      "zh": "词典的很大一部分只有英文版本。禁用它将隐藏所有这些条目。",
+      "it": "Una parte significativa del dizionario è disponibile solo in inglese. Disabilitandola, tutte queste voci verranno nascoste.",
+      "fr": "Une partie importante du dictionnaire n'est disponible qu'en anglais. En la désactivant, vous masquerez toutes ces entrées.",
+      "es": "Una parte importante del diccionario sólo está disponible en inglés. Si lo desactiva, se ocultarán todas esas entradas.",
+      "pl": "Znaczna część słownika jest dostępna tylko w języku angielskim. Wyłączenie tej opcji spowoduje ukrycie wszystkich tych haseł."
+    },
     "dict_show_word_freq": {
       "en": "Show word frequency",
-      "de": "Worthäufigkeit anzeigen",
+      "de": "Zeige Wordfrequenz",
       "ru": "Показать частоту слов",
-      "ja": "単語の頻度を表示する",
+      "ja": "単語の使用頻度を表示",
       "zh": "显示词频",
       "it": "Mostra la frequenza delle parole",
       "fr": "Afficher la fréquence des mots",
@@ -890,15 +1080,15 @@ static const Map<String,dynamic> localizations = {
       "pl": "Pokaż częstość występowania słów"
     },
     "dict_show_word_freq_body": {
-      "en": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.",
+      "en": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
       "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
-      "ru": "DaKanji использует меру частоты слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова. Эта оценка основана на различных источниках данных:\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* Веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете.\nПоказанное число является вариацией фактической частоты слов, называемой частотой Зипфа, которая стремится представить частоту слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в данном списке слов, хотя это должно означать одно появление на миллиард слов.",
-      "ja": "大漢字では、辞書項目のランク付けに単語頻度という指標を使用しています。この単語頻度は、ある単語の使用頻度を推定するものです。この推定は、さまざまなデータソースに基づいています：\n* Wikipedia、百科事典のテキストを表す。\n* 字幕、OPUS OpenSubtitles 2018およびSUBTLEXから。\n* ウェブテキスト、OSCARより\n* 短編ソーシャルメディアを代表するTwitter\n* Redditは、より長いインターネット上のコメントを表すことができます。\n表示されている数字は、Zipf頻度と呼ばれる実際の単語頻度のバリエーションで、単語頻度を人間に優しい対数スケールで返すことを目的としています。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10乗対数です。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現する。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。10億語に1回出現することを意味しますが、与えられた単語リストに出現しない単語のZipf値はデフォルトで0を使用します。",
-      "zh": "DaKanji使用词频测量法对其字典条目进行排名。这个词频是对一个词的用法的估计。这种估计是基于不同的数据来源：\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短形式的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n所显示的数字是实际词频的一种变化，称为Zipf频率，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。我们使用0作为默认的Zipf值，用于不出现在给定词表中的词，尽管它应该意味着每十亿个词中出现一次。",
-      "it": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola è una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\nIl numero mostrato è una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
-      "fr": "DaKanji utilise une mesure de la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'usage d'un mot. Cette estimation est basée sur différentes sources de données :\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, représentant les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\nLe nombre indiqué est une variante de la fréquence réelle des mots, appelée fréquence de Zipf, qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois où il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs de Zipf raisonnables se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans la liste de mots donnée, bien que cela doive signifier une occurrence par milliard de mots.",
-      "es": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimación del uso de una palabra. Esta estimación se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\nLa cifra mostrada es una variación de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logarítmica de fácil comprensión para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque debería significar una aparición por cada mil millones de palabras.",
-      "pl": "DaKanji używa miary częstotliwości słów, aby uszeregować swoje hasła słownikowe. Częstotliwość słów jest szacunkową oceną ich użycia. Szacunki te oparte są na różnych źródłach danych:\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe.\nPokazana liczba jest odmianą rzeczywistej częstotliwości słowa zwaną częstotliwością Zipfa, która ma na celu zwrócenie częstotliwości słowa w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem z 10 razy, kiedy pojawia się ono na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w danej liście słów, chociaż powinno to oznaczać jedno wystąpienie na miliard słów."
+      "ru": "DaKanji использует частоту слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова и основана на различных источниках данных:\n\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете\n\nЧисло, показанное в DaKanji, является вариацией фактической частоты слов, называемой [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law), целью которой является возвращение частоты слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в источниках данных, хотя это должно означать одно появление на миллиард слов.\n[Read more...](https://github.com/rspeer/wordfreq)",
+      "ja": "Dakanjiでは、辞書エントリーのランク付けに単語頻度を使用しています。この単語頻度は、単語の使用頻度を推定したもので、さまざまなデータソースに基づくものです：\n\n* ウィキペディア\n* OPUS OpenSubtitles 2018およびSUBTLEXの字幕\n* ウェブテキスト、OSCAR\n* Twitter\n* Reddit\n\nDakanjiで表示される数値は、実際の単語頻度のバリエーションとして、[Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law)という、人間に優しい対数スケールで単語頻度を返すことを目指したものです。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10進数対数のことを指します。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現します。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。データソースにない単語のZipf値は、10億語に1回出現することを意味するはずですが、デフォルトで0を使用しています。\n[もっと読む...](https://github.com/rspeer/wordfreq)",
+      "zh": "大汉字》使用词频对其词典条目进行排名。这个词频是对一个词的用法的估计，是基于不同的数据来源：\n\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短篇的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n\nDaKanji中显示的数字是实际词频的一种变体，称为[Zipf频率](https://en.wikipedia.org/wiki/Zipf%27s_law)，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。对于没有出现在数据源中的词，我们使用0作为默认的Zipf值，尽管它应该意味着每十亿字中出现一次。\n[阅读全文...](https://github.com/rspeer/wordfreq)",
+      "it": "DaKanji utilizza la frequenza delle parole per classificare le voci del suo dizionario. La frequenza delle parole è una stima dell'uso di una parola e si basa su diverse fonti di dati:\n\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\n\nIl numero mostrato in DaKanji è una variante della frequenza effettiva delle parole, chiamata [frequenza Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law), che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nelle fonti di dati, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.\n[Per saperne di più...](https://github.com/rspeer/wordfreq)",
+      "fr": "Le DaKanji utilise la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'utilisation d'un mot et est basée sur différentes sources de données :\n\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, qui représente les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqué dans DaKanji est une variante de la fréquence réelle des mots appelée [fréquence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans les sources de données, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
+      "es": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
+      "pl": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)"
     },
     "dict_deconjugate": {
       "en": "Convert inputs to base form",
@@ -912,7 +1102,7 @@ static const Map<String,dynamic> localizations = {
       "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
     },
     "dict_deconjugate_body": {
-      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\nFor intermediate learners, the recommendation is to turn off this setting.",
+      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
       "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
       "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
       "ja": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
@@ -934,15 +1124,81 @@ static const Map<String,dynamic> localizations = {
       "pl": "Konwertuj wyszukiwane hasła do kany"
     },
     "dict_kanaize_body": {
-      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
-      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
-      "ru": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
-      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
-      "zh": "当启用此设置时，DaKanji在查找前会将任何搜索词转换为统一的假名表示。这意味着搜索'taberu'会找到食べる，但它也可能导致非预期的匹配。\n例如，搜索'man'会被转换为まん，因此会匹配到万，而英文单词'man'才是本意。\n另一种情况是使用平假名和片假名的单词。例如，搜索りんご将被转换，因此匹配リンゴ。但是当这个设置被禁用时，りんご将不会与リンゴ匹配。\n如果你绝对知道你在搜索什么，请禁用这个设置。",
-      "it": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
-      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
-      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
-      "pl": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie."
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".",
+      "ru": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.",
+      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「たべる」という検索語は、たべるに変換され、食べるを見つけることができますが、意図しないマッチングを引き起こす可能性もあります。\n\n例えば、「man」を検索すると、「まん」に変換されるため、「万」と英語の「man」にマッチします。",
+      "zh": "当启用此设置时，DaKanji会在查找前将任何搜索词转换为统一的假名表示。这意味着查询 \"taberu \"将被转换为たべる，并能找到食べる，但这也可能导致非预期的匹配。\n\n例如，搜索'man'会被转换为まん，因此会匹配到万和英文单词'man'。",
+      "it": "Se si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la query \"taberu\" sarà convertita in たべる e troverà 食べる, ma può anche portare a corrispondenze non volute.\n\nAd esempio, la ricerca di \"man\" verrà convertita in まん e quindi corrisponderà a 万 e alla parola inglese \"man\".",
+      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".",
+      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".",
+      "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'."
+    },
+    "dict_matrix_word_levels": {
+      "en": "Matrix words use JLPT level",
+      "de": "Matrixwörter verwenden JLPT-Niveau",
+      "ru": "Матричные слова используют уровень JLPT",
+      "ja": "マトリックス語は日本語能力試験レベルを使用",
+      "zh": "矩阵词使用JLPT水平",
+      "it": "Le parole della matrice utilizzano il livello JLPT",
+      "fr": "Les mots de la matrice utilisent le niveau JLPT",
+      "es": "Las palabras de la matriz utilizan el nivel JLPT",
+      "pl": "Słowa matrycowe używają poziomu JLPT"
+    },
+    "dict_show_wikipedia_definitions": {
+      "en": "Show definitions from wikipedia",
+      "de": "Definitionen von wikipedia anzeigen",
+      "ru": "Показать определения из Википедии",
+      "ja": "wikipedia上の定義を表示",
+      "zh": "显示来自维基百科的定义",
+      "it": "Mostra le definizioni da wikipedia",
+      "fr": "Afficher les définitions de wikipedia",
+      "es": "Mostrar definiciones de wikipedia",
+      "pl": "Pokaż definicje z wikipedii"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_default_deck": {
+      "en": "Default deck",
+      "de": "Standard deck",
+      "ru": "Колода по умолчанию",
+      "ja": "デフォルトのデッキ",
+      "zh": "默认甲板",
+      "it": "Mazzo predefinito",
+      "fr": "Pont par défaut",
+      "es": "Cubierta por defecto",
+      "pl": "Pokład domyślny"
+    },
+    "anki_default_no_langs": {
+      "en": "Number of languages on notes",
+      "de": "Anzahl an Sprachen auf Karten",
+      "ru": "Количество языков на банкнотах",
+      "ja": "ノートの言語数",
+      "zh": "笔记上的语言数量",
+      "it": "Numero di lingue sulle note",
+      "fr": "Nombre de langues sur les notes",
+      "es": "Número de lenguas en los billetes",
+      "pl": "Liczba języków w notatkach"
+    },
+    "anki_default_no_translations": {
+      "en": "Number of translations on notes",
+      "de": "Anzahl von Übersetungen auf Karten",
+      "ru": "Количество переводов по векселям",
+      "ja": "ノートの翻訳数",
+      "zh": "笔记上的翻译数量",
+      "it": "Numero di traduzioni sulle note",
+      "fr": "Nombre de traductions sur les notes",
+      "es": "Número de traducciones en los billetes",
+      "pl": "Liczba tłumaczeń na notach"
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -1069,7 +1325,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Optimizing...\nPlease do not close the app.",
       "de": "Optimiert...\nBitte schließen Sie die App nicht.",
       "ru": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
-      "ja": "最適化中...\nアプリを閉じないようにしてください。",
+      "ja": "最適化中...\nアプリを閉じないでください。",
       "zh": "正在优化...\n请不要关闭该应用程序。",
       "it": "Ottimizzazione...\nNon chiudere l'applicazione.",
       "fr": "Optimisation...\nNe fermez pas l'application.",
@@ -1080,7 +1336,7 @@ static const Map<String,dynamic> localizations = {
       "en": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
       "de": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
       "ru": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
-      "ja": "これにより、ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nお使いのデバイスによっては時間がかかる場合がありますが、劇的に性能が向上します。",
+      "ja": "ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nデバイスによっては時間がかかる場合がありますが、性能が圧倒的に向上します。",
       "zh": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
       "it": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
       "fr": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
@@ -1102,7 +1358,7 @@ static const Map<String,dynamic> localizations = {
       "en": "Ok",
       "de": "Ok",
       "ru": "Хорошо",
-      "ja": "オッケー",
+      "ja": "OK",
       "zh": "好的",
       "it": "Ok",
       "fr": "Ok",
@@ -1111,25 +1367,58 @@ static const Map<String,dynamic> localizations = {
     },
     "advanced_settings_number_search_procs": {
       "en": "Number of search processes",
-      "de": "Anzahl der Suchprozesse",
-      "ru": "Количество процессов поиска",
-      "ja": "検索処理数",
-      "zh": "搜索过程的数量",
-      "it": "Numero di processi di ricerca",
-      "fr": "Nombre de processus de recherche",
-      "es": "Número de procesos de búsqueda",
-      "pl": "Liczba procesów wyszukiwania"
+      "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
+      "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
+      "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
+      "zh": "搜索进程的数量（@:SettingsScreen.required_restart）。",
+      "it": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
+      "fr": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
+      "es": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
+      "pl": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)"
     },
     "advanced_settings_number_search_procs_body": {
-      "en": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+      "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
       "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
       "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
-      "ja": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
+      "ja": "Dakanjiは、データベースを検索する際、複数のプロセスを使用します。Dakanjiに標準で付属しているデータベースでは、通常2プロセスで十分ですが、データベースで検索したときに動作が重くなるようであれば、プロセス数を増やしてください。",
       "zh": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
       "it": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
       "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
       "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
+    },
+    "advanced_settings_reset_settings": {
+      "en": "Reset settings.",
+      "de": "Setzt die Einstellungen zurück.",
+      "ru": "Сброс настроек.",
+      "ja": "設定のリセット",
+      "zh": "重置设置。",
+      "it": "Ripristina le impostazioni.",
+      "fr": "Réinitialise les paramètres.",
+      "es": "Restablece la configuración.",
+      "pl": "Resetuje ustawienia."
+    },
+    "advanced_settings_delete_dict": {
+      "en": "Delete dictionary files.",
+      "de": "Löscht die Wörterbuchdateien.",
+      "ru": "Удаляет файлы словарей.",
+      "ja": "辞書ファイルの削除",
+      "zh": "删除字典文件。",
+      "it": "Elimina i file del dizionario.",
+      "fr": "Supprime les fichiers du dictionnaire.",
+      "es": "Borra los archivos del diccionario.",
+      "pl": "Usuwa pliki słownikowe."
+    },
+    "advanced_settings_delete_history": {
+      "en": "Delete search history.",
+      "de": "Löscht den Suchverlauf.",
+      "ru": "Удаляет историю поиска.",
+      "ja": "検索履歴の削除",
+      "zh": "删除搜索历史。",
+      "it": "Elimina la cronologia delle ricerche.",
+      "fr": "Supprime l'historique des recherches.",
+      "es": "Borra el historial de búsqueda.",
+      "pl": "Usuwa historię wyszukiwania."
     }
   },
   "WebviewScreen": {
@@ -1180,15 +1469,15 @@ static const Map<String,dynamic> localizations = {
       "pl": "rysuj"
     },
     "feedback_description_text": {
-      "en": "What's wrong? Write your issue below.",
-      "de": "Was stimmt nicht? Beschreibe dein Problem unten.",
-      "ru": "Что не так? Напишите свой вопрос ниже.",
-      "ja": "どんな問題がありましたか？\n下記に詳細を入力してください",
-      "zh": "有什么问题？把你的问题写在下面。",
-      "it": "Cosa c'è che non va? Scrivete il vostro problema qui sotto.",
-      "fr": "Quel est le problème ? Écrivez votre problème ci-dessous.",
-      "es": "¿Qué te ocurre? Escriba su problema a continuación.",
-      "pl": "Co jest nie tak? Napisz swój problem poniżej."
+      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+      "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
+      "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
+      "ja": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
+      "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
+      "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
+      "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
+      "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
+      "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
     },
     "navigate": {
       "en": "navigate",
@@ -1224,6 +1513,575 @@ static const Map<String,dynamic> localizations = {
       "fr": "Manuel",
       "es": "Manual",
       "pl": "Instrukcja"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_setup_title": {
+      "en": "Setup",
+      "de": "Einrichtung",
+      "ru": "Настройка",
+      "ja": "セットアップ",
+      "zh": "设置",
+      "it": "Impostazione",
+      "fr": "Mise en place",
+      "es": "Configurar",
+      "pl": "Ustawienie"
+    },
+    "anki_setup_intro": {
+      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
+      "de": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
+      "ru": "DaKanji можно использовать для отправки заметок в Anki. Для этого для каждой платформы требуется своя настройка.",
+      "ja": "Dakanjiは、Ankiにノートを送信することが可能です。端末によって設定方法が異なりますのでご注意ください。",
+      "zh": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。",
+      "it": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.",
+      "fr": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.",
+      "es": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.",
+      "pl": "DaKanji może być używane do wysyłania notatek do Anki. Do tego każda platforma potrzebuje innej konfiguracji."
+    },
+    "anki_setup_android_title": {
+      "en": "Android",
+      "de": "Android",
+      "ru": "Android",
+      "ja": "アンドロイド",
+      "zh": "安卓",
+      "it": "Android",
+      "fr": "Android",
+      "es": "Android",
+      "pl": "Android"
+    },
+    "anki_setup_android_text": {
+      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+      "ru": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
+      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
+      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
+      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
+    },
+    "anki_setup_desktop_title": {
+      "en": "Desktop",
+      "de": "Desktop",
+      "ru": "Рабочий стол",
+      "ja": "デスクトップ",
+      "zh": "桌面",
+      "it": "Desktop",
+      "fr": "Bureau",
+      "es": "Escritorio",
+      "pl": "Pulpit"
+    },
+    "anki_setup_desktop_text": {
+      "en": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
+      "de": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
+      "ru": "На MacOS, Windows и Linux необходимо установить [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).",
+      "ja": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)をインストールし、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)となっている必要があります。",
+      "zh": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
+      "it": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
+      "fr": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
+      "es": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
+      "pl": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/)."
+    },
+    "anki_setup_ios_title": {
+      "en": "iOS",
+      "de": "iOS",
+      "ru": "iOS",
+      "ja": "iOS",
+      "zh": "基础设施",
+      "it": "iOS",
+      "fr": "iOS",
+      "es": "iOS",
+      "pl": "iOS"
+    },
+    "anki_setup_ios_text": {
+      "en": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
+      "de": "Die Einrichtung unter iOS ist genauso einfach wie unter Android. Installiere einfach [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.",
+      "ru": "Установка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.",
+      "ja": "iOSでの設定は、Androidと同様に[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、Dakanjiを許可するだけで、簡単に設定できます。",
+      "zh": "在iOS上的设置超级简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在询问时授予DaKanji权限。",
+      "it": "L'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere l'autorizzazione a DaKanji quando viene richiesto.",
+      "fr": "L'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder l'autorisation à DaKanji lorsqu'elle est demandée.",
+      "es": "La configuración en iOS es super sencilla, al igual que en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando te lo pida.",
+      "pl": "Konfiguracja na iOS jest super prosta, podobnie jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni."
+    },
+    "anki_connection_test": {
+      "en": "To test if DaKanji can reach Anki you can press the button below.",
+      "de": "Um zu testen, ob DaKanji Anki erreichen kann, kannst du den Knopf unten drücken.",
+      "ru": "Чтобы проверить, может ли DaKanji достичь Anki, вы можете нажать кнопку ниже.",
+      "ja": "DakanjiとAnkiの同期状況は、以下のボタンで確認することができます。",
+      "zh": "要测试DaKanji是否能到达Anki，你可以按下面的按钮。",
+      "it": "Per verificare se DaKanji può raggiungere Anki è possibile premere il pulsante sottostante.",
+      "fr": "Pour tester si DaKanji peut atteindre Anki, vous pouvez cliquer sur le bouton ci-dessous.",
+      "es": "Para probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
+      "pl": "Aby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej."
+    },
+    "anki_test_connection": {
+      "en": "Test connection to Anki",
+      "de": "Überprüfe Verbindung zu Anki",
+      "ru": "Тестовое подключение к Anki",
+      "ja": "Ankiへの接続をテストする",
+      "zh": "测试与Anki的连接",
+      "it": "Prova la connessione ad Anki",
+      "fr": "Test de connexion à Anki",
+      "es": "Prueba de conexión a Anki",
+      "pl": "Przetestuj połączenie z Anki"
+    },
+    "anki_test_connection_success": {
+      "en": "You are connected to Anki! 🎉",
+      "de": "Du bist mit Anki verbunden! 🎉",
+      "ru": "Вы подключены к Anki! 🎉",
+      "ja": "Ankiに接続されました！🎉",
+      "zh": "你已连接到Anki!🎉",
+      "it": "Sei connesso ad Anki! 🎉",
+      "fr": "Vous êtes connecté à Anki ! 🎉",
+      "es": "¡Estás conectado a Anki! 🎉",
+      "pl": "Jesteś podłączony do Anki! 🎉"
+    },
+    "anki_test_connection_fail": {
+      "en": "You are not connected to Anki! 😢",
+      "de": "Du bist nicht mit Anki verbunde! 😢",
+      "ru": "Вы не подключены к Anki! 😢",
+      "ja": "Ankiに接続されていません！😢",
+      "zh": "你没有连接到Anki!😢",
+      "it": "Non sei connesso ad Anki! 😢",
+      "fr": "Vous n'êtes pas connecté à Anki ! 😢",
+      "es": "¡No estás conectado a Anki! 😢",
+      "pl": "Nie jesteś połączony z Anki! 😢"
+    },
+    "dict_title": {
+      "en": "Dictionary",
+      "de": "Wörterbuch",
+      "ru": "Словарь",
+      "ja": "辞書",
+      "zh": "词典",
+      "it": "Dizionario",
+      "fr": "Dictionnaire",
+      "es": "Diccionario",
+      "pl": "Słownik"
+    },
+    "dict_search_results_title": {
+      "en": "Search results",
+      "de": "Suchergebnisse",
+      "ru": "Результаты поиска",
+      "ja": "検索結果",
+      "zh": "搜索结果",
+      "it": "Risultati della ricerca",
+      "fr": "Résultats de la recherche",
+      "es": "Resultados de la búsqueda",
+      "pl": "Wyniki wyszukiwania"
+    },
+    "dict_search_results_navigate_title": {
+      "en": "Navigate",
+      "de": "Navigieren",
+      "ru": "Перейдите по ссылке",
+      "ja": "ナビゲート",
+      "zh": "导航",
+      "it": "Navigare",
+      "fr": "Naviguer",
+      "es": "Navegue por",
+      "pl": "Nawigacja"
+    },
+    "dict_search_results_navigate_text": {
+      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
+    },
+    "dict_search_history_title": {
+      "en": "Search history",
+      "de": "Suchverlauf",
+      "ru": "История поиска",
+      "ja": "検索履歴",
+      "zh": "搜索历史",
+      "it": "Storia della ricerca",
+      "fr": "Historique de la recherche",
+      "es": "Historial de búsqueda",
+      "pl": "Historia wyszukiwania"
+    },
+    "dict_search_history_delete_title": {
+      "en": "Delete",
+      "de": "Löschen",
+      "ru": "Удалить",
+      "ja": "削除",
+      "zh": "删除",
+      "it": "Cancellare",
+      "fr": "Supprimer",
+      "es": "Borrar",
+      "pl": "Usuń"
+    },
+    "dict_search_history_delete_text": {
+      "en": "You can delete elements from the search history by swiping left on them.",
+      "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+      "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+      "ja": "左にスワイプして検索履歴を削除できます",
+      "zh": "您可以通过向左滑动从搜索历史中删除元素。",
+      "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+      "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+      "es": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+      "pl": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo."
+    },
+    "dict_kanji_title": {
+      "en": "Kanji",
+      "de": "Kanji",
+      "ru": "Кандзи",
+      "ja": "漢字",
+      "zh": "汉字",
+      "it": "Kanji",
+      "fr": "Kanji",
+      "es": "Kanji",
+      "pl": "Kanji"
+    },
+    "dict_kanji_search_kanji_group_title": {
+      "en": "Search Kanji group",
+      "de": "Kanji-Gruppe suchen",
+      "ru": "Поиск группы кандзи",
+      "ja": "漢字グループ検索",
+      "zh": "搜索汉字组",
+      "it": "Ricerca gruppo Kanji",
+      "fr": "Rechercher un groupe de Kanji",
+      "es": "Buscar grupo de kanji",
+      "pl": "Wyszukaj grupę Kanji"
+    },
+    "dict_kanji_search_kanji_group_text": {
+      "en": "When a Kanji group can be searched in the dictionary it has a green border. Long pressing will search for it in the dictionary and double tapping will copy it to the clipboard.",
+      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen versehen. Durch langes Drücken wird sie im Wörterbuch gesucht und durch doppeltes Tippen wird sie in die Zwischenablage kopiert.",
+      "ru": "Когда группа кандзи может быть найдена в словаре, она имеет зеленую рамку. При длительном нажатии на кнопку она будет найдена в словаре, а при двойном нажатии - скопирована в буфер обмена.",
+      "ja": "辞書で検索できる漢字グループには緑色の枠が表示されます。長押しで辞書検索、ダブルタップでクリップボードにコピーできます。",
+      "zh": "当一个汉字组可以在字典中搜索时，它有一个绿色的边框。长按会在字典中搜索到它，双击会把它复制到剪贴板上。",
+      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde. Premendo a lungo lo si cerca nel dizionario e toccando due volte lo si copia negli appunti.",
+      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'une bordure verte. Un appui long permet de le rechercher dans le dictionnaire et un double appui permet de le copier dans le presse-papiers.",
+      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
+      "pl": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka."
+    },
+    "dict_kanji_copy_radicals_title": {
+      "en": "Copying radicals",
+      "de": "Kopieren von Radikalen",
+      "ru": "Копирование радикалов",
+      "ja": "ラジカルのコピー",
+      "zh": "复制自由基",
+      "it": "Copiare i radicali",
+      "fr": "Copier des radicaux",
+      "es": "Copiar radicales",
+      "pl": "Kopiowanie rodników"
+    },
+    "dict_kanji_copy_radicals_text": {
+      "en": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
+      "de": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
+      "ru": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
+      "ja": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
+      "zh": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
+      "it": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
+      "fr": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
+      "es": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
+      "pl": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka."
+    },
+    "dict_examples_title": {
+      "en": "Examples",
+      "de": "Beispiele",
+      "ru": "Примеры",
+      "ja": "例",
+      "zh": "实例",
+      "it": "Esempi",
+      "fr": "Exemples",
+      "es": "Ejemplos",
+      "pl": "Przykłady"
+    },
+    "dict_text_examples_analyze_title": {
+      "en": "Opening examples in the Text screen",
+      "de": "Beispiele im Bildschirm \"Text\" öffnen",
+      "ru": "Открытие примеров на экране \"Текст",
+      "ja": "テキスト画面で例を開く",
+      "zh": "在文本屏幕中打开例子",
+      "it": "Apertura di esempi nella schermata Testo",
+      "fr": "Ouvrir des exemples dans l'écran Texte",
+      "es": "Abrir ejemplos en la pantalla Texto",
+      "pl": "Otwieranie przykładów na ekranie Tekst"
+    },
+    "dict_text_examples_analyze_text": {
+      "en": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
+      "de": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
+      "ru": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
+      "ja": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
+      "zh": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
+      "it": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
+      "fr": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
+      "es": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
+      "pl": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie."
+    },
+    "dict_radicals_title": {
+      "en": "Radicals",
+      "de": "Radikale",
+      "ru": "Радикалы",
+      "ja": "部首",
+      "zh": "激进主义者",
+      "it": "Radicali",
+      "fr": "Radicaux",
+      "es": "Radicales",
+      "pl": "Radykałowie"
+    },
+    "dict_radicals_paste_title": {
+      "en": "Pasting radicals",
+      "de": "Radikale einfügen",
+      "ru": "Пастообразные радикалы",
+      "ja": "部首の貼り付け",
+      "zh": "粘贴基点",
+      "it": "Incollare i radicali",
+      "fr": "Collage de radicaux",
+      "es": "Pegar radicales",
+      "pl": "Wklejanie rodników"
+    },
+    "dict_radicals_paste_text": {
+      "en": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
+      "de": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
+      "ru": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
+      "ja": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
+      "zh": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
+      "it": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
+      "fr": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
+      "es": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
+      "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
+    }
+  },
+  "KanjiTableScreen": {
+    "title": {
+      "en": "Kanji Table",
+      "de": "Kanji Tabelle",
+      "ru": "Таблица кандзи",
+      "ja": "漢字表",
+      "zh": "汉字表",
+      "it": "Tabella Kanji",
+      "fr": "Tableau des Kanji",
+      "es": "Tabla de Kanji",
+      "pl": "Tabela kanji"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kanji table screen!",
+      "de": "Willkommen zu den Kanji-Tabellen!",
+      "ru": "Добро пожаловать на экран таблицы кандзи!",
+      "ja": "漢字表画面へようこそ！",
+      "zh": "欢迎来到汉字表屏幕！",
+      "it": "Benvenuti nella schermata della tabella dei kanji!",
+      "fr": "Bienvenue sur l'écran de la table des kanji !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
+      "pl": "Witamy na ekranie tabeli kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kanjis": {
+      "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+      "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+      "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+      "ja": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
+      "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+      "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+      "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+      "es": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+      "pl": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów."
+    },
+    "tutorial_filter": {
+      "en": "This dropdown lets you select a way of filtering Kanji.",
+      "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+      "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+      "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+      "zh": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+      "it": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+      "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+      "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+      "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
+    },
+    "tutorial_filter_sub_group": {
+      "en": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+      "de": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
+      "ru": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
+      "ja": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
+      "zh": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
+      "it": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+      "fr": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
+      "es": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
+      "pl": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu."
+    },
+    "tutorial_sort": {
+      "en": "This dropdown lets you select an order for the shown kanji.",
+      "de": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
+      "ru": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
+      "ja": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
+      "zh": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
+      "it": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
+      "fr": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
+      "es": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
+      "pl": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
+    },
+    "tutorial_kanji_amount": {
+      "en": "This number indicates how many kanji are currently being shown.",
+      "de": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
+      "ru": "Это число показывает, сколько кандзи отображается в данный момент.",
+      "ja": "現在表示されている漢字の数を示します",
+      "zh": "该数字表示当前显示的汉字数量。",
+      "it": "Questo numero indica il numero di kanji attualmente visualizzati.",
+      "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
+      "es": "Este número indica cuántos kanji se están mostrando actualmente.",
+      "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
+    }
+  },
+  "KanjiTrainerScreen": {
+    "title": {
+      "en": "Kanji Trainer",
+      "de": "Kanji Trainer",
+      "ru": "Тренажер по кандзи",
+      "ja": "漢字トレーナー",
+      "zh": "汉字训练器",
+      "it": "Allenatore di kanji",
+      "fr": "Entraîneur de kanji",
+      "es": "Entrenador de Kanji",
+      "pl": "Kanji Trainer"
+    }
+  },
+  "KanaTableScreen": {
+    "title": {
+      "en": "Kana Table",
+      "de": "Kana Tabelle",
+      "ru": "Стол Kana",
+      "ja": "かな一覧表",
+      "zh": "卡纳桌",
+      "it": "Tavolo Kana",
+      "fr": "Table Kana",
+      "es": "Mesa Kana",
+      "pl": "Stół Kana"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kana table screen!",
+      "de": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+      "ru": "Добро пожаловать на экран таблицы kana!",
+      "ja": "かな一覧表画面へようこそ！",
+      "zh": "欢迎来到假名表屏幕！",
+      "it": "Benvenuti nella schermata della tavola kana!",
+      "fr": "Bienvenue sur l'écran de la table kana !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kana!",
+      "pl": "Witamy na ekranie tabeli kana!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kana_table": {
+      "en": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+      "de": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
+      "ru": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
+      "ja": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
+      "zh": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
+      "it": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+      "fr": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
+      "es": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
+      "pl": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę."
+    },
+    "tutorial_speed_dial": {
+      "en": "This button can be used to change which Kana are shown.",
+      "de": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
+      "ru": "С помощью этой кнопки можно изменить отображение каны.",
+      "ja": "このボタンを使って、表示する「かな」を変更することができます。",
+      "zh": "该按钮可用于更改显示的假名。",
+      "it": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+      "fr": "Ce bouton permet de modifier les Kana affichés.",
+      "es": "Este botón permite cambiar los kana que se muestran.",
+      "pl": "Za pomocą tego przycisku można zmienić wyświetlane kany."
+    },
+    "tutorial_speed_dial_dakuten": {
+      "en": "This button toggles between Dakuten on and off.",
+      "de": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+      "ru": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
+      "ja": "ダクテンのオン／オフを切り替えるボタン。",
+      "zh": "该按钮可在打开和关闭 Dakuten 之间切换。",
+      "it": "Questo pulsante consente di attivare e disattivare Dakuten.",
+      "fr": "Ce bouton permet d'activer ou de désactiver Dakuten.",
+      "es": "Este botón activa y desactiva el Dakuten.",
+      "pl": "Przycisk ten służy do włączania i wyłączania Dakutenu."
+    },
+    "tutorial_speed_dial_yoon": {
+      "en": "This button toggles Yoon characters on and off.",
+      "de": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка включает и выключает символы Юн.",
+      "ja": "このボタンでユン文字のオン／オフを切り替える。",
+      "zh": "此按钮可打开或关闭 \"尹 \"字符。",
+      "it": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+      "fr": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
+      "es": "Este botón activa y desactiva los caracteres Yoon.",
+      "pl": "Ten przycisk włącza i wyłącza znaki Yoon."
+    },
+    "tutorial_speed_dial_kana": {
+      "en": "This button switches between Katakana and Hiragana.",
+      "de": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+      "ru": "Эта кнопка переключает между катаканой и хираганой.",
+      "ja": "カタカナとひらがなを切り替えるボタンです。",
+      "zh": "该按钮可在片假名和平假名之间切换。",
+      "it": "Questo pulsante consente di passare da Katakana a Hiragana.",
+      "fr": "Ce bouton permet de passer des Katakana aux Hiragana.",
+      "es": "Este botón alterna entre Katakana e Hiragana.",
+      "pl": "Ten przycisk przełącza między Katakaną i Hiraganą."
+    },
+    "tutorial_speed_dial_romaji": {
+      "en": "This button toggles Romaji on or off.",
+      "de": "Diese Taste schaltet Romaji ein oder aus.",
+      "ru": "Эта кнопка включает или выключает режим Romaji.",
+      "ja": "ローマ字入力のオン・オフを切り替えます。",
+      "zh": "此按钮可打开或关闭罗马字。",
+      "it": "Questo pulsante attiva o disattiva il Romaji.",
+      "fr": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
+      "es": "Este botón activa o desactiva Romaji.",
+      "pl": "Ten przycisk włącza lub wyłącza funkcję Romaji."
+    },
+    "tutorial_speed_dial_yoon_special": {
+      "en": "This button toggles between rare Yoon characters on or off.",
+      "de": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка позволяет включать или выключать редкие символы Юна.",
+      "ja": "このボタンでレアなユン文字のオン・オフが切り替わる。",
+      "zh": "该按钮可切换稀有尹氏角色的开启或关闭。",
+      "it": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon.",
+      "fr": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon.",
+      "es": "Este botón activa o desactiva los personajes raros de Yoon.",
+      "pl": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
+    }
+  },
+  "KanaTrainerScreen": {
+    "title": {
+      "en": "Kana Trainer",
+      "de": "Kana Trainer",
+      "ru": "Инструктор Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
     }
   },
   "TextScreen": {
@@ -1319,7 +2177,7 @@ static const Map<String,dynamic> localizations = {
       "en": "A double tap will select a sentence.",
       "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
       "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "ダブルタップで文章が選択されます。",
+      "ja": "ダブルタップで文章を選択します",
       "zh": "双击将选择一个句子。",
       "it": "Con un doppio tocco si seleziona una frase.",
       "fr": "Une double tape permet de sélectionner une phrase.",
@@ -1478,6 +2336,72 @@ static const Map<String,dynamic> localizations = {
       "es": "Diccionario",
       "pl": "Słownik"
     },
+    "search_filter_close": {
+      "en": "Close",
+      "de": "Schließen",
+      "ru": "Закрыть",
+      "ja": "閉じる",
+      "zh": "关闭",
+      "it": "Chiudere",
+      "fr": "Fermer",
+      "es": "Cerrar",
+      "pl": "Zamknij"
+    },
+    "search_filter_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "OK",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
+    },
+    "search_radical_close": {
+      "en": "Close",
+      "de": "Schließen",
+      "ru": "Закрыть",
+      "ja": "閉じる",
+      "zh": "关闭",
+      "it": "Chiudere",
+      "fr": "Fermer",
+      "es": "Cerrar",
+      "pl": "Zamknij"
+    },
+    "search_radical_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "OK",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
+    },
+    "search_searched": {
+      "en": "Searched:",
+      "de": "Gesucht:",
+      "ru": "Искали:",
+      "ja": "検索されました：",
+      "zh": "搜索到的：",
+      "it": "Ricercati:",
+      "fr": "Recherché :",
+      "es": "Buscados:",
+      "pl": "Szukane:"
+    },
+    "search_search_for": {
+      "en": "Search for:",
+      "de": "Suche nach:",
+      "ru": "Поиск:",
+      "ja": "検索してください：",
+      "zh": "搜索：",
+      "it": "Ricerca per:",
+      "fr": "Recherche de :",
+      "es": "Buscar:",
+      "pl": "Wyszukaj:"
+    },
     "word_tab": {
       "en": "Word",
       "de": "Wort",
@@ -1488,6 +2412,105 @@ static const Map<String,dynamic> localizations = {
       "fr": "Word",
       "es": "Palabra",
       "pl": "Słowo"
+    },
+    "word_tab_menu_add_to_list": {
+      "en": "Add to list",
+      "de": "Zur Liste hinzufügen",
+      "ru": "Добавить в список",
+      "ja": "リストに追加",
+      "zh": "添加到列表",
+      "it": "Aggiungi all'elenco",
+      "fr": "Ajouter à la liste",
+      "es": "Añadir a la lista",
+      "pl": "Dodaj do listy"
+    },
+    "word_tab_menu_send_to_anki": {
+      "en": "Send to Anki",
+      "de": "An Anki senden",
+      "ru": "Отправить в Anki",
+      "ja": "Ankiに送信",
+      "zh": "发送到 Anki",
+      "it": "Inviare ad Anki",
+      "fr": "Envoyer à Anki",
+      "es": "Enviar a Anki",
+      "pl": "Wyślij do Anki"
+    },
+    "word_see_also": {
+      "en": "See also:",
+      "de": "Siehe auch:",
+      "ru": "См. также:",
+      "ja": "こちらもご覧ください：",
+      "zh": "另见：",
+      "it": "Vedi anche:",
+      "fr": "Voir aussi",
+      "es": "Véase también:",
+      "pl": "Zobacz także:"
+    },
+    "word_restricted_to": {
+      "en": "Restricted to:",
+      "de": "Eingeschränkt auf:",
+      "ru": "Ограничено:",
+      "ja": "に制限される：",
+      "zh": "限于：1：",
+      "it": "Riservato a:",
+      "fr": "Restreint à :",
+      "es": "Restringido a:",
+      "pl": "Ograniczone do:"
+    },
+    "word_field": {
+      "en": "Field:",
+      "de": "Feld",
+      "ru": "Поле:",
+      "ja": "フィールドです：",
+      "zh": "领域：",
+      "it": "Campo:",
+      "fr": "Domaine :",
+      "es": "Campo:",
+      "pl": "Pol:"
+    },
+    "word_source_language": {
+      "en": "Source language:",
+      "de": "Ursprungssprache:",
+      "ru": "Исходный язык:",
+      "ja": "ソース言語です：",
+      "zh": "源语言：",
+      "it": "Lingua di partenza:",
+      "fr": "Langue source :",
+      "es": "Idioma de origen:",
+      "pl": "Język źródłowy:"
+    },
+    "word_dialect": {
+      "en": "Dialect:",
+      "de": "Dialekt",
+      "ru": "Диалект:",
+      "ja": "方言：",
+      "zh": "方言：",
+      "it": "Dialetto:",
+      "fr": "Dialecte :",
+      "es": "Dialecto:",
+      "pl": "Dialekt:"
+    },
+    "word_info": {
+      "en": "Info:",
+      "de": "Infos:",
+      "ru": "Информация:",
+      "ja": "情報：",
+      "zh": "信息：",
+      "it": "Info:",
+      "fr": "Info :",
+      "es": "Info:",
+      "pl": "Info:"
+    },
+    "word_reading": {
+      "en": "Reading:",
+      "de": "Lesung:",
+      "ru": "Чтение:",
+      "ja": "読み：",
+      "zh": "阅读：",
+      "it": "Lettura:",
+      "fr": "Lecture :",
+      "es": "Lectura:",
+      "pl": "Czyt:"
     },
     "word_conjugation": {
       "en": "Conjugations",
@@ -1544,6 +2567,17 @@ static const Map<String,dynamic> localizations = {
       "es": "Imágenes",
       "pl": "Zdjęcia"
     },
+    "word_meanings_more": {
+      "en": "More...",
+      "de": "Mehr...",
+      "ru": "Подробнее...",
+      "ja": "詳しく見る...",
+      "zh": "更多...",
+      "it": "Altro...",
+      "fr": "Plus...",
+      "es": "Más...",
+      "pl": "Więcej..."
+    },
     "word_conj_verb": {
       "en": "Verb",
       "de": "Verb",
@@ -1577,84 +2611,102 @@ static const Map<String,dynamic> localizations = {
     "word_conj_verb_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ja": "現在形（未来）"
+      "ja": "現在形（未来）",
+      "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_verb_non_past_m": {
       "en": "Will [not] do",
       "de": "Macht [nicht]",
+      "pl": "[nie] Zrobić"
     },
     "word_conj_verb_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ja": "過去形"
+      "ja": "過去形",
+      "pl": "Przeszły"
     },
     "word_conj_verb_past_m": {
       "en": "Did [not] do",
       "de": "Hat [nicht] gemacht",
+      "pl": "[nie] Zrobił"
     },
     "word_conj_verb_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ja": "て形"
+      "ja": "て形",
+      "pl": "Forma て"
     },
     "word_conj_verb_volitional": {
       "en": "Volitional",
       "de": "Intentional",
-      "ja": "意向形"
+      "ja": "意向形",
+      "pl": "Wolicjonalny"
     },
     "word_conj_verb_volitional_m": {
       "en": "Let's [not] do!",
       "de": "Lass [nicht] machen!",
+      "pl": "[nie] róbmy!"
     },
     "word_conj_verb_imperative": {
       "en": "Imperative",
       "de": "Imperativ",
-      "ja": "命令形"
+      "ja": "命令形",
+      "pl": "Rozkazujący"
     },
     "word_conj_verb_imperative_m": {
       "en": "Do [not] do!",
       "de": "Mach [nicht]!",
+      "pl": "[nie] rób!"
     },
     "word_conj_verb_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ja": "仮定形"
+      "ja": "仮定形",
+      "pl": "Provisional"
     },
     "word_conj_verb_provisional_m": {
       "en": "If X does [not do], if X is [not]",
       "de": "Wenn X [nicht] macht, wenn X [nicht] ist",
+      "pl": "Jeżeli X [nie] zrobi, jeżeli X [nie] jest"
     },
     "word_conj_verb_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ja": "条件形"
+      "ja": "条件形",
+      "pl": "Warunkowy"
     },
     "word_conj_verb_conditional_m": {
       "en": "If X were [not] to do, when X does [not] do",
       "de": "Wenn X [nicht] machen würde, falls X [nicht] macht",
+      "pl": "Jeżeli X by [nie] zrobił, jeżeli X by [nie] był"
     },
     "word_conj_verb_potential": {
       "en": "Potential",
       "de": "Potential",
-      "ja": "可能形"
+      "ja": "可能形",
+      "pl": "Potencjalny"
     },
     "word_conj_verb_potential_m": {
       "en": "[Not] be able to do, can [not] do",
       "de": "Kann [nicht] machen",
+      "pl": "[nie] jest w stanie, [nie] może"
     },
     "word_conj_verb_passive": {
       "en": "Passive, Respectful",
       "de": "Passiv, Respektvoll",
-      "ja": "受動形、尊敬語"
+      "ja": "受動形、尊敬語",
+      "pl": "Pasywny, z szacunkiem"
     },
     "word_conj_verb_passive_m": {
       "en": "Is [not] done (by ...), will [not] be done (by ...)",
       "de": "Wird (von...) [nicht] gemacht",
+      "pl": "[nie] jest zrobione (przez...), [nie] zostanie zropione (przez...)"
     },
     "word_conj_verb_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ja": "使役形"
+      "ja": "使役形",
+      "pl": "Przyczynowy"
     },
     "word_conj_verb_causative_m": {
       "en": "Does [not] / will [not] make, let (someone) do",
@@ -1663,7 +2715,8 @@ static const Map<String,dynamic> localizations = {
     "word_conj_verb_causative_passive": {
       "en": "Causative passive",
       "de": "Kausativ passiv",
-      "ja": "受動形"
+      "ja": "受動形",
+      "pl": "Przyczynowy pasywny"
     },
     "word_conj_verb_causative_passive_m": {
       "en": "Is [not] made / will [not] be made to do (by someone)",
@@ -1672,52 +2725,74 @@ static const Map<String,dynamic> localizations = {
     "word_conj_adj_non_past": {
       "en": "Present, (Future)",
       "de": "Präsenz (Zukunft)",
-      "ja": "現在形（未来）"
+      "ja": "現在形（未来）",
+      "pl": "Teraźniejszy, (Przyszły)"
     },
     "word_conj_adj_non_past_m": {
       "en": "Is [not]",
       "de": "Ist [nicht]",
+      "pl": "[nie] jest"
     },
     "word_conj_adj_past": {
       "en": "Past",
       "de": "Vergangenheit",
-      "ja": "過去形"
+      "ja": "過去形",
+      "pl": "Przeszły"
     },
     "word_conj_adj_past_m": {
       "en": "was [not]",
       "de": "War [nicht]",
+      "pl": "[nie] był"
     },
     "word_conj_adj_te_form": {
       "en": "て-form",
       "de": "て-Form",
-      "ja": "て形"
+      "ja": "て形",
+      "pl": "forma て"
     },
     "word_conj_adj_provisional": {
       "en": "Provisional",
       "de": "Konditional 1",
-      "ja": "仮定形"
+      "ja": "仮定形",
+      "pl": "Provisional"
     },
     "word_conj_adj_provisional_m": {
       "en": "If it is [not]",
       "de": "Wenn X [nicht] ist",
+      "pl": "Jeżeli [nie] jest"
     },
     "word_conj_adj_conditional": {
       "en": "Conditional",
       "de": "Konditional 2",
-      "ja": "条件形"
+      "ja": "条件形",
+      "pl": "Warunkowy"
     },
     "word_conj_adj_conditional_m": {
       "en": "When/if it is [not]",
       "de": "Falls X [nicht] ist",
+      "pl": "Kiedy/jeśli to [nie] jest"
     },
     "word_conj_adj_causative": {
       "en": "Causative",
       "de": "Kausativ",
-      "ja": "使役形"
+      "ja": "使役形",
+      "pl": "Przyczynowy"
     },
     "word_conj_adj_causative_m": {
       "en": "Make somebody [not]",
       "de": "Jmd. [nicht] machen",
+      "pl": "Zrób kogoś [nie]"
+    },
+    "word_wikipedia": {
+      "en": "Wikipedia",
+      "de": "Wikipedia",
+      "ru": "Википедия",
+      "ja": "ウィキペディア",
+      "zh": "维基百科",
+      "it": "Wikipedia",
+      "fr": "Wikipedia (en anglais)",
+      "es": "Wikipedia",
+      "pl": "Wikipedia"
     },
     "kanji_tab": {
       "en": "Kanji",
@@ -1750,7 +2825,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Radicali",
       "fr": "Radicaux",
       "es": "Radicales",
-      "pl": "Radicals"
+      "pl": "Radicals (metoda kluczy)"
     },
     "kanji_strokes": {
       "en": "Strokes",
@@ -1761,7 +2836,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Ictus",
       "fr": "Strokes",
       "es": "Trazos",
-      "pl": "Udary"
+      "pl": "Pociągnięcia pędzla"
     },
     "kanji_grade": {
       "en": "Grade",
@@ -1810,7 +2885,9 @@ static const Map<String,dynamic> localizations = {
     "kanji_on_reading": {
       "en": "On",
       "de": "On",
+      "ru": "На сайте",
       "ja": "音読み",
+      "zh": "在",
       "it": "On",
       "fr": "On",
       "es": "On",
@@ -1819,11 +2896,24 @@ static const Map<String,dynamic> localizations = {
     "kanji_kun_reading": {
       "en": "Kun",
       "de": "Kun",
+      "ru": "Кун",
       "ja": "訓読み",
+      "zh": "坤",
       "it": "Kun",
       "fr": "Kun",
       "es": "Kun",
       "pl": "Kun"
+    },
+    "kanji_lookalikes": {
+      "en": "Lookalikes",
+      "de": "Verwechselungsgefahr",
+      "ru": "Lookalikes",
+      "ja": "類語",
+      "zh": "外观相似",
+      "it": "Somiglianze",
+      "fr": "Sosies",
+      "es": "Parecidos",
+      "pl": "Podobieństwa"
     },
     "kanji_frequency": {
       "en": "Freq.",
@@ -1834,7 +2924,7 @@ static const Map<String,dynamic> localizations = {
       "it": "Freq.",
       "fr": "Fréq.",
       "es": "Frec.",
-      "pl": "Freq."
+      "pl": "Częstotliowść"
     },
     "kanji_alternatives": {
       "en": "Alternatives",
@@ -1847,6 +2937,28 @@ static const Map<String,dynamic> localizations = {
       "es": "Alternativas",
       "pl": "Alternatywy"
     },
+    "kanji_copied": {
+      "en": "Copied:",
+      "de": "Kopiert:",
+      "ru": "Копирование:",
+      "ja": "コピー：",
+      "zh": "已复制：",
+      "it": "Copiato:",
+      "fr": "Copié :",
+      "es": "Copiado:",
+      "pl": "Skopiowane:"
+    },
+    "kanji_apended": {
+      "en": "Apended:",
+      "de": "Angehängt:",
+      "ru": "Принято:",
+      "ja": "追記",
+      "zh": "已更正：",
+      "it": "In allegato:",
+      "fr": "Approuvé :",
+      "es": "Aplazado:",
+      "pl": "Dodano:"
+    },
     "example_tab": {
       "en": "Examples",
       "de": "Beispiele",
@@ -1856,7 +2968,18 @@ static const Map<String,dynamic> localizations = {
       "it": "Esempio",
       "fr": "Exemple",
       "es": "Ejemplo",
-      "pl": "Przykład"
+      "pl": "Przykłady"
+    },
+    "examples_more": {
+      "en": "Show more examples",
+      "de": "Zeige mehr Beispiele.",
+      "ru": "Показать больше примеров",
+      "ja": "その他の例",
+      "zh": "显示更多的例子",
+      "it": "Mostra altri esempi",
+      "fr": "Montrer plus d'exemples",
+      "es": "Mostrar más ejemplos",
+      "pl": "Pokaż więcej przykładów"
     },
     "tutorial_begin_title": {
       "en": "Welcome to the dictionary!",
@@ -1891,6 +3014,17 @@ static const Map<String,dynamic> localizations = {
       "es": "Este es el campo de entrada de búsqueda, simplemente pulse sobre él para introducir cualquier palabra que desee buscar.",
       "pl": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać."
     },
+    "tutorial_search_input_wildcards_text": {
+      "en": "You can use ? to match any single character and you can use * to match 0 to infinite characters.",
+      "de": "Sie können ? verwenden, um ein einzelnes Zeichen zu finden, und Sie können * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
+      "ru": "Вы можете использовать ? для соответствия любому отдельному символу, а * - от 0 до бесконечного количества символов.",
+      "ja": "？を使えば任意の1文字に、*を使えば0～無限大の文字にマッチします。",
+      "zh": "你可以用?来匹配任何单个字符，你可以用*来匹配0到无限个字符。",
+      "it": "È possibile utilizzare ? per abbinare qualsiasi singolo carattere e * per abbinare da 0 a infiniti caratteri.",
+      "fr": "Vous pouvez utiliser ? pour faire correspondre n'importe quel caractère et vous pouvez utiliser * pour faire correspondre de 0 à une infinité de caractères.",
+      "es": "Puede utilizar ? para que coincida con cualquier carácter y puede utilizar * para que coincida de 0 a infinitos caracteres.",
+      "pl": "Możesz użyć ? aby dopasować dowolny pojedynczy znak i możesz użyć * aby dopasować 0 do nieskończonych znaków."
+    },
     "tutorial_search_input_clear_text": {
       "en": "This button clears the input or pastes the text from your clipboard.",
       "de": "Diese Schaltfläche löscht die Eingabe oder fügt den Text aus der Zwischenablage.",
@@ -1913,6 +3047,28 @@ static const Map<String,dynamic> localizations = {
       "es": "Este botón abre una pantalla en la que puedes dibujar un Kanji para buscarlo rápidamente.",
       "pl": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać."
     },
+    "tutorial_search_radical_text": {
+      "en": "This button lets you search kanji by radical.",
+      "de": "Mit dieser Schaltfläche können Sie Kanji nach Radikalen suchen.",
+      "ru": "Эта кнопка позволяет искать кандзи по радикалу.",
+      "ja": "部首から漢字を検索できます",
+      "zh": "这个按钮可以让你按部就班地搜索汉字。",
+      "it": "Questo pulsante consente di cercare i kanji per radice.",
+      "fr": "Ce bouton vous permet de rechercher des kanji par radical.",
+      "es": "Este botón te permite buscar kanji por radical.",
+      "pl": "Ten przycisk pozwala na wyszukiwanie kanji według radykałów."
+    },
+    "tutorial_search_filter_text": {
+      "en": "This button lets you apply filter to your search.",
+      "de": "Mit dieser Schaltfläche können Sie Filter auf Ihre Suche anwenden.",
+      "ru": "Эта кнопка позволяет применить фильтр к поиску.",
+      "ja": "検索にフィルターをかけることができます",
+      "zh": "这个按钮让你在搜索中应用过滤器。",
+      "it": "Questo pulsante consente di applicare un filtro alla ricerca.",
+      "fr": "Ce bouton vous permet d'appliquer un filtre à votre recherche.",
+      "es": "Este botón le permite aplicar filtros a su búsqueda.",
+      "pl": "Ten przycisk pozwala zastosować filtr do wyszukiwania."
+    },
     "tutorial_word_tab": {
       "en": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
       "de": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
@@ -1933,7 +3089,7 @@ static const Map<String,dynamic> localizations = {
       "it": "La scheda Kanji contiene informazioni sui Kanji utilizzati nella parola. Include il numero e l'ordine dei tratti e il significato.",
       "fr": "L'onglet Kanji comprend des informations sur les Kanjis utilisés dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
       "es": "La pestaña Kanji incluye información sobre los Kanjis utilizados en la palabra. Incluye el número y el orden de los trazos y los significados.",
-      "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia."
+      "pl": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę, kolejność uderzeń oraz znaczenia."
     },
     "tutorial_examples_tab": {
       "en": "Lastly, the examples tab shows you some example sentences that use the selected word.",
@@ -1947,30 +3103,78 @@ static const Map<String,dynamic> localizations = {
       "pl": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa."
     }
   },
-  "KanjiScreen": {
+  "ClipboardScreen": {
     "title": {
-      "en": "Kanji",
-      "de": "Kanji",
-      "ru": "Кандзи",
-      "ja": "漢字",
-      "zh": "汉字",
-      "it": "Kanji",
-      "fr": "Kanji",
-      "es": "Kanji",
-      "pl": "Kanji"
+      "en": "Clipboard",
+      "de": "Zwischenablage",
+      "ru": "Буфер обмена",
+      "ja": "クリップボード",
+      "zh": "剪贴板",
+      "it": "Appunti",
+      "fr": "Presse-papiers",
+      "es": "Portapapeles",
+      "pl": "Schowek"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the clipboard screen!",
+      "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
+      "ru": "Добро пожаловать на экран буфера обмена!",
+      "ja": "クリップボード画面へようこそ！",
+      "zh": "欢迎来到剪贴板屏幕!",
+      "it": "Benvenuti nella schermata degli appunti!",
+      "fr": "Bienvenue dans l'écran du presse-papiers !",
+      "es": "Bienvenido a la pantalla del portapapeles",
+      "pl": "Witamy na ekranie schowka!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_explanation": {
+      "en": "Just copy some text and DaKanji will show dictionary entries and more!",
+      "de": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
+      "ru": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
+      "ja": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
+      "zh": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
+      "it": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
+      "fr": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
+      "es": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
+      "pl": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!"
+    },
+    "tutorial_android_limitation": {
+      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
+      "ru": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
+      "ja": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
+      "zh": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
+      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
+      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
+      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności."
+    },
+    "tutorial_pin_button": {
+      "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
+      "de": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
+      "ru": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
+      "ja": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
+      "zh": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
+      "it": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
+      "fr": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
+      "es": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
+      "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
     }
   },
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji",
-      "ru": "Кудзусидзи",
-      "ja": "くずし字",
-      "zh": "库兹吉",
-      "it": "Kuzushiji",
-      "fr": "Kuzushiji",
-      "es": "Kuzushiji",
-      "pl": "Kuzushiji"
+      "de": "Kuzushiji"
     }
   },
   "WordListsScreen": {
@@ -1984,12 +3188,232 @@ static const Map<String,dynamic> localizations = {
       "fr": "Listes de mots",
       "es": "Listas de palabras",
       "pl": "Listy słowne"
+    },
+    "no_entries": {
+      "en": "No entries in this word list",
+      "de": "Keine Einträge in dieser Liste",
+      "ru": "Нет записей в этом списке слов",
+      "ja": "まだ単語がありません",
+      "zh": "该词表中没有条目",
+      "it": "Nessuna voce in questo elenco di parole",
+      "fr": "Aucune entrée dans cette liste de mots",
+      "es": "No hay entradas en esta lista de palabras",
+      "pl": "Brak wpisów w tej liście słów"
+    },
+    "add": {
+      "en": "add",
+      "de": "Hinzufügen",
+      "ru": "добавить",
+      "ja": "追加",
+      "zh": "增加",
+      "it": "aggiungere",
+      "fr": "ajouter",
+      "es": "añada",
+      "pl": "dodać"
+    },
+    "new_list": {
+      "en": "New list",
+      "de": "Neue Liste",
+      "ru": "Новый список",
+      "ja": "新規リスト",
+      "zh": "新名单",
+      "it": "Nuovo elenco",
+      "fr": "Nouvelle liste",
+      "es": "Nueva lista",
+      "pl": "Nowy wykaz"
+    },
+    "new_folder": {
+      "en": "New folder",
+      "de": "Neuer Ordner",
+      "ru": "Новая папка",
+      "ja": "新規フォルダ",
+      "zh": "新文件夹",
+      "it": "Nuova cartella",
+      "fr": "Nouveau dossier",
+      "es": "Nueva carpeta",
+      "pl": "Nowy folder"
+    },
+    "defaults": {
+      "en": "defaults",
+      "de": "Standard",
+      "ru": "по умолчанию",
+      "ja": "デフォルト",
+      "zh": "违约",
+      "it": "valori predefiniti",
+      "fr": "Défauts",
+      "es": "valores predeterminados",
+      "pl": "ustawienia domyślne"
+    },
+    "search_history": {
+      "en": "Search history",
+      "de": "Suchverlauf",
+      "ru": "История поиска",
+      "ja": "検索履歴",
+      "zh": "搜索历史",
+      "it": "Storia della ricerca",
+      "fr": "Historique de la recherche",
+      "es": "Historial de búsqueda",
+      "pl": "Historia wyszukiwania"
+    },
+    "node_hint_text": {
+      "en": "Name",
+      "de": "Name",
+      "ru": "Имя",
+      "ja": "名前",
+      "zh": "命名",
+      "it": "Nome",
+      "fr": "Nom",
+      "es": "Nombre",
+      "pl": "Nazwa"
+    },
+    "rename": {
+      "en": "Rename",
+      "de": "Umbennen",
+      "ru": "Переименовать",
+      "ja": "名前変更",
+      "zh": "重命名",
+      "it": "Rinominare",
+      "fr": "Renommer",
+      "es": "Cambie el nombre de",
+      "pl": "Zmień nazwę"
+    },
+    "delete": {
+      "en": "Delete",
+      "de": "Löschen",
+      "ru": "Удалить",
+      "ja": "削除",
+      "zh": "删除",
+      "it": "Cancellare",
+      "fr": "Supprimer",
+      "es": "Borrar",
+      "pl": "Usuń"
+    },
+    "ok": {
+      "en": "ok",
+      "de": "ok",
+      "ru": "хорошо",
+      "ja": "ok",
+      "zh": "好的",
+      "it": "ok",
+      "fr": "ok",
+      "es": "ok",
+      "pl": "ok"
+    },
+    "page": {
+      "en": "page",
+      "de": "Seite",
+      "ru": "страница",
+      "ja": "ページ",
+      "zh": "页",
+      "it": "pagina",
+      "fr": "page",
+      "es": "página",
+      "pl": "strona"
+    },
+    "of": {
+      "en": "of",
+      "de": "von",
+      "ru": "из",
+      "ja": "の",
+      "zh": "的",
+      "it": "di",
+      "fr": "de",
+      "es": "de",
+      "pl": "z"
+    },
+    "send_to_anki": {
+      "en": "Send to anki",
+      "de": "Zu Anki schicken",
+      "ru": "Отправить в anki",
+      "ja": "ankiに送る",
+      "zh": "发送到anki",
+      "it": "Invia ad anki",
+      "fr": "Envoyer à anki",
+      "es": "Enviar a anki",
+      "pl": "Wyślij do anki"
+    },
+    "create_pdf": {
+      "en": "Create PDF",
+      "de": "Konvertiere zu PDF",
+      "ru": "Создать PDF",
+      "ja": "PDFを作成する",
+      "zh": "创建PDF",
+      "it": "Creare PDF",
+      "fr": "Créer un PDF",
+      "es": "Crear PDF",
+      "pl": "Utwórz PDF"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the word lists screen!",
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "ru": "Добро пожаловать на экран списков слов!",
+      "ja": "単語リスト画面へようこそ！",
+      "zh": "欢迎来到单词列表屏幕！",
+      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "fr": "Bienvenue dans l'écran des listes de mots !",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "pl": "Witamy na ekranie list słów!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_folder": {
+      "en": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+      "de": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
+      "ru": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
+      "ja": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
+      "zh": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
+      "it": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
+      "fr": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
+      "es": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
+      "pl": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp."
+    },
+    "tutorial_list": {
+      "en": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats.",
+      "de": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen.",
+      "ru": "Это список слов. Нажав на него, можно увидеть его содержимое.",
+      "ja": "これは単語リストです。タップすると内容を見ることができます。",
+      "zh": "这是一个单词表。点击即可查看其内容。",
+      "it": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto.",
+      "fr": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu.",
+      "es": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido.",
+      "pl": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
+    },
+    "tutorial_create_folder": {
+      "en": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+      "de": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
+      "ru": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
+      "ja": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
+      "zh": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
+      "it": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
+      "fr": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
+      "es": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
+      "pl": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je."
+    },
+    "tutorial_create_list": {
+      "en": "Using this button you can create a new wordlist.",
+      "de": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
+      "ru": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
+      "ja": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
+      "zh": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
+      "it": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
+      "fr": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
+      "es": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
+      "pl": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów."
     }
   }
 };
 static const Map<String,dynamic> ja = {
   "AboutScreen": {
-    "about_text": "「DaKanji」は、日本語学習者、日本語使用者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) で見ることができます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認できます。",
+    "about_text": "「DaKanji」は、日本語学習者、日本語話者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) でご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認いただけます。",
     "credits": "クレジット",
     "show_changelog": "全ての更新履歴を表示",
     "software_informations_button": "ソフトウェア情報",
@@ -1998,28 +3422,49 @@ static const Map<String,dynamic> ja = {
   "ChangelogScreen": {
     "title": "更新履歴"
   },
+  "ClipboardScreen": {
+    "title": "クリップボード",
+    "tutorial_android_limitation": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "クリップボード画面へようこそ！",
+    "tutorial_explanation": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
+    "tutorial_pin_button": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。"
+  },
   "DictionaryScreen": {
     "example_tab": "例",
+    "examples_more": "その他の例",
     "kanji_alternatives": "その他の字体",
+    "kanji_apended": "追記",
+    "kanji_copied": "コピー：",
     "kanji_frequency": "頻度",
     "kanji_grade": "学習学年",
     "kanji_groups": "漢字グループ",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "訓読み",
+    "kanji_lookalikes": "類語",
     "kanji_on_reading": "音読み",
     "kanji_radicals": "部首",
     "kanji_skip": "SKIP",
     "kanji_strokes": "画数",
     "kanji_tab": "漢字",
+    "search_filter_close": "閉じる",
+    "search_filter_ok": "OK",
+    "search_radical_close": "閉じる",
+    "search_radical_ok": "OK",
+    "search_search_for": "検索してください：",
+    "search_searched": "検索されました：",
     "title": "辞書",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "ようこそ辞書へ！",
     "tutorial_examples_tab": "検索した単語の例文が表示されます",
     "tutorial_kanji_tab": "検索内容に含まれる漢字の画数、書き順、意味などを見ることができます",
+    "tutorial_search_filter_text": "検索にフィルターをかけることができます",
     "tutorial_search_input_clear_text": "入力内容のクリア、またはテキストの貼り付けができます",
     "tutorial_search_input_draw_text": "漢字を書いて調べることも可能です",
     "tutorial_search_input_text": "検索欄です。タップして検索したい単語を入力してください",
+    "tutorial_search_input_wildcards_text": "？を使えば任意の1文字に、*を使えば0～無限大の文字にマッチします。",
+    "tutorial_search_radical_text": "部首から漢字を検索できます",
     "tutorial_word_tab": "検索した言葉の活用や訳語などが表示されます。翻訳文の言語は設定で選択できます",
     "word_antonyms": "反意語",
     "word_conj_adj_causative": "使役形",
@@ -2045,10 +3490,21 @@ static const Map<String,dynamic> ja = {
     "word_conj_verb_te_form": "て形",
     "word_conj_verb_volitional": "意向形",
     "word_conjugation": "活用",
+    "word_dialect": "方言：",
+    "word_field": "フィールドです：",
     "word_images": "画像",
+    "word_info": "情報：",
+    "word_meanings_more": "詳しく見る...",
     "word_proverbs": "ことわざ",
+    "word_reading": "読み：",
+    "word_restricted_to": "に制限される：",
+    "word_see_also": "こちらもご覧ください：",
+    "word_source_language": "ソース言語です：",
     "word_synonyms": "同義語",
-    "word_tab": "ワード"
+    "word_tab": "ワード",
+    "word_tab_menu_add_to_list": "リストに追加",
+    "word_tab_menu_send_to_anki": "Ankiに送信",
+    "word_wikipedia": "ウィキペディア"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません",
@@ -2073,7 +3529,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
-    "feedback_description_text": "どんな問題がありましたか？\n下記に詳細を入力してください",
+    "feedback_description_text": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
     "navigate": "操作",
     "submit": "送信",
     "title": "フィードバック"
@@ -2097,16 +3553,75 @@ static const Map<String,dynamic> ja = {
     "download_failed_popup_retry": "再試行",
     "download_failed_popup_text": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
     "download_popup_permission": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
+    "new_version_available_heading": "新バージョンを公開しました！",
+    "new_version_available_text": "Dakanjiの新バージョンを公開しました！",
+    "new_version_comparison": "現在{VERSION_NUMBER}をお使いですが、最新バージョンは{NEW_VERSION_NUMBER}です。",
+    "new_versions_available_text": "Dakanjiの{NEW_VERSIONS}新バージョンを公開しました！",
     "rate_this_app": "評価",
     "whats_new": "最新情報"
   },
-  "KanjiScreen": {
-    "title": "漢字"
+  "KanaTableScreen": {
+    "title": "かな一覧表",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "かな一覧表画面へようこそ！",
+    "tutorial_kana_table": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
+    "tutorial_speed_dial": "このボタンを使って、表示する「かな」を変更することができます。",
+    "tutorial_speed_dial_dakuten": "ダクテンのオン／オフを切り替えるボタン。",
+    "tutorial_speed_dial_kana": "カタカナとひらがなを切り替えるボタンです。",
+    "tutorial_speed_dial_romaji": "ローマ字入力のオン・オフを切り替えます。",
+    "tutorial_speed_dial_yoon": "このボタンでユン文字のオン／オフを切り替える。",
+    "tutorial_speed_dial_yoon_special": "このボタンでレアなユン文字のオン・オフが切り替わる。"
+  },
+  "KanaTrainerScreen": {
+    "title": "カナ・トレーナー"
+  },
+  "KanjiTableScreen": {
+    "title": "漢字表",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "漢字表画面へようこそ！",
+    "tutorial_filter": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+    "tutorial_filter_sub_group": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
+    "tutorial_kanji_amount": "現在表示されている漢字の数を示します",
+    "tutorial_kanjis": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
+    "tutorial_sort": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。"
+  },
+  "KanjiTrainerScreen": {
+    "title": "漢字トレーナー"
   },
   "KuzushijiScreen": {
-    "title": "くずし字"
   },
   "ManualScreen": {
+    "anki_connection_test": "DakanjiとAnkiの同期状況は、以下のボタンで確認することができます。",
+    "anki_setup_android_text": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
+    "anki_setup_android_title": "アンドロイド",
+    "anki_setup_desktop_text": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)をインストールし、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)となっている必要があります。",
+    "anki_setup_desktop_title": "デスクトップ",
+    "anki_setup_intro": "Dakanjiは、Ankiにノートを送信することが可能です。端末によって設定方法が異なりますのでご注意ください。",
+    "anki_setup_ios_text": "iOSでの設定は、Androidと同様に[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、Dakanjiを許可するだけで、簡単に設定できます。",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "セットアップ",
+    "anki_test_connection": "Ankiへの接続をテストする",
+    "anki_test_connection_fail": "Ankiに接続されていません！😢",
+    "anki_test_connection_success": "Ankiに接続されました！🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "例",
+    "dict_kanji_copy_radicals_text": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
+    "dict_kanji_copy_radicals_title": "ラジカルのコピー",
+    "dict_kanji_search_kanji_group_text": "辞書で検索できる漢字グループには緑色の枠が表示されます。長押しで辞書検索、ダブルタップでクリップボードにコピーできます。",
+    "dict_kanji_search_kanji_group_title": "漢字グループ検索",
+    "dict_kanji_title": "漢字",
+    "dict_radicals_paste_text": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
+    "dict_radicals_paste_title": "部首の貼り付け",
+    "dict_radicals_title": "部首",
+    "dict_search_history_delete_text": "左にスワイプして検索履歴を削除できます",
+    "dict_search_history_delete_title": "削除",
+    "dict_search_history_title": "検索履歴",
+    "dict_search_results_navigate_text": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+    "dict_search_results_navigate_title": "ナビゲート",
+    "dict_search_results_title": "検索結果",
+    "dict_text_examples_analyze_text": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
+    "dict_text_examples_analyze_title": "テキスト画面で例を開く",
+    "dict_title": "辞書",
     "title": "マニュアル"
   },
   "OnBoarding": {
@@ -2118,31 +3633,41 @@ static const Map<String,dynamic> ja = {
     "Onboarding_3_title": "文章の読み方がわからない？"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "辞書ファイルの削除",
+    "advanced_settings_delete_history": "検索履歴の削除",
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
-    "advanced_settings_number_search_procs": "検索処理数",
-    "advanced_settings_number_search_procs_body": "大漢字はデータベースを検索するとき、複数のプロセスを使用します。大漢字に標準で付属しているデータベースでは、通常、2プロセスが妥当なところです。ただし、データベースで検索したときに動作が重くなるようであれば、より多くのプロセスを使用してみてください。",
+    "advanced_settings_number_search_procs": "検索プロセス数 (@:SettingsScreen.requires_restart)",
+    "advanced_settings_number_search_procs_body": "Dakanjiは、データベースを検索する際、複数のプロセスを使用します。Dakanjiに標準で付属しているデータベースでは、通常2プロセスで十分ですが、データベースで検索したときに動作が重くなるようであれば、プロセス数を増やしてください。",
     "advanced_settings_optimize_cancel": "キャンセル",
     "advanced_settings_optimize_nn": "ニューラルネットの最適化",
-    "advanced_settings_optimize_ok": "オッケー",
-    "advanced_settings_optimizing": "最適化中...\nアプリを閉じないようにしてください。",
-    "advanced_settings_optimze_warning": "これにより、ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nお使いのデバイスによっては時間がかかる場合がありますが、劇的に性能が向上します。",
+    "advanced_settings_optimize_ok": "OK",
+    "advanced_settings_optimizing": "最適化中...\nアプリを閉じないでください。",
+    "advanced_settings_optimze_warning": "ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nデバイスによっては時間がかかる場合がありますが、性能が圧倒的に向上します。",
+    "advanced_settings_reset_settings": "設定のリセット",
     "advanced_settings_snap": "私は絶対なのだ・・・",
     "advanced_settings_title": "詳細設定",
+    "anki_default_deck": "デフォルトのデッキ",
+    "anki_default_no_langs": "ノートの言語数",
+    "anki_default_no_translations": "ノートの翻訳数",
+    "anki_title": "Anki",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
     "dict_deconjugate": "入力内容を基本形に変換する",
     "dict_deconjugate_body": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
+    "dict_disable_english_info": "辞書の大部分は、英語でしか利用できません。無効にすると、それらの項目がすべて非表示になります。",
     "dict_kanaize": "検索語をかなに変換する",
-    "dict_kanaize_body": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「taberu」と検索すると「食べる」が見つかりますが、意図しないマッチングが起こる可能性もあります。\n例えば、「男」と検索すると、「man」という英語の単語が意図されていたのに、「まん」に変換されて「万」にマッチしてしまう。\nまた、ひらがなとカタカナが混在する単語も同様です。例えば、りんごで検索すると、りんごに変換されるため、りんごにマッチします。しかし、この設定を無効にすると、りんごはリンゴと一致しなくなります。\n絶対に何を検索しているのかわかっている場合は、この設定を無効にしてください。",
+    "dict_kanaize_body": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「たべる」という検索語は、たべるに変換され、食べるを見つけることができますが、意図しないマッチングを引き起こす可能性もあります。\n\n例えば、「man」を検索すると、「まん」に変換されるため、「万」と英語の「man」にマッチします。",
     "dict_languages": "翻訳言語を選択する（ドラッグで並び替え可能）",
-    "dict_show_word_freq": "単語の頻度を表示する",
-    "dict_show_word_freq_body": "大漢字では、辞書項目のランク付けに単語頻度という指標を使用しています。この単語頻度は、ある単語の使用頻度を推定するものです。この推定は、さまざまなデータソースに基づいています：\n* Wikipedia、百科事典のテキストを表す。\n* 字幕、OPUS OpenSubtitles 2018およびSUBTLEXから。\n* ウェブテキスト、OSCARより\n* 短編ソーシャルメディアを代表するTwitter\n* Redditは、より長いインターネット上のコメントを表すことができます。\n表示されている数字は、Zipf頻度と呼ばれる実際の単語頻度のバリエーションで、単語頻度を人間に優しい対数スケールで返すことを目的としています。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10乗対数です。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現する。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。10億語に1回出現することを意味しますが、与えられた単語リストに出現しない単語のZipf値はデフォルトで0を使用します。",
+    "dict_matrix_word_levels": "マトリックス語は日本語能力試験レベルを使用",
+    "dict_show_wikipedia_definitions": "wikipedia上の定義を表示",
+    "dict_show_word_freq": "単語の使用頻度を表示",
+    "dict_show_word_freq_body": "Dakanjiでは、辞書エントリーのランク付けに単語頻度を使用しています。この単語頻度は、単語の使用頻度を推定したもので、さまざまなデータソースに基づくものです：\n\n* ウィキペディア\n* OPUS OpenSubtitles 2018およびSUBTLEXの字幕\n* ウェブテキスト、OSCAR\n* Twitter\n* Reddit\n\nDakanjiで表示される数値は、実際の単語頻度のバリエーションとして、[Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law)という、人間に優しい対数スケールで単語頻度を返すことを目指したものです。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10進数対数のことを指します。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現します。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。データソースにない単語のZipf値は、10億語に1回出現することを意味するはずですが、デフォルトで0を使用しています。\n[もっと読む...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "ウェブビューでウェブ辞書を開く",
     "draw_custom_url_format": "カスタムURL",
     "draw_custom_url_hint": "使用したい辞書のURL",
     "draw_dictionary_system_translator": "OS統合翻訳",
     "draw_double_tap_empty_canvas": "ダブルタップで文字記入欄を空にする",
     "draw_invert_short_long_press": "長押しとタップを反転する",
-    "draw_long_press_opens": "辞書を選択",
+    "draw_long_press_opens": "辞書の選択",
     "draw_title": "漢字を探す",
     "misc_default_screen": "アプリ起動時の初期画面",
     "misc_language": "言語 (@:SettingsScreen.restarts_app)",
@@ -2151,6 +3676,7 @@ static const Map<String,dynamic> ja = {
     "misc_title": "その他",
     "misc_window_on_top": "アプリを常に画面トップに表示する",
     "misc_window_opacity": "アプリ画面の透過性",
+    "requires_restart": "再起動が必要です",
     "restarts_app": "アプリを再起動する",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "title": "設定"
@@ -2177,7 +3703,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_colors_text": "テキストの品詞を色別に表示します（色の意味は、マニュアルから確認できます）",
     "tutorial_fullscreen_text": "テキストをフルスクリーンに切り替えます",
     "tutorial_furigana_text": "テキストにふりがなをつけます",
-    "tutorial_processed_text_double_tap": "ダブルタップで文章が選択されます。",
+    "tutorial_processed_text_double_tap": "ダブルタップで文章を選択します",
     "tutorial_processed_text_long_press": "長押しで単語を選択すると、品詞が表示されます",
     "tutorial_processed_text_tap": "シングルタップで単語を選択します",
     "tutorial_processed_text_text": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
@@ -2190,7 +3716,27 @@ static const Map<String,dynamic> ja = {
     "title": "ウェブビュー"
   },
   "WordListsScreen": {
-    "title": "単語リスト"
+    "add": "追加",
+    "create_pdf": "PDFを作成する",
+    "defaults": "デフォルト",
+    "delete": "削除",
+    "new_folder": "新規フォルダ",
+    "new_list": "新規リスト",
+    "no_entries": "まだ単語がありません",
+    "node_hint_text": "名前",
+    "of": "の",
+    "ok": "ok",
+    "page": "ページ",
+    "rename": "名前変更",
+    "search_history": "検索履歴",
+    "send_to_anki": "ankiに送る",
+    "title": "単語リスト",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
+    "tutorial_create_folder": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
+    "tutorial_create_list": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
+    "tutorial_folder": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
+    "tutorial_list": "これは単語リストです。タップすると内容を見ることができます。"
   }
 };
 static const Map<String,dynamic> de = {
@@ -2204,28 +3750,49 @@ static const Map<String,dynamic> de = {
   "ChangelogScreen": {
     "title": "Änderungen"
   },
+  "ClipboardScreen": {
+    "title": "Zwischenablage",
+    "tutorial_android_limitation": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Zwischenablage!",
+    "tutorial_explanation": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
+    "tutorial_pin_button": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden."
+  },
   "DictionaryScreen": {
     "example_tab": "Beispiele",
+    "examples_more": "Zeige mehr Beispiele.",
     "kanji_alternatives": "Alternativen",
+    "kanji_apended": "Angehängt:",
+    "kanji_copied": "Kopiert:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Klasse",
     "kanji_groups": "Kanji-Gruppen",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Verwechselungsgefahr",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radikale",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Striche",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Schließen",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Schließen",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Suche nach:",
+    "search_searched": "Gesucht:",
     "title": "Wörterbuch",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen zum Wörterbuch!",
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
+    "tutorial_search_filter_text": "Mit dieser Schaltfläche können Sie Filter auf Ihre Suche anwenden.",
     "tutorial_search_input_clear_text": "Diese Schaltfläche löscht die Eingabe oder fügt den Text aus der Zwischenablage.",
     "tutorial_search_input_draw_text": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzufügen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
+    "tutorial_search_input_wildcards_text": "Sie können ? verwenden, um ein einzelnes Zeichen zu finden, und Sie können * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
+    "tutorial_search_radical_text": "Mit dieser Schaltfläche können Sie Kanji nach Radikalen suchen.",
     "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
@@ -2266,10 +3833,21 @@ static const Map<String,dynamic> de = {
     "word_conj_verb_volitional": "Intentional",
     "word_conj_verb_volitional_m": "Lass [nicht] machen!",
     "word_conjugation": "Konjugationen",
+    "word_dialect": "Dialekt",
+    "word_field": "Feld",
     "word_images": "Bilder",
+    "word_info": "Infos:",
+    "word_meanings_more": "Mehr...",
     "word_proverbs": "Sprichwörter",
+    "word_reading": "Lesung:",
+    "word_restricted_to": "Eingeschränkt auf:",
+    "word_see_also": "Siehe auch:",
+    "word_source_language": "Ursprungssprache:",
     "word_synonyms": "Synonyme",
-    "word_tab": "Wort"
+    "word_tab": "Wort",
+    "word_tab_menu_add_to_list": "Zur Liste hinzufügen",
+    "word_tab_menu_send_to_anki": "An Anki senden",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
@@ -2294,7 +3872,7 @@ static const Map<String,dynamic> de = {
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
-    "feedback_description_text": "Was stimmt nicht? Beschreibe dein Problem unten.",
+    "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
     "title": "Feedback"
@@ -2318,16 +3896,76 @@ static const Map<String,dynamic> de = {
     "download_failed_popup_retry": "Wiederholung",
     "download_failed_popup_text": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
     "download_popup_permission": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
+    "new_version_available_heading": "Neue Version verfügbar!",
+    "new_version_available_text": "Es ist eine neue Version von DaKanji verfügbar!",
+    "new_version_comparison": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+    "new_versions_available_text": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Kana Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+    "tutorial_kana_table": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
+    "tutorial_speed_dial": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
+    "tutorial_speed_dial_dakuten": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+    "tutorial_speed_dial_kana": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+    "tutorial_speed_dial_romaji": "Diese Taste schaltet Romaji ein oder aus.",
+    "tutorial_speed_dial_yoon": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+    "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
+  },
+  "KanaTrainerScreen": {
+    "title": "Kana Trainer"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji Tabelle",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen zu den Kanji-Tabellen!",
+    "tutorial_filter": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+    "tutorial_filter_sub_group": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
+    "tutorial_kanji_amount": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
+    "tutorial_kanjis": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+    "tutorial_sort": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "Um zu testen, ob DaKanji Anki erreichen kann, kannst du den Knopf unten drücken.",
+    "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
+    "anki_setup_desktop_title": "Desktop",
+    "anki_setup_intro": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
+    "anki_setup_ios_text": "Die Einrichtung unter iOS ist genauso einfach wie unter Android. Installiere einfach [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Einrichtung",
+    "anki_test_connection": "Überprüfe Verbindung zu Anki",
+    "anki_test_connection_fail": "Du bist nicht mit Anki verbunde! 😢",
+    "anki_test_connection_success": "Du bist mit Anki verbunden! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Beispiele",
+    "dict_kanji_copy_radicals_text": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
+    "dict_kanji_copy_radicals_title": "Kopieren von Radikalen",
+    "dict_kanji_search_kanji_group_text": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen versehen. Durch langes Drücken wird sie im Wörterbuch gesucht und durch doppeltes Tippen wird sie in die Zwischenablage kopiert.",
+    "dict_kanji_search_kanji_group_title": "Kanji-Gruppe suchen",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
+    "dict_radicals_paste_title": "Radikale einfügen",
+    "dict_radicals_title": "Radikale",
+    "dict_search_history_delete_text": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+    "dict_search_history_delete_title": "Löschen",
+    "dict_search_history_title": "Suchverlauf",
+    "dict_search_results_navigate_text": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+    "dict_search_results_navigate_title": "Navigieren",
+    "dict_search_results_title": "Suchergebnisse",
+    "dict_text_examples_analyze_text": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
+    "dict_text_examples_analyze_title": "Beispiele im Bildschirm \"Text\" öffnen",
+    "dict_title": "Wörterbuch",
     "title": "Handbuch"
   },
   "OnBoarding": {
@@ -2339,23 +3977,33 @@ static const Map<String,dynamic> de = {
     "Onboarding_3_title": "Du weißt nicht wie man einen  Satz liest?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Löscht die Wörterbuchdateien.",
+    "advanced_settings_delete_history": "Löscht den Suchverlauf.",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
-    "advanced_settings_number_search_procs": "Anzahl der Suchprozesse",
+    "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
     "advanced_settings_optimize_cancel": "Abbrechen",
     "advanced_settings_optimize_nn": "Neuronale Netze optimieren",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimiert...\nBitte schließen Sie die App nicht.",
     "advanced_settings_optimze_warning": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
+    "advanced_settings_reset_settings": "Setzt die Einstellungen zurück.",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
+    "anki_default_deck": "Standard deck",
+    "anki_default_no_langs": "Anzahl an Sprachen auf Karten",
+    "anki_default_no_translations": "Anzahl von Übersetungen auf Karten",
+    "anki_title": "Anki",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Konvertierung der Eingaben in die Basisform",
     "dict_deconjugate_body": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
+    "dict_disable_english_info": "Ein großer Teil des Wörterbuchs ist nur auf Englisch verfügbar. Wenn Sie es deaktivieren, werden alle diese Einträge ausgeblendet.",
     "dict_kanaize": "Suchbegriff in Kana umwandeln",
-    "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor es ihn nachschlägt. Das bedeutet, dass die Suche nach \"taberu\" 食べる findet, aber es kann auch zu unbeabsichtigten Treffern führen.\nSo wird zum Beispiel die Suche nach \"man\" in まん umgewandelt und führt somit zu 万, obwohl das englische Wort \"man\" die Absicht war.\nEin anderer Fall sind Wörter, die Hiragana und Katakana verwenden. Die Suche nach りんご wird zum Beispiel umgewandelt und passt daher zu リンゴ. Wenn diese Einstellung jedoch deaktiviert ist, passt りんご nicht zu リンゴ.\nWenn Sie genau wissen, wonach Sie suchen, deaktivieren Sie diese Einstellung.",
+    "dict_kanaize_body": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".",
     "dict_languages": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
-    "dict_show_word_freq": "Worthäufigkeit anzeigen",
+    "dict_matrix_word_levels": "Matrixwörter verwenden JLPT-Niveau",
+    "dict_show_wikipedia_definitions": "Definitionen von wikipedia anzeigen",
+    "dict_show_word_freq": "Zeige Wordfrequenz",
     "dict_show_word_freq_body": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
     "draw_browser_for_online_dict": "Benutze einen webview für web Wörterbücher",
     "draw_custom_url_format": "Benutzerdefiniertes URL format",
@@ -2363,7 +4011,7 @@ static const Map<String,dynamic> de = {
     "draw_dictionary_system_translator": "betriebssysteminternes Übersetzer",
     "draw_double_tap_empty_canvas": "Lösche alle Striche nach doppeltem Tippen",
     "draw_invert_short_long_press": "Invertiere kurzes und langes drücken",
-    "draw_long_press_opens": "Auswahl des Wörterbuchs",
+    "draw_long_press_opens": "Wörterbuch Auswahl",
     "draw_title": "Zeichnen",
     "misc_default_screen": "Startbildschirm beim öffnen der App",
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
@@ -2372,6 +4020,7 @@ static const Map<String,dynamic> de = {
     "misc_title": "Verschiedenes",
     "misc_window_on_top": "Sollte die Anwendung immer über anderen sein",
     "misc_window_opacity": "Die Transparenz der Anwendung",
+    "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "title": "Einstellungen"
@@ -2411,7 +4060,27 @@ static const Map<String,dynamic> de = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Wortlisten"
+    "add": "Hinzufügen",
+    "create_pdf": "Konvertiere zu PDF",
+    "defaults": "Standard",
+    "delete": "Löschen",
+    "new_folder": "Neuer Ordner",
+    "new_list": "Neue Liste",
+    "no_entries": "Keine Einträge in dieser Liste",
+    "node_hint_text": "Name",
+    "of": "von",
+    "ok": "ok",
+    "page": "Seite",
+    "rename": "Umbennen",
+    "search_history": "Suchverlauf",
+    "send_to_anki": "Zu Anki schicken",
+    "title": "Wortlisten",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+    "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
+    "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
+    "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
+    "tutorial_list": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen."
   }
 };
 static const Map<String,dynamic> ru = {
@@ -2425,33 +4094,67 @@ static const Map<String,dynamic> ru = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Буфер обмена",
+    "tutorial_android_limitation": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран буфера обмена!",
+    "tutorial_explanation": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
+    "tutorial_pin_button": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения."
+  },
   "DictionaryScreen": {
     "example_tab": "Пример",
+    "examples_more": "Показать больше примеров",
     "kanji_alternatives": "Альтернативы",
+    "kanji_apended": "Принято:",
+    "kanji_copied": "Копирование:",
     "kanji_frequency": "Частота.",
     "kanji_grade": "Класс",
     "kanji_groups": "Группы кандзи",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
+    "kanji_kun_reading": "Кун",
+    "kanji_lookalikes": "Lookalikes",
+    "kanji_on_reading": "На сайте",
     "kanji_radicals": "Радикалы",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Инсульты",
     "kanji_tab": "Кандзи",
+    "search_filter_close": "Закрыть",
+    "search_filter_ok": "Хорошо",
+    "search_radical_close": "Закрыть",
+    "search_radical_ok": "Хорошо",
+    "search_search_for": "Поиск:",
+    "search_searched": "Искали:",
     "title": "Словарь",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать в словарь!",
     "tutorial_examples_tab": "Наконец, на вкладке \"Примеры\" показаны примеры предложений, в которых используется выбранное слово.",
     "tutorial_kanji_tab": "Вкладка Kanji-tab содержит информацию о кандзи, используемых в слове. Сюда входит количество и порядок штрихов, а также значения.",
+    "tutorial_search_filter_text": "Эта кнопка позволяет применить фильтр к поиску.",
     "tutorial_search_input_clear_text": "Эта кнопка очищает вводимый текст или копирует его из буфера обмена.",
     "tutorial_search_input_draw_text": "Эта кнопка открывает экран, на котором можно нарисовать кандзи для их быстрого поиска.",
     "tutorial_search_input_text": "Это поле ввода поиска, просто нажмите на него, чтобы ввести любое слово, которое вы хотите найти.",
+    "tutorial_search_input_wildcards_text": "Вы можете использовать ? для соответствия любому отдельному символу, а * - от 0 до бесконечного количества символов.",
+    "tutorial_search_radical_text": "Эта кнопка позволяет искать кандзи по радикалу.",
     "tutorial_word_tab": "На этой вкладке содержится различная информация о выбранном результате поиска, например, спряжение и перевод. Язык перевода можно выбрать в настройках.",
     "word_antonyms": "Антонимы",
     "word_conjugation": "Спряжение",
+    "word_dialect": "Диалект:",
+    "word_field": "Поле:",
     "word_images": "Изображения",
+    "word_info": "Информация:",
+    "word_meanings_more": "Подробнее...",
     "word_proverbs": "Притчи",
+    "word_reading": "Чтение:",
+    "word_restricted_to": "Ограничено:",
+    "word_see_also": "См. также:",
+    "word_source_language": "Исходный язык:",
     "word_synonyms": "Синонимы",
-    "word_tab": "Слово"
+    "word_tab": "Слово",
+    "word_tab_menu_add_to_list": "Добавить в список",
+    "word_tab_menu_send_to_anki": "Отправить в Anki",
+    "word_wikipedia": "Википедия"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} не установлен",
@@ -2476,7 +4179,7 @@ static const Map<String,dynamic> ru = {
   },
   "FeedbackScreen": {
     "draw": "нарисовать",
-    "feedback_description_text": "Что не так? Напишите свой вопрос ниже.",
+    "feedback_description_text": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
     "navigate": "перейдите по ссылке",
     "submit": "отправить",
     "title": "Обратная связь"
@@ -2500,16 +4203,75 @@ static const Map<String,dynamic> ru = {
     "download_failed_popup_retry": "Повторная попытка",
     "download_failed_popup_text": "Загрузка не удалась, пожалуйста, убедитесь, что у вас стабильное интернет-соединение.",
     "download_popup_permission": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
+    "new_version_available_heading": "Доступна новая версия!",
+    "new_version_available_text": "Вышла новая версия DaKanji!",
+    "new_version_comparison": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
   },
-  "KanjiScreen": {
-    "title": "Кандзи"
+  "KanaTableScreen": {
+    "title": "Стол Kana",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран таблицы kana!",
+    "tutorial_kana_table": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
+    "tutorial_speed_dial": "С помощью этой кнопки можно изменить отображение каны.",
+    "tutorial_speed_dial_dakuten": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
+    "tutorial_speed_dial_kana": "Эта кнопка переключает между катаканой и хираганой.",
+    "tutorial_speed_dial_romaji": "Эта кнопка включает или выключает режим Romaji.",
+    "tutorial_speed_dial_yoon": "Эта кнопка включает и выключает символы Юн.",
+    "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
+  },
+  "KanaTrainerScreen": {
+    "title": "Инструктор Кана"
+  },
+  "KanjiTableScreen": {
+    "title": "Таблица кандзи",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран таблицы кандзи!",
+    "tutorial_filter": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+    "tutorial_filter_sub_group": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
+    "tutorial_kanji_amount": "Это число показывает, сколько кандзи отображается в данный момент.",
+    "tutorial_kanjis": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+    "tutorial_sort": "В этом выпадающем списке можно выбрать порядок отображения кандзи."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Тренажер по кандзи"
   },
   "KuzushijiScreen": {
-    "title": "Кудзусидзи"
   },
   "ManualScreen": {
+    "anki_connection_test": "Чтобы проверить, может ли DaKanji достичь Anki, вы можете нажать кнопку ниже.",
+    "anki_setup_android_text": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "На MacOS, Windows и Linux необходимо установить [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Рабочий стол",
+    "anki_setup_intro": "DaKanji можно использовать для отправки заметок в Anki. Для этого для каждой платформы требуется своя настройка.",
+    "anki_setup_ios_text": "Установка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Настройка",
+    "anki_test_connection": "Тестовое подключение к Anki",
+    "anki_test_connection_fail": "Вы не подключены к Anki! 😢",
+    "anki_test_connection_success": "Вы подключены к Anki! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Примеры",
+    "dict_kanji_copy_radicals_text": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
+    "dict_kanji_copy_radicals_title": "Копирование радикалов",
+    "dict_kanji_search_kanji_group_text": "Когда группа кандзи может быть найдена в словаре, она имеет зеленую рамку. При длительном нажатии на кнопку она будет найдена в словаре, а при двойном нажатии - скопирована в буфер обмена.",
+    "dict_kanji_search_kanji_group_title": "Поиск группы кандзи",
+    "dict_kanji_title": "Кандзи",
+    "dict_radicals_paste_text": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
+    "dict_radicals_paste_title": "Пастообразные радикалы",
+    "dict_radicals_title": "Радикалы",
+    "dict_search_history_delete_text": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+    "dict_search_history_delete_title": "Удалить",
+    "dict_search_history_title": "История поиска",
+    "dict_search_results_navigate_text": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+    "dict_search_results_navigate_title": "Перейдите по ссылке",
+    "dict_search_results_title": "Результаты поиска",
+    "dict_text_examples_analyze_text": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
+    "dict_text_examples_analyze_title": "Открытие примеров на экране \"Текст",
+    "dict_title": "Словарь",
     "title": "Руководство"
   },
   "OnBoarding": {
@@ -2521,24 +4283,34 @@ static const Map<String,dynamic> ru = {
     "Onboarding_3_title": "Не умеете читать предложения?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Удаляет файлы словарей.",
+    "advanced_settings_delete_history": "Удаляет историю поиска.",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
-    "advanced_settings_number_search_procs": "Количество процессов поиска",
+    "advanced_settings_number_search_procs": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
     "advanced_settings_optimize_cancel": "Отмена",
     "advanced_settings_optimize_nn": "Оптимизация нейронных сетей",
     "advanced_settings_optimize_ok": "Хорошо",
     "advanced_settings_optimizing": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
     "advanced_settings_optimze_warning": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
+    "advanced_settings_reset_settings": "Сброс настроек.",
     "advanced_settings_snap": "Я неизбежен...",
     "advanced_settings_title": "Дополнительные настройки",
+    "anki_default_deck": "Колода по умолчанию",
+    "anki_default_no_langs": "Количество языков на банкнотах",
+    "anki_default_no_translations": "Количество переводов по векселям",
+    "anki_title": "Anki",
     "custom_url_explanation": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Преобразование входных данных в базовую форму",
     "dict_deconjugate_body": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
+    "dict_disable_english_info": "Значительная часть словаря доступна только на английском языке. Отключение этой функции скроет все эти словарные статьи.",
     "dict_kanaize": "Преобразование поискового термина в кану",
-    "dict_kanaize_body": "При включении этой настройки DaKanji преобразует любой поисковый термин в унифицированное представление каны, прежде чем искать его. Это означает, что при поиске 'taberu' будет найдено 食べる, но это также может привести к непреднамеренным совпадениям.\nНапример, при поиске \"man\" будет преобразовано в まん и, следовательно, найдется 万, в то время как подразумевалось английское слово \"man\".\nДругой случай - слова, в которых используются хирагана и катакана. Например, при поиске りんご будет преобразовано, и поэтому будет соответствовать リンゴ. Но если эта настройка отключена, りんご не будет соответствовать リンゴ.\nЕсли вы точно знаете, что ищете, отключите эту настройку.",
+    "dict_kanaize_body": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.",
     "dict_languages": "Показать переводы в (перетащите, чтобы изменить порядок)",
+    "dict_matrix_word_levels": "Матричные слова используют уровень JLPT",
+    "dict_show_wikipedia_definitions": "Показать определения из Википедии",
     "dict_show_word_freq": "Показать частоту слов",
-    "dict_show_word_freq_body": "DaKanji использует меру частоты слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова. Эта оценка основана на различных источниках данных:\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* Веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете.\nПоказанное число является вариацией фактической частоты слов, называемой частотой Зипфа, которая стремится представить частоту слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в данном списке слов, хотя это должно означать одно появление на миллиард слов.",
+    "dict_show_word_freq_body": "DaKanji использует частоту слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова и основана на различных источниках данных:\n\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете\n\nЧисло, показанное в DaKanji, является вариацией фактической частоты слов, называемой [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law), целью которой является возвращение частоты слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в источниках данных, хотя это должно означать одно появление на миллиард слов.\n[Read more...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Использование веб-просмотра для веб-словарей",
     "draw_custom_url_format": "Пользовательский формат URL",
     "draw_custom_url_hint": "URL вашего словаря",
@@ -2554,6 +4326,7 @@ static const Map<String,dynamic> ru = {
     "misc_title": "Разное",
     "misc_window_on_top": "Должно ли приложение всегда быть на высоте",
     "misc_window_opacity": "Прозрачность приложения",
+    "requires_restart": "требует перезапуска",
     "restarts_app": "перезапускает приложение",
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "title": "Настройки"
@@ -2579,7 +4352,27 @@ static const Map<String,dynamic> ru = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Списки слов"
+    "add": "добавить",
+    "create_pdf": "Создать PDF",
+    "defaults": "по умолчанию",
+    "delete": "Удалить",
+    "new_folder": "Новая папка",
+    "new_list": "Новый список",
+    "no_entries": "Нет записей в этом списке слов",
+    "node_hint_text": "Имя",
+    "of": "из",
+    "ok": "хорошо",
+    "page": "страница",
+    "rename": "Переименовать",
+    "search_history": "История поиска",
+    "send_to_anki": "Отправить в anki",
+    "title": "Списки слов",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
+    "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
+    "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
+    "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
+    "tutorial_list": "Это список слов. Нажав на него, можно увидеть его содержимое."
   }
 };
 static const Map<String,dynamic> pl = {
@@ -2593,40 +4386,102 @@ static const Map<String,dynamic> pl = {
   "ChangelogScreen": {
     "title": "Historia zmian"
   },
+  "ClipboardScreen": {
+    "title": "Schowek",
+    "tutorial_android_limitation": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności.",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie schowka!",
+    "tutorial_explanation": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!",
+    "tutorial_pin_button": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
+  },
   "DictionaryScreen": {
-    "example_tab": "Przykład",
+    "example_tab": "Przykłady",
+    "examples_more": "Pokaż więcej przykładów",
     "kanji_alternatives": "Alternatywy",
-    "kanji_frequency": "Freq.",
+    "kanji_apended": "Dodano:",
+    "kanji_copied": "Skopiowane:",
+    "kanji_frequency": "Częstotliowść",
     "kanji_grade": "Stopień",
     "kanji_groups": "Grupy kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Podobieństwa",
     "kanji_on_reading": "On",
-    "kanji_radicals": "Radicals",
+    "kanji_radicals": "Radicals (metoda kluczy)",
     "kanji_skip": "SKIP",
-    "kanji_strokes": "Udary",
+    "kanji_strokes": "Pociągnięcia pędzla",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Zamknij",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Zamknij",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Wyszukaj:",
+    "search_searched": "Szukane:",
     "title": "Słownik",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Witamy w słowniku!",
     "tutorial_examples_tab": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa.",
-    "tutorial_kanji_tab": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę i kolejność uderzeń oraz znaczenia.",
+    "tutorial_kanji_tab": "Zakładka Kanji zawiera informacje o Kanji użytych w słowie. Obejmuje to liczbę, kolejność uderzeń oraz znaczenia.",
+    "tutorial_search_filter_text": "Ten przycisk pozwala zastosować filtr do wyszukiwania.",
     "tutorial_search_input_clear_text": "Ten przycisk czyści dane wejściowe lub kopiuje tekst ze schowka.",
     "tutorial_search_input_draw_text": "Ten przycisk otwiera ekran, na którym można narysować kanji, aby szybko je wyszukać.",
     "tutorial_search_input_text": "To jest pole wyszukiwania, wystarczy dotknąć go, aby wprowadzić dowolne słowo, które chcesz wyszukać.",
+    "tutorial_search_input_wildcards_text": "Możesz użyć ? aby dopasować dowolny pojedynczy znak i możesz użyć * aby dopasować 0 do nieskończonych znaków.",
+    "tutorial_search_radical_text": "Ten przycisk pozwala na wyszukiwanie kanji według radykałów.",
     "tutorial_word_tab": "Ta zakładka zawiera różne informacje o wybranym wyniku wyszukiwania, takie jak koniugacja i tłumaczenia. Język tłumaczeń można wybrać w ustawieniach.",
     "word_antonyms": "Antonimy",
+    "word_conj_adj_causative": "Przyczynowy",
+    "word_conj_adj_causative_m": "Zrób kogoś [nie]",
+    "word_conj_adj_conditional": "Warunkowy",
+    "word_conj_adj_conditional_m": "Kiedy/jeśli to [nie] jest",
+    "word_conj_adj_non_past": "Teraźniejszy, (Przyszły)",
+    "word_conj_adj_non_past_m": "[nie] jest",
+    "word_conj_adj_past": "Przeszły",
+    "word_conj_adj_past_m": "[nie] był",
+    "word_conj_adj_provisional": "Provisional",
+    "word_conj_adj_provisional_m": "Jeżeli [nie] jest",
+    "word_conj_adj_te_form": "forma て",
     "word_conj_adjective": "Przymiotnik",
     "word_conj_copula": "Lącznik",
     "word_conj_plain": "Nieformalny",
     "word_conj_polite": "Uprzejmy",
     "word_conj_verb": "Czasownik",
+    "word_conj_verb_causative": "Przyczynowy",
+    "word_conj_verb_causative_passive": "Przyczynowy pasywny",
+    "word_conj_verb_conditional": "Warunkowy",
+    "word_conj_verb_conditional_m": "Jeżeli X by [nie] zrobił, jeżeli X by [nie] był",
+    "word_conj_verb_imperative": "Rozkazujący",
+    "word_conj_verb_imperative_m": "[nie] rób!",
+    "word_conj_verb_non_past": "Teraźniejszy, (Przyszły)",
+    "word_conj_verb_non_past_m": "[nie] Zrobić",
+    "word_conj_verb_passive": "Pasywny, z szacunkiem",
+    "word_conj_verb_passive_m": "[nie] jest zrobione (przez...), [nie] zostanie zropione (przez...)",
+    "word_conj_verb_past": "Przeszły",
+    "word_conj_verb_past_m": "[nie] Zrobił",
+    "word_conj_verb_potential": "Potencjalny",
+    "word_conj_verb_potential_m": "[nie] jest w stanie, [nie] może",
+    "word_conj_verb_provisional": "Provisional",
+    "word_conj_verb_provisional_m": "Jeżeli X [nie] zrobi, jeżeli X [nie] jest",
+    "word_conj_verb_te_form": "Forma て",
+    "word_conj_verb_volitional": "Wolicjonalny",
+    "word_conj_verb_volitional_m": "[nie] róbmy!",
     "word_conjugation": "Koniugacja",
+    "word_dialect": "Dialekt:",
+    "word_field": "Pol:",
     "word_images": "Zdjęcia",
+    "word_info": "Info:",
+    "word_meanings_more": "Więcej...",
     "word_proverbs": "Przysłowia",
+    "word_reading": "Czyt:",
+    "word_restricted_to": "Ograniczone do:",
+    "word_see_also": "Zobacz także:",
+    "word_source_language": "Język źródłowy:",
     "word_synonyms": "Synonimy",
-    "word_tab": "Słowo"
+    "word_tab": "Słowo",
+    "word_tab_menu_add_to_list": "Dodaj do listy",
+    "word_tab_menu_send_to_anki": "Wyślij do Anki",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -2651,7 +4506,7 @@ static const Map<String,dynamic> pl = {
   },
   "FeedbackScreen": {
     "draw": "rysuj",
-    "feedback_description_text": "Co jest nie tak? Napisz swój problem poniżej.",
+    "feedback_description_text": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wyślij",
     "title": "Opinia"
@@ -2675,16 +4530,75 @@ static const Map<String,dynamic> pl = {
     "download_failed_popup_retry": "Ponów",
     "download_failed_popup_text": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe.",
     "download_popup_permission": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
+    "new_version_available_heading": "Nowa wersja dostępna!",
+    "new_version_available_text": "Dostępna jest nowa wersja DaKanji!",
+    "new_version_comparison": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Stół Kana",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kana!",
+    "tutorial_kana_table": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę.",
+    "tutorial_speed_dial": "Za pomocą tego przycisku można zmienić wyświetlane kany.",
+    "tutorial_speed_dial_dakuten": "Przycisk ten służy do włączania i wyłączania Dakutenu.",
+    "tutorial_speed_dial_kana": "Ten przycisk przełącza między Katakaną i Hiraganą.",
+    "tutorial_speed_dial_romaji": "Ten przycisk włącza lub wyłącza funkcję Romaji.",
+    "tutorial_speed_dial_yoon": "Ten przycisk włącza i wyłącza znaki Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
+  },
+  "KanaTrainerScreen": {
+    "title": "Trener Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabela kanji",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli kanji!",
+    "tutorial_filter": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane.",
+    "tutorial_filter_sub_group": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu.",
+    "tutorial_kanji_amount": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych.",
+    "tutorial_kanjis": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów.",
+    "tutorial_sort": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "Aby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej.",
+    "anki_setup_android_text": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Pulpit",
+    "anki_setup_intro": "DaKanji może być używane do wysyłania notatek do Anki. Do tego każda platforma potrzebuje innej konfiguracji.",
+    "anki_setup_ios_text": "Konfiguracja na iOS jest super prosta, podobnie jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Ustawienie",
+    "anki_test_connection": "Przetestuj połączenie z Anki",
+    "anki_test_connection_fail": "Nie jesteś połączony z Anki! 😢",
+    "anki_test_connection_success": "Jesteś podłączony do Anki! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Przykłady",
+    "dict_kanji_copy_radicals_text": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka.",
+    "dict_kanji_copy_radicals_title": "Kopiowanie rodników",
+    "dict_kanji_search_kanji_group_text": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka.",
+    "dict_kanji_search_kanji_group_title": "Wyszukaj grupę Kanji",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia.",
+    "dict_radicals_paste_title": "Wklejanie rodników",
+    "dict_radicals_title": "Radykałowie",
+    "dict_search_history_delete_text": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo.",
+    "dict_search_history_delete_title": "Usuń",
+    "dict_search_history_title": "Historia wyszukiwania",
+    "dict_search_results_navigate_text": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone.",
+    "dict_search_results_navigate_title": "Nawigacja",
+    "dict_search_results_title": "Wyniki wyszukiwania",
+    "dict_text_examples_analyze_text": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie.",
+    "dict_text_examples_analyze_title": "Otwieranie przykładów na ekranie Tekst",
+    "dict_title": "Słownik",
     "title": "Instrukcja"
   },
   "OnBoarding": {
@@ -2696,24 +4610,34 @@ static const Map<String,dynamic> pl = {
     "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Usuwa pliki słownikowe.",
+    "advanced_settings_delete_history": "Usuwa historię wyszukiwania.",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
-    "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania",
+    "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów.",
     "advanced_settings_optimize_cancel": "Anuluj",
     "advanced_settings_optimize_nn": "Optymalizuj sieć neuronową",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optymalizacja...\nProszę nie zamykać aplikacji.",
     "advanced_settings_optimze_warning": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie.",
+    "advanced_settings_reset_settings": "Resetuje ustawienia.",
     "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
+    "anki_default_deck": "Pokład domyślny",
+    "anki_default_no_langs": "Liczba języków w notatkach",
+    "anki_default_no_translations": "Liczba tłumaczeń na notach",
+    "anki_title": "Anki",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Przekształcenie danych wejściowych na postać bezokolicznikową",
     "dict_deconjugate_body": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia.",
+    "dict_disable_english_info": "Znaczna część słownika jest dostępna tylko w języku angielskim. Wyłączenie tej opcji spowoduje ukrycie wszystkich tych haseł.",
     "dict_kanaize": "Konwertuj wyszukiwane hasła do kany",
-    "dict_kanaize_body": "Kiedy włączone jest to ustawienie, DaKanji konwertuje każdy wyszukiwany termin na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że wyszukiwanie 'taberu' znajdzie 食べる, ale może również prowadzić do niezamierzonych dopasowań.\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego pasuje do 万, podczas gdy angielskie słowo 'man' było zamierzone.\nInnym przypadkiem są słowa, które używają hiragana i katakana. Na przykład, wyszukiwanie りんご zostanie przekonwertowane, a zatem będzie pasować do リンゴ. Ale gdy to ustawienie jest wyłączone, りんご nie będzie pasować do リンゴ.\nJeśli absolutnie wiesz, czego szukasz, wyłącz to ustawienie.",
+    "dict_kanaize_body": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'.",
     "dict_languages": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)",
+    "dict_matrix_word_levels": "Słowa matrycowe używają poziomu JLPT",
+    "dict_show_wikipedia_definitions": "Pokaż definicje z wikipedii",
     "dict_show_word_freq": "Pokaż częstość występowania słów",
-    "dict_show_word_freq_body": "DaKanji używa miary częstotliwości słów, aby uszeregować swoje hasła słownikowe. Częstotliwość słów jest szacunkową oceną ich użycia. Szacunki te oparte są na różnych źródłach danych:\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe.\nPokazana liczba jest odmianą rzeczywistej częstotliwości słowa zwaną częstotliwością Zipfa, która ma na celu zwrócenie częstotliwości słowa w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem z 10 razy, kiedy pojawia się ono na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w danej liście słów, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.",
+    "dict_show_word_freq_body": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Użyj webview dla słowników internetowych",
     "draw_custom_url_format": "Niestandardowy format URL",
     "draw_custom_url_hint": "URL twojego słownika",
@@ -2729,6 +4653,7 @@ static const Map<String,dynamic> pl = {
     "misc_title": "Inne",
     "misc_window_on_top": "Czy aplikacja powinna być zawsze na wierzchu",
     "misc_window_opacity": "Transparentność aplikacji",
+    "requires_restart": "wymaga ponownego uruchomienia",
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ustawienia"
@@ -2768,7 +4693,27 @@ static const Map<String,dynamic> pl = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Listy słowne"
+    "add": "dodać",
+    "create_pdf": "Utwórz PDF",
+    "defaults": "ustawienia domyślne",
+    "delete": "Usuń",
+    "new_folder": "Nowy folder",
+    "new_list": "Nowy wykaz",
+    "no_entries": "Brak wpisów w tej liście słów",
+    "node_hint_text": "Nazwa",
+    "of": "z",
+    "ok": "ok",
+    "page": "strona",
+    "rename": "Zmień nazwę",
+    "search_history": "Historia wyszukiwania",
+    "send_to_anki": "Wyślij do anki",
+    "title": "Listy słowne",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie list słów!",
+    "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
+    "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
+    "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
+    "tutorial_list": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
   }
 };
 static const Map<String,dynamic> en = {
@@ -2782,28 +4727,49 @@ static const Map<String,dynamic> en = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Clipboard",
+    "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the clipboard screen!",
+    "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
+    "tutorial_pin_button": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application."
+  },
   "DictionaryScreen": {
     "example_tab": "Examples",
+    "examples_more": "Show more examples",
     "kanji_alternatives": "Alternatives",
+    "kanji_apended": "Apended:",
+    "kanji_copied": "Copied:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Kanji groups",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Lookalikes",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicals",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Close",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Close",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Search for:",
+    "search_searched": "Searched:",
     "title": "Dictionary",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the dictionary!",
     "tutorial_examples_tab": "Lastly, the examples tab shows you some example sentences that use the selected word.",
     "tutorial_kanji_tab": "The Kanji-tab includes information about the Kanjis used in the word. This includes stroke order, count and meanings.",
+    "tutorial_search_filter_text": "This button lets you apply filter to your search.",
     "tutorial_search_input_clear_text": "This button clears the input or pastes the text from your clipboard.",
     "tutorial_search_input_draw_text": "This button opens a screen in which you can draw Kanjis to add them to the search query.",
     "tutorial_search_input_text": "This is the search input field, just tap on it to input any word you would like to search.",
+    "tutorial_search_input_wildcards_text": "You can use ? to match any single character and you can use * to match 0 to infinite characters.",
+    "tutorial_search_radical_text": "This button lets you search kanji by radical.",
     "tutorial_word_tab": "This tab includes various information about the selected search result, such as conjugations and translations. The languages of the translations can be chosen in the settings.",
     "word_antonyms": "Antonyms",
     "word_conj_adj_causative": "Causative",
@@ -2844,10 +4810,21 @@ static const Map<String,dynamic> en = {
     "word_conj_verb_volitional": "Volitional",
     "word_conj_verb_volitional_m": "Let's [not] do!",
     "word_conjugation": "Conjugations",
+    "word_dialect": "Dialect:",
+    "word_field": "Field:",
     "word_images": "Images",
+    "word_info": "Info:",
+    "word_meanings_more": "More...",
     "word_proverbs": "Proverbs",
+    "word_reading": "Reading:",
+    "word_restricted_to": "Restricted to:",
+    "word_see_also": "See also:",
+    "word_source_language": "Source language:",
     "word_synonyms": "Synonyms",
-    "word_tab": "Word"
+    "word_tab": "Word",
+    "word_tab_menu_add_to_list": "Add to list",
+    "word_tab_menu_send_to_anki": "Send to Anki",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -2872,7 +4849,7 @@ static const Map<String,dynamic> en = {
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Write your issue below.",
+    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -2896,16 +4873,76 @@ static const Map<String,dynamic> en = {
     "download_failed_popup_retry": "Retry",
     "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
     "download_popup_permission": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
+    "new_version_available_heading": "New version Available!",
+    "new_version_available_text": "There is a new version of DaKanji available!",
+    "new_version_comparison": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+    "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Kana Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kana table screen!",
+    "tutorial_kana_table": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+    "tutorial_speed_dial": "This button can be used to change which Kana are shown.",
+    "tutorial_speed_dial_dakuten": "This button toggles between Dakuten on and off.",
+    "tutorial_speed_dial_kana": "This button switches between Katakana and Hiragana.",
+    "tutorial_speed_dial_romaji": "This button toggles Romaji on or off.",
+    "tutorial_speed_dial_yoon": "This button toggles Yoon characters on and off.",
+    "tutorial_speed_dial_yoon_special": "This button toggles between rare Yoon characters on or off."
+  },
+  "KanaTrainerScreen": {
+    "title": "Kana Trainer"
+  },
+  "KanjiTableScreen": {
+    "title": "Kanji Table",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji table screen!",
+    "tutorial_filter": "This dropdown lets you select a way of filtering Kanji.",
+    "tutorial_filter_sub_group": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+    "tutorial_kanji_amount": "This number indicates how many kanji are currently being shown.",
+    "tutorial_kanjis": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+    "tutorial_sort": "This dropdown lets you select an order for the shown kanji."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Kanji Trainer"
   },
   "KuzushijiScreen": {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "To test if DaKanji can reach Anki you can press the button below.",
+    "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Desktop",
+    "anki_setup_intro": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
+    "anki_setup_ios_text": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Setup",
+    "anki_test_connection": "Test connection to Anki",
+    "anki_test_connection_fail": "You are not connected to Anki! 😢",
+    "anki_test_connection_success": "You are connected to Anki! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Examples",
+    "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
+    "dict_kanji_copy_radicals_title": "Copying radicals",
+    "dict_kanji_search_kanji_group_text": "When a Kanji group can be searched in the dictionary it has a green border. Long pressing will search for it in the dictionary and double tapping will copy it to the clipboard.",
+    "dict_kanji_search_kanji_group_title": "Search Kanji group",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
+    "dict_radicals_paste_title": "Pasting radicals",
+    "dict_radicals_title": "Radicals",
+    "dict_search_history_delete_text": "You can delete elements from the search history by swiping left on them.",
+    "dict_search_history_delete_title": "Delete",
+    "dict_search_history_title": "Search history",
+    "dict_search_results_navigate_text": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+    "dict_search_results_navigate_title": "Navigate",
+    "dict_search_results_title": "Search results",
+    "dict_text_examples_analyze_text": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
+    "dict_text_examples_analyze_title": "Opening examples in the Text screen",
+    "dict_title": "Dictionary",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -2917,24 +4954,34 @@ static const Map<String,dynamic> en = {
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Delete dictionary files.",
+    "advanced_settings_delete_history": "Delete search history.",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes",
-    "advanced_settings_number_search_procs_body": "When DaKanji searches its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+    "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizing...\nPlease do not close the app.",
     "advanced_settings_optimze_warning": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
+    "advanced_settings_reset_settings": "Reset settings.",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
+    "anki_default_deck": "Default deck",
+    "anki_default_no_langs": "Number of languages on notes",
+    "anki_default_no_translations": "Number of translations on notes",
+    "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convert inputs to base form",
-    "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\nFor intermediate learners, the recommendation is to turn off this setting.",
+    "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
+    "dict_disable_english_info": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
     "dict_kanaize": "Convert search term to kana",
-    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that searching 'taberu' will find 食べる, but it can also lead to unintended matches.\nFor example searching 'man' will be converted to まん and therfore, matches 万, while the english word 'man' was the intention.\nAnother case are words that use hiragana and katakana. For example, searching りんご will be converted, and therefore match リンゴ. But when this setting is disabled, りんご will not match リンゴ.\nIf you absolutely know what you are searching, disable this setting.",
+    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.",
     "dict_languages": "Show translations in (drag to reorder)",
+    "dict_matrix_word_levels": "Matrix words use JLPT level",
+    "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
     "dict_show_word_freq": "Show word frequency",
-    "dict_show_word_freq_body": "DaKanji uses a word frequency measure to rank its dictionary entries. This word frequency is an estimation of a word's usage. This estimation is based on different data sources:\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\nThe shown number is a variation on the actual word frequency called Zipf frequency that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the given wordlist, although it should mean one occurrence per billion words.",
+    "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
     "draw_custom_url_format": "Custom URL format",
     "draw_custom_url_hint": "URL of your dictionary",
@@ -2950,6 +4997,7 @@ static const Map<String,dynamic> en = {
     "misc_title": "Miscellaneous",
     "misc_window_on_top": "Should the application always be on top of others",
     "misc_window_opacity": "The transparency of the application",
+    "requires_restart": "requires restart",
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "title": "Settings"
@@ -2989,7 +5037,27 @@ static const Map<String,dynamic> en = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Word lists"
+    "add": "add",
+    "create_pdf": "Create PDF",
+    "defaults": "defaults",
+    "delete": "Delete",
+    "new_folder": "New folder",
+    "new_list": "New list",
+    "no_entries": "No entries in this word list",
+    "node_hint_text": "Name",
+    "of": "of",
+    "ok": "ok",
+    "page": "page",
+    "rename": "Rename",
+    "search_history": "Search history",
+    "send_to_anki": "Send to anki",
+    "title": "Word lists",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the word lists screen!",
+    "tutorial_create_folder": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+    "tutorial_create_list": "Using this button you can create a new wordlist.",
+    "tutorial_folder": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+    "tutorial_list": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats."
   }
 };
 static const Map<String,dynamic> it = {
@@ -3003,35 +5071,67 @@ static const Map<String,dynamic> it = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Appunti",
+    "tutorial_android_limitation": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata degli appunti!",
+    "tutorial_explanation": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
+    "tutorial_pin_button": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione."
+  },
   "DictionaryScreen": {
     "example_tab": "Esempio",
+    "examples_more": "Mostra altri esempi",
     "kanji_alternatives": "Alternative",
+    "kanji_apended": "In allegato:",
+    "kanji_copied": "Copiato:",
     "kanji_frequency": "Freq.",
     "kanji_grade": "Grado",
     "kanji_groups": "Gruppi di kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Somiglianze",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicali",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Ictus",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Chiudere",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Chiudere",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Ricerca per:",
+    "search_searched": "Ricercati:",
     "title": "Dizionario",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nel dizionario!",
     "tutorial_examples_tab": "Infine, le schede degli esempi mostrano alcune frasi di esempio che utilizzano la parola selezionata.",
     "tutorial_kanji_tab": "La scheda Kanji contiene informazioni sui Kanji utilizzati nella parola. Include il numero e l'ordine dei tratti e il significato.",
+    "tutorial_search_filter_text": "Questo pulsante consente di applicare un filtro alla ricerca.",
     "tutorial_search_input_clear_text": "Questo pulsante cancella l'input o copia il testo dagli appunti.",
     "tutorial_search_input_draw_text": "Questo pulsante apre una schermata in cui è possibile disegnare un Kanji per consultarlo rapidamente.",
     "tutorial_search_input_text": "Questo è il campo di inserimento della ricerca, basta toccarlo per inserire la parola che si desidera cercare.",
+    "tutorial_search_input_wildcards_text": "È possibile utilizzare ? per abbinare qualsiasi singolo carattere e * per abbinare da 0 a infiniti caratteri.",
+    "tutorial_search_radical_text": "Questo pulsante consente di cercare i kanji per radice.",
     "tutorial_word_tab": "Questa scheda contiene varie informazioni sul risultato della ricerca selezionato, come la coniugazione e le traduzioni. La lingua delle traduzioni può essere scelta nelle impostazioni.",
     "word_antonyms": "Anonimi",
     "word_conjugation": "Coniugazione",
+    "word_dialect": "Dialetto:",
+    "word_field": "Campo:",
     "word_images": "Immagini",
+    "word_info": "Info:",
+    "word_meanings_more": "Altro...",
     "word_proverbs": "Proverbi",
+    "word_reading": "Lettura:",
+    "word_restricted_to": "Riservato a:",
+    "word_see_also": "Vedi anche:",
+    "word_source_language": "Lingua di partenza:",
     "word_synonyms": "Sinonimi",
-    "word_tab": "Parola"
+    "word_tab": "Parola",
+    "word_tab_menu_add_to_list": "Aggiungi all'elenco",
+    "word_tab_menu_send_to_anki": "Inviare ad Anki",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installato",
@@ -3056,7 +5156,7 @@ static const Map<String,dynamic> it = {
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
-    "feedback_description_text": "Cosa c'è che non va? Scrivete il vostro problema qui sotto.",
+    "feedback_description_text": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
     "title": "Feedback"
@@ -3080,16 +5180,75 @@ static const Map<String,dynamic> it = {
     "download_failed_popup_retry": "Riprova",
     "download_failed_popup_text": "Il download non è riuscito, assicurarsi di avere una connessione internet stabile.",
     "download_popup_permission": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
+    "new_version_available_heading": "Nuova versione disponibile!",
+    "new_version_available_text": "È disponibile una nuova versione di DaKanji!",
+    "new_version_comparison": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+    "new_versions_available_text": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Tavolo Kana",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tavola kana!",
+    "tutorial_kana_table": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+    "tutorial_speed_dial": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+    "tutorial_speed_dial_dakuten": "Questo pulsante consente di attivare e disattivare Dakuten.",
+    "tutorial_speed_dial_kana": "Questo pulsante consente di passare da Katakana a Hiragana.",
+    "tutorial_speed_dial_romaji": "Questo pulsante attiva o disattiva il Romaji.",
+    "tutorial_speed_dial_yoon": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+    "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
+  },
+  "KanaTrainerScreen": {
+    "title": "Allenatore Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabella Kanji",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della tabella dei kanji!",
+    "tutorial_filter": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+    "tutorial_filter_sub_group": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+    "tutorial_kanji_amount": "Questo numero indica il numero di kanji attualmente visualizzati.",
+    "tutorial_kanjis": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+    "tutorial_sort": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Allenatore di kanji"
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "Per verificare se DaKanji può raggiungere Anki è possibile premere il pulsante sottostante.",
+    "anki_setup_android_text": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Desktop",
+    "anki_setup_intro": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.",
+    "anki_setup_ios_text": "L'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere l'autorizzazione a DaKanji quando viene richiesto.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Impostazione",
+    "anki_test_connection": "Prova la connessione ad Anki",
+    "anki_test_connection_fail": "Non sei connesso ad Anki! 😢",
+    "anki_test_connection_success": "Sei connesso ad Anki! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Esempi",
+    "dict_kanji_copy_radicals_text": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
+    "dict_kanji_copy_radicals_title": "Copiare i radicali",
+    "dict_kanji_search_kanji_group_text": "Quando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde. Premendo a lungo lo si cerca nel dizionario e toccando due volte lo si copia negli appunti.",
+    "dict_kanji_search_kanji_group_title": "Ricerca gruppo Kanji",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
+    "dict_radicals_paste_title": "Incollare i radicali",
+    "dict_radicals_title": "Radicali",
+    "dict_search_history_delete_text": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+    "dict_search_history_delete_title": "Cancellare",
+    "dict_search_history_title": "Storia della ricerca",
+    "dict_search_results_navigate_text": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+    "dict_search_results_navigate_title": "Navigare",
+    "dict_search_results_title": "Risultati della ricerca",
+    "dict_text_examples_analyze_text": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
+    "dict_text_examples_analyze_title": "Apertura di esempi nella schermata Testo",
+    "dict_title": "Dizionario",
     "title": "Manuale"
   },
   "OnBoarding": {
@@ -3101,24 +5260,34 @@ static const Map<String,dynamic> it = {
     "Onboarding_3_title": "Non sapete leggere una frase?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Elimina i file del dizionario.",
+    "advanced_settings_delete_history": "Elimina la cronologia delle ricerche.",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
-    "advanced_settings_number_search_procs": "Numero di processi di ricerca",
+    "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
     "advanced_settings_optimize_cancel": "Annullamento",
     "advanced_settings_optimize_nn": "Ottimizzare le reti neurali",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Ottimizzazione...\nNon chiudere l'applicazione.",
     "advanced_settings_optimze_warning": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
+    "advanced_settings_reset_settings": "Ripristina le impostazioni.",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
+    "anki_default_deck": "Mazzo predefinito",
+    "anki_default_no_langs": "Numero di lingue sulle note",
+    "anki_default_no_translations": "Numero di traduzioni sulle note",
+    "anki_title": "Anki",
     "custom_url_explanation": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertire gli input in forma base",
     "dict_deconjugate_body": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
+    "dict_disable_english_info": "Una parte significativa del dizionario è disponibile solo in inglese. Disabilitandola, tutte queste voci verranno nascoste.",
     "dict_kanaize": "Convertire i termini di ricerca in kana",
-    "dict_kanaize_body": "Quando si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la ricerca di \"taberu\" troverà 食べる, ma può anche portare a corrispondenze non volute.\nAd esempio, la ricerca di 'man' verrà convertita in まん e quindi corrisponderà a 万, mentre l'intenzione era quella di trovare la parola inglese 'man'.\nUn altro caso è quello delle parole che utilizzano hiragana e katakana. Ad esempio, la ricerca di りんご verrà convertita e corrisponderà quindi a リンゴ. Se invece questa impostazione è disattivata, りんご non corrisponderà a リンゴ.\nSe si sa assolutamente cosa si sta cercando, disabilitare questa impostazione.",
+    "dict_kanaize_body": "Se si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la query \"taberu\" sarà convertita in たべる e troverà 食べる, ma può anche portare a corrispondenze non volute.\n\nAd esempio, la ricerca di \"man\" verrà convertita in まん e quindi corrisponderà a 万 e alla parola inglese \"man\".",
     "dict_languages": "Mostra le traduzioni in (trascinare per riordinare)",
+    "dict_matrix_word_levels": "Le parole della matrice utilizzano il livello JLPT",
+    "dict_show_wikipedia_definitions": "Mostra le definizioni da wikipedia",
     "dict_show_word_freq": "Mostra la frequenza delle parole",
-    "dict_show_word_freq_body": "Per classificare le voci del dizionario, DaKanji utilizza una misura di frequenza delle parole. La frequenza di parola è una stima dell'uso di una parola. Questa stima si basa su diverse fonti di dati:\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\nIl numero mostrato è una variante della frequenza reale delle parole, chiamata frequenza Zipf, che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nell'elenco di parole dato, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.",
+    "dict_show_word_freq_body": "DaKanji utilizza la frequenza delle parole per classificare le voci del suo dizionario. La frequenza delle parole è una stima dell'uso di una parola e si basa su diverse fonti di dati:\n\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\n\nIl numero mostrato in DaKanji è una variante della frequenza effettiva delle parole, chiamata [frequenza Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law), che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nelle fonti di dati, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.\n[Per saperne di più...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Utilizzare una webview per i dizionari web",
     "draw_custom_url_format": "Formato URL personalizzato",
     "draw_custom_url_hint": "URL del vostro dizionario",
@@ -3134,6 +5303,7 @@ static const Map<String,dynamic> it = {
     "misc_title": "Varie",
     "misc_window_on_top": "L'applicazione deve essere sempre in cima",
     "misc_window_opacity": "La trasparenza dell'applicazione",
+    "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "title": "Impostazioni"
@@ -3159,7 +5329,27 @@ static const Map<String,dynamic> it = {
     "title": "Vista sul web"
   },
   "WordListsScreen": {
-    "title": "Elenchi di parole"
+    "add": "aggiungere",
+    "create_pdf": "Creare PDF",
+    "defaults": "valori predefiniti",
+    "delete": "Cancellare",
+    "new_folder": "Nuova cartella",
+    "new_list": "Nuovo elenco",
+    "no_entries": "Nessuna voce in questo elenco di parole",
+    "node_hint_text": "Nome",
+    "of": "di",
+    "ok": "ok",
+    "page": "pagina",
+    "rename": "Rinominare",
+    "search_history": "Storia della ricerca",
+    "send_to_anki": "Invia ad anki",
+    "title": "Elenchi di parole",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
+    "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
+    "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
+    "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
+    "tutorial_list": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto."
   }
 };
 static const Map<String,dynamic> fr = {
@@ -3173,35 +5363,67 @@ static const Map<String,dynamic> fr = {
   "ChangelogScreen": {
     "title": "Changelog"
   },
+  "ClipboardScreen": {
+    "title": "Presse-papiers",
+    "tutorial_android_limitation": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans l'écran du presse-papiers !",
+    "tutorial_explanation": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
+    "tutorial_pin_button": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application."
+  },
   "DictionaryScreen": {
     "example_tab": "Exemple",
+    "examples_more": "Montrer plus d'exemples",
     "kanji_alternatives": "Alternatives",
+    "kanji_apended": "Approuvé :",
+    "kanji_copied": "Copié :",
     "kanji_frequency": "Fréq.",
     "kanji_grade": "Grade",
     "kanji_groups": "Groupes de kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Sosies",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicaux",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Strokes",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Fermer",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Fermer",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Recherche de :",
+    "search_searched": "Recherché :",
     "title": "Dictionnaire",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue dans le dictionnaire !",
     "tutorial_examples_tab": "Enfin, l'onglet \"Exemples\" vous montre des exemples de phrases qui utilisent le mot sélectionné.",
     "tutorial_kanji_tab": "L'onglet Kanji comprend des informations sur les Kanjis utilisés dans le mot. Cela comprend le nombre et l'ordre des traits et les significations.",
+    "tutorial_search_filter_text": "Ce bouton vous permet d'appliquer un filtre à votre recherche.",
     "tutorial_search_input_clear_text": "Ce bouton efface la saisie ou copie le texte depuis le presse-papiers.",
     "tutorial_search_input_draw_text": "Ce bouton ouvre un écran dans lequel l'utilisateur peut dessiner un Kanji pour le rechercher rapidement.",
     "tutorial_search_input_text": "Il s'agit du champ de saisie de la recherche. Il suffit de taper dessus pour saisir le mot que vous souhaitez rechercher.",
+    "tutorial_search_input_wildcards_text": "Vous pouvez utiliser ? pour faire correspondre n'importe quel caractère et vous pouvez utiliser * pour faire correspondre de 0 à une infinité de caractères.",
+    "tutorial_search_radical_text": "Ce bouton vous permet de rechercher des kanji par radical.",
     "tutorial_word_tab": "Cet onglet comprend diverses informations sur le résultat de recherche sélectionné, telles que la conjugaison et les traductions. La langue des traductions peut être choisie dans les paramètres.",
     "word_antonyms": "Antonymes",
     "word_conjugation": "Conjugaison",
+    "word_dialect": "Dialecte :",
+    "word_field": "Domaine :",
     "word_images": "Images",
+    "word_info": "Info :",
+    "word_meanings_more": "Plus...",
     "word_proverbs": "Proverbes",
+    "word_reading": "Lecture :",
+    "word_restricted_to": "Restreint à :",
+    "word_see_also": "Voir aussi",
+    "word_source_language": "Langue source :",
     "word_synonyms": "Synonymes",
-    "word_tab": "Word"
+    "word_tab": "Word",
+    "word_tab_menu_add_to_list": "Ajouter à la liste",
+    "word_tab_menu_send_to_anki": "Envoyer à Anki",
+    "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installé",
@@ -3226,7 +5448,7 @@ static const Map<String,dynamic> fr = {
   },
   "FeedbackScreen": {
     "draw": "dessiner",
-    "feedback_description_text": "Quel est le problème ? Écrivez votre problème ci-dessous.",
+    "feedback_description_text": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
     "title": "Commentaires"
@@ -3250,16 +5472,75 @@ static const Map<String,dynamic> fr = {
     "download_failed_popup_retry": "Réessayer",
     "download_failed_popup_text": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
     "download_popup_permission": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
+    "new_version_available_heading": "Nouvelle version disponible !",
+    "new_version_available_text": "#ERROR!",
+    "new_version_comparison": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Table Kana",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la table kana !",
+    "tutorial_kana_table": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
+    "tutorial_speed_dial": "Ce bouton permet de modifier les Kana affichés.",
+    "tutorial_speed_dial_dakuten": "Ce bouton permet d'activer ou de désactiver Dakuten.",
+    "tutorial_speed_dial_kana": "Ce bouton permet de passer des Katakana aux Hiragana.",
+    "tutorial_speed_dial_romaji": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
+    "tutorial_speed_dial_yoon": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
+    "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
+  },
+  "KanaTrainerScreen": {
+    "title": "Formateur Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tableau des Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la table des kanji !",
+    "tutorial_filter": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+    "tutorial_filter_sub_group": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
+    "tutorial_kanji_amount": "Ce nombre indique combien de kanji sont actuellement affichés.",
+    "tutorial_kanjis": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+    "tutorial_sort": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entraîneur de kanji"
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "Pour tester si DaKanji peut atteindre Anki, vous pouvez cliquer sur le bouton ci-dessous.",
+    "anki_setup_android_text": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Bureau",
+    "anki_setup_intro": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.",
+    "anki_setup_ios_text": "L'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder l'autorisation à DaKanji lorsqu'elle est demandée.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Mise en place",
+    "anki_test_connection": "Test de connexion à Anki",
+    "anki_test_connection_fail": "Vous n'êtes pas connecté à Anki ! 😢",
+    "anki_test_connection_success": "Vous êtes connecté à Anki ! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Exemples",
+    "dict_kanji_copy_radicals_text": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
+    "dict_kanji_copy_radicals_title": "Copier des radicaux",
+    "dict_kanji_search_kanji_group_text": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'une bordure verte. Un appui long permet de le rechercher dans le dictionnaire et un double appui permet de le copier dans le presse-papiers.",
+    "dict_kanji_search_kanji_group_title": "Rechercher un groupe de Kanji",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
+    "dict_radicals_paste_title": "Collage de radicaux",
+    "dict_radicals_title": "Radicaux",
+    "dict_search_history_delete_text": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+    "dict_search_history_delete_title": "Supprimer",
+    "dict_search_history_title": "Historique de la recherche",
+    "dict_search_results_navigate_text": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+    "dict_search_results_navigate_title": "Naviguer",
+    "dict_search_results_title": "Résultats de la recherche",
+    "dict_text_examples_analyze_text": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
+    "dict_text_examples_analyze_title": "Ouvrir des exemples dans l'écran Texte",
+    "dict_title": "Dictionnaire",
     "title": "Manuel"
   },
   "OnBoarding": {
@@ -3271,24 +5552,34 @@ static const Map<String,dynamic> fr = {
     "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
+    "advanced_settings_delete_history": "Supprime l'historique des recherches.",
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
-    "advanced_settings_number_search_procs": "Nombre de processus de recherche",
+    "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
     "advanced_settings_optimize_cancel": "Annuler",
     "advanced_settings_optimize_nn": "Optimiser les réseaux neuronaux",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimisation...\nNe fermez pas l'application.",
     "advanced_settings_optimze_warning": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
+    "advanced_settings_reset_settings": "Réinitialise les paramètres.",
     "advanced_settings_snap": "Je suis inévitable...",
     "advanced_settings_title": "Paramètres avancés",
+    "anki_default_deck": "Pont par défaut",
+    "anki_default_no_langs": "Nombre de langues sur les notes",
+    "anki_default_no_translations": "Nombre de traductions sur les notes",
+    "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertir les entrées en forme de base",
     "dict_deconjugate_body": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
+    "dict_disable_english_info": "Une partie importante du dictionnaire n'est disponible qu'en anglais. En la désactivant, vous masquerez toutes ces entrées.",
     "dict_kanaize": "Convertir les termes de recherche en kana",
-    "dict_kanaize_body": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la recherche de 'taberu' trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\nPar exemple, la recherche de \"man\" sera convertie en まん et correspondra donc à 万, alors que le mot anglais \"man\" était l'intention.\nUn autre cas est celui des mots qui utilisent l'hiragana et le katakana. Par exemple, la recherche de りんご sera convertie et correspondra donc à リンゴ. Mais lorsque ce paramètre est désactivé, りんご ne correspondra pas à リンゴ.\nSi vous savez absolument ce que vous recherchez, désactivez ce paramètre.",
+    "dict_kanaize_body": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".",
     "dict_languages": "Afficher les traductions dans (glisser pour réorganiser)",
+    "dict_matrix_word_levels": "Les mots de la matrice utilisent le niveau JLPT",
+    "dict_show_wikipedia_definitions": "Afficher les définitions de wikipedia",
     "dict_show_word_freq": "Afficher la fréquence des mots",
-    "dict_show_word_freq_body": "DaKanji utilise une mesure de la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'usage d'un mot. Cette estimation est basée sur différentes sources de données :\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, représentant les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\nLe nombre indiqué est une variante de la fréquence réelle des mots, appelée fréquence de Zipf, qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois où il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs de Zipf raisonnables se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans la liste de mots donnée, bien que cela doive signifier une occurrence par milliard de mots.",
+    "dict_show_word_freq_body": "Le DaKanji utilise la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'utilisation d'un mot et est basée sur différentes sources de données :\n\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, qui représente les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqué dans DaKanji est une variante de la fréquence réelle des mots appelée [fréquence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans les sources de données, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Utiliser une vue web pour les dictionnaires web",
     "draw_custom_url_format": "Format d'URL personnalisé",
     "draw_custom_url_hint": "URL de votre dictionnaire",
@@ -3304,6 +5595,7 @@ static const Map<String,dynamic> fr = {
     "misc_title": "Divers",
     "misc_window_on_top": "L'application doit-elle toujours être en tête",
     "misc_window_opacity": "La transparence de l'application",
+    "requires_restart": "nécessite un redémarrage",
     "restarts_app": "redémarre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "title": "Paramètres"
@@ -3329,7 +5621,27 @@ static const Map<String,dynamic> fr = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Listes de mots"
+    "add": "ajouter",
+    "create_pdf": "Créer un PDF",
+    "defaults": "Défauts",
+    "delete": "Supprimer",
+    "new_folder": "Nouveau dossier",
+    "new_list": "Nouvelle liste",
+    "no_entries": "Aucune entrée dans cette liste de mots",
+    "node_hint_text": "Nom",
+    "of": "de",
+    "ok": "ok",
+    "page": "page",
+    "rename": "Renommer",
+    "search_history": "Historique de la recherche",
+    "send_to_anki": "Envoyer à anki",
+    "title": "Listes de mots",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
+    "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
+    "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
+    "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
+    "tutorial_list": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu."
   }
 };
 static const Map<String,dynamic> es = {
@@ -3343,35 +5655,67 @@ static const Map<String,dynamic> es = {
   "ChangelogScreen": {
     "title": "Lista de cambios"
   },
+  "ClipboardScreen": {
+    "title": "Portapapeles",
+    "tutorial_android_limitation": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla del portapapeles",
+    "tutorial_explanation": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
+    "tutorial_pin_button": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación."
+  },
   "DictionaryScreen": {
     "example_tab": "Ejemplo",
+    "examples_more": "Mostrar más ejemplos",
     "kanji_alternatives": "Alternativas",
+    "kanji_apended": "Aplazado:",
+    "kanji_copied": "Copiado:",
     "kanji_frequency": "Frec.",
     "kanji_grade": "Grado",
     "kanji_groups": "Grupos de kanji",
     "kanji_heisig": "Heisig",
     "kanji_jlpt": "JLPT",
     "kanji_kun_reading": "Kun",
+    "kanji_lookalikes": "Parecidos",
     "kanji_on_reading": "On",
     "kanji_radicals": "Radicales",
     "kanji_skip": "SKIP",
     "kanji_strokes": "Trazos",
     "kanji_tab": "Kanji",
+    "search_filter_close": "Cerrar",
+    "search_filter_ok": "Ok",
+    "search_radical_close": "Cerrar",
+    "search_radical_ok": "Ok",
+    "search_search_for": "Buscar:",
+    "search_searched": "Buscados:",
     "title": "Diccionario",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "¡Bienvenido al diccionario!",
     "tutorial_examples_tab": "Por último, la pestaña de ejemplos le muestra algunas frases de ejemplo que utilizan la palabra seleccionada.",
     "tutorial_kanji_tab": "La pestaña Kanji incluye información sobre los Kanjis utilizados en la palabra. Incluye el número y el orden de los trazos y los significados.",
+    "tutorial_search_filter_text": "Este botón le permite aplicar filtros a su búsqueda.",
     "tutorial_search_input_clear_text": "Este botón borra la entrada o copia el texto del portapapeles.",
     "tutorial_search_input_draw_text": "Este botón abre una pantalla en la que puedes dibujar un Kanji para buscarlo rápidamente.",
     "tutorial_search_input_text": "Este es el campo de entrada de búsqueda, simplemente pulse sobre él para introducir cualquier palabra que desee buscar.",
+    "tutorial_search_input_wildcards_text": "Puede utilizar ? para que coincida con cualquier carácter y puede utilizar * para que coincida de 0 a infinitos caracteres.",
+    "tutorial_search_radical_text": "Este botón te permite buscar kanji por radical.",
     "tutorial_word_tab": "Esta pestaña incluye diversa información sobre el resultado de búsqueda seleccionado, como la conjugación y las traducciones. El idioma de las traducciones puede elegirse en los ajustes.",
     "word_antonyms": "Antónimos",
     "word_conjugation": "Conjugación",
+    "word_dialect": "Dialecto:",
+    "word_field": "Campo:",
     "word_images": "Imágenes",
+    "word_info": "Info:",
+    "word_meanings_more": "Más...",
     "word_proverbs": "Proverbios",
+    "word_reading": "Lectura:",
+    "word_restricted_to": "Restringido a:",
+    "word_see_also": "Véase también:",
+    "word_source_language": "Idioma de origen:",
     "word_synonyms": "Sinónimos",
-    "word_tab": "Palabra"
+    "word_tab": "Palabra",
+    "word_tab_menu_add_to_list": "Añadir a la lista",
+    "word_tab_menu_send_to_anki": "Enviar a Anki",
+    "word_wikipedia": "Wikipedia"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",
@@ -3396,7 +5740,7 @@ static const Map<String,dynamic> es = {
   },
   "FeedbackScreen": {
     "draw": "dibujar",
-    "feedback_description_text": "¿Qué te ocurre? Escriba su problema a continuación.",
+    "feedback_description_text": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
     "navigate": "navegue por",
     "submit": "enviar",
     "title": "Comentarios"
@@ -3420,16 +5764,75 @@ static const Map<String,dynamic> es = {
     "download_failed_popup_retry": "Reintentar",
     "download_failed_popup_text": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
     "download_popup_permission": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
+    "new_version_available_heading": "Nueva versión disponible",
+    "new_version_available_text": "¡Hay una nueva versión de DaKanji disponible!",
+    "new_version_comparison": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+    "new_versions_available_text": "#ERROR!",
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
   },
-  "KanjiScreen": {
-    "title": "Kanji"
+  "KanaTableScreen": {
+    "title": "Mesa Kana",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de la tabla de kana!",
+    "tutorial_kana_table": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
+    "tutorial_speed_dial": "Este botón permite cambiar los kana que se muestran.",
+    "tutorial_speed_dial_dakuten": "Este botón activa y desactiva el Dakuten.",
+    "tutorial_speed_dial_kana": "Este botón alterna entre Katakana e Hiragana.",
+    "tutorial_speed_dial_romaji": "Este botón activa o desactiva Romaji.",
+    "tutorial_speed_dial_yoon": "Este botón activa y desactiva los caracteres Yoon.",
+    "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
+  },
+  "KanaTrainerScreen": {
+    "title": "Entrenador Kana"
+  },
+  "KanjiTableScreen": {
+    "title": "Tabla de Kanji",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de la tabla de kanji!",
+    "tutorial_filter": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+    "tutorial_filter_sub_group": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
+    "tutorial_kanji_amount": "Este número indica cuántos kanji se están mostrando actualmente.",
+    "tutorial_kanjis": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+    "tutorial_sort": "Este desplegable te permite seleccionar un orden para los kanji mostrados."
+  },
+  "KanjiTrainerScreen": {
+    "title": "Entrenador de Kanji"
   },
   "KuzushijiScreen": {
-    "title": "Kuzushiji"
   },
   "ManualScreen": {
+    "anki_connection_test": "Para probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
+    "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+    "anki_setup_android_title": "Android",
+    "anki_setup_desktop_text": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
+    "anki_setup_desktop_title": "Escritorio",
+    "anki_setup_intro": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.",
+    "anki_setup_ios_text": "La configuración en iOS es super sencilla, al igual que en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando te lo pida.",
+    "anki_setup_ios_title": "iOS",
+    "anki_setup_title": "Configurar",
+    "anki_test_connection": "Prueba de conexión a Anki",
+    "anki_test_connection_fail": "¡No estás conectado a Anki! 😢",
+    "anki_test_connection_success": "¡Estás conectado a Anki! 🎉",
+    "anki_title": "Anki",
+    "dict_examples_title": "Ejemplos",
+    "dict_kanji_copy_radicals_text": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
+    "dict_kanji_copy_radicals_title": "Copiar radicales",
+    "dict_kanji_search_kanji_group_text": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
+    "dict_kanji_search_kanji_group_title": "Buscar grupo de kanji",
+    "dict_kanji_title": "Kanji",
+    "dict_radicals_paste_text": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
+    "dict_radicals_paste_title": "Pegar radicales",
+    "dict_radicals_title": "Radicales",
+    "dict_search_history_delete_text": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+    "dict_search_history_delete_title": "Borrar",
+    "dict_search_history_title": "Historial de búsqueda",
+    "dict_search_results_navigate_text": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+    "dict_search_results_navigate_title": "Navegue por",
+    "dict_search_results_title": "Resultados de la búsqueda",
+    "dict_text_examples_analyze_text": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
+    "dict_text_examples_analyze_title": "Abrir ejemplos en la pantalla Texto",
+    "dict_title": "Diccionario",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -3441,24 +5844,34 @@ static const Map<String,dynamic> es = {
     "Onboarding_3_title": "¿No sabe leer una frase?"
   },
   "SettingsScreen": {
+    "advanced_settings_delete_dict": "Borra los archivos del diccionario.",
+    "advanced_settings_delete_history": "Borra el historial de búsqueda.",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
-    "advanced_settings_number_search_procs": "Número de procesos de búsqueda",
+    "advanced_settings_number_search_procs": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
     "advanced_settings_optimize_cancel": "Cancelar",
     "advanced_settings_optimize_nn": "Optimizar las redes neuronales",
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizando...\nPor favor, no cierre la aplicación.",
     "advanced_settings_optimze_warning": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
+    "advanced_settings_reset_settings": "Restablece la configuración.",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
+    "anki_default_deck": "Cubierta por defecto",
+    "anki_default_no_langs": "Número de lenguas en los billetes",
+    "anki_default_no_translations": "Número de traducciones en los billetes",
+    "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma básica",
     "dict_deconjugate_body": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
+    "dict_disable_english_info": "Una parte importante del diccionario sólo está disponible en inglés. Si lo desactiva, se ocultarán todas esas entradas.",
     "dict_kanaize": "Convertir el término de búsqueda en kana",
-    "dict_kanaize_body": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda en una representación kana uniforme antes de buscarlo. Esto significa que al buscar \"taberu\" se encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\nPor ejemplo, la búsqueda de \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万, mientras que la intención era buscar la palabra inglesa \"man\".\nOtro caso son las palabras que utilizan hiragana y katakana. Por ejemplo, la búsqueda りんご se convertirá y, por tanto, coincidirá con リンゴ. Pero cuando este ajuste está desactivado, りんご no coincidirá con リンゴ.\nSi sabes perfectamente lo que buscas, desactiva esta opción.",
+    "dict_kanaize_body": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".",
     "dict_languages": "Mostrar traducciones en (arrastre para reordenar)",
+    "dict_matrix_word_levels": "Las palabras de la matriz utilizan el nivel JLPT",
+    "dict_show_wikipedia_definitions": "Mostrar definiciones de wikipedia",
     "dict_show_word_freq": "Mostrar frecuencia de palabras",
-    "dict_show_word_freq_body": "DaKanji utiliza una medida de frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia es una estimación del uso de una palabra. Esta estimación se basa en diferentes fuentes de datos:\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\nLa cifra mostrada es una variación de la frecuencia real de las palabras denominada frecuencia Zipf, cuyo objetivo es devolver la frecuencia de las palabras en una escala logarítmica de fácil comprensión para el ser humano. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en la lista de palabras dada, aunque debería significar una aparición por cada mil millones de palabras.",
+    "dict_show_word_freq_body": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
     "draw_browser_for_online_dict": "Usar una webview para los diccionarios en la web",
     "draw_custom_url_format": "Formato de la URL personalizada",
     "draw_custom_url_hint": "URL de tu diccionario",
@@ -3474,6 +5887,7 @@ static const Map<String,dynamic> es = {
     "misc_title": "Misceláneo",
     "misc_window_on_top": "¿Debe la aplicación estar siempre encima",
     "misc_window_opacity": "La transparencia de la aplicación",
+    "requires_restart": "requiere reinicio",
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "title": "Ajustes"
@@ -3499,7 +5913,27 @@ static const Map<String,dynamic> es = {
     "title": "Webview"
   },
   "WordListsScreen": {
-    "title": "Listas de palabras"
+    "add": "añada",
+    "create_pdf": "Crear PDF",
+    "defaults": "valores predeterminados",
+    "delete": "Borrar",
+    "new_folder": "Nueva carpeta",
+    "new_list": "Nueva lista",
+    "no_entries": "No hay entradas en esta lista de palabras",
+    "node_hint_text": "Nombre",
+    "of": "de",
+    "ok": "ok",
+    "page": "página",
+    "rename": "Cambie el nombre de",
+    "search_history": "Historial de búsqueda",
+    "send_to_anki": "Enviar a anki",
+    "title": "Listas de palabras",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
+    "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
+    "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
+    "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
+    "tutorial_list": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido."
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};

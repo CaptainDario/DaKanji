@@ -3,13 +3,14 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  clipboard_watcher
   isar_flutter_libs
   mecab_dart
   media_kit_libs_linux
   media_kit_video
+  printing
   screen_retriever
   sentry_flutter
-  tflite_flutter_helper
   url_launcher_linux
   window_manager
 )
