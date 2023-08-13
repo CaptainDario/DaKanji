@@ -102,7 +102,7 @@ bool g_IsTestingAppStartupDrawscreenNewFeatures = false;
 
 // PATHS
 /// path to the documents directory
-late final Directory g_documentsDirectory;
+late Directory g_documentsDirectory;
 
 
 //about page
