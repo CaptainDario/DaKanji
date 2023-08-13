@@ -89,6 +89,14 @@ class UserData{
   @JsonKey(defaultValue: false)
   bool showChangelog = false;
 
+  /// Has the dictionary of japanese grammar anki deck (w/o media) been imported
+  @JsonKey(defaultValue: false)
+  bool dojgImported = false;
+
+  /// Has the dictionary of japanese grammar anki deck (w/ media) been imported
+  @JsonKey(defaultValue: false)
+  bool dojgWithMediaImported = false;
+
   /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)
   InferenceBackend? drawingBackend;
