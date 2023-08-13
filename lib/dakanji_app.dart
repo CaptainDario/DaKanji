@@ -111,6 +111,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                       GetIt.I<UserData>().showTutorialWordLists = false;
                       await GetIt.I<UserData>().save();
                     }
+                    else if(index == GetIt.I<Tutorials>().dojgScreenTutorial.indexes!.last){
+                      print("Dojg screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialDojg = false;
+                      await GetIt.I<UserData>().save();
+                    }
                   },
                   child: screen,
                 );
@@ -146,7 +151,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               initialEntryId: args.initialEntryId,
             ));
           case "/dojg":
-            return switchScreen(const DoJGScreen());
+            return switchScreen(DoJGScreen(includeTutorial: true,));
           case "/text":
             return switchScreen(TextScreen(
               args.navigatedByDrawer, true, 

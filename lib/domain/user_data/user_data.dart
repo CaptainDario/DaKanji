@@ -61,6 +61,10 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialText = true;
 
+  /// should the tutorial of the dictionary screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialDojg = true;
+
   /// should the tutorial of the clipboard screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialClipboard = true;

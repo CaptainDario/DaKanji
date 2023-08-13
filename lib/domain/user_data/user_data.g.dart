@@ -17,6 +17,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showTutorialDrawing = json['showTutorialDrawing'] as bool? ?? true
   ..showTutorialDictionary = json['showTutorialDictionary'] as bool? ?? true
   ..showTutorialText = json['showTutorialText'] as bool? ?? true
+  ..showTutorialDojg = json['showTutorialDojg'] as bool? ?? true
   ..showTutorialClipboard = json['showTutorialClipboard'] as bool? ?? true
   ..showTutorialKanjiTable = json['showTutorialKanjiTable'] as bool? ?? true
   ..showTutorialKanaTable = json['showTutorialKanaTable'] as bool? ?? true
@@ -37,6 +38,7 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'showTutorialDrawing': instance.showTutorialDrawing,
       'showTutorialDictionary': instance.showTutorialDictionary,
       'showTutorialText': instance.showTutorialText,
+      'showTutorialDojg': instance.showTutorialDojg,
       'showTutorialClipboard': instance.showTutorialClipboard,
       'showTutorialKanjiTable': instance.showTutorialKanjiTable,
       'showTutorialKanaTable': instance.showTutorialKanaTable,
