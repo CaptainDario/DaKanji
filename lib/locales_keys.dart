@@ -106,6 +106,10 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
+  static const DojgScreen_tile = 'DojgScreen.tile';
+  static const DojgScreen_tutorial_begin_text = 'DojgScreen.tutorial_begin_text';
+  static const DojgScreen_tutorial_begin_title = 'DojgScreen.tutorial_begin_title';
+  static const DojgScreen = 'DojgScreen';
   static const DrawScreen_not_installed = 'DrawScreen.not_installed';
   static const DrawScreen_title = 'DrawScreen.title';
   static const DrawScreen_tutorial_begin_continue = 'DrawScreen.tutorial_begin_continue';

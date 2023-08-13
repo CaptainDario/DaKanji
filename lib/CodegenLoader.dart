@@ -87,6 +87,11 @@ class CodegenLoader extends AssetLoader{
     "word_tab_menu_send_to_anki": "发送到 Anki",
     "word_wikipedia": "维基百科"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎访问《日语语法词典》（DoJG）屏幕！"
+  },
   "DrawScreen": {
     "not_installed": "未安装{DICTIONARY}。",
     "title": "绘图",
@@ -307,6 +312,41 @@ class CodegenLoader extends AssetLoader{
   }
 };
 static const Map<String,dynamic> localizations = {
+  "DojgScreen": {
+    "tile": {
+      "en": "DoJG",
+      "de": "DoJG",
+      "ru": "DoJG",
+      "ja": "DoJG",
+      "zh": "DoJG",
+      "it": "DoJG",
+      "fr": "DoJG",
+      "es": "DoJG",
+      "pl": "DoJG"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+      "de": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
+      "ru": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
+      "ja": "日本語文法辞典（DoJG）の画面へようこそ！",
+      "zh": "欢迎访问《日语语法词典》（DoJG）屏幕！",
+      "it": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
+      "fr": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
+      "es": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
+      "pl": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    }
+  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -3506,6 +3546,11 @@ static const Map<String,dynamic> ja = {
     "word_tab_menu_send_to_anki": "Ankiに送信",
     "word_wikipedia": "ウィキペディア"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "日本語文法辞典（DoJG）の画面へようこそ！"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません",
     "title": "漢字を探す",
@@ -3849,6 +3894,11 @@ static const Map<String,dynamic> de = {
     "word_tab_menu_send_to_anki": "An Anki senden",
     "word_wikipedia": "Wikipedia"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
     "title": "Zeichnen",
@@ -4155,6 +4205,11 @@ static const Map<String,dynamic> ru = {
     "word_tab_menu_add_to_list": "Добавить в список",
     "word_tab_menu_send_to_anki": "Отправить в Anki",
     "word_wikipedia": "Википедия"
+  },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран словаря японской грамматики (DoJG)!"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} не установлен",
@@ -4482,6 +4537,11 @@ static const Map<String,dynamic> pl = {
     "word_tab_menu_add_to_list": "Dodaj do listy",
     "word_tab_menu_send_to_anki": "Wyślij do Anki",
     "word_wikipedia": "Wikipedia"
+  },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -4826,6 +4886,11 @@ static const Map<String,dynamic> en = {
     "word_tab_menu_send_to_anki": "Send to Anki",
     "word_wikipedia": "Wikipedia"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
     "title": "Drawing",
@@ -5133,6 +5198,11 @@ static const Map<String,dynamic> it = {
     "word_tab_menu_send_to_anki": "Inviare ad Anki",
     "word_wikipedia": "Wikipedia"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installato",
     "title": "Disegno",
@@ -5425,6 +5495,11 @@ static const Map<String,dynamic> fr = {
     "word_tab_menu_send_to_anki": "Envoyer à Anki",
     "word_wikipedia": "Wikipedia (en anglais)"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installé",
     "title": "Dessin",
@@ -5716,6 +5791,11 @@ static const Map<String,dynamic> es = {
     "word_tab_menu_add_to_list": "Añadir a la lista",
     "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_wikipedia": "Wikipedia"
+  },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG)."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",

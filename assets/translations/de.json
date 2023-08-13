@@ -108,6 +108,11 @@
     "word_tab_menu_send_to_anki": "An Anki senden",
     "word_wikipedia": "Wikipedia"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm des W\u00f6rterbuchs der japanischen Grammatik (DoJG)!"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
     "title": "Zeichnen",

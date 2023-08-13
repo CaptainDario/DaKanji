@@ -108,6 +108,11 @@
     "word_tab_menu_send_to_anki": "\u53d1\u9001\u5230 Anki",
     "word_wikipedia": "\u7ef4\u57fa\u767e\u79d1"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
+    "tutorial_begin_title": "\u6b22\u8fce\u8bbf\u95ee\u300a\u65e5\u8bed\u8bed\u6cd5\u8bcd\u5178\u300b\uff08DoJG\uff09\u5c4f\u5e55\uff01"
+  },
   "DrawScreen": {
     "not_installed": "\u672a\u5b89\u88c5{DICTIONARY}\u3002",
     "title": "\u7ed8\u56fe",

@@ -108,6 +108,11 @@
     "word_tab_menu_send_to_anki": "Wy\u015blij do Anki",
     "word_wikipedia": "Wikipedia"
   },
+  "DojgScreen": {
+    "tile": "DoJG",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!"
+  },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
     "title": "Obraz",

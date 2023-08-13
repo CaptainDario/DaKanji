@@ -1,4 +1,39 @@
 {
+  "DojgScreen": {
+    "tile": {
+      "en": "DoJG",
+      "de": "DoJG",
+      "ru": "DoJG",
+      "ja": "DoJG",
+      "zh": "DoJG",
+      "it": "DoJG",
+      "fr": "DoJG",
+      "es": "DoJG",
+      "pl": "DoJG"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+      "de": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
+      "ru": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
+      "ja": "日本語文法辞典（DoJG）の画面へようこそ！",
+      "zh": "欢迎访问《日语语法词典》（DoJG）屏幕！",
+      "it": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
+      "fr": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
+      "es": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
+      "pl": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    }
+  },
   "AboutScreen": {
     "title": {
       "en": "About",
