@@ -43,6 +43,8 @@ dependencies:
   share_plus: 7.1.0
   cross_file: 0.3.3+4
   file_picker: 5.3.3
+  sqlite3: 2.1.0
+  sqlite3_flutter_libs: 0.5.15
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
   sentry_flutter: 7.9.0
