@@ -870,7 +870,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           // Delete dojg
                           ResponsiveIconButtonTile(
-                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_doj.tr(),
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_dojg.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
 
