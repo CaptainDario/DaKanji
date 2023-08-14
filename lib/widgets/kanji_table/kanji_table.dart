@@ -236,7 +236,9 @@ class _KanjiTableState extends State<KanjiTable> {
                   value: categorySelection,
                   items: categoryDropDowns,
                   style: TextStyle(
-                    color: Colors.black
+                    color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black
                   ),
                   onChanged: (value) async {
                     setState(() {
