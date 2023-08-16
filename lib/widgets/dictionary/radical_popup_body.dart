@@ -230,18 +230,29 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    height: 30,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: g_Dakanji_green,
-                      borderRadius: BorderRadius.circular(5000)
-                    ),
-                    child: Center(
-                      child: Text(
-                        LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                        style: TextStyle(
-                          color: Colors.white
+                  child: Material(
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        color: g_Dakanji_green,
+                        borderRadius: BorderRadius.circular(5000)
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        borderRadius: BorderRadius.circular(5000),
+                        highlightColor: g_Dakanji_green.withOpacity(0.2),
+                        child: SizedBox(
+                          height: 24,
+                          width: 100,
+                          child: Center(
+                            child: Text(
+                              LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -260,6 +271,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       },
                       icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
                     ),
+                    // paste button
                     IconButton(
                       onPressed: () async {
                         // get radicals in clipboard
@@ -279,6 +291,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       },
                       icon: Icon(Icons.paste)
                     ),
+                    // icons clear
                     IconButton(
                       onPressed: () {
                         setState(() {
