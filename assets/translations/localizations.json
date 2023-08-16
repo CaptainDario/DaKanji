@@ -1080,37 +1080,59 @@
       "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
     },
     "advanced_settings_reset_settings": {
-      "en": "Reset settings.",
-      "de": "Setzt die Einstellungen zurück.",
-      "ru": "Сброс настроек.",
+      "en": "Reset settings",
+      "de": "Einstellungen zurücksetzen",
+      "ru": "Сброс настроек",
       "ja": "設定のリセット",
-      "zh": "重置设置。",
-      "it": "Ripristina le impostazioni.",
-      "fr": "Réinitialise les paramètres.",
-      "es": "Restablece la configuración.",
-      "pl": "Resetuje ustawienia."
+      "zh": "重置设置",
+      "it": "Ripristino delle impostazioni",
+      "fr": "Réinitialiser les paramètres",
+      "es": "Restablecer ajustes",
+      "pl": "Resetowanie ustawień"
+    },
+    "advanced_settings_delete_user_data": {
+      "en": "Delete user data",
+      "de": "Benutzerdaten löschen",
+      "ru": "Удаление пользовательских данных",
+      "ja": "ユーザーデータの削除",
+      "zh": "删除用户数据",
+      "it": "Cancellare i dati dell'utente",
+      "fr": "Supprimer les données de l'utilisateur",
+      "es": "Borrar datos de usuario",
+      "pl": "Usuwanie danych użytkownika"
     },
     "advanced_settings_delete_dict": {
-      "en": "Delete dictionary files.",
-      "de": "Löscht die Wörterbuchdateien.",
-      "ru": "Удаляет файлы словарей.",
-      "ja": "辞書ファイルの削除",
-      "zh": "删除字典文件。",
-      "it": "Elimina i file del dizionario.",
-      "fr": "Supprime les fichiers du dictionnaire.",
-      "es": "Borra los archivos del diccionario.",
-      "pl": "Usuwa pliki słownikowe."
+      "en": "Reset dictionary files",
+      "de": "Wörterbuchdateien zurücksetzen",
+      "ru": "Сброс файлов словарей",
+      "ja": "辞書ファイルのリセット",
+      "zh": "重置字典文件",
+      "it": "Reimpostare i file del dizionario",
+      "fr": "Réinitialiser les fichiers du dictionnaire",
+      "es": "Restablecer archivos de diccionario",
+      "pl": "Resetowanie plików słownika"
     },
     "advanced_settings_delete_history": {
-      "en": "Delete search history.",
-      "de": "Löscht den Suchverlauf.",
-      "ru": "Удаляет историю поиска.",
+      "en": "Delete search history",
+      "de": "Suchverlauf löschen",
+      "ru": "Удаление истории поиска",
       "ja": "検索履歴の削除",
-      "zh": "删除搜索历史。",
-      "it": "Elimina la cronologia delle ricerche.",
-      "fr": "Supprime l'historique des recherches.",
-      "es": "Borra el historial de búsqueda.",
-      "pl": "Usuwa historię wyszukiwania."
+      "zh": "删除搜索历史",
+      "it": "Cancellare la cronologia delle ricerche",
+      "fr": "Supprimer l'historique des recherches",
+      "es": "Eliminar el historial de búsqueda",
+      "pl": "Usuwanie historii wyszukiwania"
+    },
+    "advanced_settings_delete_dojg": {
+      "en": "Delete DoJG files",
+      "de": "DoJG-Dateien löschen",
+      "ru": "Удаление файлов DoJG",
+      "ja": "DoJGファイルの削除",
+      "zh": "删除 DoJG 文件",
+      "it": "Eliminare i file DoJG",
+      "fr": "Supprimer les fichiers DoJG",
+      "es": "Eliminar archivos DoJG",
+      "pl": "Usuwanie plików DoJG"
     }
   },
   "WebviewScreen": {

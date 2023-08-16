@@ -224,6 +224,7 @@ abstract class  LocaleKeys {
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
+  static const SettingsScreen_advanced_settings_delete_user_data = 'SettingsScreen.advanced_settings_delete_user_data';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
   static const SettingsScreen_advanced_settings_number_search_procs_body = 'SettingsScreen.advanced_settings_number_search_procs_body';

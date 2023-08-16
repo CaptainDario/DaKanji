@@ -236,8 +236,10 @@
     "Onboarding_3_title": "Do not know how to read a sentence?"
   },
   "SettingsScreen": {
-    "advanced_settings_delete_dict": "Delete dictionary files.",
-    "advanced_settings_delete_history": "Delete search history.",
+    "advanced_settings_delete_dict": "Reset dictionary files",
+    "advanced_settings_delete_dojg": "Delete DoJG files",
+    "advanced_settings_delete_history": "Delete search history",
+    "advanced_settings_delete_user_data": "Delete user data",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -246,7 +248,7 @@
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimizing...\nPlease do not close the app.",
     "advanced_settings_optimze_warning": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
-    "advanced_settings_reset_settings": "Reset settings.",
+    "advanced_settings_reset_settings": "Reset settings",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
     "anki_default_deck": "Default deck",
