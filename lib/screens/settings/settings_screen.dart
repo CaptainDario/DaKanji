@@ -480,7 +480,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       ResponsiveHeaderTile(
                         LocaleKeys.DojgScreen_title.tr(),
-                        Icons.text_fields_sharp,
+                        DaKanjiIcons.dojg,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // has dojg w/o media been imported
