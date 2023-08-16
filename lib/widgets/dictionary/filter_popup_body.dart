@@ -155,22 +155,28 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: 24,
-                      width: 100,
+                  child: Material(
+                    child: Ink(
                       decoration: BoxDecoration(
                         color: g_Dakanji_green,
                         borderRadius: BorderRadius.circular(5000)
                       ),
-                      child: Center(
-                        child: Text(
-                          LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                          style: TextStyle(
-                            color: Colors.white
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        borderRadius: BorderRadius.circular(5000),
+                        highlightColor: g_Dakanji_green.withOpacity(0.2),
+                        child: SizedBox(
+                          height: 24,
+                          width: 100,
+                          child: Center(
+                            child: Text(
+                              LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
                           ),
                         ),
                       ),
