@@ -864,6 +864,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             },
                           ),
                           // Delete dojg
+                          /* TODO v dojg enable
                           ResponsiveIconButtonTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_delete_dojg.tr(),
                             icon: Icons.delete_forever,
@@ -881,7 +882,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 await restartApp(context);
                               }
                             },
-                          ),
+                          ),*/
                         ],
                       ),
                       // #endregion
