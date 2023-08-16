@@ -862,7 +862,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_reset_settings.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
-                              await clearPreferences();
+                              Settings settings = Settings();
+                              await settings.save();
+                              await restartApp(context);
+                            },
+                          ),
+                          // Delete user data
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_user_data.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              UserData uD = UserData();
+                              await uD.save();
+                              await restartApp(context);
+                            },
+                          ),
+                          // delete search history
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
                               await restartApp(context);
                             },
                           ),
@@ -895,15 +915,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                 await restartApp(context);
                               }
-                            },
-                          ),
-                          // delete search history
-                          ResponsiveIconButtonTile(
-                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
-                            icon: Icons.delete_forever,
-                            onButtonPressed: () async {
-                              await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
-                              await restartApp(context);
                             },
                           ),
                         ],

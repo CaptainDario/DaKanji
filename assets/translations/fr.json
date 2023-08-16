@@ -243,9 +243,10 @@
     "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
   },
   "SettingsScreen": {
-    "advanced_settings_delete_dict": "Supprime les fichiers du dictionnaire.",
-    "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG.",
-    "advanced_settings_delete_history": "Supprime l'historique des recherches.",
+    "advanced_settings_delete_dict": "R\u00e9initialiser les fichiers du dictionnaire",
+    "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG",
+    "advanced_settings_delete_history": "Supprimer l'historique des recherches",
+    "advanced_settings_delete_user_data": "Supprimer les donn\u00e9es de l'utilisateur",
     "advanced_settings_draw_backend": "Backend d'inf\u00e9rence (n\u00e9cessite un red\u00e9marrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de donn\u00e9es, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de donn\u00e9es standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de donn\u00e9es, essayez d'utiliser plus de processus.",
@@ -254,7 +255,7 @@
     "advanced_settings_optimize_ok": "Ok",
     "advanced_settings_optimizing": "Optimisation...\nNe fermez pas l'application.",
     "advanced_settings_optimze_warning": "Cela optimisera l'ex\u00e9cution du r\u00e9seau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut am\u00e9liorer consid\u00e9rablement les performances.",
-    "advanced_settings_reset_settings": "R\u00e9initialise les param\u00e8tres.",
+    "advanced_settings_reset_settings": "R\u00e9initialiser les param\u00e8tres",
     "advanced_settings_snap": "Je suis in\u00e9vitable...",
     "advanced_settings_title": "Param\u00e8tres avanc\u00e9s",
     "anki_default_deck": "Pont par d\u00e9faut",
