@@ -36,7 +36,65 @@ Future<bool> importDoJGDeck () async {
 
 }
 
-Future<void> deleteDojg() async {
+/// Converts the sql database from the anki deck to isar
+List<DojgEntry> convertSQLiteToDojgEntry() {
+
+  List<List<String>> sqlDojgEntries    = getAllEntries();
+  Map<String, String> dojgMediaMapping = getAllMediaFiles();
+
+  List<DojgEntry> dojgEntries = [];
+  for (List<String> entry in sqlDojgEntries){
+    //String tag = entry[0];
+    String data = entry[1];
+    //String concept = entry[2];
+
+    List<String> dataSplit = data.split("");
+
+    // get all examples and separte key sentences from examples
+    List<String> examples = dataSplit.sublist(9, 41);
+    List<String> keySentencesJp = [], keySentencesEn = [], examplesJp = [], examplesEn = [];
+    for (int i = 0; i < examples.length;i+=2){
+      if(examples[i] == "") continue;
+
+      // key sentence
+      if(examples[i].startsWith("<span class=\"green\">(ks")){
+        keySentencesJp.add(examples[i]); keySentencesEn.add(examples[i+1]);
+      }
+      // normal example
+      else {
+        examplesJp.add(examples[i]); examplesEn.add(examples[i+1]);
+      }
+    }
+
+    dojgEntries.add(DojgEntry(
+      grammaticalConcept: dataSplit[0],
+      usage: dataSplit[1] != "" ? dataSplit[1] : null,
+      equivalent: dataSplit[2] != "" ? dataSplit[2] : null,
+      pos: dataSplit[44] != "" ? dataSplit[44] : null,
+      relatedExpression: dataSplit[45] != "" ? dataSplit[45] : null,
+      antonymExpression: dataSplit[46] != "" ? dataSplit[46] : null,
+
+      formation: dataSplit[43] != "" ? dataSplit[43] : null,
+
+      volume: dataSplit[4],
+      volumeTag: dataSplit[5],
+      volumeJp: dataSplit[6],
+      page: int.parse(dataSplit[7]),
+
+      cloze: dataSplit[8],
+      keySentencesJp: keySentencesJp, keySentencesEn: keySentencesEn,
+      examplesJp: examplesJp, examplesEn : examplesEn,
+
+      note: dataSplit[42] != "" ? dataSplit[42] : null,
+      noteImageName: dataSplit[41] != ""
+      ? dojgMediaMapping[
+        dataSplit[41].replaceFirst("<img src=\"", "").replaceFirst("\" />", "")
+      ]!
+      : dataSplit[41],
+    ));
+  }
+
+  return dojgEntries;
 
 }
 
