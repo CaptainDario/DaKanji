@@ -14,7 +14,6 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path/path.dart' as p;
 
 import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
@@ -37,7 +36,6 @@ import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
@@ -904,15 +902,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
 
+                              if(!GetIt.I<UserData>().dojgImported)
+                                return;
+
+                              GetIt.I<UserData>().dojgImported = false;
+                              GetIt.I<UserData>().dojgWithMediaImported = false;
+                              GetIt.I<UserData>().save();
+
                               Directory dojgDir = Directory(p.join(
                                 g_documentsDirectory.path, "DaKanji", "dojg"
                               ));
                               if(dojgDir.existsSync()){
+                                if(GetIt.I<Isars>().dojg != null){
+                                  GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);
+                                }
                                 dojgDir.delete(recursive: true);
-                                GetIt.I<UserData>().dojgImported = false;
-                                GetIt.I<UserData>().dojgWithMediaImported = false;
-                                GetIt.I<UserData>().save();
-
                                 await restartApp(context);
                               }
                             },
