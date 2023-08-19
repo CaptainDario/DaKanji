@@ -7,7 +7,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg_widget.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_list.dart';
 import 'package:da_kanji_mobile/application/dojg/dojg.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
@@ -88,7 +88,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
       animationAtStart: !widget.openedByDrawer,
       currentScreen: Screens.dojg,
       child: GetIt.I<UserData>().dojgImported
-        ? DoJGWidget()
+        ? DojgEntryList()
         : GestureDetector(
           onTap: importDojgPressed,
           child: Container(
