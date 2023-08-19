@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:isar/isar.dart';
 import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
@@ -128,13 +131,14 @@ bool checkDojgWithMediaImported() {
 
 }
 
+/// Get all DoJG deck entries from the SQLite database
 List<List<String>> getAllEntries() {
 
   Database dojgDb = sqlite3.open(
     p.join(g_documentsDirectory.path, "DaKanji", "dojg", "collection.anki2")
   );
 
-  ResultSet r = dojgDb.select("SELECT \"tags\", \"flds\", \"sfld\" FROM \"notes\" LIMIT 0,30");
+  ResultSet r = dojgDb.select("SELECT \"tags\", \"flds\", \"sfld\" FROM \"notes\"");
 
   return r.rows.map((row) => 
     row.map((e) => 
