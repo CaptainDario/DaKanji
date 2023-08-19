@@ -308,14 +308,14 @@ class _KanjiTableState extends State<KanjiTable> {
                   },
                   selectedItemBuilder: (context) {
                     return KanjiSorting.values.map<Widget>((KanjiSorting item) {
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        KanjiSortingToString[item]!,
-                        style: const TextStyle(color: Colors.white,),
-                      ),
-                    );
-                  }).toList();
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          KanjiSortingToString[item]!,
+                          style: const TextStyle(color: Colors.white,),
+                        ),
+                      );
+                    }).toList();
                   },
                 ),
               ),
