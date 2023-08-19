@@ -111,23 +111,36 @@ List<DojgEntry> convertSQLiteToDojgEntry() {
 
 }
 
+/// Checks if the DoJG anki deck has been imported and that the data **seems**
+/// to be correct. Does not check the actual values just counts the number of
+/// entries.
 bool checkDojgImported() {
 
-  String dojgPath = p.join(
-    g_documentsDirectory.path, "DaKanji", "dojg", "collection.anki2"
-  );
-  
-  return File(dojgPath).existsSync();
+  bool imported = false;
+
+  String dojgPath = p.join(g_documentsDirectory.path, "DaKanji", "dojg");
+
+  if(Directory(dojgPath).existsSync()){
+    Isar isar = Isar.getInstance("dojg") ??
+      Isar.openSync([DojgEntrySchema], directory: dojgPath);
+
+    imported = isar.dojgEntrys.countSync() == 629;
+  }
+
+  return imported;
 
 }
 
+/// Checks if the DoJG anki deck WITH media has been imported
+/// 
+/// Warning: Does not check if all data is present nor if the data is correct
 bool checkDojgWithMediaImported() {
 
   String dojgPath = p.join(
     g_documentsDirectory.path, "DaKanji", "dojg", "1"
   );
   
-  return File(dojgPath).existsSync();
+  return File(dojgPath).existsSync() && checkDojgImported();
 
 }
 
