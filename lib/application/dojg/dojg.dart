@@ -10,26 +10,36 @@ import 'package:sqlite3/sqlite3.dart';
 
 
 /// Let the user select the anki DoJG deck and import it.
+/// Returns `true` if the base dojg (no media) has been successfully been
+/// imported
 Future<bool> importDoJGDeck () async {
 
   bool imported = false;
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: ["apkg"]
+    type: FileType.custom, allowedExtensions: ["apkg"]
   );
   if(result != null){
-    // TODO validate the selected file
+    try {
+      // get current file path and dakanji directory
+      File dojg = File(result.files.single.path!);
+      String copyTo = p.join(g_documentsDirectory.path, "DaKanji", "dojg");
 
+      // extract the zip to the dakanji directory
+      final inputStream = InputFileStream(dojg.path);
+      final archive = ZipDecoder().decodeBuffer(inputStream);
+      extractArchiveToDisk(archive, copyTo);
 
-    // get current file path and dakanji directory
-    File dojg = File(result.files.single.path!);
-    String copyTo = p.join(g_documentsDirectory.path, "DaKanji", "dojg");
-
-    // extract the zip to the dakanji directory
-    final inputStream = InputFileStream(dojg.path);
-    final archive = ZipDecoder().decodeBuffer(inputStream);
-    extractArchiveToDisk(archive, copyTo);
+      // convert SQLite -> Isar
+      List<DojgEntry> entries = convertSQLiteToDojgEntry();
+      Isar isar = Isar.openSync([DojgEntrySchema], directory: copyTo, name: "dojg");
+      isar.writeTxnSync(() => isar.dojgEntrys.putAllSync(entries));
+      
+      imported = entries.length == 629;
+    } 
+    catch (e){
+      print("Cannot load DoJG deck! Encountered: $e");
+    }
   }
 
   return imported;
