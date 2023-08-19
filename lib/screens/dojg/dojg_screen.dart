@@ -81,24 +81,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
       child: GetIt.I<UserData>().dojgImported
         ? DoJGWidget()
         : GestureDetector(
-          onTap: () async {
-            if (importing) return;
-
-            importing = true;
-
-            await importDoJGDeck();
-            
-            GetIt.I<UserData>().dojgImported = (await checkDojgImported());
-            GetIt.I<UserData>().dojgWithMediaImported = (await checkDojgWithMediaImported());
-            await GetIt.I<UserData>().save();
-            
-            if(GetIt.I<UserData>().showTutorialDojg)
-              showTutorialCallback();
-            
-            setState(() {});
-
-            importing = false;
-          },
+          onTap: importDojgPressed,
           child: Container(
             constraints: BoxConstraints.expand(),
             color: Colors.transparent,
@@ -127,6 +110,29 @@ class _DoJGScreenState extends State<DoJGScreen> {
           ),
         )
     );
+  }
+
+  /// Callback that is triggered when a user pressed on the import dojg button
+  void importDojgPressed() async {
+    if (importing) return;
+
+    importing = true;
+
+    if(await importDoJGDeck()){
+      GetIt.I<UserData>().dojgImported = (await checkDojgImported());
+      GetIt.I<UserData>().dojgWithMediaImported = (await checkDojgWithMediaImported());
+      await GetIt.I<UserData>().save();
+      
+      if(GetIt.I<UserData>().showTutorialDojg)
+        showTutorialCallback();
+      
+      setState(() {});
+    }
+    else {
+      print("The data that you provded is incorrect, please import the correct one");
+    }
+
+    importing = false;
   }
 
 }
