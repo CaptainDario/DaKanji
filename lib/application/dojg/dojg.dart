@@ -147,3 +147,17 @@ List<List<String>> getAllEntries() {
   ).toList();
 
 }
+
+/// Read the media acronym <-> file name map from file
+Map<String, String> getAllMediaFiles(){
+  
+  String dojgMediaMappingString = File(p.join(
+    g_documentsDirectory.path, "DaKanji", "dojg", "media"
+  )).readAsStringSync();
+
+  Map t = json.decode(dojgMediaMappingString);
+  Map<String, String> dojgMediaMapping = t.map((key, value) =>
+    MapEntry(value.toString(), key.toString()));
+
+  return dojgMediaMapping;
+}
