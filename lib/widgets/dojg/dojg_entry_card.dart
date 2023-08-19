@@ -57,9 +57,10 @@ class DojgEntryCard extends StatelessWidget {
         Positioned(
           right: 6,
           top: 4,
-          child: Text(
-            this.dojgEntry.volumeTag,
+          child: SelectableText(
+            this.dojgEntry.volumeTag + this.dojgEntry.page.toString(),
             textScaleFactor: 1.25,
+            maxLines: 1,
           ),
         ),
       ],
