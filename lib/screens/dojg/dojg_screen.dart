@@ -47,6 +47,16 @@ class _DoJGScreenState extends State<DoJGScreen> {
 
     showTutorialCallback();
 
+    /*if(GetIt.I<UserData>().dojgImported){
+      Directory dojgDir = Directory(p.join(
+          g_documentsDirectory.path, "DaKanji", "dojg"
+        ));
+      dojgDir.delete(recursive: true);
+      GetIt.I<UserData>().dojgImported = false;
+      GetIt.I<UserData>().dojgWithMediaImported = false;
+      GetIt.I<UserData>().save();
+    }*/
+
   }
 
   @override
@@ -70,7 +80,6 @@ class _DoJGScreenState extends State<DoJGScreen> {
       }
     });
   }
-
 
 
   @override
