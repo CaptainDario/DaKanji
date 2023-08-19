@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +16,8 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:path/path.dart' as p;
 
+import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
@@ -131,6 +132,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // ISAR / database services
   String documentsDir = g_documentsDirectory.path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
+  String dojgIsarPath = p.joinAll([documentsDir, "DaKanji", "dojg"]);
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
@@ -153,6 +155,11 @@ Future<void> initDocumentsServices(BuildContext context) async {
         [RadkSchema], directory: isarPath,
         name: "radk", maxSizeMiB: 512
       ),
+      dojg: GetIt.I<UserData>().dojgImported && Directory(dojgIsarPath).existsSync()
+        ? Isar.getInstance("dojg") ?? Isar.openSync(
+          [DojgEntrySchema], directory: dojgIsarPath, name: "dojg"
+        )
+        : null
     )
   );
 
