@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 
 
 
