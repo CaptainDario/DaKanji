@@ -142,7 +142,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     ].map((e) => "assets/icons/kana/$e").toList();
 
     return DaKanjiDrawer(
-      currentScreen: Screens.kana_table,
+      currentScreen: Screens.kanaTable,
       animationAtStart: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(

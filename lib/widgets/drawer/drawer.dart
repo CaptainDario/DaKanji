@@ -80,23 +80,23 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(), "/dojg", Screens.dojg,
       null, null,
       true, null),
-    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanjiTable,
       null, null,
       true, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanjiTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kanaTable,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kanaTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
+    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.wordLists,
       null, const Alignment(0, -0.1),
       kDebugMode, null),
     DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,

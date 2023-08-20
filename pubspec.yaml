@@ -63,7 +63,8 @@ dependencies:
   async: 2.11.0
   path: 1.8.3
   http: 1.1.0
-  kana_kit: any
+  collection: 1.17.2
+  #kana_kit:
   media_kit: ^1.1.2                              # Primary package.
   
   media_kit_video: ^1.1.2                        # For video rendering.
