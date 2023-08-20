@@ -15,7 +15,7 @@ def main():
         f.write("const String f = 'f';\n")
         f.write("const String t = 't';\n\n")
         f.write("/// list containing example `ConjoNote`s from the JMDict project \n")
-        f.write("const List conjo_notes = [\n")
+        f.write("const List conjoNotes = [\n")
 
         with open(f"{base_path}{file_name}.csv", newline='') as csvfile:
 
