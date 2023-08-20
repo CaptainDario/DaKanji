@@ -102,6 +102,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                           ...[  
                             for (int i = 0; i < widget.matchSpans.length; i++)
                               ...[
+                                // before the word of th
                                 if(widget.matchSpans[i].item1 != 0)
                                   TextSpan(
                                     text: widget.sentences.sentence.substring(
@@ -109,6 +110,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                                       widget.matchSpans[i].item1,
                                     ),
                                   ),
+                                // the dict entry in bold
                                 TextSpan(
                                   text: widget.sentences.sentence.substring(
                                     widget.matchSpans[i].item1,
@@ -120,7 +122,8 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                                   )
                                 )
                               ],
-                            if(widget.matchSpans.last.item2 != widget.sentences.sentence)
+                            // after the dict entry
+                            if(widget.matchSpans.last.item2 != widget.sentences.sentence.length)
                               TextSpan(
                                 text: widget.sentences.sentence.substring(
                                   widget.matchSpans.last.item2,

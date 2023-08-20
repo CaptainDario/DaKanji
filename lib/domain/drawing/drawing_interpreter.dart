@@ -1,7 +1,9 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 
+import 'package:get_it/get_it.dart';
+import 'package:universal_io/io.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tuple/tuple.dart';
 
@@ -11,7 +13,6 @@ import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
 import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
-import 'package:universal_io/io.dart';
 
 
 
@@ -93,7 +94,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// available on this platform.
   Future<InferenceBackend> getBackend() async {
 
-    InferenceBackend iB;
+    InferenceBackend iB = InferenceBackend.cpu_1;
 
     // check if the backend was already tested -> return it if true
     if(GetIt.I<UserData>().drawingBackend != null) {
@@ -101,12 +102,14 @@ class DrawingInterpreter with ChangeNotifier{
     }
     // Otherwise, find the best available backend and load the model
     else {
-      // on single core return CPU_1
-      if(Platform.numberOfProcessors == 1) {
-        iB = getCPUFromString("CPU_1");
-      } else {
-        iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
-      }
+      // on single core return CPU_1, otherwise use some cores
+      if(Platform.numberOfProcessors == 2) {
+        iB = InferenceBackend.cpu_2;
+      } if(Platform.numberOfProcessors == 3) {
+        iB = InferenceBackend.cpu_3;
+      } if(Platform.numberOfProcessors > 3) {
+        iB = InferenceBackend.cpu_4;
+      } 
     }
 
     return iB;
