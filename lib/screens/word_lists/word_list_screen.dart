@@ -44,8 +44,9 @@ class _WordListScreenState extends State<WordListScreen> {
   @override
   void initState() {
 
-    if(wordListDefaultTypes.contains(widget.node.value.type))
+    if(wordListDefaultTypes.contains(widget.node.value.type)) {
       isDefault = true;
+    }
 
     // search history (assure it is a default list and not a user created one)
     if(widget.node.value.name == WordListsDefaults.searchHistory.name &&

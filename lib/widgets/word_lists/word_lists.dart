@@ -123,11 +123,12 @@ class _WordListsState extends State<WordLists> {
                       hitTestBehavior: HitTestBehavior.opaque,
                       onWillAccept: (data) {
                         // start animation to the top of the list d
-                        if(scrollController.offset > 60)
+                        if(scrollController.offset > 60) {
                           scrollController.animateTo(0,
                             duration: Duration(milliseconds: scrollController.offset.round()*5),
                             curve: Curves.linear
                           );
+                        }
                         return false;
                       },
                       onLeave: (data) {
@@ -240,8 +241,9 @@ class _WordListsState extends State<WordLists> {
                                 onWillAccept: (TreeNode<WordListsData>? data) {
 
                                   // do no allow self drags
-                                  if(data == null || i == childrenDFS.indexOf(data)-1)
+                                  if(data == null || i == childrenDFS.indexOf(data)-1) {
                                     return false;
+                                  }
 
                                   draggingOverDividerIndex = i; 
                                   return true;
@@ -343,7 +345,7 @@ class _WordListsState extends State<WordLists> {
                       scrollController.position.hold(() { });
                     },
                     builder: (context, candidateData, rejectedData) {
-                      return Container(
+                      return SizedBox(
                         height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
                         width: MediaQuery.of(context).size.width,
                         //color: Colors.amber

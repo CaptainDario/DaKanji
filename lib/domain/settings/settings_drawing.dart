@@ -20,15 +20,15 @@ class SettingsDrawing with ChangeNotifier  {
 
   /// The URL of the jisho website
   @JsonKey(includeFromJson: false, includeToJson: false)
-  String jishoURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
+  String jishoURL = "https://www.jisho.org/search/$kanjiPlaceholder";
 
   /// The URL of the weblio website
   @JsonKey(includeFromJson: false, includeToJson: false)
-  String wadokuURL = "https://www.wadoku.de/search/" + kanjiPlaceholder;
+  String wadokuURL = "https://www.wadoku.de/search/$kanjiPlaceholder";
 
   /// The URL of the weblio website
   @JsonKey(includeFromJson: false, includeToJson: false)
-  late String weblioURL = "https://www.weblio.jp/content/" + kanjiPlaceholder;
+  late String weblioURL = "https://www.weblio.jp/content/$kanjiPlaceholder";
   
   /// A list with all web dictionaries
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -65,7 +65,7 @@ class SettingsDrawing with ChangeNotifier  {
 
   /// The default value for `customURL`
   @JsonKey(includeFromJson: false, includeToJson: false)
-  static const d_customURL = "https://www.jisho.org/search/" + kanjiPlaceholder;
+  static const d_customURL = "https://www.jisho.org/search/$kanjiPlaceholder";
   /// The custom URL a user can define on the settings page.
   @JsonKey(defaultValue: d_customURL)
   String _customURL = d_customURL;

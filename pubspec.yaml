@@ -147,9 +147,6 @@ flutter_icons:
   
   image_path: "assets/images/dakanji/icon.png"
 
-analyzer:
-  exclude:
-    - lib/locale_keys.dart
 
 # The following section is specific to Flutter.
 flutter:

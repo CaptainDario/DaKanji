@@ -83,7 +83,7 @@ String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G
 
 
 /// The minimum size of the desktop window in normal mode
-const Size g_minDesktopWindowSize = const Size(480, 720);
+const Size g_minDesktopWindowSize = Size(480, 720);
 
 
 /// is the app running to test the drawscreen
@@ -109,9 +109,9 @@ late Directory g_documentsDirectory;
 /// link to the github repo
 const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 /// link to the github repos issues
-const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
+const g_GithubIssues = "$g_GithubRepoUrl/issues/new";
 /// link to the github repos release page
-const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+const g_GithubReleasesPage = "$g_GithubRepoUrl/releases";
 ///
 const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
@@ -123,7 +123,7 @@ const g_DiscordInvite = "https://discord.com/invite/gdqaux3r4P";
 /// the base url to ANY app on the PlayStore
 const g_PlaystoreBaseUrl = "https://play.google.com/store/apps/details?id=";
 /// the url to the PlayStore page of Dakanji 
-const g_PlaystorePage = g_PlaystoreBaseUrl + "com.DaAppLab.DaKanjiRecognizer";
+const g_PlaystorePage = "${g_PlaystoreBaseUrl}com.DaAppLab.DaKanjiRecognizer";
 /// the base intent to open the playstore's android app
 const g_PlaystoreBaseIntent =  "market://details?id=";
 /// the url to DaAppLab's playstore page
@@ -134,14 +134,14 @@ const g_AppStoreBaseUrl = "itms-apps://itunes.apple.com/app/";
 /// DaKanji's ID on the AppStore
 const g_AppStoreId = "1593741764";
 /// link to DaKanji's appstore page
-const g_AppStorePage = "https://apps.apple.com/de/app/DaKanji/id" + g_AppStoreId;
+const g_AppStorePage = "https://apps.apple.com/de/app/DaKanji/id$g_AppStoreId";
 ///the url to developer's AppStore page
 const g_DaAppLabAppStorepage = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
 /// DaKanji's ID on the MicrosoftStore
 const g_MicrosoftStoreId = "9n08051t2xtv";
 /// the url to the MicrosoftStore page of Dakanji 
-const g_MicrosoftStorePage = "https://www.microsoft.com/p/dakanji/" + g_MicrosoftStoreId;
+const g_MicrosoftStorePage = "https://www.microsoft.com/p/dakanji/$g_MicrosoftStoreId";
 /// uri to open DaAppLab's page in the Microsoft store 
 const g_MicrosoftStoreDaAppLabPage = "ms-windows-store://publisher/?name=DaAppLab";
 

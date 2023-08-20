@@ -196,7 +196,7 @@ class _KanjiTableState extends State<KanjiTable> {
     categoryLevelDropDowns = List.generate(categoryLevels.length, (index) => 
       DropdownMenuItem(
         value: categoryLevels[index],
-        child: Text("${categoryLevels[index]}")
+        child: Text(categoryLevels[index])
       )
     );
 

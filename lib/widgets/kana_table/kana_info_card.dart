@@ -37,7 +37,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   /// The svg of the dakuten
   String? yoonSVG;
   /// The mnemonic of the kana
-  String? mnemonic = null;
+  String? mnemonic;
 
 
   @override

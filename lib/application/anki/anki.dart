@@ -19,12 +19,14 @@ Future<bool> addNote(AnkiNote note) async {
     print("Anki not running");
   }
   // assure that the DaKanji card type is present
-  if(!(await daKanjiModelExists()))
+  if(!(await daKanjiModelExists())) {
     await addDaKanjiModel();
+  }
 
   // if the given deck does not exist, create it
-  if(!(await getDeckNames()).contains(note.deckName))
+  if(!(await getDeckNames()).contains(note.deckName)) {
     await addDeck(note.deckName);
+  }
 
 
   // Add the note to Anki platform dependent
@@ -119,10 +121,11 @@ Future<bool> _daKanjiModelExistsDesktop() async {
   http.Response r = await http.post(anki_connect_url, body: bodyString);
   Map rMap = jsonDecode(r.body);
 
-  if(rMap.containsKey("result"))
+  if(rMap.containsKey("result")) {
     return rMap["result"].contains("DaKanji");
-  else
+  } else {
     return false;
+  }
 
 }
 
@@ -328,12 +331,12 @@ Future<bool> checkAnkiAvailable(){
 /// Platform specific (desktop via anki connect) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkiConnectAvailable() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   try {
     var response = await http.get(anki_connect_url);
     if(response.statusCode == 200){
-      _isRunning = true;
+      isRunning = true;
     }
   }
   catch(e){
@@ -341,27 +344,27 @@ Future<bool> _checkAnkiConnectAvailable() async {
     print(e);
   }
 
-  return _isRunning;
+  return isRunning;
 }
 
 /// Platform specific (android via ankidroid) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkidroidAvailable() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   // TODO v word lists implement android
   throw Exception("Not implemented");
 
-  return _isRunning;
+  return isRunning;
 }
 
 /// Platform specific (iOS via anki mobile) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkiMobileRunning() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   // TODO v word lists implement iOS
   throw Exception("Not implemented");
 
-  return _isRunning;
+  return isRunning;
 }

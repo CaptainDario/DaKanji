@@ -73,7 +73,7 @@ class WordListNode extends StatefulWidget {
 
 class _WordListNodeState extends State<WordListNode> {
   /// The text controller for the name editing text field
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   /// is the name of the folder currently being edited
   bool nameEditing = false;
   /// Focus node for the name editing text field
@@ -126,8 +126,10 @@ class _WordListNodeState extends State<WordListNode> {
             if(data == null ||
               data == widget.node || // ... in itself
               wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
-              widget.node.getPath().contains(data)) // ... in a child
+              widget.node.getPath().contains(data)) {
+              // ... in a child
               return false;
+            }
     
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
@@ -188,7 +190,7 @@ class _WordListNodeState extends State<WordListNode> {
                 onTap: () {
                   if(widget.onTap != null){
                     widget.onTap!(widget.node);
-                  };
+                  }
                 },
                 child: Row(
                   children: [
@@ -207,9 +209,9 @@ class _WordListNodeState extends State<WordListNode> {
                           widget.onFolderPressed?.call(widget.node);
                         },
                       )
-                      : Container(
+                      : const SizedBox(
                         width: 48,
-                        child: const Icon(Icons.list)
+                        child: Icon(Icons.list)
                       ),
                     const SizedBox(width: 8.0,),
                     Expanded(
@@ -390,7 +392,7 @@ class _WordListNodeState extends State<WordListNode> {
                 canChangeOrientation: false,
                 canChangePageFormat: false,
                 
-                pdfFileName: widget.node.value.name + ".pdf",
+                pdfFileName: "${widget.node.value.name}.pdf",
                 build: (format) {
                   return pdf.save();
                 }
@@ -527,7 +529,7 @@ class _WordListNodeState extends State<WordListNode> {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            '${widget.node.value.name}',
+            widget.node.value.name,
             style: const pw.TextStyle(
               color: PdfColors.grey,
               fontSize: 10,

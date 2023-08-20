@@ -49,7 +49,7 @@ class DrawingInterpreter with ChangeNotifier{
   }
 
   /// Message that it printed when the instance accessed but was not initialized
-  String _notInitializedMessage =
+  final String _notInitializedMessage =
     "You are trying to use the interpreter before it was initialized!\n"
     "Execute init() first!";
 
@@ -63,7 +63,7 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-      print("${this.name} already initialized. Skipping init.");
+      print("$name already initialized. Skipping init.");
       return;
     }
     
@@ -102,10 +102,11 @@ class DrawingInterpreter with ChangeNotifier{
     // Otherwise, find the best available backend and load the model
     else {
       // on single core return CPU_1
-      if(Platform.numberOfProcessors == 1)
+      if(Platform.numberOfProcessors == 1) {
         iB = getCPUFromString("CPU_1");
-      else
+      } else {
         iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
+      }
     }
 
     return iB;
@@ -141,7 +142,7 @@ class DrawingInterpreter with ChangeNotifier{
       print("Inference timings for Drawing: $tests");
     }
     
-    print("Using: ${iB}");
+    print("Using: $iB");
     return iB;
   }
 

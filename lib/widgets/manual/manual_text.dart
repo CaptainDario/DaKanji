@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// The manual for the TextScreen
 class ManualTextScreen extends StatelessWidget {
-  ManualTextScreen({super.key});
+  const ManualTextScreen({super.key});
 
   final String manualTextScreenText = "";
 

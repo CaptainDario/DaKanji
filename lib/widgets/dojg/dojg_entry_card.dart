@@ -30,7 +30,7 @@ class DojgEntryCard extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DojgEntryPage(this.dojgEntry),)
+                  MaterialPageRoute(builder: (context) => DojgEntryPage(dojgEntry),)
                 );
               },
               child: Padding(
@@ -39,14 +39,14 @@ class DojgEntryCard extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     Text(
-                      this.dojgEntry.grammaticalConcept,
+                      dojgEntry.grammaticalConcept,
                       textScaleFactor: 1.5,
                       style: const TextStyle(
                         fontFamily: g_japaneseFontFamily
                       ),
                     ),
                     Text(
-                      this.dojgEntry.usage ?? "",
+                      dojgEntry.usage ?? "",
                       style: const TextStyle(
                         color: Colors.grey,
                         fontFamily: g_japaneseFontFamily
@@ -62,7 +62,7 @@ class DojgEntryCard extends StatelessWidget {
           right: 6,
           top: 4,
           child: SelectableText(
-            this.dojgEntry.volumeTag + this.dojgEntry.page.toString(),
+            dojgEntry.volumeTag + dojgEntry.page.toString(),
             textScaleFactor: 1.25,
             maxLines: 1,
           ),

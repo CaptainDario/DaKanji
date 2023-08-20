@@ -11,10 +11,10 @@ AwesomeDialog LoadingPopup(BuildContext context){
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
-    body: Container(
+    body: const SizedBox(
       height: 100,
       width: 100,
-      child: const DaKanjiLoadingIndicator()
+      child: DaKanjiLoadingIndicator()
     ),
     dismissOnBackKeyPress: false,
     dismissOnTouchOutside: false,

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:archive/archive_io.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:universal_io/io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:path/path.dart' as p;
@@ -42,11 +41,12 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
     await copyFromAssets(asset.path, file.parent);
   }
   catch (e){
-    if(askToDownload)
+    if(askToDownload) {
       await downloadPopup(
         context: context,
         btnOkOnPress: () {}
       ).show();
+    }
 
     while(true){
       try{
@@ -75,7 +75,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 /// Caution: throws exception if the asset does not exist
 Future<void> copyFromAssets(String assetPath,  Directory dest) async {
 
-  assetPath = assetPath.split(".").first + ".zip";
+  assetPath = "${assetPath.split(".").first}.zip";
   print(assetPath);
 
   // Get the zipped file from assets
@@ -92,13 +92,13 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   Dio dio = Dio(); String downloadUrl = "";
   Response response = await dio.get(url);
   String extension = destination.uri.pathSegments.last.split(".").length > 1
-    ? "." + destination.uri.pathSegments.last.split(".").last
+    ? ".${destination.uri.pathSegments.last.split(".").last}"
     : "";
 
   // iterate over the releases
   for (var release in response.data){
     // if the version number matches the current version
-    if(release["tag_name"] == "v" + g_Version.versionString){
+    if(release["tag_name"] == "v${g_Version.versionString}"){
       // iterate over the assets in this release
       for (var element in release["assets"]) {
         if((element["name"] as String).startsWith(destination.uri.pathSegments.last.replaceAll(extension, ""))) {
@@ -112,24 +112,24 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   // download the asset
   String fileName = destination.uri.pathSegments.last;
   await Dio().download(
-    downloadUrl, destination.path + ".zip",
+    downloadUrl, "${destination.path}.zip",
     onReceiveProgress: (received, total) {
       if (total != -1) {
         String progress =
-          "${fileName.split(".")[0]}: ${(received / total * 100).toStringAsFixed(0) + "%"}";
+          "${fileName.split(".")[0]}: ${"${(received / total * 100).toStringAsFixed(0)}%"}";
         g_downloadFromGHStream.add(progress);
       }
     }
   );
-  print("Downloaded ${fileName} to ${destination.path}");
+  print("Downloaded $fileName to ${destination.path}");
 
   // unzip the asset
   await extractFileToDisk(
-    destination.path + ".zip",
+    "${destination.path}.zip",
     destination.parent.path
   );
   print("Extracted $destination");
   
   // delete the zip file
-  File(destination.path + ".zip").deleteSync();
+  File("${destination.path}.zip").deleteSync();
 }

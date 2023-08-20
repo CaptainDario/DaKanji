@@ -218,14 +218,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onTap: () async {
                                   // do not allow removing the last dictionary
                                   if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     return;
+                                  }
 
                                   // when disabling english dictionary tell user
                                   // that significant part of the dict is only in english
                                   if(lang == iso639_1.en.name &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     await DisableEnglishDictPopup(context).show();
+                                  }
 
                                   LoadingPopup(context).show();
 
@@ -236,8 +238,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
                                       ).toList();
                                   }
-                                  else
+                                  else {
                                     settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                  }
                                   await settings.save();
                                   await GetIt.I<DictionarySearch>().init();
 
@@ -295,7 +298,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -306,13 +309,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 child: MarkdownBody(
                                   data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
                                   onTapLink: (text, href, title) {
-                                    if(href != null)
+                                    if(href != null) {
                                       launchUrlString(href);
+                                    }
                                   },
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -328,7 +332,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -341,7 +345,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -365,7 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           restartingDictSearch = false;
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -378,7 +382,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -410,10 +414,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 String level = SettingsDictionary.d_fallingWordsLevels[index];
                                 return GestureDetector(
                                   onTap: () async {
-                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level))
+                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
                                       settings.dictionary.selectedFallingWordsLevels.remove(level);
-                                    else
+                                    } else {
                                       settings.dictionary.selectedFallingWordsLevels.add(level);
+                                    }
                                     await settings.save();
                                     setState(() {});
                                   },
@@ -814,7 +819,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
                             icon: Icons.saved_search_sharp,
                             onButtonPressed: () {
-                              optimizeBackendsPopup(context)..show();
+                              optimizeBackendsPopup(context).show();
                             },
                             autoSizeGroup: g_SettingsAutoSizeGroup,
                           ),
@@ -840,7 +845,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     )
                                   ),
                                 )
-                              )..show();
+                              ).show();
                             },
                             onChanged: (double value) {
                               setState(() {
@@ -902,8 +907,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
 
-                              if(!GetIt.I<UserData>().dojgImported)
+                              if(!GetIt.I<UserData>().dojgImported) {
                                 return;
+                              }
 
                               GetIt.I<UserData>().dojgImported = false;
                               GetIt.I<UserData>().dojgWithMediaImported = false;

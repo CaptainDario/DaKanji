@@ -65,7 +65,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   }
 
   void init(){
-    hasKanji = !widget.entry.kanjis.isEmpty;
+    hasKanji = widget.entry.kanjis.isNotEmpty;
 
     readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
         .whereNotNull().map((e) => e.attributes)
@@ -87,8 +87,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               widget.entry.accents![i]!.attributes[j]!
             ).first.group(0)!
           );
-          if(!accents[i]!.contains(accentPattern))
+          if(!accents[i]!.contains(accentPattern)) {
             accents[i]!.add(accentPattern);
+          }
         }
       }
       else{
@@ -109,7 +110,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                 // kanjis and writings
                 for (int i = 0; i < (hasKanji ? widget.entry.kanjis.length : 1); i++)
                   ...[
-                    Container(
+                    SizedBox(
                       width: i == 0 ? constraints.maxWidth : null,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +126,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                     widget.entry.readingRestriction![j]!.attributes.contains(widget.entry.kanjis[i]))
                                       ...[
                                         // the reading
-                                        Container(
+                                        SizedBox(
                                           width: j == 0 && !hasKanji ? constraints.maxWidth : null,
                                           child: SelectableText(
                                             widget.entry.readings[j],
@@ -251,8 +252,9 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           }
                           // add "," to separate pitch readingss
                           if(i + a != widget.entry.readings.length-1 +
-                            widget.entry.accents![i]!.attributes.length-1)
+                            widget.entry.accents![i]!.attributes.length-1) {
                             ret.add(const Text("、"));
+                          }
 
                           return ret;
                         } ()
@@ -287,7 +289,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                             )
                           ),
                           TextSpan(
-                            text: ": " + readingInfos.keys.toList()[i],
+                            text: ": ${readingInfos.keys.toList()[i]}",
                             style: const TextStyle(
                               fontSize: 10,
                               color: Colors.grey
@@ -314,7 +316,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               )
                             ),
                             TextSpan(
-                              text: ": " + kanjiInfos.keys.toList()[i],
+                              text: ": ${kanjiInfos.keys.toList()[i]}",
                               style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey
@@ -404,17 +406,19 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
 
     // 平板 
     if(pitchAccent == 0){
-      if(at == 0)
+      if(at == 0) {
         return rising;
-      else
+      } else {
         return high;
+      }
     }
     // 頭高
     else if(pitchAccent == 1 && 1 < reading.length){
-      if(at == 0)
+      if(at == 0) {
         return falling;
-      else
+      } else {
         return low;
+      }
     }
     // 中高
     else if(1 < pitchAccent && pitchAccent < reading.length){
@@ -434,10 +438,11 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     // 尾高
     else if(pitchAccent == reading.length){
       if(at == 0){
-        if(reading.length == 1)
+        if(reading.length == 1) {
           return falling;
-        else
+        } else {
           return rising;
+        }
       }
       else if(0 < at && at < reading.length-1)
         return high;

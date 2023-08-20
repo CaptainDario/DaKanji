@@ -10,11 +10,11 @@ import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
 
 class DrawScreenUndoButton extends StatelessWidget {
   
-  DrawScreenUndoButton(
+  const DrawScreenUndoButton(
     this.canvasSize,
     this.includeTutorial,
     {Key? key}
-  ) : super(key: key) {}
+  ) : super(key: key);
 
   /// the size of the DrawingCanvas
   final double canvasSize;

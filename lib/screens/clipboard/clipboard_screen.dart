@@ -70,11 +70,12 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
         String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
-        if(data != "" && data != currentClipboard)
+        if(data != "" && data != currentClipboard) {
           setState(() {
             currentClipboard = ClipboardData(text: data);
           }
-      ); });
+      );
+        } });
     }
     // on other platforms always listen to clipboard
     else{

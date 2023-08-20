@@ -47,7 +47,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
   /// updates the DoJG search results
   void updateSearchResults() {
     // if no volume is selected do not show anything
-    if(currentVolumeSelection.where((e) => e).length == 0){
+    if(currentVolumeSelection.where((e) => e).isEmpty){
       currentEntries = [];
     }
     else{
@@ -59,10 +59,9 @@ class _DojgEntryListState extends State<DojgEntryList> {
       // sort found entries
       ..sort(((a, b) {
         // first by the starting kana
-        if(a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]) != 0)
+        if(a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]) != 0) {
           return a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]);
-        // then by the volumen (beginner, intermediate, advanced)
-        else if (a.volumeTag.compareTo(b.volumeTag) != 0)
+        } else if (a.volumeTag.compareTo(b.volumeTag) != 0)
           return a.volumeTag[0].compareTo(b.volumeTag[0]);
         // then by the page
         else
@@ -115,7 +114,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
                   children: [
                     for (int i = 0; i < 3; i++)
                       Text(
-                        "${volumeTags[i]}",
+                        volumeTags[i],
                         textScaleFactor: 1.25,
                       )
                   ],
@@ -127,10 +126,11 @@ class _DojgEntryListState extends State<DojgEntryList> {
             itemCount: currentEntries.length,
             separatorBuilder: (context, i) {
               if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
-                currentEntries[i+1].grammaticalConcept[0])
-                return Text("${currentEntries[i+1].grammaticalConcept[0]}");
-              else
+                currentEntries[i+1].grammaticalConcept[0]) {
+                return Text(currentEntries[i+1].grammaticalConcept[0]);
+              } else {
                 return const SizedBox();
+              }
             },
             itemBuilder: (context, i) {
               return DojgEntryCard(currentEntries[i]);

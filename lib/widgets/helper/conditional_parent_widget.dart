@@ -46,6 +46,6 @@ class ConditionalParentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return condition ? this.conditionalBuilder(this.child) : this.child;
+    return condition ? conditionalBuilder(child) : child;
   }
 }

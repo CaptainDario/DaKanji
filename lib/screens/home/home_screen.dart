@@ -58,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
       List<String> updates = await updateAvailable();
-      if(updates.isNotEmpty)
+      if(updates.isNotEmpty) {
         await showUpdatePopup(updates);
+      }
     }
 
     if(GetIt.I<UserData>().showChangelog){
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
         GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
         await GetIt.I<UserData>().save();
       },
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height * 0.5,
         child: SingleChildScrollView(
           child: Column(

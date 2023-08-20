@@ -59,13 +59,13 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
   @override
   Widget build(BuildContext context) {
 
-    ScrollController _scrollController = ScrollController();
+    ScrollController scrollController = ScrollController();
 
     double innerDialogueHeight = (MediaQuery.of(context).size.height * 4/5) - 10;
     double innerDialogueWidth = (MediaQuery.of(context).size.width * 4/5) - 10;
 
     return Center(
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height * 4/5,
         width:  MediaQuery.of(context).size.width * 4/5,
         
@@ -96,10 +96,10 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                     width: innerDialogueWidth,
                     child: Scrollbar(
                       thumbVisibility: true,
-                      controller: _scrollController,
+                      controller: scrollController,
                       child: Markdown(
                         selectable: false,
-                        controller: _scrollController,
+                        controller: scrollController,
                         data: GetIt.I<Changelog>().newestChangelog,
                         onTapLink:
                         (String text, String? url, String title) async {

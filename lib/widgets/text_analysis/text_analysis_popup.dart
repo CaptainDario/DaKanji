@@ -61,8 +61,9 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     super.initState();
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
-    if(g_webViewSupported)
+    if(g_webViewSupported) {
       tabNames.add("Deepl");
+    }
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
     widget.onInitialized?.call(popupTabController);
@@ -71,12 +72,13 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if(webController != null && oldWidget.text != widget.text)
+      if(webController != null && oldWidget.text != widget.text) {
         await webController!.loadUrl(
           urlRequest: URLRequest(
             url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
           )
         );
+      }
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -146,7 +148,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           Card(
                             child: InAppWebView(
                               gestureRecognizers: 
-                                Set()..add(
+                                <Factory<OneSequenceGestureRecognizer>>{}..add(
                                   Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
                                 ),
                               initialUrlRequest: (

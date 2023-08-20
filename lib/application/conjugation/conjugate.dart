@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 /// meaning of `Conjo` attributes meanings
 List<Conjo> conjosFromArgs(
   Pos pos, Conj conj, bool neg, bool fml,
-  {int? onum = null}  )
+  {int? onum}  )
 {
   return conjos.where((element) => 
     element.pos == pos &&
@@ -69,9 +69,9 @@ void main(){
   bool neg = false;
   bool fml = true;
   
-  List<Conjo> _conjos = conjosFromArgs(pos, conj, neg, fml);
+  List<Conjo> conjos = conjosFromArgs(pos, conj, neg, fml);
 
 
-  String conjugation = conjugate(verb, _conjos.first);
+  String conjugation = conjugate(verb, conjos.first);
   print(conjugation);
 }

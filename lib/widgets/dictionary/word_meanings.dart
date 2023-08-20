@@ -59,7 +59,7 @@ class _WordMeaningsState extends State<WordMeanings> {
           
           
           // language flag
-          if(meanings.isNotEmpty)
+          if(meanings.isNotEmpty) {
             ret.add(
               Row(
                 children: [
@@ -77,8 +77,9 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ],
               ),
             );
+          }
           // add the meanings
-          if(meanings.isNotEmpty)
+          if(meanings.isNotEmpty) {
             ret.add(
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 8.0, 8.0, 8.0),
@@ -93,6 +94,7 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ),
               )
             );
+          }
 
           return ret;
         }).expand((element) => element).toList(),

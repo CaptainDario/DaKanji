@@ -15,7 +15,7 @@ class AnkiStatus {
     {
       Map m = jsonDecode(message);
       if(m["error"] != "null"){
-        this.code = -1;
+        code = -1;
       }
     }
 

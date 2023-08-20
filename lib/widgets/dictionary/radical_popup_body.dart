@@ -65,7 +65,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
 
     int noKanjiButtons = MediaQuery.of(context).size.width~/80;
 
-    return Container(
+    return SizedBox(
       height: widget.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +85,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
               ),
               itemCount: kanjisThatUseAllRadicals.length,
               itemBuilder: (context, index) {
-                return kanjisThatUseAllRadicals.length == 0 
+                return kanjisThatUseAllRadicals.isEmpty 
                   ? Container()
                   : ElevatedButton(
                     onPressed: () {
@@ -146,7 +146,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           if(krad.value.length > index &&
                             (possibleRadicals.contains(krad.value[index]) ||
                             selectedRadicals.contains(krad.value[index]) ||
-                            possibleRadicals.isEmpty))
+                            possibleRadicals.isEmpty)) {
                             return AnimationConfiguration.staggeredGrid(
                               position: index,
                               columnCount: MediaQuery.of(context).size.width~/50,
@@ -167,10 +167,11 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                       possibleRadicals.isEmpty
                                     ? () {
                                       // mark this chip as selected
-                                      if(selectedRadicals.contains(krad.value[index]))
+                                      if(selectedRadicals.contains(krad.value[index])) {
                                         selectedRadicals.remove(krad.value[index]);
-                                      else
+                                      } else {
                                         selectedRadicals.add(krad.value[index]);
+                                      }
                                 
                                       // find all kanji that use this
                                       kanjisThatUseAllRadicals =
@@ -202,9 +203,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                 ),
                               ),
                             );
-                          // radical that cannot be selected because there are no 
-                          // kanjis that use this one + all selected
-                          else
+                          } else {
                             return Container(
                               child: Center(
                                 child: Text(
@@ -213,6 +212,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                 ),
                               )
                             );
+                          }
                         },
                       ),
                       const SizedBox(height: 16)

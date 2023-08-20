@@ -48,16 +48,18 @@ Future<bool> init() async {
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
   // init window Manager
-  if(g_desktopPlatform)
+  if(g_desktopPlatform) {
     await windowManager.ensureInitialized();
+  }
 
   await initPaths();
 
   await initServices();
 
   // deep links
-  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows)
+  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows) {
     await initDeepLinksStream();
+  }
   
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
@@ -181,7 +183,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await GetIt.I<Mecab>().init(
     "assets/ipadic",
     true,
-    dicDir: documentsDir + "/DaKanji/assets/ipadic/"
+    dicDir: "$documentsDir/DaKanji/assets/ipadic/"
   );
 
   g_documentsServicesInitialized = true;

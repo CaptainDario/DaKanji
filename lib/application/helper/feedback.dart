@@ -52,7 +52,7 @@ Future<String> writeImageToTmpStorage(Uint8List image) async {
 /// returns the path to the file
 Future<String> writeTextToTmpStorage(String text, String fileName) async {
   final Directory output = await getTemporaryDirectory();
-  final String textFilePath = '${output.path}/${fileName}.txt';
+  final String textFilePath = '${output.path}/$fileName.txt';
   final File screenshotFile = File(textFilePath);
   await screenshotFile.writeAsString(text);
   return textFilePath;

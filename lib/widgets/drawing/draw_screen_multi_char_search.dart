@@ -49,9 +49,9 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
           );
           if (includeHeroes) {
             tpmWidget = Hero(
-              tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
+              tag: "webviewHero_b_${kanjiBuffer.kanjiBuffer == "" 
                 ? "Buffer" 
-                : kanjiBuffer.kanjiBuffer),
+                : kanjiBuffer.kanjiBuffer}",
               child: tpmWidget
             );
           }

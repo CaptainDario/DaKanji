@@ -19,7 +19,7 @@ class ManualDictionary extends StatelessWidget {
     fontWeight: FontWeight.bold,
   );
 
-  ManualDictionary(
+  const ManualDictionary(
     {
       super.key
     }

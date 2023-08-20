@@ -26,11 +26,7 @@ class SettingsDictionary with ChangeNotifier {
   /// All languages that are available in the dictionary
   @JsonKey(includeFromJson: false, includeToJson: false)
   Map<String, String> translationLanguagesToSvgPath = 
-    Map<String, String>.fromIterable(
-      (d_translationLanguageCodes),
-      key : (item) => item,
-      value : (item) => "assets/icons/$item.svg"
-    );
+    { for (var item in d_translationLanguageCodes) item : "assets/icons/$item.svg" };
   
 
   /// The default value for `selectedTranslationLanguagesDefault` 
@@ -72,7 +68,7 @@ class SettingsDictionary with ChangeNotifier {
     "N5", "N4", "N3", "N2", "N1",
   ];
   /// All levels that can be selected for the falling words in the dictionary
-  @JsonKey(defaultValue: const ["N5", "N4", "N3"])
+  @JsonKey(defaultValue: ["N5", "N4", "N3"])
   List<String> selectedFallingWordsLevels = ["N5", "N4", "N3"];
 
 

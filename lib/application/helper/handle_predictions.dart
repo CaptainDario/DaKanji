@@ -50,7 +50,7 @@ void copy(BuildContext context, String char){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 1),
-        content: Text("copied " + char + " to clipboard"),
+        content: Text("copied $char to clipboard"),
       )
     );
   }
@@ -208,11 +208,11 @@ void openDictionary(BuildContext context, String char) async {
       if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[0]){
         print("iOS shirabe");
-        final url = Uri.encodeFull("shirabelookup://search?w=" + char);
+        final url = Uri.encodeFull("shirabelookup://search?w=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          print("cannot launch $url");
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Shirabe Jisho"
@@ -226,11 +226,11 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[1]){
         print("iOS imiwa?");
-        final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
+        final url = Uri.encodeFull("imiwa://dictionary?search=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          print("cannot launch $url");
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Imiwa?"
@@ -244,11 +244,11 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[2]){
         print("iOS Japanese");
-        final url = Uri.encodeFull("japanese://search/word/" + char);
+        final url = Uri.encodeFull("japanese://search/word/$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          print("cannot launch $url");
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Japanese"
@@ -262,13 +262,13 @@ void openDictionary(BuildContext context, String char) async {
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[3]){
         print("iOS midori");
-        final url = Uri.encodeFull("midori://search?text=" + char);
+        final url = Uri.encodeFull("midori://search?text=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(
             url,
           );
         } else {
-          print("cannot launch" + url);
+          print("cannot launch$url");
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Midori"
@@ -311,7 +311,7 @@ String openWithSelectedDictionary(String kanji) {
   if(url != ""){
     // check that the URL starts with protocol, otherwise launch() fails
     if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-      url = "https://" + url;
+      url = "https://$url";
     }
 
     // replace the placeholder with the actual character

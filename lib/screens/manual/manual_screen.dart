@@ -49,7 +49,7 @@ class _ManualScreenState extends State<ManualScreen>
   Widget build(BuildContext context) {
 
     List<Widget> manualTexts = [
-      ManualDictionary(),
+      const ManualDictionary(),
       //ManualTextScreen(),
       //ManualAnki()
     ];

@@ -153,7 +153,7 @@ Future<void> _searchInIsar(SendPort p) async {
   int idRangeStart = (ids[(noEntries/noIsolates*isolateNo).floor()]).floor();
   int idRangeEnd   = (ids[(noEntries/noIsolates*(isolateNo+1)).floor()]).floor();
 
-  print('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
+  print('Spawned isolate started, args: langs - $langs; isolateNo - $isolateNo; idRangeStart - $idRangeStart; idRangeEnd - $idRangeEnd');
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {

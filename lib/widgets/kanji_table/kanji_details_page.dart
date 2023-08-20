@@ -55,7 +55,7 @@ class _KanjiDetailsPageState extends State<KanjiDetailsPage> {
                 alignment: Alignment.topCenter,
                 child: DictionaryScreenKanjiCard(
                   kanjidic2,
-                  ["en"],
+                  const ["en"],
                 ),
               ),
             ],

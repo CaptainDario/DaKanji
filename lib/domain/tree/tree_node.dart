@@ -44,7 +44,7 @@ class TreeNode<T> with ChangeNotifier{
   /// A unique ID in the tree, used for deserializing this objetc, null means
   /// this is the root
   @JsonKey(includeFromJson: true, includeToJson: true)
-  int? _parentID = null;
+  int? _parentID;
 
   /// the level of this node in the tree, 0 means it is the root
   @JsonKey(includeFromJson: true, includeToJson: true)
@@ -54,7 +54,7 @@ class TreeNode<T> with ChangeNotifier{
   int get level => _level;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
-  late Map<TreeTraversalMode, Iterable<TreeNode<T>>> _iterDict = {
+  late final Map<TreeTraversalMode, Iterable<TreeNode<T>>> _iterDict = {
     TreeTraversalMode.BFS: BFS(),
     TreeTraversalMode.DFS: DFS(),
   };
@@ -67,18 +67,20 @@ class TreeNode<T> with ChangeNotifier{
     }
   ){
 
-    if(children.isNotEmpty)
+    if(children.isNotEmpty) {
       this._children = children;
-    else
+    } else {
       this._children = [];
+    }
   }
 
 
   /// adds newNode as a child to this node
   void addChild (TreeNode<T> newNode) {
     // if the added data is a change notifier, add `this` as a listener
-    if(newNode.value is ChangeNotifier)
+    if(newNode.value is ChangeNotifier) {
       (newNode.value as ChangeNotifier).addListener(notifyListeners);
+    }
 
     _children.add(newNode);
     newNode.parent = this;
@@ -97,8 +99,9 @@ class TreeNode<T> with ChangeNotifier{
       newNode.parent = this;
 
       // if the added data is a change notifier, add `this` as a listener
-      if(newNode.value is ChangeNotifier)
+      if(newNode.value is ChangeNotifier) {
         (newNode.value as ChangeNotifier).addListener(notifyListeners);
+      }
     }
 
     // update the tree
@@ -115,8 +118,9 @@ class TreeNode<T> with ChangeNotifier{
     newNode.parent = this;
 
     // if the added data is a change notifier, add `this` as a listener
-    if(newNode.value is ChangeNotifier)
+    if(newNode.value is ChangeNotifier) {
       (newNode.value as ChangeNotifier).addListener(notifyListeners);
+    }
 
     // update the tree
     updateLevel();
@@ -131,8 +135,9 @@ class TreeNode<T> with ChangeNotifier{
     node.parent = null;
     node.updateID();
     // if the removed data is a change notifier, remove listener
-    if(node.value is ChangeNotifier)
+    if(node.value is ChangeNotifier) {
       (node.value as ChangeNotifier).removeListener(notifyListeners);
+    }
 
     updateID();
 
@@ -153,8 +158,9 @@ class TreeNode<T> with ChangeNotifier{
       if(_children.remove(node)){
         removed.add(node);
         // if the removed data is a change notifier, remove listener
-        if(node.value is ChangeNotifier)
+        if(node.value is ChangeNotifier) {
           (node.value as ChangeNotifier).removeListener(notifyListeners);
+        }
         node.parent = null;
         node.updateLevel();
         node.updateID();
@@ -174,8 +180,9 @@ class TreeNode<T> with ChangeNotifier{
 
     for (final TreeNode<T> node in _children) {
       // if the removed data is a change notifier, remove listener
-      if(node.value is ChangeNotifier)
+      if(node.value is ChangeNotifier) {
         (node.value as ChangeNotifier).removeListener(notifyListeners);
+      }
       node.parent = null;
       node.updateLevel();
       node.updateID();
@@ -203,10 +210,11 @@ class TreeNode<T> with ChangeNotifier{
     for (final n in root.BFS()) {
       n._id = cnt;
 
-      if(n.parent != null)
+      if(n.parent != null) {
         n._parentID = n.parent!._id;
-      else
+      } else {
         n._parentID = null;
+      }
 
       cnt++;
     }

@@ -37,9 +37,9 @@ Future<void> main() async {
         child: FutureBuilder(
           future: g_initApp,
           builder: (context, snapshot) {
-            if(snapshot.hasData == false)
+            if(snapshot.hasData == false) {
               return const DaKanjiSplash();
-            else
+            } else {
               return EasyLocalization(
                 supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
                 path: 'assets/translations',
@@ -63,6 +63,7 @@ Future<void> main() async {
                   child: const DaKanjiApp(),
                 ),
               );
+            }
           }
         ),
       )

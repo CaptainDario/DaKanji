@@ -15,8 +15,9 @@ import 'package:da_kanji_mobile/globals.dart';
 /// Searches in KanjiVG the matching entries to `kanjis` and returns them
 List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
 
-  if(kanjis.isEmpty)
+  if(kanjis.isEmpty) {
     return [];
+  }
   
   return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
     .anyOf(kanjis, (q, element) => q.characterEqualTo(element))
@@ -39,7 +40,7 @@ Tuple2<List<String>, List<String>> kanjiVGToGraph(String kanjiVGEntry, Graph gra
   ).first;
 
   /// list of sub-SVGs ordered the same way as `graph`
-  List<String> kanjiSVGStringList = [kanjiVGHeader + firstElem.toString() + "</g></svg>"];
+  List<String> kanjiSVGStringList = ["$kanjiVGHeader$firstElem</g></svg>"];
   /// list of unicode characters matching 
   List<String> kanjiSVGCharacters = [firstElem.getAttribute("kvg:element")!];
   
@@ -58,10 +59,11 @@ Tuple2<List<String>, List<String>> kanjiVGToGraph(String kanjiVGEntry, Graph gra
         String t = "";
         // get the whole subtree and create a string of it
         for (XmlElement node in childElement.descendantElements) {
-          if(!node.attributes.any((p0) => p0.name.qualified == "kvg:part"))
+          if(!node.attributes.any((p0) => p0.name.qualified == "kvg:part")) {
             t += node.toXmlString(pretty: true);
+          }
         }
-        kanjiSVGStringList.add(kanjiVGHeader + t + "</g></svg>");
+        kanjiSVGStringList.add("$kanjiVGHeader$t</g></svg>");
 
         // add the unicode character to the list
         kanjiSVGCharacters.add(childElement.getAttribute("kvg:element") ?? "");
@@ -118,7 +120,7 @@ Map<String, XmlElement> _preprocessKanjiVGStringMergeKvgParts(XmlElement firstEl
   {
     String  kvgE  = childElement.getAttribute("kvg:element")!;
     String? kvgNo = childElement.getAttribute("kvg:number");
-    String  key = kvgE + (kvgNo==null ? "" : kvgNo);
+    String  key = kvgE + (kvgNo ?? "");
     if(!mergedParts.containsKey(key)){
       var elem = XmlElement(XmlName("g"));
       elem.attributes.add(XmlAttribute(XmlName("kvg:element"), kvgE));
@@ -186,11 +188,13 @@ void _preprocessKanjiVGStringInsertModifiedParts(
           String  kvgE  = childElement.getAttribute("kvg:element")!;
           String? kvgNo = childElement.getAttribute("kvg:number");
           // replace it if it is the first one
-          if(mergedParts.containsKey(kvgE+(kvgNo==null ? "" : kvgNo))){
-            childElement.replace(mergedParts.remove(kvgE+(kvgNo==null ? "" : kvgNo))!);
+          if(mergedParts.containsKey(kvgE+(kvgNo ?? ""))){
+            childElement.replace(mergedParts.remove(kvgE+(kvgNo ?? ""))!);
           }
           // otherwise add it to the list of elements to remove
-          else toRemove.add(childElement);
+          else {
+            toRemove.add(childElement);
+          }
         }
       }
     }

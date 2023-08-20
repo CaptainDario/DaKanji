@@ -30,7 +30,7 @@ enum iso639_1{
 /// `is` -> `is_` 
 /// `new` -> `is_`
 /// `for` -> `for_`
-const Map<String, iso639_1> isoToiso639_1 = const {
+const Map<String, iso639_1> isoToiso639_1 = {
 	'aa' : iso639_1.aa,	'aar' : iso639_1.aa,	'ab' : iso639_1.ab,
 		'abk' : iso639_1.ab,	'af' : iso639_1.af,	'afr' : iso639_1.af,	'ak' : iso639_1.ak,
 		'aka' : iso639_1.ak,	'am' : iso639_1.am,	'amh' : iso639_1.am,	'ar' : iso639_1.ar,
@@ -171,7 +171,7 @@ enum iso639_2T{
 /// `is` -> `is_` 
 /// `new` -> `is_`
 /// `for` -> `for_`
-const Map<String, iso639_2T> isoToiso639_2T = const {
+const Map<String, iso639_2T> isoToiso639_2T = {
 	'aa' : iso639_2T.aar,	'aar' : iso639_2T.aar,	'ab' : iso639_2T.abk,
 		'abk' : iso639_2T.abk,	'ace' : iso639_2T.ace,	'ach' : iso639_2T.ach,	'ada' : iso639_2T.ada,
 		'ady' : iso639_2T.ady,	'afh' : iso639_2T.afh,	'af' : iso639_2T.afr,	'afr' : iso639_2T.afr,
@@ -371,7 +371,7 @@ enum iso639_2B{
 /// `is` -> `is_` 
 /// `new` -> `is_`
 /// `for` -> `for_`
-const Map<String, iso639_2B> isoToiso639_2B = const {
+const Map<String, iso639_2B> isoToiso639_2B = {
 	'aa' : iso639_2B.aar,	'aar' : iso639_2B.aar,	'ab' : iso639_2B.abk,
 		'abk' : iso639_2B.abk,	'ace' : iso639_2B.ace,	'ach' : iso639_2B.ach,	'ada' : iso639_2B.ada,
 		'ady' : iso639_2B.ady,	'afh' : iso639_2B.afh,	'af' : iso639_2B.afr,	'afr' : iso639_2B.afr,
@@ -1070,7 +1070,7 @@ enum iso639_3{
 /// `is` -> `is_` 
 /// `new` -> `is_`
 /// `for` -> `for_`
-const Map<String, iso639_3> isoToiso639_3 = const {
+const Map<String, iso639_3> isoToiso639_3 = {
 	'aaa' : iso639_3.aaa,	'aab' : iso639_3.aab,	'aac' : iso639_3.aac,
 		'aad' : iso639_3.aad,	'aae' : iso639_3.aae,	'aaf' : iso639_3.aaf,	'aag' : iso639_3.aag,
 		'aah' : iso639_3.aah,	'aai' : iso639_3.aai,	'aak' : iso639_3.aak,	'aal' : iso639_3.aal,
@@ -3106,7 +3106,7 @@ const Map<String, iso639_3> isoToiso639_3 = const {
 
 
 /// Map to convert ISO 639-1, 639-1, 639-1, 639-1, to an language string
-const Map<Enum, String> isoToLanguage = const {
+const Map<Enum, String> isoToLanguage = {
 	iso639_3.aaa : 'Ghotuo', 	iso639_3.aab : 'Alumu-Tesu', 	iso639_3.aac : 'Ari', 	iso639_3.aad : 'Amal', 
 	iso639_3.aae : 'Arbëreshë Albanian', 	iso639_3.aaf : 'Aranadan', 	iso639_3.aag : 'Ambrak', 	iso639_3.aah : 'Abu Arapesh', 
 	iso639_3.aai : 'Arifama-Miniafia', 	iso639_3.aak : 'Ankave', 	iso639_3.aal : 'Afade', 	iso639_3.aan : 'Anambé', 

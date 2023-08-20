@@ -34,8 +34,8 @@ class DictionarySearch {
   /// Should the search be converted to hiragana
   bool convertToHiragana;
 
-  KanaKit _kKitRomaji = const KanaKit();
-  KanaKit _kKitKanji = const KanaKit(
+  final KanaKit _kKitRomaji = const KanaKit();
+  final KanaKit _kKitKanji = const KanaKit(
     config: KanaKitConfig(passRomaji: true, passKanji: true, upcaseKatakana: false)
   );
 
@@ -80,13 +80,15 @@ class DictionarySearch {
     query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
 
     // convert query to hiragana if it is Japanese
-    if(_kKitKanji.isJapanese(query))
+    if(_kKitKanji.isJapanese(query)) {
       query = _kKitKanji.toHiragana(query);
+    }
 
     // if romaji conversion setting is enabled, convert query to hiragana
     String? queryKana;
-    if(convertToHiragana) 
+    if(convertToHiragana) {
       queryKana = _kKitRomaji.toHiragana(query);
+    }
 
     // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
@@ -98,13 +100,13 @@ class DictionarySearch {
     searchGroup.close();
 
     // wait for all isolates to finish and merge the results to one list
-    final search_result =
+    final searchResult =
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
-    final sort_result = sortJmdictList(
-      search_result, query, queryKana, this.languages, this.convertToHiragana
+    final sortResult = sortJmdictList(
+      searchResult, query, queryKana, languages, convertToHiragana
     );
-    var result = sort_result.expand((element) => element).toList();
+    var result = sortResult.expand((element) => element).toList();
     _isSearching = false;
 
     // if one or more queries were made while this one was running, run the last

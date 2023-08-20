@@ -128,12 +128,13 @@ class _DoJGScreenState extends State<DoJGScreen> {
     importing = true;
 
     if(await importDoJGDeck()){
-      GetIt.I<UserData>().dojgImported = (await checkDojgImported());
-      GetIt.I<UserData>().dojgWithMediaImported = (await checkDojgWithMediaImported());
+      GetIt.I<UserData>().dojgImported = (checkDojgImported());
+      GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
       await GetIt.I<UserData>().save();
       
-      if(GetIt.I<UserData>().showTutorialDojg)
+      if(GetIt.I<UserData>().showTutorialDojg) {
         showTutorialCallback();
+      }
       
       setState(() {});
     }

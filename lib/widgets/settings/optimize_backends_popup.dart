@@ -46,7 +46,7 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
             const SizedBox(height: 20,)
           ]
         ),
-      )..show();
+      ).show();
       
       // wait a bit so the dialog can be shown
       await Future.delayed(const Duration(seconds: 2));

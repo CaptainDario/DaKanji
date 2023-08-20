@@ -23,7 +23,7 @@ class ManualAnki extends StatelessWidget {
     fontWeight: FontWeight.bold,
   );
 
-  ManualAnki(
+  const ManualAnki(
     {
       super.key
     }
@@ -84,7 +84,7 @@ class ManualAnki extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  if(await checkAnkiAvailable())
+                  if(await checkAnkiAvailable()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -92,7 +92,7 @@ class ManualAnki extends StatelessWidget {
                         ),
                       ),
                     );
-                  else
+                  } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -100,6 +100,7 @@ class ManualAnki extends StatelessWidget {
                         ),
                       ),
                     );
+                  }
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

@@ -68,11 +68,11 @@ class Version implements Comparable<Version>{
   }
 
   List<int> toListFull(){
-    return [this.major, this.minor, this.patch, this.build ?? -1];
+    return [major, minor, patch, build ?? -1];
   }
 
   List<int> toList(){
-    return [this.major, this.minor, this.patch];
+    return [major, minor, patch];
   }
 
   bool operator >(Version other){
@@ -120,17 +120,20 @@ class Version implements Comparable<Version>{
   }
 
   bool operator >=(Version other){
-    if(this > other || this == other)
+    if(this > other || this == other) {
       return true;
+    }
     return false;
   }
 
   bool operator <=(Version other){
-    if(this < other || this == other)
+    if(this < other || this == other) {
       return true;
+    }
     return false;
   }
 
+  @override
   bool operator ==(Object other){
 
     if(other is Version){
@@ -148,9 +151,9 @@ class Version implements Comparable<Version>{
 
   @override
   int compareTo(Version other){
-    if(this > other)
+    if(this > other) {
       return 1;
-    else if(this < other)
+    } else if(this < other)
       return -1;
     else
       return 0;
@@ -160,15 +163,16 @@ class Version implements Comparable<Version>{
 
     // migrate old data format to new one
     if(json is String){
-      if(json == "")
+      if(json == "") {
         return Version(0, 0, 0);
-      else if(json.contains("+"))
+      } else if(json.contains("+"))
         return Version.fromStringFull(json);
       else
         return Version.fromString(json);
     }
-    else
+    else {
       return _$VersionFromJson(json);
+    }
   }
 
   Map<String, dynamic> toJson() => _$VersionToJson(this);

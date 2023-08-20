@@ -117,7 +117,7 @@ class SettingsMisc with ChangeNotifier {
   }
 
   /// Order of the items in the drawer
-  @JsonKey(defaultValue: const [])
+  @JsonKey(defaultValue: [])
   List<int> _drawerItemOrder = [];
   /// Order of the items in the drawer
   List<int> get drawerItemOrder => _drawerItemOrder;

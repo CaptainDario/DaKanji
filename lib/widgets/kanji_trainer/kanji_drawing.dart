@@ -21,11 +21,11 @@ class KanjiDrawingWidget extends StatefulWidget {
 class _KanjiDrawingWidgetState extends State<KanjiDrawingWidget> {
   
   /// list containing all points that have been drawn
-  List<List<Offset>> _paths = [];
+  final List<List<Offset>> _paths = [];
   /// list containing the pen pressure values when drawing `_points`
-  List<double> _penPressures = [];
+  final List<double> _penPressures = [];
   /// list containing the pen tilts when drawing `_points`
-  List<double> _penTilts = [];
+  final List<double> _penTilts = [];
 
   UI.Image? brush;
 

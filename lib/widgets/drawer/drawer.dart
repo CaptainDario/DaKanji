@@ -160,17 +160,20 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     // order of drawer elements
     drawerElementsIndexOrder = GetIt.I<Settings>().misc.drawerItemOrder;
     // no order was ever defined
-    if(drawerElementsIndexOrder.isEmpty)
+    if(drawerElementsIndexOrder.isEmpty) {
       drawerElementsIndexOrder = List.generate(drawerEntries.length, (index) => index);
+    }
     // there are new elements in the drawer (migrate old safed values)
-    if(drawerElementsIndexOrder.length < drawerEntries.length)
+    if(drawerElementsIndexOrder.length < drawerEntries.length) {
       drawerElementsIndexOrder.addAll(
         List.generate(drawerEntries.length-drawerElementsIndexOrder.length, 
           (index) => index+drawerElementsIndexOrder.length)
       );
+    }
     // elements have been removed from the drawer -> reset all values
-    if(drawerElementsIndexOrder.length > drawerEntries.length)
+    if(drawerElementsIndexOrder.length > drawerEntries.length) {
       drawerElementsIndexOrder = List.generate(drawerEntries.length, (i) => i);
+    }
 
     GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
     GetIt.I<Settings>().save();
@@ -180,8 +183,9 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   void dispose() { 
     _drawerController.dispose();
     super.dispose();
-    if(GetIt.I.isRegistered<DrawerListener>())
+    if(GetIt.I.isRegistered<DrawerListener>()) {
       GetIt.I<DrawerListener>().removeListener(_handleDrawer);
+    }
   }
 
   @override
@@ -198,7 +202,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     }
     
 
-    DragStartDetails? _start;
+    DragStartDetails? start;
     
     // add a listener to when the Navigator animation finished
     var route = ModalRoute.of(context);
@@ -262,16 +266,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                       _drawerController.reverse();
                     },
                     onHorizontalDragStart: (DragStartDetails details){
-                      _start ??= details;
+                      start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
-                      var newState = _start!.localPosition.dx - 
+                      var newState = start!.localPosition.dx - 
                         details.localPosition.dx;
                       _drawerController.value = 
                         1 - (newState / _drawerWidth).clamp(0.0, 1.0);
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
-                      _start = null;
+                      start = null;
                       if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
                       } else {
@@ -299,16 +303,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onHorizontalDragStart: (DragStartDetails details){
-                      _start ??= details;
+                      start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
-                      var newState = _start!.localPosition.dx - 
+                      var newState = start!.localPosition.dx - 
                         details.localPosition.dx;
                       _drawerController.value = 
                         1 - (newState / _drawerWidth).clamp(0.0, 1.0);
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
-                      _start = null;
+                      start = null;
                       if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
                       } else {
@@ -354,8 +358,9 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 buildDefaultDragHandles: false,
                                 padding: EdgeInsets.zero,
                                 onReorder: (oldIndex, newIndex) async {
-                                  if(newIndex > oldIndex)
+                                  if(newIndex > oldIndex) {
                                     newIndex -= 1;
+                                  }
                                   int old = drawerElementsIndexOrder.removeAt(oldIndex);
                                   drawerElementsIndexOrder.insert(newIndex, old);
                                   GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;

@@ -39,22 +39,22 @@ class ConjoNote {
   @override
   operator ==(Object other) =>
     other is ConjoNote      &&
-    this.pos  == other.pos  &&
-    this.conj == other.conj &&
-    this.neg  == other.neg  &&
-    this.fml  == other.fml  &&
-    this.onum == other.onum &&
-    this.note == other.note;
+    pos  == other.pos  &&
+    conj == other.conj &&
+    neg  == other.neg  &&
+    fml  == other.fml  &&
+    onum == other.onum &&
+    note == other.note;
   
 
   int get hasCode => 
     Object.hashAll([
-      this.pos,
-      this.conj,
-      this.neg,
-      this.fml,
-      this.onum,
-      this.note
+      pos,
+      conj,
+      neg,
+      fml,
+      onum,
+      note
     ]);
   
 }

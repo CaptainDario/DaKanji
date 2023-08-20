@@ -103,8 +103,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       if(widget.targetLanguages.any(
         (l) => l.contains(widget.kanjidic2entry.meanings[i].language!)
       )) {
-        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
+        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language)) {
           meanings[widget.kanjidic2entry.meanings[i].language!] = [];
+        }
 
         meanings[widget.kanjidic2entry.meanings[i].language]!.add(
           widget.kanjidic2entry.meanings[i].meaning!
@@ -195,7 +196,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} ${radical}"
+                                                        "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical"
                                                       )
                                                     )
                                                   );
@@ -208,7 +209,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} ${text}${radical}"
+                                                        "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} $text$radical"
                                                       )
                                                     )
                                                   );

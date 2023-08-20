@@ -214,10 +214,11 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
     // if no level selection is made or the widget should be hidden return `widget.bottom`
     if(widget.levels.isEmpty || widget.hide){
-      if(widget.bottom != null)
+      if(widget.bottom != null) {
         return widget.bottom!;
-      else
+      } else {
         return const SizedBox();
+      }
     }
 
     return LayoutBuilder(
@@ -230,9 +231,9 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
             for (var entry in floatingWords) {
               if(widgetSize == null) return;
 
-              if(update.delta.dy > 0)
+              if(update.delta.dy > 0) {
                 entry.animationController.value += 0.005 * entry.parallax;
-              else {
+              } else {
                 entry.animationController.value -= 0.005 * entry.parallax;
               }
 

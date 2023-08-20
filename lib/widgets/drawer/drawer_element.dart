@@ -90,7 +90,7 @@ class DrawerElement extends StatelessWidget {
                 Center(
                   child: Align(
                     alignment: leadingAlignment,
-                    child: Container(
+                    child: SizedBox(
                       width: drawerWidth*0.1,
                       child: Icon(
                         leading,
