@@ -2,29 +2,29 @@
 
 
 enum InferenceBackend {
-  CPU,
-  CPU_1, CPU_2, CPU_3, CPU_4, CPU_5, CPU_6, CPU_7, CPU_8,
-  CPU_9, CPU_10, CPU_11, CPU_12, CPU_13, CPU_14, CPU_15, CPU_16,
-  CPU_17, CPU_18, CPU_19, CPU_20, CPU_21, CPU_22, CPU_23, CPU_24,
-  CPU_25, CPU_26, CPU_27, CPU_28, CPU_29, CPU_30, CPU_31, CPU_32,
-  GPU,
-  NNApi,
-  CoreML2,
-  CoreML3,
-  Metal,
-  XNNPack,
-  XNNPack_1, XNNPack_2, XNNPack_3, XNNPack_4, XNNPack_5, XNNPack_6, XNNPack_7, XNNPack_8,
-  XNNPack_9, XNNPack_10, XNNPack_11, XNNPack_12, XNNPack_13, XNNPack_14, XNNPack_15, XNNPack_16,
-  XNNPack_17, XNNPack_18, XNNPack_19, XNNPack_20, XNNPack_21, XNNPack_22, XNNPack_23, XNNPack_24,
-  XNNPack_25, XNNPack_26, XNNPack_27, XNNPack_28, XNNPack_29, XNNPack_30, XNNPack_31, XNNPack_32,
+  cpu,
+  cpu_1, cpu_2, cpu_3, cpu_4, cpu_5, cpu_6, cpu_7, cpu_8,
+  cpu_9, cpu_10, cpu_11, cpu_12, cpu_13, cpu_14, cpu_15, cpu_16,
+  cpu_17, cpu_18, cpu_19, cpu_20, cpu_21, cpu_22, cpu_23, cpu_24,
+  cpu_25, cpu_26, cpu_27, cpu_28, cpu_29, cpu_30, cpu_31, cpu_32,
+  gpu,
+  nnapi,
+  coreMl_2,
+  coreMl_3,
+  metal,
+  xnnPack,
+  xnnPack_1, xnnPack_2, xnnPack_3, xnnPack_4, xnnPack_5, xnnPack_6, xnnPack_7, xnnPack_8,
+  xnnPack_9, xnnPack_10, xnnPack_11, xnnPack_12, xnnPack_13, xnnPack_14, xnnPack_15, xnnPack_16,
+  xnnPack_17, xnnPack_18, xnnPack_19, xnnPack_20, xnnPack_21, xnnPack_22, xnnPack_23, xnnPack_24,
+  xnnPack_25, xnnPack_26, xnnPack_27, xnnPack_28, xnnPack_29, xnnPack_30, xnnPack_31, xnnPack_32,
 }
 
-/// Returns an CPU inference backend from a string.
-InferenceBackend getCPUFromString(String backend){
+/// Returns an cpu inference backend from a string.
+InferenceBackend getcpuFromString(String backend){
   return InferenceBackend.values.firstWhere((b) => b.name == backend);
 }
 
-/// Returns an XNNPack inference backend from a string.
-InferenceBackend getXNNPackFromString(String backend){
+/// Returns an xnnPack inference backend from a string.
+InferenceBackend getxnnPackFromString(String backend){
   return InferenceBackend.values.firstWhere((b) => b.name == backend);
 }

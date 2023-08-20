@@ -95,31 +95,31 @@ Future<Interpreter> initInterpreterFromBackend(
   String assetPath
   ) async
 {
-  if(inferenceBackend == InferenceBackend.CPU){
+  if(inferenceBackend == InferenceBackend.cpu){
     return _cpuInterpreter(assetPath, 1);
   }
   else if(inferenceBackend.name.startsWith("CPU")){
     return _cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
-  else if(inferenceBackend == InferenceBackend.XNNPack){
+  else if(inferenceBackend == InferenceBackend.xnnPack){
     return _xnnPackInterpreter(assetPath, 1);
   }
   else if(inferenceBackend.name.startsWith("XNNPack")){
     return await _xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
-  else if(inferenceBackend == InferenceBackend.GPU){
+  else if(inferenceBackend == InferenceBackend.gpu){
     return await _gpuInterpreter(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.NNApi){
+  else if(inferenceBackend == InferenceBackend.nnapi){
     return await _nnapiInterpreter(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.Metal){
+  else if(inferenceBackend == InferenceBackend.metal){
     return await _metalInterpreterIOS(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.CoreML2){
+  else if(inferenceBackend == InferenceBackend.coreMl_2){
     return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
   }
-  else if(inferenceBackend == InferenceBackend.CoreML3){
+  else if(inferenceBackend == InferenceBackend.coreMl_3){
     return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
   }
   else{
@@ -144,11 +144,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // NNAPI delegate
-  if(!exclude.contains(InferenceBackend.NNApi)){
+  if(!exclude.contains(InferenceBackend.nnapi)){
     try{
       Interpreter interpreter = await _nnapiInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.NNApi, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.nnapi, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -156,11 +156,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
     }
   }
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -168,7 +168,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
     }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -183,7 +183,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
     }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -217,11 +217,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // CoreML 3 delegate
-  if(!exclude.contains(InferenceBackend.CoreML3)){
+  if(!exclude.contains(InferenceBackend.coreMl_3)){
     try{
       Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CoreML3, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.coreMl_3, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -229,11 +229,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
     }
   }
   // CoreML 2 delegate
-  if(!exclude.contains(InferenceBackend.CoreML2)){
+  if(!exclude.contains(InferenceBackend.coreMl_2)){
     try{
       Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CoreML2, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.coreMl_2, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -241,11 +241,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
     }
   }
   // Metal delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _metalInterpreterIOS(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.Metal, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.metal, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -253,7 +253,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
     }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -268,7 +268,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
     }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -302,11 +302,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -314,7 +314,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
     }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -329,7 +329,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
     }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -362,11 +362,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -374,7 +374,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
     }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -389,7 +389,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
     }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -422,11 +422,11 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
     catch (e){
@@ -434,7 +434,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
     }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -449,7 +449,7 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
     }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
