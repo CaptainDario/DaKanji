@@ -117,57 +117,56 @@ class _WordListsState extends State<WordLists> {
             children: [
               Column(
                 children: [
-                  // header with tools 
-                  Container(
-                    child: DragTarget<TreeNode<WordListsData>>(
-                      hitTestBehavior: HitTestBehavior.opaque,
-                      onWillAccept: (data) {
-                        // start animation to the top of the list d
-                        if(scrollController.offset > 60) {
-                          scrollController.animateTo(0,
-                            duration: Duration(milliseconds: scrollController.offset.round()*5),
-                            curve: Curves.linear
-                          );
-                        }
-                        return false;
-                      },
-                      onLeave: (data) {
-                        // cancel animation
-                        scrollController.position.hold(() { });
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        return Row(
-                          children: [
-                            const Expanded(child: SizedBox()),
-                            // add new list button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.wordList);
-                                },
-                                icon: const Icon(Icons.format_list_bulleted_add)
-                              ),
-                            ), 
-                            // add new folder button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.folder);
-                                },
-                                icon: const Icon(Icons.create_new_folder)
-                              ),
-                            ), 
-                          ],
+                  // header with tools
+                  DragTarget<TreeNode<WordListsData>>(
+                    hitTestBehavior: HitTestBehavior.opaque,
+                    onWillAccept: (data) {
+                      // start animation to the top of the list d
+                      if(scrollController.offset > 60) {
+                        scrollController.animateTo(0,
+                          duration: Duration(milliseconds: scrollController.offset.round()*5),
+                          curve: Curves.linear
                         );
                       }
-                    ),
+                      return false;
+                    },
+                    onLeave: (data) {
+                      // cancel animation
+                      scrollController.position.hold(() { });
+                    },
+                    builder: (context, candidateData, rejectedData) {
+                      return Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          // add new list button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.wordList);
+                              },
+                              icon: const Icon(Icons.format_list_bulleted_add)
+                            ),
+                          ), 
+                          // add new folder button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.folder);
+                              },
+                              icon: const Icon(Icons.create_new_folder)
+                            ),
+                          ), 
+                        ],
+                      );
+                    }
                   ),
+                  
                   // the word lists / folders
                   Expanded(
                     child: ListView(
