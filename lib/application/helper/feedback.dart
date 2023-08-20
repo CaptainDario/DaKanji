@@ -62,8 +62,8 @@ Future<String> writeTextToTmpStorage(String text, String fileName) async {
 Future<String> getDeviceInfoText(BuildContext context) async {
   Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).data;
 
-  String deviceInfo = """System / App info:
-    I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
+  // ignore: use_build_context_synchronously
+  String deviceInfo = """System / App info:\nI am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
 
     ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
     """;

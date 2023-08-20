@@ -16,6 +16,7 @@ analyzer:
     lib/data/da_kanji_icons_icons.dart,
     lib/data/iso/iso_table.dart,
     lib/globals.dart,
+    lib/CodegenLoader.dart,
     assets/**,
   ]
 

@@ -70,11 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
         context, "/onboarding", (route) => false
       );
     }
     else {
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(context, 
         "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
         (route) => false

@@ -110,6 +110,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else{
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(
               context,
               "No translator installed", 
@@ -138,6 +139,7 @@ void openDictionary(BuildContext context, String char) async {
           }
         }
         catch (e){
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "aedict"
@@ -165,6 +167,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else {
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "akebi"
@@ -190,6 +193,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else{
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "takoboto"
@@ -213,6 +217,7 @@ void openDictionary(BuildContext context, String char) async {
           launchUrlString(url);
         } else {
           debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Shirabe Jisho"
@@ -231,6 +236,7 @@ void openDictionary(BuildContext context, String char) async {
           launchUrlString(url);
         } else {
           debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Imiwa?"
@@ -249,6 +255,7 @@ void openDictionary(BuildContext context, String char) async {
           launchUrlString(url);
         } else {
           debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Japanese"
@@ -269,6 +276,7 @@ void openDictionary(BuildContext context, String char) async {
           );
         } else {
           debugPrint("cannot launch$url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Midori"

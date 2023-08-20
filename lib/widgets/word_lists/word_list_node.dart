@@ -255,7 +255,7 @@ class _WordListNodeState extends State<WordListNode> {
                           widget.onSelectedToggled!.call(widget.node);
                         }
                       ),
-                    if(!wordListDefaultTypes.contains(widget.node.value.type.name.contains("Default")))
+                    if(!wordListDefaultTypes.contains(widget.node.value.type))
                       PopupMenuButton<PopupMenuButtonItems>(
                         onSelected: (PopupMenuButtonItems value) {
                           switch(value){
