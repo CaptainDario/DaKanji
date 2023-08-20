@@ -2982,7 +2982,14 @@
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji"
+      "de": "Kuzushiji",
+      "ru": "Kuzushiji",
+      "ja": "崩し字",
+      "zh": "崩し字",
+      "it": "Kuzushiji",
+      "fr": "Kuzushiji",
+      "es": "Kuzushiji",
+      "pl": "Kuzushiji"
     }
   },
   "WordListsScreen": {
