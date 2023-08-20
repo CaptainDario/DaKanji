@@ -7,7 +7,7 @@ import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart'
 
 
 /// Simple popup that shows a spinning animation
-AwesomeDialog LoadingPopup(BuildContext context){
+AwesomeDialog loadingPopup(BuildContext context){
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,

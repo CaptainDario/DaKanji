@@ -10,7 +10,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Info popup that informs the user that a significant part of the dictionary
 /// is only available in english
-AwesomeDialog DisableEnglishDictPopup(BuildContext context){
+AwesomeDialog disableEnglishDictPopup(BuildContext context){
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,

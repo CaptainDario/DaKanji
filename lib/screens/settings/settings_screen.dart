@@ -229,7 +229,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     await DisableEnglishDictPopup(context).show();
                                   }
 
-                                  LoadingPopup(context).show();
+                                  loadingPopup(context).show();
 
                                   await GetIt.I<DictionarySearch>().kill();
                                   if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {

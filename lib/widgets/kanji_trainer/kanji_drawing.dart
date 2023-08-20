@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:ui' as UI;
+import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 
 import 'calligraphy_pen_painter.dart';
@@ -27,7 +27,7 @@ class _KanjiDrawingWidgetState extends State<KanjiDrawingWidget> {
   /// list containing the pen tilts when drawing `_points`
   final List<double> _penTilts = [];
 
-  UI.Image? brush;
+  ui.Image? brush;
 
   @override
   void initState() {
@@ -93,7 +93,7 @@ class _KanjiDrawingWidgetState extends State<KanjiDrawingWidget> {
     );
   }
 
-  Future<UI.Image> loadUiImage(String imageAssetPath) async {
+  Future<ui.Image> loadUiImage(String imageAssetPath) async {
     final data = await rootBundle.load(imageAssetPath);
     return decodeImageFromList(data.buffer.asUint8List());
   }

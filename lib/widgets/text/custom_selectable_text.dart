@@ -90,7 +90,7 @@ class CustomSelectableText extends StatefulWidget {
   final void Function(Offset)? onTapOutsideOfText;
 
   @override
-  _CustomSelectableTextState createState() => _CustomSelectableTextState();
+  State<CustomSelectableText> createState() => _CustomSelectableTextState();
 }
 
 class _CustomSelectableTextState extends State<CustomSelectableText> {
@@ -416,8 +416,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     // if the offset is outside of the text, return the previous character (at the end)
     if(tP.offset >= words.join("").length) {
       tP = TextPosition(offset: words.join("").length);
-    } else if(!selectedBox.first.toRect().contains(textOffset))
+    } else if(!selectedBox.first.toRect().contains(textOffset)) {
       tP = TextPosition(offset: tP.offset-1);
+    }
     // if the offset is outside of the text, return the previous character (at the beginning)
     if(tP.offset < 0) {
       tP = const TextPosition(offset: 0);
