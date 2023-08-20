@@ -99,9 +99,8 @@ class DrawingInterpreter with ChangeNotifier{
     if(GetIt.I<UserData>().drawingBackend != null) {
       iB = GetIt.I<UserData>().drawingBackend!;
     }
-    // Otherwise, find the best available backend and load the model
+    // Otherwise, on single core return CPU_1, otherwise use some cores
     else {
-      // on single core return CPU_1, otherwise use some cores
       if(Platform.numberOfProcessors == 2) {
         iB = InferenceBackend.cpu_2;
       } if(Platform.numberOfProcessors == 3) {

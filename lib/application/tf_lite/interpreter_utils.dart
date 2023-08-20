@@ -98,13 +98,13 @@ Future<Interpreter> initInterpreterFromBackend(
   if(inferenceBackend == InferenceBackend.cpu){
     return _cpuInterpreter(assetPath, 1);
   }
-  else if(inferenceBackend.name.startsWith("CPU")){
+  else if(inferenceBackend.name.startsWith(InferenceBackend.cpu.name)){
     return _cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.xnnPack){
     return _xnnPackInterpreter(assetPath, 1);
   }
-  else if(inferenceBackend.name.startsWith("XNNPack")){
+  else if(inferenceBackend.name.startsWith(InferenceBackend.xnnPack.name)){
     return await _xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.gpu){
@@ -123,7 +123,7 @@ Future<Interpreter> initInterpreterFromBackend(
     return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
   }
   else{
-    throw Exception("Unknown inference backend");
+    throw Exception("Unknown inference backend $inferenceBackend.");
   }
 }
 
