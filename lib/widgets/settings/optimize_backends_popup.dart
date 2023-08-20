@@ -39,17 +39,17 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
               size: 30.0,
               itemCount: 10,
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text(
               LocaleKeys.SettingsScreen_advanced_settings_optimizing.tr()
             ),
-            SizedBox(height: 20,)
+            const SizedBox(height: 20,)
           ]
         ),
       )..show();
       
       // wait a bit so the dialog can be shown
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
 
       await optimizeTFLiteBackendsForModels();
       

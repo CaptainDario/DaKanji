@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -27,7 +28,10 @@ class DojgEntryCard extends StatelessWidget {
           child: Card(
             child: InkWell(
               onTap: () {
-                print(this.dojgEntry.grammaticalConcept);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DojgEntryPage(this.dojgEntry),)
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -37,13 +41,13 @@ class DojgEntryCard extends StatelessWidget {
                     Text(
                       this.dojgEntry.grammaticalConcept,
                       textScaleFactor: 1.5,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: g_japaneseFontFamily
                       ),
                     ),
                     Text(
                       this.dojgEntry.usage ?? "",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontFamily: g_japaneseFontFamily
                       ),

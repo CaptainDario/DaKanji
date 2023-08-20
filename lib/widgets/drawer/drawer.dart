@@ -97,7 +97,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       kDebugMode, null),
     if(kDebugMode)
     DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
-      null, Alignment(0, -0.1),
+      null, const Alignment(0, -0.1),
       kDebugMode, null),
     DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
       null, null,
@@ -116,7 +116,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       true, sendFeedback),
     if(kDebugMode)
     DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
-      0.7, Alignment(-1000, 0),
+      0.7, const Alignment(-1000, 0),
       kDebugMode, null),
   ];
 

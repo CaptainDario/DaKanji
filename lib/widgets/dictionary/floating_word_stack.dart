@@ -217,7 +217,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       if(widget.bottom != null)
         return widget.bottom!;
       else
-        return SizedBox();
+        return const SizedBox();
     }
 
     return LayoutBuilder(

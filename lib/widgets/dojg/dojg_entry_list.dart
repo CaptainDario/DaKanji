@@ -83,7 +83,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
             floating: true,
             title: Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: TextField(
                     autocorrect: false,
                     maxLines: 1,
@@ -98,7 +98,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
                     ),
                   )
                 ),
-                SizedBox(width: 50,),
+                const SizedBox(width: 50,),
                 ToggleButtons(
                   renderBorder: false,
                   isSelected: currentVolumeSelection,
@@ -130,7 +130,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
                 currentEntries[i+1].grammaticalConcept[0])
                 return Text("${currentEntries[i+1].grammaticalConcept[0]}");
               else
-                return SizedBox();
+                return const SizedBox();
             },
             itemBuilder: (context, i) {
               return DojgEntryCard(currentEntries[i]);

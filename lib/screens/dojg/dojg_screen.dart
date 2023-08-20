@@ -88,11 +88,11 @@ class _DoJGScreenState extends State<DoJGScreen> {
       animationAtStart: !widget.openedByDrawer,
       currentScreen: Screens.dojg,
       child: GetIt.I<UserData>().dojgImported
-        ? DojgEntryList()
+        ? const DojgEntryList()
         : GestureDetector(
           onTap: importDojgPressed,
           child: Container(
-            constraints: BoxConstraints.expand(),
+            constraints: const BoxConstraints.expand(),
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,16 +101,16 @@ class _DoJGScreenState extends State<DoJGScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.download),
-                    SizedBox(width: 10.0),
+                    const Icon(Icons.download),
+                    const SizedBox(width: 10.0),
                     Text(LocaleKeys.DojgScreen_import_dojg.tr()),
                   ],
                 ),
-                SizedBox(height: 4,),
+                const SizedBox(height: 4,),
                 Text(
                   LocaleKeys.DojgScreen_refer_to_manual.tr(),
                   textScaleFactor: 0.9,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                   ),
                 )

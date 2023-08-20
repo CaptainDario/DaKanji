@@ -66,7 +66,7 @@ String themeMnemonicSvg(String svgString, bool darkTheme){
 /// converts the given kana to romaji maching the audio file names of the app
 String convertToRomaji(String kana){
   
-  String romaji = ""; KanaKit k = KanaKit();
+  String romaji = ""; KanaKit k = const KanaKit();
 
   switch (k.toHiragana(kana)) {
 
@@ -110,7 +110,7 @@ String convertToRomaji(String kana){
       break;
 
     default:
-      romaji = KanaKit().toRomaji(kana);
+      romaji = const KanaKit().toRomaji(kana);
   }
 
   return romaji;
@@ -195,35 +195,35 @@ List<String> hiraSmall =
 /// 2D list (table) of all Katakana characters ex.: ア, イ, ウ, ...
 List<List<String>> katakana = hiragana.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// 2D list (table) of all Katakana dakuten characters, ex.: ガ, ザ, ...
 List<List<String>> kataDakuten = hiraDakuten.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// 2D list (table) of all Katakana yoon handakuten characters, ex.: パ, ピ, ...
 List<List<String>> kataHandakuten = hiraHandakuten.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// 2D list (table) of all Katakana yoon characters, ex.: ギャ, ジャ, ...
 List<List<String>> kataYoonDakuten = hiraYoonDakuten.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// 2D list (table) of all Hiragana yoon handakuten characters, ex.: ピャ, ピュ, ...
 List<List<String>> kataYoonHandakuten = hiraYoonHandakuten.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
@@ -234,20 +234,20 @@ List<List<String>> kataDaku = kataDakuten + kataYoonDakuten + kataHandakuten + k
 /// 2D list (table) of all Katakana yoon characters, ex.: キャ, キュ
 List<List<String>> kataYoon = hiraYoon.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// A list of special (uncommon) Katakana characters ex.: ファ, ツァ, ...
 List<List<String>> kataSpecial = hiraSpecial.map((e) => 
   e.map((e) =>
-    KanaKit().toKatakana(e)
+    const KanaKit().toKatakana(e)
   ).toList()
 ).toList();
 
 /// A list of a "small" Katakana characters ex.: ァ, ィ, ゥ
 List<String> kataSmall = hiraSmall.map((e) => 
-  KanaKit().toKatakana(e)
+  const KanaKit().toKatakana(e)
 ).toList();
 
 

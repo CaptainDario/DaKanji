@@ -77,7 +77,7 @@ class _ManualScreenState extends State<ManualScreen>
                       return Scaffold(
                         appBar: AppBar(
                           leading: IconButton(
-                            icon: Icon(Icons.arrow_back),
+                            icon: const Icon(Icons.arrow_back),
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                           title: Align(
@@ -86,7 +86,7 @@ class _ManualScreenState extends State<ManualScreen>
                           ),
                         ),
                         body: Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               manualTexts[index]

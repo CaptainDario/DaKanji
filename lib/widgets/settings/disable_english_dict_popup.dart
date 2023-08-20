@@ -19,7 +19,7 @@ AwesomeDialog DisableEnglishDictPopup(BuildContext context){
 
     },
     body: Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Text(
           LocaleKeys.SettingsScreen_dict_disable_english_info.tr()

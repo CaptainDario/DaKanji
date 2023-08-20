@@ -14,7 +14,7 @@ AwesomeDialog LoadingPopup(BuildContext context){
     body: Container(
       height: 100,
       width: 100,
-      child: DaKanjiLoadingIndicator()
+      child: const DaKanjiLoadingIndicator()
     ),
     dismissOnBackKeyPress: false,
     dismissOnTouchOutside: false,

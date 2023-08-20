@@ -151,7 +151,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               initialEntryId: args.initialEntryId,
             ));
           case "/dojg":
-            return switchScreen(DoJGScreen(true, true,));
+            return switchScreen(const DoJGScreen(true, true,));
           case "/text":
             return switchScreen(TextScreen(
               args.navigatedByDrawer, true, 
@@ -180,7 +180,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/manual":
             return switchScreen(ManualScreen(args.navigatedByDrawer));
           case "/testScreen":
-            return switchScreen(TestScreen());
+            return switchScreen(const TestScreen());
         }
         throw UnsupportedError("Unknown route: ${settings.name}");
       },

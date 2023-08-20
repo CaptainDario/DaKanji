@@ -43,7 +43,7 @@ class ClipboardScreen extends StatefulWidget {
 class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListener, WidgetsBindingObserver {
 
   /// Current state of the OS clipboard
-  ClipboardData currentClipboard = ClipboardData(text: "");
+  ClipboardData currentClipboard = const ClipboardData(text: "");
   /// Timer that refreshes the UI every 1s (android only)
   late Timer refreshClipboardAndroid;
   /// Is the app currently set to be always on top
@@ -66,7 +66,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     // android does not allow for continous clipboard reading -> periodically
     // read clipboard till there is new value
     if(Platform.isAndroid){
-      refreshClipboardAndroid = Timer.periodic(Duration(seconds: 1), (timer) async { 
+      refreshClipboardAndroid = Timer.periodic(const Duration(seconds: 1), (timer) async { 
 
         String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
@@ -125,7 +125,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
   @override
   void onClipboardChanged() async {
-    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? ClipboardData(text: "");
+    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? const ClipboardData(text: "");
     setState(() { });
   }
   
@@ -174,8 +174,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     await windowManager.setAlwaysOnTop(isAlwaysOnTop);
 
     if(isAlwaysOnTop){
-      await windowManager.setSize(Size(300, 300));
-      await windowManager.setMinimumSize(Size(300, 300));
+      await windowManager.setSize(const Size(300, 300));
+      await windowManager.setMinimumSize(const Size(300, 300));
       await windowManager.setAsFrameless();
     }
     else {

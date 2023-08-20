@@ -71,7 +71,7 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
       ? Container()
       : ExpansionTile(
         textColor: Theme.of(context).highlightColor,
-        childrenPadding: EdgeInsets.all(16),
+        childrenPadding: const EdgeInsets.all(16),
         title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
         children: [
           TabBar(

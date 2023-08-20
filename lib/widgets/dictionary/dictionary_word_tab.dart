@@ -153,7 +153,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           ...[
                             Text(
                               widget.entry!.jlptLevel!.join(", "),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12
                               ),
@@ -298,8 +298,8 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DaKanjiLoadingIndicator(),
-                      SizedBox(height: 8,),
+                      const DaKanjiLoadingIndicator(),
+                      const SizedBox(height: 8,),
                       Text(
                         snapshot.data ?? ""
                       ),

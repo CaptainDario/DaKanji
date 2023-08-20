@@ -114,7 +114,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                                     widget.matchSpans[i].item1,
                                     widget.matchSpans[i].item2,
                                   ),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: g_japaneseFontFamily,
                                     fontWeight: FontWeight.bold
                                   )
@@ -135,7 +135,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                     )
                 )
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               ...translations.map((e) => 
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -149,7 +149,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                         ]!
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     SelectableText(e.sentence!)
                   ],
                 ),

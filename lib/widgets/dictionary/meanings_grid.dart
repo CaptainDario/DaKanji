@@ -103,7 +103,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
     int hide = widget.meanings.meanings.length > 5 && !showAllMeanings ? 1 : 0;
     
     return AnimatedSize(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       alignment: Alignment.topCenter,
       child: LayoutGrid(
         gridFit: GridFit.loose,
@@ -121,7 +121,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 alignment: Alignment.topRight,
                 child: Text(
                   "${(j+1).toString()}. ",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey
                   )
                 ),
@@ -267,9 +267,9 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 child: Row(
                   children: [
                     Container(
-                      child: Icon(Icons.expand_more)
+                      child: const Icon(Icons.expand_more)
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Text(LocaleKeys.DictionaryScreen_word_meanings_more.tr())
                   ],
                 )

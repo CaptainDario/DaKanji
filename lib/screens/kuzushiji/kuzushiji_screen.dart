@@ -34,7 +34,7 @@ class _KuzushijiScreenState extends State<KuzushijiScreen> {
     return DaKanjiDrawer(
       currentScreen: Screens.kuzushiji,
       animationAtStart: !widget.openedByDrawer,
-      child: Text(
+      child: const Text(
         "崩",
         style: TextStyle(
           fontFamily: "kouzan",

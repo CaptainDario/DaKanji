@@ -406,7 +406,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(pos),
-          duration: Duration(milliseconds: 5000),
+          duration: const Duration(milliseconds: 5000),
         )
       );
     });

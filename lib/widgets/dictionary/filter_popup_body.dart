@@ -60,7 +60,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
       height: widget.height,
       child: Column(
         children: [
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Expanded(
             child: GridView.builder(
               clipBehavior: Clip.hardEdge,
@@ -74,7 +74,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
               itemCount: currentFilter.length+1,
               itemBuilder: (context, index) {
   
-                MapEntry<String, String> item = MapEntry("", "");
+                MapEntry<String, String> item = const MapEntry("", "");
   
                 int cnt = 0;
                 for (MapEntry<String, String> i in currentFilter.entries) {
@@ -173,7 +173,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                           child: Center(
                             child: Text(
                               LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white
                               ),
                             ),

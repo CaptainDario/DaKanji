@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_lints: ^2.0.2
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
@@ -26,7 +28,7 @@ dependencies:
   universal_io: 2.2.0
   awesome_dialog: 3.1.0
   easy_localization: 3.0.2
-  flutter_layout_grid: 1.0.3
+  flutter_layout_grid: 2.0.4
   tuple: 2.0.1
   lottie: 1.2.1
   flutter_svg: 1.1.6
@@ -144,6 +146,10 @@ flutter_icons:
     generate: true 
   
   image_path: "assets/images/dakanji/icon.png"
+
+analyzer:
+  exclude:
+    - lib/locale_keys.dart
 
 # The following section is specific to Flutter.
 flutter:

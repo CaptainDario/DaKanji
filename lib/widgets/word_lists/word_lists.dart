@@ -111,7 +111,7 @@ class _WordListsState extends State<WordLists> {
       },
       builder: (context, candidateData, rejectedData) {
         return Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           color: itemDraggingOverThis ? g_Dakanji_green.withOpacity(0.5) : null,
           child: Stack(
             children: [
@@ -137,7 +137,7 @@ class _WordListsState extends State<WordLists> {
                       builder: (context, candidateData, rejectedData) {
                         return Row(
                           children: [
-                            Expanded(child: SizedBox()),
+                            const Expanded(child: SizedBox()),
                             // add new list button
                             Focus(
                               focusNode: widget.includeTutorial
@@ -147,7 +147,7 @@ class _WordListsState extends State<WordLists> {
                                 onPressed: () {
                                   addNewWordListNode(WordListNodeType.wordList);
                                 },
-                                icon: Icon(Icons.format_list_bulleted_add)
+                                icon: const Icon(Icons.format_list_bulleted_add)
                               ),
                             ), 
                             // add new folder button
@@ -159,7 +159,7 @@ class _WordListsState extends State<WordLists> {
                                 onPressed: () {
                                   addNewWordListNode(WordListNodeType.folder);
                                 },
-                                icon: Icon(Icons.create_new_folder)
+                                icon: const Icon(Icons.create_new_folder)
                               ),
                             ), 
                           ],
@@ -292,9 +292,9 @@ class _WordListsState extends State<WordLists> {
                   // confirm selection button if word lists are opened in selection mode
                   if(widget.onSelectionConfirmed != null)
                     ...[
-                      SizedBox(height: 16),
-                      Divider(),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 16),
+                      const Divider(),
+                      const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                         child: SizedBox(
@@ -302,8 +302,8 @@ class _WordListsState extends State<WordLists> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                               ),
@@ -321,7 +321,7 @@ class _WordListsState extends State<WordLists> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                     ]
                 ],
               ),
