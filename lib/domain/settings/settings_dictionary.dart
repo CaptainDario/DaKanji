@@ -15,6 +15,7 @@ class SettingsDictionary with ChangeNotifier {
 
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_translationLanguageCodes = [
     "en", "de", "ru", "it", "fr", "es", "pl",
   ];
@@ -31,6 +32,7 @@ class SettingsDictionary with ChangeNotifier {
 
   /// The default value for `selectedTranslationLanguagesDefault` 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_selectedTranslationLanguages = ["en"];
   /// All languages that are selected to be shown in the dict UI
   @JsonKey(defaultValue: d_selectedTranslationLanguages)
@@ -44,18 +46,21 @@ class SettingsDictionary with ChangeNotifier {
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_showWordFruequency = false;
   @JsonKey(defaultValue: d_showWordFruequency)
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_searchDeconjugate = true;
   @JsonKey(defaultValue: d_searchDeconjugate)
   /// Should the search term be deconjugated before searching
   bool searchDeconjugate = d_searchDeconjugate;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_convertToHiragana = true;
   @JsonKey(defaultValue: d_convertToHiragana)
   /// Should the search term be converted to kana if it is written in romaji
@@ -64,6 +69,7 @@ class SettingsDictionary with ChangeNotifier {
 
   /// The deafult value for `selectedFallingWordsLevels`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_fallingWordsLevels = [
     "N5", "N4", "N3", "N2", "N1",
   ];
