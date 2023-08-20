@@ -56,6 +56,7 @@ dependencies:
   pdf: 3.10.3
   printing: 5.11.0
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
+  flutter_widget_from_html_core: 0.10.3
   #kana_kit: any # included in dakanji dictionary
   media_kit: ^1.1.2                              # Primary package.
   
