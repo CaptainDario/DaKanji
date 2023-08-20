@@ -85,7 +85,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                   cnt++;
                 }
 
-                if(item != "")
+                if(item .key != "") {
                   return AnimationConfiguration.staggeredGrid(
                     position: index, 
                     columnCount: crossAxisCount, 
@@ -144,8 +144,9 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                       ),
                     )
                   );
+                }
                 return null;
-              },
+              }
             ),
               
           ),
