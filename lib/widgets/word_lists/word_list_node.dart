@@ -22,10 +22,10 @@ import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
 enum  PopupMenuButtonItems {
-  Rename,
-  Delete,
-  SendToAnki,
-  ToPdf
+  rename,
+  delete,
+  sendToAnki,
+  toPdf
 }
 
 class WordListNode extends StatefulWidget {
@@ -259,15 +259,15 @@ class _WordListNodeState extends State<WordListNode> {
                       PopupMenuButton<PopupMenuButtonItems>(
                         onSelected: (PopupMenuButtonItems value) {
                           switch(value){
-                            case PopupMenuButtonItems.Rename:
+                            case PopupMenuButtonItems.rename:
                               renameButtonPressed();
                               break;
-                            case PopupMenuButtonItems.Delete:
+                            case PopupMenuButtonItems.delete:
                               deleteButtonPressed();
                               break;
-                            case PopupMenuButtonItems.SendToAnki:
+                            case PopupMenuButtonItems.sendToAnki:
                               break;
-                            case PopupMenuButtonItems.ToPdf:
+                            case PopupMenuButtonItems.toPdf:
                               toPDFPressed();
                               break;
                           }
@@ -275,14 +275,14 @@ class _WordListNodeState extends State<WordListNode> {
                         itemBuilder: (context) => [
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.Rename,
+                              value: PopupMenuButtonItems.rename,
                               child: Text(
                                 LocaleKeys.WordListsScreen_rename.tr(),
                               )
                             ),
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.Delete,
+                              value: PopupMenuButtonItems.delete,
                               child: Text(
                                 LocaleKeys.WordListsScreen_delete.tr(),
                               )
@@ -290,13 +290,13 @@ class _WordListNodeState extends State<WordListNode> {
                           if(wordListListypes.contains(widget.node.value.type))
                             ...[
                               const PopupMenuItem(
-                                value: PopupMenuButtonItems.SendToAnki,
+                                value: PopupMenuButtonItems.sendToAnki,
                                 child: Text(
                                   "Send to anki"
                                 )
                               ),
                               const PopupMenuItem(
-                                value: PopupMenuButtonItems.ToPdf,
+                                value: PopupMenuButtonItems.toPdf,
                                 child: Text(
                                   "To PDF"
                                 )
