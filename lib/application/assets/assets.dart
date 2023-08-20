@@ -42,6 +42,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   }
   catch (e){
     if(askToDownload) {
+      // ignore: use_build_context_synchronously
       await downloadPopup(
         context: context,
         btnOkOnPress: () {}
@@ -54,6 +55,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         break;
       }
       catch (e){
+        // ignore: use_build_context_synchronously
         await AwesomeDialog(
           context: context,
           headerAnimationLoop: false,

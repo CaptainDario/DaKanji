@@ -352,6 +352,7 @@ class _WordListNodeState extends State<WordListNode> {
 
     pw.Document pdf = await pdfPortrait();
 
+    // ignore: use_build_context_synchronously
     await AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,

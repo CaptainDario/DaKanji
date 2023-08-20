@@ -54,9 +54,7 @@ Future<void> main() async {
                     sheetIsDraggable: true
                   ),
                   localizationsDelegates: [
-                    CustomFeedbackLocalizationsDelegate()..supportedLocales = {
-                      const Locale('en'): CustomFeedbackLocalizations()
-                    },
+                    CustomFeedbackLocalizationsDelegate(),
                   ],
                   localeOverride: const Locale("en"),
                   mode: FeedbackMode.navigate,
