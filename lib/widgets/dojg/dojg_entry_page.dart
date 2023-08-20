@@ -43,10 +43,55 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
                 
               ),
             ),
+            const SizedBox(height: 16,),
+            // fomration ie. conjugation / usage
             if(widget.dojgEntry.formation != null)
-              HtmlWidget(
-                widget.dojgEntry.formation!
-              )
+              ...[
+                Text(
+                  "Formation",
+                  textScaleFactor: 1.5,
+                ),
+                const SizedBox(height: 8,),
+                HtmlWidget(
+                  widget.dojgEntry.formation!
+                )
+              ],
+
+            // key sentences
+            if(widget.dojgEntry.examplesEn.isNotEmpty)
+              ...[
+                const SizedBox(height: 10,),
+                Text(
+                  "Key sentences",
+                  textScaleFactor: 1.5,
+                ),
+                const SizedBox(height: 8,),
+                for (int i = 0; i < widget.dojgEntry.keySentencesEn.length; i++)
+                  ...[
+                    HtmlWidget(widget.dojgEntry.keySentencesJp[i]),
+                    Row(
+                      children: [
+                        const Text(
+                          "(ksa).　",
+                          style: TextStyle(color: Colors.transparent),
+                        ),
+                        Flexible(
+                          child: Text(
+                            widget.dojgEntry.keySentencesEn[i],
+                            style: const TextStyle(
+                              color: Colors.grey
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // after each ks pair (except last one) put a small margin
+                    if(i != widget.dojgEntry.keySentencesEn.length-1)
+                      const SizedBox(height: 4,)
+                  ]
+              ],
+
+            // examples
           ],
         ),
       )
