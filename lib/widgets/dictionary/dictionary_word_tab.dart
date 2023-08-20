@@ -238,7 +238,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           }
                           // add to word list
                           else if(selection == menuItems[5]) {
-                            await AddToWordListDialog(context, widget).show();
+                            await addToWordListDialog(context, widget).show();
                           }
                           else if(selection == menuItems[6]){
                             await AnkiDialog(context).show();

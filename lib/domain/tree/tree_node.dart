@@ -55,8 +55,8 @@ class TreeNode<T> with ChangeNotifier{
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   late final Map<TreeTraversalMode, Iterable<TreeNode<T>>> _iterDict = {
-    TreeTraversalMode.bfs: BFS(),
-    TreeTraversalMode.dfs: DFS(),
+    TreeTraversalMode.bfs: bfs(),
+    TreeTraversalMode.dfs: dfs(),
   };
 
 
@@ -196,7 +196,7 @@ class TreeNode<T> with ChangeNotifier{
 
   /// Update the level information of all nodes in the subtree
   void updateLevel () {
-    for (final node in DFS()) {
+    for (final node in dfs()) {
       node._level = node.parent!.level + 1;
     }
   }
@@ -207,7 +207,7 @@ class TreeNode<T> with ChangeNotifier{
     TreeNode<T> root = getRoot();
 
     int cnt = 0;
-    for (final n in root.BFS()) {
+    for (final n in root.bfs()) {
       n._id = cnt;
 
       if(n.parent != null) {
@@ -246,7 +246,7 @@ class TreeNode<T> with ChangeNotifier{
   }
 
   /// Traverse the tree in breadth first order
-  Iterable<TreeNode<T>> BFS() sync* {
+  Iterable<TreeNode<T>> bfs() sync* {
     Queue<TreeNode<T>> queue = Queue()..add(this);
     
     while (queue.isNotEmpty) {
@@ -257,10 +257,10 @@ class TreeNode<T> with ChangeNotifier{
   }
 
   /// Traverse the tree in depth first order
-  Iterable<TreeNode<T>> DFS() sync* {
+  Iterable<TreeNode<T>> dfs() sync* {
     for (TreeNode<T> node in _children) {
       yield node;
-      yield* node.DFS();
+      yield* node.dfs();
     }
   }
 
@@ -310,8 +310,7 @@ class TreeNode<T> with ChangeNotifier{
     
     if (root.children.isEmpty) return TreeNode(root.value);
 
-    TreeNode(root.value)
-      .._children.addAll(
+    TreeNode(root.value)._children.addAll(
         root._children.map((e) => e._copy(e))
       );
 
@@ -329,7 +328,7 @@ class TreeNode<T> with ChangeNotifier{
     String treeString = '';
 
     int previousLevel = 0;
-    for (var node in BFS()) {
+    for (var node in bfs()) {
       if (node.level > previousLevel) {
         treeString += "\n${node.level}: ";
         previousLevel = node.level;
@@ -357,7 +356,7 @@ class TreeNode<T> with ChangeNotifier{
     
     TreeNode<T> root = _$TreeNodeFromJson<T>(json);
     
-    for (final node in root.BFS()){
+    for (final node in root.bfs()){
       if(node._parentID == null) continue;
 
       node.parent = root.findByID(node._parentID!);

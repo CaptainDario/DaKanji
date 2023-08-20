@@ -4,11 +4,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 
 
-AwesomeDialog AddToWordListDialog(BuildContext context, DictionaryWordTab widget){
+AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget){
   return AwesomeDialog(
     context: context,
     headerAnimationLoop: false,
@@ -17,7 +17,7 @@ AwesomeDialog AddToWordListDialog(BuildContext context, DictionaryWordTab widget
     body: SizedBox(
       height: MediaQuery.of(context).size.height * 0.8,
       width: MediaQuery.of(context).size.width * 0.8,
-      child: WordListsUI.WordLists(
+      child: word_lists_ui.WordLists(
         false,
         GetIt.I<WordLists>().root,
         showDefaults: false,

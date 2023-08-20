@@ -85,7 +85,7 @@ class _WordListsState extends State<WordLists> {
   @override
   Widget build(BuildContext context) {
 
-    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.DFS().toList();
+    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.dfs().toList();
 
     return DragTarget<TreeNode<WordListsData>>(
       hitTestBehavior: HitTestBehavior.opaque,
@@ -312,7 +312,7 @@ class _WordListsState extends State<WordLists> {
                             ),
                             onPressed: (){
                               List<TreeNode<WordListsData>> selection =
-                                widget.parent!.DFS().where(
+                                widget.parent!.dfs().where(
                                   (node) => node.value.isChecked
                                 ).toList();
                               widget.onSelectionConfirmed!(selection);

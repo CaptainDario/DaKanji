@@ -121,7 +121,7 @@ class WordLists {
       root.addChildren(wL.userCreatedLists);
 
       // add save listeners to all nodes
-      for (var node in root.BFS()) {
+      for (var node in root.bfs()) {
         node.value.addListener(() {
           save();
         });

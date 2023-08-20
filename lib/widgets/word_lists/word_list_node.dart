@@ -247,7 +247,7 @@ class _WordListNodeState extends State<WordListNode> {
     
                           setState(() {
                             widget.node.value.isChecked = value;
-                            widget.node.DFS().forEach((element) {
+                            widget.node.dfs().forEach((element) {
                               element.value.isChecked = value;
                             });
                           });
