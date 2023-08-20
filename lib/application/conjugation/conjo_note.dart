@@ -46,6 +46,8 @@ class ConjoNote {
     onum == other.onum &&
     note == other.note;
   
+  @override
+  int get hashCode => Object.hashAll([pos, conj, neg, fml, onum, note]);
 
   int get hasCode => 
     Object.hashAll([

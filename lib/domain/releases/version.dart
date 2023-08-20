@@ -150,6 +150,9 @@ class Version implements Comparable<Version>{
   }
 
   @override
+  int get hashCode => Object.hashAll([major, minor, patch, build]);
+
+  @override
   int compareTo(Version other){
     if(this > other) {
       return 1;
