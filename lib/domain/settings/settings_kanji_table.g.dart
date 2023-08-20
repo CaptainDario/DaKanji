@@ -34,12 +34,12 @@ const _$KanjiCategoryEnumMap = {
 };
 
 const _$KanjiSortingEnumMap = {
-  KanjiSorting.strokesAsc: 'STROKES_ASC',
-  KanjiSorting.strokesDsc: 'STROKES_DSC',
-  KanjiSorting.freqAsc: 'FREQ_ASC',
-  KanjiSorting.freqDsc: 'FREQ_DSC',
-  KanjiSorting.rtkAsc: 'RTK_ASC',
-  KanjiSorting.rtkDsc: 'RTK_DSC',
-  KanjiSorting.klcAsc: 'KLC_ASC',
-  KanjiSorting.klcDsc: 'KLC_DSC',
+  KanjiSorting.strokesAsc: 'strokesAsc',
+  KanjiSorting.strokesDsc: 'strokesDsc',
+  KanjiSorting.freqAsc: 'freqAsc',
+  KanjiSorting.freqDsc: 'freqDsc',
+  KanjiSorting.rtkAsc: 'rtkAsc',
+  KanjiSorting.rtkDsc: 'rtkDsc',
+  KanjiSorting.klcAsc: 'klcAsc',
+  KanjiSorting.klcDsc: 'klcDsc',
 };
