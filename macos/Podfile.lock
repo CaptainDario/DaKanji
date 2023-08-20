@@ -167,7 +167,7 @@ SPEC CHECKSUMS:
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
-  rive_common: fab8476ce8352bf54152a913f393a8696d3dc98c
+  rive_common: acedcab7802c0ece4b0d838b71d7deb637e1309a
   screen_brightness_macos: 2d6d3af2165592d9a55ffcd95b7550970e41ebda
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   Sentry: e3203780941722a1fcfee99e351de14244c7f806
