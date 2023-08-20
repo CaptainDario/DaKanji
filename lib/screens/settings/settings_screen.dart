@@ -925,9 +925,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ));
                               if(dojgDir.existsSync()){
                                 if(GetIt.I<Isars>().dojg != null){
-                                  GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);
+                                  await GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);
                                 }
-                                dojgDir.delete(recursive: true);
+                                await dojgDir.delete(recursive: true);
+                                // ignore: use_build_context_synchronously
                                 await restartApp(context);
                               }
                             },
