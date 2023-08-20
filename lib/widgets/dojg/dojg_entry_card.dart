@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_page.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
@@ -10,11 +10,15 @@ class DojgEntryCard extends StatelessWidget {
 
   /// The DoJG entry of this widget
   final DojgEntry dojgEntry;
+  /// Callback that is called when the user taps on this card. provides
+  /// the `this.dojgEntry` as parameter
+  final Function(DojgEntry entry)? onTap;
 
 
   const DojgEntryCard(
     this.dojgEntry,
     {
+      this.onTap,
       super.key
     }
   );
@@ -27,12 +31,7 @@ class DojgEntryCard extends StatelessWidget {
         Positioned(
           child: Card(
             child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DojgEntryPage(dojgEntry),)
-                );
-              },
+              onTap: () => onTap?.call(dojgEntry),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(

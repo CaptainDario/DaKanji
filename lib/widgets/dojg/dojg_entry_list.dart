@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -12,8 +13,14 @@ import 'package:da_kanji_mobile/globals.dart';
 
 class DojgEntryList extends StatefulWidget {
 
+  /// Callback that is called when the user taps on this card. provides
+  /// the `this.dojgEntry` as parameter
+  final Function(DojgEntry dojgEntry)? onTap;
+
+
   const DojgEntryList(
     {
+      this.onTap,
       super.key
     }
   );
@@ -77,7 +84,6 @@ class _DojgEntryListState extends State<DojgEntryList> {
     return Align(
       alignment: Alignment.topCenter,
       child: CustomScrollView(
-        //padding: EdgeInsets.all(8.0),
         slivers: <Widget>[
           SliverAppBar(
             floating: true,
@@ -134,7 +140,12 @@ class _DojgEntryListState extends State<DojgEntryList> {
               }
             },
             itemBuilder: (context, i) {
-              return DojgEntryCard(currentEntries[i]);
+              return DojgEntryCard(
+                currentEntries[i],
+                onTap: (entry) {
+                  widget.onTap?.call(currentEntries[i]);
+                },
+              );
             }
           )
             
