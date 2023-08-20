@@ -62,7 +62,7 @@ class _KanjiTableState extends State<KanjiTable> {
   /// The currently selected category level
   String categoryLevelSelection = "5";
   /// the available sorting orders
-  Map<KanjiSorting, String> KanjiSortingToString = {
+  Map<KanjiSorting, String> kanjiSortingToString = {
     KanjiSorting.strokesAsc : "Strokes ↑", KanjiSorting.strokesDsc : "Strokes ↓",
     KanjiSorting.freqAsc    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.freqDsc : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
     KanjiSorting.rtkAsc     : "RTK ↑"    , KanjiSorting.rtkDsc : "RTK ↓",
@@ -204,7 +204,7 @@ class _KanjiTableState extends State<KanjiTable> {
     sortingDropDowns = List.generate(KanjiSorting.values.length, (index) => 
       DropdownMenuItem(
         value: KanjiSorting.values[index],
-        child: Text("${KanjiSortingToString[KanjiSorting.values[index]]}")
+        child: Text("${kanjiSortingToString[KanjiSorting.values[index]]}")
       )
     );
   }
@@ -311,7 +311,7 @@ class _KanjiTableState extends State<KanjiTable> {
                       return Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          KanjiSortingToString[item]!,
+                          kanjiSortingToString[item]!,
                           style: const TextStyle(color: Colors.white,),
                         ),
                       );

@@ -25,7 +25,7 @@ class PredictionButton extends StatefulWidget {
   {Key? key}) : super(key : key);
   
   @override
-  _PredictionButtonState createState() => _PredictionButtonState();
+  State<PredictionButton> createState() => _PredictionButtonState();
 }
 
 class _PredictionButtonState extends State<PredictionButton>

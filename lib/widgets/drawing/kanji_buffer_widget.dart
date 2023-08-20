@@ -31,7 +31,7 @@ class KanjiBufferWidget extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _KanjiBufferWidgetState createState() => _KanjiBufferWidgetState();
+  State<KanjiBufferWidget> createState() => _KanjiBufferWidgetState();
 }
 
 class _KanjiBufferWidgetState extends State<KanjiBufferWidget>

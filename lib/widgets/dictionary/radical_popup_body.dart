@@ -204,13 +204,11 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                               ),
                             );
                           } else {
-                            return Container(
-                              child: Center(
-                                child: Text(
-                                  krad.value[index],
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                              )
+                            return Center(
+                              child: Text(
+                                krad.value[index],
+                                style: const TextStyle(color: Colors.grey),
+                              ),
                             );
                           }
                         },

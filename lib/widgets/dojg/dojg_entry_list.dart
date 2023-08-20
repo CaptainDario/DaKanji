@@ -61,11 +61,12 @@ class _DojgEntryListState extends State<DojgEntryList> {
         // first by the starting kana
         if(a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]) != 0) {
           return a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]);
-        } else if (a.volumeTag.compareTo(b.volumeTag) != 0)
+        } else if (a.volumeTag.compareTo(b.volumeTag) != 0) {
           return a.volumeTag[0].compareTo(b.volumeTag[0]);
         // then by the page
-        else
+        } else {
           return a.page.compareTo(b.page);
+        }
       }));
     }
   }
