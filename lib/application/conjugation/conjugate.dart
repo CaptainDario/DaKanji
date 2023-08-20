@@ -3,6 +3,7 @@
 /// 
 /// The basic approach is as described in the README of jconj and the NOTE in
 /// this folder
+import 'package:flutter/foundation.dart';
 
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 
@@ -73,5 +74,5 @@ void main(){
 
 
   String conjugation = conjugate(verb, conjos.first);
-  print(conjugation);
+  debugPrint(conjugation);
 }

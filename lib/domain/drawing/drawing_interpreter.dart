@@ -63,7 +63,7 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-      print("$name already initialized. Skipping init.");
+      debugPrint("$name already initialized. Skipping init.");
       return;
     }
     
@@ -139,10 +139,10 @@ class DrawingInterpreter with ChangeNotifier{
 
       // store the best backend to disk
       iB = tests.first.key;
-      print("Inference timings for Drawing: $tests");
+      debugPrint("Inference timings for Drawing: $tests");
     }
     
-    print("Using: $iB");
+    debugPrint("Using: $iB");
     return iB;
   }
 
@@ -178,7 +178,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// Frees all used resources
   void free() {
     if(!wasInitialized){
-     print(_notInitializedMessage);
+     debugPrint(_notInitializedMessage);
       return;
     }
 

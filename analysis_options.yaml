@@ -13,7 +13,9 @@ analyzer:
   exclude: [
     lib/locales_keys.dart,
     lib/data/conjugation/kwpos.dart,
-    assets/**
+    lib/data/da_kanji_icons_icons.dart,
+    lib/data/iso/iso_table.dart
+    assets/**,
   ]
 
 linter:

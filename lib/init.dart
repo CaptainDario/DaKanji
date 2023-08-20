@@ -75,7 +75,7 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
- print("CLEARED PREFERENCES AT APP START.");
+ debugPrint("CLEARED PREFERENCES AT APP START.");
 }
 
 /// Initializes all the path varaibles that daanji uses 
@@ -89,7 +89,7 @@ Future<void> initPaths() async {
 /// directory.
 Future<void> initServices() async {
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  print("Starting DaKanji ${yaml['version']}");
+  debugPrint("Starting DaKanji ${yaml['version']}");
   g_Version = Version.fromStringFull(yaml['version']);
 
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
@@ -199,7 +199,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 Future<void> initDocumentsAssets(BuildContext context) async {
 
   String documentsDir = p.join(g_documentsDirectory.path, "DaKanji");
-  print("documents directory: ${documentsDir.toString()}");
+  debugPrint("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
   bool downloadAllowed = false;
@@ -262,7 +262,7 @@ void desktopWindowSetup() {
 /// be called only once.
 Future<void> optimizeTFLiteBackendsForModels() async {
 
-  print("Optimizing TFLite backends for models...");
+  debugPrint("Optimizing TFLite backends for models...");
 
   // find the best backend for the drawing ml
   DrawingInterpreter d = DrawingInterpreter();
@@ -270,7 +270,7 @@ Future<void> optimizeTFLiteBackendsForModels() async {
   GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
   d.free();
 
-  print("Finished optimizing TFLite backends for models...");
+  debugPrint("Finished optimizing TFLite backends for models...");
   
   await GetIt.I<UserData>().save();
 

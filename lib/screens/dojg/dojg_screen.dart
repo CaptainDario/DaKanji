@@ -139,7 +139,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
       setState(() {});
     }
     else {
-      print("The data that you provded is incorrect, please import the correct one");
+      debugPrint("The data that you provded is incorrect, please import the correct one");
     }
 
     importing = false;

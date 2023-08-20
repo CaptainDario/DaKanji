@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:archive/archive_io.dart';
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
@@ -41,7 +42,7 @@ Future<bool> importDoJGDeck () async {
       imported = entries.length == 629;
     } 
     catch (e){
-      print("Cannot load DoJG deck! Encountered: $e");
+      debugPrint("Cannot load DoJG deck! Encountered: $e");
     }
   }
 

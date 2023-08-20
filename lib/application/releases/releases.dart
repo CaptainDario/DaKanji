@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
@@ -39,7 +40,7 @@ Future<List<String>> updateAvailable() async {
   try {
     response = await Dio().get(g_GithubReleasesApi);
   } on DioError catch (e) {
-    print("Could not check for new version $e");
+    debugPrint("Could not check for new version $e");
     return [];
   }
   List<Version> versions = (List<String?>.from(

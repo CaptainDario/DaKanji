@@ -30,7 +30,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   final file = File(p.joinAll([g_documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
   if (file.existsSync()) {
     file.deleteSync();
-    print("Deleted ${asset.uri.pathSegments.last}");
+    debugPrint("Deleted ${asset.uri.pathSegments.last}");
   }
   // otherwise create the folder structure
   else{
@@ -63,7 +63,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
           dialogType: DialogType.noHeader,
           btnOkOnPress: (){}
         ).show();
-        print("Download failed, retrying...");
+        debugPrint("Download failed, retrying...");
       }
     }
   }
@@ -76,7 +76,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 Future<void> copyFromAssets(String assetPath,  Directory dest) async {
 
   assetPath = "${assetPath.split(".").first}.zip";
-  print(assetPath);
+  debugPrint(assetPath);
 
   // Get the zipped file from assets
   ByteData data = await rootBundle.load(assetPath);
@@ -121,14 +121,14 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
       }
     }
   );
-  print("Downloaded $fileName to ${destination.path}");
+  debugPrint("Downloaded $fileName to ${destination.path}");
 
   // unzip the asset
   await extractFileToDisk(
     "${destination.path}.zip",
     destination.parent.path
   );
-  print("Extracted $destination");
+  debugPrint("Extracted $destination");
   
   // delete the zip file
   File("${destination.path}.zip").deleteSync();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -7,7 +8,7 @@ import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
 
 
 
-Uri anki_connect_url = Uri.http("localhost:8765");
+Uri ankiConnectUrl = Uri.http("localhost:8765");
 
 /// Addes the given note to Anki
 /// 
@@ -16,7 +17,7 @@ Future<bool> addNote(AnkiNote note) async {
 
   // checl that anki is running
   if(!await checkAnkiAvailable()){
-    print("Anki not running");
+    debugPrint("Anki not running");
   }
   // assure that the DaKanji card type is present
   if(!(await daKanjiModelExists())) {
@@ -72,7 +73,7 @@ void _addNoteDesktop(AnkiNote note) async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 }
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`
@@ -118,7 +119,7 @@ Future<bool> _daKanjiModelExistsDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
   Map rMap = jsonDecode(r.body);
 
   if(rMap.containsKey("result")) {
@@ -199,7 +200,7 @@ Future<void> _addDaKanjiModelDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
   
   return;
 }
@@ -251,7 +252,7 @@ Future<void> _addDeckDesktop(String deckName) async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 
 }
 
@@ -294,7 +295,7 @@ Future<List<String>> _getDeckNamesDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 
   return List<String>.from(jsonDecode(r.body)["result"]);
 }
@@ -334,14 +335,14 @@ Future<bool> _checkAnkiConnectAvailable() async {
   bool isRunning = false;
 
   try {
-    var response = await http.get(anki_connect_url);
+    var response = await http.get(ankiConnectUrl);
     if(response.statusCode == 200){
       isRunning = true;
     }
   }
   catch(e){
     // Anki is not running
-    print(e);
+    debugPrint(e.toString());
   }
 
   return isRunning;

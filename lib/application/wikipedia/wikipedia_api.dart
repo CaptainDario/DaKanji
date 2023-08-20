@@ -16,7 +16,7 @@ Future<String> getWikipediaDefinition(String topic, String locale) async {
     response = await get(Uri.parse(url));
   }
   catch (e) {
-    print(e);
+    debugPrint(e);
     return "";
   }
 

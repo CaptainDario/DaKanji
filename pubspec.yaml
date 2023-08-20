@@ -59,7 +59,11 @@ dependencies:
   printing: 5.11.0
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
   flutter_widget_from_html_core: 0.10.3
-  #kana_kit: any # included in dakanji dictionary
+  tflite_flutter: 0.10.1
+  async: 2.11.0
+  path: 1.8.3
+  http: 1.1.0
+  kana_kit: any
   media_kit: ^1.1.2                              # Primary package.
   
   media_kit_video: ^1.1.2                        # For video rendering.
@@ -103,7 +107,6 @@ dependencies:
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
       path: flutter_appavailability
-
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows

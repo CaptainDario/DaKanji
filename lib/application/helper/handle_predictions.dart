@@ -83,7 +83,7 @@ void openDictionary(BuildContext context, String char) async {
           );
         } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview){
             
-          //print("webview is side by side");
+          //debugPrint("webview is side by side");
         }
       }
     }
@@ -207,12 +207,12 @@ void openDictionary(BuildContext context, String char) async {
       // dictionary shirabe (iOS)
       if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[0]){
-        print("iOS shirabe");
+        debugPrint("iOS shirabe");
         final url = Uri.encodeFull("shirabelookup://search?w=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch $url");
+          debugPrint("cannot launch $url");
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Shirabe Jisho"
@@ -225,12 +225,12 @@ void openDictionary(BuildContext context, String char) async {
       // imiwa?
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[1]){
-        print("iOS imiwa?");
+        debugPrint("iOS imiwa?");
         final url = Uri.encodeFull("imiwa://dictionary?search=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch $url");
+          debugPrint("cannot launch $url");
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Imiwa?"
@@ -243,12 +243,12 @@ void openDictionary(BuildContext context, String char) async {
       // Japanese
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[2]){
-        print("iOS Japanese");
+        debugPrint("iOS Japanese");
         final url = Uri.encodeFull("japanese://search/word/$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch $url");
+          debugPrint("cannot launch $url");
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Japanese"
@@ -261,14 +261,14 @@ void openDictionary(BuildContext context, String char) async {
       // midori
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[3]){
-        print("iOS midori");
+        debugPrint("iOS midori");
         final url = Uri.encodeFull("midori://search?text=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(
             url,
           );
         } else {
-          print("cannot launch$url");
+          debugPrint("cannot launch$url");
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Midori"
@@ -280,7 +280,7 @@ void openDictionary(BuildContext context, String char) async {
       }
     }
     else if(Platform.isWindows){
-      print("There are no app dictionaries for windows available!");
+      debugPrint("There are no app dictionaries for windows available!");
     }
     
   }
