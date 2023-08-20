@@ -147,29 +147,27 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               )
                             );
                           },
-                          child: Container(
-                            child: SizedBox(
-                              width: constrains.maxWidth * 0.5,
-                              height: constrains.maxWidth * 0.5,
-                              child: kanjiVGs.isNotEmpty
-                                ? KanjiVGWidget(
-                                  kanjiVGs.first.svg,
-                                  constrains.maxWidth * 0.5,
-                                  constrains.maxWidth * 0.5,
-                                  colorize: true,
-                                )
-                                : Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-                                  ),
-                                  child: FittedBox(
-                                    child: Text(
-                                      widget.kanjidic2entry.character,
-                                    ),
+                          child: SizedBox(
+                            width: constrains.maxWidth * 0.5,
+                            height: constrains.maxWidth * 0.5,
+                            child: kanjiVGs.isNotEmpty
+                              ? KanjiVGWidget(
+                                kanjiVGs.first.svg,
+                                constrains.maxWidth * 0.5,
+                                constrains.maxWidth * 0.5,
+                                colorize: true,
+                              )
+                              : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                ),
+                                child: FittedBox(
+                                  child: Text(
+                                    widget.kanjidic2entry.character,
                                   ),
                                 ),
-                            ),
-                          )
+                              ),
+                          ),
                         ),
                         
                         const SizedBox(width: 8,),

@@ -68,9 +68,9 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                   
                   if(includeHeroes) {
                     tmpWidget = Hero(
-                      tag: "webviewHero_" + (interpreter.predictions[i] == " " 
+                      tag: "webviewHero_${(interpreter.predictions[i] == " " 
                         ? i.toString() 
-                        : interpreter.predictions[i]),
+                        : interpreter.predictions[i])}",
                       child: tmpWidget,
                     );
                   }

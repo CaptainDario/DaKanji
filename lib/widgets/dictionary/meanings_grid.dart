@@ -260,9 +260,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 },
                 child: Row(
                   children: [
-                    Container(
-                      child: const Icon(Icons.expand_more)
-                    ),
+                    const Icon(Icons.expand_more),
                     const SizedBox(width: 10,),
                     Text(LocaleKeys.DictionaryScreen_word_meanings_more.tr())
                   ],
