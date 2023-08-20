@@ -17,7 +17,7 @@ class SettingsKanjiTable with ChangeNotifier {
 
   /// the default value for `kanjiCategory`
   // ignore: constant_identifier_names
-  static const KanjiCategory d_kanjiCategory = KanjiCategory.JLPT;
+  static const KanjiCategory d_kanjiCategory = KanjiCategory.jlpt;
   /// The category of which kanji should be shown
   @JsonKey(defaultValue: d_kanjiCategory)
   KanjiCategory kanjiCategory = d_kanjiCategory;

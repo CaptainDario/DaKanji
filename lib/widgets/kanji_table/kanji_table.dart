@@ -42,18 +42,18 @@ class _KanjiTableState extends State<KanjiTable> {
 
   /// Lookup to convert the [KanjiCategory] to a localized string
   Map<KanjiCategory, String> kanjiCategoryToString = {
-    KanjiCategory.JLPT     : "JLPT",
-    KanjiCategory.RTK      : "RTK",
-    KanjiCategory.SCHOOL   : "School",
-    KanjiCategory.FREQ     : "Freq",
-    KanjiCategory.KLC      : "KLC",
-    KanjiCategory.KENTEI   : "漢字検定",
-    KanjiCategory.WANIKANI : "Wanikani"
+    KanjiCategory.jlpt     : "JLPT",
+    KanjiCategory.rtk      : "RTK",
+    KanjiCategory.school   : "School",
+    KanjiCategory.freq     : "Freq",
+    KanjiCategory.klc      : "KLC",
+    KanjiCategory.kentei   : "漢字検定",
+    KanjiCategory.wanikani : "Wanikani"
   };
   /// [DropdownMenuItem]s for the catgeroy selction
   List<DropdownMenuItem> categoryDropDowns = [];
   /// The currently selected category
-  KanjiCategory categorySelection = KanjiCategory.JLPT;
+  KanjiCategory categorySelection = KanjiCategory.jlpt;
 
   /// the available categories matching `categorySelection`
   List<String> categoryLevels = [];
@@ -121,25 +121,25 @@ class _KanjiTableState extends State<KanjiTable> {
     // get the available levels for the current category
     var k = GetIt.I<Isars>().dictionary.kanjidic2s; QueryBuilder<Kanjidic2, int, QQueryOperations>? query;
     switch (categorySelection) {
-      case KanjiCategory.JLPT:
+      case KanjiCategory.jlpt:
         query = k.where().distinctByJlptNew().jlptNewProperty();
         break;
-      case KanjiCategory.RTK:
+      case KanjiCategory.rtk:
         categoryLevels = List.generate(30, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.SCHOOL:
+      case KanjiCategory.school:
         query = k.where().distinctByGrade().gradeProperty();
         break;
-      case KanjiCategory.FREQ:
+      case KanjiCategory.freq:
         categoryLevels = List.generate(26, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.KLC:
+      case KanjiCategory.klc:
         categoryLevels = List.generate(23, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.KENTEI:
+      case KanjiCategory.kentei:
         categoryLevels = ["1", "1.5", "2", "2.5", "3", "4", "5", "6", "7", "8", "9", "10"];
         break;
-      case KanjiCategory.WANIKANI:
+      case KanjiCategory.wanikani:
         query = k.where().distinctByWanikani().wanikaniProperty();
         break;
     }
@@ -154,22 +154,22 @@ class _KanjiTableState extends State<KanjiTable> {
 
     // find all kanji for the current selection
     kanjis = GetIt.I<Isars>().dictionary.kanjidic2s.filter()
-      .optional(categorySelection == KanjiCategory.JLPT, (q) => q.jlptNewEqualTo(int.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.RTK, (q) => q.rtkNewBetween(
+      .optional(categorySelection == KanjiCategory.jlpt, (q) => q.jlptNewEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.rtk, (q) => q.rtkNewBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.SCHOOL, (q) => q.gradeEqualTo(int.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.FREQ, (q) => q.frequencyBetween(
+      .optional(categorySelection == KanjiCategory.school, (q) => q.gradeEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.freq, (q) => q.frequencyBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.KLC, (q) => q.klcBetween(
+      .optional(categorySelection == KanjiCategory.klc, (q) => q.klcBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.KENTEI, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.WANIKANI, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.kentei, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.wanikani, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
     // apply sorting
     .optional(sortingSelection == KanjiSorting.strokesAsc, (q) => q.sortByStrokeCount())
     .optional(sortingSelection == KanjiSorting.strokesDsc, (q) => q.thenByStrokeCountDesc())
