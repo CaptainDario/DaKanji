@@ -444,15 +444,16 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
           return rising;
         }
       }
-      else if(0 < at && at < reading.length-1)
+      else if(0 < at && at < reading.length-1) {
         return high;
-      else if(at == reading.length-1)
+      } else if(at == reading.length-1) {
         return falling;
-      else
+      } else {
         return low;
+      }
     }
-    else
+    else {
       throw Exception("Invalid pitch accent");
-
+    }
   }
 }

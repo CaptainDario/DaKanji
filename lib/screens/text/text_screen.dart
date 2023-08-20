@@ -50,7 +50,7 @@ class TextScreen extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _TextScreenState createState() => _TextScreenState();
+  State<TextScreen> createState() => _TextScreenState();
 }
 
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
@@ -360,13 +360,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// changes
   void onCustomSelectableTextChange(TextSelection selection){
     // open the dict popup when text is slected and it is not opening
-    if(selection != "" &&
+    if(selection.start != selection.end &&
       popupAnimationController.status != AnimationStatus.forward)
     {
       popupAnimationController.forward();
     }
     // close the dict popup when there is no selection
-    if(selection == "" &&
+    if(selection.start != selection.end &&
       popupAnimationController.isCompleted)
     {
       popupAnimationController.reverse(from: 1.0);

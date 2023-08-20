@@ -8,7 +8,7 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 
-AwesomeDialog AnkiDialog(BuildContext context) {
+AwesomeDialog ankiDialog(BuildContext context) {
 
   return AwesomeDialog(
     context: context,

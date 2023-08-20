@@ -226,7 +226,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   // that significant part of the dict is only in english
                                   if(lang == iso639_1.en.name &&
                                     settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-                                    await DisableEnglishDictPopup(context).show();
+                                    await disableEnglishDictPopup(context).show();
                                   }
 
                                   loadingPopup(context).show();

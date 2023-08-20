@@ -6,7 +6,7 @@ class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
 
   @override
-  _TestScreenState createState() => _TestScreenState();
+  State<TestScreen> createState() => _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {

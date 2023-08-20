@@ -52,7 +52,7 @@ class Dictionary extends StatefulWidget {
   ) : super(key: key);
 
   @override
-  _DictionaryState createState() => _DictionaryState();
+  State<Dictionary> createState() => _DictionaryState();
 }
 
 class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {

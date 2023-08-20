@@ -24,13 +24,13 @@ Map<String, dynamic> _$SettingsKanjiTableToJson(SettingsKanjiTable instance) =>
     };
 
 const _$KanjiCategoryEnumMap = {
-  KanjiCategory.jlpt: 'JLPT',
-  KanjiCategory.rtk: 'RTK',
-  KanjiCategory.school: 'SCHOOL',
-  KanjiCategory.freq: 'FREQ',
-  KanjiCategory.klc: 'KLC',
-  KanjiCategory.kentei: 'KENTEI',
-  KanjiCategory.wanikani: 'WANIKANI',
+  KanjiCategory.jlpt: 'jlpt',
+  KanjiCategory.rtk: 'rtk',
+  KanjiCategory.school: 'school',
+  KanjiCategory.freq: 'freq',
+  KanjiCategory.klc: 'klc',
+  KanjiCategory.kentei: 'kentei',
+  KanjiCategory.wanikani: 'wanikani',
 };
 
 const _$KanjiSortingEnumMap = {
