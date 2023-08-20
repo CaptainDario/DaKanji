@@ -65,6 +65,7 @@ class SettingsDrawing with ChangeNotifier  {
 
   /// The default value for `customURL`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const d_customURL = "https://www.jisho.org/search/$kanjiPlaceholder";
   /// The custom URL a user can define on the settings page.
   @JsonKey(defaultValue: d_customURL)

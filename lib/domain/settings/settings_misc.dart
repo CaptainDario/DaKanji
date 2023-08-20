@@ -45,7 +45,9 @@ class SettingsMisc with ChangeNotifier {
     Screens.text,
   ];
 
+  /// The default for the startup screen
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_selectedStartupScreen = 2;
   /// string denoting the screen that should be loaded at app start
   @JsonKey(defaultValue: d_selectedStartupScreen)
@@ -61,6 +63,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `windowWidth`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_windowWidth = 480;
   /// width of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -69,6 +72,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `windowHeight`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_windowHeight = 720;
   /// height of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -77,6 +81,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `selectedTheme` 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const String d_selectedTheme = LocaleKeys.General_system;
   /// The theme which the application will use.
   /// System will match the settings of the system.
@@ -118,14 +123,15 @@ class SettingsMisc with ChangeNotifier {
 
   /// Order of the items in the drawer
   @JsonKey(defaultValue: [])
-  List<int> _drawerItemOrder = [];
+  List<int> drawerItemOrder = [];
   /// Order of the items in the drawer
-  List<int> get drawerItemOrder => _drawerItemOrder;
+  /// // ignore: constant_identifier_names
+  //List<int> get drawerItemOrder => _drawerItemOrder;
   /// Order of the items in the drawer
-  set drawerItemOrder(List<int> newOrder){
-    _drawerItemOrder = newOrder;
-    //notifyListeners();
-  }
+  //set drawerItemOrder(List<int> newOrder){
+  //  _drawerItemOrder = newOrder;
+  //  notifyListeners();
+  //}
 
 
   SettingsMisc (){

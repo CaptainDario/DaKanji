@@ -13,9 +13,9 @@ part 'tree_node.g.dart';
 /// Enum that defines the traversal mode available for the tree
 enum TreeTraversalMode{
   /// Traverse the tree in breadth first order
-  BFS,
+  bfs,
   /// Traverse the tree in depth first order
-  DFS,
+  dfs,
 }
 
 /// A node in a tree structure, emits a notification when it's structure changes
@@ -55,8 +55,8 @@ class TreeNode<T> with ChangeNotifier{
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   late final Map<TreeTraversalMode, Iterable<TreeNode<T>>> _iterDict = {
-    TreeTraversalMode.BFS: BFS(),
-    TreeTraversalMode.DFS: DFS(),
+    TreeTraversalMode.bfs: BFS(),
+    TreeTraversalMode.dfs: DFS(),
   };
 
 
@@ -269,7 +269,7 @@ class TreeNode<T> with ChangeNotifier{
   /// `query` returns null.
   /// `TreeNode`s are compared using their value only.
   /// `mode` determines the algorithm used to traverse the tree.
-  TreeNode<T>? find(TreeNode<T> query, {TreeTraversalMode mode = TreeTraversalMode.BFS}){
+  TreeNode<T>? find(TreeNode<T> query, {TreeTraversalMode mode = TreeTraversalMode.bfs}){
 
     var iter = _iterDict[mode]!;
 
@@ -285,7 +285,7 @@ class TreeNode<T> with ChangeNotifier{
   /// Searches the node in the tree that has the ID `id`. If the tree does not
   /// contain the `query` returns null.
   /// `mode` determines the algorithm used to traverse the tree.
-  TreeNode<T>? findByID(int id, {TreeTraversalMode mode = TreeTraversalMode.BFS}){
+  TreeNode<T>? findByID(int id, {TreeTraversalMode mode = TreeTraversalMode.bfs}){
 
     var iter = _iterDict[mode]!;
 
@@ -342,7 +342,7 @@ class TreeNode<T> with ChangeNotifier{
 
   /// Converts this tree to a list by traversing it in the order specified by
   /// `mode`, finally returns the list.
-  List<T> toList({TreeTraversalMode mode = TreeTraversalMode.BFS}) {
+  List<T> toList({TreeTraversalMode mode = TreeTraversalMode.bfs}) {
     
     List<T> treeList = [];
     

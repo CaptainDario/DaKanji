@@ -153,10 +153,11 @@ class Version implements Comparable<Version>{
   int compareTo(Version other){
     if(this > other) {
       return 1;
-    } else if(this < other)
+    } else if(this < other) {
       return -1;
-    else
+    } else {
       return 0;
+    }
   }
 
   factory Version.fromJson(dynamic json) {
@@ -165,10 +166,11 @@ class Version implements Comparable<Version>{
     if(json is String){
       if(json == "") {
         return Version(0, 0, 0);
-      } else if(json.contains("+"))
+      } else if(json.contains("+")) {
         return Version.fromStringFull(json);
-      else
+      } else {
         return Version.fromString(json);
+      }
     }
     else {
       return _$VersionFromJson(json);

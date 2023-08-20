@@ -33,8 +33,9 @@ void handleDeepLink(String link){
 
   if(short.startsWith("dictionary/")) {
     handDeepLinkDict(short.replaceFirst("dictionary/", ""));
-  } else if(short.startsWith("text/"))
+  } else if(short.startsWith("text/")) {
     handleDeepLinkText(short.replaceFirst("text/", ""));
+  }
 }
 
 /// Handles deep links that are related to the text screen
