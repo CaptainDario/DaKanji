@@ -746,7 +746,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: (newValue) {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
-                            Phoenix.rebirth(context);
                           }
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
