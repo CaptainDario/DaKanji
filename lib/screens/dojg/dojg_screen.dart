@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
@@ -11,6 +12,8 @@ import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_list.dart';
 import 'package:da_kanji_mobile/application/dojg/dojg.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 
 
@@ -131,15 +134,30 @@ class _DoJGScreenState extends State<DoJGScreen> {
       GetIt.I<UserData>().dojgImported = (checkDojgImported());
       GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
       await GetIt.I<UserData>().save();
-      
-      if(GetIt.I<UserData>().showTutorialDojg) {
-        showTutorialCallback();
-      }
-      
-      setState(() {});
+
+      // ignore: use_build_context_synchronously
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.noHeader,
+        btnOkColor: g_Dakanji_green,
+        btnOkOnPress: () {},
+        dismissOnTouchOutside: false,
+        desc: "DoJG has been imported successfully! Resetarting the app..."
+      ).show();
+      // ignore: use_build_context_synchronously
+      restartApp(context);
     }
     else {
-      debugPrint("The data that you provded is incorrect, please import the correct one");
+      // ignore: use_build_context_synchronously
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.noHeader,
+        btnOkColor: g_Dakanji_green,
+        btnOkOnPress: () {},
+        dismissOnTouchOutside: false,
+        desc: "The import failed, please assure that you are importing the correct data."
+          "Refer to the manual for more details."
+      ).show();
     }
 
     importing = false;
