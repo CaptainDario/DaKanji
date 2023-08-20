@@ -107,11 +107,9 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     spawnEntriesTimer = Timer(Duration(seconds: widget.secondsTillFirstWord), () {
       dictEntries = getDictEntries();
       setState(() {});
-
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        initEntries();
-        setState(() {});
-      });
+ 
+      initEntries();
+      setState(() {});
     });
   }
 
