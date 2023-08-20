@@ -65,7 +65,7 @@ void main(){
 
   String verb = "来る";
   Pos pos = posDescriptionToPosEnum["Kuru verb - special class"]!;
-  Conj conj = Conj.Passive;
+  Conj conj = Conj.passive;
   bool neg = false;
   bool fml = true;
   
