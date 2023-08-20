@@ -35,7 +35,7 @@ class DictionaryScreen extends StatefulWidget {
   ) : super(key: key);
 
   @override
-  _DictionaryScreenState createState() => _DictionaryScreenState();
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
 }
 
 class _DictionaryScreenState

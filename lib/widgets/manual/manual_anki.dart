@@ -85,6 +85,7 @@ class ManualAnki extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   if(await checkAnkiAvailable()) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -93,6 +94,7 @@ class ManualAnki extends StatelessWidget {
                       ),
                     );
                   } else {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

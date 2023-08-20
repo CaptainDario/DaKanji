@@ -89,6 +89,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
       .findFirstSync()!.svg;
       yoonSVG = modifyKanjiVGSvg(
         yoonSVG!,
+        // ignore: use_build_context_synchronously
         strokeColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black

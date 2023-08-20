@@ -10,7 +10,7 @@ import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as ratePopup;
+import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 import 'package:da_kanji_mobile/application/releases/releases.dart';
@@ -36,7 +36,7 @@ class HomeScreen extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -163,10 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> showRatePopup() async {
     // show a rating dialogue WITHOUT "do not show again"-option
     if(GetIt.I<UserData>().appOpenedTimes < g_MinTimesOpenedToAsknotShowRate) {
-      await ratePopup.showRateDialog(context, false);
+      await rate_popup.showRateDialog(context, false);
     }
     else {
-      await ratePopup.showRateDialog(context, true);
+      await rate_popup.showRateDialog(context, true);
     }
 
     GetIt.I<UserData>().showRateDialog = false;

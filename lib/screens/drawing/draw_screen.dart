@@ -49,7 +49,7 @@ class DrawScreen extends StatefulWidget {
   ) : super(key: key);
 
   @override
-  _DrawScreenState createState() => _DrawScreenState();
+  State<DrawScreen> createState() => _DrawScreenState();
 }
 
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {

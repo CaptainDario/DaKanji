@@ -229,6 +229,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     await disableEnglishDictPopup(context).show();
                                   }
 
+                                  // ignore: use_build_context_synchronously
                                   loadingPopup(context).show();
 
                                   await GetIt.I<DictionarySearch>().kill();
@@ -244,6 +245,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   await settings.save();
                                   await GetIt.I<DictionarySearch>().init();
 
+                                  // ignore: use_build_context_synchronously
                                   Navigator.of(context).pop();
 
                                   setState(() {});
@@ -867,6 +869,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
                               Settings settings = Settings();
                               await settings.save();
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -877,6 +880,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
                               UserData uD = UserData();
                               await uD.save();
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -886,6 +890,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
                               await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -898,6 +903,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),

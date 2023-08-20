@@ -203,7 +203,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                   var data = (await Clipboard.getData("text/plain"));
                                                   String text = data == null ? "" : data.text!;
                                                   Clipboard.setData(ClipboardData(text: text+radical));
+                                                  // ignore: use_build_context_synchronously
                                                   ScaffoldMessenger.of(context).clearSnackBars();
+                                                  // ignore: use_build_context_synchronously
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(
                                                       content: Text(

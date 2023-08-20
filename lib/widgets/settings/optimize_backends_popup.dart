@@ -53,6 +53,7 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
 
       await optimizeTFLiteBackendsForModels();
       
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     },
     body: Column(
