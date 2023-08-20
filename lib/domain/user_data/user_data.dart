@@ -197,7 +197,8 @@ class UserData{
         return UserData();
       }
     }
-    on Exception {
+    catch (e) {
+      print("Encountered: $e");
       return UserData();
     }
   }
