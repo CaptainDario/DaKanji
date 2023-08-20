@@ -28,7 +28,7 @@ class SettingsKanjiTable with ChangeNotifier {
   String kanjiCategoryLevel = d_kanjiCategoryLevel;
 
   /// the default value for `kanjiSorting`
-  static const KanjiSorting d_kanjiSorting = KanjiSorting.STROKES_ASC;
+  static const KanjiSorting d_kanjiSorting = KanjiSorting.strokesAsc;
   /// The way to sort the shown kanji
   @JsonKey(defaultValue: d_kanjiSorting)
   KanjiSorting kanjiSorting = d_kanjiSorting;

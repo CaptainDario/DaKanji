@@ -63,15 +63,15 @@ class _KanjiTableState extends State<KanjiTable> {
   String categoryLevelSelection = "5";
   /// the available sorting orders
   Map<KanjiSorting, String> KanjiSortingToString = {
-    KanjiSorting.STROKES_ASC : "Strokes ↑", KanjiSorting.STROKES_DSC : "Strokes ↓",
-    KanjiSorting.FREQ_ASC    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.FREQ_DSC : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
-    KanjiSorting.RTK_ASC     : "RTK ↑"    , KanjiSorting.RTK_DSC : "RTK ↓",
-    KanjiSorting.KLC_ASC     : "KLC ↑"    , KanjiSorting.KLC_DSC : "KLC ↓"
+    KanjiSorting.strokesAsc : "Strokes ↑", KanjiSorting.strokesDsc : "Strokes ↓",
+    KanjiSorting.freqAsc    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.freqDsc : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
+    KanjiSorting.rtkAsc     : "RTK ↑"    , KanjiSorting.rtkDsc : "RTK ↓",
+    KanjiSorting.klcAsc     : "KLC ↑"    , KanjiSorting.klcDsc : "KLC ↓"
   };
   /// [DropdownMenuItem]s for the sorting selction
   List<DropdownMenuItem> sortingDropDowns = [];
   /// The currently selected sorting order
-  KanjiSorting sortingSelection = KanjiSorting.STROKES_ASC;
+  KanjiSorting sortingSelection = KanjiSorting.strokesAsc;
   /// has the user changed the category
   bool changedCategories = false;
 
@@ -171,14 +171,14 @@ class _KanjiTableState extends State<KanjiTable> {
       .optional(categorySelection == KanjiCategory.KENTEI, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
       .optional(categorySelection == KanjiCategory.WANIKANI, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
     // apply sorting
-    .optional(sortingSelection == KanjiSorting.STROKES_ASC, (q) => q.sortByStrokeCount())
-    .optional(sortingSelection == KanjiSorting.STROKES_DSC, (q) => q.thenByStrokeCountDesc())
-    .optional(sortingSelection == KanjiSorting.FREQ_ASC,    (q) => q.thenByFrequency())
-    .optional(sortingSelection == KanjiSorting.FREQ_DSC,    (q) => q.thenByFrequencyDesc())
-    .optional(sortingSelection == KanjiSorting.RTK_ASC,     (q) => q.thenByRtkNew())
-    .optional(sortingSelection == KanjiSorting.RTK_DSC,     (q) => q.thenByRtkNewDesc())
-    .optional(sortingSelection == KanjiSorting.KLC_ASC,     (q) => q.thenByKlc())
-    .optional(sortingSelection == KanjiSorting.KLC_DSC,     (q) => q.thenByKlcDesc())
+    .optional(sortingSelection == KanjiSorting.strokesAsc, (q) => q.sortByStrokeCount())
+    .optional(sortingSelection == KanjiSorting.strokesDsc, (q) => q.thenByStrokeCountDesc())
+    .optional(sortingSelection == KanjiSorting.freqAsc,    (q) => q.thenByFrequency())
+    .optional(sortingSelection == KanjiSorting.freqDsc,    (q) => q.thenByFrequencyDesc())
+    .optional(sortingSelection == KanjiSorting.rtkAsc,     (q) => q.thenByRtkNew())
+    .optional(sortingSelection == KanjiSorting.rtkDsc,     (q) => q.thenByRtkNewDesc())
+    .optional(sortingSelection == KanjiSorting.klcAsc,     (q) => q.thenByKlc())
+    .optional(sortingSelection == KanjiSorting.klcDsc,     (q) => q.thenByKlcDesc())
     .findAllSync();
   }
 

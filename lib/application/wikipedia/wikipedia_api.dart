@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:http/http.dart';
 
@@ -16,7 +17,7 @@ Future<String> getWikipediaDefinition(String topic, String locale) async {
     response = await get(Uri.parse(url));
   }
   catch (e) {
-    debugPrint(e);
+    debugPrint(e.toString());
     return "";
   }
 

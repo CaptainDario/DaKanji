@@ -20,11 +20,11 @@ enum InferenceBackend {
 }
 
 /// Returns an cpu inference backend from a string.
-InferenceBackend getcpuFromString(String backend){
+InferenceBackend getCPUFromString(String backend){
   return InferenceBackend.values.firstWhere((b) => b.name == backend);
 }
 
 /// Returns an xnnPack inference backend from a string.
-InferenceBackend getxnnPackFromString(String backend){
+InferenceBackend getXNNPackFromString(String backend){
   return InferenceBackend.values.firstWhere((b) => b.name == backend);
 }
