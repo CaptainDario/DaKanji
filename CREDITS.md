@@ -47,9 +47,9 @@ A huge thanks to everybody involved in this project be it testing, bug reporting
   * Windows:
     * michalpatryk, pa9eup, Tobias Olms
   * Linux:
-    * Francesco S.
+    * Francesco S., [returnrei](https://returnrei.jp)
   * MacOS
-    * ゆうか 田村村
+    * ゆうか 田村村, [returnrei](https://returnrei.jp)
 * Another huge shout out to all current and past translators:
   * Polish
     * michalpatryk
