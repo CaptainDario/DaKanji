@@ -52,6 +52,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   bool initialized = false;
   /// Should the tutorial be shown
   bool showTutorial = false;
+  /// Keeps track if the window has been minimized at least once
+  bool hasBeenMinimized = false;
 
 
   /// when app comes back to foregorund update dict
@@ -141,7 +143,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         return Scaffold(
           body: DaKanjiDrawer(
             currentScreen: Screens.clipboard,
-            animationAtStart: !widget.openedByDrawer,
+            drawerClosed: !(!widget.openedByDrawer || !hasBeenMinimized),
             child: child
           ),
         );
@@ -173,6 +175,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   /// Callback that is executed when the pin-button is pressed
   Future<void> pinButtonPressed() async {
     isAlwaysOnTop = !isAlwaysOnTop;
+    hasBeenMinimized = true;
 
     if(Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
         await windowManager.setAlwaysOnTop(isAlwaysOnTop);
