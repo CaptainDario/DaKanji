@@ -98,7 +98,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       }
 
       // get current always on top state
-      isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
+      if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+        isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
 
     });
     
@@ -118,7 +119,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     }
 
     // reset the state of the always on top option
-    WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+      WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
 
     super.dispose();
   }
@@ -171,22 +173,25 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   /// Callback that is executed when the pin-button is pressed
   Future<void> pinButtonPressed() async {
     isAlwaysOnTop = !isAlwaysOnTop;
-    await windowManager.setAlwaysOnTop(isAlwaysOnTop);
 
-    if(isAlwaysOnTop){
-      await windowManager.setSize(Size(300, 300));
-      await windowManager.setMinimumSize(Size(300, 300));
-      await windowManager.setAsFrameless();
-    }
-    else {
-      await windowManager.setSize(Size(
-        GetIt.I<Settings>().misc.windowWidth.toDouble(),
-        GetIt.I<Settings>().misc.windowHeight.toDouble()
-      ));
-      await windowManager.setMinimumSize(g_minDesktopWindowSize);
+    if(Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
+        await windowManager.setAlwaysOnTop(isAlwaysOnTop);
 
-      await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
-      await windowManager.setTitle(g_AppTitle);
+      if(isAlwaysOnTop){
+        await windowManager.setSize(Size(300, 300));
+        await windowManager.setMinimumSize(Size(300, 300));
+        await windowManager.setAsFrameless();
+      }
+      else {
+        await windowManager.setSize(Size(
+          GetIt.I<Settings>().misc.windowWidth.toDouble(),
+          GetIt.I<Settings>().misc.windowHeight.toDouble()
+        ));
+        await windowManager.setMinimumSize(g_minDesktopWindowSize);
+
+        await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
+        await windowManager.setTitle(g_AppTitle);
+      }
     }
     setState(() {});
   }
