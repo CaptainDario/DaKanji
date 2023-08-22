@@ -45,7 +45,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       body: DaKanjiDrawer(
         currentScreen: Screens.about,
-        animationAtStart: !openedByDrawer,
+        drawerClosed: !openedByDrawer,
         child: SingleChildScrollView(
           primary: false,
           child: Column(

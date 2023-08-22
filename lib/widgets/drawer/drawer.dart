@@ -32,8 +32,8 @@ class DaKanjiDrawer extends StatefulWidget{
   final bool useBackArrowAppBar;
   /// The currently selected screen
   final Screens currentScreen;
-  /// should the animation begin at the start or end
-  final bool animationAtStart;
+  /// is the drawer closed when initializing it
+  final bool drawerClosed;
 
 
   const DaKanjiDrawer(
@@ -41,7 +41,7 @@ class DaKanjiDrawer extends StatefulWidget{
       required this.currentScreen,
       required this.child,
       this.useBackArrowAppBar = false,
-      this.animationAtStart = true,
+      this.drawerClosed = true,
       Key? key, 
     }
   ) : super(key: key);
@@ -138,7 +138,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       curve: const Interval(0.0, 1.0, curve: Curves.linear)
     ));
 
-    if(!widget.animationAtStart) {
+    if(!widget.drawerClosed) {
       _drawerController.value = 1.0;
     }
 
@@ -203,7 +203,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       if (status == AnimationStatus.completed) {
         route?.animation?.removeStatusListener(handler);
         
-        if(!widget.animationAtStart){
+        if(!widget.drawerClosed){
           SchedulerBinding.instance.addPostFrameCallback((_) async {
             _drawerController.reverse();
           });

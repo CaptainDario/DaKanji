@@ -143,7 +143,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
     return DaKanjiDrawer(
       currentScreen: Screens.kana_table,
-      animationAtStart: !widget.navigatedByDrawer,
+      drawerClosed: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           focusColor: g_Dakanji_green,

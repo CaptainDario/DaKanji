@@ -33,7 +33,7 @@ class _KuzushijiScreenState extends State<KuzushijiScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       currentScreen: Screens.kuzushiji,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: Text(
         "崩",
         style: TextStyle(

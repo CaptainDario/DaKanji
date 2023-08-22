@@ -34,7 +34,7 @@ class _KanjiTrainerScreenState extends State<KanjiTrainerScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       currentScreen: Screens.kanji_trainer,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: KanjiDrawingWidget(
     
       ),

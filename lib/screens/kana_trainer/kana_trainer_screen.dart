@@ -27,7 +27,7 @@ class _KanaTrainerScreenState extends State<KanaTrainerScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       currentScreen: Screens.kana_trainer,
-      animationAtStart: !widget.navigatedByDrawer,
+      drawerClosed: !widget.navigatedByDrawer,
       child: KanaTrainer()
     );
   }

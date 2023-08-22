@@ -155,7 +155,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     return DaKanjiDrawer(
       currentScreen: Screens.text,
       useBackArrowAppBar: widget.useBackArrowAppBar,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: LayoutBuilder(
         builder: (context, constraints) {
 

@@ -91,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       body: DaKanjiDrawer(
         currentScreen: Screens.settings,
-        animationAtStart: !widget.openedByDrawer,
+        drawerClosed: !widget.openedByDrawer,
         // ListView of all available settings
         child: ChangeNotifierProvider.value(
           value: GetIt.I<Settings>(),

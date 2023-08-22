@@ -30,7 +30,7 @@ class _KanjiTableScreenState extends State<KanjiTableScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       currentScreen: Screens.kanji_table,
-      animationAtStart: !widget.navigatedByDrawer,
+      drawerClosed: !widget.navigatedByDrawer,
       child: KanjiTable(
         widget.includeTutorial
       )

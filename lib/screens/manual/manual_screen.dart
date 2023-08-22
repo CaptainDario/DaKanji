@@ -58,7 +58,7 @@ class _ManualScreenState extends State<ManualScreen>
 
     return DaKanjiDrawer(
       currentScreen: Screens.manual,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(

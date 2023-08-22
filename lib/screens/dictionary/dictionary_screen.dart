@@ -78,7 +78,7 @@ class _DictionaryScreenState
 
     return DaKanjiDrawer(
       currentScreen: Screens.dictionary,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: Dictionary(
         widget.includeTutorial,
         initialSearch: widget.initialSearch,

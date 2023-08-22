@@ -121,7 +121,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: ChangeNotifierProvider.value(
         value: GetIt.I<DrawScreenState>().strokes,
         child: FutureBuilder(
