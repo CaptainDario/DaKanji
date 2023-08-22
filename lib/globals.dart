@@ -61,7 +61,7 @@ List<Version> g_OnboardingNewPages = [
 /// all versions that implemented new dictionary versions (ISAR DB)
 List<Version> g_NewDictionary = [
   Version(3, 0, 0, build: 47), Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52),
-  Version(3, 1, 0, build: 53)
+  Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56)
 ];
 /// all versions that implemented new examples versions (ISAR DB)
 List<Version> g_NewExamples = [
