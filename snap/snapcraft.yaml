@@ -1,5 +1,5 @@
 name: dakanji
-version: 3.0.0
+version: 3.1.0
 summary: You are learning Japanese? Then you need to give "DaKanji" a try!
 description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
 
@@ -16,7 +16,7 @@ slots:
 apps:
   dakanji:
     command: da_kanji_mobile
-    extensions: [flutter-master]
+    extensions: [flutter-stable]
     plugs:
     - network
     slots:
