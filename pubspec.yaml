@@ -68,7 +68,7 @@ dependencies:
   # TODO : use non beta version for release
   flutter_inappwebview: 6.0.0-beta.23   # android, iOS, (mac)
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  pdf: 3.10.3
+  pdf: 3.10.4
   printing: 5.11.0
   clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
 
