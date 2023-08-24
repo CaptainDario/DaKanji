@@ -93,3 +93,7 @@ repo
 flatpak/.flatpak-builder
 .flatpak-builder
 flatpak/DaKanji
+flatpak/DaKanji.zip
+flatpak/DaKanji.tar.xz
+flatpak/DaKanji.tar.gz
+com.DaAppLab.DaKanji.flatpak
