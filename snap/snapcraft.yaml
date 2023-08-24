@@ -1,11 +1,16 @@
+# referenc: https://github.com/ubuntu-flutter-community/software/blob/main/snap/snapcraft.yaml
+
 name: dakanji
-version: 3.1.0
+adopt-info: dakanji
 summary: You are learning Japanese? Then you need to give "DaKanji" a try!
 description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
 
 confinement: strict
-base: core18
+base: core22
 grade: stable
+
+assumes:
+  - snapd2.41
 
 slots:
   dbus-dakanji:
@@ -15,10 +20,12 @@ slots:
     
 apps:
   dakanji:
-    command: da_kanji_mobile
-    extensions: [flutter-stable]
+    command: bin/DaKanji
+    extensions: [gnome]
     plugs:
-    - network
+      - appstream-metadata
+      - network
+      - packagekit-control
     slots:
       - dbus-dakanji
     environment:
@@ -26,7 +33,29 @@ apps:
 
 parts:
 
+  flutter-git:
+    source: https://github.com/flutter/flutter.git
+    source-tag: 3.13.1
+    plugin: nil
+    override-build: |
+      set -eux
+      mkdir -p $CRAFT_PART_INSTALL/usr/bin
+      mkdir -p $CRAFT_PART_INSTALL/usr/libexec
+      cp -r $CRAFT_PART_SRC $CRAFT_PART_INSTALL/usr/libexec/flutter
+      ln -sf $CRAFT_PART_INSTALL/usr/libexec/flutter/bin/flutter $CRAFT_PART_INSTALL/usr/bin/flutter
+      export PATH="$CRAFT_PART_INSTALL/usr/bin:$PATH"
+      flutter doctor
+    build-packages:
+      - clang
+      - cmake
+      - curl
+      - ninja-build
+      - unzip
+    override-prime: ''
+
   copy-tf-lite:
+    after:
+      - flutter-git
     plugin: dump
     source: ./blobs
     stage:
@@ -35,11 +64,30 @@ parts:
       libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
 
   dakanji:
+    after:
+      - flutter-git
+      - copy-tf-lite
     source: .
-    plugin: flutter
-    flutter-target: lib/main.dart
+    plugin: nil
     build-packages:
       - libmpv-dev
+      - pkg-config
+      - clang
+      - cmake
+      - ninja-build
+      - libgtk-3-dev
+      - liblzma-dev
+      - libstdc++-12-dev
+      - jq
     stage-packages:
       - libmpv1
       - libblas3
+    override-build: |
+      set -eux
+      flutter pub get || true
+      flutter build linux --release -v
+      craftctl set version="$(jq -r '.version' build/flutter_assets/version.json)"
+      mkdir -p $CRAFT_PART_INSTALL/bin
+      cp -r build/linux/*/release/bundle/* $CRAFT_PART_INSTALL/bin/
+      sed -i -e 's|\(Icon=\).*|\1/bin/data/flutter_assets/assets/images/dakanji/icon.png|' \
+          $SNAPCRAFT_PART_SRC/snap/gui/DaKanji.desktop
