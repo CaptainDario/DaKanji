@@ -43,6 +43,8 @@ class DojgSentenceTable extends StatelessWidget {
                 if (element.classes.contains('cloze')) {
                   return {'color': 'red'};
                 }
+
+                return null;
               },
             ),
             const SizedBox(),
