@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg_key_sentence_table.dart';
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 
 
@@ -23,6 +25,9 @@ class DojgEntryPage extends StatefulWidget {
 }
 
 class _DojgEntryPageState extends State<DojgEntryPage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,17 +38,40 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8 , 0),
         child: ListView(
           children: [
+            // title
             Text(
-              "${widget.dojgEntry.volumeTag} ${widget.dojgEntry.grammaticalConcept}",
+              "${widget.dojgEntry.volumeTag} ${widget.dojgEntry.grammaticalConcept} (${widget.dojgEntry.page})",
               textScaleFactor: 2.0,
               style: const TextStyle(
                 
               ),
             ),
             const SizedBox(height: 16,),
+
+            if(widget.dojgEntry.antonymExpression != null)
+              ...[
+                Text("Usage"),
+                Text(widget.dojgEntry.antonymExpression!),
+              ],
+
+            if(widget.dojgEntry.relatedExpression != null)
+              Text(
+                widget.dojgEntry.relatedExpression!,
+                style: TextStyle(
+                  color: Colors.grey
+                ),
+              ),
+
+            //
+            if(widget.dojgEntry.equivalent != null)
+              ...[
+                Text("English equivalent"),
+                Text(widget.dojgEntry.usage!),
+              ],
+
             // formation ie. conjugation / usage
             if(widget.dojgEntry.formation != null)
               ...[
