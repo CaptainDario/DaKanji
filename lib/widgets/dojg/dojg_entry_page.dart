@@ -58,40 +58,34 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
               ],
 
             // key sentences
+            if(widget.dojgEntry.keySentencesEn.isNotEmpty)
+              ...[
+                const SizedBox(height: 10,),
+                Text("Key sentences", textScaleFactor: 1.5,),
+                const SizedBox(height: 5,),
+                DojgSentenceTable(
+                  widget.dojgEntry.keySentencesJp.map((e) => 
+                    e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
+                  ).toList(),
+                  widget.dojgEntry.keySentencesEn
+                )
+              ],
+            // examples
             if(widget.dojgEntry.examplesEn.isNotEmpty)
               ...[
                 const SizedBox(height: 10,),
-                Text(
-                  "Key sentences",
-                  textScaleFactor: 1.5,
-                ),
-                const SizedBox(height: 8,),
-                for (int i = 0; i < widget.dojgEntry.keySentencesEn.length; i++)
-                  ...[
-                    HtmlWidget(widget.dojgEntry.keySentencesJp[i]),
-                    Row(
-                      children: [
-                        const Text(
-                          "(ksa).　",
-                          style: TextStyle(color: Colors.transparent),
-                        ),
-                        Flexible(
-                          child: Text(
-                            widget.dojgEntry.keySentencesEn[i],
-                            style: const TextStyle(
-                              color: Colors.grey
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    // after each ks pair (except last one) put a small margin
-                    if(i != widget.dojgEntry.keySentencesEn.length-1)
-                      const SizedBox(height: 4,)
-                  ]
+                Text("Examples", textScaleFactor: 1.5,),
+                const SizedBox(height: 5,),
+                DojgSentenceTable(
+                  widget.dojgEntry.examplesJp.map((e) => 
+                    e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
+                  ).toList(),
+                  widget.dojgEntry.examplesEn
+                )
               ],
 
-            // examples
+            // small margin at the end of the list
+            const SizedBox(height: 8,)
           ],
         ),
       )
