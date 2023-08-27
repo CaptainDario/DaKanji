@@ -11,7 +11,7 @@
   },
   "ClipboardScreen": {
     "title": "Clipboard",
-    "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
+    "tutorial_android_limitation": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. On iOS, you can allow DaKanji to read your clipboard in the settings. This way it will not always ask you to allow pasting. Sorry for the inconvenience.",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the clipboard screen!",
     "tutorial_explanation": "Just copy some text and DaKanji will show dictionary entries and more!",
@@ -107,6 +107,13 @@
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_send_to_anki": "Send to Anki",
     "word_wikipedia": "Wikipedia"
+  },
+  "DojgScreen": {
+    "import_dojg": "Tap to import the DoJG Deck",
+    "refer_to_manual": "For details refer to the manual",
+    "title": "DoJG",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -241,7 +248,7 @@
     "advanced_settings_delete_history": "Delete search history",
     "advanced_settings_delete_user_data": "Delete user data",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
-    "advanced_settings_number_search_procs": "Number of search processes",
+    "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
     "advanced_settings_optimize_cancel": "Cancel",
     "advanced_settings_optimize_nn": "Optimize Neural Networks",
@@ -266,6 +273,8 @@
     "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
     "dict_show_word_freq": "Show word frequency",
     "dict_show_word_freq_body": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+    "dojg_imported": "DoJG imported",
+    "dojg_media_imported": "DoJG with media imported",
     "draw_browser_for_online_dict": "Use a webview for web dictionaries",
     "draw_custom_url_format": "Custom URL format",
     "draw_custom_url_hint": "URL of your dictionary",
@@ -275,7 +284,7 @@
     "draw_long_press_opens": "Dictionary selection",
     "draw_title": "Drawing",
     "misc_default_screen": "Initial screen when starting the app",
-    "misc_language": "language (@:SettingsScreen.restarts_app)",
+    "misc_language": "language",
     "misc_settings_window_size": "Save current window size",
     "misc_theme": "theme (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscellaneous",
