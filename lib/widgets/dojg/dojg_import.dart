@@ -87,7 +87,7 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
-        desc: "The import failed, please assure that you are importing the correct data."
+        desc: "The import failed, please assure that you are importing the correct data. "
           "Refer to the manual for more details."
       ).show();
     }
