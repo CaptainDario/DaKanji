@@ -912,10 +912,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
 
-                              if(!GetIt.I<UserData>().dojgImported) {
-                                return;
-                              }
-
                               GetIt.I<UserData>().dojgImported = false;
                               GetIt.I<UserData>().dojgWithMediaImported = false;
                               GetIt.I<UserData>().save();
