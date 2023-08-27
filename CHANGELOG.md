@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v 3.1.0 - 辞書開発 (8.8.2023)
+## v 3.1.0 - 辞書開発 (2.9.2023)
 
 New Features:
 
