@@ -37,6 +37,8 @@ class _DojgEntryListState extends State<DojgEntryList> {
   List<String> volumeTags = ["㊤", "㊥", "㊦"];
   /// the state of the shown / not shown volumes
   List<bool> currentVolumeSelection = [true, true, true];
+  /// the text that is currently in the search bar
+  String currentSearch = "";
 
 
   @override
@@ -62,6 +64,12 @@ class _DojgEntryListState extends State<DojgEntryList> {
         // show only entries of currently selected volumes
         .anyOf(volumeTags.indexed.where((e) => currentVolumeSelection[e.$1]),
           (q, tag) => q.volumeTagEqualTo(tag.$2))
+        //
+        .optional(currentSearch != "", (q) => 
+          q.grammaticalConceptContains(currentSearch, caseSensitive: false)
+            .or()
+          .usageContains(currentSearch, caseSensitive: false)
+        )
         .findAllSync()
       // sort found entries
       ..sort(((a, b) {
@@ -89,19 +97,25 @@ class _DojgEntryListState extends State<DojgEntryList> {
             floating: true,
             title: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
                     autocorrect: false,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: g_japaneseFontFamily
                     ),
                     decoration: InputDecoration(
                       hintText: "Search...",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        currentSearch = value;
+                        updateSearchResults();
+                      });
+                    },
                   )
                 ),
                 const SizedBox(width: 50,),
