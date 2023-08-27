@@ -54,18 +54,28 @@ PODS:
     - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - TensorFlowLiteC (2.11.0):
-    - TensorFlowLiteC/Core (= 2.11.0)
-  - TensorFlowLiteC/Core (2.11.0)
-  - TensorFlowLiteC/CoreML (2.11.0):
+  - TensorFlowLiteC (2.12.0):
+    - TensorFlowLiteC/Core (= 2.12.0)
+  - TensorFlowLiteC/Core (2.12.0)
+  - TensorFlowLiteC/CoreML (2.12.0):
     - TensorFlowLiteC/Core
-  - TensorFlowLiteC/Metal (2.11.0):
+  - TensorFlowLiteC/Metal (2.12.0):
     - TensorFlowLiteC/Core
-  - tflite_flutter (0.1.0):
+  - TensorFlowLiteSwift (2.12.0):
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - TensorFlowLiteSwift/Core (2.12.0):
+    - TensorFlowLiteC (= 2.12.0)
+  - TensorFlowLiteSwift/CoreML (2.12.0):
+    - TensorFlowLiteC/CoreML (= 2.12.0)
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - TensorFlowLiteSwift/Metal (2.12.0):
+    - TensorFlowLiteC/Metal (= 2.12.0)
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - tflite_flutter (0.0.1):
     - Flutter
-    - TensorFlowLiteC (~> 2.11.0)
-    - TensorFlowLiteC/CoreML (~> 2.11.0)
-    - TensorFlowLiteC/Metal (~> 2.11.0)
+    - TensorFlowLiteSwift (= 2.12.0)
+    - TensorFlowLiteSwift/CoreML (= 2.12.0)
+    - TensorFlowLiteSwift/Metal (= 2.12.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - volume_controller (0.0.1):
@@ -107,6 +117,7 @@ SPEC REPOS:
     - Sentry
     - SentryPrivate
     - TensorFlowLiteC
+    - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
   app_links:
@@ -188,8 +199,9 @@ SPEC CHECKSUMS:
   SentryPrivate: 5e3683390f66611fc7c6215e27645873adb55d13
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  TensorFlowLiteC: 8a8cb6fa20ad74dff29b5e490d02c36a14d48148
-  tflite_flutter: 57bfede7ef02c24fb20d8cbc0c99259469fc5d7c
+  TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
+  TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793
+  tflite_flutter: 9433d086a3060431bbc9f3c7c20d017db0e72d08
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
