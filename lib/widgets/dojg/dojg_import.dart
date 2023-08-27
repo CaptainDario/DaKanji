@@ -74,6 +74,7 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
+        // TODO translate
         desc: "DoJG has been imported successfully! Resetarting the app..."
       ).show();
       // ignore: use_build_context_synchronously
@@ -87,6 +88,7 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
+        // TODO translate
         desc: "The import failed, please assure that you are importing the correct data. "
           "Refer to the manual for more details."
       ).show();
