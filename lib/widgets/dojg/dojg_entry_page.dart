@@ -44,16 +44,21 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
               ),
             ),
             const SizedBox(height: 16,),
-            // fomration ie. conjugation / usage
+            // formation ie. conjugation / usage
             if(widget.dojgEntry.formation != null)
               ...[
-                Text(
-                  "Formation",
-                  textScaleFactor: 1.5,
-                ),
-                const SizedBox(height: 8,),
+                Text("Formation", textScaleFactor: 1.5,),
                 HtmlWidget(
-                  widget.dojgEntry.formation!
+                  widget.dojgEntry.formation!,
+                  customStylesBuilder: (element) {
+                    if (element.classes.contains('concept')) {
+                      return {'font-weight': 'bold'};
+                    }
+                    return null;
+                  },
+                  textStyle: const TextStyle(
+                    fontFamily: g_japaneseFontFamily
+                  ),
                 )
               ],
 
