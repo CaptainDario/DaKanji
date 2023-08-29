@@ -12,7 +12,7 @@ finish-args:
   - --share=network
   - --device=all
   - --socket=session-bus
-  - --env="LD_LIBRARY_PATH=/app/lib/"
+  - --env=LD_LIBRARY_PATH=/app/lib
 modules:
 
 # These are the required dependencies
