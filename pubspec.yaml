@@ -111,6 +111,14 @@ dependency_overrides:
   tflite_flutter:
     git:
       url: https://github.com/CaptainDario/tflite_flutter_plugin
+  app_links:
+    git:
+      url: https://github.com/LucasXu0/app_links
+      ref: c64ce17
+  url_protocol:
+    git:
+      url: https://github.com/LucasXu0/flutter_url_protocol.git
+      commit: 77a8420
 
 msix_config:
   display_name: DaKanji
