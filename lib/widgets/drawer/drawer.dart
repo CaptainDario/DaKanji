@@ -99,7 +99,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.wordLists,
       null, const Alignment(0, -0.1),
       kDebugMode, null),
-    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+    DrawerEntry(Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
       null, null,
       true, null),
     DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
