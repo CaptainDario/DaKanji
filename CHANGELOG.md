@@ -1,6 +1,16 @@
 
 # DaKanji - changelog
 
+## v 3.2.0 - ポップアップ ()
+
+New Features:
+
+- Dictionary of Japanese Grammar (DoJG)
+  - import anki deck
+  - search content
+- Popup
+  - One-tap-lookup now includes results from DoJG
+
 ## v 3.1.0 - 辞書開発 (8.8.2023)
 
 New Features:
