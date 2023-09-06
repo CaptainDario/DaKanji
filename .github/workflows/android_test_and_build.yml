@@ -43,6 +43,7 @@ jobs:
       - name: Setup Java to compile Android project
         uses: actions/setup-java@v2
         with:
+          distribution: zulu
           java-version: ${{env.JAVA_VERSION}}
 
       # get flutter version from pubspec
