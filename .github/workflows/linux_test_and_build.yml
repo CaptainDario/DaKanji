@@ -55,7 +55,7 @@ jobs:
       # TESTS  
       #- name: Analyze
       #  run: flutter analyze
-      
+
       #- name: Run integration tests
       #  run: python3 ./integration_test/run_tests.py
 
@@ -74,10 +74,8 @@ jobs:
 
 
       # build SNAP
-      - name: change into dakanji project directory
-        run: |
-          ls -a snap
-
+      - name: update snapcraft with flutter version from pubspec
+        run: python3 ./.github/workflows/building.py update_snapcraft_yaml
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
         id: snapcraft
@@ -85,3 +83,4 @@ jobs:
         with:
           name: snap
           path: ${{ steps.snapcraft.outputs.snap }}
+      # upload to snap store
