@@ -68,8 +68,10 @@ jobs:
       #    path: build/linux/x64/release/bundle
 
       # build SNAP
-      - name: change into daknaji project directory
-        run: cwd DaKanji
+      - name: change into dakanji project directory
+        run: |
+          ls -a
+          cd DaKanji
 
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
