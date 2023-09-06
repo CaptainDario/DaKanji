@@ -120,7 +120,8 @@ jobs:
       # appbundle
       - name: build app bundle
         run: |
-          python3 
+          python3 ./.github/workflows/building.py comment_large_assets_in_pubspec
+          flutter pub get
           flutter build appbundle
       - name: Archive appbundle
         uses: actions/upload-artifact@v3

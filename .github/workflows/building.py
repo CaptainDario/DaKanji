@@ -44,7 +44,8 @@ def comment_large_assets_in_pubspec():
             content += line if "# downloadable:" not in last_line else f"#{line}"
             last_line = line
 
-    print(content)
+    with open("pubspec.yaml", mode="w+") as f:
+        f.write(content)
 
 
 
