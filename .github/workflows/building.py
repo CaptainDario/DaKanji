@@ -33,6 +33,19 @@ def update_snapcraft_yaml():
     with open("snap/snapcraft.yaml", mode="w+"):
         f.write(snap)
 
+def comment_large_assets_in_pubspec():
+    """ Comments all large assets in pubspec.yaml for building .appbundle
+    """
+
+    content = ""
+    with open("pubspec.yaml", mode="r") as f:
+        last_line = ""
+        for line in f:
+            content += line if "# downloadable:" not in last_line else f"#{line}"
+            last_line = line
+
+    print(content)
+
 
 
 if __name__ == "__main__":
@@ -47,3 +60,6 @@ if __name__ == "__main__":
 
     if(arg == "update_snapcraft_yaml"):
         update_snapcraft_yaml()
+
+    if(arg == "comment_large_assets_in_pubspec"):
+        comment_large_assets_in_pubspec()
