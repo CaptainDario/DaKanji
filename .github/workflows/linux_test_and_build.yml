@@ -68,22 +68,22 @@ jobs:
           path: build/linux/x64/release/bundle
 
       # build SNAP
-      #- name: Install Snapcraft
-      #  uses: samuelmeuli/action-snapcraft@v1
-      #  with:
-      #    use_lxd: true
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        with:
+          use_lxd: true
 
-      #- name: Build DaKanji snap
-      #  run: |
-      #    python3 .github/workflows/create_snapcraft_yaml.py
-      #    flutter clean
-      #    flutter pub get
-      #    sg lxd -c 'snapcraft --use-lxd'
+      - name: Build DaKanji snap
+        run: |
+          
+          flutter clean
+          flutter pub get
+          sg lxd -c 'snapcraft --use-lxd'
      
-      #- name: Archive production artifacts
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_linux.snap
-      #    path: "*.snap"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_linux.snap
+          path: "*.snap"
 
       # build flatpak
