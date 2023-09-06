@@ -9,8 +9,8 @@
 
 import re
 
-def get_version():
-    """ Read the version from pubspec.yaml and return it
+def get_version_dakanji():
+    """ Reads DaKanji version from pubspec.yaml and returns it
     """
     
     with open("pubspec.yaml") as f:
@@ -24,4 +24,4 @@ if __name__ == "__main__":
 
         
     with open("dakanji_version.txt", mode="w+", encoding="utf8") as f:
-        f.write("DAKANJI_VERSION=" + get_version())
+        f.write("DAKANJI_VERSION=" + get_version_dakanji())
