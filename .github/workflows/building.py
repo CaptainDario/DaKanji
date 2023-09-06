@@ -30,7 +30,7 @@ def update_snapcraft_yaml():
     
     snap = re.sub("source-tag: .*", f"source-tag: {utils.get_flutter_version()}", snap)
 
-    with open("snap/snapcraft.yaml", mode="w+"):
+    with open("snap/snapcraft.yaml", mode="w+") as f:
         f.write(snap)
 
 def comment_large_assets_in_pubspec():
