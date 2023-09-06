@@ -230,9 +230,7 @@ flutter:
     # large files
     # tf lite models
     - assets/tflite_models/
-
-    # can be downloaded
-    # mecab
+    # downloadable: mecab
     - assets/ipadic.zip
-    # dictionary
+    # downloadable: dictionary
     - assets/dict/
