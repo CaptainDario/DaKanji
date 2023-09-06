@@ -32,7 +32,7 @@ jobs:
 
       # get flutter version from pubspec
       - name: set flutter version
-        run: python3 ./.github/workflows/building.py
+        run: python3 ./.github/workflows/building.py set_env_flutter_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
