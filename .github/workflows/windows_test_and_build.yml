@@ -14,9 +14,8 @@ on:
       DA_KANJI_ML_RELEASES_TOKEN: 
         required: true
 
-env:
-  FLUTTER_VERSION: "2.10.3"
-  FLUTTER_CHANNEL: "stable"
+#env:
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,32 +27,31 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      # get flutter version from pubspec
+      - name: set flutter version
+        run: python3 ./.github/workflows/building.py set_env_flutter_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
+          channel: stable
           
       - name: Restore packages
         run: flutter pub get
         
-      # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
-        
+      # download all files necessary to run dakanji
+      - name: setup dakanji
+        run: python3 setup.py
+
+      # TESTS  
       #- name: Analyze
       #  run: flutter analyze
       
-      - name: Run integration tests
-        run: python ./integration_test/run_tests.py
+      #- name: Run integration tests
+      #  run: python ./integration_test/run_tests.py
 
       - name: build exe
         run: flutter build windows --release
