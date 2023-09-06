@@ -70,8 +70,7 @@ jobs:
       # build SNAP
       - name: change into dakanji project directory
         run: |
-          ls -a
-          cd DaKanji
+          ls -a snap
 
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
