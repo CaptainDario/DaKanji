@@ -10,23 +10,7 @@ def set_env_flutter_version():
     variable to the flutter version from pubspec 
     """
 
-    # read version from pubspec
-    with open("pubspec.yaml", mode="r") as f:
-        content = f.read()
-    matches = re.search("flutter: \"(.*)\"", content)
-    version = matches.groups(0)[0]
-
-    utils.set_github_env("FLUTTER_VERSION", version)
-
-def get_latest_changes() :
-    """ Reads the Changelog from the last release and returns it.
-    """
-    with open("CHANGELOG.md", mode="r", encoding="utf8") as f:
-        changelog = f.read()
-
-    newest_changes = re.search("##(.*?)----------------", changelog, re.DOTALL).groups()[0]
-
-    return newest_changes
+    utils.set_github_env("FLUTTER_VERSION", utils.get_flutter_version())
 
 def create_latest_changes_txt():
     """ Creates a file called "latest_changes.txt" and 
@@ -34,7 +18,20 @@ def create_latest_changes_txt():
     """
     
     with open("latest_changes.txt", mode="w+", encoding="utf8") as f:
-        f.write(get_latest_changes())   
+        f.write(utils.get_latest_changes())
+
+def update_snapcraft_yaml():
+    """ Updates the snapcraft yaml with
+        * current flutter version from pubspec
+    """
+
+    with open("snap/snapcraft.yaml", mode="r") as f:
+        snap = f.read()
+    
+    snap = re.sub("source-tag: .*", f"source-tag: {utils.get_flutter_version()}", snap)
+
+    with open("snap/snapcraft.yaml", mode="w+"):
+        f.write(snap)
 
 
 
@@ -44,3 +41,9 @@ if __name__ == "__main__":
 
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
+
+    if(arg == "create_latest_changes_txt"):
+        create_latest_changes_txt()
+
+    if(arg == "update_snapcraft_yaml"):
+        update_snapcraft_yaml()
