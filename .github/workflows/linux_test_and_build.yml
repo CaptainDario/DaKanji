@@ -69,9 +69,7 @@ jobs:
 
       # build SNAP
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v2
-        with:
-          use_lxd: true
+        uses: snapcore/action-build@v1
 
       - name: Build DaKanji snap
         run: |
@@ -80,10 +78,9 @@ jobs:
           flutter pub get
           sg lxd -c 'snapcraft --use-lxd'
      
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_linux.snap
-          path: "*.snap"
+          name: snap
+          path: ${{ steps.snapcraft.outputs.snap }}
 
       # build flatpak
