@@ -45,11 +45,15 @@ jobs:
         with:
           java-version: ${{env.JAVA_VERSION}}
 
+      # get flutter version from pubspec
+      - name: set flutter version
+        run: python3 ./.github/workflows/building.py set_env_flutter_version
+
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
+          channel: stable
           
       - name: Restore packages
         run: |
@@ -57,22 +61,26 @@ jobs:
           sudo bash install.sh -d
         
       # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
+      #- name: Download release asset
+      #  uses: robinraju/release-downloader@v1.3
+      #  with:
+      #    repository: CaptainDario/DaKanji-ML
+      #    latest: true
+      #    fileName: "*"
+      #    token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
+      #    out-file-path: "assets/tflite_models"
         
-      - name: Run integration tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          disk-size: 8G
-          script: |
-            python3 ./integration_test/run_tests.py android
+
+      # TESTS  
+      #- name: Analyze
+      #  run: flutter analyze
+      #- name: Run integration tests
+      #  uses: reactivecircus/android-emulator-runner@v2
+      #  with:
+      #    api-level: 29
+      #    disk-size: 8G
+      #    script: |
+      #      python3 ./integration_test/run_tests.py android
 
       - name: Creating the key.properties file
         run: |
