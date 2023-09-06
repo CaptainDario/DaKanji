@@ -47,9 +47,9 @@ jobs:
       - name: setup dakanji
         run: python3 setup.py
         
-      - name: install build packages
-        run: |
-          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
+      #- name: install build packages
+      #  run: |
+      #    sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
 
       - name: enable linux
         run: flutter config --enable-linux-desktop
@@ -68,15 +68,11 @@ jobs:
       #    path: build/linux/x64/release/bundle
 
       # build SNAP
-      - name: Install Snapcraft
-        uses: snapcore/action-build@v1
+      - name: change into daknaji project directory
+        run: cwd DaKanji
 
-      - name: Build DaKanji snap
-        run: |
-          
-          flutter clean
-          flutter pub get
-          sg lxd -c 'snapcraft --use-lxd'
+      - name: Install Snapcraft and build snap
+        uses: snapcore/action-build@v1
      
       - uses: actions/upload-artifact@v3
         with:
