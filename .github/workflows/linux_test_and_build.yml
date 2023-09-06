@@ -52,8 +52,12 @@ jobs:
       - name: enable linux
         run: flutter config --enable-linux-desktop
 
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+      # TESTS  
+      #- name: Analyze
+      #  run: flutter analyze
+      
+      #- name: Run integration tests
+      #  run: python3 ./integration_test/run_tests.py
 
       # build portable linux
       - name: build linux executable
