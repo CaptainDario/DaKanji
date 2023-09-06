@@ -14,9 +14,7 @@ on:
       DA_KANJI_ML_RELEASES_TOKEN: 
         required: true
 
-env:
-  FLUTTER_VERSION: "3.10.6"
-  FLUTTER_CHANNEL: "stable"
+#env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -74,7 +72,7 @@ jobs:
 
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
-     
+        id: snapcraft
       - uses: actions/upload-artifact@v3
         with:
           name: snap
