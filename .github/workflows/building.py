@@ -12,6 +12,13 @@ def set_env_flutter_version():
 
     utils.set_github_env("FLUTTER_VERSION", utils.get_flutter_version())
 
+def set_env_dakanji_version():
+    """ Sets a github actions environment DAKANJI_VERSION
+    variable to the dakanji version from pubspec 
+    """
+
+    utils.set_github_env("DAKANJI_VERSION", utils.get_dakanji_version())
+
 def create_latest_changes_txt():
     """ Creates a file called "latest_changes.txt" and 
     writes the Changelog of the newest release to it
@@ -55,6 +62,9 @@ if __name__ == "__main__":
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
 
+    if(arg == "set_env_dakanji_version"):
+        set_env_dakanji_version()
+
     if(arg == "create_latest_changes_txt"):
         create_latest_changes_txt()
 
@@ -63,3 +73,5 @@ if __name__ == "__main__":
 
     if(arg == "comment_large_assets_in_pubspec"):
         comment_large_assets_in_pubspec()
+
+        

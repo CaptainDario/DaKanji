@@ -46,9 +46,11 @@ jobs:
           distribution: zulu
           java-version: ${{env.JAVA_VERSION}}
 
-      # get flutter version from pubspec
-      - name: set flutter version
-        run: python3 ./.github/workflows/building.py set_env_flutter_version
+      # get flutter versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -57,8 +59,7 @@ jobs:
           channel: stable
           
       - name: Restore packages
-        run: |
-          flutter pub get
+        run: flutter pub get
 
       # download all files necessary to run dakanji
       - name: setup dakanji
@@ -105,17 +106,17 @@ jobs:
       - name: Archive arm64-v8a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_arm64-v8a.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
           path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
       - name: Archive apk arm64-v7a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_arm64-v7a.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v7a.apk.zip
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
       - name: Archive apk x86_64
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_x86_64.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk.zip
           path: build/app/outputs/apk/release/app-x86_64-release.apk
 
       # appbundle
@@ -127,7 +128,7 @@ jobs:
       - name: Archive appbundle
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_bundle.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_bundle.zip
           path: build/app/outputs/bundle/release/app-release.aab
 
 
