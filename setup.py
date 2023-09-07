@@ -10,6 +10,7 @@ repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/relea
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
 move_to_dict  = ["dict", "examples", "krad", "radk"]
+move_to_tf_lite = ["CNN_single_char.tflite"]
 files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 
 release_url = None
@@ -26,11 +27,11 @@ def exclude_files_per_platform():
     elif(sys.platform.startswith("darwin")):
         files_to_exclude.append("libtensorflowlite_c-linux.so")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab_x86.dll")
+        files_to_exclude.append("libmecab.dll")
     elif(sys.platform.startswith("linux")):
         files_to_exclude.append("libtensorflowlite_c-mac.dylib")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab_x86.dll")
+        files_to_exclude.append("libmecab.dll")
 
 def get_release_url():
     """ gets the url to the latest assets release of DaKanji
@@ -88,6 +89,11 @@ def move_assets():
         if(f.startswith("ipadic")):
             shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
 
+        # move tf lite assets
+        if(f.startswith(tuple(move_to_tf_lite))):
+            shutil.copy(f"{tmp_dir}/{f}", "assets/tflite_models/")
+        
+        
         # move the dictionary related assets
         if(f.startswith(tuple(move_to_dict))):
             shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
