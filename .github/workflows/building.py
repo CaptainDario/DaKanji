@@ -25,13 +25,12 @@ def update_snapcraft_yaml():
         * current flutter version from pubspec
     """
 
-    with open("snap/snapcraft.yaml", mode="r") as f:
+    with open("snap/snapcraft.yaml", mode="r+") as f:
         snap = f.read()
-    
-    snap = re.sub("source-tag: .*", f"source-tag: {utils.get_flutter_version()}", snap)
-
-    with open("snap/snapcraft.yaml", mode="w+") as f:
+        snap = re.sub("source-tag: .*", f"source-tag: {utils.get_flutter_version()}", snap)
+        f.seek(0)
         f.write(snap)
+        f.truncate()
 
 def comment_large_assets_in_pubspec():
     """ Comments all large assets in pubspec.yaml for building .appbundle

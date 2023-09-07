@@ -75,7 +75,10 @@ jobs:
 
       # build SNAP
       - name: update snapcraft with flutter version from pubspec
-        run: python3 ./.github/workflows/building.py update_snapcraft_yaml
+        run: |
+          cat snap/snapcraft.yaml
+          python3 ./.github/workflows/building.py update_snapcraft_yaml
+          cat snap/snapcraft.yaml
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
         id: snapcraft
