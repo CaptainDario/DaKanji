@@ -28,9 +28,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # get flutter version from pubspec
-      - name: set flutter version
-        run: python3 ./.github/workflows/building.py set_env_flutter_version
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
+          env
+          echo ${{env.DAKANJI_VERSION}}
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
