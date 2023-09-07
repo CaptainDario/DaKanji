@@ -86,7 +86,7 @@ jobs:
         id: snapcraft
       - uses: actions/upload-artifact@v3
         with:
-          name: snap
+          name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
           path: ${{ steps.snapcraft.outputs.snap }}
        
       # upload to snap store
