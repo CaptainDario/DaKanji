@@ -33,8 +33,6 @@ jobs:
         run: |
           python3 ./.github/workflows/building.py set_env_flutter_version
           python3 ./.github/workflows/building.py set_env_dakanji_version
-          env
-          echo 'test ${{env.DAKANJI_VERSION}}'
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -78,16 +76,17 @@ jobs:
 
 
       # build SNAP
-      #- name: prepare snap building
-      #  run: |
-      #    python3 ./.github/workflows/building.py update_snapcraft_yaml
-      #    flutter clean
-      #    flutter pub get
-      #- name: Install Snapcraft and build snap
-      #  uses: snapcore/action-build@v1
-      #  id: snapcraft
-      #- uses: actions/upload-artifact@v3
-      #  with:
-      #    name: snap
-      #    path: ${{ steps.snapcraft.outputs.snap }}
+      - name: prepare snap building
+        run: |
+          python3 ./.github/workflows/building.py update_snapcraft_yaml
+          flutter clean
+          flutter pub get
+      - name: Install Snapcraft and build snap
+        uses: snapcore/action-build@v1
+        id: snapcraft
+      - uses: actions/upload-artifact@v3
+        with:
+          name: snap
+          path: ${{ steps.snapcraft.outputs.snap }}
+       
       # upload to snap store
