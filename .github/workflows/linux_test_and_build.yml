@@ -81,10 +81,10 @@ jobs:
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
         id: snapcraft
-      - uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
-          path: ${{ steps.snapcraft.outputs.snap }}
+      #- uses: actions/upload-artifact@v3
+      #  with:
+      #    name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
+      #    path: ${{ steps.snapcraft.outputs.snap }}
        
       # upload to snap store
       - uses: snapcore/action-publish@v1
