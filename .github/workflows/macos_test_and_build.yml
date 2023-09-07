@@ -27,7 +27,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # get versions from pubspec
       - name: set env variables
@@ -61,5 +61,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
-          path: build/macos/Build/Products/Release/DaKanji
+          path: build/macos/Build/Products/Release/DaKanji.app
 
