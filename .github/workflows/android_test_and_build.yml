@@ -24,8 +24,6 @@ on:
 
 env:
   JAVA_VERSION: "11.x"
-  FLUTTER_VERSION: "2.10.3"
-  FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
