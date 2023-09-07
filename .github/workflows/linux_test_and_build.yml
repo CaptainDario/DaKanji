@@ -34,7 +34,7 @@ jobs:
           python3 ./.github/workflows/building.py set_env_flutter_version
           python3 ./.github/workflows/building.py set_env_dakanji_version
           env
-          echo "test ${{env.DAKANJI_VERSION}}""
+          echo 'test ${{env.DAKANJI_VERSION}}'
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
