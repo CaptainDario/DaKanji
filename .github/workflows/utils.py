@@ -35,9 +35,8 @@ def set_github_env(name : str, value : str):
 
     env_file = os.getenv('GITHUB_ENV')
 
-    with open(env_file, "a") as myfile:
-        env = f"{name}={value}"
-        print(env, myfile)
+    with open(env_file, "a") as f:
+        f.write(f"{name}={value}\n")
 
 def get_latest_changes() -> str:
     """ Reads the Changelog from the last release and returns it.
