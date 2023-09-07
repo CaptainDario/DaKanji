@@ -44,7 +44,7 @@ jobs:
           distribution: zulu
           java-version: ${{env.JAVA_VERSION}}
 
-      # get flutter versions from pubspec
+      # get versions from pubspec
       - name: set env variables
         run: |
           python3 ./.github/workflows/building.py set_env_flutter_version

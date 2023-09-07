@@ -29,9 +29,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # get flutter version from pubspec
-      - name: set flutter version
-        run: python3 ./.github/workflows/building.py set_env_flutter_version
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -59,7 +61,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
           path: build/windows/runner/Release/
 
       - name: build MSIX
@@ -68,5 +70,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.msix
+          name: DaKanji_${{env.DAKANJI_VERSION}}.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
