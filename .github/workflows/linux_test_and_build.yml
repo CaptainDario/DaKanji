@@ -90,3 +90,7 @@ jobs:
           path: ${{ steps.snapcraft.outputs.snap }}
        
       # upload to snap store
+      - uses: snapcore/action-publish@v1
+        with:
+          store_login: ${{ secrets.SNAP_STORE_LOGIN }}
+          snap: ${{ steps.build.outputs.snap }}
