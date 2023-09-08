@@ -69,7 +69,7 @@ jobs:
         env:
           PFX_CONTENT: ${{ secrets.SELF_SIGN_MSIX_PFX }}
         run: |
-          $pfxPath = keys/dakanji_self_sign_msix.pfx;
+          $pfxPath = 'keys/dakanji_self_sign_msix.pfx';
           $encodedBytes = [System.Convert]::FromBase64String($env:PFX_CONTENT);
           Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
           Write-Output "::set-output name=PFX_PATH::$pfxPath";
