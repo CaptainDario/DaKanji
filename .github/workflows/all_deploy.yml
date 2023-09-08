@@ -12,16 +12,20 @@ on:
         default: false
 
 jobs:
+  
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
-    
-  android-test-and-build:
-    uses: ./.github/workflows/android_test_and_build.yml
-    secrets:
-      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
-      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
-      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
+  linux-test-and-build:
+    uses: ./.github/workflows/windows_test_and_build.yml
+
+  #android-test-and-build:
+  #  uses: ./.github/workflows/android_test_and_build.yml
+  #  secrets:
+  #    KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+  #    KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+  #    KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+  #    KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       
 
   upload-releases-to-github:
