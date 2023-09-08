@@ -4,13 +4,16 @@ name: dakanji
 adopt-info: dakanji
 summary: You are learning Japanese? Then you need to give "DaKanji" a try!
 description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
+issues: https://github.com/CaptainDario/DaKanji/issues
+source-code: https://github.com/CaptainDario/DaKanji
 
 confinement: strict
 base: core22
 grade: stable
-
+architectures:
+  - amd64
 assumes:
-  - snapd2.41
+  - snapd2.60.3
 
 slots:
   dbus-dakanji:
@@ -27,7 +30,7 @@ apps:
     slots:
       - dbus-dakanji
     environment:
-      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/blas:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/lapack
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/vdpau:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/dri
 
 parts:
 
@@ -69,13 +72,6 @@ parts:
     plugin: nil
     build-packages:
       - libmpv-dev
-      - pkg-config
-      - clang
-      - cmake
-      - ninja-build
-      - libgtk-3-dev
-      - liblzma-dev
-      - libstdc++-12-dev
       - jq
     stage-packages:
       - libmpv1
@@ -87,5 +83,20 @@ parts:
       craftctl set version="$(jq -r '.version' build/flutter_assets/version.json)"
       mkdir -p $CRAFT_PART_INSTALL/bin
       cp -r build/linux/*/release/bundle/* $CRAFT_PART_INSTALL/bin/
-      sed -i -e 's|\(Icon=\).*|\1${SNAP}/data/flutter_assets/assets/images/dakanji/icon.png|' \
-          $SNAPCRAFT_PART_SRC/snap/gui/DaKanji.desktop
+
+  # Find files provided by the base and platform snap and ensure they aren't
+  # duplicated in this snap
+  cleanup:
+    after: [dakanji]  # Make this part run last; list all your other parts here
+    plugin: nil
+    build-snaps: [gnome-42-2204]  # List all content-snaps you're using here
+    override-prime: |
+      set -eux
+      for snap in "gnome-42-2204"; do  # List all content-snaps you're using here
+        cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$CRAFT_PRIME/{}" "$CRAFT_PRIME/usr/{}" \;
+      done
+      for CRUFT in bug lintian man; do
+        rm -rf $CRAFT_PRIME/usr/share/$CRUFT
+      done
+      find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
+      find $CRAFT_PRIME/usr/share -type d -empty -delete
