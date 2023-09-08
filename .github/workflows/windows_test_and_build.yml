@@ -72,9 +72,12 @@ jobs:
           $pfxPath = 'keys/dakanji_self_sign_msix.pfx';
           $encodedBytes = [System.Convert]::FromBase64String($env:PFX_CONTENT);
           Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
-          Write-Output "::set-output name=PFX_PATH::$pfxPath";
+          
+        # Write-Output "::set-output name=PFX_PATH::$pfxPath";
       - name: build and sign non-store MSIX
-        run: flutter pub run msix:create --build-windows=false -c ./keys/dakanji_self_sign_msix.pfx -p ${{secrets.SELF_SIGN_MSIX_PWD}}
+        run: |
+          flutter pub run msix:create --install-certificate=false --build-windows=false \
+          -c ./keys/dakanji_self_sign_msix.pfx -p ${{secrets.SELF_SIGN_MSIX_PWD}}
 
       #- name: Archive production artifacts
       #  uses: actions/upload-artifact@v3
