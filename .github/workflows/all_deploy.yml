@@ -17,7 +17,7 @@ jobs:
     uses: ./.github/workflows/windows_test_and_build.yml
 
   linux-test-and-build:
-    uses: ./.github/workflows/windows_test_and_build.yml
+    uses: ./.github/workflows/linux_test_and_build.yml
 
   #android-test-and-build:
   #  uses: ./.github/workflows/android_test_and_build.yml
