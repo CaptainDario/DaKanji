@@ -21,6 +21,16 @@ on:
         required: true
       KEYSTORE_BASE64: 
         required: true
+    
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        options    :
+        - no
+        - beta
+        - release
+
 
 env:
   JAVA_VERSION: "11.x"
