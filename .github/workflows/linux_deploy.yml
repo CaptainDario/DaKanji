@@ -57,11 +57,11 @@ jobs:
       # upload portable to gh release
       - name: get build artifacts for linux portable
         uses: actions/download-artifact@v3
-        if: ${{env.upload_to_gh}} == true
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
       - name: upload to GH release
-        if: ${{env.upload_to_gh}} == true
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -74,7 +74,7 @@ jobs:
       # get snap artifact and upload it to GH release and snap store
       - name: get build artifacts for linux portable
         uses: actions/download-artifact@v3
-        if: ${{env.upload_to_gh}} == true
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
       - name: upload to GH release
