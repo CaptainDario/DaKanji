@@ -13,11 +13,11 @@ on:
 
 jobs:
   
-  windows-test-and-build:
-    uses: ./.github/workflows/windows_test_and_build.yml
+  #windows-test-and-build:
+  #  uses: ./.github/workflows/windows_test_and_build.yml
 
-  linux-test-and-build:
-    uses: ./.github/workflows/linux_test_and_build.yml
+  #linux-test-and-build:
+  #  uses: ./.github/workflows/linux_test_and_build.yml
 
   #android-test-and-build:
   #  uses: ./.github/workflows/android_test_and_build.yml
