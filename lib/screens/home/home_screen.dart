@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Setup the app by showing the changelog, onboarding, rate popup or 
   /// dwonloading the data necessary for this release
   Future<void> setupApp() async {
-    if(testing()) return;
 
     await initDocumentsServices(context);
 

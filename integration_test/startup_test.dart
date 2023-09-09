@@ -4,6 +4,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+
+import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -59,11 +61,10 @@ void main() {
 
     // #region 3 - check that the DrawScreen tutorial is shown
     cnt = 0;
-    while(tester.widgetList(find.byType(DrawingCanvas)).toList().isEmpty &&
-      cnt < 100){
+    while(tester.widgetList(find.byType(FloatingWordStack)).toList().isEmpty && cnt < 100){
       cnt++;
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      print('waiting for tutorial to show up');
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      print('waiting for dictionary to load');
     }
     
     expect(find.byType(DrawingCanvas), findsOneWidget);
