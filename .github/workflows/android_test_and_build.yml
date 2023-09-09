@@ -23,17 +23,7 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: 
-        required: true
-      KEY_PROPERTIES_KEY_PASSWORD: 
-        required: true
-      KEY_PROPERTIES_STORE_PASSWORD: 
-        required: true
-      KEY_PROPERTIES_KEY_ALIAS: 
-        required: true
-      KEYSTORE_BASE64: 
-        required: true
+    #secrets:
     
     inputs:
       upload_to_stores:
@@ -54,8 +44,9 @@ env:
 jobs:
   # This workflow contains a single job called "build"
   build:
+
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -132,7 +123,7 @@ jobs:
 
       # upload apks to GH release
       - name: upload to GH release
-        if: ${{env.upload_to_gh}} == true
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
         run: |
           mv build/app/outputs/apk/release/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip --clobber
@@ -151,13 +142,13 @@ jobs:
 
       # upload appbundle to google play beta track
       - name: Create whats new
-        if: ${{env.upload_to_stores}} == "beta"
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
         run: |
           python3 .github/workflows/building.py create_latest_changes_txt
           mkdir whatsnew
           mv latest_changes.txt whatsnew/whatsnew-en-US
       - name: upload appbundle to playstore
-        if: ${{env.upload_to_stores}} == "beta"
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
