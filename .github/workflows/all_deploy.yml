@@ -10,10 +10,10 @@ on:
         description: "Should the build packages be uploaded to stores"
         type       : choice
         required   : true
-        default    : no
+        default    : "no"
         options    :
-        - no
-        - beta
+        - "no"
+        - "beta"
       upload_to_gh:
         description: "Should the build packages be uploaded to a github release"
         type       : choice
