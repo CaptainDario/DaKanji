@@ -1,14 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
-import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
-import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/main.dart' as app;
 
@@ -22,8 +19,6 @@ void main() {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
-
-    g_IsTestingAppStartup = true;
 
     // create app instance and wait until it finished initializing
     await app.main();
@@ -46,28 +41,15 @@ void main() {
     print("Passed step: 1");
     // #endregion
 
-    // #region 2 - check that the onboarding is shown and skip it
-    cnt = 0;
-    while(tester.widgetList(find.byType(DrawingCanvas)).toList().isEmpty &&
-      cnt < 100){
-      cnt++;
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
-      print('waiting for tutorial to show up');
-    }
-    
-    expect(find.byType(DrawingCanvas), findsOneWidget);
-    print("Passed step: 2");
-    // #endregion
-
     // #region 3 - check that the DrawScreen tutorial is shown
     cnt = 0;
-    while(tester.widgetList(find.byType(FloatingWordStack)).toList().isEmpty && cnt < 100){
+    while(tester.widgetList(find.byType(OnboardingStepper)).toList().isEmpty && cnt < 60){
       cnt++;
-      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
       print('waiting for dictionary to load');
     }
     
-    expect(find.byType(DrawingCanvas), findsOneWidget);
+    expect(find.byType(OnboardingStepper), findsOneWidget);
     print("Passed step: 2");
     // #endregion
 
