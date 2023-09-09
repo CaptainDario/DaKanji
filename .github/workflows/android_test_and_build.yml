@@ -15,6 +15,12 @@ on:
         - no
         - beta
         - release
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : boolean
+        required   : true
+        default    : true
+
 
   # allows that other workflows can run this one
   workflow_call:
@@ -34,7 +40,11 @@ on:
       upload_to_stores:
         description: "Should the build packages be uploaded to stores"
         type       : string 
-        required   : true 
+        required   : true
+      upload_to_gh :
+        description: "Should the build packages be uploaded to a github release"
+        type       : boolean
+        required   : true
 
 
 env:
