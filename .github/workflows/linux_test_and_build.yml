@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Ubuntu - Test and Build
+name: linux - Test and Build
 
 # Controls when the workflow will run
 on:
@@ -39,7 +39,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build_test_upload:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
@@ -119,6 +119,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_snap.zip --clobber
 
       # upload to snap store
@@ -127,5 +128,5 @@ jobs:
         env :
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
         with:
-          snap   : ${{ steps.snapcraft.outputs.snap }}
+          snap   : DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
           release: ${{env.upload_to_stores}}
