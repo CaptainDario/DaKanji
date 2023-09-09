@@ -3,18 +3,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/main.dart' as app;
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 import 'package:da_kanji_mobile/widgets/drawing/prediction_button.dart';
 import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'drawscreen_test_util.dart';
+import 'test_utils.dart';
 
 
 
@@ -23,21 +22,16 @@ void main() {
 
   testWidgets("DrawScreen test", (WidgetTester tester) async {
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    await initDaKanjiTest(tester, initCallback: () {
+      GetIt.I<UserData>().showTutorialDictionary = false;
+      GetIt.I<UserData>().showTutorialDrawing    = false;
+      GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap = false;
+    });
 
-    // create app instance and wait until it finished initializing
-    await app.main();
-    GetIt.I<Settings>().load();
-    GetIt.I<Settings>().save();
-    GetIt.I<UserData>().showChangelog       = false;
-    GetIt.I<UserData>().showOnboarding      = false;
-    GetIt.I<UserData>().showRateDialog      = false;
-    GetIt.I<UserData>().showTutorialDrawing = false;
-    GetIt.I<UserData>().save();
+    await navigate_to_screen(Icons.brush, tester);
 
-    await tester.pumpAndSettle(const Duration(seconds: 1));
-
+    await waitTillFinder(tester, find.byType(DrawingCanvas), "Waiting for canvas init");
+  
     // check that the app does not show any predictions on start up
     List<String> preds = (tester.widgetList(find.byType(PredictionButton)))
       .map((e) => (e as PredictionButton).char).toList();
