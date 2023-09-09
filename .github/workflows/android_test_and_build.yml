@@ -113,7 +113,6 @@ jobs:
       - name: build apks for different architectures
         run: |
           flutter build apk --split-per-abi
-          mv build/app/outputs/apk/release/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
           ls build/app/outputs/apk/release/
       - name: Archive arm64-v8a
         uses: actions/upload-artifact@v3
@@ -135,6 +134,7 @@ jobs:
       - name: upload to GH release
         if: ${{env.upload_to_gh}} == true
         run: |
+          mv build/app/outputs/apk/release/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip --clobber
 
       # build appbundle
