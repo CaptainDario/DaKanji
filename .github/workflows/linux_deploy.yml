@@ -64,36 +64,33 @@ jobs:
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
-          path: artifacts
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ls -la
-          ls -la artifacts
-          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
  
       # TODO upload flatpak to GH release
 
 
       # get snap artifact and upload it to GH release and snap store
-      - name: get build artifacts for linux portable
+      - name: get build artifacts for snap
         uses: actions/download-artifact@v3
-        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        if: ${{github.event.inputs.upload_to_gh == 'true' || github.event.inputs.upload_to_stores == 'beta'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
-          path: artifacts
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_snap.zip --clobber
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
       - uses: snapcore/action-publish@v1
         if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
         env :
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
         with:
-          snap   : artifacts/DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
+          snap   : DaKanji_${{env.DAKANJI_VERSION}}.snap
           release: beta

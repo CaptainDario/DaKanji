@@ -50,7 +50,7 @@ jobs:
 
       - name: Create text files
         run: |
-          python3 .github/workflows/building.py create_latest_changes_txt
+          python3 .github/workflows/building.py create_release_notes_txt
 
       - name: delete previous beta releases
         uses: dev-drprasad/delete-tag-and-release@v1.0
@@ -66,8 +66,8 @@ jobs:
         run: |
           gh release create gh_action \
             --draft \
-            --notes-file latest_changes.txt \
-            --title "$(head -n 1 latest_changes.txt)"
+            --notes-file create_release_notes.txt \
+            --title "$(head -n 1 create_release_notes.txt)"
 
   linux_deploy:
     needs: [create_github_release]

@@ -27,6 +27,19 @@ def create_latest_changes_txt():
     with open("latest_changes.txt", mode="w+", encoding="utf8") as f:
         f.write(utils.get_latest_changes())
 
+def create_release_notes_txt():
+    """ Creates a file called "latest_changes.txt" and 
+    writes the Changelog of the newest release to it
+    """
+
+    with open(".github/workflows/github_release_text.txt", mode="r") as f:
+        release_notes = f.read()
+    
+    release_notes = release_notes.replace("CHANGELOG", utils.get_latest_changes())
+
+    with open("create_release_notes.txt", mode="w+", encoding="utf8") as f:
+        f.write(release_notes)
+
 def update_snapcraft_yaml():
     """ Updates the snapcraft yaml with
         * current flutter version from pubspec
@@ -70,6 +83,9 @@ if __name__ == "__main__":
 
     if(arg == "update_snapcraft_yaml"):
         update_snapcraft_yaml()
+
+    if(arg == "create_release_notes_txt"):
+        create_release_notes_txt()
 
     if(arg == "comment_large_assets_in_pubspec"):
         comment_large_assets_in_pubspec()

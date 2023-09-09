@@ -71,15 +71,15 @@ jobs:
 
 
       # build SNAP
-      #- name: prepare snap building
-      #  run: |
-      #    python3 ./.github/workflows/building.py update_snapcraft_yaml
-      #    flutter clean
-      #    flutter pub get
-      #- name: Install Snapcraft and build snap
-      #  uses: snapcore/action-build@v1
-      #  id: snapcraft
-      #- uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}.snap
-      #    path: ${{ steps.snapcraft.outputs.snap }}
+      - name: prepare snap building
+        run: |
+          python3 ./.github/workflows/building.py update_snapcraft_yaml
+          flutter clean
+          flutter pub get
+      - name: Install Snapcraft and build snap
+        uses: snapcore/action-build@v1
+        id: snapcraft
+      - uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+          path: ${{ steps.snapcraft.outputs.snap }}
