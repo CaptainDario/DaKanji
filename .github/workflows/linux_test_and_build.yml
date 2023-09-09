@@ -97,7 +97,7 @@ jobs:
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
 
       # TODO build flatpak
-
+      # TODO upload flatpak to GH release
 
       # build SNAP
       - name: prepare snap building
@@ -112,7 +112,15 @@ jobs:
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
           path: ${{ steps.snapcraft.outputs.snap }}
-      
+
+      # upoad snap to gh release
+      - name: upload to GH release
+        if: ${{env.upload_to_gh}} == true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_snap.zip --clobber
+
       # upload to snap store
       - uses: snapcore/action-publish@v1
         if  : ${{env.upload_to_stores}} != "no" 
