@@ -5,6 +5,23 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        required   : true
+        default    : no
+        options    :
+        - no
+        - beta
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : choice
+        required   : true
+        default    : "false"
+        options:
+        - "false"
+        - "true"
 
 jobs:
   windows-test-and-build:
@@ -31,7 +48,7 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/3
 
       - name: Get latest changes and set LATEST_CHANGES
         run: |
