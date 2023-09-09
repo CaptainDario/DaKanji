@@ -76,4 +76,8 @@ jobs:
 
   linux_deploy:
     needs: [create_github_release]
-    uses: ./.github/workflows/linux_test_and_build.yml
+    uses: ./.github/workflows/linux_deploy.yml
+    with:
+      upload_to_gh    : ${{env.upload_to_gh}}
+      upload_to_stores: ${{env.upload_to_stores}}
+
