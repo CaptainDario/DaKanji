@@ -71,7 +71,7 @@ jobs:
         run: |
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
 
-      # TESTS  
+      # Test the application
       #- name: Analyze
       #  run: flutter analyze
 
