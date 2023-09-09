@@ -27,6 +27,7 @@ apps:
     extensions: [gnome]
     plugs:
       - network
+      - home
     slots:
       - dbus-dakanji
     environment:
