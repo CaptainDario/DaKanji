@@ -38,7 +38,7 @@ jobs:
       
 
   create_github_release:
-    if: ${{env.upload_to_gh}} == true
+    if: ${{github.event.inputs.upload_to_gh == 'true'}}
     # upload to github releases after everything is build
     needs: [linux-test-and-build]
 
@@ -79,6 +79,6 @@ jobs:
     needs: [create_github_release]
     uses: ./.github/workflows/linux_deploy.yml
     with:
-      upload_to_gh    : ${{env.upload_to_gh}}
-      upload_to_stores: ${{env.upload_to_stores}}
+      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
