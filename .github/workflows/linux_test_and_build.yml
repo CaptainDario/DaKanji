@@ -115,7 +115,7 @@ jobs:
 
       # upoad snap to gh release
       - name: upload to GH release
-        if: ${{env.upload_to_gh == 'true'}}
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -124,7 +124,7 @@ jobs:
 
       # upload to snap store
       - uses: snapcore/action-publish@v1
-        if  : ${{env.upload_to_stores == 'beta'}}
+        if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
         env :
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
         with:
