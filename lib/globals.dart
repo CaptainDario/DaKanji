@@ -86,20 +86,6 @@ String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G
 const Size g_minDesktopWindowSize = const Size(480, 720);
 
 
-/// is the app running to test the drawscreen
-bool g_IsTestingDrawscreen = false;
-/// is the app running to test the app startup situations
-bool g_IsTestingAppStartup = false;
-/// is the app running to test the misc. settings
-bool g_IsTestingSettings = false;
-/// is the app running to test if the onboarding shows again if there are new
-/// pages added to it
-bool g_IsTestingAppStartupOnboardingNewFeatures = false;
-/// is the app running to test if the DrawScreen tutorial shows again if there are new
-/// points added to it
-bool g_IsTestingAppStartupDrawscreenNewFeatures = false;
-
-
 //about page
 /// link to the github repo
 const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";

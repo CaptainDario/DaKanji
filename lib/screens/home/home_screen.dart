@@ -80,26 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Runs the app in different testing modes
-  bool testing(){
-
-    bool isTesting = false;
-
-    // if the app is being tested for different startup situations
-    if(g_IsTestingAppStartup) {
-      isTesting = true;
-      print("RUNNING IN 'APP STARTUP TESTING'-mode");
-    }
-    // if the DrawScreen is being tested switch there immediately
-    else if(g_IsTestingDrawscreen){
-      isTesting = true;
-      print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
-      Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
-    }
-
-    return isTesting;
-  }
-
   Future<void> showUpdatePopup(List<String> changelog) async {
     // show a popup with the changelog of the new version
     await AwesomeDialog(
