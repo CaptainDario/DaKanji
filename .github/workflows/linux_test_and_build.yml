@@ -11,6 +11,8 @@ on:
       upload_to_stores:
         description: "Should the build packages be uploaded to stores"
         type       : choice
+        required   : true
+        default    : "no"
         options    :
         - no
         - beta
@@ -18,7 +20,7 @@ on:
         description: "Should the build packages be uploaded to a github release"
         type       : boolean
         required   : true
-        default    : true
+        default    : false
   # allows that other workflows can run this one
   workflow_call:
     #secrets:

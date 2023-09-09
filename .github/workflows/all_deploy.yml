@@ -5,11 +5,18 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
     inputs:
       upload_to_stores:
         description: "Should the build packages be uploaded to stores"
-        default: false
+        type       : choice
+        options    :
+        - no
+        - beta
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : boolean
+        required   : true
+        default    : true
 
 jobs:
   
