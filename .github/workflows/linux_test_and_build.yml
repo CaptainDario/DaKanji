@@ -88,6 +88,8 @@ jobs:
       # upload portable to gh release
       - name: upload to GH release
         if: ${{env.upload_to_gh}} == true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
