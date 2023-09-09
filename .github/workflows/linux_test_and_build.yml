@@ -12,7 +12,7 @@ on:
         description: "Should the build packages be uploaded to stores"
         type       : choice
         required   : true
-        default    : "no"
+        default    : no
         options    :
         - no
         - beta
@@ -54,22 +54,22 @@ jobs:
           python3 ./.github/workflows/building.py set_env_flutter_version
           python3 ./.github/workflows/building.py set_env_dakanji_version
 
-      - name: Install and set Flutter version
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: stable
+      # - name: Install and set Flutter version
+      #   uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: ${{env.FLUTTER_VERSION}}
+      #     channel: stable
           
-      - name: Restore packages
-        run: flutter pub get
+      # - name: Restore packages
+      #   run: flutter pub get
         
-      # download all files necessary to run dakanji
-      - name: setup dakanji
-        run: python3 setup.py
+      # # download all files necessary to run dakanji
+      # - name: setup dakanji
+      #   run: python3 setup.py
         
-      - name: install build packages
-        run: |
-          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
+      # - name: install build packages
+      #   run: |
+      #     sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
 
       # TESTS  
       #- name: Analyze
@@ -79,39 +79,39 @@ jobs:
       #  run: python3 ./integration_test/run_tests.py
 
       # build portable linux
-      - name: build linux executable
-        run: flutter build linux --release
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
-          path: build/linux/x64/release/bundle
+      # - name: build linux executable
+      #   run: flutter build linux --release
+      # - name: Archive production artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
+      #     path: build/linux/x64/release/bundle
 
       # upload portable to gh release
-      - name: upload to GH release
-        if: ${{env.upload_to_gh}} == true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
-          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
+      # - name: upload to GH release
+      #   if: ${{env.upload_to_gh}} == true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
+      #     gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
 
       # TODO build flatpak
       # TODO upload flatpak to GH release
 
       # build SNAP
-      - name: prepare snap building
-        run: |
-          python3 ./.github/workflows/building.py update_snapcraft_yaml
-          flutter clean
-          flutter pub get
-      - name: Install Snapcraft and build snap
-        uses: snapcore/action-build@v1
-        id: snapcraft
-      - uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
-          path: ${{ steps.snapcraft.outputs.snap }}
+      # - name: prepare snap building
+      #   run: |
+      #     python3 ./.github/workflows/building.py update_snapcraft_yaml
+      #     flutter clean
+      #     flutter pub get
+      # - name: Install Snapcraft and build snap
+      #   uses: snapcore/action-build@v1
+      #   id: snapcraft
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
+      #     path: ${{ steps.snapcraft.outputs.snap }}
 
       # upoad snap to gh release
       - name: upload to GH release
@@ -124,9 +124,9 @@ jobs:
 
       # upload to snap store
       - uses: snapcore/action-publish@v1
-        if  : ${{env.upload_to_stores}} != "no" 
+        if  : ${{env.upload_to_stores}} == beta
         env :
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
         with:
           snap   : DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
-          release: ${{env.upload_to_stores}}
+          release: beta
