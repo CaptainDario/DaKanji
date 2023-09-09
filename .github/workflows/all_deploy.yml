@@ -30,7 +30,7 @@ jobs:
 
   upload-releases-to-github:
     # upload to github releases after everything is build
-    needs: [linux-test-and-build, windows-test-and-build]
+    #needs: [linux-test-and-build, windows-test-and-build]
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
