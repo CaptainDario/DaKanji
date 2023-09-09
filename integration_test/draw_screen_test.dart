@@ -14,7 +14,6 @@ import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'drawscreen_test_util.dart';
 
 
@@ -23,8 +22,6 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets("DrawScreen test", (WidgetTester tester) async {
-
-    g_IsTestingDrawscreen = true;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
