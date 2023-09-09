@@ -9,6 +9,7 @@ on:
       upload_to_stores:
         description: "Should the build packages be uploaded to stores"
         type       : choice
+        default    : "no"
         options    :
         - no
         - beta
