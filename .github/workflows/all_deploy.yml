@@ -44,7 +44,7 @@ jobs:
           python3 .github/workflows/building.py set_env_flutter_version
           python3 .github/workflows/building.py set_env_dakanji_version
 
-      - name: Get latest changes and set LATEST_CHANGES
+      - name: Create text files
         run: |
           python3 .github/workflows/building.py create_latest_changes_txt
 
@@ -59,13 +59,13 @@ jobs:
       #    ls -R artifacts/
       #    echo $PWD
 
-      #- name: delete previous beta releases
-      #  uses: dev-drprasad/delete-tag-and-release@v0.2.0
-      #  with:
-      #    delete_release: true 
-      #    tag_name: gh_action
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: delete previous beta releases
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true 
+          tag_name: gh_action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       #- name: create zip from exe artifact folder
       #  run: |
@@ -77,20 +77,22 @@ jobs:
           
       #    ls -R
           
-      #- name: Upload files to github release
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  run: |
-      #    cd artifacts
 
-      #    gh release create \
-      #      beta --draft\
+      - name: Upload files to github release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create gh_action \
+            --draft \
+            --notes-file latest_changes.txt \
+            --title "$(head -n 1 latest_changes.txt)" \
+
       #      DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
       #      DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
       #      DaKanji_android_bundle.zip/app-release.aab \
       #      DaKanji_android_x86_64.zip/app-x86_64-release.apk \
       #      DaKanji_win.msix/da_kanji_mobile.msix \
       #      DaKanji_win_exe.zip \
-      #      --notes-file ../latest_changes.txt \
-      #      -t "$(head -n 1 ../latest_changes.txt)" \
+      #      
+      #      
 
