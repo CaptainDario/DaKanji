@@ -65,6 +65,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
+          path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
 
       # TODO build flatpak
 
