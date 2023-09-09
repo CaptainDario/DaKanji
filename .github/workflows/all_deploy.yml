@@ -38,6 +38,7 @@ jobs:
       
 
   create_github_release:
+    if: ${{env.upload_to_gh}} == true
     # upload to github releases after everything is build
     needs: [linux-test-and-build]
 
