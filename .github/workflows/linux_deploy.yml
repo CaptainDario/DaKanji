@@ -54,12 +54,12 @@ jobs:
           python3 ./.github/workflows/building.py set_env_flutter_version
           python3 ./.github/workflows/building.py set_env_dakanji_version
 
-      # get build artifacts
-      - uses: actions/download-artifact@v3
+      # upload portable to gh release
+      - name: get build artifacts for linux portable
+        uses: actions/download-artifact@v3
+        if: ${{env.upload_to_gh}} == true
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
-
-      # upload portable to gh release
       - name: upload to GH release
         if: ${{env.upload_to_gh}} == true
         env:
@@ -71,7 +71,12 @@ jobs:
       # TODO upload flatpak to GH release
 
 
-      # upoad snap to gh release
+      # get snap artifact and upload it to GH release and snap store
+      - name: get build artifacts for linux portable
+        uses: actions/download-artifact@v3
+        if: ${{env.upload_to_gh}} == true
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
@@ -79,8 +84,6 @@ jobs:
         run: |
           mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_snap.zip --clobber
-
-      # upload to snap store
       - uses: snapcore/action-publish@v1
         if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
         env :

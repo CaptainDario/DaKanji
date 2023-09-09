@@ -9,7 +9,8 @@ on:
       upload_to_stores:
         description: "Should the build packages be uploaded to stores"
         type       : choice
-        default    : "no"
+        required   : true
+        default    : no
         options    :
         - no
         - beta
@@ -17,15 +18,15 @@ on:
         description: "Should the build packages be uploaded to a github release"
         type       : boolean
         required   : true
-        default    : true
+        default    : false
 
 jobs:
   
   #windows-test-and-build:
   #  uses: ./.github/workflows/windows_test_and_build.yml
 
-  #linux-test-and-build:
-  #  uses: ./.github/workflows/linux_test_and_build.yml
+  linux-test-and-build:
+    uses: ./.github/workflows/linux_test_and_build.yml
 
   #android-test-and-build:
   #  uses: ./.github/workflows/android_test_and_build.yml
@@ -36,9 +37,9 @@ jobs:
   #    KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       
 
-  upload-releases-to-github:
+  create_github_release:
     # upload to github releases after everything is build
-    #needs: [linux-test-and-build, windows-test-and-build]
+    needs: [linux-test-and-build]
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -56,17 +57,6 @@ jobs:
         run: |
           python3 .github/workflows/building.py create_latest_changes_txt
 
-      #- uses: actions/download-artifact@v3
-      #  with:
-      #    path: artifacts/
-          
-      #- name: Display structure of downloaded files
-      #  run: |
-      #    ls
-      #    echo "\n"
-      #    ls -R artifacts/
-      #    echo $PWD
-
       - name: delete previous beta releases
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
@@ -75,18 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      #- name: create zip from exe artifact folder
-      #  run: |
-      #    cd artifacts
-      #    mv DaKanji_win.zip DaKanji_win
-      #    
-      #    zip -r DaKanji_win_exe.zip DaKanji_win
-      #    rm -R DaKanji_win
-          
-      #    ls -R
-          
-
-      - name: Create github release
+      - name: Create github beta release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -94,3 +73,7 @@ jobs:
             --draft \
             --notes-file latest_changes.txt \
             --title "$(head -n 1 latest_changes.txt)"
+
+  linux_deploy:
+    needs: [create_github_release]
+    uses: ./.github/workflows/linux_test_and_build.yml
