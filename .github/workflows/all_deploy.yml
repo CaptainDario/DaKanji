@@ -78,21 +78,11 @@ jobs:
       #    ls -R
           
 
-      - name: Upload files to github release
+      - name: Create github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create gh_action \
             --draft \
             --notes-file latest_changes.txt \
-            --title "$(head -n 1 latest_changes.txt)" \
-
-      #      DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
-      #      DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
-      #      DaKanji_android_bundle.zip/app-release.aab \
-      #      DaKanji_android_x86_64.zip/app-x86_64-release.apk \
-      #      DaKanji_win.msix/da_kanji_mobile.msix \
-      #      DaKanji_win_exe.zip \
-      #      
-      #      
-
+            --title "$(head -n 1 latest_changes.txt)"
