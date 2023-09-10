@@ -31,7 +31,7 @@ jobs:
   #  uses: ./.github/workflows/linux_test_and_build.yml
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
-    with:
+    secrets:
       KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
