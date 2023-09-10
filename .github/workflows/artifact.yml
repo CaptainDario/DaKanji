@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: artifact testing
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+  # allows that other workflows can run this one
+  workflow_call:
+    #secrets:
+
+#env:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_test_upload:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
+          touch DaKanji_${{env.DAKANJI_VERSION}}.snap
+      - name: Upload snap as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+          path: DaKanji_${{env.DAKANJI_VERSION}}.snap
+
+      - name: get build artifacts for snap
+        uses: actions/download-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+          path: artifacts
+
+      - name: testing
+        run: |
+          ls
+          ls DaKanji
