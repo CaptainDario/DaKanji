@@ -76,7 +76,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ls -la artifacts
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_exe.zip --clobber
 
