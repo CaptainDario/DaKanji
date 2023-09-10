@@ -47,7 +47,14 @@ jobs:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
           path: artifacts
 
-      - name: testing
+      - name: testing 1
         run: |
           ls -la
+
+      - name: testing 1
+        run: |
           ls -la DaKanji_${{env.DAKANJI_VERSION}}.snap
+
+      - name: testing 1
+        run: |
+          ls -la artifacts
