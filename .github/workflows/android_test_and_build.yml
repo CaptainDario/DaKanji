@@ -95,7 +95,7 @@ jobs:
         run: |
           mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
           mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
-          mv build/app/outputs/flutter-apk/app-x86-64-release.apk DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+          mv build/app/outputs/flutter-apk/app-x86_64-release.apk DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
           mv build/app/outputs/flutter-apk/app-release.apk DaKanji_${{env.DAKANJI_VERSION}}.apk
       - name: Upload artifact arm64-v8a
         uses: actions/upload-artifact@v3
@@ -107,7 +107,7 @@ jobs:
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
-      - name: Upload artifact apk x86-64
+      - name: Upload artifact apk x86_64
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
