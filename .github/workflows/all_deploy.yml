@@ -40,6 +40,8 @@ jobs:
     uses: ./.github/workflows/macos_test_and_build.yml
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
+    secrets:
+      SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
   
 
   create_github_release:
