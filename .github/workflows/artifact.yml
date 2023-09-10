@@ -31,7 +31,11 @@ jobs:
         run: |
           python3 ./.github/workflows/building.py set_env_flutter_version
           python3 ./.github/workflows/building.py set_env_dakanji_version
+          
+      - name: generate snap fake
+        run: |
           touch DaKanji_${{env.DAKANJI_VERSION}}.snap
+          ls
       - name: Upload snap as artifact
         uses: actions/upload-artifact@v3
         with:
