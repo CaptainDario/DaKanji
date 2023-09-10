@@ -101,13 +101,11 @@ jobs:
           path: build\windows\runner\Release\da_kanji_mobile.msix
 
       # Use Store Broker to publish to Microsoft Store
-      - name: Submit to Partner Center (aka DevCenter)
-        shell: pwsh
-        run: |
-          $uploadBundlePath = ""
-          .github/workflows/SubmitToMsftStore.ps1 $uploadBundlePath
-        env:
-          PartnerCenterClientId: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
-          PartnerCenterClientSecret: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
-          PartnerCenterStoreId: 9PD3JFK7W5MB
-          PartnerCenterTenantId: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+      - name: Publish to MS Store
+        uses: isaacrlevin/windows-store-action
+        with:
+          tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+          client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          app-id: ${{ secrets.STORE_APP_ID }}
+          package-path: "${{ github.workspace }}/ReleaseSigned/MyApp.appxupload"
