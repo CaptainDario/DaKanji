@@ -79,7 +79,11 @@ jobs:
       - name: Install Snapcraft and build snap
         uses: snapcore/action-build@v1
         id: snapcraft
-      - uses: actions/upload-artifact@v3
+      - name: Rename snap
+        run: |
+          mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}.snap
+      - name: Upload snap as artifact
+        uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
-          path: ${{ steps.snapcraft.outputs.snap }}
+          path: DaKanji_${{env.DAKANJI_VERSION}}.snap
