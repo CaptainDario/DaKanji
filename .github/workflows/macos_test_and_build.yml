@@ -65,7 +65,7 @@ jobs:
 
       - name: get build artifacts of executables
         uses: actions/download-artifact@v3
-        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        #if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
           path: artifacts
