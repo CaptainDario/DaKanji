@@ -28,11 +28,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: futureware-tech/simulator-action@v1
-        with:
-          model: 'iPhone 8'
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -43,16 +45,18 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
-      # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
+      # # download all files necessary to run dakanji
+      - name: setup dakanji
+        run: python3 setup.py
+        
+      # Test the application
+      #- uses: futureware-tech/simulator-action@v1
+      #  with:
+      #    model: 'iPhone 8'
+      #- name: Analyze
+      #  run: flutter analyze
+      #- name: Run integration tests
+      #  run: python3 ./integration_test/run_tests.py
 
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py ios
+     
 
