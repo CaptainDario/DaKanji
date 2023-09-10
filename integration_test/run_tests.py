@@ -29,8 +29,8 @@ if __name__ == "__main__":
     # MacOS
     elif platform == "darwin":
 
-        if(arg == "ios"):
-            device = "EDD017A2-C549-4647-AE16-83F13BCEF58C"
+        if(arg.startswith("ios_")):
+            device = arg.replace("ios_", "")
         else:
             device = "macos"
 
