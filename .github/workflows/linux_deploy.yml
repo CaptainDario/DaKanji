@@ -80,7 +80,7 @@ jobs:
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true' || github.event.inputs.upload_to_stores == 'beta'}}
         with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_snap.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
