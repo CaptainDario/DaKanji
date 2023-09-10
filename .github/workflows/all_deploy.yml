@@ -73,9 +73,16 @@ jobs:
             --notes-file release_notes.txt \
             --title "$(head -n 1 latest_changes.txt)"
 
-  linux_deploy:
+  # linux_deploy:
+  #   needs: [create_github_release]
+  #   uses: ./.github/workflows/linux_deploy.yml
+  #   with:
+  #     upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+  #     upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+
+  android-deploy:
     needs: [create_github_release]
-    uses: ./.github/workflows/linux_deploy.yml
+    uses: ./.github/workflows/android_deploy.yml
     with:
       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
