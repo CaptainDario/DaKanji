@@ -53,11 +53,28 @@ jobs:
       #  run: python3 ./integration_test/run_tests.py
 
       - name: build macos executable
-        run: flutter build macos --release
+        run: |
+          flutter build macos --release
+          zip -r build/macos/Build/Products/Release/DaKanji.app DaKanji_${{env.DAKANJI_VERSION}}_app
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
-          path: build/macos/Build/Products/Release/DaKanji.app
+          path: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
+
+      - name: get build artifacts of executables
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
+          path: artifacts
+      
+      - name: upload app to GH release
+        #if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la artifacts
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_app.zip --clobber
 
