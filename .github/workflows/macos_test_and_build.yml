@@ -55,7 +55,7 @@ jobs:
       - name: build macos executable
         run: |
           flutter build macos --release
-          zip -r build/macos/Build/Products/Release/DaKanji.app DaKanji_${{env.DAKANJI_VERSION}}_app
+          zip -r DaKanji_${{env.DAKANJI_VERSION}}_app.zip build/macos/Build/Products/Release/DaKanji.app
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
