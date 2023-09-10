@@ -13,6 +13,8 @@ on:
     secrets:
       SELF_SIGN_MSIX_PFX:
         required: true
+      SELF_SIGN_MSIX_PWD:
+        required: true
 
 #env:
 

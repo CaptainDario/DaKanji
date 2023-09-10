@@ -41,6 +41,7 @@ jobs:
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
+      SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
       SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
   
 
