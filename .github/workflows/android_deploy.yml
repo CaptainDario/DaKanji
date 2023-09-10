@@ -1,0 +1,100 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Android - Deploy
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        required   : true
+        default    : no
+        options    :
+        - no
+        - beta
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : choice
+        required   : true
+        default    : "false"
+        options:
+        - "false"
+        - "true"
+  # allows that other workflows can run this one
+  workflow_call:
+    #secrets:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : string 
+        required   : true
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : string
+        required   : true
+        default    : "false"
+
+#env:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
+
+      # get apks and upload to gh release
+      - name: get build artifacts for linux portable
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk.zip
+          path: artifacts
+      - name: upload to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
+ 
+      # TODO upload flatpak to GH release
+
+
+      # get appbundle artifact and upload it to GH release and play store
+      - name: get build artifacts for appbundle
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_bundle.zip
+          path: artifacts
+      - name: Create whats new
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+        run: |
+          python3 .github/workflows/building.py create_latest_changes_txt
+          mkdir whatsnew
+          mv latest_changes.txt whatsnew/whatsnew-en-US
+      - name: upload appbundle to playstore
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.DaAppLab.DaKanjiRecognizer
+          releaseFiles: artifacts/app-release.aab
+          track: internal
+          whatsNewDirectory: whatsnew
