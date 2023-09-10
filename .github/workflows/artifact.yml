@@ -17,7 +17,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build_test_upload:
+  build_test:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
@@ -35,7 +35,6 @@ jobs:
       - name: generate snap fake
         run: |
           touch DaKanji_${{env.DAKANJI_VERSION}}.snap
-          ls
       - name: Upload snap as artifact
         uses: actions/upload-artifact@v3
         with:
@@ -50,5 +49,5 @@ jobs:
 
       - name: testing
         run: |
-          ls
-          ls DaKanji
+          ls -la
+          ls -la DaKanji_${{env.DAKANJI_VERSION}}.snap
