@@ -49,20 +49,25 @@ jobs:
       # TESTS  
       #- name: Analyze
       #  run: flutter analyze
-      
       #- name: Run integration tests
       #  run: python ./integration_test/run_tests.py
 
-      # build exe
+      # build exe and upload to artifacts
       - name: build exe
         run: flutter build windows --release
-      #- name: Archive production artifacts
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
-      #    path: build/windows/runner/Release/
+      - name: zip exe
+        shell: powershell
+        run: >
+          Compress-Archive
+          -Path build/windows/runner/Release/*
+          -Destination DaKanji_${{env.DAKANJI_VERSION}}_win.zip
+      - name: Archive exe production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
+          path: build/windows/runner/Release/
 
-      # sign and build .msix for github release
+      # build and sign .msix for github release
       - name: Create PFX certificate for gh msix
         id: create-pfx
         shell: pwsh
@@ -72,8 +77,6 @@ jobs:
           $pfxPath = 'keys/dakanji_self_sign_msix.pfx';
           $encodedBytes = [System.Convert]::FromBase64String($env:PFX_CONTENT);
           Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
-          
-        # Write-Output "::set-output name=PFX_PATH::$pfxPath";
       - name: build and sign non-store MSIX
         run: >
           flutter pub run msix:create
@@ -81,15 +84,19 @@ jobs:
           --build-windows=false
           -c ./keys/dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
-
-      #- name: Archive production artifacts
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}.msix
-      #    path: build\windows\runner\Release\da_kanji_mobile.msix
+      - name: Archive msix gh production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+          path: build\windows\runner\Release\da_kanji_mobile.msix
 
       # build MSIX for MS Store and upload
-      #- name: build and sign non-store MSIX
-      #  run: |
-      #    flutter pub run msix:create --build-windows=false --store
-      # upload msix to MS Store
+      - name: build and sign non-store MSIX
+        run: |
+          flutter pub run msix:create --build-windows=false --store
+          upload msix to MS Store
+      - name: Archive msix store production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
+          path: build\windows\runner\Release\da_kanji_mobile.msix
