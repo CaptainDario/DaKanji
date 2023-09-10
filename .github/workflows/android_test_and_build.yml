@@ -10,7 +10,15 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    #secrets:
+    secrets:
+      KEY_PROPERTIES_KEY_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_STORE_PASSWORD: 
+        required: true
+      KEY_PROPERTIES_KEY_ALIAS: 
+        required: true
+      KEYSTORE_BASE64: 
+        required: true
 
 
 env:

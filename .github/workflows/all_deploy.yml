@@ -31,6 +31,11 @@ jobs:
   #  uses: ./.github/workflows/linux_test_and_build.yml
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
+    with:
+      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
   create_github_release:
     if: ${{github.event.inputs.upload_to_gh == 'true'}}
