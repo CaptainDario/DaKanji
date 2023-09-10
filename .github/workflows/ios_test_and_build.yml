@@ -53,6 +53,7 @@ jobs:
       - uses: futureware-tech/simulator-action@v1
         with:
           model: 'iPhone 14 Pro'
+          udid:  "EDD017A2-C549-4647-AE16-83F13BCEF58C"
       #- name: Analyze
       #  run: flutter analyze
       - name: Run integration tests

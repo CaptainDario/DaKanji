@@ -30,7 +30,7 @@ if __name__ == "__main__":
     elif platform == "darwin":
 
         if(arg == "ios"):
-            device = "ios"
+            device = "EDD017A2-C549-4647-AE16-83F13BCEF58C"
         else:
             device = "macos"
 
