@@ -10,7 +10,9 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    secrets: SELF_SIGN_MSIX_PFX
+    secrets:
+      SELF_SIGN_MSIX_PFX:
+        required: true
 
 #env:
 
