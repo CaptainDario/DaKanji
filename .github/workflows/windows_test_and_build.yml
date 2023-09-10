@@ -94,7 +94,6 @@ jobs:
       - name: build and sign non-store MSIX
         run: |
           flutter pub run msix:create --build-windows=false --store
-          upload msix to MS Store
       - name: Archive msix store production artifacts
         uses: actions/upload-artifact@v3
         with:
