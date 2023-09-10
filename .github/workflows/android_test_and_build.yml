@@ -104,7 +104,7 @@ jobs:
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
-      - name: Upload artifact apk x86-64
+      - name: Upload artifact fat apk
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.apk

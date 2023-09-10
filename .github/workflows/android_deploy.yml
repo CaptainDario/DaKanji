@@ -59,25 +59,25 @@ jobs:
           python3 ./.github/workflows/building.py set_env_dakanji_version
 
       # get apks and upload to gh release
-      - name: get build artifacts for linux portable
+      - name: get build artifacts for arm64-v8a.apk
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
           path: artifacts
-      - name: get build artifacts for linux portable
+      - name: get build artifacts for armeabi-v7a.apk
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
           path: artifacts
-      - name: get build artifacts for linux portable
+      - name: get build artifacts for x86_64.apk
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
           path: artifacts
-      - name: get build artifacts for linux portable
+      - name: get build artifacts for fat apk
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
