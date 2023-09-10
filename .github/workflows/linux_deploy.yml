@@ -87,14 +87,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ls
-          ls artifacts
-          ls DaKanji
-          gh release upload gh_action DaKanji/DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
+          ls -la artifacts
+          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
       - uses: snapcore/action-publish@v1
         if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
         env :
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
         with:
-          snap   : artifaDaKanji_${{env.DAKANJI_VERSION}}.snap
+          snap   : artifacts/DaKanji_${{env.DAKANJI_VERSION}}.snap
           release: beta
