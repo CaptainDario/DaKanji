@@ -52,7 +52,7 @@ jobs:
       # Test the application
       - uses: futureware-tech/simulator-action@v1
         with:
-          model: 'iPhone 8'
+          model: 'iPhone 14 Pro'
       #- name: Analyze
       #  run: flutter analyze
       - name: Run integration tests
