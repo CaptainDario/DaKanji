@@ -37,7 +37,7 @@ def create_release_notes_txt():
     
     release_notes = release_notes.replace("CHANGELOG", utils.get_latest_changes())
 
-    with open("create_release_notes.txt", mode="w+", encoding="utf8") as f:
+    with open("release_notes.txt", mode="w+", encoding="utf8") as f:
         f.write(release_notes)
 
 def update_snapcraft_yaml():
