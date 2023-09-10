@@ -81,11 +81,14 @@ jobs:
         if: ${{github.event.inputs.upload_to_gh == 'true' || github.event.inputs.upload_to_stores == 'beta'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+          path: artifacts
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          ls
+          ls artifacts
           gh release upload gh_action DaKanji/DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
       - uses: snapcore/action-publish@v1
         if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
