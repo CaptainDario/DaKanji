@@ -129,10 +129,8 @@ modules:
   - cp -R DaKanji/ /app
   - ln -s /app/DaKanji/DaKanji /app/bin/DaKanji
   sources:
-  - type: archive
-    #url: https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.2.0/bundle_3.2.zip
-    #sha256: 1fe3593a799be8f0b347308570d02eed0207c3567757ee54d916b42230f5859d
-    path: bundle.zip
+  - type: dir
+    path: ../build/linux/x64/release/bundle/
     dest: DaKanji
   - type: file
     path: com.DaAppLab.DaKanji.appdata.xml
