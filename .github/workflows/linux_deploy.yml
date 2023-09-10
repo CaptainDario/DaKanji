@@ -86,7 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
+          gh release upload gh_action DaKanji/DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
       - uses: snapcore/action-publish@v1
         if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
         env :
