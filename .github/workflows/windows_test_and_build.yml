@@ -10,65 +10,102 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: 
-        required: true
+    #secrets:
 
-env:
-  FLUTTER_VERSION: "2.10.3"
-  FLUTTER_CHANNEL: "stable"
+#env:
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
+          channel: stable
           
       - name: Restore packages
         run: flutter pub get
         
-      # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
-        
+      # download all files necessary to run dakanji
+      - name: setup dakanji
+        run: python3 setup.py
+
+      # TESTS  
       #- name: Analyze
       #  run: flutter analyze
-      
-      - name: Run integration tests
-        run: python ./integration_test/run_tests.py
+      #- name: Run integration tests
+      #  run: python ./integration_test/run_tests.py
 
+      # build exe and upload to artifacts
       - name: build exe
         run: flutter build windows --release
-
-      - name: Archive production artifacts
+      - name: zip exe
+        shell: powershell
+        run: >
+          Compress-Archive
+          -Path build/windows/runner/Release/*
+          -Destination DaKanji_${{env.DAKANJI_VERSION}}_win.zip
+      - name: Archive exe production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
           path: build/windows/runner/Release/
 
-      - name: build MSIX
-        run: flutter pub run msix:create --build-windows=false --store
-     
-      - name: Archive production artifacts
+      # build and sign .msix for github release
+      - name: Create PFX certificate for gh msix
+        id: create-pfx
+        shell: pwsh
+        env:
+          PFX_CONTENT: ${{ secrets.SELF_SIGN_MSIX_PFX }}
+        run: |
+          $pfxPath = 'keys/dakanji_self_sign_msix.pfx';
+          $encodedBytes = [System.Convert]::FromBase64String($env:PFX_CONTENT);
+          Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
+      - name: build and sign non-store MSIX
+        run: >
+          flutter pub run msix:create
+          --install-certificate=false
+          --build-windows=false
+          -c ./keys/dakanji_self_sign_msix.pfx
+          -p ${{secrets.SELF_SIGN_MSIX_PWD}}
+      - name: Archive msix gh production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_win.msix
+          name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
+
+      # build MSIX for MS Store and upload
+      - name: build and sign non-store MSIX
+        run: |
+          flutter pub run msix:create --build-windows=false --store
+      - name: Archive msix store production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
+          path: build\windows\runner\Release\da_kanji_mobile.msix
+
+      # Use Store Broker to publish to Microsoft Store
+      - name: Publish to MS Store
+        uses: isaacrlevin/windows-store-action
+        with:
+          tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
+          client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          app-id: ${{ secrets.STORE_APP_ID }}
+          package-path: "${{ github.workspace }}/ReleaseSigned/MyApp.appxupload"
