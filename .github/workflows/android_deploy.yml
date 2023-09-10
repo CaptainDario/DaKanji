@@ -81,7 +81,7 @@ jobs:
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}.apk
+          name: DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
           path: artifacts
       - name: upload to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
@@ -92,7 +92,7 @@ jobs:
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk --clobber
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk --clobber
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk --clobber
-          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}.apk --clobber
+          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_fat.apk --clobber
  
       # TODO upload flatpak to GH release
 
