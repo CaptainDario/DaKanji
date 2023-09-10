@@ -27,18 +27,18 @@ jobs:
   
   #windows-test-and-build:
   #  uses: ./.github/workflows/windows_test_and_build.yml
-  linux-test-and-build:
-    uses: ./.github/workflows/linux_test_and_build.yml
-  #android-test-and-build:
-  #  uses: ./.github/workflows/android_test_and_build.yml
+  #linux-test-and-build:
+  #  uses: ./.github/workflows/linux_test_and_build.yml
+  android-test-and-build:
+    uses: ./.github/workflows/android_test_and_build.yml
 
   create_github_release:
     if: ${{github.event.inputs.upload_to_gh == 'true'}}
     # upload to github releases after everything is build
     needs: 
-      - linux-test-and-build
+      #- linux-test-and-build
       #- windows-test-and-build
-      #- android-test-and-build
+      - android-test-and-build
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest

@@ -104,31 +104,37 @@ jobs:
       - name: build apks for different architectures
         run: |
           flutter build apk --split-per-abi
+          flutter build apk
           ls build/app/outputs/apk/release/
-      - name: Archive arm64-v8a
+      - name: rename apks
+        run: |
+          mv build/app/outputs/apk/release/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+          mv build/app/outputs/apk/release/app-armeabi-v7a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+          mv build/app/outputs/apk/release/app-x86-64-release.apk DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+          mv build/app/outputs/apk/release/app-release.apk DaKanji_${{env.DAKANJI_VERSION}}.apk
+      - name: Upload artifact arm64-v8a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
-          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
-      #- name: Archive apk arm64-v7a
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v7a.apk.zip
-      #    path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-      #- name: Archive apk x86_64
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk.zip
-      #    path: build/app/outputs/apk/release/app-x86_64-release.apk
+          name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+      - name: Upload artifact armeabi-v7a
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+      - name: Upload artifact apk x86-64
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+      - name: Upload artifact apk x86-64
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}.apk
 
-      # upload apks to GH release
-      - name: upload to GH release
-        if: ${{github.event.inputs.upload_to_gh == 'true'}}
-        run: |
-          mv build/app/outputs/apk/release/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip
-          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk.zip --clobber
 
-      # build appbundle
+      # build appbundle and upload to artifacts
       - name: build app bundle
         run: |
           python3 ./.github/workflows/building.py comment_large_assets_in_pubspec
@@ -139,22 +145,5 @@ jobs:
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_bundle.zip
           path: build/app/outputs/bundle/release/app-release.aab
-
-      # upload appbundle to google play beta track
-      - name: Create whats new
-        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
-        run: |
-          python3 .github/workflows/building.py create_latest_changes_txt
-          mkdir whatsnew
-          mv latest_changes.txt whatsnew/whatsnew-en-US
-      - name: upload appbundle to playstore
-        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          packageName: com.DaAppLab.DaKanjiRecognizer
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
-          track: internal
-          whatsNewDirectory: whatsnew
 
 
