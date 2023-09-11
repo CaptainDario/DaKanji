@@ -10,9 +10,9 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: 
-        required: true
+    #secrets:
+    #  DA_KANJI_ML_RELEASES_TOKEN: 
+    #    required: true
 
 env:
   FLUTTER_VERSION: "2.10.3"
