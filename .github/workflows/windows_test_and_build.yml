@@ -64,12 +64,12 @@ jobs:
         run: >
           Compress-Archive
           -Path build/windows/runner/Release/*
-          -Destination DaKanji_${{env.DAKANJI_VERSION}}_win.zip
+          -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
-          path: build/windows/runner/Release/
+          path: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
 
       # build and sign .msix for github release
       - name: Create PFX certificate for gh msix

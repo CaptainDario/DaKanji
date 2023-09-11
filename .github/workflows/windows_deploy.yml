@@ -65,6 +65,7 @@ jobs:
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
+          path: artifacts
       - name: get msix gh build artifacts
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
@@ -77,8 +78,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           dir
-          gh release upload gh_action DaKanji/artifacts/DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
+          dir artifacts
           gh release upload gh_action DaKanji/DaKanji_${{env.DAKANJI_VERSION}}_exe.zip --clobber
+          gh release upload gh_action DaKanji/artifacts/DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
 
       # get msix store artifact and upload it to MS store
       #- name: get build artifacts for snap
