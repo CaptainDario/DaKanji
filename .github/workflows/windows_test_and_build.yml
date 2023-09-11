@@ -88,11 +88,15 @@ jobs:
           --build-windows=false
           -c ./keys/dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
+      - name: rename non store msix
+        working-directory: build\windows\runner\Release\
+        run: |
+           rename da_kanji_mobile.msix DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
       - name: Archive msix gh production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
+          path: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
 
       # build MSIX for MS Store and upload
       - name: build and sign non-store MSIX
