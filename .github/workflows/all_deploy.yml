@@ -50,7 +50,7 @@ jobs:
     # upload to github releases after everything is build
     needs: 
       - android-test-and-build
-      # ios-test-and-build
+      - ios-test-and-build
       - linux-test-and-build
       - macos-test-and-build
       - windows-test-and-build
