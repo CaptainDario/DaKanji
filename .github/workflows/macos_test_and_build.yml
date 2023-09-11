@@ -49,9 +49,12 @@ jobs:
       - name: enable macos
         run: flutter config --enable-macos-desktop
 
-      #- name: Run integration tests
-      #  run: python3 ./integration_test/run_tests.py
+      - name: Run integration tests
+        run: python3 ./integration_test/run_tests.py
 
+      #- name: flutter analyze
+      #  run: |
+      #    flutter analyze
       - name: build macos executable
         run: |
           flutter build macos --release
