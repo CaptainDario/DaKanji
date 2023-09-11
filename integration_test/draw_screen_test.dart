@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 import 'package:da_kanji_mobile/widgets/drawing/prediction_button.dart';
 import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'drawscreen_test_util.dart';
+import 'draw_screen_test_util.dart';
 import 'test_utils.dart';
 
 

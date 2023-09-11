@@ -50,7 +50,9 @@ jobs:
         run: flutter config --enable-macos-desktop
 
       - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+        run: |
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart --profile -d mac
+        # python3 ./integration_test/run_tests.py
 
       #- name: flutter analyze
       #  run: |
