@@ -25,19 +25,19 @@ on:
 
 jobs:
   
-  #android-test-and-build:
-  #  uses: ./.github/workflows/android_test_and_build.yml
-  #  secrets:
-  #    KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
-  #    KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
-  #    KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
-  #    KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-  #ios-test-and-build:
-  #  uses: ./.github/workflows/ios_test_and_build.yml
-  #linux-test-and-build:
-  #  uses: ./.github/workflows/linux_test_and_build.yml
-  #macos-test-and-build:
-  #  uses: ./.github/workflows/macos_test_and_build.yml
+  android-test-and-build:
+    uses: ./.github/workflows/android_test_and_build.yml
+    secrets:
+      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+  ios-test-and-build:
+    uses: ./.github/workflows/ios_test_and_build.yml
+  linux-test-and-build:
+    uses: ./.github/workflows/linux_test_and_build.yml
+  macos-test-and-build:
+    uses: ./.github/workflows/macos_test_and_build.yml
   windows-test-and-build:
     uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
@@ -49,10 +49,10 @@ jobs:
     if: ${{github.event.inputs.upload_to_gh == 'true'}}
     # upload to github releases after everything is build
     needs: 
-      #- android-test-and-build
+      - android-test-and-build
       # ios-test-and-build
-      #- linux-test-and-build
-      #- macos-test-and-build
+      - linux-test-and-build
+      - macos-test-and-build
       - windows-test-and-build
 
     # The type of runner that the job will run on

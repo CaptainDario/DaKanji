@@ -53,8 +53,8 @@ jobs:
       # TESTS  
       #- name: Analyze
       #  run: flutter analyze
-      #- name: Run integration tests
-      #  run: python ./integration_test/run_tests.py
+      - name: Run integration tests
+        run: python ./integration_test/run_tests.py
 
       # build exe and upload to artifacts
       - name: build exe
