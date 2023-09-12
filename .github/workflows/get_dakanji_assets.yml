@@ -31,20 +31,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
         id: cache-dakanji-assets-restore
         uses: actions/cache/restore@v3
         with:
           path: tmp
           key: dakanji-assets
-        
-      # download all files necessary to run dakanji
       - name: Download DaKanji assets if necessary
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
         run: |
           python3 setup.py --download-all --no-delete
-
-      # cache the files
       - name: Save dakanji assets to cache if not saved
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
         id: cache-dakanji-assets-save

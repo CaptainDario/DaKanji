@@ -33,106 +33,106 @@ jobs:
       - static_checks
     uses: ./.github/workflows/get_dakanji_assets.yml
   
-  android-test-and-build:
-    uses: ./.github/workflows/android_test_and_build.yml
-    needs:
-      - cache_assets
-    secrets:
-      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
-      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
-      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-  ios-test-and-build:
-    needs:
-      - cache_assets
-    uses: ./.github/workflows/ios_test_and_build.yml
+  # android-test-and-build:
+  #   uses: ./.github/workflows/android_test_and_build.yml
+  #   needs:
+  #     - cache_assets
+  #   secrets:
+  #     KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+  #     KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+  #     KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+  #     KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+  # ios-test-and-build:
+  #   needs:
+  #     - cache_assets
+  #   uses: ./.github/workflows/ios_test_and_build.yml
   linux-test-and-build:
     needs:
       - cache_assets
     uses: ./.github/workflows/linux_test_and_build.yml
-  macos-test-and-build:
-    needs:
-      - cache_assets
-    uses: ./.github/workflows/macos_test_and_build.yml
-  windows-test-and-build:
-    needs:
-      - cache_assets
-    secrets:
-      SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
-      SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
-    uses: ./.github/workflows/windows_test_and_build.yml
+  # macos-test-and-build:
+  #   needs:
+  #     - cache_assets
+  #   uses: ./.github/workflows/macos_test_and_build.yml
+  # windows-test-and-build:
+  #   needs:
+  #     - cache_assets
+  #   secrets:
+  #     SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
+  #     SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
+  #   uses: ./.github/workflows/windows_test_and_build.yml
   
 
-  create_github_release:
-    if: ${{github.event.inputs.upload_to_gh == 'true'}}
-    # upload to github releases after everything is build
-    needs: 
-      - android-test-and-build
-      - ios-test-and-build
-      - linux-test-and-build
-      - macos-test-and-build
-      - windows-test-and-build
+  # create_github_release:
+  #   if: ${{github.event.inputs.upload_to_gh == 'true'}}
+  #   # upload to github releases after everything is build
+  #   needs: 
+  #     - android-test-and-build
+  #     - ios-test-and-build
+  #     - linux-test-and-build
+  #     - macos-test-and-build
+  #     - windows-test-and-build
 
-    # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+  #   # The type of runner that the job will run on
+  #   runs-on: ubuntu-22.04
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - name: Set env variables
-        run: |
-          python3 .github/workflows/building.py set_env_flutter_version
-          python3 .github/workflows/building.py set_env_dakanji_version
+  #   steps:
+  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  #     - uses: actions/checkout@v3
+  #     - name: Set env variables
+  #       run: |
+  #         python3 .github/workflows/building.py set_env_flutter_version
+  #         python3 .github/workflows/building.py set_env_dakanji_version
 
-      - name: Create text files
-        run: |
-          python3 .github/workflows/building.py create_release_notes_txt
-          python3 .github/workflows/building.py create_latest_changes_txt
+  #     - name: Create text files
+  #       run: |
+  #         python3 .github/workflows/building.py create_release_notes_txt
+  #         python3 .github/workflows/building.py create_latest_changes_txt
 
-      - name: delete previous beta releases
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          delete_release: true 
-          tag_name: gh_action
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: delete previous beta releases
+  #       uses: dev-drprasad/delete-tag-and-release@v1.0
+  #       with:
+  #         delete_release: true 
+  #         tag_name: gh_action
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Create github beta release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create gh_action \
-            --draft \
-            --notes-file release_notes.txt \
-            --title "$(head -n 1 latest_changes.txt)"
+  #     - name: Create github beta release
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       run: |
+  #         gh release create gh_action \
+  #           --draft \
+  #           --notes-file release_notes.txt \
+  #           --title "$(head -n 1 latest_changes.txt)"
 
-  android-deploy:
-    needs: [create_github_release]
-    uses: ./.github/workflows/android_deploy.yml
-    with:
-      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
-      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+  # android-deploy:
+  #   needs: [create_github_release]
+  #   uses: ./.github/workflows/android_deploy.yml
+  #   with:
+  #     upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+  #     upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
-  # ios
+  # # ios
 
-  linux_deploy:
-     needs: [create_github_release]
-     uses: ./.github/workflows/linux_deploy.yml
-     with:
-       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
-       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+  # linux_deploy:
+  #    needs: [create_github_release]
+  #    uses: ./.github/workflows/linux_deploy.yml
+  #    with:
+  #      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+  #      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
     
-  macos_deploy:
-     needs: [create_github_release]
-     uses: ./.github/workflows/macos_deploy.yml
-     with:
-       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
-       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+  # macos_deploy:
+  #    needs: [create_github_release]
+  #    uses: ./.github/workflows/macos_deploy.yml
+  #    with:
+  #      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+  #      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
-  windows_deploy:
-     needs: [create_github_release]
-     uses: ./.github/workflows/windows_deploy.yml
-     with:
-       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
-       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+  # windows_deploy:
+  #    needs: [create_github_release]
+  #    uses: ./.github/workflows/windows_deploy.yml
+  #    with:
+  #      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+  #      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
