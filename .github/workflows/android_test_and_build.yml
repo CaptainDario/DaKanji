@@ -31,7 +31,7 @@ jobs:
   build:
 
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: macos-13
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -88,6 +88,7 @@ jobs:
         with:
           api-level: 33
           disk-size: 16G
+          target: google_apis
           script: |
             python3 ./integration_test/run_tests.py android
 
