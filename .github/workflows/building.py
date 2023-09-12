@@ -1,7 +1,11 @@
 import re
 import sys
-
+import json
+import urllib.request
 import utils
+
+
+repo_url = "https://api.github.com/repos/CaptainDario/DaKanji/releases"
 
 
 
@@ -66,11 +70,38 @@ def comment_large_assets_in_pubspec():
     with open("pubspec.yaml", mode="w+") as f:
         f.write(content)
 
+def check_build_number_unused():
+    """ Gets all release names from github releases and checks if the current
+    build number is unused.
+    """
+
+    req = urllib.request.Request(repo_url)
+    response = urllib.request.urlopen(req)
+    page = json.loads(response.read())
+
+    build_nrs = []
+    for release in page:
+        name = release["name"]
+
+        build_no_re = re.search("\+(\d+)", name)
+
+        if(build_no_re is not None):
+            build_nrs.append(build_no_re.groups(0)[0])
+
+    dakanji_version_re = re.search("\+(\d+)", utils.get_dakanji_version())
+    dakanji_version    = dakanji_version_re.groups(0)[0]
+
+    if(dakanji_version in build_nrs):
+        return 1
+    
+    return 0
+
 
 
 if __name__ == "__main__":
     
-    arg = sys.argv[1]
+    arg = "check_build_number_unused"
+    #arg = sys.argv[1]
 
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
@@ -89,5 +120,8 @@ if __name__ == "__main__":
 
     if(arg == "comment_large_assets_in_pubspec"):
         comment_large_assets_in_pubspec()
+
+    if(arg == "check_build_number_unused"):
+        sys.exit(check_build_number_unused())
 
         

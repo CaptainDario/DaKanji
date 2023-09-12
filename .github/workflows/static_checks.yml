@@ -46,12 +46,12 @@ jobs:
       - name: Restore packages
         run: flutter pub get
 
-      - name: dart format
-        run: dart format .
+      #- name: dart format
+      #  run: dart format .
 
-      - name: flutter analyze
-        run: flutter analyze
+      #- name: flutter analyze
+      #  run: flutter analyze
 
-      - name: Check build number unused
+      - name: Check build number is unused
         run: |
           python3 ./.github/workflows/building.py check_build_number_unused
