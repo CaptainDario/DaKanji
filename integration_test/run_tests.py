@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # copy the tf lite binaries
     if platform == "linux" or platform == "linux2":
-        prefix = "xvfb-run "
+        prefix = "xvfb-run"
         device = "linux"
         additional_args += "--profile"
 
@@ -45,8 +45,7 @@ if __name__ == "__main__":
     # run all tests
     for file in os.listdir("integration_test"):
         if(file.endswith("_test.dart")):
-            command = prefix
-            command +=  "flutter drive "
+            command =  f"{prefix} flutter drive "
             command += "--driver=test_driver/integration_test.dart "
             command += "--target=integration_test/draw_screen_test.dart "
             command += f"-d {device} "
