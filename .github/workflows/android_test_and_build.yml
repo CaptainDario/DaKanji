@@ -91,7 +91,6 @@ jobs:
           target: google_apis
           profile: Nexus 6
           script: |
-            sdkmanager
             python3 ./integration_test/run_tests.py android
 
       # create signing files
