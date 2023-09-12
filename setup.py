@@ -45,7 +45,6 @@ def get_release_url():
 
     return repo_url + "v" + assets_version
 
-
 def download_assets():
     """ Downloads all assets for DaKanji
     """
@@ -108,11 +107,21 @@ if __name__ == "__main__":
 
     print("Setting up DaKanji")
 
-    exclude_files_per_platform()
-    
-    release_url = get_release_url()
+    args = sys.argv[1:]
 
-    download_assets()        
+    if("--help" in args or "-h" in args):
+        print("""
+        --download_all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
+        --no_download  : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
+        """)
+        sys.exit(0)
+
+    if("--download_all" not in args):
+        exclude_files_per_platform()
+    
+    if("--no_download" not in args):
+        release_url = get_release_url()
+        download_assets()        
 
     move_assets()
 
