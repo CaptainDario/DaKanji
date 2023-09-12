@@ -45,11 +45,12 @@ if __name__ == "__main__":
     # run all tests
     for file in os.listdir("integration_test"):
         if(file.endswith("_test.dart")):
-            command =  "flutter drive "
+            command =  "xvfb-run flutter drive "
             command += "--driver=test_driver/integration_test.dart "
             command += "--target=integration_test/draw_screen_test.dart "
             command += f"-d {device} "
             command += additional_args
+            print(f"Executing: {command}")
             ret_val = subprocess.run(command, shell=True)
             if(ret_val.returncode != 0):
                 print(f"Error in {file}, returned {ret_val}")
