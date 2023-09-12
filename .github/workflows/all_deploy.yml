@@ -24,7 +24,10 @@ on:
         - "true"
 
 jobs:
-  
+
+  static_checks:
+    uses: ./.github/workflows/static_checks.yml
+
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
     secrets:

@@ -50,9 +50,7 @@ jobs:
       - name: setup dakanji
         run: python3 setup.py
 
-      # TESTS  
-      #- name: Analyze
-      #  run: flutter analyze
+      # TESTS
       - name: Run integration tests
         run: python ./integration_test/run_tests.py
 

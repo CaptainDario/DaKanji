@@ -28,7 +28,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       # get versions from pubspec
       - name: set env variables
@@ -40,22 +41,17 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
-          
+          channel: stable
+
       - name: Restore packages
         run: flutter pub get
-        
-      # # download all files necessary to run dakanji
-      - name: setup dakanji
-        run: python3 setup.py
-        
-      # Test the application
-      - uses: futureware-tech/simulator-action@v1
-        with:
-          model: 'iPhone 14 Pro'
-          udid:  "BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7"
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py ios_BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7
 
-     
+      - name: dart format
+        run: dart format .
 
+      - name: flutter analyze
+        run: flutter analyze
+
+      - name: Check build number unused
+        run: |
+          python3 ./.github/workflows/building.py check_build_number_unused

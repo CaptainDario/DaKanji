@@ -64,8 +64,6 @@ jobs:
         run: python3 setup.py      
 
       # TESTS  
-      #- name: Analyze
-      #  run: flutter analyze
       - name: Run integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
