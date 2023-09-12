@@ -100,8 +100,7 @@ def check_build_number_unused():
 
 if __name__ == "__main__":
     
-    arg = "check_build_number_unused"
-    #arg = sys.argv[1]
+    arg = sys.argv[1]
 
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
