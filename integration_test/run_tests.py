@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # copy the tf lite binaries
     if platform == "linux" or platform == "linux2":
-        prefix = "xvfb-run"
+        prefix = "xvfb-run "
         device = "linux"
         additional_args += "--profile"
 
