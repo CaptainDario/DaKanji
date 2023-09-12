@@ -97,10 +97,6 @@ def move_assets():
         if(f.startswith(tuple(move_to_dict))):
             shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
 
-    # delete temp dir
-    print("Deleting temporary folder")
-    shutil.rmtree(tmp_dir)
-
 
 
 if __name__ == "__main__":
@@ -111,19 +107,25 @@ if __name__ == "__main__":
 
     if("--help" in args or "-h" in args):
         print("""
-        --download_all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
+        --download-all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
         --no_download  : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
+        --no-delete    : Do not delete the tmp folder
         """)
         sys.exit(0)
 
-    if("--download_all" not in args):
+    if("--download-all" not in args):
         exclude_files_per_platform()
     
     if("--no_download" not in args):
         release_url = get_release_url()
-        download_assets()        
+        download_assets()
 
     move_assets()
+
+    if("--no-delete" not in args):
+        # delete temp dir
+        print("Deleting temporary folder")
+        shutil.rmtree(tmp_dir)
 
     print("Setup done! Run: \n flutter run")
     

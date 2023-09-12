@@ -42,7 +42,7 @@ jobs:
       - name: Download DaKanji assets if necessary
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
         run: |
-          python3 setup.py --download_all
+          python3 setup.py --download-all --no-delete
 
       # cache the files
       - name: Save dakanji assets to cache if not saved
