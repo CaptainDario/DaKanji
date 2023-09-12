@@ -74,7 +74,8 @@ jobs:
           model: 'iPhone 14 Pro'
           udid:  "BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7"
       - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py ios_BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7
+        run: |
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7
 
      
 
