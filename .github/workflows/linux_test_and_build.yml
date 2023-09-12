@@ -59,7 +59,7 @@ jobs:
       # build portable linux
       - name: build linux executable
         run: |
-          flutter build linux --release
+          xvfb-run flutter build linux --release
           zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
