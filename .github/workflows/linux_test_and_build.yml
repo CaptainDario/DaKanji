@@ -87,8 +87,7 @@ jobs:
         working-directory: flatpak/
         run: |
           sudo apt-get install flatpak flatpak-builder
-          flatpak install org.gnome.Sdk/x86_64/44
-          flatpak install org.gnome.Platform/x86_64/44
+          flatpak install flathub org.gnome.Sdk//44 org.gnome.Platform//44
           
           flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
           flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
