@@ -86,10 +86,12 @@ jobs:
       - name: Run integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 29
           disk-size: 16G
           target: google_apis
+          profile: Nexus 6
           script: |
+            sdkmanager
             python3 ./integration_test/run_tests.py android
 
       # create signing files
