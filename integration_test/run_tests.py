@@ -17,14 +17,12 @@ if __name__ == "__main__":
         arg = ""
 
     # the device to run the tests on
-    device = ""
+    device, additional_args = "", ""
 
     # copy the tf lite binaries
     if platform == "linux" or platform == "linux2":
-        #os.makedirs(os.path.dirname("build/linux/x64/debug/blobs/"), exist_ok=True)
-        #shutil.copy("blobs/libtensorflowlite_c-linux.so", "build/linux/x64/debug/blobs/")
-
         device = "linux"
+        additional_args += "--profile"
 
     # MacOS
     elif platform == "darwin":
@@ -33,13 +31,12 @@ if __name__ == "__main__":
             device = arg.replace("ios_", "")
         else:
             device = "macos"
+            additional_args += "--profile"
 
     # Windows
     elif platform == "win32":
-        #os.makedirs(os.path.dirname("build/windows/runner/Debug/blobs/"), exist_ok=True)
-        #shutil.copy("blobs/libtensorflowlite_c-win.dll", "build/windows/runner/Debug/blobs/")
-
         device = "windows"
+        additional_args += "--profile"
     
     if(arg == "android"):
         device = "emulator"
@@ -52,7 +49,7 @@ if __name__ == "__main__":
             command += "--driver=test_driver/integration_test.dart "
             command += "--target=integration_test/draw_screen_test.dart "
             command += f"-d {device} "
-            command += "--profile "
+            command += additional_args
             ret_val = subprocess.run(command, shell=True)
             if(ret_val.returncode != 0):
                 print(f"Error in {file}, returned {ret_val}")
