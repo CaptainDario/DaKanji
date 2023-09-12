@@ -90,6 +90,7 @@ jobs:
           disk-size: 16G
           target: google_apis
           profile: Nexus 6
+          ram-size: 4096M
           script: |
             flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d emulator
 
