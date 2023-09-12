@@ -89,9 +89,10 @@ def check_build_number_unused():
             build_nrs.append(build_no_re.groups(0)[0])
 
     dakanji_version_re = re.search("\+(\d+)", utils.get_dakanji_version())
-    dakanji_version    = dakanji_version_re.groups(0)[0]
+    dakanji_build_no   = dakanji_version_re.groups(0)[0]
 
-    if(dakanji_version in build_nrs):
+    if(dakanji_build_no in build_nrs):
+        print(f"Build number {dakanji_build_no} already in use: {utils.get_dakanji_version()}")
         return 1
     
     return 0
