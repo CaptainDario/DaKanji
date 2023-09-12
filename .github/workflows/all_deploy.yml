@@ -5,123 +5,134 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        required   : true
+        default    : "no"
+        options    :
+        - "no"
+        - "beta"
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : choice
+        required   : true
+        default    : "false"
+        options:
+        - "false"
+        - "true"
 
 jobs:
-  windows-test-and-build:
-    uses: ./.github/workflows/windows_test_and_build.yml
-    secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-    
+
+  static_checks:
+    uses: ./.github/workflows/static_checks.yml
+
+  cache_assets:
+    needs:
+      - static_checks
+    uses: ./.github/workflows/get_dakanji_assets.yml
+  
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
+    needs:
+      - cache_assets
     secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
       KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-      
+  ios-test-and-build:
+    needs:
+      - cache_assets
+    uses: ./.github/workflows/ios_test_and_build.yml
+  linux-test-and-build:
+    needs:
+      - cache_assets
+    uses: ./.github/workflows/linux_test_and_build.yml
+  macos-test-and-build:
+    needs:
+      - cache_assets
+    uses: ./.github/workflows/macos_test_and_build.yml
+  windows-test-and-build:
+    needs:
+      - cache_assets
+    secrets:
+      SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
+      SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
+    uses: ./.github/workflows/windows_test_and_build.yml
+  
 
-  upload-releases-to-github:
+  create_github_release:
+    if: ${{github.event.inputs.upload_to_gh == 'true'}}
     # upload to github releases after everything is build
-    needs: [windows-test-and-build, android-test-and-build]
+    needs: 
+      - android-test-and-build
+      - ios-test-and-build
+      - linux-test-and-build
+      - macos-test-and-build
+      - windows-test-and-build
 
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Get latest changes and set LATEST_CHANGES
+      - uses: actions/checkout@v3
+      - name: Set env variables
         run: |
-          python .github/workflows/latest_changes.py
+          python3 .github/workflows/building.py set_env_flutter_version
+          python3 .github/workflows/building.py set_env_dakanji_version
 
-      - uses: actions/download-artifact@v3
-        with:
-          path: artifacts/
-          
-      - name: Display structure of downloaded files
+      - name: Create text files
         run: |
-          ls
-          echo "\n"
-          ls -R artifacts/
-          echo $PWD
+          python3 .github/workflows/building.py create_release_notes_txt
+          python3 .github/workflows/building.py create_latest_changes_txt
 
       - name: delete previous beta releases
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
           delete_release: true 
-          tag_name: beta
+          tag_name: gh_action
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: create zip from exe artifact folder
-        run: |
-          cd artifacts
-          mv DaKanji_win.zip DaKanji_win
-          
-          zip -r DaKanji_win_exe.zip DaKanji_win
-          rm -R DaKanji_win
-          
-          ls -R
-          
-      - name: Upload files to github release
+      - name: Create github beta release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd artifacts
+          gh release create gh_action \
+            --draft \
+            --notes-file release_notes.txt \
+            --title "$(head -n 1 latest_changes.txt)"
 
-          gh release create \
-            beta \
-            DaKanji_android_arm64-v7a.zip/app-armeabi-v7a-release.apk \
-            DaKanji_android_arm64-v8a.zip/app-arm64-v8a-release.apk \
-            DaKanji_android_bundle.zip/app-release.aab \
-            DaKanji_android_x86_64.zip/app-x86_64-release.apk \
-            DaKanji_win.msix/da_kanji_mobile.msix \
-            DaKanji_win_exe.zip \
-            -F ../latest_changes.txt \
-            -p \
-            -t "$(head -n 1 ../latest_changes.txt)" \
+  android-deploy:
+    needs: [create_github_release]
+    uses: ./.github/workflows/android_deploy.yml
+    with:
+      upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+      upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
-  send-discord-notifications:
-    # send discord notifications after everything is uploaded to github releases
-    needs: upload-releases-to-github
+  # ios
 
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  linux_deploy:
+     needs: [create_github_release]
+     uses: ./.github/workflows/linux_deploy.yml
+     with:
+       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
+    
+  macos_deploy:
+     needs: [create_github_release]
+     uses: ./.github/workflows/macos_deploy.yml
+     with:
+       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+  windows_deploy:
+     needs: [create_github_release]
+     uses: ./.github/workflows/windows_deploy.yml
+     with:
+       upload_to_gh    : ${{github.event.inputs.upload_to_gh}}
+       upload_to_stores: ${{github.event.inputs.upload_to_stores}}
 
-      - name: Set LATEST_CHANGES and DEPLOY_MESSAGE
-        run: |
-          python .github/workflows/latest_changes.py
-          echo 'LATEST_CHANGES<<EOF' >> $GITHUB_ENV
-          cat latest_changes.txt >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-      
-          python .github/workflows/deploy_message.py
-          echo 'DEPLOY_MESSAGE<<EOFF' >> $GITHUB_ENV
-          cat deploy_message.txt >> $GITHUB_ENV
-          echo 'EOFF' >> $GITHUB_ENV
-
-      - name: Windows Testing - Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
-          STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: |
-            ${{ env.DEPLOY_MESSAGE }}
-
-      - name: Android Testing - Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WORKFLOW_TEST_WEBHOOK }}
-          STORE_URL: 'https://www.microsoft.com/p/dakanji/9n08051t2xtv?rtc=1#activetab=pivot:overviewtab'
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: |
-            ${{ env.DEPLOY_MESSAGE }}

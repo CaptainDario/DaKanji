@@ -1,0 +1,90 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Windows - Deploy
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        required   : true
+        default    : no
+        options    :
+        - no
+        - beta
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : choice
+        required   : true
+        default    : "false"
+        options:
+        - "false"
+        - "true"
+  # allows that other workflows can run this one
+  workflow_call:
+    #secrets:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : string 
+        required   : true
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : string
+        required   : true
+        default    : "false"
+
+#env:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-2022
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
+
+      # get msix GH and exe artifact and upload it to GH release
+      - name: get exe build artifacts
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
+          path: artifacts
+      - name: get msix gh build artifacts
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+          path: artifacts
+      - name: upload exe and msix to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dir
+          dir artifacts
+          gh release upload gh_action \DaKanji_${{env.DAKANJI_VERSION}}_exe.zip --clobber
+          gh release upload gh_action artifacts\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
+
+      # get msix store artifact and upload it to MS store
+      #- name: get build artifacts for snap
+      #  uses: actions/download-artifact@v3
+      #  if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+      #  with:
+      #    name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix

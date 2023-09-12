@@ -10,57 +10,77 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: 
-        required: true
+    #secrets:
 
-env:
-  FLUTTER_VERSION: "2.10.3"
-  FLUTTER_CHANNEL: "stable"
+#env:
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-10.15
+    runs-on: macos-13
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
+          channel: stable
           
       - name: Restore packages
         run: flutter pub get
         
-      # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
+      # get / set dakanji assets from cache
+      - name: Check dakanji assets in cache
+        id: cache-dakanji-assets-restore
+        uses: actions/cache/restore@v3
         with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
+          path: tmp
+          key: dakanji-assets
+      - name: Download DaKanji assets if necessary
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        run: |
+          python3 setup.py --download-all --no-delete
+      - name: Move DaKanji assets if in cache
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
+        run: |
+          python3 setup.py --no-download 
+      - name: Save dakanji assets to cache if not saved
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        id: cache-dakanji-assets-save
+        uses: actions/cache/save@v3
+        with:
+          path: tmp
+          key: dakanji-assets
 
       - name: enable macos
         run: flutter config --enable-macos-desktop
 
-      #- name: Run integration tests
-      #  run: python3 ./integration_test/run_tests.py
-
+      - name: Run integration tests
+        run: |
+          python3 ./integration_test/run_tests.py
+        #  flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart --profile -d mac
+          
       - name: build macos executable
-        run: flutter build macos --release
+        run: |
+          flutter build macos --release
+          zip -r DaKanji_${{env.DAKANJI_VERSION}}_app.zip build/macos/Build/Products/Release/DaKanji.app
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_macos.zip
-          path: build/macos/Build/Products/Release/
+          name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
+          path: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
 

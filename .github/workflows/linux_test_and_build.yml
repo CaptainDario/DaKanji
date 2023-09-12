@@ -41,20 +41,35 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
-      # # download all files necessary to run dakanji
-      - name: setup dakanji
-        run: python3 setup.py
+      # get / set dakanji assets from cache
+      - name: Check dakanji assets in cache
+        id: cache-dakanji-assets-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: tmp
+          key: dakanji-assets
+      - name: Download DaKanji assets if necessary
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        run: |
+          python3 setup.py --download-all --no-delete
+      - name: Move DaKanji assets if in cache
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
+        run: |
+          python3 setup.py --no-download 
+      - name: Save dakanji assets to cache if not saved
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        id: cache-dakanji-assets-save
+        uses: actions/cache/save@v3
+        with:
+          path: tmp
+          key: dakanji-assets
         
       - name: install build packages
         run: |
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
 
-      # Test the application
-      #- name: Analyze
-      #  run: flutter analyze
-
-      #- name: Run integration tests
-      #  run: python3 ./integration_test/run_tests.py
+      - name: Run integration tests
+        run: python3 ./integration_test/run_tests.py
 
       # build portable linux
       - name: build linux executable

@@ -23,28 +23,14 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-13
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      # get versions from pubspec
-      - name: set env variables
-        run: |
-          python3 ./.github/workflows/building.py set_env_flutter_version
-          python3 ./.github/workflows/building.py set_env_dakanji_version
-
-      - name: Install and set Flutter version
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
-          
-      - name: Restore packages
-        run: flutter pub get
-        
       # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
         id: cache-dakanji-assets-restore
@@ -67,14 +53,3 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
-        
-      # Test the application
-      - uses: futureware-tech/simulator-action@v1
-        with:
-          model: 'iPhone 14 Pro'
-          udid:  "BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7"
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py ios_BF8B95EE-B3F0-40C0-A3DB-052E385F4EE7
-
-     
-
