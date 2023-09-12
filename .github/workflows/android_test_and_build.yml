@@ -91,7 +91,7 @@ jobs:
           target: google_apis
           profile: Nexus 6
           script: |
-            python3 ./integration_test/run_tests.py android
+            flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d emulator
 
       # create signing files
       - name: Creating the .properties file
