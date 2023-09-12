@@ -2,7 +2,6 @@ import subprocess
 import os
 import sys
 from sys import platform
-import shutil
 
 
 
@@ -17,10 +16,11 @@ if __name__ == "__main__":
         arg = ""
 
     # the device to run the tests on
-    device, additional_args = "", ""
+    prefix, device, additional_args = "", "", ""
 
     # copy the tf lite binaries
     if platform == "linux" or platform == "linux2":
+        prefix = "xvfb-run"
         device = "linux"
         additional_args += "--profile"
 
@@ -45,7 +45,8 @@ if __name__ == "__main__":
     # run all tests
     for file in os.listdir("integration_test"):
         if(file.endswith("_test.dart")):
-            command =  "xvfb-run flutter drive "
+            command = prefix
+            command +=  "flutter drive "
             command += "--driver=test_driver/integration_test.dart "
             command += "--target=integration_test/draw_screen_test.dart "
             command += f"-d {device} "
