@@ -116,7 +116,7 @@ if __name__ == "__main__":
     if("--download-all" not in args):
         exclude_files_per_platform()
     
-    if("--no_download" not in args):
+    if("--no-download" not in args):
         release_url = get_release_url()
         download_assets()
 
