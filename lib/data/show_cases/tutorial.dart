@@ -40,7 +40,7 @@ abstract class Tutorial {
       OnboardingStep(
         focusNode: focusNodes![index], 
         titleText: titles![index],
-        bodyText: bodies![index]
+        bodyText: bodies![index],
       )
     );
   }

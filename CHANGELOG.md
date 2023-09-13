@@ -1,9 +1,44 @@
 
-# Da Kanji - changelog
+# DaKanji - changelog
+
+## v3.1.0+58 - 辞書開発 (13.9.2023)
+
+New Features:
+
+- Kanji charts: filter and sort kanjis by categories such as JLPT, 漢検, KLC and more
+- Clipboard screen to lookup words that are in the OS's clipboard
+- Drawer elements reorderable
+- Periodically, check for updates at app start
+- Dictionary
+  - Mark the current word in example sentences (#31)
+  - English dictionary can be disabled (#30)
+  - Show more kanji information
+    - KLC, new JLPT, RTK, 漢検
+    - antonyms, synonyms, lookalikes
+  - Radical lookup
+    - Clear selection
+    - Selection from clipboard
+    - Sort kanji by stroke order
+    - Improved radical rendering
+    - UI improvements
+  - Navigate search results with keyboard
+- Sentry for feedback collection
+- マトリックス (#39)
+
+Fixed:
+
+- Pitch accent not correct for words that include 2 character mora (#29)
+- Radical popup does not close (#27)
+- Navigating dictionary -> drawing -> dictionary
+- Some Searches lead to seemingly incorrect results (#49)
+- Sometimes radicals were missing
+- JLPT data for some entries wrong
+
+-------------------------------------------------------------------------
 
 ## v 3.0.0 - 辞書 (4.6.2023)
 
-new Features:
+New Features:
 
 - Inbuilt dictionary
   - Search with kanji, kana or romaji

@@ -7,7 +7,7 @@ part 'version.g.dart';
 
 /// Represents a version in the format major.minor.patch
 @JsonSerializable(checked: false)
-class Version{
+class Version implements Comparable<Version>{
 
   /// Major part of this version
   @JsonKey(defaultValue: 0)
@@ -59,7 +59,20 @@ class Version{
 
   @override
   String toString() {
+    return versionString;
+  }
+
+  /// Returns the full version as string (includes build number)
+  String toStringFull() {
     return fullVersionString;
+  }
+
+  List<int> toListFull(){
+    return [this.major, this.minor, this.patch, this.build ?? -1];
+  }
+
+  List<int> toList(){
+    return [this.major, this.minor, this.patch];
   }
 
   bool operator >(Version other){
@@ -133,6 +146,16 @@ class Version{
     return false;
   }
 
+  @override
+  int compareTo(Version other){
+    if(this > other)
+      return 1;
+    else if(this < other)
+      return -1;
+    else
+      return 0;
+  }
+
   factory Version.fromJson(dynamic json) {
 
     // migrate old data format to new one
@@ -149,15 +172,5 @@ class Version{
   }
 
   Map<String, dynamic> toJson() => _$VersionToJson(this);
-
-  ///
-  static Version fromJsonMigrate(dynamic json){
-
-    if(json is String){
-      return Version.fromString(json);
-    }
-
-    return Version.fromJson(Map<String, dynamic>.from(json));
-  }
 
 }

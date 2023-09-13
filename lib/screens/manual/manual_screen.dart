@@ -4,7 +4,6 @@ import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
-import 'package:da_kanji_mobile/widgets/manual/manual_anki.dart';
 
 
 /// The screen to show the manual of DaKanji
@@ -27,7 +26,7 @@ class _ManualScreenState extends State<ManualScreen>
     //"Drawing",
     "Dictionary", 
     //"Text",
-    "Anki"
+    //"Anki"
   ];
   /// the icons that are shown on the ManualButtons
   List<IconData> buttonIcons = [
@@ -35,10 +34,7 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    /*const IconData(
-      0xe803,
-      fontFamily: "Anki",
-    )*/
+    //DaKanjiIcons.anki
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
@@ -55,14 +51,14 @@ class _ManualScreenState extends State<ManualScreen>
     List<Widget> manualTexts = [
       ManualDictionary(),
       //ManualTextScreen(),
-      ManualAnki()
+      //ManualAnki()
     ];
 
     
 
     return DaKanjiDrawer(
       currentScreen: Screens.manual,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(

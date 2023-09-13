@@ -57,7 +57,7 @@ class DrawScreenPredictionButtons extends StatelessWidget {
                     interpreter.predictions[i],
                     i
                   );
-                  // add short/long press showcase to the first button
+                  // add short/long press tutorial to the first button
                   if(i == 0) {
                     tmpWidget = MultiFocus(
                       focusNodes: includeTutorial ? 

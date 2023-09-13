@@ -137,6 +137,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         Dictionary(
                           false, 
                           initialSearch: widget.text,
+                          includeFallingWords: false,
                           includeDrawButton: false,
                           isExpanded: true,
                           allowDeconjugation: widget.allowDeconjugation,
@@ -172,26 +173,27 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
             ),
           ),
         ),
-        Positioned(
-          right: 2,
-          bottom: 2,
-          height: 25,
-          width: 25,
-          child: MouseRegion(
-            cursor: SystemMouseCursors.resizeDownRight,
-            child: Listener(
-              onPointerMove: (event) {
-                if(widget.onResizedViaCorner != null) {
-                  widget.onResizedViaCorner!(event);
-                }
-              },
-              child: SvgPicture.asset(
-                "assets/icons/corner_resize.svg",
-                color: Colors.grey,
+        if(widget.onResizedViaCorner != null)
+          Positioned(
+            right: 2,
+            bottom: 2,
+            height: 25,
+            width: 25,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.resizeDownRight,
+              child: Listener(
+                onPointerMove: (event) {
+                  if(widget.onResizedViaCorner != null) {
+                    widget.onResizedViaCorner!(event);
+                  }
+                },
+                child: SvgPicture.asset(
+                  "assets/icons/corner_resize.svg",
+                  color: Colors.grey,
+                ),
               ),
             ),
-          ),
-        )
+          )
       ],
     );
   }

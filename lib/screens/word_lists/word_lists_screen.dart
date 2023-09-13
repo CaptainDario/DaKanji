@@ -58,7 +58,7 @@ class _WordListsScreenState extends State<WordListsScreen> {
 
     return DaKanjiDrawer(
       currentScreen: Screens.word_lists,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: wordLists.WordLists(
         widget.includeTutorial,
         parent,

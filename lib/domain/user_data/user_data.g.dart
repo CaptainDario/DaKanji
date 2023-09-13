@@ -11,11 +11,18 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed =
       json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
-  ..showShowcaseDrawing = json['showShowcaseDrawing'] as bool? ?? true
-  ..showShowcaseDictionary = json['showShowcaseDictionary'] as bool? ?? true
-  ..showShowcaseText = json['showShowcaseText'] as bool? ?? true
+  ..userRefusedUpdate = json['userRefusedUpdate'] == null
+      ? null
+      : DateTime.parse(json['userRefusedUpdate'] as String)
+  ..showTutorialDrawing = json['showTutorialDrawing'] as bool? ?? true
+  ..showTutorialDictionary = json['showTutorialDictionary'] as bool? ?? true
+  ..showTutorialText = json['showTutorialText'] as bool? ?? true
+  ..showTutorialClipboard = json['showTutorialClipboard'] as bool? ?? true
+  ..showTutorialKanjiTable = json['showTutorialKanjiTable'] as bool? ?? true
+  ..showTutorialKanaTable = json['showTutorialKanaTable'] as bool? ?? true
+  ..showTutorialWordLists = json['showTutorialWordLists'] as bool? ?? true
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
-  ..showRatePopup = json['showRatePopup'] as bool? ?? false
+  ..showRateDialog = json['showRateDialog'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
   ..drawingBackend =
       $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
@@ -24,11 +31,16 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
       'doNotShowRateAgain': instance.doNotShowRateAgain,
       'versionUsed': instance.versionUsed,
-      'showShowcaseDrawing': instance.showShowcaseDrawing,
-      'showShowcaseDictionary': instance.showShowcaseDictionary,
-      'showShowcaseText': instance.showShowcaseText,
+      'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),
+      'showTutorialDrawing': instance.showTutorialDrawing,
+      'showTutorialDictionary': instance.showTutorialDictionary,
+      'showTutorialText': instance.showTutorialText,
+      'showTutorialClipboard': instance.showTutorialClipboard,
+      'showTutorialKanjiTable': instance.showTutorialKanjiTable,
+      'showTutorialKanaTable': instance.showTutorialKanaTable,
+      'showTutorialWordLists': instance.showTutorialWordLists,
       'showOnboarding': instance.showOnboarding,
-      'showRatePopup': instance.showRatePopup,
+      'showRateDialog': instance.showRateDialog,
       'showChangelog': instance.showChangelog,
       'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
     };

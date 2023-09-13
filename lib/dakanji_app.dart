@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/screens/kana/KanaScreen.dart';
+import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
+import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji/kanji_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
@@ -26,6 +28,8 @@ import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 
 
@@ -54,6 +58,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       navigatorKey: g_NavigatorKey,
+      navigatorObservers: [
+        SentryNavigatorObserver()
+      ],
       
       onGenerateRoute: (settings) {
         PageRouteBuilder switchScreen (Widget screen) =>
@@ -66,22 +73,42 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   globalOnboarding: true,
                   autoSizeTexts: true,
                   steps: GetIt.I<Tutorials>().getSteps(),
-                  onChanged: (int index){
+                  onChanged: (int index) async {
                     print("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
                       print("DrawScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseDrawing = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialDrawing = false;
+                      await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
                       print("DictionaryScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseDictionary = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialDictionary = false;
+                      await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
                       print("TextScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showShowcaseText = false;
-                      GetIt.I<UserData>().save();
+                      GetIt.I<UserData>().showTutorialText = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!.last){
+                      print("Clipboard screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialClipboard = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
+                      print("Kanji table screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialKanjiTable = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
+                      print("Kana table screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialKanaTable = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!.last){
+                      print("Word lists screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialWordLists = false;
+                      await GetIt.I<UserData>().save();
                     }
                   },
                   child: screen,
@@ -122,10 +149,16 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, true, 
               initialText: args.initialText,
             ));
-          case "/kanji":
-            return switchScreen(KanjiScreen(args.navigatedByDrawer, true));
-          case "/kana_chart":
-            return switchScreen(KanaScreen(args.navigatedByDrawer));
+          case "/clipboard":
+            return switchScreen(ClipboardScreen(args.navigatedByDrawer, true));
+          case "/kanji_trainer":
+            return switchScreen(KanjiTrainerScreen(args.navigatedByDrawer, true));
+          case "/kanji_table":
+            return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
+          case "/kana_table":
+            return switchScreen(KanaTableScreen(args.navigatedByDrawer, true));
+          case "/kana_trainer":
+            return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
           case "/kuzushiji":
             return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
           case "/word_lists":

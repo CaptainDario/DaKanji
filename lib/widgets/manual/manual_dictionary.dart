@@ -29,28 +29,95 @@ class ManualDictionary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(LocaleKeys.ManualScreen_dict_kanji_title.tr(), style: heading_1,),
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Search results
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_dict_search_results_title.tr(), style: heading_1,),
+              children: [
+                SizedBox(height: 15),
 
-          SizedBox(height: 10),
-          
-          Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_title.tr(), style: heading_2,),
-          SizedBox(height: 5),
-          Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_text.tr()),
+                Text(LocaleKeys.ManualScreen_dict_search_results_navigate_title.tr(), style: heading_2,),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_search_results_navigate_text.tr()),
 
-          SizedBox(height: 15),
+                SizedBox(height: 15),
+              ],
+            ),
+    
+            // Search history
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_dict_search_history_title.tr(), style: heading_1,),
+              children: [
+                SizedBox(height: 15),
 
-          Text(LocaleKeys.ManualScreen_dict_examples_title.tr(), style: heading_1,),
+                Text(LocaleKeys.ManualScreen_dict_search_history_delete_title.tr(), style: heading_2,),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_search_history_delete_text.tr()),
+                
+                SizedBox(height: 15),
+              ],
+            ),
+    
+            // Kanji
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_dict_kanji_title.tr(), style: heading_1,),
+              children: [
+                SizedBox(height: 15),
+            
+                Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_title.tr(), style: heading_2,),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_text.tr()),
+        
+                SizedBox(height: 10),
+                
+                Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_title.tr(), style: heading_2,),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_text.tr()),
+        
+                SizedBox(height: 15),
+              ],
+            ),
+    
+            // Examples
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_dict_examples_title.tr(), style: heading_1,),
+              children: [
+                SizedBox(height: 15),
+            
+                Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_title.tr(), style: heading_2,),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_text.tr()),
+        
+                SizedBox(height: 15,),
+              ],
+            ),
+    
+            // Radical popup
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_dict_radicals_title.tr(), style: heading_1,),
+              children: [
+                SizedBox(height: 15),
+            
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
+                    SizedBox(width: 8,),
+                    Icon(Icons.paste, size: 18,),
+                  ]
+                ),
+                SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_radicals_paste_text.tr()),
 
-          SizedBox(height: 10),
-          
-          Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_title.tr(), style: heading_2,),
-          SizedBox(height: 5),
-          Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_text.tr())
-        ]
+                SizedBox(height: 15),
+              ],
+            )
+          ]
+        ),
       ),
     );
   }

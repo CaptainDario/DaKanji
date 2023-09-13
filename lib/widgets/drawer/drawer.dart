@@ -1,22 +1,20 @@
 import 'dart:math';
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:feedback/feedback.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_io/io.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/application/drawer/drawer_entries.dart';
 
 
 
@@ -34,16 +32,16 @@ class DaKanjiDrawer extends StatefulWidget{
   final bool useBackArrowAppBar;
   /// The currently selected screen
   final Screens currentScreen;
-  /// should the animation begin at the start or end
-  final bool animationAtStart;
+  /// is the drawer closed when initializing it
+  final bool drawerClosed;
 
 
   const DaKanjiDrawer(
     {
+      required this.currentScreen,
       required this.child,
       this.useBackArrowAppBar = false,
-      required this.currentScreen,
-      this.animationAtStart = true,
+      this.drawerClosed = true,
       Key? key, 
     }
   ) : super(key: key);
@@ -67,10 +65,65 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   late double _screenHeight;
   /// function to open/close the drawer (invoked when DrawerListener changed)
   late void Function() _handleDrawer; 
-  
+
+
+  List<DrawerEntry> drawerEntries = [
+    DrawerEntry(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
+      null, null,
+      true, null),
+    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+      null, null,
+      true, null),
+    if(kDebugMode)
+    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+      null, null,
+      kDebugMode, null),
+    if(kDebugMode)
+    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+      null, null,
+      kDebugMode, null),
+    if(kDebugMode)
+    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+      null, null,
+      kDebugMode, null),
+    if(kDebugMode)
+    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
+      null, Alignment(0, -0.1),
+      kDebugMode, null),
+    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual,
+      null, null,
+      true, null),
+    DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,
+      null, null,
+      true, sendFeedback),
+    if(kDebugMode)
+    DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
+      0.7, Alignment(-1000, 0),
+      kDebugMode, null),
+  ];
+
+  late List<int> drawerElementsIndexOrder;
   
   @override
-  void initState() { 
+  void initState() {
+    // remove debug only items
+    //drawerEntries.removeWhere((e) => !e.include);
+
     super.initState();
     _drawerController = AnimationController(
       duration: const Duration(milliseconds: 250),
@@ -85,7 +138,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       curve: const Interval(0.0, 1.0, curve: Curves.linear)
     ));
 
-    if(!widget.animationAtStart) {
+    if(!widget.drawerClosed) {
       _drawerController.value = 1.0;
     }
 
@@ -100,6 +153,24 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       });
     };
     GetIt.I<DrawerListener>().addListener(_handleDrawer);
+
+    // order of drawer elements
+    drawerElementsIndexOrder = GetIt.I<Settings>().misc.drawerItemOrder;
+    // no order was ever defined
+    if(drawerElementsIndexOrder.isEmpty)
+      drawerElementsIndexOrder = List.generate(drawerEntries.length, (index) => index);
+    // there are new elements in the drawer (migrate old safed values)
+    if(drawerElementsIndexOrder.length < drawerEntries.length)
+      drawerElementsIndexOrder.addAll(
+        List.generate(drawerEntries.length-drawerElementsIndexOrder.length, 
+          (index) => index+drawerElementsIndexOrder.length)
+      );
+    // elements have been removed from the drawer -> reset all values
+    if(drawerElementsIndexOrder.length > drawerEntries.length)
+      drawerElementsIndexOrder = List.generate(drawerEntries.length, (i) => i);
+
+    GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
+    GetIt.I<Settings>().save();
   }
 
   @override
@@ -132,7 +203,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       if (status == AnimationStatus.completed) {
         route?.animation?.removeStatusListener(handler);
         
-        if(!widget.animationAtStart){
+        if(!widget.drawerClosed){
           SchedulerBinding.instance.addPostFrameCallback((_) async {
             _drawerController.reverse();
           });
@@ -257,161 +328,56 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                       child: ListTileTheme(
                         style: ListTileStyle.drawer,
                         selectedColor: Theme.of(context).colorScheme.secondary,
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          children: <Widget>[
-                            // DaKanji Logo at the top
-                            SafeArea(
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
-                                  child: Image(
-                                    width: _drawerWidth * 0.6,
-                                    //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                    image: const AssetImage("assets/images/dakanji/banner.png"),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onLongPress: () {},
+                              child: SafeArea(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
+                                    child: Image(
+                                      width: _drawerWidth * 0.6,
+                                      //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
+                                      image: const AssetImage("assets/images/dakanji/banner.png"),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            // Drawer entry to go to the Kanji drawing screen
-                            DrawerElement(
-                              leading: Icons.brush,
-                              title: LocaleKeys.DrawScreen_title.tr(),
-                              route: "/drawing",
-                              selected: widget.currentScreen == Screens.drawing,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
-                            // Drawer entry to go to the text dictionary screen
-                            DrawerElement(
-                              leading: Icons.book,
-                              title: LocaleKeys.DictionaryScreen_title.tr(),
-                              route: "/dictionary",
-                              selected: widget.currentScreen == Screens.dictionary,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
-                            // Drawer entry to go to the text processing screen
-                            DrawerElement(
-                              leading: Icons.text_snippet,
-                              title: LocaleKeys.TextScreen_title.tr(),
-                              route: "/text",
-                              selected: widget.currentScreen == Screens.text,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
-                            // Drawer entry to go to the kanji screen
-                            if(kDebugMode)
-                              DrawerElement(
-                                leading: const IconData(
-                                  0x6f22, fontFamily: "NotoSansJP",
-                                ),
-                                leadingAlignment: Alignment(-0.1, -0.65),
-                                title: LocaleKeys.KanjiScreen_title.tr(),
-                                route: "/kanji",
-                                selected: widget.currentScreen == Screens.kanji,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
+                            Expanded(
+                              child: ReorderableListView(
+                                buildDefaultDragHandles: false,
+                                padding: EdgeInsets.zero,
+                                onReorder: (oldIndex, newIndex) async {
+                                  if(newIndex > oldIndex)
+                                    newIndex -= 1;
+                                  int old = drawerElementsIndexOrder.removeAt(oldIndex);
+                                  drawerElementsIndexOrder.insert(newIndex, old);
+                                  GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
+                                  await GetIt.I<Settings>().save();
+                                  setState(() {});
+                                },
+                                children: <Widget>[
+                                  // DaKanji Logo at the top
+                                  for (final (j, i) in drawerElementsIndexOrder.indexed)
+                                    if(drawerEntries[i].include)
+                                      DrawerElement(
+                                        leading: drawerEntries[i].icon,
+                                        title: drawerEntries[i].title,
+                                        route: drawerEntries[i].route,
+                                        selected: widget.currentScreen == drawerEntries[i].screen,
+                                        leadingSize: drawerEntries[i].iconSize ?? 0.5,
+                                        leadingAlignment: drawerEntries[i].iconAlignment ?? Alignment.center,
+                                        drawerWidth: _drawerWidth,
+                                        index: j,
+                                        drawerController: _drawerController,
+                                        onTap: drawerEntries[i].onTap,
+                                      )
+                                ],
                               ),
-                            // Drawer entry to go to the kana screen
-                            if(!kReleaseMode)
-                              DrawerElement(
-                                leading: const IconData(
-                                  0x30AB, fontFamily: "NotoSansJP-Black"
-                                ),
-                                leadingSize: 0.5,
-                                leadingAlignment: Alignment(1000, -0.7),
-                                title: LocaleKeys.KanaChartScreen_title.tr(),
-                                route: "/kana_chart",
-                                selected: widget.currentScreen == Screens.kana_chart,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
-                              ),
-                            // Drawer entry to go to the kuzushiji screen
-                            if(kDebugMode)
-                              DrawerElement(
-                                leading: IconData(
-                                  0x5d29,
-                                  fontFamily: "kouzan"
-                                ),
-                                leadingSize: 0.7,
-                                leadingAlignment: Alignment(-1000, 0),
-                                title: LocaleKeys.KuzushijiScreen_title.tr(),
-                                route: "/kuzushiji",
-                                selected: widget.currentScreen == Screens.kuzushiji,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
-                              ),
-                            // Drawer entry to go to the word lists screen
-                            if(kDebugMode)
-                              DrawerElement(
-                                leading: Icons.list_outlined,
-                                leadingAlignment: Alignment(0, -0.1),
-                                title: LocaleKeys.WordListsScreen_title.tr(),
-                                route: "/word_lists",
-                                selected: widget.currentScreen == Screens.word_lists,
-                                drawerWidth: _drawerWidth,
-                                drawerController: _drawerController,
-                              ),
-                            // Drawer entry to go to the settings screen
-                            DrawerElement(
-                              leading: Icons.settings_applications,
-                              title: LocaleKeys.SettingsScreen_title.tr(),
-                              route: "/settings",
-                              selected: widget.currentScreen == Screens.settings,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
                             ),
-                            // Drawer entry to go to the about screen
-                            DrawerElement(
-                              leading: Icons.info,
-                              title: LocaleKeys.AboutScreen_title.tr(),
-                              route: "/about",
-                              selected: widget.currentScreen == Screens.about,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
-                            // Drawer entry to go to the manual screen
-                            DrawerElement(
-                              leading: Icons.help,
-                              title: LocaleKeys.ManualScreen_title.tr(),
-                              route: "/manual",
-                              selected: widget.currentScreen == Screens.manual,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                            ),
-                            // Drawer entry to send feedback
-                            DrawerElement(
-                              leading: Icons.feedback,
-                              title: LocaleKeys.FeedbackScreen_title.tr(),
-                              route: "",
-                              selected: false,
-                              drawerWidth: _drawerWidth,
-                              drawerController: _drawerController,
-                              onTap: () {
-                                BetterFeedback.of(context).show((UserFeedback feedback) async {
-                                  
-                                  final screenshotFilePath = await writeImageToTmpStorage(feedback.screenshot);
-                                  final textFilePath = await writeTextToTmpStorage(await getDeviceInfoText(context), "deviceInfo");
-                                  final logsFilePath = await writeTextToTmpStorage(g_appLogs, "logs");
-
-                                  String feedbackText = "Send to: daapplab\n" + feedback.text;
-                                  String feedbackSubject = "DaKanji $g_Version - feedback";
-
-                                  await Share.shareXFiles(
-                                    [XFile(screenshotFilePath), XFile(textFilePath), XFile(logsFilePath)],
-                                    text: Platform.isWindows ? feedbackSubject : feedbackText,
-                                    subject: Platform.isWindows ? feedbackText : feedbackSubject,
-                                    sharePositionOrigin: () {
-                                      RenderBox? box = context.findRenderObject() as RenderBox?;
-                                      return Rect.fromLTRB(0, 0, box!.size.height/2, box.size.width/2);
-                                    } (),
-                                  );
-                                });
-                              },
-                            ),                           
                           ],
                         ),
                       )
@@ -426,35 +392,3 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   }
 }
 
-/// Saves the given Uint8List to the temporary directory of the device and 
-/// returns the path to the file
-Future<String> writeImageToTmpStorage(Uint8List image) async {
-  final Directory output = await getTemporaryDirectory();
-  final String screenshotFilePath = '${output.path}/feedback.png';
-  final File screenshotFile = File(screenshotFilePath);
-  await screenshotFile.writeAsBytes(image);
-  return screenshotFilePath;
-}
-
-/// Saves the given String to the temporary directory of the device and 
-/// returns the path to the file
-Future<String> writeTextToTmpStorage(String text, String fileName) async {
-  final Directory output = await getTemporaryDirectory();
-  final String textFilePath = '${output.path}/${fileName}.txt';
-  final File screenshotFile = File(textFilePath);
-  await screenshotFile.writeAsString(text);
-  return textFilePath;
-}
-
-/// Returns a String containing details about the system the app is running on
-Future<String> getDeviceInfoText(BuildContext context) async {
-  Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).toMap();
-
-  String deviceInfo = """System / App info:
-    I am using DaKanji v.$g_Version on ${Theme.of(context).platform.name}.
-
-    ${t.toString().replaceAll(",", "\n").replaceAll("}", "").replaceAll("{", "")}
-    """;
-
-  return deviceInfo;
-}

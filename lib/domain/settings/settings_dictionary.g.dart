@@ -19,7 +19,12 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
               .toList()
       ..showWordFruequency = json['showWordFruequency'] as bool? ?? false
       ..searchDeconjugate = json['searchDeconjugate'] as bool? ?? true
-      ..convertToHiragana = json['convertToHiragana'] as bool? ?? true;
+      ..convertToHiragana = json['convertToHiragana'] as bool? ?? true
+      ..selectedFallingWordsLevels =
+          (json['selectedFallingWordsLevels'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              ['N5', 'N4', 'N3'];
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
@@ -28,4 +33,5 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
       'showWordFruequency': instance.showWordFruequency,
       'searchDeconjugate': instance.searchDeconjugate,
       'convertToHiragana': instance.convertToHiragana,
+      'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
     };

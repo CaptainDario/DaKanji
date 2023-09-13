@@ -12,7 +12,12 @@ class DictSearch with ChangeNotifier {
   String currentSearch = "";
 
   /// a list of all search results
-  List searchResults = [];
+  List _searchResults = [];
+  List get searchResults => _searchResults;
+  set searchResults(List newResults){
+    _searchResults = newResults;
+    notifyListeners();
+  }
 
   /// the selected search Result
   JMdict? _selectedResult;

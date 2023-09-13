@@ -41,6 +41,9 @@ keys/**
 
 # python
 python
+.venv/**
+
+# keys
 android/app/key.jks
 
 # ignore none mock tflite models
@@ -75,7 +78,6 @@ keys/DaKanjiRecognizer.jks
 
 # ignore built snaps and the none template snapcraft.yaml
 *.snap
-snap/snapcraft.yaml
 
 # ignore ephemerals
 macos/Flutter/ephemeral/**
@@ -83,3 +85,14 @@ linux/flutter/ephemeral/**
 
 # ios build files
 ios/build/**
+
+# flatpak
+build-dir
+repo
+flatpak/.flatpak-builder
+.flatpak-builder
+flatpak/DaKanji
+flatpak/DaKanji.zip
+flatpak/DaKanji.tar.xz
+flatpak/DaKanji.tar.gz
+com.DaAppLab.DaKanji.flatpak

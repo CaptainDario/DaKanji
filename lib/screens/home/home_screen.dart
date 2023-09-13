@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
@@ -10,6 +13,7 @@ import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as ratePopup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/application/releases/releases.dart';
 
 
 
@@ -47,14 +51,20 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Setup the app by showing the changelog, onboarding, rate popup or 
   /// dwonloading the data necessary for this release
   Future<void> setupApp() async {
-    if(testing()) return;
 
     await initDocumentsServices(context);
+
+    if(GetIt.I<UserData>().userRefusedUpdate == null ||
+      DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
+      List<String> updates = await updateAvailable();
+      if(updates.isNotEmpty)
+        await showUpdatePopup(updates);
+    }
 
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
     }
-    if(GetIt.I<UserData>().showRatePopup){
+    if(GetIt.I<UserData>().showRateDialog){
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
@@ -70,24 +80,47 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Runs the app in different testing modes
-  bool testing(){
-
-    bool isTesting = false;
-
-    // if the app is being tested for different startup situations
-    if(g_IsTestingAppStartup) {
-      isTesting = true;
-      print("RUNNING IN 'APP STARTUP TESTING'-mode");
-    }
-    // if the DrawScreen is being tested switch there immediately
-    else if(g_IsTestingDrawscreen){
-      isTesting = true;
-      print("RUNNING IN 'DRAWSCREEN TESTING'-mode");
-      Navigator.pushNamedAndRemoveUntil(context, "/drawing", (route) => false);
-    }
-
-    return isTesting;
+  Future<void> showUpdatePopup(List<String> changelog) async {
+    // show a popup with the changelog of the new version
+    await AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.noHeader,
+      btnOkColor: g_Dakanji_green,
+      btnOkText: "Download",
+      btnOkOnPress: () {
+        openStoreListing();
+      },
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () async {},
+      onDismissCallback: (dismisstype) async {
+        GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
+        await GetIt.I<UserData>().save();
+      },
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  "🔥 ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} 🔥",
+                  style: TextStyle(
+                    fontSize: 24
+                  ),
+                )
+              ),
+              SizedBox(height: 8,),
+              Text(changelog.first.replaceAll("\n", "")),
+              SizedBox(height: 16,),
+              MarkdownBody(
+                data: changelog.sublist(1).join(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ).show();
   }
 
   /// Shows a popup with the changelog of the current version
@@ -114,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
       await ratePopup.showRateDialog(context, true);
     }
 
-    GetIt.I<UserData>().showRatePopup = false;
+    GetIt.I<UserData>().showRateDialog = false;
     GetIt.I<UserData>().save();
   }
 

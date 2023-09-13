@@ -11,8 +11,6 @@ on:
   # allows that other workflows can run this one
   workflow_call:
     secrets:
-      DA_KANJI_ML_RELEASES_TOKEN: 
-        required: true
       KEY_PROPERTIES_KEY_PASSWORD: 
         required: true
       KEY_PROPERTIES_STORE_PASSWORD: 
@@ -22,99 +20,136 @@ on:
       KEYSTORE_BASE64: 
         required: true
 
+
 env:
   JAVA_VERSION: "11.x"
-  FLUTTER_VERSION: "2.10.3"
-  FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
+
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: macos-13
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Java to compile Android project
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: zulu
           java-version: ${{env.JAVA_VERSION}}
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
-          channel: ${{env.FLUTTER_CHANNEL}}
+          channel: stable
           
       - name: Restore packages
-        run: |
-          flutter pub get
-          sudo bash install.sh -d
-        
-      # download all TF lite files from the DaKanji-ML repo
-      - name: Download release asset
-        uses: robinraju/release-downloader@v1.3
-        with:
-          repository: CaptainDario/DaKanji-ML
-          latest: true
-          fileName: "*"
-          token: ${{ secrets.DA_KANJI_ML_RELEASES_TOKEN }}
-          out-file-path: "assets/tflite_models"
-        
-      - name: Run integration tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          disk-size: 8G
-          script: |
-            python3 ./integration_test/run_tests.py android
+        run: flutter pub get
 
-      - name: Creating the key.properties file
+      # get / set dakanji assets from cache
+      - name: Check dakanji assets in cache
+        id: cache-dakanji-assets-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: tmp
+          key: dakanji-assets
+      - name: Download DaKanji assets if necessary
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        run: |
+          python3 setup.py --download-all --no-delete
+      - name: Move DaKanji assets if in cache
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
+        run: |
+          python3 setup.py --no-download 
+      - name: Save dakanji assets to cache if not saved
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        id: cache-dakanji-assets-save
+        uses: actions/cache/save@v3
+        with:
+          path: tmp
+          key: dakanji-assets    
+
+      # TESTS  
+      #- name: Run integration tests
+      #  uses: reactivecircus/android-emulator-runner@v2
+      #  with:
+      #    api-level: 29
+      #    disk-size: 16G
+      #    target: google_apis
+      #    profile: Nexus 6
+      #    ram-size: 4096M
+      #    heap-size: 1024M
+      #    script: |
+      #      flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d emulator
+
+      # create signing files
+      - name: Creating the .properties file
         run: |
           echo keyPassword=\${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
           echo storePassword=\${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
           echo keyAlias=\${{ secrets.KEY_PROPERTIES_KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
           echo storeFile=../../keys/DaKanjiRecognizer.jks >> ${{env.PROPERTIES_PATH}}
-
-      - name: Decoding base64 key into a file
+      - name: Decoding base64 into a file
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keys/DaKanjiRecognizer.jks
 
+      # build apks
       - name: build apks for different architectures
         run: |
           flutter build apk --split-per-abi
+          flutter build apk
           ls build/app/outputs/apk/release/
-
-      - name: Archive arm64-v8a
+      - name: rename apks
+        run: |
+          mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+          mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+          mv build/app/outputs/flutter-apk/app-x86_64-release.apk DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+          mv build/app/outputs/flutter-apk/app-release.apk DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
+      - name: Upload artifact arm64-v8a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_arm64-v8a.zip
-          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
-
-      - name: Archive apk arm64-v7a
+          name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
+      - name: Upload artifact armeabi-v7a
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_arm64-v7a.zip
-          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-
-      - name: Archive apk x86_64
+          name: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
+      - name: Upload artifact apk x86_64
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_x86_64.zip
-          path: build/app/outputs/apk/release/app-x86_64-release.apk
+          name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
+      - name: Upload artifact fat apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
+          path: DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
 
+
+      # build appbundle and upload to artifacts
       - name: build app bundle
-        run: flutter build appbundle
-
+        run: |
+          python3 ./.github/workflows/building.py comment_large_assets_in_pubspec
+          flutter pub get
+          flutter build appbundle
       - name: Archive appbundle
         uses: actions/upload-artifact@v3
         with:
-          name: DaKanji_android_bundle.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_bundle.zip
           path: build/app/outputs/bundle/release/app-release.aab
 
 

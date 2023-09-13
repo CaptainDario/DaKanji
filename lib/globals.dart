@@ -26,6 +26,9 @@ const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 
+/// The font for Japanese text
+const String g_japaneseFontFamily = "NotoSansJP";
+
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
 
@@ -45,6 +48,8 @@ Version g_Version = Version(0, 0, 0);
 const int g_MinTimesOpenedToAsknotShowRate = 401;
 /// How often does the app need to be opened to ask the user to rate the app
 const int g_AskRateAfterEach = 20;
+/// The amount of days to wait before asking the user to update the app again
+const int g_daysToWaitBeforeAskingForUpdate = 14;
 /// all versions which implemented new features for the drawing screen
 List<Version> g_DrawingScreenNewFeatures = [
   Version(0, 0, 1), Version(1, 0, 0), Version(1, 0, 0), Version(1, 1, 0), Version(2, 1, 0)
@@ -55,11 +60,16 @@ List<Version> g_OnboardingNewPages = [
 ];
 /// all versions that implemented new dictionary versions (ISAR DB)
 List<Version> g_NewDictionary = [
-  Version(3, 0, 0, build: 47)
+  Version(3, 0, 0, build: 47), Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52),
+  Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56)
 ];
 /// all versions that implemented new examples versions (ISAR DB)
 List<Version> g_NewExamples = [
   Version(3, 0, 0, build: 47)
+];
+/// all versions that implemented new radiclas data (ISAR DB)
+List<Version> g_NewRadicals = [
+  Version(3, 1, 0)
 ];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
@@ -71,18 +81,9 @@ final bool g_desktopPlatform =
 /// browser user agent to fake a mobile device on desktop
 String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
 
-/// is the app running to test the drawscreen
-bool g_IsTestingDrawscreen = false;
-/// is the app running to test the app startup situations
-bool g_IsTestingAppStartup = false;
-/// is the app running to test the misc. settings
-bool g_IsTestingSettings = false;
-/// is the app running to test if the onboarding shows again if there are new
-/// pages added to it
-bool g_IsTestingAppStartupOnboardingNewFeatures = false;
-/// is the app running to test if the DrawScreen tutorial shows again if there are new
-/// points added to it
-bool g_IsTestingAppStartupDrawscreenNewFeatures = false;
+
+/// The minimum size of the desktop window in normal mode
+const Size g_minDesktopWindowSize = const Size(480, 720);
 
 
 //about page
@@ -92,6 +93,8 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+///
+const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
 const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
 

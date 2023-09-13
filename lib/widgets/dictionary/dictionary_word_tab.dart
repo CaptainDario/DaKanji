@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
-import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
@@ -17,8 +16,8 @@ import 'package:path/path.dart' as p;
 import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -58,7 +57,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
-    //"Add to List"
+    // TODO v word lists - reenable
+    //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
+    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr()
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -217,7 +218,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                       child: PopupMenuButton(
                         splashRadius: 25,
                         icon: const Icon(Icons.more_vert),
-                        onSelected: (String selection) {
+                        onSelected: (String selection) async {
                           String url = "";
                           // Wiki
                           if(selection == menuItems[0]) {
@@ -237,34 +238,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           }
                           // add to word list
                           else if(selection == menuItems[5]) {
-                            AwesomeDialog(
-                              context: context,
-                              headerAnimationLoop: false,
-                              useRootNavigator: false,
-                              dialogType: DialogType.noHeader,
-                              body: SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.8,
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: WordListsUI.WordLists(
-                                  false,
-                                  GetIt.I<WordLists>().root,
-                                  showDefaults: false,
-                                  onSelectionConfirmed: (selection) {
-                                    
-                                    selection.where(
-                                      (sel) =>
-                                        // assure this node is a word list
-                                        wordListListypes.contains(sel.value.type) &&
-                                        // assure that the word is not already in the list
-                                        !sel.value.wordIds.contains(widget.entry!.id)
-                                    ).forEach(
-                                      (sel) => sel.value.wordIds.add(widget.entry!.id)
-                                    );
-                                    Navigator.of(context, rootNavigator: false).pop();
-                                  },
-                                ),
-                              )
-                            )..show();
+                            await AddToWordListDialog(context, widget).show();
+                          }
+                          else if(selection == menuItems[6]){
+                            await AnkiDialog(context).show();
                           }
 
                           if(url != "")

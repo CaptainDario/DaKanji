@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  clipboard_watcher
   isar_flutter_libs
   mecab_dart
   media_kit_libs_linux

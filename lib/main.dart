@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:universal_io/io.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,7 +28,9 @@ Future<void> main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880s';
+      options.dsn = kReleaseMode
+        ? 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880'
+        : "";
     },
     appRunner: () => runApp(
       Phoenix(
@@ -44,6 +48,7 @@ Future<void> main() async {
                 useOnlyLangCode: true,
                 assetLoader: const CodegenLoader(),
                 saveLocale: true,
+                startLocale: Platform.isLinux ? const Locale("en") : null,
                 child: BetterFeedback(
                   theme: FeedbackThemeData(
                     sheetIsDraggable: true
@@ -53,6 +58,7 @@ Future<void> main() async {
                       const Locale('en'): CustomFeedbackLocalizations()
                     },
                   ],
+                  localeOverride: const Locale("en"),
                   mode: FeedbackMode.navigate,
                   child: const DaKanjiApp(),
                 ),

@@ -1,7 +1,6 @@
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/init.dart';
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -16,6 +15,8 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
 
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
@@ -33,6 +34,10 @@ import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
 
 
@@ -86,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       body: DaKanjiDrawer(
         currentScreen: Screens.settings,
-        animationAtStart: !widget.openedByDrawer,
+        drawerClosed: !widget.openedByDrawer,
         // ListView of all available settings
         child: ChangeNotifierProvider.value(
           value: GetIt.I<Settings>(),
@@ -167,7 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseDrawing = true;
+                          GetIt.I<UserData>().showTutorialDrawing = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -210,19 +215,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             (index) {
                               String lang = settings.dictionary.translationLanguageCodes[index];
                               return GestureDetector(
-                                onTap: () {
-                                  if(lang == iso639_1.en.name)
+                                onTap: () async {
+                                  // do not allow removing the last dictionary
+                                  if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
                                     return;
 
-                                  setState(() {
-                                    if(!settings.dictionary.selectedTranslationLanguages.contains(lang)){
-                                      settings.dictionary.selectedTranslationLanguages.add(lang);
-                                    }
-                                    else{
-                                      settings.dictionary.selectedTranslationLanguages.remove(lang);
-                                    }
-                                    settings.save();
-                                  });
+                                  // when disabling english dictionary tell user
+                                  // that significant part of the dict is only in english
+                                  if(lang == iso639_1.en.name &&
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    await DisableEnglishDictPopup(context).show();
+
+                                  LoadingPopup(context).show();
+
+                                  await GetIt.I<DictionarySearch>().kill();
+                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                                    settings.dictionary.selectedTranslationLanguages = 
+                                      settings.dictionary.translationLanguageCodes.where((element) => 
+                                        [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
+                                      ).toList();
+                                  }
+                                  else
+                                    settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                  await settings.save();
+                                  await GetIt.I<DictionarySearch>().init();
+
+                                  Navigator.of(context).pop();
+
+                                  setState(() {});
                                 },
                                 child: Chip(
                                   backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
@@ -361,12 +382,65 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
+                      // Floating words selection
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        child: Align(
+                          alignment: Alignment.centerLeft, 
+                          child: AutoSizeText(
+                            LocaleKeys.SettingsScreen_dict_matrix_word_levels.tr(),
+                            group: g_SettingsAutoSizeGroup,
+                          )
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          child: Wrap(
+                            spacing: 8.0,
+                            runSpacing: 4.0,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            alignment: WrapAlignment.start,
+                            
+                            runAlignment: WrapAlignment.start,
+                            children: List.generate(
+                              SettingsDictionary.d_fallingWordsLevels.length,
+                              (index) {
+                                String level = SettingsDictionary.d_fallingWordsLevels[index];
+                                return GestureDetector(
+                                  onTap: () async {
+                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level))
+                                      settings.dictionary.selectedFallingWordsLevels.remove(level);
+                                    else
+                                      settings.dictionary.selectedFallingWordsLevels.add(level);
+                                    await settings.save();
+                                    setState(() {});
+                                  },
+                                  child: Chip(
+                                    backgroundColor: settings.dictionary.selectedFallingWordsLevels.contains(level)
+                                      ? Theme.of(context).highlightColor
+                                      : null,
+                                    label: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(level),
+                                      ],
+                                    )
+                                  ),
+                                );
+                              }
+                            ),
+                          ),
+                        ),
+                      ),
+
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseDictionary = true;
+                          GetIt.I<UserData>().showTutorialDictionary = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -389,7 +463,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
-                          GetIt.I<UserData>().showShowcaseText = true;
+                          GetIt.I<UserData>().showTutorialText = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -400,14 +474,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Anki header
-                      /* TODO - add anki settings
+                      // #region - Kanji table header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.KanjiTableScreen_title.tr(),
+                        DaKanjiIcons.kanji_table,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialKanjiTable = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
+
+                      // #region - Kana table header TODO: v Kana table - enable
+                      if(kDebugMode)
+                        ...[
+                          ResponsiveHeaderTile(
+                            LocaleKeys.KanaTableScreen_title.tr(),
+                            DaKanjiIcons.kana_table,
+                            autoSizeGroup: g_SettingsAutoSizeGroup
+                          ),
+                          // reshow tutorial
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                            icon: Icons.replay_outlined,
+                            onButtonPressed: () {
+                              GetIt.I<UserData>().showTutorialKanaTable = true;
+                              settings.save();
+                              Phoenix.rebirth(context);
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                          // move down between enreegon and region anki header
+                          const Divider(),
+                        ],
+
+                      // #endregion
+
+                      // #region - word lists header TODO: v word lists - enable
+                      if(kDebugMode)
+                        ...[
+                          ResponsiveHeaderTile(
+                            LocaleKeys.WordListsScreen_title.tr(),
+                            Icons.list,
+                            autoSizeGroup: g_SettingsAutoSizeGroup
+                          ),
+                          // reshow tutorial
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                            icon: Icons.replay_outlined,
+                            onButtonPressed: () {
+                              GetIt.I<UserData>().showTutorialWordLists = true;
+                              settings.save();
+                              Phoenix.rebirth(context);
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                          // move down between enreegon and region anki header
+                          const Divider(),
+                        ],
+
+                      // #endregion        
+
+                      // #region - Anki header : TODO - v word lists - enable anki settings
+                      /*
                       ResponsiveHeaderTile(
                         LocaleKeys.SettingsScreen_anki_title.tr(),
-                        const IconData(
-                          0xe803,
-                          fontFamily: 'Anki',
-                        ),
+                        DaKanjiIcons.anki,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       // the default deck to add cards to
@@ -494,6 +638,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
                       */
+
+                      // #region - Clipboard header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.ClipboardScreen_title.tr(),
+                        Icons.paste,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialClipboard = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
 
                       // #region - Miscellaneous header
                       ResponsiveHeaderTile(
@@ -660,18 +827,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_reset_settings.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
-                              await clearPreferences();
+                              Settings settings = Settings();
+                              await settings.save();
                               await restartApp(context);
                             },
                           ),
-                          // Delete dict
+                          // Delete user data
                           ResponsiveIconButtonTile(
-                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_user_data.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
-                              await GetIt.I<DictionarySearch>().kill();
-                              await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
-                              await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
+                              UserData uD = UserData();
+                              await uD.save();
                               await restartApp(context);
                             },
                           ),
@@ -684,6 +851,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await restartApp(context);
                             },
                           ),
+                          // Delete dict
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+                              await GetIt.I<DictionarySearch>().kill();
+                              await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
+                              await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
+                              await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
+                              await restartApp(context);
+                            },
+                          ),
+                          // Delete dojg
+                          /* TODO v dojg enable
+                          ResponsiveIconButtonTile(
+                            text: LocaleKeys.SettingsScreen_advanced_settings_delete_dojg.tr(),
+                            icon: Icons.delete_forever,
+                            onButtonPressed: () async {
+
+                              Directory dojgDir = Directory(p.join(
+                                g_documentsDirectory.path, "DaKanji", "dojg"
+                              ));
+                              if(dojgDir.existsSync()){
+                                dojgDir.delete(recursive: true);
+                                GetIt.I<UserData>().dojgImported = false;
+                                GetIt.I<UserData>().dojgWithMediaImported = false;
+                                GetIt.I<UserData>().save();
+
+                                await restartApp(context);
+                              }
+                            },
+                          ),*/
                         ],
                       ),
                       // #endregion

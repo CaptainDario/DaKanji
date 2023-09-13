@@ -6,7 +6,6 @@ import 'package:database_builder/database_builder.dart';
 
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
@@ -51,8 +50,6 @@ class _DictionaryScreenState
   int noTabs = -1;
   /// Function that is executed when the tab was changed
   late void Function() changeTab;
-  /// Current search in the dictionary
-  DictSearch search = DictSearch();
   /// A list containing all kanjiVGs that match the selected dict entry
   List<KanjiSVG> kanjiVGs = [];
   /// A List of kanjidic2 entries thath should be shown
@@ -60,14 +57,13 @@ class _DictionaryScreenState
 
   @override
   void initState() {
-    search.currentSearch = widget.initialSearch;
     super.initState();
 
     // init tutorial
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDictionary && widget.includeTutorial) {
+        GetIt.I<UserData>().showTutorialDictionary && widget.includeTutorial) {
 
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes![0],
@@ -82,10 +78,11 @@ class _DictionaryScreenState
 
     return DaKanjiDrawer(
       currentScreen: Screens.dictionary,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: Dictionary(
         widget.includeTutorial,
         initialSearch: widget.initialSearch,
+        includeFallingWords: true,
         isExpanded: widget.initialSearch != "",
         initialEntryId: widget.initialEntryId,
         allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,

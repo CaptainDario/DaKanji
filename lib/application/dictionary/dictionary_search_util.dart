@@ -1,12 +1,9 @@
 
 
 import 'package:collection/collection.dart';
-import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
-
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 
 
@@ -158,28 +155,6 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
   return combined.map((e) => e.item1).toList();
 }
 
-/// Searches in KanjiVG the matching entries to `kanjis` and returns them
-List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
-
-  if(kanjis.isEmpty)
-    return [];
-  
-  return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-  ).findAllSync().toList();
-}
-
-/// Searches in KanjiVG the matching entries to `kanjis` and returns them
-List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){
-  
-  if(kanjis.isEmpty)
-    return [];
-    
-  return GetIt.I<Isars>().dictionary.kanjidic2s.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element)
-  ).findAllSync().toList();
-}
-
 ///  Builds a search query for the JMDict database in ISAR
 /// 
 /// Searches in the given `isar` for entries with an id between `idRangeStart`
@@ -216,9 +191,55 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
         )
       )
     )
-    .sortByFrequencyDesc()
-    .limit(200 ~/ noIsolates);
+    // filter matches that do not match in an active language
+    .group((q) => 
+      // allow kanji / hiragana matches without wildcard
+      q.optional(!containsWildcard, (q) => 
+        q.group((q) => 
+          q.kanjiIndexesElementStartsWith(query)
+            .or()
+          .hiraganasElementStartsWith(kanaizedQuery ?? query)
+        )
+      )
+      .or()
+      // allow kanji / hiragana matches with wildcard  
+      .optional(containsWildcard, (q) => 
+        q.group((q) => 
+          q.kanjisElementMatches(query)
+            .or()
+          .hiraganasElementMatches(kanaizedQuery ?? query)
+        )
+      )
+      .or()
+      // of any meaning ...
+      .meaningsElement((lMeanings) => 
+        // does any ...
+        lMeanings.anyOf(langs, (lMeaning, lang) =>
+          // active language ...
+          lMeaning.languageEqualTo(lang)
+            .and()
+          .group((q) => 
+            q
+            .optional(!containsWildcard, (q) => 
+              q.meaningsElement((meaning) => 
+                meaning.attributesElementStartsWith(query)
+              )
+            )
+            .or()
+            .optional(containsWildcard, (q) => 
+              q.meaningsElement((meaning) => 
+                meaning.attributesElementMatches(query)
+              )
+            )
+          )
+        )
+      )
+    )
+  // filter out entries 
+  .sortByFrequencyDesc()
+  .limit(200 ~/ noIsolates);
 }
+
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
   Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
@@ -229,7 +250,6 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
     .hiraganasElementStartsWith(kanaizedQuery ?? query)
       .or()
     .meaningsIndexesElementStartsWith(query)
-
   .filter()
     // limit this process to one chunk of size (entries.length / num_processes)
     .idBetween(idRangeStart, idRangeEnd)

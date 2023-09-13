@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 

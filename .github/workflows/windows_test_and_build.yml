@@ -10,7 +10,11 @@ on:
 
   # allows that other workflows can run this one
   workflow_call:
-    #secrets:
+    secrets:
+      SELF_SIGN_MSIX_PFX:
+        required: true
+      SELF_SIGN_MSIX_PWD:
+        required: true
 
 #env:
 
@@ -42,15 +46,32 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
-      # download all files necessary to run dakanji
-      - name: setup dakanji
-        run: python3 setup.py
+      # get / set dakanji assets from cache
+      - name: Check dakanji assets in cache
+        id: cache-dakanji-assets-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: tmp
+          key: dakanji-assets
+      - name: Download DaKanji assets if necessary
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        run: |
+          python3 setup.py --download-all --no-delete
+      - name: Move DaKanji assets if in cache
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
+        run: |
+          python3 setup.py --no-download 
+      - name: Save dakanji assets to cache if not saved
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        id: cache-dakanji-assets-save
+        uses: actions/cache/save@v3
+        with:
+          path: tmp
+          key: dakanji-assets
 
-      # TESTS  
-      #- name: Analyze
-      #  run: flutter analyze
-      #- name: Run integration tests
-      #  run: python ./integration_test/run_tests.py
+      # TESTS
+      - name: Run integration tests
+        run: python ./integration_test/run_tests.py
 
       # build exe and upload to artifacts
       - name: build exe
@@ -60,12 +81,12 @@ jobs:
         run: >
           Compress-Archive
           -Path build/windows/runner/Release/*
-          -Destination DaKanji_${{env.DAKANJI_VERSION}}_win.zip
+          -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
-          path: build/windows/runner/Release/
+          path: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
 
       # build and sign .msix for github release
       - name: Create PFX certificate for gh msix
@@ -84,10 +105,27 @@ jobs:
           --build-windows=false
           -c ./keys/dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
+      - name: rename non store msix
+        working-directory: build\windows\runner\Release\
+        shell: powershell
+        run: >	
+          Rename-Item
+          -Path da_kanji_mobile.msix
+          -NewName DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
       - name: Archive msix gh production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+          path: build\windows\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+
+      # build MSIX for MS Store and upload
+      - name: build and sign non-store MSIX
+        run: |
+          flutter pub run msix:create --build-windows=false --store
+      - name: Archive msix store production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
 
       # build MSIX for MS Store and upload

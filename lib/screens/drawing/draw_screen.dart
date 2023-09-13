@@ -32,7 +32,7 @@ class DrawScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// A prefix that is prepended to every search query
   final String searchPrefix;
-  /// A prefix that is appended to every search query
+  /// A postfix that is appended to every search query
   final String searchPostfix;
   /// should the hero widgets for animating to the webview be included
   final bool includeHeroes;
@@ -58,7 +58,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
-  bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showShowcaseDrawing;
+  bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showTutorialDrawing;
   /// Future that completes and returns true when the drawing interpreter 
   /// has been initialized
   Future<void>? initInterpter;
@@ -88,7 +88,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
-        GetIt.I<UserData>().showShowcaseDrawing && widget.includeTutorial) {
+        GetIt.I<UserData>().showTutorialDrawing && widget.includeTutorial) {
 
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.indexes![0],
@@ -121,7 +121,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     return DaKanjiDrawer(
       currentScreen: Screens.drawing,
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       child: ChangeNotifierProvider.value(
         value: GetIt.I<DrawScreenState>().strokes,
         child: FutureBuilder(

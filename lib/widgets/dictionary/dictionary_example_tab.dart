@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -35,10 +36,12 @@ class DictionaryExampleTab extends StatefulWidget {
 
 class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
-  /// A list of all example sentences that contain `widget.entry.kanjis.first`
+  /// A list of all example sentences that contain the given entry
   List<ExampleSentence> examples = [];
-
-  Future<List<ExampleSentence>>? dictSearch = null;
+  /// The future that searches for examples in an isolate
+  Future<List<ExampleSentence>>? examplesSearch = null;
+  /// A spans (start, end) that matched the current dict entry
+  List<List<Tuple2<int, int>>> matchSpans = [];
 
 
   @override
@@ -61,7 +64,6 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
-    
       List<String> kanjiSplits = widget.entry!.kanjis.map((e) => 
         GetIt.I<Mecab>().parse(e)
           .where((e) => e.features.length > 6)
@@ -70,7 +72,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       .expand((e) => e)
       .toList();
 
-      dictSearch = compute(searchExamples, Tuple7(
+      examplesSearch = (compute(searchExamples, Tuple7(
         selectedLangs,
         widget.entry!.kanjis,
         widget.entry!.readings,
@@ -78,20 +80,26 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
         kanjiSplits,
         limit,
         GetIt.I<Isars>().examples.directory
-      )).then((value) => examples = value);
+      )).then((value) {
+        examples = value;
+        matchSpans = getMatchSpans();
+        return examples;
+      }));
     }    
-
   }
   
 
   @override
   Widget build(BuildContext context) {
 
+    if(widget.entry == null)
+      return Container();
+
     return FutureBuilder(
-      future: dictSearch,
+      future: examplesSearch,
       builder: (context, snapshot) {
         // Is data loading
-        if(snapshot.connectionState != ConnectionState.done){
+        if(!snapshot.hasData){
           return Center(
             child: DaKanjiLoadingIndicator()
           );
@@ -123,7 +131,8 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
                 );
 
               return ExampleSentenceCard(
-                examples[no]
+                examples[no],
+                matchSpans[no]
               );
             }
           );
@@ -132,6 +141,56 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     );
 
     
+  }
+
+  /// Get a list of lists of TextSpan that mark the entry's word in the example sentences
+  List<List<Tuple2<int, int>>> getMatchSpans(){
+
+    List<List<Tuple2<int, int>>> matchSpans = [];
+
+    for (var e = 0; e < this.examples.length; e++) {
+      matchSpans.add([]);
+
+      // parse example sentence and kanjis of this entry with mecab
+      String example = examples[e].sentence;
+      List<TokenNode> parsedExample = GetIt.I<Mecab>().parse(example);
+
+      for (List<String> items in [widget.entry!.kanjis, widget.entry!.readings, widget.entry!.hiraganas]){
+        for (int k = 0; k < items.length; k++){
+          String item = items[k];
+
+          // does the kanji of the entry match
+          int match = example.indexOf(item);
+          while(match != -1) {
+            matchSpans.last.add(Tuple2(match, match+item.length));
+            match = example.indexOf(item, min(match+1, example.length));
+          }
+        }
+      }
+      
+      for (int i = 0; i < parsedExample.length; i++){
+        if(parsedExample[i].features.length > 5){
+
+          int lengthToCurrentWord = parsedExample.sublist(0, i).map((e) => e.surface).join("").length;
+
+          // get the current span and check if a highlight has already been added for it
+          Tuple2<int, int> currentSpan = Tuple2(lengthToCurrentWord, lengthToCurrentWord+parsedExample[i].surface.length);
+          if(matchSpans.last.contains(currentSpan))
+            continue;
+
+          if(widget.entry!.kanjis.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
+          }
+          else if(widget.entry!.readings.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
+          }
+          else if(widget.entry!.hiraganas.contains(parsedExample[i].features[6])){
+            matchSpans.last.add(currentSpan);
+          }
+        }
+      }
+    }
+    return matchSpans;
   }
 }
 
@@ -142,12 +201,9 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   List<String> kanjis = query.item2;
   List<String> readings = query.item3;
   List<String> hiraganas = query.item4;
-  List<String> kanjiSplits = query.item5;
+  //List<String> kanjiSplits = query.item5;
   int limit = query.item6;
   String isarPath = query.item7;
-
-  print(selectedLangs);
-
   
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
@@ -159,28 +215,32 @@ List<ExampleSentence> searchExamples(Tuple7 query){
       // any kanji matches
         .anyOf(kanjis, (q, element) => q.mecabBaseFormsElementEqualTo(element))
       .or()
-      // any reading matches
+        // any reading matches
         .anyOf(readings, (q, element) => q.mecabBaseFormsElementEqualTo(element))
       .or()
       // any hiragana matches
         .anyOf(hiraganas, (q, element) => q.mecabBaseFormsElementEqualTo(element))
-      
     .filter()
-      // exclude examples that do not contain any translation in any of the
-      // selected languages
+      // exclude examples that do not contain any translation in any of the selected languages
       .translationsElement((q) => 
-        q.anyOf(
-          selectedLangs,
-          (q, element) => q.languageEqualTo(isoToiso639_3[element]!.name))
+        q.anyOf(selectedLangs, (q, element) => 
+          q.languageEqualTo(isoToiso639_3[element]!.name))
       )
     .optional(limit != -1, (q) => q.limit(limit))
     .findAllSync();
 
-  if(examples.isEmpty){
+  /// if there are no examples try to match the word with sentence (no mecab transforms)
+  if(examples.isEmpty && kanjis.isNotEmpty){
     examples = examplesIsar.exampleSentences
       .filter()
-        // mecab splits of all kanjis must match
-        .allOf(kanjiSplits, (q, e) => q.mecabBaseFormsElementEqualTo(e))
+        .anyOf(kanjis, (q, kanji) => q.sentenceContains(kanji))
+      .or()
+        .anyOf(readings, (q, reading) => q.sentenceContains(reading))
+        // apply language filters
+        .translationsElement((q) => 
+          q.anyOf(selectedLangs, (q, element) => 
+            q.languageEqualTo(isoToiso639_3[element]!.name))
+        )
       .optional(limit != -1, (q) => q.limit(limit))
       .findAllSync();
   }
@@ -199,6 +259,5 @@ List<ExampleSentence> searchExamples(Tuple7 query){
     return bScore - aScore;
   });
 
-  print(examples.length);
   return examples;
 }

@@ -10,15 +10,6 @@ import 'package:da_kanji_mobile/domain/settings/settings.dart';
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
-  const SearchResultCard(
-    {
-      required this.dictEntry,
-      required this.resultIndex,
-      this.showWordFrequency = false,
-      this.onPressed,
-      Key? key
-    }
-  ) : super(key: key);
 
   /// The reading that should be displayed in this card
   final JMdict dictEntry;
@@ -26,9 +17,22 @@ class SearchResultCard extends StatefulWidget {
   final bool showWordFrequency;
   /// The index of this result in the search results
   final int resultIndex;
+
+  final FocusNode? focusNode;
   /// Callback that is invoked if the card is pressed, passes `dict_entry`
   /// as parameter
   final Function(JMdict selection)? onPressed;
+
+  const SearchResultCard(
+    {
+      required this.dictEntry,
+      required this.resultIndex,
+      this.showWordFrequency = false,
+      this.focusNode,
+      this.onPressed,
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();
@@ -60,13 +64,18 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
   @override
   Widget build(BuildContext context) {
+    // if this entry does not have any translation that the user has selected in the settings
+    if(!GetIt.I<Settings>().dictionary.selectedTranslationLanguages.any((selection) =>
+      widget.dictEntry.meanings.map((meaning) => isoToiso639_1[meaning.language]!.name)
+      .contains(selection)))
+      return Container();
+
     return Card(
       child: InkWell(
+        focusNode: widget.focusNode,
         borderRadius: BorderRadius.circular(5.0),
         onTap: () {
-          if(widget.onPressed != null) {
-            widget.onPressed!(widget.dictEntry);
-          }
+          widget.onPressed?.call(widget.dictEntry);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -118,6 +127,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
                                 cnt += 1;
                               }
                             }
+                            // if there is no language selected that is available for this entry
+                            if(idx == -1)
+                              return Text("");
+
                             return Text(
                               widget.dictEntry.meanings[idx].meanings.length > index
                                 ? "${(index+1).toString()}. ${widget.dictEntry.meanings[idx].meanings[index].attributes.join(", ")}"

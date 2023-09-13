@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:database_builder/database_builder.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
 import 'search_result_card.dart';
 
 
@@ -15,6 +17,11 @@ class SearchResultList extends StatefulWidget {
   final bool reversed;
   /// If true the word frequency will be displayed
   final bool showWordFrequency;
+  /// Function that is called after the search results have been initialized
+  /// provides
+  /// * [DictSearchResultController] for controlling the search results
+  /// as argument 
+  final void Function(DictSearchResultController controller)? init;
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
@@ -28,6 +35,7 @@ class SearchResultList extends StatefulWidget {
       required this.searchResults,
       this.reversed = false,
       this.showWordFrequency = false,
+      this.init,
       this.onSearchResultPressed,
       this.onDismissed,
       super.key
@@ -39,14 +47,57 @@ class SearchResultList extends StatefulWidget {
 }
 
 class _SearchResultListState extends State<SearchResultList> {
+
+  
+  /// [DictSearchResultController] to focus between the different search results
+  late DictSearchResultController dictSearchResultController;
+  /// [ItemScrollController] controller to scroll to items if they are not visible
+  ItemScrollController itemScrollController = ItemScrollController();
+  /// [ItemPositionsListener] to check which search results are currently visible 
+  ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SearchResultList oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init(){
+
+    final searchResultsFocusses =
+      List.generate(widget.searchResults.length, (index) => FocusNode());
+    dictSearchResultController = DictSearchResultController(
+      searchResultsFocusses,
+      itemScrollController,
+      itemPositionsListener
+    );
+
+    widget.init?.call(dictSearchResultController);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ScrollablePositionedList.builder(
       itemCount: widget.searchResults.length,
+      itemScrollController: itemScrollController,
+      itemPositionsListener: itemPositionsListener,
       itemBuilder: ((context, index) {
         // determine index based on 
         int i = widget.reversed ? widget.searchResults.length-index-1 : index;
-
+    
         return Dismissible(
           key: ValueKey(widget.searchResults[i].id),
           direction: widget.onDismissed != null
@@ -68,9 +119,9 @@ class _SearchResultListState extends State<SearchResultList> {
             dictEntry: widget.searchResults[i],
             resultIndex: i,
             showWordFrequency: widget.showWordFrequency,
+            focusNode: dictSearchResultController.searchResultsFocusses[i],
             onPressed: (selection) {
-              if(widget.onSearchResultPressed != null)
-                  widget.onSearchResultPressed!(selection);
+              widget.onSearchResultPressed?.call(selection);
             } 
           ),
         );

@@ -42,25 +42,48 @@ class UserData{
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool getNewExamples = false;
 
-  /// should the showcase of the draw screen be shown
-  @JsonKey(defaultValue: true)
-  bool showShowcaseDrawing = true;
+  /// Should new examples be downloaded / copied from the assets folder
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool getNewRadicals = false;
 
-  /// should the showcase of the dictionary screen be shown
-  @JsonKey(defaultValue: true)
-  bool showShowcaseDictionary = true;
+  @JsonKey(defaultValue: null)
+  DateTime? userRefusedUpdate;
 
-  /// should the showcase of the text screen be shown
+  /// should the tutorial of the draw screen be shown
   @JsonKey(defaultValue: true)
-  bool showShowcaseText = true;
+  bool showTutorialDrawing = true;
 
-  /// should the onboarding be shown
+  /// should the tutorial of the dictionary screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialDictionary = true;
+
+  /// should the tutorial of the text screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialText = true;
+
+  /// should the tutorial of the clipboard screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialClipboard = true;
+
+  /// should the tutorial of the kanji table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialKanjiTable = true;
+
+  /// should the tutorial of the kana table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialKanaTable = true;
+
+  /// should the tutorial of the kana table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialWordLists = true;
+
+  /// should the App's onboarding be shown
   @JsonKey(defaultValue: true)
   bool showOnboarding = true;
 
   /// should the rate popup be shown
   @JsonKey(defaultValue: false)
-  bool showRatePopup = false;
+  bool showRateDialog = false;
 
   /// should the onboarding be shown
   @JsonKey(defaultValue: false)
@@ -98,7 +121,7 @@ class UserData{
       
       // any version newer than `versionUsed` has new drawing tutorial steps
       if(g_DrawingScreenNewFeatures.any((v) => v > versionUsed!)){
-        showShowcaseDrawing = true;
+        showTutorialDrawing = true;
       }
       // any version newer than `versionUsed` has new onboarding pages
       if(g_OnboardingNewPages.any((v) => v > versionUsed!)){
@@ -112,9 +135,12 @@ class UserData{
       if(g_NewExamples.any((v) => v > versionUsed!)){
         getNewExamples = true;
       }
-
-      versionUsed = g_Version;
+      // any version newer than `versionUsed` has newer radicals data
+      if(g_NewRadicals.any((v) => v > versionUsed!)){
+        getNewRadicals = true;
+      }
     }
+    versionUsed = g_Version;
 
     // this is the first start of the app
     if (appOpenedTimes == 1){
@@ -125,7 +151,7 @@ class UserData{
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
      print("show rate dialogue");
-      showRatePopup = true;
+      showRateDialog = true;
     }
 
     // DEBUGGING: onboarding, changelog, rate popup
