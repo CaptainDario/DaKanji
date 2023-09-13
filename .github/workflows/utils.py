@@ -38,12 +38,17 @@ def set_github_env(name : str, value : str):
     with open(env_file, "a") as f:
         f.write(f"{name}={value}\n")
 
-def get_latest_changes() -> str:
+def get_latest_changes(include_header : bool = True) -> str:
     """ Reads the Changelog from the last release and returns it.
     """
     with open("CHANGELOG.md", mode="r", encoding="utf8") as f:
         changelog = f.read()
 
     newest_changes = re.search("##(.*?)----------------", changelog, re.DOTALL).groups()[0]
+
+    if(not include_header):
+        matches = re.search("(.*?\\n\\n)", newest_changes)
+        match = matches.groups(0)[0]
+        newest_changes = newest_changes.replace(match, "")
 
     return newest_changes

@@ -39,7 +39,7 @@ def create_release_notes_txt():
     with open(".github/workflows/github_release_text.txt", mode="r") as f:
         release_notes = f.read()
     
-    release_notes = release_notes.replace("CHANGELOG", utils.get_latest_changes())
+    release_notes = release_notes.replace("CHANGELOG", utils.get_latest_changes(include_header=False))
 
     with open("release_notes.txt", mode="w+", encoding="utf8") as f:
         f.write(release_notes)
@@ -101,7 +101,8 @@ def check_build_number_unused():
 
 if __name__ == "__main__":
     
-    arg = sys.argv[1]
+    arg = None
+    #arg = sys.argv[1]
 
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
@@ -115,7 +116,7 @@ if __name__ == "__main__":
     if(arg == "update_snapcraft_yaml"):
         update_snapcraft_yaml()
 
-    if(arg == "create_release_notes_txt"):
+    if(arg == "create_release_notes_txt" or True):
         create_release_notes_txt()
 
     if(arg == "comment_large_assets_in_pubspec"):
