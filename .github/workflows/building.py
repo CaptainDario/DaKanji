@@ -101,8 +101,7 @@ def check_build_number_unused():
 
 if __name__ == "__main__":
     
-    arg = None
-    #arg = sys.argv[1]
+    arg = sys.argv[1]
 
     if(arg == "set_env_flutter_version"):
         set_env_flutter_version()
@@ -116,7 +115,7 @@ if __name__ == "__main__":
     if(arg == "update_snapcraft_yaml"):
         update_snapcraft_yaml()
 
-    if(arg == "create_release_notes_txt" or True):
+    if(arg == "create_release_notes_txt"):
         create_release_notes_txt()
 
     if(arg == "comment_large_assets_in_pubspec"):
