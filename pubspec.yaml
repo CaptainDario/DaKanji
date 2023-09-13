@@ -34,7 +34,7 @@ dependencies:
   flutter_markdown: 0.6.13
   get_it: 7.2.0
   provider: 6.0.3
-  universal_io: 2.2.0
+  universal_io: 2.2.2
   awesome_dialog: 3.1.0
   easy_localization: 3.0.2
   flutter_layout_grid: 2.0.4
@@ -62,9 +62,9 @@ dependencies:
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
-  media_kit: ^1.1.7                              # Primary package.
-  media_kit_video: ^1.1.8                        # For video rendering.
-  media_kit_libs_video: ^1.0.1                   # Native video dependencies.
+  media_kit: 1.1.7                              # Primary package.
+  media_kit_video: 1.1.8                        # For video rendering.
+  media_kit_libs_video: 1.0.1                   # Native video dependencies.
   #kana_kit: any # included in dakanji dictionary
   liquid_swipe:
     git:
@@ -111,6 +111,14 @@ dependency_overrides:
   tflite_flutter:
     git:
       url: https://github.com/CaptainDario/tflite_flutter_plugin
+  app_links:
+    git:
+      url: https://github.com/LucasXu0/app_links
+      ref: c64ce17
+  url_protocol:
+    git:
+      url: https://github.com/LucasXu0/flutter_url_protocol.git
+      commit: 77a8420
 
 msix_config:
   display_name: DaKanji

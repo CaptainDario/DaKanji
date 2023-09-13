@@ -72,8 +72,20 @@ jobs:
           ls -la
           gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
  
-      # TODO upload flatpak to GH release
-
+      # get flatpak artifact and upload it to GH release
+      - name: get build artifacts for flatpak
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: com.DaAppLab.DaKanji.flatpak
+          path: artifacts
+      - name: upload flatpak to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la artifacts
+          gh release upload gh_action artifacts/com.DaAppLab.DaKanji.flatpak --clobber
 
       # get snap artifact and upload it to GH release and snap store
       - name: get build artifacts for snap

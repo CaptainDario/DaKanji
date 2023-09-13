@@ -89,10 +89,14 @@ ios/build/**
 # flatpak
 build-dir
 repo
-flatpak/.flatpak-builder
+dakanji_flatpak_repo
 .flatpak-builder
+flatpak_build
+flatpak/.flatpak-builder
+flatpak/build
 flatpak/DaKanji
 flatpak/DaKanji.zip
 flatpak/DaKanji.tar.xz
 flatpak/DaKanji.tar.gz
+flatpak/bundle.zip
 com.DaAppLab.DaKanji.flatpak
