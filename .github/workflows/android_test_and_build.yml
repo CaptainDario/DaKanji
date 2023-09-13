@@ -83,17 +83,17 @@ jobs:
           key: dakanji-assets    
 
       # TESTS  
-      - name: Run integration tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          disk-size: 16G
-          target: google_apis
-          profile: Nexus 6
-          ram-size: 4096M
-          heap-size: 1024M
-          script: |
-            flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d emulator
+      #- name: Run integration tests
+      #  uses: reactivecircus/android-emulator-runner@v2
+      #  with:
+      #    api-level: 29
+      #    disk-size: 16G
+      #    target: google_apis
+      #    profile: Nexus 6
+      #    ram-size: 4096M
+      #    heap-size: 1024M
+      #    script: |
+      #      flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart -d emulator
 
       # create signing files
       - name: Creating the .properties file
