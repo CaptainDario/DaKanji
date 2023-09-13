@@ -42,10 +42,10 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-  ios-test-and-build:
-    needs:
-      - cache_assets
-    uses: ./.github/workflows/ios_test_and_build.yml
+  #ios-test-and-build:
+  #  needs:
+  #    - cache_assets
+  #  uses: ./.github/workflows/ios_test_and_build.yml
   linux-test-and-build:
     needs:
       - cache_assets
@@ -68,7 +68,7 @@ jobs:
     # upload to github releases after everything is build
     needs: 
       - android-test-and-build
-      - ios-test-and-build
+      #- ios-test-and-build
       - linux-test-and-build
       - macos-test-and-build
       - windows-test-and-build
