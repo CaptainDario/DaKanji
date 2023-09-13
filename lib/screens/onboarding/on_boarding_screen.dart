@@ -53,10 +53,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   @override
   void initState() { 
     super.initState();
-
-    // DO NOT loop the onboarding dragging animation when the startup process
-    // is being tested
-    if(!g_IsTestingAppStartup) _controller.repeat(reverse: true);
     
     scaleAnimation = Tween(
       begin: 0.5,

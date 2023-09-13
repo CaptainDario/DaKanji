@@ -10,6 +10,7 @@ repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/relea
 tmp_dir = "tmp"
 move_to_blobs = ["libtensorflow", "libmecab"]
 move_to_dict  = ["dict", "examples", "krad", "radk"]
+move_to_tf_lite = ["CNN_single_char.tflite"]
 files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 
 release_url = None
@@ -26,11 +27,11 @@ def exclude_files_per_platform():
     elif(sys.platform.startswith("darwin")):
         files_to_exclude.append("libtensorflowlite_c-linux.so")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab_x86.dll")
+        files_to_exclude.append("libmecab.dll")
     elif(sys.platform.startswith("linux")):
         files_to_exclude.append("libtensorflowlite_c-mac.dylib")
         files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab_x86.dll")
+        files_to_exclude.append("libmecab.dll")
 
 def get_release_url():
     """ gets the url to the latest assets release of DaKanji
@@ -43,7 +44,6 @@ def get_release_url():
         print("Downloading assets for version: ", assets_version)
 
     return repo_url + "v" + assets_version
-
 
 def download_assets():
     """ Downloads all assets for DaKanji
@@ -88,13 +88,14 @@ def move_assets():
         if(f.startswith("ipadic")):
             shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
 
+        # move tf lite assets
+        if(f.startswith(tuple(move_to_tf_lite))):
+            shutil.copy(f"{tmp_dir}/{f}", "assets/tflite_models/")
+        
+        
         # move the dictionary related assets
         if(f.startswith(tuple(move_to_dict))):
             shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
-
-    # delete temp dir
-    print("Deleting temporary folder")
-    shutil.rmtree(tmp_dir)
 
 
 
@@ -102,13 +103,29 @@ if __name__ == "__main__":
 
     print("Setting up DaKanji")
 
-    exclude_files_per_platform()
-    
-    release_url = get_release_url()
+    args = sys.argv[1:]
 
-    download_assets()        
+    if("--help" in args or "-h" in args):
+        print("""
+        --download-all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
+        --no_download  : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
+        --no-delete    : Do not delete the tmp folder
+        """)
+        sys.exit(0)
+
+    if("--download-all" not in args):
+        exclude_files_per_platform()
+    
+    if("--no-download" not in args):
+        release_url = get_release_url()
+        download_assets()
 
     move_assets()
+
+    if("--no-delete" not in args):
+        # delete temp dir
+        print("Deleting temporary folder")
+        shutil.rmtree(tmp_dir)
 
     print("Setup done! Run: \n flutter run")
     
