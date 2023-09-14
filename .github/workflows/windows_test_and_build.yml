@@ -127,23 +127,3 @@ jobs:
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
           path: build\windows\runner\Release\da_kanji_mobile.msix
-
-      # build MSIX for MS Store and upload
-      - name: build and sign non-store MSIX
-        run: |
-          flutter pub run msix:create --build-windows=false --store
-      - name: Archive msix store production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
-
-      # Use Store Broker to publish to Microsoft Store
-      - name: Publish to MS Store
-        uses: isaacrlevin/windows-store-action
-        with:
-          tenant-id: ${{ secrets.AZURE_AD_TENANT_ID }}
-          client-id: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
-          client-secret: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
-          app-id: ${{ secrets.STORE_APP_ID }}
-          package-path: "${{ github.workspace }}/ReleaseSigned/MyApp.appxupload"
