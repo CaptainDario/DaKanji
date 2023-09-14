@@ -7,22 +7,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  windows-test-and-build:
-    uses: ./.github/workflows/windows_test_and_build.yml
-    #secrets:
 
-  linux-test-and-build:
-    uses: ./.github/workflows/linux_test_and_build.yml
-    #secrets:
+  static_checks:
+    uses: ./.github/workflows/static_checks.yml
 
-  macos-test-and-build:
-    uses: ./.github/workflows/macos_test_and_build.yml
-    #secrets:
-
+  cache_assets:
+    needs:
+      - static_checks
+    uses: ./.github/workflows/get_dakanji_assets.yml
+  
   android-test-and-build:
     uses: ./.github/workflows/android_test_and_build.yml
-    #secrets:
+    needs:
+      - cache_assets
+    secrets:
+      KEY_PROPERTIES_KEY_PASSWORD: ${{ secrets.KEY_PROPERTIES_KEY_PASSWORD }}
+      KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
+      KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
-  ios-test-and-build:
-    uses: ./.github/workflows/ios_test_and_build.yml
-    #secrets:
+  #ios-test-and-build:
+  #  needs:
+  #    - cache_assets
+  #  uses: ./.github/workflows/ios_test_and_build.yml
+
+  linux-test-and-build:
+    needs:
+      - cache_assets
+    uses: ./.github/workflows/linux_test_and_build.yml
+  macos-test-and-build:
+    needs:
+      - cache_assets
+    uses: ./.github/workflows/macos_test_and_build.yml
+  windows-test-and-build:
+    needs:
+      - cache_assets
+    secrets:
+      SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
+      SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
+    uses: ./.github/workflows/windows_test_and_build.yml
