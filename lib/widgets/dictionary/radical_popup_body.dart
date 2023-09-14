@@ -51,15 +51,6 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   /// Is the kanji part of the popup larger
   bool kanjiIsFullscreen = false;
 
-  late Map<int, List<String>> radicalsByStrokeOrder;
-
-  @override
-  void initState() {
-    
-    radicalsByStrokeOrder = radk.getRadicalsByStrokeOrder(widget.kradIsar);
-    
-    super.initState();
-  }
 
   @override
   void initState() {
