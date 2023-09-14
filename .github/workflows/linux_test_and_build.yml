@@ -101,6 +101,11 @@ jobs:
         with:
           name: com.DaAppLab.DaKanji.flatpak
           path: com.DaAppLab.DaKanji.flatpak
+      - name: Clean after flatpak
+        run: |
+          rm com.DaAppLab.DaKanji.flatpak
+          rm -rf flatpak/repo
+          rm -rf flatpak/build-dir
 
       # build SNAP
       - name: prepare snap building
