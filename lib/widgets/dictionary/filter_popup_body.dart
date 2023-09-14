@@ -52,18 +52,6 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
   }
 
   @override
-  void initState() {
-    
-    // get current filters from search bar
-    selectedFilters = widget.searchController.text.split(" ")
-      .where((e) => e.startsWith("#"))
-      .map((e) => e.replaceAll("#", ""))
-      .toList();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     int crossAxisCount = max([MediaQuery.of(context).size.width ~/ 200, 1])!;
