@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
@@ -245,11 +244,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                             }
                           });
                         },
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          child: Icon(Icons.brush)
-                        ),
                       ),
                     ),
                     // text input
