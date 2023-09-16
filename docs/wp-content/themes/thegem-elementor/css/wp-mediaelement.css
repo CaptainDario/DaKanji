@@ -1,0 +1,317 @@
+/* AUDIO & VIDEO PLAYER */
+
+audio {
+	height: 80px;
+}
+.mejs-container *:focus {
+	outline: 0 none;
+}
+.mejs-poster {
+	background-size: cover;
+}
+.mejs-overlay {
+	width: 100%;
+	height: 100%;
+}
+.mejs-container.mejs-audio {
+	height: 80px !important;
+}
+.mejs-container .mejs-layers .mejs-poster {
+	width: 100%;
+	height: 100%;
+}
+.mejs-container .mejs-layers .mejs-poster img {
+	display: none;
+}
+.mejs-container .mejs-controls,
+.news-grid .format-audio .post-featured-content {
+	background: #e3ebe8;
+	height: 80px;
+}
+.mejs-container .mejs-controls div {
+	font: inherit;
+}
+.mejs-container .mejs-controls .mejs-time {
+	position: relative;
+	padding: 0;
+	width: 0;
+	height: 0;
+	color: #99a9b5;
+	overflow: visible;
+}
+.mejs-container .mejs-controls .mejs-time .mejs-currenttime,
+.mejs-container .mejs-controls .mejs-time .mejs-duration {
+	position: absolute;
+	top: 5px;
+}
+.mejs-container .mejs-controls .mejs-time .mejs-currenttime {
+	margin-left: 5px;
+}
+.mejs-container .mejs-controls .mejs-time .mejs-duration {
+	margin-left: -5px;
+	transform: translateX(-100%);
+}
+.mejs-container .mejs-controls .mejs-button {
+	width: 35px;
+	height: 100%;
+}
+.mejs-controls .mejs-button button {
+	margin: 25px 0 0 7px;
+	text-align: center;
+	height: 30px;
+	width: 30px;
+	line-height: 30px;
+	outline: 0 none;
+	background: none;
+}
+.mejs-controls .mejs-button button:focus {
+	outline: 0 none;
+}
+.mejs-controls .mejs-button button:after {
+	font-family: 'thegem-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 30px;
+}
+.mejs-container .mejs-controls .mejs-button.mejs-playpause-button {
+	width: 50px;
+}
+.mejs-controls .mejs-button.mejs-playpause-button button {
+	height: 36px;
+	width: 36px;
+	line-height: 36px;
+	margin: 22px 0 0 12px;
+}
+.mejs-controls .mejs-button.mejs-playpause-button.mejs-play button:after,
+.mejs-controls .mejs-button.mejs-playpause-button.mejs-pause button:after {
+	color: #00bcd4;
+	font-size: 36px;
+}
+.mejs-controls .mejs-button.mejs-playpause-button.mejs-replay button:after,
+.mejs-controls .mejs-button.mejs-playpause-button.mejs-play button:after {
+	content: '\e655';
+}
+.mejs-controls .mejs-button.mejs-playpause-button.mejs-pause button:after {
+	content: '\e656';
+}
+.mejs-controls div.mejs-time-rail {
+	padding-top: 32px;
+}
+.mejs-controls .mejs-time-rail span, .mejs-controls .mejs-time-rail a {
+	border-radius: 0;
+	height: 8px;
+}
+.mejs-controls .mejs-time-rail span.mejs-time-float {
+	height: 17px;
+}
+.mejs-controls .mejs-time-rail .mejs-time-total {
+	background: #99a9b5;
+}
+.mejs-controls .mejs-time-rail .mejs-time-loaded {
+	background: #ffd553;
+}
+.mejs-controls .mejs-time-rail .mejs-time-current {
+	background: #3c3950;
+}
+.mejs-controls .mejs-time-rail .mejs-time-handle {
+	display: none;
+}
+.mejs-controls .mejs-time-rail .mejs-time-handle .mejs-time-handle-content {
+	display: none;
+}
+.mejs-controls .mejs-time-rail .mejs-time-float-current {
+	font-size: 10px;
+	line-height: 12px;
+}
+.mejs-controls .mejs-time-rail .mejs-time-float-corner {
+	border-color: #3c3950 transparent transparent;
+}
+.mejs-controls .mejs-button.mejs-volume-button.mejs-mute button:after {
+	content: '\e657';
+	color: #99a9b5;
+}
+.mejs-controls .mejs-button.mejs-volume-button.mejs-unmute button:after {
+	content: '\e658';
+	color: #99a9b5;
+}
+.mejs-controls .mejs-button.mejs-fullscreen-button {
+	width: 45px;
+}
+.mejs-controls .mejs-button.mejs-fullscreen-button button {
+	margin-left: 5px;
+}
+.mejs-controls .mejs-button.mejs-fullscreen-button button:after {
+	content: '\e659';
+	color: #99a9b5;
+}
+.mejs-controls .mejs-button.mejs-fullscreen-button.mejs-unfullscreen button:after {
+	content: '\e65a';
+	color: #99a9b5;
+}
+.mejs-overlay-button {
+	background: none;
+	line-height: 100px;
+	opacity: 0.8;
+	width: 100px;
+	height: 100px;
+}
+.mejs-overlay-button:after {
+	font-family: 'thegem-icons';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100px;
+	content: '\e655';
+	color: #ffffff;
+}
+.mejs-controls .mejs-volume-button .mejs-volume-slider {
+	background: #f1f5f6;
+	width: 36px;
+	left: 5px;
+	height: 110px;
+	top: -80px;
+	bottom: auto;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform: none;
+}
+.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total {
+	background: #99a9b5;
+	width: 6px;
+	left: 15px;
+	top: 10px;
+	height: 90px;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform: none;
+}
+.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-current {
+	background: #3c3950;
+	width: 6px;
+	left: 15px
+}
+.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-handle {
+	background: #3c3950;
+	left: 50%;
+	margin-left: -8px;
+}
+
+.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total .mejs-volume-current {
+	width: 100%;
+	left: 0;
+}
+
+.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total .mejs-volume-handle {
+	margin-left: 0;
+}
+
+.mejs-controls a.mejs-horizontal-volume-slider {
+	margin-top: 38px;
+}
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+	border-radius: 0;
+	height: 5px;
+	background: #d7e0e3;
+}
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+	border-radius: 0;
+	height: 6px;
+	background: #d7e0e3;
+	top: 0px;
+}
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
+	border-radius: 0;
+	height: 6px;
+	background: #3c3950;
+	top: 0px;
+}
+.mejs-container.mejs-audio .mejs-controls .mejs-button.mejs-volume-button {
+	width: 50px;
+}
+.mejs-container.mejs-audio .mejs-controls .mejs-button.mejs-volume-button button {
+	margin-right: 0;
+}
+
+.mejs-overlay-loading {
+	background: transparent;
+}
+
+.small-item.format-video .mejs-overlay-button {
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+}
+
+.small-item.format-video .mejs-overlay-button:after {
+	font-size: 60px;
+}
+
+.small-item.format-video .mejs-container .mejs-controls .mejs-time {
+	display: none;
+}
+
+.small-item.format-video .mejs-controls div.mejs-time-rail {
+	padding-top: 10px;
+}
+
+.small-item.format-video .mejs-controls .mejs-time-rail span,
+.small-item.format-video .mejs-controls .mejs-time-rail a {
+	height: 5px;
+}
+
+.small-item.format-video .mejs-controls .mejs-time-rail .mejs-time-handle {
+	height: 17px;
+	margin-top: -10px;
+}
+
+.small-item.format-video .mejs-controls .mejs-button.mejs-playpause-button button {
+	width: 27px;
+	height: 27px;
+	line-height: 27px;
+	margin: 4px 0 0 0;
+}
+
+.small-item.format-video .mejs-controls .mejs-button.mejs-playpause-button.mejs-play button:after,
+.small-item.format-video .mejs-controls .mejs-button.mejs-playpause-button.mejs-pause button:after {
+	font-size: 27px;
+}
+
+.small-item.format-video .mejs-controls .mejs-button,
+.small-item.format-video .mejs-controls .mejs-button.mejs-fullscreen-button {
+	width: 30px;
+}
+
+.small-item.format-video .mejs-controls .mejs-button.mejs-fullscreen-button {
+	width: 25px;
+}
+
+.small-item.format-video .mejs-controls .mejs-button button {
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	margin: 5px 0 0 0;
+}
+
+.small-item.format-video .mejs-controls .mejs-button button:after {
+	font-size: 25px;
+}
+
+.small-item.format-video .mejs-container .mejs-controls {
+	height: 38px;
+}
+
+.small-item.format-video .mejs-controls .mejs-volume-button .mejs-volume-slider {
+	width: 24px;
+	height: 70px;
+	left: 0;
+	top: -70px;
+}
+
+.small-item.format-video .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total {
+	width: 4px;
+	height: 50px;
+	left: 10px;
+}
+
+.small-item.format-video .mejs-volume-handle {
+	height: 4px;
+}

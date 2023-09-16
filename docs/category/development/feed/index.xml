@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Development &#8211; DaKanji</title>
+	<atom:link href="/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//category/development/feed/" rel="self" type="application/rss+xml" />
+	<link>/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//</link>
+	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
+	<lastBuildDate>Sat, 16 Sep 2023 10:56:27 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.3.1</generator>
+
+<image>
+	<url>/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/uploads/2023/09/icon.png</url>
+	<title>Development &#8211; DaKanji</title>
+	<link>/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>DaKanji 3.0 released</title>
+		<link>/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//dakanji_3_0_released/</link>
+		
+		<dc:creator><![CDATA[dario]]></dc:creator>
+		<pubDate>Sat, 10 Jun 2023 09:46:17 +0000</pubDate>
+				<category><![CDATA[Development]]></category>
+		<guid isPermaLink="false">/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//?p=1663</guid>
+
+					<description><![CDATA[At the beginning of 2021, I first published DaKanji as an offline stroke order independent Kanji lookup tool for Linux,...]]></description>
+										<content:encoded><![CDATA[		<div data-elementor-type="wp-post" data-elementor-id="1663" class="elementor elementor-1663">
+						<div class="elementor-inner">
+				<div class="elementor-section-wrap">
+									<section class="elementor-section elementor-top-section elementor-element elementor-element-473aef1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="473aef1" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-ede284f" data-id="ede284f" data-element_type="column">
+			<div class="elementor-column-wrap">
+							<div class="elementor-widget-wrap">
+								</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-33922c4 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="33922c4" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-e129297" data-id="e129297" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-d0bdef3 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-text-editor" data-id="d0bdef3" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>					<div class="elementor-text-editor elementor-clearfix">
+				<p>At the beginning of 2021, I first published DaKanji as an offline stroke order independent Kanji lookup tool for Linux, Mac, and Windows written in Python. Because of the positive Feedback I received, I was motivated to continue working on DaKanji. Fast forward a bit, I rewrote DaKanji in Dart and published it first for Android, slowly extending it to iOS, MacOS, Linux, and Windows.</p><p>After taking a break from DaKanji (and randomly starting to learn Spanish), I decided to apply for a scholarship to study in Japan. For this, I wanted to have something stand out in my application and I decided to add an offline dictionary to DaKanji.<br />And finally, after a long, long development time, DaKanji 3 is finally out. I am super excited that this new version has finally shipped! DaKanji is a passion project of mine, and I have worked really hard the last year to build the best fully offline, responsive, and cross-platform (Android, iOS, MacOS, Linux, Windows) Japanese &lt;-&gt; English, German, French, Russian, &#8230; dictionary I could. Therefore, I would greatly appreciate you checking it out and letting me know what you think, what to improve, giving a positive review, or maybe even recommending it to your friends</p><p>Here are the new Features:</p><ul><li>Inbuilt dictionary<ul><li>Search with kanji, kana or romaji</li><li>Search Kanji by radical or draw them</li><li>Multi-language support: English, German, French, Spanish, &#8230;</li><li>Conjugation of verbs, adjectives, copula</li><li>Detailed information about Kanjis</li><li>6000+ audios</li><li>Pitch accent</li><li>Example sentences</li></ul></li><li>Text processing screen<ul><li>Add furigana to any text</li><li>Look up unknown words using the inbuilt dictionary</li><li>Colorize words based on their Part of Speech</li><li>Translate using DeepL (currently mobile only)</li></ul></li></ul><p>Lastly, I would like to give you a rough idea of in which direction this project is heading, the next 3.x versions will add more features to make DaKanji not only a word lookup dictionary but a tool to understand Japanese texts and effectively learn from them. This includes features such as word lists, Anki integration, grammar lookup, chat GPT integration, a discussion section to ask questions, and likely, yomichan dictionary support. After that, DaKanji will receive support for directly using the dictionary on different sources such as videos, PDFs, and ebooks, &#8230;</p><p>Thank you a lot for reading till the (and maybe using DaKanji). If you have any problems with it, let me know.</p>					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-271d9cb flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="271d9cb" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-column .elementor-spacer-inner{height:var(--spacer-size)}.e-con{--container-widget-width:100%}.e-con-inner>.elementor-widget-spacer,.e-con>.elementor-widget-spacer{width:var(--container-widget-width,var(--spacer-size));--align-self:var(--container-widget-align-self,initial);--flex-shrink:0}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container,.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,.e-con>.elementor-widget-spacer>.elementor-widget-container,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer{height:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner{height:var(--container-widget-height,var(--spacer-size))}</style>		<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-cd4c030 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="cd4c030" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-bd7be4c elementor-invisible" data-id="bd7be4c" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:200}">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-621abc2 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="621abc2" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-e512ec7" data-id="e512ec7" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-7bfbcdf flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-invisible elementor-widget elementor-widget-heading" data-id="7bfbcdf" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><div class="title-h2 elementor-heading-title elementor-size-default">Join the Japanese learning revolution now!</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-49122ba elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="49122ba" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-ab536d3" data-id="ab536d3" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-8637e8c flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-counter" data-id="8637e8c" data-element_type="widget" data-widget_type="counter.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-counter .elementor-counter-number-wrapper{display:flex;font-size:69px;font-weight:600;line-height:1}.elementor-counter .elementor-counter-number-prefix,.elementor-counter .elementor-counter-number-suffix{flex-grow:1;white-space:pre-wrap}.elementor-counter .elementor-counter-number-prefix{text-align:right}.elementor-counter .elementor-counter-number-suffix{text-align:left}.elementor-counter .elementor-counter-title{text-align:center;font-size:19px;font-weight:400;line-height:2.5}</style>		<div class="elementor-counter">
+			<div class="elementor-counter-number-wrapper">
+				<span class="elementor-counter-number-prefix"></span>
+				<span class="elementor-counter-number" data-duration="2000" data-to-value="5000" data-from-value="0" data-delimiter=",">0</span>
+				<span class="elementor-counter-number-suffix">+</span>
+			</div>
+							<div class="elementor-counter-title">Downloads</div>
+					</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-b0a1b93" data-id="b0a1b93" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-e4b9ada flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-counter" data-id="e4b9ada" data-element_type="widget" data-widget_type="counter.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-counter">
+			<div class="elementor-counter-number-wrapper">
+				<span class="elementor-counter-number-prefix"></span>
+				<span class="elementor-counter-number" data-duration="2000" data-to-value="75" data-from-value="0" data-delimiter=",">0</span>
+				<span class="elementor-counter-number-suffix">+</span>
+			</div>
+							<div class="elementor-counter-title">5 Star ratings</div>
+					</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<div class="elementor-element elementor-element-364aecc flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="364aecc" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-246645e elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="246645e" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-44885aa" data-id="44885aa" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-22e83a8 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="22e83a8" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				iOS			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-e0ea7f0" data-id="e0ea7f0" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-b391fee flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="b391fee" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-google-play"></i>				</span>
+						<span class="gem-text-button">
+				Android			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-45573e2" data-id="45573e2" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-644fbf2 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="644fbf2" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-microsoft"></i>				</span>
+						<span class="gem-text-button">
+				Windows			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-fade13b" data-id="fade13b" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-95561e1 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="95561e1" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><path d="m12 2.604-.43.283L0 10.459v6.752l6.393 4.184L12 17.725l5.607 3.671L24 17.211v-6.752L12 2.604zm0 .828 5.434 3.556-2.717 1.778L12 10.545l-2.717-1.78-2.717-1.777L12 3.432zM6.39 7.104l5.434 3.556-5.408 3.54-5.434-3.557 5.409-3.54zm11.22 0 5.431 3.554-5.434 3.557-5.433-3.555 5.435-3.556zM.925 10.867l5.379 3.52a.123.08 0 0 0 .027.013v5.647l-5.406-3.54v-5.64zm11.213.115 5.408 3.54v5.664l-5.408-3.54v-5.664z"></path></svg>				</span>
+						<span class="gem-text-button">
+				flatpak			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-6b7b160" data-id="6b7b160" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-8bd5c0e flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="8bd5c0e" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><title>Snapcraft icon</title><path d="M13.804 13.367V5.69l5.292 2.362-5.292 5.315zM3.701 23.514l6.49-12.22 2.847 2.843L3.7 23.514zM0 .486l13.355 4.848v8.484L0 .486zM21.803 5.334H14.11L24 9.748z"></path></svg>				</span>
+						<span class="gem-text-button">
+				Snap			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-8b4060d" data-id="8b4060d" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-7eac88f flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="7eac88f" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				Mac			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+									</div>
+			</div>
+					</div>
+		]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Object Caching 0/0 objects using disk
+Page Caching using disk: enhanced (Requested URI contains query) 
+Database Caching using disk
+
+Served from: dakanji.local @ 2023-09-16 18:36:51 by W3 Total Cache
+-->

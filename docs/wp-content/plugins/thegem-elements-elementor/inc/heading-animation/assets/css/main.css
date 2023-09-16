@@ -1,0 +1,425 @@
+/* TheGem Heading */
+
+.thegem-heading {
+    position: relative;
+}
+
+.thegem-heading.thegem-heading-animate:not(.thegem-heading-animated ) {
+    opacity: 0 !important;
+}
+
+.thegem-heading .thegem-heading-line-wrap {
+    display: block;
+    overflow: hidden;
+}
+
+.thegem-heading .thegem-heading-word-wrap,
+.thegem-heading .thegem-heading-letter-wrap {
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.thegem-heading .thegem-heading-word {
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+/* Lines Slide Up  */
+.thegem-heading.lines-slide-up.thegem-heading-animated .thegem-heading-line {
+    animation-name: thegemHeadingLinesSlideUp;
+    transform: translateY(100%);
+    display: inline-block;
+    animation-fill-mode: forwards;
+    animation-duration: 1200ms;
+    animation-timing-function: cubic-bezier(0,1,0.3,1);
+}
+
+@keyframes thegemHeadingLinesSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+/* Lines Slide Up Random */
+.thegem-heading.lines-slide-up-random.thegem-heading-animated .thegem-heading-word {
+    animation-name: thegemHeadingLinesSlideUpRandom;
+    transform: translateY(100%);
+    animation-fill-mode: forwards;
+    animation-duration: 1200ms;
+    animation-timing-function: cubic-bezier(0.3, 0, 0, 1);
+}
+
+@keyframes thegemHeadingLinesSlideUpRandom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+/* Words Slide Up */
+.thegem-heading.words-slide-up.thegem-heading-animated .thegem-heading-word {
+    animation-name: thegemHeadingWordsSlideUp;
+    transform: translateY(100%);
+    animation-fill-mode: forwards;
+    animation-duration: 1000ms;
+    animation-timing-function: cubic-bezier(0.3, 1.7, 0.4, 1);
+}
+
+@keyframes thegemHeadingWordsSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Words Slide Left */
+.thegem-heading.words-slide-left.thegem-heading-animated .thegem-heading-word {
+    animation-name: thegemHeadingWordsSlideLeft;
+    transform: translateX(100%);
+    animation-fill-mode: forwards;
+    animation-duration: 1200ms;
+    animation-timing-function: cubic-bezier(0.25,1,0.5,1);
+}
+
+@keyframes thegemHeadingWordsSlideLeft {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Words Slide Right */
+.thegem-heading.words-slide-right.thegem-heading-animated .thegem-heading-word {
+    animation-name: thegemHeadingWordsSlideRight;
+    transform: translateX(-100%);
+    animation-fill-mode: forwards;
+    animation-duration: 1200ms;
+    animation-timing-function: cubic-bezier(0.25,1,0.5,1);
+}
+
+@keyframes thegemHeadingWordsSlideRight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Letters Slide Up */
+.thegem-heading.letters-slide-up.thegem-heading-animated .thegem-heading-letter {
+    animation-name: thegemHeadingLettersSlideUp;
+    position: relative;
+    transform: translateY(100%);
+    display: inline-flex;
+    animation-fill-mode: forwards;
+    animation-duration: 350ms;
+    animation-timing-function: cubic-bezier(0.3, 1.7, 0.4, 1);
+}
+
+@keyframes thegemHeadingLettersSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Typewriter */
+.thegem-heading.typewriter.thegem-heading-animated .thegem-heading-letter {
+    animation-name: thegemHeadingTypewriter;
+    position: relative;
+    opacity: 0;
+    display: inline-flex;
+    animation-fill-mode: forwards;
+    animation-duration: 0ms;
+    animation-timing-function: inherit;
+}
+
+@keyframes thegemHeadingTypewriter {
+    from { opacity: 1; }
+    to { opacity: 1; }
+}
+
+/* Letters Scale Out */
+.thegem-heading.letters-scale-out.thegem-heading-animated .thegem-heading-letter {
+    animation-name: thegemHeadingLettersScaleOut;
+    position: relative;
+    transform: scale(1.5);
+    opacity: 0;
+    display: inline-flex;
+    animation-fill-mode: forwards;
+    animation-duration: 500ms;
+    animation-timing-function: cubic-bezier(0.3, 4, 0.4, 1);
+}
+
+@keyframes thegemHeadingLettersScaleOut {
+    from {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Background Sliding */
+.thegem-heading-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.thegem-heading.background-sliding {
+    display: inline-flex;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.thegem-heading.background-sliding:before {
+    content: '';
+    transform-origin: left;
+    transform: scale(0, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.thegem-heading.background-sliding.thegem-heading-animated:before {
+    animation-name: thegemHeadingBackgroundSliding;
+    animation-duration: 700ms;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes thegemHeadingBackgroundSliding{
+    from {
+        transform: scale(0, 1);
+    }
+
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+.thegem-heading.background-sliding .thegem-heading-text-wrap {
+    overflow: hidden;
+    transform: translateX(-105%);
+    position: relative;
+    z-index: 2;
+}
+
+.thegem-heading.thegem-heading-animated .thegem-heading-text-wrap {
+    transform: translateX(0%);
+    transition-property: transform;
+    transition-duration: 700ms;
+}
+
+.thegem-heading.background-sliding .thegem-heading-text {
+    transform: translateX(105%);
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.thegem-heading.thegem-heading-animated .thegem-heading-text {
+    transform: translateX(0%);
+    transition-property: transform;
+    transition-duration: inherit;
+    transition-delay: inherit;
+    transition-timing-function: inherit;
+}
+
+/* Rotating */
+.thegem-heading-rotating {
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
+    transition-property: width, color;
+    transition-timing-function: ease;
+    transition-duration: 500ms, 300ms;
+}
+
+.thegem-heading-rotating:before {
+    content: '\200b';
+}
+
+.thegem-heading-rotating-text {
+    position: relative;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    overflow: hidden;
+    display: inline-flex;
+    white-space: nowrap;
+    transition-property: width, opacity;
+    transition-timing-function: ease;
+    transition-duration: 500ms;
+}
+
+.thegem-heading-rotating[data-animation="fade"] .thegem-heading-rotating-text {
+    display: inline-block;
+}
+
+/* Fade top to bottom */
+.thegem-heading.thegem-heading-animated.fade-tb {
+    animation-duration: .7s;
+    animation-fill-mode: both;
+    animation-name: thegemHeadingFadeTB;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+@keyframes thegemHeadingFadeTB {
+    from {
+        transform: translate(0, -10%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+
+/* Fade bottom to top */
+.thegem-heading.thegem-heading-animated.fade-bt {
+    animation-duration: .7s;
+    animation-fill-mode: both;
+    animation-name: thegemHeadingFadeBT;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+@keyframes thegemHeadingFadeBT {
+    from {
+        transform: translate(0, 10%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+
+/* Fade left to right */
+.thegem-heading.thegem-heading-animated.fade-lr {
+    animation-duration: .7s;
+    animation-fill-mode: both;
+    animation-name: thegemHeadingFadeLR;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+@keyframes thegemHeadingFadeLR {
+    from {
+        transform: translate(-10%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+
+/* Fade right to left */
+.thegem-heading.thegem-heading-animated.fade-rl {
+    animation-duration: .7s;
+    animation-fill-mode: both;
+    animation-name: thegemHeadingFadeRL;
+    animation-timing-function: cubic-bezier(.175,.885,.32,1.275);
+}
+
+@keyframes thegemHeadingFadeRL {
+    from {
+        transform: translate(10%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+/* Simple fade */
+.thegem-heading.thegem-heading-animated.fade-simple {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: thegemHeadingFadeSimple;
+}
+
+@keyframes thegemHeadingFadeSimple {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .thegem-heading.thegem-heading-animate-disable-desktop,
+    .thegem-heading.thegem-heading-animate-disable-desktop .thegem-heading-line,
+    .thegem-heading.thegem-heading-animate-disable-desktop .thegem-heading-word,
+    .thegem-heading.thegem-heading-animate-disable-desktop .thegem-heading-letter,
+    .thegem-heading.thegem-heading-animate-disable-desktop .thegem-heading-text-wrap,
+    .thegem-heading.thegem-heading-animate-disable-desktop .thegem-heading-text,
+    .thegem-heading.thegem-heading-animate-disable-desktop:before {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+    }
+}
+
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+    .thegem-heading.thegem-heading-animate-disable-tablet,
+    .thegem-heading.thegem-heading-animate-disable-tablet .thegem-heading-line,
+    .thegem-heading.thegem-heading-animate-disable-tablet .thegem-heading-word,
+    .thegem-heading.thegem-heading-animate-disable-tablet .thegem-heading-letter,
+    .thegem-heading.thegem-heading-animate-disable-tablet .thegem-heading-text-wrap,
+    .thegem-heading.thegem-heading-animate-disable-tablet .thegem-heading-text,
+    .thegem-heading.thegem-heading-animate-disable-tablet:before {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .thegem-heading.thegem-heading-animate-disable-mobile,
+    .thegem-heading.thegem-heading-animate-disable-mobile .thegem-heading-line,
+    .thegem-heading.thegem-heading-animate-disable-mobile .thegem-heading-word,
+    .thegem-heading.thegem-heading-animate-disable-mobile .thegem-heading-letter,
+    .thegem-heading.thegem-heading-animate-disable-mobile .thegem-heading-text-wrap,
+    .thegem-heading.thegem-heading-animate-disable-mobile .thegem-heading-text,
+    .thegem-heading.thegem-heading-animate-disable-mobile:before {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+    }
+}
+

@@ -1,0 +1,199 @@
+#page-preloader {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 999999;
+	opacity: 0.98;
+	background: #2c2e3d;
+}
+.block-preloader.preloader,
+.block-preloader {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 2;
+	height: auto;
+}
+.block-preloader + * {
+	overflow: visible !important;
+}
+.block-preloader.preloader + *:not(iframe) {
+	height: auto !important;
+}
+.block-preloader:after {
+	display: none;
+}
+#page-preloader.preloader-loaded .page-preloader-spin,
+.block-preloader.preloader-loaded .page-preloader-spin {
+	opacity: 0;
+	-webkit-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+#page-preloader.preloader-loaded,
+.block-preloader.preloader-loaded {
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.no-js #page-preloader,
+.no-js .block-preloader {
+	display: none;
+}
+#page-preloader .page-preloader-spin,
+.block-preloader .page-preloader-spin,
+.preloader-spin {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 1001;
+	width: 80px;
+	height: 80px;
+	margin: -40px;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border: 2px solid transparent;
+	border-top-color: #b9b7ff;
+	-webkit-animation: PreloaderSpin 2s linear infinite;
+	animation: PreloaderSpin 2s linear infinite;
+}
+.preloader-spin {
+	border-top-color: #b9b7ff;
+}
+.block-preloader .page-preloader-spin {
+	top: 100px;
+	margin-top: 0;
+}
+#page-preloader .page-preloader-spin:before,
+.block-preloader .page-preloader-spin:before,
+.preloader-spin:before {
+	content: "";
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	right: 4px;
+	bottom: 4px;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border: 2px solid transparent;
+	border-top-color: #00bcd4;
+	-webkit-animation: PreloaderSpin 3s linear infinite;
+	animation: PreloaderSpin 3s linear infinite;
+}
+.preloader-spin:before {
+	border-top-color: #00bcd4;
+}
+#page-preloader .page-preloader-spin:after,
+.block-preloader .page-preloader-spin:after,
+.preloader-spin:after {
+	content: "";
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border: 2px solid transparent;
+	border-top-color: #a3e7f0;
+	-webkit-animation: PreloaderSpin 1.5s linear infinite;
+	animation: PreloaderSpin 1.5s linear infinite;
+}
+.gem-fancybox-preloader .preloader-spin:after {
+	border-top-color: #a3e7f0;
+}
+.preloader-spin:after {
+	border-top-color: #7b97ab;
+}
+.fancybox-slide .gem-fancybox-preloader {
+	width: 150px;
+	height: 150px;
+	background: transparent;
+	margin: 0;
+	margin-top: -75px;
+	margin-left: -75px;
+	padding: 0;
+}
+@-webkit-keyframes PreloaderSpin {
+	0%   {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes PreloaderSpin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.portfolio-scroll-pagination .preloader-spin {
+	margin-top: -10px;
+}
+.blog-load-more-style-timeline-new .preloader-spin {
+	margin-top: -10px;
+}
+.gem-product-scroll-pagination .preloader-spin {
+	margin-top: -10px;
+}
+.preloader-spin-new {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 1001;
+	width: 50px;
+	height: 50px;
+	margin: -25px;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border: 2px solid #00bcd4;
+	border-top-color: transparent !important;
+	-webkit-animation: PreloaderSpin 1.3s linear infinite;
+	animation: PreloaderSpin 1.3s linear infinite;
+}
+
+.preloader.fullwidth-preloader:before {
+	content: '';
+	position: absolute;
+	width: 200%;
+	height: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: inherit;
+}
+
+.gem-blog-slider-preloader {
+	padding-bottom: 165%;
+}
+
+@media (min-width: 768px) {
+	.gem-blog-slider-preloader {
+		padding-bottom: 90%;
+	}
+}
+
+@media (min-width: 992px) {
+	.gem-blog-slider-preloader {
+		padding-bottom: 44.87%;
+	}
+}
