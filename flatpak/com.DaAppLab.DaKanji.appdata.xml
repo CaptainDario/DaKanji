@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Generator for metainfo & .desktop files: 
+    https://www.freedesktop.org/software/appstream/metainfocreator/#/
+-->
+<component type="desktop-application">
+  <id>com.DaAppLab.DaKanji</id>
+  <name>DaKanji</name>
+  <summary>You are learning Japanese? Then you need to give "DaKanji" a try!</summary>
+  <developer_name></developer_name>
+  <url type="homepage">https://dakanji.dev/</url>
+  <metadata_license>PolyForm Strict License 1.0.0</metadata_license>
+  <project_license>PolyForm Strict License 1.0.0</project_license>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+  <description>
+    <p>DaKanji DaKanji</p>
+  </description>
+  <launchable type="desktop-id">com.DaAppLab.DaKanji.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_1.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_2.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_3.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_4.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_5.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="3.2.0" date="2022-02-25" />
+  </releases>
+</component>

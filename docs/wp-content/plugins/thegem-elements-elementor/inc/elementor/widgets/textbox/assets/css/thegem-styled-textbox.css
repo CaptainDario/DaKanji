@@ -1,0 +1,217 @@
+.gem-textbox,
+.gem-textbox-wrapper,
+.gem-textbox .gem-textbox-content,
+.gem-textbox .gem-texbox-icon-image-wrapper .elementor-icon,
+.gem-textbox .gem-texbox-icon-image-wrapper .elementor-icon i,
+.gem-textbox .gem-image,
+.gem-textbox .gem-image img,
+.gem-textbox .gem-image span,
+.gem-textbox .gem-image span:before,
+.gem-textbox .gem-textbox-title,
+.gem-textbox .gem-textbox-description,
+.gem-textbox .gem-button-container,
+.gem-textbox .gem-textbox-top,
+.gem-textbox .gem-textbox-top svg,
+.gem-textbox .gem-textbox-bottom,
+.gem-textbox .gem-textbox-bottom svg {
+	-o-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.gem-textbox-content {
+	padding: 30px;
+}
+
+.gem-textbox-top,
+.gem-textbox-bottom {
+	font-size: 0;
+	line-height: 0;
+	text-align: center;
+}
+
+.gem-styled-textbox-link,
+.gem-styled-textbox-icon-image-link {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.gem-texbox-icon-image-wrapper {
+	position: relative;
+}
+
+.gem-textbox .gem-textbox-icon-horizontal-right.gem-textbox-icon-image-wrapping-inline .gem-texbox-icon-image-wrapper {
+	padding-left: 10px;
+}
+
+.gem-textbox .gem-textbox-icon-horizontal-left.gem-textbox-icon-image-wrapping-inline .gem-texbox-icon-image-wrapper {
+	padding-right: 10px;
+}
+
+.gem-textbox h4,
+.gem-textbox .title-h4 {
+	margin-top: 0;
+}
+
+.gem-textbox-content .gem-image span {
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+	max-width: 100%;
+	position: relative;
+}
+
+.gem-textbox-content .gem-image span::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	-o-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	opacity: 0;
+	z-index: 1;
+}
+
+.gem-textbox:hover .gem-textbox-content .gem-image a::before,
+.gem-textbox:hover .gem-textbox-content .gem-image span::before {
+	opacity: 1;
+}
+
+.gem-textbox .gem-textbox-icon-horizontal-right .gem-icon-with-text-icon {
+	padding-right: 0px;
+	padding-left: 10px;
+}
+
+/* Icon Bottom */
+
+.gem-textbox-content.icon-bottom {
+	display: flex;
+	flex-direction: column;
+}
+
+.gem-textbox .icon-bottom .gem-texbox-text-wrapper {
+	order: 1;
+}
+
+.gem-textbox .icon-bottom .gem-texbox-icon-image-wrapper {
+	order: 2;
+	margin-top: 30px;
+}
+
+
+/* Icon Bottom + Button Bottom */
+
+.gem-textbox-content.icon-bottom,
+.gem-textbox-content.button-top {
+	display: flex;
+	flex-direction: column;
+}
+
+.gem-textbox .icon-bottom.button-bottom .gem-texbox-text-wrapper {
+	order: 1;
+}
+
+.gem-textbox .icon-bottom.button-bottom .gem-texbox-icon-image-wrapper {
+	order: 2;
+}
+
+
+/* Icon Top + Button Top */
+
+.gem-textbox-content.icon-top.button-top .gem-texbox-text-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.gem-textbox-content.icon-top.button-top .gem-button-container {
+	order: 1;
+}
+
+.gem-textbox-content.icon-top.button-top .gem-textbox-title {
+	order: 2;
+}
+
+.gem-textbox-content.icon-top.button-top .gem-textbox-description {
+	order: 3;
+}
+
+
+/* Icon Bottom + Button Top */
+
+.gem-textbox-content.icon-bottom.button-top .gem-texbox-text-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.gem-textbox-content.icon-bottom.button-top .gem-button-container {
+	order: 1;
+}
+
+.gem-textbox-content.icon-bottom.button-top .gem-textbox-title {
+	order: 2;
+}
+
+.gem-textbox-content.icon-bottom.button-top .gem-textbox-description {
+	order: 3;
+}
+
+.gem-textbox-content.icon-bottom.button-top .gem-texbox-text-wrapper {
+	order: 1;
+}
+
+.gem-textbox-content.icon-bottom.button-top .gem-texbox-icon-image-wrapper {
+	order: 2;
+	margin-top: 30px;
+}
+
+.gem-textbox-icon-horizontal-center .gem-texbox-icon-image-wrapper {
+	text-align: center !important;
+}
+
+.gem-textbox-icon-horizontal-left .gem-texbox-icon-image-wrapper {
+	text-align: left !important;
+}
+
+.gem-textbox-icon-horizontal-right .gem-texbox-icon-image-wrapper {
+	text-align: right !important;
+}
+
+.gem-textbox-icon-horizontal-right.gem-textbox-icon-image-wrapping-wrap .gem-texbox-icon-image-wrapper {
+	float: right;
+}
+
+.gem-textbox-icon-horizontal-left.gem-textbox-icon-image-wrapping-wrap .gem-texbox-icon-image-wrapper {
+	float: left;
+}
+
+.gem-textbox-icon-image-wrapping-inline {
+	display: flex;
+	flex-direction: column;
+}
+
+.gem-textbox-icon-image-wrapping-inline .gem-texbox-text-wrapper {
+	flex-grow: 1;
+}
+
+.gem-textbox-icon-image-wrapping-inline.gem-textbox-icon-horizontal-right {
+	flex-direction: row-reverse;
+}
+.icon-bottom.gem-textbox-icon-image-wrapping-inline.gem-textbox-icon-horizontal-right {
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.gem-textbox-icon-image-wrapping-inline.gem-textbox-icon-horizontal-left {
+	flex-direction: row;
+}
+.icon-bottom.gem-textbox-icon-image-wrapping-inline.gem-textbox-icon-horizontal-left {
+	flex-direction: row-reverse;
+	align-items: flex-end;
+}

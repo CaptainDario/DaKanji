@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Comments for DaKanji	</title>
+	<atom:link href="/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//comments/feed/" rel="self" type="application/rss+xml" />
+	<link>/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//</link>
+	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
+	<lastBuildDate>Sat, 16 Sep 2023 18:12:47 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.3.1</generator>
+</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Object Caching 0/0 objects using disk
+Page Caching using disk: enhanced (Requested URI contains query) 
+Database Caching using disk
+
+Served from: dakanji.local @ 2023-09-16 18:36:48 by W3 Total Cache
+-->

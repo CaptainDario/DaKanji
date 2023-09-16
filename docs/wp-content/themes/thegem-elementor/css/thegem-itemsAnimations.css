@@ -1,0 +1,195 @@
+.items-animations-timer-element {
+    font-size: 0;
+    line-height: 1;
+    height: 0;
+
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+}
+
+.items-animations-timer-element.start-timer {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+/* Move Up */
+.item-animation-move-up .item-animations-inited.before-start {
+    -moz-transform: translateY(40px) !important;
+    -ms-transform: translateY(40px) !important;
+    -webkit-transform: translateY(40px) !important;
+    -o-transform: translateY(40px) !important;
+    transform: translateY(40px) !important;
+
+    zoom: 1;
+    -webkit-opacity: 0 !important;
+    -moz-opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    opacity: 0 !important;
+}
+
+.item-animation-move-up .item-animations-inited.before-start.start-animation {
+    -o-transition: opacity 1s, transform 1s !important;
+	-webkit-transition: opacity 1s, transform 1s !important;
+	transition: opacity 1s, transform 1s !important;
+
+    -moz-transform: translateY(0px) !important;
+    -ms-transform: translateY(0px) !important;
+    -webkit-transform: translateY(0px) !important;
+    -o-transform: translateY(0px) !important;
+    transform: translateY(0px) !important;
+
+    zoom: 1;
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    opacity: 1 !important;
+}
+
+
+/* Bounce */
+.item-animation-bounce .item-animations-inited.before-start {
+    -moz-transform: scale(0.001) !important;
+    -ms-transform: scale(0.001) !important;
+    -webkit-transform: scale(0.001) !important;
+    -o-transform: scale(0.001) !important;
+    transform: scale(0.001) !important;
+
+    zoom: 1;
+    -webkit-opacity: 0 !important;
+    -moz-opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    opacity: 0 !important;
+}
+
+.item-animation-bounce .item-animations-inited.before-start.start-animation {
+    -o-transition: opacity 0.4s, transform 0.4s !important;
+	-webkit-transition: opacity 0.4s, transform 0.4s !important;
+	transition: opacity 0.4s, transform 0.4s !important;
+
+    -moz-transform: scale(1) !important;
+    -ms-transform: scale(1) !important;
+    -webkit-transform: scale(1) !important;
+    -o-transform: scale(1) !important;
+    transform: scale(1) !important;
+
+    zoom: 1;
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    opacity: 1 !important;
+}
+
+/* Fade In */
+.item-animation-fade-in .item-animations-inited.before-start {
+    zoom: 1;
+    -webkit-opacity: 0 !important;
+    -moz-opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    opacity: 0 !important;
+}
+
+.item-animation-fade-in .item-animations-inited.before-start.start-animation {
+    -o-transition: opacity 0.7s !important;
+	-webkit-transition: opacity 0.7s !important;
+	transition: opacity 0.7s !important;
+
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    opacity: 1 !important;
+}
+
+/* Scale */
+.item-animation-scale .item-animations-inited.before-start {
+    -moz-transform: scale(0.001) !important;
+    -ms-transform: scale(0.001) !important;
+    -webkit-transform: scale(0.001) !important;
+    -o-transform: scale(0.001) !important;
+    transform: scale(0.001) !important;
+}
+
+.item-animation-scale .item-animations-inited.before-start.start-animation {
+    -o-transition: transform 0.57s ease-in-out !important;
+	-webkit-transition: transform 0.57s ease-in-out !important;
+	transition: opacity transform 0.57s ease-in-out !important;
+
+    -moz-transform: scale(1) !important;
+    -ms-transform: scale(1) !important;
+    -webkit-transform: scale(1) !important;
+    -o-transform: scale(1) !important;
+    transform: scale(1) !important;
+}
+
+/* Flip */
+.item-animation-flip .item-animations-inited.before-start {
+    -moz-transform: rotate3d(1, 0, 0, -80deg) !important;
+    -ms-transform: rotate3d(1, 0, 0, -80deg) !important;
+    -webkit-transform: rotate3d(1, 0, 0, -80deg) !important;
+    -o-transform: rotate3d(1, 0, 0, -80deg) !important;
+    transform: rotate3d(1, 0, 0, -80deg) !important;
+
+    zoom: 1;
+    -webkit-opacity: 0 !important;
+    -moz-opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    opacity: 0 !important;
+}
+
+.item-animation-flip .item-animations-inited.before-start.start-animation {
+    -o-transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+	-webkit-transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+	transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+
+    -moz-transform: rotate3d(0, 0, 0, 0deg) !important;
+    -ms-transform: rotate3d(0, 0, 0, 0deg) !important;
+    -webkit-transform: rotate3d(0, 0, 0, 0deg) !important;
+    -o-transform: rotate3d(0, 0, 0, 0deg) !important;
+    transform: rotate3d(0, 0, 0, 0deg) !important;
+
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    opacity: 1 !important;
+}
+
+/* Fall Rerspective */
+.item-animation-fall-perspective .item-animations-inited.before-start {
+    -moz-transform: translateZ(400px) translateY(300px) rotateX(-65deg) !important;
+    -ms-transform: translateZ(400px) translateY(300px) rotateX(-65deg) !important;
+    -webkit-transform: translateZ(400px) translateY(300px) rotateX(-65deg) !important;
+    -o-transform: translateZ(400px) translateY(300px) rotateX(-65deg) !important;
+    transform: translateZ(400px) translateY(300px) rotateX(-65deg) !important;
+
+    zoom: 1;
+    -webkit-opacity: 0 !important;
+    -moz-opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+    opacity: 0 !important;
+}
+
+.item-animation-fall-perspective .item-animations-inited.before-start.start-animation {
+    -o-transition: opacity 0.75s ease-in-out, transform 0.75s ease-in-out !important;
+	-webkit-transition: opacity 0.75s ease-in-out, transform 0.75s ease-in-out !important;
+	transition: opacity 0.75s ease-in-out, transform 0.75s ease-in-out !important;
+
+    -moz-transform: translateZ(0px) translateY(0px) rotateX(0deg) !important;
+    -ms-transform: translateZ(0px) translateY(0px) rotateX(0deg) !important;
+    -webkit-transform: translateZ(0px) translateY(0px) rotateX(0deg) !important;
+    -o-transform: translateZ(0px) translateY(0px) rotateX(0deg) !important;
+    transform: translateZ(0px) translateY(0px) rotateX(0deg) !important;
+
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+    opacity: 1 !important;
+}

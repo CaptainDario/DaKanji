@@ -1,0 +1,358 @@
+/* Styled Image, Video */
+.gem-youtube .gem-wrapbox-inner,
+.gem-youtube .shadow-wrap,
+.gem-youtube .gem-wrapbox-element,
+.gem-vimeo .gem-wrapbox-inner,
+.gem-vimeo .shadow-wrap,
+.gem-vimeo .gem-wrapbox-element,
+.gem-video .gem-wrapbox-inner,
+.gem-video .shadow-wrap,
+.gem-video .gem-wrapbox-element {
+	width: 100%;
+	height: 100%;
+}
+.gem-wrapbox-inner.gem-ratio-style .gem-wrapbox-element,
+.gem-wrapbox-inner.gem-ratio-style .shadow-wrap,
+.gem-wrapbox-inner.gem-ratio-style .preloader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.gem-image-centered-box {
+	margin-bottom: 1.421em;
+}
+.gem-image a,
+.gem-textbox-picture a{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+}
+
+.gem-image a:before,
+.gem-textbox-picture a:before{
+	content: '';
+	position: absolute;
+	top: -100%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	-webkit-transition: opacity 0.5s, background-color 0.5s;
+	transition: opacity 0.5s, background-color 0.5s;
+	opacity: 0;
+	z-index: 5;
+}
+.gem-image a:hover:before,
+.gem-textbox-picture a:hover:before {
+	opacity: 1;
+	-webkit-transition: opacity 0.5s, background-color 0.5s;
+	transition: opacity 0.5s, background-color 0.5s;
+}
+.gem-image a:after,
+.gem-textbox-picture a:after{
+	content: '\e60f';
+	font-family: 'thegem-icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 40px;
+	height: 40px;
+	line-height: 40px;
+	width: 40px;
+	text-align: center;
+	position: absolute;
+	top: -20px;
+	left: 50%;
+	transition: opacity 0.3s, top 0.3s;
+	-webkit-transition: opacity 0.3s, top 0.3s;
+	margin-left: -20px;
+	margin-top: -20px;
+	z-index: 5;
+	opacity: 0;
+}
+.gem-image a:hover:after,
+.gem-textbox-picture a:hover:after{
+	top: 50%;
+	opacity: 1;
+	transition: opacity 0.5s, top 0.3s;
+	-webkit-transition: opacity 0.5s, top 0.3s;
+}
+
+.gem-map-with-text .wpb_gmaps_widget .wpb_wrapper {
+	padding: 0;
+}
+.gem-gmaps {
+	display: inline-block;
+	max-width: 100%;
+}
+.gem-gmaps .gem-gmaps-hide {
+	overflow: hidden;
+	width: 100%;
+}
+.gem-gmaps iframe {
+	border: 0 none;
+	vertical-align: top;
+	margin-top: -46px;
+	width: 100%;
+}
+.gem-gmaps .preloader + iframe {
+	margin-top: -240px !important;
+}
+.gem-gmaps .preloader + iframe + .map-locker {
+	opacity: 0;
+}
+.gem-gmaps.gem-wrapbox-style-11 {
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	overflow: hidden;
+}
+.gem-gmaps.gem-wrapbox-style-11 .gem-gmaps-hide {
+	-webkit-mask-image: url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/css/css/circle.svg');
+}
+iframe + .map-locker {
+	position: relative;
+	float: right;
+	margin-top: -150px;
+	margin-right: 13px;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	background: #ffffff url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/css/images/map-locker.png') no-repeat 0 50%;
+}
+iframe + .map-locker.disabled {
+	background-position: 100% 50%;
+}
+
+.wpb_gmaps_widget .wpb_map_wraper.hide_title  iframe {
+	margin-top: -46px;
+}
+.wpb_gmaps_widget  .wpb_map_wraper.hide_title {
+	overflow: hidden;
+}
+
+.gem-gmaps.gem-wrapbox-style-11 .gem-wrapbox-inner:after {
+	display: none;
+}
+.gem-gmaps.gem-wrapbox-style-11 .gem-wrapbox-inner  {
+	padding: 12px;
+	border: 2px solid;
+}
+.gem-gmaps.gem-wrapbox-style-8  .gem-wrapbox-inner {
+	border-radius: 34px;
+	overflow: hidden;
+}
+
+/* WRAPBOXES */
+.gem-wrapbox {
+	position: relative;
+	margin-bottom: 1.421em;
+}
+.gem-wrapbox-position-left {
+	float: left;
+}
+.gem-wrapbox-position-right {
+	float: right;
+}
+.gem-wrapbox-position-below,
+.gem-wrapbox-position-centered {
+	display: inline-block;
+}
+.gem-wrapbox-inner {
+	position: relative;
+}
+.gem-wrapbox-element {
+	width: 100%;
+}
+.gem-wrapbox-style-1 {
+	border: 8px solid transparent;
+}
+.gem-wrapbox-style-1.shadow-box {
+	box-shadow: none;
+}
+
+.gem-wrapbox-style-2 {
+	border: 16px solid transparent;
+}
+.gem-wrapbox-style-3 {
+	padding: 8px;
+	border: 1px solid transparent;
+}
+.gem-wrapbox-style-4 {
+	padding: 20px;
+	border: 2px solid transparent;
+}
+.gem-wrapbox-style-5 {
+	padding: 20px;
+}
+body .gem-wrapbox-style-5{
+	-webkit-box-shadow: 0px 1px 27px 1px rgba(44, 46, 61, 0.25);
+	-moz-box-shadow: 0px 1px 27px 1px rgba(44, 46, 61, 0.25);
+	box-shadow: 0px 1px 27px 1px rgba(44, 46, 61, 0.25);
+}
+.gem-wrapbox-style-6 {
+	padding: 8px;
+	border: 20px solid transparent;
+}
+
+.gem-wrapbox-style-7 {
+	padding: 10px;
+	border-radius: 20px;
+	border: 10px solid transparent;
+}
+.gem-wrapbox-style-8 {
+	padding: 18px;
+	border: 6px solid transparent;
+	border-radius: 55px;
+}
+.gem-wrapbox-style-8 img{
+	border-radius: 34px;
+}
+.gem-wrapbox-style-8 .gem-wrapbox-inner a:before{
+	border-radius: 34px;
+}
+.gem-wrapbox-style-8 .gem-wrapbox-inner a{
+	z-index: 1;
+	overflow: hidden;
+	border-radius: 34px;
+}
+
+.gem-wrapbox-style-8 .overlay-wrap {
+	border-radius: 34px;
+	overflow: hidden;
+}
+
+.gem-wrapbox-style-9 .gem-wrapbox-inner:after {
+	content: "";
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	right: 20px;
+	bottom: 20px;
+	border: 2px  dashed transparent;
+}
+
+.gem-wrapbox-style-9 .overlay-wrap:after {
+	content: "";
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	right: 20px;
+	bottom: 20px;
+	border: 2px  dashed transparent;
+}
+.gem-wrapbox-style-11 .gem-wrapbox-inner {
+	overflow: hidden;
+	border-radius: 50%;
+	z-index: 1;
+}
+.gem-wrapbox-style-11 .gem-wrapbox-inner:after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: 15px;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
+	border: 2px  solid #FFFFFF;
+	border-radius: 50%;
+}
+.gem-gallery-grid.metro.metro-item-style-6  .gallery-set .gallery-item {
+	margin-bottom: 70px !important;
+	overflow: visible !important;
+}
+.gem-gallery-grid.metro.metro-item-style-10  .gallery-set .gallery-item,
+.gem-gallery-grid.metro.metro-item-style-8  .gallery-set .gallery-item,
+.gem-gallery-grid.metro.metro-item-style-5  .gallery-set .gallery-item,
+.gem-gallery-grid.metro.metro-item-style-4  .gallery-set .gallery-item {
+	margin-bottom: 60px !important;
+	overflow: visible !important;
+}
+.gem-gallery-grid.metro.metro-item-style-7  .gallery-set .gallery-item,
+.gem-gallery-grid.metro.metro-item-style-2  .gallery-set .gallery-item {
+	margin-bottom: 50px !important;
+	overflow: visible !important;
+}
+.gem-gallery-grid.metro.metro-item-style-1  .gallery-set .gallery-item {
+	margin-bottom: 30px !important;
+	overflow: visible !important;
+}
+
+.gem-gallery-grid.metro.metro-item-style-3  .gallery-set .gallery-item {
+	margin-bottom: 35px !important;
+	overflow: visible !important;
+}
+.gem-gallery-grid.metro.metro-item-style-11  .gallery-set .gallery-item {
+	margin-bottom: 20px !important;
+	overflow: visible !important;
+}
+
+.gem-wrapbox-style-10 {
+	padding: 20px;
+	border: 2px dashed transparent;
+}
+.gem-wrapbox-style-12 {
+	z-index: 5;
+}
+.gem-wrapbox-style-14  img{
+	border-radius: 50%;
+}
+.gem-wrapbox-style-12 .shadow-wrap {
+	padding: 16px;
+	height: auto;
+}
+.gem-wrapbox-style-12 .shadow-wrap:before,
+.gem-wrapbox-style-12 .shadow-wrap:after {
+	box-shadow: 0 -15px 20px rgba(0, 0, 0, 0.1);
+	content: "";
+	height: 20%;
+	left: 2px;
+	max-width: 300px;
+	position: absolute;
+	top: 22px;
+	transform: rotate(2deg);
+	width: 40%;
+	z-index: -2;
+}
+.gem-wrapbox-style-12 .shadow-wrap:after {
+	left: auto;
+	right: 2px;
+	transform: rotate(-2deg);
+}
+.gem-wrapbox-style-12 .gem-wrapbox-inner:before,
+.gem-wrapbox-style-12 .gem-wrapbox-inner:after {
+	bottom: 20px;
+	box-shadow: 0 15px 25px rgba(0, 0, 0, 0.35);
+	content: '';
+	height: 20%;
+	left: 5px;
+	max-width: 300px;
+	position: absolute;
+	transform: rotate(-2deg);
+	width: 40%;
+	z-index: -2;
+}
+.gem-wrapbox-style-12 .gem-wrapbox-inner:after {
+	left: auto;
+	right: 5px;
+	transform: rotate(2deg);
+}
+.gem-wrapbox-style-9 .overlay-wrap:after,
+.gem-wrapbox-style-9 .gem-wrapbox-inner:after
+{
+	border-color: rgba(255, 255, 255, 0.5);
+}
+
+.gem-video.gem-wrapbox-style-11,
+.gem-youtube.gem-wrapbox-style-11,
+.gem-vimeo.gem-wrapbox-style-11 {
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.gem-gmaps.gem-wrapbox-style-11 .gem-wrapbox-inner {
+	border-color: #e0e5e8;
+}

@@ -1,0 +1,147 @@
+/* STYLED BUTTON Widget */
+.gem-widget-button .gem-button-separator-type-square .gem-button-separator-button {
+	padding: 0;
+}
+.gem-widget-button .gem-button-separator-type-single .gem-button-separator-line {
+	border-bottom: 0 none;
+}
+
+.gem-widget-button .gem-button-separator-type-square .gem-button-separator-button a {
+	margin: 0 10px;
+}
+.gem-widget-button .gem-button {
+	height: auto;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	z-index: 1;
+	white-space: normal;
+	min-width: max-content;
+	overflow: hidden;
+}
+.gem-widget-button .gem-button .gem-inner-wrapper-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+.gem-widget-button .gem-button.gem-button-size-tiny .gem-inner-wrapper-btn {
+	padding: 8px 14px;
+}
+.gem-widget-button .gem-button.gem-button-size-small .gem-inner-wrapper-btn {
+	padding: 13px 17px;
+}
+.gem-widget-button .gem-button.gem-button-size-medium .gem-inner-wrapper-btn {
+	padding: 15px 25px 16px;
+}
+.gem-widget-button .gem-button.gem-button-size-large .gem-inner-wrapper-btn {
+	padding: 28px 37px;
+}
+.gem-widget-button .gem-button.gem-button-size-giant .gem-inner-wrapper-btn {
+	padding: 32px 53px;
+}
+
+.gem-widget-button .gem-button.gem-button-style-outline.gem-button-size-tiny .gem-inner-wrapper-btn {
+	padding: 6px 12px;
+}
+.gem-widget-button .gem-button.gem-button-style-outline.gem-button-size-small .gem-inner-wrapper-btn {
+	padding: 11px 15px;
+}
+.gem-widget-button .gem-button.gem-button-style-outline.gem-button-size-medium .gem-inner-wrapper-btn {
+	padding: 12px 22px 13px;
+}
+.gem-widget-button .gem-button.gem-button-style-outline.gem-button-size-large .gem-inner-wrapper-btn {
+	padding: 24px 33px;
+}
+.gem-widget-button .gem-button.gem-button-style-outline.gem-button-size-giant .gem-inner-wrapper-btn {
+	padding: 26px 47px;
+}
+
+
+.gem-widget-button .gem-button.gem-button-size-tiny:not(.gem-button-icon-position-right) .gem-button-icon {
+	margin-right: 6px;
+}
+.gem-widget-button .gem-button.gem-button-size-small:not(.gem-button-icon-position-right) .gem-button-icon {
+	margin-right: 6px;
+}
+.gem-widget-button .gem-button.gem-button-size-medium:not(.gem-button-icon-position-right) .gem-button-icon {
+	margin-right: 9px;
+}
+.gem-widget-button .gem-button.gem-button-size-large:not(.gem-button-icon-position-right) .gem-button-icon {
+	margin-right: 12px;
+}
+.gem-widget-button .gem-button.gem-button-size-giant:not(.gem-button-icon-position-right) .gem-button-icon {
+	margin-right: 16px;
+}
+
+
+.gem-widget-button .gem-button.gem-button-size-tiny.gem-button-icon-position-right .gem-button-icon {
+	margin-left: 6px;
+}
+.gem-widget-button .gem-button.gem-button-size-small.gem-button-icon-position-right .gem-button-icon {
+	margin-left: 6px;
+}
+
+.gem-widget-button .gem-button.gem-button-size-medium.gem-button-icon-position-right .gem-button-icon {
+	margin-left: 9px;
+}
+.gem-widget-button .gem-button.gem-button-size-large.gem-button-icon-position-right .gem-button-icon {
+	margin-left: 12px;
+}
+.gem-widget-button .gem-button.gem-button-size-giant.gem-button-icon-position-right .gem-button-icon {
+	margin-left: 16px;
+}
+
+.gem-widget-button .gem-button .gem-button-icon svg {
+	width: 1em;
+	height: 1em;
+	display: block;
+}
+
+.gem-widget-button .gem-inner-wrapper-btn i {
+	align-items: center;
+	display: flex;
+}
+.gem-widget-button .gem-inner-wrapper-btn {
+	line-height: 1;
+}
+
+.gem-widget-button .gem-button .gem-button-icon,
+.gem-widget-button .gem-button:hover .gem-button-icon,
+.gem-widget-button .gem-button .gem-button-icon svg,
+.gem-widget-button .gem-button:hover .gem-button-icon svg,
+.gem-widget-button .gem-button .gem-text-button,
+.gem-widget-button .gem-button:hover .gem-text-button {
+	transition: all 0.3s ease;
+}
+.gem-widget-button .gem-button .gem-text-button {
+	margin: 0;
+	color: inherit;
+}
+.gem-widget-button .gem-button {
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+	.gem-widget-button .gem-button {
+		min-width: min-content;
+	}
+}
+
+.elementor-widget-thegem-styledbutton.elementor-widget-empty {
+	 background: none !important;
+ }
+.elementor-widget-thegem-styledbutton .elementor-widget-empty-icon {
+	display: none !important;
+}
+
+.elementor-edit-area-active .elementor-inline-editing.gem-text-button {
+	min-height: 0;
+}
+.gem-widget-button .gem-button.gem-button-inherit {
+	font-weight: inherit;
+	font-family: inherit;
+}
+.gem-widget-button .gem-button.gem-button-disable-uppercase {
+	text-transform: initial;
+}

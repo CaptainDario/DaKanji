@@ -1,0 +1,61 @@
+.styled-image-wrapper::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+.styled-image-wrapper .gem-image a img {
+  transition: all 0.5s;
+}
+.gem-wrapbox, .gem-image-centered-box {
+    margin-bottom: 0;
+}
+
+.gem-image a {
+  display: block;
+}
+.gem-image a:after{
+	content: none;
+}
+.gem-image a:before {
+  top: 0;
+  background-color: unset;
+}
+.gem-image a i{
+    font-style: normal;
+    font-size: 40px;
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transition: opacity 0.3s, top 0.3s;
+    -webkit-transition: opacity 0.3s, top 0.3s;
+    margin-left: -20px;
+    margin-top: -20px;
+    z-index: 5;
+	opacity: 0;
+	color: #ffffff;
+}
+.gem-image a:hover i {
+    top: 50%;
+    opacity: 1;
+    transition: opacity 0.5s, top 0.3s;
+    -webkit-transition: opacity 0.5s, top 0.3s;
+}
+.gem-wrapbox-style-13 .gem-wrapbox-inner {
+  overflow: hidden;
+  border-radius: 50%;
+  z-index: 1;
+}
+.gem-wrapbox-style-13 .gem-wrapbox-inner:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: unset;
+  left: unset;
+  right: unset;
+  bottom: unset;
+  border: none;
+}
