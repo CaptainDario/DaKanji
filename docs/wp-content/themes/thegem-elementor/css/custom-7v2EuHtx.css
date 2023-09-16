@@ -1,11 +1,11 @@
 
 @font-face {
 	font-family: 'Montserrat UltraLight';
-	src: url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.eot');
-	src: url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.eot#iefix') format('embedded-opentype'),
-		url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.woff') format('woff'),
-		url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.ttf') format('truetype'),
-		url('/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.svg#montserratultra_light') format('svg');
+	src: url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.eot');
+	src: url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.eot#iefix') format('embedded-opentype'),
+		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.woff') format('woff'),
+		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.ttf') format('truetype'),
+		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/montserrat-ultralight.svg#montserratultra_light') format('svg');
 		font-weight: normal;
 		font-style: normal;
 }

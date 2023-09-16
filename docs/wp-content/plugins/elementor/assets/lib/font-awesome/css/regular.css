@@ -7,8 +7,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.eot");
-  src: url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.eot#iefix") format("embedded-opentype"), url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.woff2") format("woff2"), url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.woff") format("woff"), url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.ttf") format("truetype"), url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.svg#fontawesome") format("svg"); }
+  src: url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.eot");
+  src: url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.eot#iefix") format("embedded-opentype"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.woff2") format("woff2"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.woff") format("woff"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.ttf") format("truetype"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.svg#fontawesome") format("svg"); }
 
 .far {
   font-family: 'Font Awesome 5 Free';
