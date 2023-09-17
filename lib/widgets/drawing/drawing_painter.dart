@@ -1,8 +1,9 @@
-import 'dart:ui' as ui;
+// Dart imports:
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-
 
 /// The canvas widget on which the user draws the kanji.
 class DrawingPainter extends CustomPainter {

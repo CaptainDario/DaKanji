@@ -1,23 +1,26 @@
+// Dart imports:
 import 'dart:math';
 import 'dart:ui';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
-
-
+import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
 
 class KanaTableScreen extends StatefulWidget {
   

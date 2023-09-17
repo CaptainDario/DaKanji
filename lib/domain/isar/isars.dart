@@ -1,6 +1,7 @@
 
 
 
+// Package imports:
 import 'package:isar/isar.dart';
 
 /// class to bundle all instances of isar

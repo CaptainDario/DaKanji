@@ -1,15 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/changelog.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/domain/changelog.dart';
-
-
 
 /// The "changelog"-screen.
 /// 

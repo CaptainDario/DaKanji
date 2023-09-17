@@ -15,5 +15,6 @@ enum Screens{
   settings,
   onboarding,
   webviewDict,
-  manual
+  manual,
+  test
 }

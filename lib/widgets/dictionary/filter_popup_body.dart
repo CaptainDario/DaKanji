@@ -1,14 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:quiver/iterables.dart';
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:quiver/iterables.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 class FilterPopupBody extends StatefulWidget {
 

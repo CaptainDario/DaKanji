@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:kana_kit/kana_kit.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// Increases the font size of the stroke numbers to `size` and sets stroke
 /// number's color to `color`.

@@ -1,21 +1,23 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/init.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+// Project imports:
+import 'package:da_kanji_mobile/application/releases/releases.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as ratePopup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:da_kanji_mobile/application/releases/releases.dart';
-
-
 
 /// The "home"-screen
 /// 
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if(GetIt.I<UserData>().showOnboarding){
       Navigator.pushNamedAndRemoveUntil(
-        context, "/onboarding", (route) => false
+        context, "/${Screens.onboarding.name}", (route) => false
       );
     }
     else {

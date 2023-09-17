@@ -1,10 +1,10 @@
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_table.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-
-
+import 'package:da_kanji_mobile/widgets/kanji_table/kanji_table.dart';
 
 class KanjiTableScreen extends StatefulWidget {
   

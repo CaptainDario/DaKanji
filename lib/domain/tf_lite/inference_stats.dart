@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// Bundles different elapsed times
 class InferenceStats with ChangeNotifier {

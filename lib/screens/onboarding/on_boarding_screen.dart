@@ -1,16 +1,18 @@
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 
 /// The "home"-screen
 /// 
@@ -129,7 +131,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 GetIt.I<UserData>().showOnboarding = false;
                 GetIt.I<UserData>().save();
                 Future.delayed(const Duration(milliseconds: 500), () =>
-                  Navigator.pushNamedAndRemoveUntil(context, "/dictionary", (route) => false)
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    "/${Screens.dictionary.name}",
+                    (route) => false
+                  )
                 );
               }
             },

@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:async';
 import 'dart:ui' as UI;
+
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Project imports:
 import 'calligraphy_pen_painter.dart';
-
-
 
 class KanjiDrawingWidget extends StatefulWidget {
   const KanjiDrawingWidget(

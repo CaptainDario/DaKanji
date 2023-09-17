@@ -1,6 +1,7 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
-
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:universal_io/io.dart';
 

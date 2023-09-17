@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 class KanaTrainer extends StatefulWidget {
   const KanaTrainer({super.key});

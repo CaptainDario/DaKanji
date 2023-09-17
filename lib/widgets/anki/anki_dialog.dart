@@ -1,12 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 AwesomeDialog AnkiDialog(BuildContext context) {
 

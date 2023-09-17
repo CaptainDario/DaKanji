@@ -4,14 +4,12 @@
 /// The basic approach is as described in the README of jconj and the NOTE in
 /// this folder
 
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
-
-import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
-import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/conjugation/conjo.dart';
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-
-
 
 /// Convenience function to get all conjugations that match the given arguments.
 /// The returned list can contain multiple entries if `onum == null`. 

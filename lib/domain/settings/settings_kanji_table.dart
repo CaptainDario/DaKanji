@@ -1,9 +1,13 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_category.dart';
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_sorting.dart';
+
 part 'settings_kanji_table.g.dart';
 
 

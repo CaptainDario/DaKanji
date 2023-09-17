@@ -1,14 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/meanings_grid.dart';
-
-
 
 class WordMeanings extends StatefulWidget {
   

@@ -1,13 +1,16 @@
+// Dart imports:
 import 'dart:async';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
+// Package imports:
 import 'package:app_links/app_links.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 final AppLinks _appLinks = AppLinks();
 

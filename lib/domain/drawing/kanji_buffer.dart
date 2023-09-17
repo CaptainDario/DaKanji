@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
-
-
 
 /// Class which notifies its listeners always when [_value] changed.
 class KanjiBuffer with ChangeNotifier{

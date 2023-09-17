@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// A button that is used to open a manual page
 class ManualButton extends StatelessWidget {

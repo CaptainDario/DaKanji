@@ -1,16 +1,19 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/settings/settings_advanced.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_misc.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_anki.dart';
-
-
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_misc.dart';
 
 /// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {

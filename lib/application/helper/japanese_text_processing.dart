@@ -1,8 +1,7 @@
+// Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
-
-
 
 /// String that can be used for Regex that matches any Kana character
 String kanaRegexString = "([\u3040-\u309f]|[\u3040-\u30ff])";

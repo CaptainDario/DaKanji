@@ -1,8 +1,14 @@
+// Dart imports:
 import 'dart:collection';
-import 'package:da_kanji_mobile/domain/tree/tree_node_json_converter.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/domain/tree/tree_node_json_converter.dart';
 
 part 'tree_node.g.dart';
 

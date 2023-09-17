@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
-
 
 /// The screen to show the manual of DaKanji
 class ManualScreen extends StatefulWidget {

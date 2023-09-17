@@ -1,20 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
+import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 
 class WordListScreen extends StatefulWidget {
 

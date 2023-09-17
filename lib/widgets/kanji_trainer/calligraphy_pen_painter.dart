@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:ui' as UI;
 
-
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class CalligraphyPenPainter extends CustomPainter {
 

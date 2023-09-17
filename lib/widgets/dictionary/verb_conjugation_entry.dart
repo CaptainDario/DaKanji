@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 enum ConjugationType {
   polite, plain

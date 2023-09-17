@@ -1,9 +1,8 @@
 //based on conjo_notes.csv which was scraped from
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
+// Project imports:
 import '../../application/conjugation/conjo_note.dart';
-
-
 
 // convenience vars  
 const String f = 'f';

@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
-
-
 
 /// Bundles the information of a floating word entry of `FloatingWordsEntry`
 class FloatingWord {

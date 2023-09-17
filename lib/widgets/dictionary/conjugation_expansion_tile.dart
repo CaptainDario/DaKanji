@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
-import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
-import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/conjugation/conjugate.dart';
+import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/data/conjugation/conjugation_descriptions.dart';
+import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {

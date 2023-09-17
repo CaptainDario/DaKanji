@@ -1,14 +1,15 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:isolate';
-import 'package:async/async.dart';
 
-import 'package:isar/isar.dart';
+// Package imports:
+import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
-
-
 
 class DictionarySearchIsolate {
 

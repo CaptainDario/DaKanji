@@ -1,32 +1,34 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:isar/isar.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-
-
 
 /// The search widget for the dictionary.
 /// 

@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
-
-
 
 /// Notifies listener when the state of the drawer changes, iE: playForward or
 /// playReverse is called

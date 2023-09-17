@@ -1,15 +1,18 @@
+// Dart imports:
 import 'dart:typed_data';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/widgets/drawing/canvas_snappable.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
-import 'package:da_kanji_mobile/widgets/drawing/drawing_painter.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-
-
+import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/drawing/canvas_snappable.dart';
+import 'package:da_kanji_mobile/widgets/drawing/drawing_painter.dart';
 
 class DrawingCanvas extends StatefulWidget {
 

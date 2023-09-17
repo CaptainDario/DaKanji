@@ -1,13 +1,14 @@
+// Dart imports:
 import 'dart:isolate';
+
+// Package imports:
 import 'package:async/async.dart';
-
 import 'package:tflite_flutter/tflite_flutter.dart';
-
 import 'package:tuple/tuple.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
 import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
-
-
 
 /// Bundles data to pass between Isolate
 class DrawingIsolate {

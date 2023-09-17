@@ -1,12 +1,15 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
-
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {

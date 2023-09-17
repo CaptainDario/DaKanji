@@ -1,13 +1,12 @@
+// Package imports:
 import 'package:async/async.dart';
-
 import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
-import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
 import 'search_isolate.dart';
-
-
 
 /// Class that spawns a number of isolates to search multi-processed in the
 /// dictionary.

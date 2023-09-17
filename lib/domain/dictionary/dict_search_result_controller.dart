@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
-
 
 /// class to bundle data for manipulating / navigating the search results
 class DictSearchResultController {

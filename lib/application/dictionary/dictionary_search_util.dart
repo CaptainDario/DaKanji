@@ -1,11 +1,10 @@
 
 
+// Package imports:
 import 'package:collection/collection.dart';
-import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
-
-
+import 'package:tuple/tuple.dart';
 
 /// Sorts a list of Jmdict entries given a query text. The order is determined
 /// by those sorting criteria:

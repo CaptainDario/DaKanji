@@ -1,12 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get_it/get_it.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-
 
 AwesomeDialog AddToWordListDialog(BuildContext context, DictionaryWordTab widget){
   return AwesomeDialog(

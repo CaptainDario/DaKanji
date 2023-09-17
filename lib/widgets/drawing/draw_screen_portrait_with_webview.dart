@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
-
-
 
 // Drawscreen in portrait layout with a webview side by side
 class DrawScreenPortraitWithWebview extends StatelessWidget {

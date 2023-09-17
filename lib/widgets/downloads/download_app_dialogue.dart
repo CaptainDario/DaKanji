@@ -1,11 +1,13 @@
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Show a dialogue using [context] with a [title], some [text] and a button
 /// to open the [url] and one to close the dialog.
