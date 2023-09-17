@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,6 +16,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';

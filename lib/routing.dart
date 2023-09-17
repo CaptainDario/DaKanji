@@ -1,27 +1,26 @@
-import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_table.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/screens/about/about_screen.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
+import 'package:da_kanji_mobile/screens/home/home_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
+import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
 import 'package:da_kanji_mobile/screens/test/test_screen.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
-
-
 
 /// Returns the screen matching `name` 
 Widget getWidgetFromScreen(String? name, NavigationArguments args){
