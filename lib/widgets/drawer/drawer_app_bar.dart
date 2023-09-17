@@ -30,8 +30,6 @@ class DrawerAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -110,6 +108,9 @@ class DrawerAppBar extends StatelessWidget {
                     throw Exception("OnBoardingScreen should not be navigated to via drawer");
                   case Screens.webviewDict:
                     title = LocaleKeys.WebviewScreen_title.tr();
+                    break;
+                  case Screens.test:
+                    title = "Testing";
                     break;
                 }
                 return title;
