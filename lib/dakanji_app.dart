@@ -16,23 +16,6 @@ import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/routing.dart';
-import 'package:da_kanji_mobile/screens/about/about_screen.dart';
-import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
-import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
-import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
-import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
-import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
-import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
-import 'package:da_kanji_mobile/screens/test/test_screen.dart';
-import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 /// The starting widget of the app
