@@ -27,84 +27,84 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
 
   Widget newRoute;
 
-  if(name == Screens.home.name){
+  if(name == "/${Screens.home.name}"){
     newRoute = const HomeScreen();
   }
-  else if(name == Screens.onboarding.name){
+  else if(name == "/${Screens.onboarding.name}"){
     newRoute = OnBoardingScreen();
   }
-  else if(name == Screens.drawing.name){
+  else if(name == "/${Screens.drawing.name}"){
     newRoute = DrawScreen(
       args.navigatedByDrawer, args.draw_SearchPrefix,
       args.draw_SearchPostfix, true, true
     );
   }
-  else if(name == Screens.dictionary.name){
+  else if(name == "/${Screens.dictionary.name}"){
     newRoute = DictionaryScreen(
       args.navigatedByDrawer, true, args.dict_InitialSearch,
       initialEntryId: args.dict_InitialEntryId,
     );
   }
-  else if(name == Screens.text.name){
+  else if(name == "/${Screens.text.name}"){
     newRoute = TextScreen(
       args.navigatedByDrawer, true, 
       initialText: args.text_InitialText,
     );
   }
-  else if(name == Screens.clipboard.name){
+  else if(name == "/${Screens.clipboard.name}"){
     newRoute = ClipboardScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.kanji_trainer.name){
+  else if(name == "/${Screens.kanji_trainer.name}"){
     newRoute = KanjiTrainerScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.kanji_table.name){
+  else if(name == "/${Screens.kanji_table.name}"){
     newRoute = KanjiTableScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.kana_trainer.name){
+  else if(name == "/${Screens.kana_trainer.name}"){
     newRoute = KanaTrainerScreen(
       args.navigatedByDrawer
     );
   }
-  else if(name == Screens.kana_table.name){
+  else if(name == "/${Screens.kana_table.name}"){
     newRoute = KanaTableScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.kuzushiji.name){
+  else if(name == "/${Screens.kuzushiji.name}"){
     newRoute = KuzushijiScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.word_lists.name){
+  else if(name == "/${Screens.word_lists.name}"){
     newRoute = WordListsScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == Screens.settings.name){
+  else if(name == "/${Screens.settings.name}"){
     newRoute = SettingsScreen(
       args.navigatedByDrawer
     );
   }
-  else if(name == Screens.about.name){
+  else if(name == "/${Screens.about.name}"){
     newRoute = AboutScreen(
       args.navigatedByDrawer
     );
   }
-  else if(name == Screens.changelog.name){
+  else if(name == "/${Screens.changelog.name}"){
     newRoute = ChangelogScreen();
   }
-  else if(name == Screens.manual.name){
+  else if(name == "/${Screens.manual.name}"){
     newRoute = ManualScreen(
       args.navigatedByDrawer
     );
   }
-  else if(name == Screens.test.name){
+  else if(name == "/${Screens.test.name}"){
     newRoute = TestScreen();
   }
   else{
