@@ -37,6 +37,10 @@ It is recommended to use the store of your platform to install DaKanji, however,
 * Linux (x86):
   * `linux.zip` portable Linux application build on Ubuntu 22.04
   * `snap.zip` snap package
+  * `.flatpak` flatpak package
 * Windows (x86):
   * `exe.zip` build on Windows 10
   * `.msix` msix installer (DaKanji v3.1.0+ is signed with the same certificate that I created, therefore you need to add it to your trust list)
+
+Notes:
+* the builds `.app`, `linux.zip`, `exe.zip` do **not** automatically register deep linking.
