@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:flutter/foundation.dart';
 
@@ -18,7 +19,7 @@ Future<void> initDeepLinksStream() async {
   /// Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
-    if(uri.isScheme("dakanji") && uri.toString().startsWith(g_AppLink))
+    if(uri.toString().startsWith(g_AppLink))
       handleDeepLink(uri.toString());
   });
 }
@@ -26,56 +27,94 @@ Future<void> initDeepLinksStream() async {
 /// Handles the deep link
 void handleDeepLink(String link){
 
+  debugPrint("Deeplink: $link");
+
+  List<String> route = extractRouteFromLink(link);
+  Map<String, String> args = extractArgsFromLink(link);
+
+  if(route[0] == Screens.dictionary.name){
+    handleDeepLinkDict(args);
+  }
+  else if(route[0] == Screens.text.name){
+    handleDeepLinkText(args);
+  }
+}
+
+/// Extracts all route parts from a link and returns them
+List<String> extractRouteFromLink(String link){
+
+  List<String> route;
+
+  // remove the base and get the route
+  String routeString = link.replaceFirst(g_AppLink, "");
+  routeString = routeString.split("?")[0];
+
+  // split route into separate parts
+  route = routeString.split("/");
+
+  return route;
+}
+
+/// Extracts all args from a link and returns them
+Map<String, String> extractArgsFromLink(String link){
+
+  Map<String, String> args = {};
+
+  // remove the base
   String short = link.replaceFirst(g_AppLink, "");
 
-  debugPrint("Deeplink: $short");
+  // split into separate args
+  List<String> split = short.split("?");
+  if(split.length > 1){
+    List<String> argsString  = split[1].split("&");
 
-  if(short.startsWith("dictionary/"))
-    handDeepLinkDict(short.replaceFirst("dictionary/", ""));
-  else if(short.startsWith("text/"))
-    handleDeepLinkText(short.replaceFirst("text/", ""));
+    // split and convert args
+    for (String arg in argsString){
+      List<String> keyValue = arg.split("=");
+      args[keyValue[0]] = keyValue[1];
+    }
+  }
+
+  return args;
 }
 
 /// Handles deep links that are related to the text screen
-void handleDeepLinkText(String textLink){
+void handleDeepLinkText(Map<String, String> linkArgs){
 
-  NavigationArguments args = NavigationArguments(
+  NavigationArguments navArgs = NavigationArguments(
     false,
-    initialText: Uri.decodeFull(textLink)
   );
+
+  if(linkArgs.containsKey("text")){
+    navArgs.text_InitialText = Uri.decodeFull(linkArgs["text"]!);
+  }
   
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/text",
-    (route) => false, arguments: args
+    "/${Screens.text.name}",
+    (route) => false,
+    arguments: navArgs
   );
 }
 
 /// Handles deep links that are related to the dictionary
-void handDeepLinkDict(String dictLink){
+void handleDeepLinkDict(Map<String, String> linkArgs){
 
-  NavigationArguments? args;
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );
 
   /// search by id
-  if(dictLink.startsWith("id/")){
-    args = NavigationArguments(
-      false,
-      initialEntryId: int.tryParse(dictLink.replaceFirst("id/", ""))
-    );
+  if(linkArgs.containsKey("id")){
+    navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
   }
   /// normal dictionary search
-  else if(dictLink.startsWith("search/")){
-    // assure that the search string is not encoded
-    String search = dictLink.replaceFirst("search/", "");
-    search = Uri.decodeFull(search);
-    args = NavigationArguments(
-      false,
-      initialDictSearch: search
-    );
+  else if(linkArgs.containsKey("search")){
+    navArgs.dict_InitialSearch = Uri.decodeFull(linkArgs["search"]!);
   }
-  
-  if(args != null)
-    g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-      "/dictionary",
-      (route) => false, arguments: args
-    );
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.dictionary.name}",
+    (route) => false,
+    arguments: navArgs
+  );
 }
