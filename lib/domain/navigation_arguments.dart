@@ -10,32 +10,32 @@ class NavigationArguments{
 
   // DRAWING SCREEN
   /// prefix that should be prepended to every search query
-  final String drawSearchPrefix;
+  String draw_SearchPrefix;
   /// postfix that should be appended to every search query
-  final String drawSearchPostfix;
+  String draw_SearchPostfix;
 
   // DICT SCREEN
   /// query that should be searched when navigating the dictionary screen
-  final String initialDictSearch;
+  String dict_InitialSearch;
   /// id of the entry that should be shown when navigating to the dictionary
   /// screen
-  final int? initialEntryId;
+  int? dict_InitialEntryId;
 
   // TEXT SCREEN
   /// The text that should be shown when opening the text screen
-  final String? initialText;
+  String? text_InitialText;
 
 
   NavigationArguments(
     this.navigatedByDrawer,
     {
-      this.drawSearchPrefix = "",
-      this.drawSearchPostfix = "",
+      this.draw_SearchPrefix = "",
+      this.draw_SearchPostfix = "",
 
-      this.initialDictSearch = "",
-      this.initialEntryId,
+      this.dict_InitialSearch = "",
+      this.dict_InitialEntryId,
 
-      this.initialText
+      this.text_InitialText
     }
   );
 

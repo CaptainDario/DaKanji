@@ -112,7 +112,7 @@ class _WordListScreenState extends State<WordListScreen> {
               '/dictionary',
               arguments: NavigationArguments(
                 false,
-                initialEntryId: entry.id
+                dict_InitialEntryId: entry.id
               )
             );
           },

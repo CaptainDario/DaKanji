@@ -162,7 +162,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dict_InitialEntryId: id
                                         )
                                       );
                                     },
@@ -195,7 +195,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dict_InitialEntryId: id
                                         )
                                       );
                                     },

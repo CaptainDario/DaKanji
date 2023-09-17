@@ -92,7 +92,7 @@ void openDictionary(BuildContext context, String char) async {
       GetIt.I<Settings>().drawing.inbuiltDictId){
       Navigator.pushNamedAndRemoveUntil(
         context, "/dictionary", (route) => false,
-        arguments: NavigationArguments(false, initialDictSearch: char)
+        arguments: NavigationArguments(false, dict_InitialSearch: char)
       );
     }
     // handle dictionary opening on ANDROID
