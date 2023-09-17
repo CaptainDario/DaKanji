@@ -122,60 +122,13 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           );
 
         // check type and extract arguments
-        NavigationArguments args;
+        NavigationArguments args = NavigationArguments(false);
 
         if((settings.arguments is NavigationArguments)){
           args = settings.arguments as NavigationArguments;
         }
-        else{
-          args = NavigationArguments(false);
-        }
 
-        //return switchScreen(getWidgetFromScreen(settings.name, args));
-
-        switch(settings.name){
-          case "/onboarding":
-            return switchScreen(const OnBoardingScreen());
-          case "/drawing":
-            return switchScreen(DrawScreen(
-              args.navigatedByDrawer, args.draw_SearchPrefix,
-              args.draw_SearchPostfix, true, true
-            ));
-          case "/dictionary":
-            return switchScreen(DictionaryScreen(
-              args.navigatedByDrawer, true, args.dict_InitialSearch,
-              initialEntryId: args.dict_InitialEntryId,
-            ));
-          case "/text":
-            return switchScreen(TextScreen(
-              args.navigatedByDrawer, true, 
-              initialText: args.text_InitialText,
-            ));
-          case "/clipboard":
-            return switchScreen(ClipboardScreen(args.navigatedByDrawer, true));
-          case "/kanji_trainer":
-            return switchScreen(KanjiTrainerScreen(args.navigatedByDrawer, true));
-          case "/kanji_table":
-            return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
-          case "/kana_table":
-            return switchScreen(KanaTableScreen(args.navigatedByDrawer, true));
-          case "/kana_trainer":
-            return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
-          case "/kuzushiji":
-            return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
-          case "/word_lists":
-            return switchScreen(WordListsScreen(args.navigatedByDrawer, true));
-          case "/settings":
-            return switchScreen(SettingsScreen(args.navigatedByDrawer));
-          case "/about":
-            return switchScreen(AboutScreen(args.navigatedByDrawer));
-          case "/changelog":
-            return switchScreen(const ChangelogScreen());
-          case "/manual":
-            return switchScreen(ManualScreen(args.navigatedByDrawer));
-          case "/testScreen":
-            return switchScreen(TestScreen());
-        }
+        return switchScreen(getWidgetFromScreen(settings.name, args));
         
       },
 

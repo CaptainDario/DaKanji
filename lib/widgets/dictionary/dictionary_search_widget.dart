@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -305,7 +306,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               GetIt.I<Settings>().drawing.inbuiltDictId;
                             Navigator.pushNamedAndRemoveUntil(
                               widget.context, 
-                              "/drawing",
+                              "/${Screens.drawing.name}",
                               (route) => true,
                               arguments: NavigationArguments(
                                 false, draw_SearchPrefix: searchInputController.text

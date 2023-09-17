@@ -71,51 +71,77 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
 
 
   List<DrawerEntry> drawerEntries = [
-    DrawerEntry(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing,
+    DrawerEntry(
+      Icons.brush, LocaleKeys.DrawScreen_title.tr(),
+      "/${Screens.drawing.name}", Screens.drawing,
       null, null,
       true, null),
-    DrawerEntry(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary,
+    DrawerEntry(
+      Icons.book, LocaleKeys.DictionaryScreen_title.tr(),
+      "/${Screens.dictionary.name}", Screens.dictionary,
       null, null,
       true, null),
-    DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
+    DrawerEntry(
+      Icons.text_snippet, LocaleKeys.TextScreen_title.tr(),
+      "/${Screens.text.name}", Screens.text,
       null, null,
       true, null),
-    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+    DrawerEntry(
+      DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(),
+      "/${Screens.kanji_table.name}", Screens.kanji_table,
       null, null,
       true, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+    DrawerEntry(
+      DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(),
+      "/${Screens.kanji_trainer.name}", Screens.kanji_trainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+    DrawerEntry(
+      DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(),
+      "/${Screens.kana_table.name}", Screens.kana_table,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+    DrawerEntry(
+      DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(),
+      "/${Screens.kana_trainer.name}", Screens.kana_trainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
+    DrawerEntry(
+      Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(),
+      "/${Screens.word_lists.name}", Screens.word_lists,
       null, Alignment(0, -0.1),
       kDebugMode, null),
-    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+    DrawerEntry(
+      Icons.copy, LocaleKeys.ClipboardScreen_title.tr(),
+      "/${Screens.clipboard.name}", Screens.clipboard,
       null, null,
       true, null),
-    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
+    DrawerEntry(
+      Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(),
+      "/${Screens.settings.name}", Screens.settings,
       null, null,
       true, null),
-    DrawerEntry(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about,
+    DrawerEntry(
+      Icons.info, LocaleKeys.AboutScreen_title.tr(),
+      "/${Screens.about.name}", Screens.about,
       null, null,
       true, null),
-    DrawerEntry(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual,
+    DrawerEntry(
+      Icons.help, LocaleKeys.ManualScreen_title.tr(),
+      "/${Screens.manual.name}", Screens.manual,
       null, null,
       true, null),
     DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,
       null, null,
       true, sendFeedback),
     if(kDebugMode)
-    DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
+    DrawerEntry(
+      const IconData(0x5d29, fontFamily: "kouzan"),
+      LocaleKeys.KuzushijiScreen_title.tr(), "/${Screens.kuzushiji.name}", Screens.kuzushiji,
       0.7, Alignment(-1000, 0),
       kDebugMode, null),
   ];

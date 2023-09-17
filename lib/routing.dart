@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:da_kanji_mobile/widgets/kanji_table/kanji_table.dart';
@@ -34,46 +35,75 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     newRoute = OnBoardingScreen();
   }
   else if(name == Screens.drawing.name){
-    newRoute = DrawScreen(openedByDrawer, searchPrefix, searchPostfix, includeHeroes, includeTutorial);
+    newRoute = DrawScreen(
+      args.navigatedByDrawer, args.draw_SearchPrefix,
+      args.draw_SearchPostfix, true, true
+    );
   }
   else if(name == Screens.dictionary.name){
-    newRoute = DictionaryScreen(openedByDrawer, includeTutorial, initialSearch);
+    newRoute = DictionaryScreen(
+      args.navigatedByDrawer, true, args.dict_InitialSearch,
+      initialEntryId: args.dict_InitialEntryId,
+    );
   }
   else if(name == Screens.text.name){
-    newRoute = TextScreen(openedByDrawer, includeTutorial);
+    newRoute = TextScreen(
+      args.navigatedByDrawer, true, 
+      initialText: args.text_InitialText,
+    );
   }
   else if(name == Screens.clipboard.name){
-    newRoute = ClipboardScreen(openedByDrawer, includeTutorial);
+    newRoute = ClipboardScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.kanji_trainer.name){
-    newRoute = KanjiTrainerScreen(openedByDrawer, includeTutorial);
+    newRoute = KanjiTrainerScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.kanji_table.name){
-    newRoute = KanjiTable(includeTutorial);
+    newRoute = KanjiTableScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.kana_trainer.name){
-    newRoute = KanaTrainerScreen();
+    newRoute = KanaTrainerScreen(
+      args.navigatedByDrawer
+    );
   }
   else if(name == Screens.kana_table.name){
-    newRoute = KanaTableScreen(navigatedByDrawer, includeTutorial);
+    newRoute = KanaTableScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.kuzushiji.name){
-    newRoute = KuzushijiScreen(openedByDrawer, includeTutorial);
+    newRoute = KuzushijiScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.word_lists.name){
-    newRoute = WordListsScreen(openedByDrawer, includeTutorial);
+    newRoute = WordListsScreen(
+      args.navigatedByDrawer, true
+    );
   }
   else if(name == Screens.settings.name){
-    newRoute = SettingsScreen(openedByDrawer);
+    newRoute = SettingsScreen(
+      args.navigatedByDrawer
+    );
   }
   else if(name == Screens.about.name){
-    newRoute = AboutScreen(openedByDrawer);
+    newRoute = AboutScreen(
+      args.navigatedByDrawer
+    );
   }
   else if(name == Screens.changelog.name){
     newRoute = ChangelogScreen();
   }
   else if(name == Screens.manual.name){
-    newRoute = ManualScreen(openedByDrawer);
+    newRoute = ManualScreen(
+      args.navigatedByDrawer
+    );
   }
   else if(name == Screens.test.name){
     newRoute = TestScreen();
