@@ -213,8 +213,8 @@ flutter:
     - assets/images/onboarding/onboarding_3_1.png
     - assets/images/onboarding/onboarding_3_2.png
 
-    - assets/images/onboarding/study_hard_1_1.svg
-    - assets/images/onboarding/study_hard_1_2.svg
+    #- assets/images/onboarding/study_hard_1_1.svg
+    #- assets/images/onboarding/study_hard_1_2.svg
     - assets/animations/
     # kana mnemonics / sounds
     - assets/images/kana/individuals/
