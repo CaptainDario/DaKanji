@@ -1,37 +1,39 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
-import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
-import 'package:da_kanji_mobile/screens/test/test_screen.dart';
-import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/screens/about/about_screen.dart';
-import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
-import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/routing.dart';
+import 'package:da_kanji_mobile/screens/about/about_screen.dart';
+import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-
-
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
+import 'package:da_kanji_mobile/screens/home/home_screen.dart';
+import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
+import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
+import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
+import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
+import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
+import 'package:da_kanji_mobile/screens/test/test_screen.dart';
+import 'package:da_kanji_mobile/screens/text/text_screen.dart';
+import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
+import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
@@ -129,9 +131,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           args = NavigationArguments(false);
         }
 
+        //return switchScreen(getWidgetFromScreen(settings.name, args));
+
         switch(settings.name){
-          case "/home":
-            return switchScreen(const HomeScreen());
           case "/onboarding":
             return switchScreen(const OnBoardingScreen());
           case "/drawing":
@@ -174,7 +176,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/testScreen":
             return switchScreen(TestScreen());
         }
-        throw UnsupportedError("Unknown route: ${settings.name}");
+        
       },
 
       title: g_AppTitle,
