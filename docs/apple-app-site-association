@@ -1,0 +1,15 @@
+{
+  "applinks": {
+      "details": [
+           {
+             "appIDs": [ "1593741764.com.DaAppLab.daKanji" ],
+             "components": [
+               {
+                  "/": "/app/*",
+                  "comment": "Matches any URL with a path that starts with /buy/."
+               },
+             ]
+           }
+       ]
+   },
+}
