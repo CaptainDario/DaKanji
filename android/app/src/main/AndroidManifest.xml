@@ -40,15 +40,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
               <!-- Deep Links -->
               <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
-              <data
-                android:scheme="dakanji"
-                android:host="dakanji" />
+              <data android:scheme="https"/>
+              <data android:host="dakanji.app"/>
+              <data android:pathPrefix="/app"/>
             </intent-filter>
 
         </activity>
