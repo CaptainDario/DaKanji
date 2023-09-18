@@ -9,8 +9,8 @@
 
 <channel>
 	<title>DaKanji</title>
-	<atom:link href="https://dakanji.app/feed/" rel="self" type="application/rss+xml" />
-	<link>https://dakanji.app/</link>
+	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
 	<lastBuildDate>Sat, 16 Sep 2023 10:56:27 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,20 +21,20 @@
 	<generator>https://wordpress.org/?v=6.3.1</generator>
 
 <image>
-	<url>https://dakanji.app/wp-content/uploads/2023/09/icon.png</url>
+	<url>/wp-content/uploads/2023/09/icon.png</url>
 	<title>DaKanji</title>
-	<link>https://dakanji.app/</link>
+	<link>/</link>
 	<width>32</width>
 	<height>32</height>
 </image> 
 	<item>
 		<title>DaKanji 3.0 released</title>
-		<link>https://dakanji.app/dakanji_3_0_released/</link>
+		<link>/dakanji_3_0_released/</link>
 		
 		<dc:creator><![CDATA[dario]]></dc:creator>
 		<pubDate>Sat, 10 Jun 2023 09:46:17 +0000</pubDate>
 				<category><![CDATA[Development]]></category>
-		<guid isPermaLink="false">https://dakanji.app/?p=1663</guid>
+		<guid isPermaLink="false">/?p=1663</guid>
 
 					<description><![CDATA[At the beginning of 2021, I first published DaKanji as an offline stroke order independent Kanji lookup tool for Linux,...]]></description>
 										<content:encoded><![CDATA[		<div data-elementor-type="wp-post" data-elementor-id="1663" class="elementor elementor-1663">
@@ -320,5 +320,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:50 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:58:57 by W3 Total Cache
 -->

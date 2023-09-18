@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://dakanji.app/main-sitemap.xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://dakanji.app/category/development/</loc>
+		<loc>/category/development/</loc>
 		<lastmod>2023-09-16T10:56:27+00:00</lastmod>
 	</url>
 </urlset>
@@ -13,5 +13,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:51 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:58:58 by W3 Total Cache
 -->

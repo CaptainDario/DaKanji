@@ -1,107 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://dakanji.app/main-sitemap.xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://dakanji.app/blog/</loc>
+		<loc>/blog/</loc>
 		<lastmod>2023-09-04T09:25:14+00:00</lastmod>
 	</url>
 	<url>
-		<loc>https://dakanji.app/</loc>
-		<lastmod>2023-09-16T17:56:04+00:00</lastmod>
+		<loc>/</loc>
+		<lastmod>2023-09-18T21:58:15+00:00</lastmod>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/phone.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/phone.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/chat_bubble_small.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/chat_bubble_small.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/chat_bubble_small.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/chat_bubble_small.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/chat_bubble_large.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/chat_bubble_large.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/11/people.png</image:loc>
+			<image:loc>/wp-content/uploads/2020/11/people.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2020/12/unnamed-1.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/circle_half_full_bottom_left.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/mockups_1-1.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/mockups_2.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2020/11/10.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/14.svg</image:loc>
+			<image:loc>/wp-content/uploads/2020/12/unnamed-1.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/circle_full_light_trans.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/circle_half_full_bottom_left.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/mockups_3.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/12/unnamed-1.png</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/mockups_4.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/circle_half_full_bottom_left.svg</image:loc>
+			<image:loc>/wp-content/uploads/2020/11/10.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/mockups_1-1.webp</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/circle_full_light_trans.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/mockups_2.webp</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/11/10.png</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/circle_half_outlined_top_right.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/12/unnamed-1.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/circle_half_full_bottom_left.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/mockups_3.webp</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/mockups_4.webp</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/11/10.png</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/circle_half_outlined_top_right.svg</image:loc>
-		</image:image>
-		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/12/24.png</image:loc>
+			<image:loc>/wp-content/uploads/2020/12/24.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://dakanji.app/page-404/</loc>
+		<loc>/deep-links/</loc>
+		<lastmod>2023-09-18T21:51:10+00:00</lastmod>
+	</url>
+	<url>
+		<loc>/page-404/</loc>
 		<lastmod>2023-09-16T18:12:47+00:00</lastmod>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://dakanji.app/wp-content/uploads/2020/11/1-1.png</image:loc>
+			<image:loc>/wp-content/uploads/2020/11/1-1.png</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>https://dakanji.app/deep-links/</loc>
-		<lastmod>2023-09-16T10:51:12+00:00</lastmod>
-	</url>
-	<url>
-		<loc>https://dakanji.app/privacy-policy/</loc>
+		<loc>/privacy-policy/</loc>
 		<lastmod>2023-09-16T10:44:16+00:00</lastmod>
 	</url>
 </urlset>
@@ -113,5 +95,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:51 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:58:58 by W3 Total Cache
 -->

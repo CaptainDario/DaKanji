@@ -118,7 +118,7 @@
 								This KML file contains <xsl:value-of select="count(kml:kml/kml:Document/kml:Folder/kml:Placemark)"/> Locations.
 							</p>
 							<p class="expl">
-								<a href="https://dakanji.app/sitemap_index.xml">&#8592; Sitemap Index</a>							</p>
+								<a href="/sitemap_index.xml">&#8592; Sitemap Index</a>							</p>
 							<table id="sitemap" cellpadding="3">
 								<thead>
 									<tr>
@@ -213,7 +213,7 @@
 									This XML Sitemap contains <strong><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></strong> URLs.								</p>
 
 								<p class="expl">
-									<a href="https://dakanji.app/sitemap_index.xml">&#8592; Sitemap Index</a>								</p>
+									<a href="/sitemap_index.xml">&#8592; Sitemap Index</a>								</p>
 
 								<table id="sitemap" cellpadding="3">
 
@@ -266,5 +266,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:50 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:58:58 by W3 Total Cache
 -->

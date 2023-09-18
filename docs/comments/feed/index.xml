@@ -8,10 +8,10 @@
 <channel>
 	<title>
 	Comments for DaKanji	</title>
-	<atom:link href="https://dakanji.app/comments/feed/" rel="self" type="application/rss+xml" />
-	<link>https://dakanji.app/</link>
+	<atom:link href="/comments/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
-	<lastBuildDate>Sat, 16 Sep 2023 18:12:47 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 18 Sep 2023 21:58:15 +0000</lastBuildDate>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
@@ -27,5 +27,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:50 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:58:57 by W3 Total Cache
 -->

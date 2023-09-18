@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'MaterialDesignIcons';
-	src:url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.eot');
-	src:url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.eot#iefix') format('embedded-opentype'),
-		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.woff') format('woff'),
-		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.ttf') format('truetype'),
-		url('https://dakanji.app/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.svg#MaterialDesignIcons') format('svg');
+	src:url('/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.eot');
+	src:url('/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.eot#iefix') format('embedded-opentype'),
+		url('/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.woff') format('woff'),
+		url('/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.ttf') format('truetype'),
+		url('/wp-content/themes/thegem-elementor/fonts/material/materialdesignicons.svg#MaterialDesignIcons') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -42,7 +42,7 @@
 	content: '';
 	width: 20px;
 	height: 20px;
-	background: url('https://dakanji.app/wp-content/themes/thegem-elementor/css/icons-material-logo.svg') no-repeat 50% 50%;
+	background: url('/wp-content/themes/thegem-elementor/css/icons-material-logo.svg') no-repeat 50% 50%;
 	background-size: 20px 20px;
 	display: inline-block;
 	vertical-align: middle;

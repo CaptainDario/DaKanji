@@ -8,8 +8,8 @@
 <channel>
 	<title>
 	Comments on: Privacy Policy	</title>
-	<atom:link href="https://dakanji.app/privacy-policy/feed/" rel="self" type="application/rss+xml" />
-	<link>https://dakanji.app/</link>
+	<atom:link href="/privacy-policy/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
 	<lastBuildDate>Sat, 16 Sep 2023 10:44:16 +0000</lastBuildDate>
 	<sy:updatePeriod>
@@ -27,5 +27,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-16 18:47:53 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-18 21:59:01 by W3 Total Cache
 -->
