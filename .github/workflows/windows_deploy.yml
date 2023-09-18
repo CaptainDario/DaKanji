@@ -79,7 +79,7 @@ jobs:
         run: |
           dir
           dir artifacts
-          gh release upload gh_action \DaKanji_${{env.DAKANJI_VERSION}}_exe.zip --clobber
+          gh release upload gh_action artifacts\DaKanji_${{env.DAKANJI_VERSION}}_exe.zip --clobber
           gh release upload gh_action artifacts\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
 
       # get msix store artifact and upload it to MS store
