@@ -1584,7 +1584,7 @@ packages:
       sha256: f6deed8ed625c52864792459709183da231ebf66ff0cf09e69b573227c377efe
       url: "https://pub.dev"
     source: hosted
-    version: "11.3.0"
+    version: "11.7.1"
   volume_controller:
     dependency: transitive
     description:
@@ -1690,5 +1690,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.1.0-185.0.dev <4.0.0"
   flutter: ">=3.10.6"
