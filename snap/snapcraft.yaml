@@ -19,7 +19,7 @@ slots:
   dbus-dakanji:
     interface: dbus
     bus: session
-    name: org.daapplab.dakanji
+    name: com.DaAppLab.DaKanji
     
 apps:
   dakanji:
