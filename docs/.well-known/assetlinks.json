@@ -1,0 +1,26 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.DaAppLab.DaKanjiRecognizer",
+      "sha256_cert_fingerprints": [
+        "36:EF:15:AD:31:1C:07:12:7F:17:7D:D3:75:64:B5:7D:A0:4A:6C:4A:F9:3A:E7:DF:4B:5E:2E:6A:F5:2F:19:47"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.DaAppLab.DaKanjiRecognizer",
+      "sha256_cert_fingerprints": [
+        "9F:BE:B4:EB:37:CD:86:99:65:E3:2C:B6:F8:6B:8F:EE:A6:C4:50:71:56:02:E6:8F:EE:D2:F7:9A:B6:2F:3B:41"
+      ]
+    }
+  }
+]

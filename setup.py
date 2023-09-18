@@ -54,9 +54,23 @@ def download_assets():
     asset_names, asset_urls = [], []
     with urllib.request.urlopen(req) as response:
         the_page = json.loads(response.read())
-        print(f"Using release: {the_page['name']}")
+        for release_json in the_page:
+            if(release_json["tag_name"] == f"v{version}"):
+                return release_json["assets_url"]
+
+def download_assets(url: str):
+    """ Downloads all assets for DaKanji from the given url
+
+    url : url to the assets release of DaKanji
+    """
+
+    # get url to latest download
+    req = urllib.request.Request(url)
+    asset_names, asset_urls = [], []
+    with urllib.request.urlopen(req) as response:
+        the_page = json.loads(response.read())
         #print(json.dumps(the_page, sort_keys=True, indent=4))
-        for i in the_page["assets"]:
+        for i in the_page:
             for k, v in i.items():
                 if(k == "browser_download_url"):
                     asset_urls.append(v)

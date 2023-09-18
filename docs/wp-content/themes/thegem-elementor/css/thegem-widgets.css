@@ -30,7 +30,7 @@
 	float: left;
 }
 .widget  .gem-teams-image .gem-dummy {
-	background-image:url("/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/docs//wp-content/themes/thegem-elementor/images/default-avatar.png") ;
+	background-image:url("https://dakanji.app/wp-content/themes/thegem-elementor/images/default-avatar.png") ;
 	background-size: 100%;
 }
 .widget  .gem-teams-image .gem-dummy:after {
