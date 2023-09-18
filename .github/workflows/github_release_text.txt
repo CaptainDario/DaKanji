@@ -29,7 +29,7 @@
 
 CHANGELOG
 
-**I want to download from GitHub, which release do I need?**
+Which release do I need?
 It is recommended to use the store of your platform to install DaKanji, however, all release names end in the platform they are made for:
 * Android: `.apk`
   * if you are not sure which architecture your device uses, use the file ending in `fat.apk`
