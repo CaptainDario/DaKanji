@@ -19,7 +19,7 @@ import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
 
 
 
-/// Screen that listens to clipboard changes and displays them in
+/// Screen that listens to clipboard changes and displays them in a
 /// [TextAnalysisPopup]
 class ClipboardScreen extends StatefulWidget {
 
@@ -65,10 +65,10 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
   @override
   void initState() {
 
-    // android does not allow for continous clipboard reading -> periodically
-    // read clipboard till there is new value
-    if(Platform.isAndroid){
-      refreshClipboardAndroid = Timer.periodic(Duration(seconds: 1), (timer) async { 
+    // android / iOS do not allow for continous clipboard reading
+    //   -> periodically read clipboard till there is new value
+    if(Platform.isAndroid || Platform.isIOS){
+      refreshClipboardAndroid = Timer.periodic(Duration(milliseconds: 500), (timer) async { 
 
         String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
@@ -100,7 +100,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       }
 
       // get current always on top state
-      if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+      if(g_desktopPlatform)
         isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
 
     });
@@ -121,7 +121,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     }
 
     // reset the state of the always on top option
-    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+    if(g_desktopPlatform)
       WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
 
     super.dispose();

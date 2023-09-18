@@ -1,0 +1,55 @@
+# This is a basic workflow to help you get started with Actions
+
+name: iOS - Test and Build
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # allows that other workflows can run this one
+  workflow_call:
+    #secrets:
+    #  DA_KANJI_ML_RELEASES_TOKEN: 
+    #    required: true
+
+env:
+  FLUTTER_VERSION: "2.10.3"
+  FLUTTER_CHANNEL: "stable"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # get / set dakanji assets from cache
+      - name: Check dakanji assets in cache
+        id: cache-dakanji-assets-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: tmp
+          key: dakanji-assets
+      - name: Download DaKanji assets if necessary
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        run: |
+          python3 setup.py --download-all --no-delete
+      - name: Move DaKanji assets if in cache
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
+        run: |
+          python3 setup.py --no-download 
+      - name: Save dakanji assets to cache if not saved
+        if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
+        id: cache-dakanji-assets-save
+        uses: actions/cache/save@v3
+        with:
+          path: tmp
+          key: dakanji-assets

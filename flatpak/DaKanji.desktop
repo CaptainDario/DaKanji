@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=DaKanji
+Comment=You are learning Japanese? Then you need to try DaKanji!
+Exec=DaKanji %u
+Icon=com.DaAppLab.DaKanji
+Terminal=false
+Type=Application
+Categories=Education;Languages;
+MimeType=x-scheme-handler/dakanji;

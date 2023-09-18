@@ -1,4 +1,61 @@
 {
+  "DojgScreen": {
+    "title": {
+      "en": "DoJG",
+      "de": "DoJG",
+      "ru": "DoJG",
+      "ja": "DoJG",
+      "zh": "DoJG",
+      "it": "DoJG",
+      "fr": "DoJG",
+      "es": "DoJG",
+      "pl": "DoJG"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+      "de": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
+      "ru": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
+      "ja": "日本語文法辞典（DoJG）の画面へようこそ！",
+      "zh": "欢迎访问《日语语法词典》（DoJG）屏幕！",
+      "it": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
+      "fr": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
+      "es": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
+      "pl": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "refer_to_manual": {
+      "en": "For details refer to the manual",
+      "de": "Einzelheiten finden Sie im Handbuch",
+      "ru": "Более подробная информация приведена в руководстве",
+      "ja": "詳細はマニュアルを参照",
+      "zh": "详情请参阅手册",
+      "it": "Per i dettagli, consultare il manuale",
+      "fr": "Pour plus de détails, voir le manuel",
+      "es": "Para más detalles, consulte el manual",
+      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
+    },
+    "import_dojg": {
+      "en": "Tap to import the DoJG Deck",
+      "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+      "ru": "Нажмите, чтобы импортировать DoJG Deck",
+      "ja": "タップしてDoJGデッキをインポートする",
+      "zh": "点按导入 DoJG 资料集",
+      "it": "Toccare per importare il mazzo DoJG",
+      "fr": "Tapez pour importer le Deck DoJG",
+      "es": "Pulse para importar la cubierta DoJG",
+      "pl": "Stuknij, aby zaimportować DoJG Deck"
+    }
+  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -892,6 +949,28 @@
       "es": "Número de traducciones en los billetes",
       "pl": "Liczba tłumaczeń na notach"
     },
+    "dojg_imported": {
+      "en": "DoJG imported",
+      "de": "DoJG importiert",
+      "ru": "DoJG импортный",
+      "ja": "輸入されたDoJG",
+      "zh": "进口的 DoJG",
+      "it": "DoJG importato",
+      "fr": "DoJG importé",
+      "es": "DoJG importado",
+      "pl": "Import DoJG"
+    },
+    "dojg_media_imported": {
+      "en": "DoJG with media imported",
+      "de": "DoJG mit Medien importiert",
+      "ru": "DoJG с импортными СМИ",
+      "ja": "メディアから輸入されたDoJG",
+      "zh": "司法部与进口媒体",
+      "it": "DoJG con i media importati",
+      "fr": "DoJG avec les médias importés",
+      "es": "DoJG con medios de comunicación importados",
+      "pl": "DoJG z zaimportowanymi mediami"
+    },
     "misc_title": {
       "en": "Miscellaneous",
       "de": "Verschiedenes",
@@ -926,7 +1005,7 @@
       "pl": "Zapisz bieżący rozmiar okna"
     },
     "misc_language": {
-      "en": "language (@:SettingsScreen.restarts_app)",
+      "en": "language",
       "de": "Sprache (@:SettingsScreen.restarts_app)",
       "ru": "язык (@:SettingsScreen.restarts_app)",
       "ja": "言語 (@:SettingsScreen.restarts_app)",
@@ -1058,7 +1137,7 @@
       "pl": "Ok"
     },
     "advanced_settings_number_search_procs": {
-      "en": "Number of search processes",
+      "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
       "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
       "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
       "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
@@ -2878,15 +2957,15 @@
       "pl": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!"
     },
     "tutorial_android_limitation": {
-      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. Sorry for the inconvenience.",
-      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Entschuldigung für die Unannehmlichkeiten.",
-      "ru": "На Android этот экран не может автоматически считывать ваш буфер обмена в фоновом режиме. Необходимо, чтобы приложение было на переднем плане. Извините за неудобства.",
-      "ja": "Androidの場合、この画面ではバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリがフォアグラウンドにあることが必要です。ご不便をおかけして申し訳ありません。",
-      "zh": "在安卓上，这个屏幕不能在后台自动读取你的剪贴板。你需要让应用程序处于前台。对不起，给您带来不便。",
-      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Ci scusiamo per l'inconveniente.",
-      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. L'application doit être au premier plan. Désolé pour la gêne occasionnée.",
-      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. Disculpa las molestias.",
-      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi działać na pierwszym planie. Przepraszamy za niedogodności."
+      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. On iOS, you can allow DaKanji to read your clipboard in the settings. This way it will not always ask you to allow pasting. Sorry for the inconvenience.",
+      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Unter iOS können Sie DaKanji in den Einstellungen erlauben, Ihre Zwischenablage zu lesen. Auf diese Weise werden Sie nicht immer gefragt, ob Sie das Einfügen erlauben möchten. Entschuldigung für die Unannehmlichkeiten.",
+      "ru": "На Android этот экран не может автоматически считывать буфер обмена в фоновом режиме. Необходимо, чтобы приложение находилось на переднем плане. На iOS можно разрешить DaKanji считывать буфер обмена в настройках. В этом случае приложение не будет постоянно запрашивать разрешение на вставку. Приносим извинения за доставленные неудобства.",
+      "ja": "Androidでは、この画面はバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリをフォアグラウンドにする必要があります。iOSでは、設定でクリップボードの読み取りを許可することができます。iOSの場合、設定でクリップボードの読み取りを許可することができます。ご迷惑をおかけして申し訳ありません。",
+      "zh": "在安卓系统中，该屏幕无法在后台自动读取剪贴板。您需要将应用程序置于前台。在 iOS 上，你可以在设置中允许 DaKanji 读取剪贴板。这样，它就不会总是要求您允许粘贴。很抱歉给您带来不便。",
+      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Su iOS, è possibile consentire a DaKanji di leggere gli appunti nelle impostazioni. In questo modo non vi chiederà sempre di autorizzare l'incollaggio. Ci scusiamo per l'inconveniente.",
+      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. Vous devez avoir l'application au premier plan. Sur iOS, vous pouvez autoriser DaKanji à lire votre presse-papiers dans les paramètres. Ainsi, il ne vous demandera pas toujours d'autoriser le collage. Désolé pour la gêne occasionnée.",
+      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. En iOS, puedes permitir que DaKanji lea tu portapapeles en los ajustes. De esta forma no te pedirá siempre que permitas pegar. Disculpa las molestias.",
+      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi być uruchomiona na pierwszym planie. W systemie iOS można zezwolić DaKanji na odczytywanie schowka w ustawieniach. W ten sposób nie będzie zawsze pytać o zgodę na wklejanie. Przepraszamy za niedogodności."
     },
     "tutorial_pin_button": {
       "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
@@ -2903,7 +2982,14 @@
   "KuzushijiScreen": {
     "title": {
       "en": "Kuzushiji",
-      "de": "Kuzushiji"
+      "de": "Kuzushiji",
+      "ru": "Kuzushiji",
+      "ja": "崩し字",
+      "zh": "崩し字",
+      "it": "Kuzushiji",
+      "fr": "Kuzushiji",
+      "es": "Kuzushiji",
+      "pl": "Kuzushiji"
     }
   },
   "WordListsScreen": {

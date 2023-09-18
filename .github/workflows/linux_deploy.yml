@@ -1,0 +1,110 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Linux - Deploy
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : choice
+        required   : true
+        default    : no
+        options    :
+        - no
+        - beta
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : choice
+        required   : true
+        default    : "false"
+        options:
+        - "false"
+        - "true"
+  # allows that other workflows can run this one
+  workflow_call:
+    #secrets:
+    inputs:
+      upload_to_stores:
+        description: "Should the build packages be uploaded to stores"
+        type       : string 
+        required   : true
+      upload_to_gh:
+        description: "Should the build packages be uploaded to a github release"
+        type       : string
+        required   : true
+        default    : "false"
+
+#env:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # get versions from pubspec
+      - name: set env variables
+        run: |
+          python3 ./.github/workflows/building.py set_env_flutter_version
+          python3 ./.github/workflows/building.py set_env_dakanji_version
+
+      # upload portable to gh release
+      - name: get build artifacts for linux portable
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
+      - name: upload to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la
+          gh release upload gh_action DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip --clobber
+ 
+      # get flatpak artifact and upload it to GH release
+      - name: get build artifacts for flatpak
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        with:
+          name: com.DaAppLab.DaKanji.flatpak
+          path: artifacts
+      - name: upload flatpak to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la artifacts
+          gh release upload gh_action artifacts/com.DaAppLab.DaKanji.flatpak --clobber
+
+      # get snap artifact and upload it to GH release and snap store
+      - name: get build artifacts for snap
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_gh == 'true' || github.event.inputs.upload_to_stores == 'beta'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+          path: artifacts
+      - name: upload snap to GH release
+        if: ${{github.event.inputs.upload_to_gh == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -la artifacts
+          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}.snap --clobber
+      - uses: snapcore/action-publish@v1
+        if  : ${{github.event.inputs.upload_to_stores == 'beta'}}
+        env :
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
+        with:
+          snap   : artifacts/DaKanji_${{env.DAKANJI_VERSION}}.snap
+          release: beta

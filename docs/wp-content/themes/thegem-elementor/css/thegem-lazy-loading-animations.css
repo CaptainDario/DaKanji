@@ -1,0 +1,286 @@
+body:not(.elementor-editor-active) .lazy-loading:not(.lazy-loading-not-hide) {
+    visibility: hidden;
+}
+
+body #page .lazy-loading.lazy-loading-end-animation,
+body #page .lazy-loading.lazy-loading-before-start-animation {
+    visibility: visible;
+}
+
+.lazy-loading-timer-element {
+    font-size: 0;
+    line-height: 1;
+    height: 0;
+
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+}
+
+.lazy-loading-timer-element.start-timer {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+.lazy-loading-timer-element {
+    font-size: 0;
+    line-height: 1;
+    height: 0;
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+/* Clip */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-clip {
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -webkit-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+    zoom: 1;
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-clip {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+
+    -moz-transition: transform 0.4s cubic-bezier(.35,.8,.25,1.34);
+    -ms-transition: transform 0.4s cubic-bezier(.35,.8,.25,1.34);
+    -o-transition: transform 0.4s cubic-bezier(.35,.8,.25,1.34);
+	-webkit-transition: transform 0.4s cubic-bezier(.35,.8,.25,1.34);
+	transition: transform 0.4s cubic-bezier(.35,.8,.25,1.34);
+}
+
+
+/* Fading */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-fading {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-fading {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transition: opacity 0.4s;
+    -ms-transition: opacity 0.4s;
+    -o-transition: opacity 0.4s;
+	-webkit-transition: opacity 0.4s;
+	transition: opacity 0.4s;
+}
+
+/* Drop right */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-drop-right {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateX(7%);
+    -ms-transform: translateX(7%);
+    -webkit-transform: translateX(7%);
+    -o-transform: translateX(7%);
+    transform: translateX(7%);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-drop-right {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+
+    -moz-transition: transform 0.7s, opacity 0.7s;
+    -ms-transition: transform 0.7s, opacity 0.7s;
+    -o-transition: transform 0.7s, opacity 0.7s;
+	-webkit-transition: transform 0.7s, opacity 0.7s;
+	transition: transform 0.7s, opacity 0.7s;
+}
+
+/* Drop left */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-drop-left {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateX(-7%);
+    -ms-transform: translateX(-7%);
+    -webkit-transform: translateX(-7%);
+    -o-transform: translateX(-7%);
+    transform: translateX(-7%);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-drop-left {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+
+    -moz-transition: transform 0.7s, opacity 0.7s;
+    -ms-transition: transform 0.7s, opacity 0.7s;
+    -o-transition: transform 0.7s, opacity 0.7s;
+	-webkit-transition: transform 0.7s, opacity 0.7s;
+	transition: transform 0.7s, opacity 0.7s;
+}
+
+/* Drop bottom */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-drop-bottom {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateY(7%);
+    -ms-transform: translateY(7%);
+    -webkit-transform: translateY(7%);
+    -o-transform: translateY(7%);
+    transform: translateY(7%);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-drop-bottom {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+
+    -moz-transition: transform 0.7s, opacity 0.7s;
+    -ms-transition: transform 0.7s, opacity 0.7s;
+    -o-transition: transform 0.7s, opacity 0.7s;
+	-webkit-transition: transform 0.7s, opacity 0.7s;
+	transition: transform 0.7s, opacity 0.7s;
+}
+
+/* Drop top */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-drop-top {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-drop-top {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+
+    -moz-transition: transform 0.7s, opacity 0.7s;
+    -ms-transition: transform 0.7s, opacity 0.7s;
+    -o-transition: transform 0.7s, opacity 0.7s;
+	-webkit-transition: transform 0.7s, opacity 0.7s;
+	transition: transform 0.7s, opacity 0.7s;
+}
+
+/* Slide right */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-slide-right {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-slide-right {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+
+    -moz-transition: transform 0.3s cubic-bezier(.33,.8,.14,1.2), opacity 0.1s;
+    -ms-transition: transform 0.3s cubic-bezier(.33,.8,.14,1.2), opacity 0.1s;
+    -o-transition: transform 0.3s cubic-bezier(.33,.8,.14,1.2), opacity 0.1s;
+	-webkit-transition: transform 0.3s cubic-bezier(.33,.8,.14,1.2), opacity 0.1s;
+	transition: transform 0.3s cubic-bezier(.33,.8,.14,1.2), opacity 0.1s;
+}
+
+/* Move up */
+body .lazy-loading.lazy-loading-before-start-animation .lazy-loading-item-move-up {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -webkit-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+}
+
+body .lazy-loading.lazy-loading-start-animation .lazy-loading-item-move-up {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+
+    -moz-transition: transform 1s, opacity 1s;
+    -ms-transition: transform 1s, opacity 1s;
+    -o-transition: transform 1s, opacity 1s;
+	-webkit-transition: transform 1s, opacity 1s;
+	transition: transform 1s, opacity 1s;
+}

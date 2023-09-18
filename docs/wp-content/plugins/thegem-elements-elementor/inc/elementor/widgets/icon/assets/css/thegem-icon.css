@@ -1,0 +1,327 @@
+.gem-icon{
+	background-origin:border-box;
+	border-color: #91a0ac;
+}
+.gem-icon, .gem-icon i, .gem-icon svg, .gem-icon-shape-hexagon-back-inner-before, .gem-icon-shape-hexagon-top-inner-before, .padding-box-inner{
+	-o-transition: color 0.5s, background-color 0.5s, -o-transform 0.5s, border-color 0.5s, fill 0.5s;
+	-webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s, border-color 0.5s, fill 0.5s;
+	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s, border-color 0.5s, fill 0.5s;
+	transition: color 0.5s, background-color 0.5s, transform 0.5s, border-color 0.5s, fill 0.5s;	
+}
+.gem-icon-style-gradient{
+	width: 100%;
+}
+.gem-icon-style-gradient .back-angle i{
+	background-image: linear-gradient(180deg, #91a0ac 0%, #65707e 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.gem-icon-inner .padding-box-inner{
+	display: flex;
+	overflow: visible;
+}
+.gem-icon a, .gem-icon a:hover{
+	color: unset;
+}
+.gem-icon-shape-default {
+	border: 0 none;
+}
+/*.gem-icon-shape-default,
+.gem-icon-shape-default.gem-icon-size-small,
+.gem-icon-shape-default.gem-icon-size-medium,
+.gem-icon-shape-default.gem-icon-size-large,
+.gem-icon-shape-default.gem-icon-size-xlarge {
+	border: unset;
+    border-width: 0px;
+    border-radius: 0px;
+}*/
+.gem-icon-size-small, .gem-icon-size-medium, .gem-icon-size-large, .gem-icon-size-xlarge{
+	height: unset;
+}
+.gem-icon-shape-default .gem-icon-inner {
+	border: 0;
+	margin: 0
+}
+.gem-icon-size-small .padding-box-inner{
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+.gem-icon-size-medium .padding-box-inner{
+	width: 48px;
+    height: 48px;
+    line-height: 48px;
+}
+.gem-icon-size-large .padding-box-inner{
+    width: 96px;
+    height: 96px;
+    line-height: 96px;
+}
+.gem-icon-size-xlarge .padding-box-inner{
+    width: 144px;
+    height: 144px;
+    line-height: 144px;
+}
+.gem-icon-shape-default .gem-icon-inner,
+.gem-icon-shape-square .gem-icon-inner,
+.gem-icon-shape-circle .gem-icon-inner,
+.gem-icon-shape-romb .gem-icon-inner{
+    width: unset;
+    height: unset;
+    line-height: unset;
+}
+.gem-icon-shape-hexagon-back-inner-before{
+	background-color: #91a0ac;
+}
+.gem-icon-shape-hexagon-top-inner-before{
+	background-color: #2c2e3d;
+}
+.left-box{
+	text-align: left;
+}
+.right-box{
+	text-align: right;
+}
+.icon-inline-position a{
+	position: relative;
+    display: inline-block;
+}
+.gem-icon i{
+	line-height: unset;
+}
+.gem-icon svg{
+	fill: #91a0ac;
+}
+.back-angle svg{
+	width: 100%;
+	height: 100%;
+}
+
+/* Gem icon hexagon*/
+.gem-icon-shape-hexagon {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	border: 0;
+	position: relative;
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-back {
+	display: block;
+	-webkit-transform: rotate(-30deg) skewX(30deg);
+	-ms-transform: rotate(-30deg) skewX(30deg);
+	-o-transform: rotate(-30deg) skewX(30deg);
+	transform: rotate(-30deg) skewX(30deg);
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	font-size: 0;
+	line-height: 1;
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-back .gem-icon-shape-hexagon-back-inner,
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-back .gem-icon-shape-hexagon-back-inner-before {
+	display: block;
+	width: inherit;
+	height: inherit;
+	-webkit-border-radius: inherit;
+	-moz-border-radius: inherit;
+	border-radius: inherit;
+	overflow: hidden;
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-back .gem-icon-shape-hexagon-back-inner {
+	-webkit-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-ms-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-o-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-back .gem-icon-shape-hexagon-back-inner-before {
+	-webkit-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-ms-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-o-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-top {
+	display: block;
+	-webkit-transform: rotate(-30deg) skewX(30deg);
+	-ms-transform: rotate(-30deg) skewX(30deg);
+	-o-transform: rotate(-30deg) skewX(30deg);
+	transform: rotate(-30deg) skewX(30deg);
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	font-size: 0;
+	line-height: 1;
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-top .gem-icon-shape-hexagon-top-inner,
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-top .gem-icon-shape-hexagon-top-inner-before {
+	display: block;
+	width: inherit;
+	height: inherit;
+	-webkit-border-radius: inherit;
+	-moz-border-radius: inherit;
+	border-radius: inherit;
+	overflow: hidden;
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-top .gem-icon-shape-hexagon-top-inner {
+	-webkit-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-ms-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-o-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+}
+
+.gem-icon-shape-hexagon .gem-icon-shape-hexagon-top .gem-icon-shape-hexagon-top-inner-before {
+	-webkit-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-ms-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	-o-transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+	transform: skewX(-30deg) rotate(60deg) skewX(30deg);
+}
+
+.gem-icon-shape-hexagon .gem-icon-inner {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	background: none !important;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+/* Hexagon small icon */
+.gem-icon-shape-hexagon.gem-icon-size-small {
+	margin: 3px 0;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-small .gem-icon-shape-hexagon-back {
+	width: 59px;
+	height: 49px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-small .gem-icon-shape-hexagon-top {
+	width: 55px;
+	height: 45px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	left: 2px;
+	top: 2px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-small .gem-icon-inner {
+	line-height: 49px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-small .gem-icon-inner svg{
+	height: 100%;
+    width: 36px;
+}
+
+/* Hexagon medium icon */
+.gem-icon-shape-hexagon.gem-icon-size-medium {
+	margin: 5px 0;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-medium .gem-icon-shape-hexagon-back {
+	width: 91px;
+	height: 77px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-medium .gem-icon-shape-hexagon-top {
+	width: 85px;
+	height: 71px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	left: 3px;
+	top: 3px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-medium .gem-icon-inner {
+	line-height: 77px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-medium .gem-icon-inner svg{
+	height: 100%;
+    width: 58px;
+}
+
+/* Hexagon large icon */
+.gem-icon-shape-hexagon.gem-icon-size-large {
+	margin: 11px 0;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-large .gem-icon-shape-hexagon-back {
+	width: 181px;
+	height: 153px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-large .gem-icon-shape-hexagon-top {
+	width: 169px;
+	height: 141px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	left: 6px;
+	top: 6px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-large .gem-icon-inner {
+	line-height: 153px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-large .gem-icon-inner svg{
+	height: 100%;
+    width: 114px;
+}
+
+/* Hexagon xlarge icon */
+.gem-icon-shape-hexagon.gem-icon-size-xlarge {
+	margin: 16px 0;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-xlarge .gem-icon-shape-hexagon-back {
+	width: 267px;
+	height: 227px;
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 12px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-xlarge .gem-icon-shape-hexagon-top {
+	width: 243px;
+	height: 203px;
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+	left: 12px;
+	top: 12px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-xlarge .gem-icon-inner {
+	line-height: 227px;
+}
+
+.gem-icon-shape-hexagon.gem-icon-size-xlarge .gem-icon-inner svg{
+	height: 100%;
+    width: 164px;
+}

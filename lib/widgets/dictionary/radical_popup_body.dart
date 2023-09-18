@@ -231,6 +231,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Material(
+                    color: Colors.transparent,
                     child: Ink(
                       decoration: BoxDecoration(
                         color: g_Dakanji_green,
