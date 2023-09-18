@@ -1,6 +1,12 @@
 
 # DaKanji - changelog
 
+## v3.1.1+60 - 辞書開発 (18.9.2023)
+
+Hotfixes:
+
+- Drawing not working on android devices
+
 ## v3.1.0+58 - 辞書開発 (13.9.2023)
 
 New Features:

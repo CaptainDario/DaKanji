@@ -7,7 +7,7 @@ funding: https://github.com/sponsors/captaindario
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.1.0+59
+version: 3.1.1+60
 
 environment:
   sdk: ">=3.0.0"
