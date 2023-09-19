@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_feedback.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -28,6 +30,8 @@ class _ManualScreenState extends State<ManualScreen>
     "Dictionary", 
     //"Text",
     //"Anki"
+    "Feedback",
+    "Deep Links"
   ];
   /// the icons that are shown on the ManualButtons
   List<IconData> buttonIcons = [
@@ -35,7 +39,9 @@ class _ManualScreenState extends State<ManualScreen>
     Icons.book,
     //Icons.text_snippet,
     
-    //DaKanjiIcons.anki
+    //DaKanjiIcons.anki,
+    Icons.feedback,
+    Icons.link
   ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
@@ -52,7 +58,9 @@ class _ManualScreenState extends State<ManualScreen>
     List<Widget> manualTexts = [
       ManualDictionary(),
       //ManualTextScreen(),
-      //ManualAnki()
+      //ManualAnki(),
+      ManualDeepLinks(),
+      ManualFeedback()
     ];
 
     
