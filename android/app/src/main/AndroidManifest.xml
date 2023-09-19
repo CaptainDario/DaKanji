@@ -49,6 +49,10 @@
               <data android:scheme="https"/>
               <data android:host="dakanji.app"/>
               <data android:pathPrefix="/app"/>
+
+              <data
+                android:scheme="dakanji"
+                android:host="dakanji" />
             </intent-filter>
 
         </activity>
