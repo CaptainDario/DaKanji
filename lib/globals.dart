@@ -21,8 +21,10 @@ String g_appLogs = "";
 /// the title of the app
 const String g_AppTitle = "DaKanji";
 
-/// deep link pattern
-const String g_AppLink = r"https://dakanji.app/app/";
+/// deep link pattern (https://)
+const String g_AppLinkHttps   = r"https://dakanji.app/app/";
+/// deep link pattern (dakanji://)
+const String g_AppLinkDaKanji = r"dakanji://";
 
 /// The green tone that dakanji uses
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);

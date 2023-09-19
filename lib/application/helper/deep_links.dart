@@ -24,8 +24,9 @@ Future<void> initDeepLinksStream() async {
   /// Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
-    if(uri.toString().startsWith(g_AppLink))
+    if(uri.toString().startsWith(g_AppLinkDaKanji)){
       handleDeepLink(uri.toString());
+    }
   });
 }
 
@@ -38,13 +39,26 @@ void handleDeepLink(String link){
   Map<String, String> args = extractArgsFromLink(link);
 
   if(route[0] == Screens.drawing.name){
-    handleDeepLinkText(args);
+    handleDeepLinkDrawing(args);
   }
   else if(route[0] == Screens.dictionary.name){
     handleDeepLinkDict(args);
   }
   else if(route[0] == Screens.text.name){
     handleDeepLinkText(args);
+  }
+  else if(route[0] == Screens.text.name){
+    handleDeepLinkText(args);
+  }
+  // TODO deep link dojg
+  //else if(route[0] == Screens.dojg.name){
+  //  handleDeepLinkDojg(args);
+  //}
+  else if(route[0] == Screens.kanji_table.name.replaceAll("_", "-")){
+    handleDeepLinkKanjiTable(args);
+  }
+  else if(route[0] == Screens.settings.name){
+    handleDeepLinkSettings(args);
   }
   
 }
@@ -55,7 +69,9 @@ List<String> extractRouteFromLink(String link){
   List<String> route;
 
   // remove the base and get the route
-  String routeString = link.replaceFirst(g_AppLink, "");
+  String routeString = link
+    .replaceFirst(g_AppLinkHttps, "")
+    .replaceFirst(g_AppLinkDaKanji, "");
   routeString = routeString.split("?")[0];
 
   // split route into separate parts
@@ -70,7 +86,9 @@ Map<String, String> extractArgsFromLink(String link){
   Map<String, String> args = {};
 
   // remove the base
-  String short = link.replaceFirst(g_AppLink, "");
+  String short = link
+    .replaceFirst(g_AppLinkHttps, "")
+    .replaceFirst(g_AppLinkDaKanji, "");
 
   // split into separate args
   List<String> split = short.split("?");
