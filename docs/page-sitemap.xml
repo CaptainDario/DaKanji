@@ -6,7 +6,7 @@
 	</url>
 	<url>
 		<loc>/</loc>
-		<lastmod>2023-09-18T21:58:15+00:00</lastmod>
+		<lastmod>2023-09-18T22:30:14+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
@@ -69,18 +69,18 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>/deep-links/</loc>
-		<lastmod>2023-09-18T21:51:10+00:00</lastmod>
-	</url>
-	<url>
-		<loc>/page-404/</loc>
-		<lastmod>2023-09-16T18:12:47+00:00</lastmod>
+		<loc>/404-2/</loc>
+		<lastmod>2023-09-18T22:29:51+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
 			<image:loc>/wp-content/uploads/2020/11/1-1.png</image:loc>
 		</image:image>
+	</url>
+	<url>
+		<loc>/deep-links/</loc>
+		<lastmod>2023-09-18T21:51:10+00:00</lastmod>
 	</url>
 	<url>
 		<loc>/privacy-policy/</loc>
@@ -95,5 +95,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-09-18 21:58:58 by W3 Total Cache
+Served from: dakanji.local @ 2023-09-19 08:22:28 by W3 Total Cache
 -->
