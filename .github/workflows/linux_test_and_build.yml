@@ -66,6 +66,7 @@ jobs:
         
       - name: install build packages
         run: |
+          sudo apt-get update
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
 
       - name: Run integration tests
