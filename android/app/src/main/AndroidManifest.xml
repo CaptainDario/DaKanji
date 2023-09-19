@@ -55,9 +55,7 @@
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
               <!-- Accepts URIs that begin with dakanji:// -->
-              <data
-                android:scheme="dakanji"
-                android:host="" />
+              <data android:scheme="dakanji"/>
             </intent-filter>
 
         </activity>
