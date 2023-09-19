@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
@@ -60,9 +62,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
+    "share",
     // TODO v word lists - reenable
     //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
-    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr()
+    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -241,9 +244,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           }
                           // add to word list
                           else if(selection == menuItems[5]) {
-                            await AddToWordListDialog(context, widget).show();
+                            await Share.share("${g_AppLinkHttps}${Screens.dictionary.name}?id=${widget.entry!.id}");
                           }
                           else if(selection == menuItems[6]){
+                            await AddToWordListDialog(context, widget).show();
+                          }
+                          else if(selection == menuItems[7]){
                             await AnkiDialog(context).show();
                           }
 
