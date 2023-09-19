@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -11,6 +12,7 @@ import 'package:app_links/app_links.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:get_it/get_it.dart';
 
 final AppLinks _appLinks = AppLinks();
 
@@ -35,12 +37,16 @@ void handleDeepLink(String link){
   List<String> route = extractRouteFromLink(link);
   Map<String, String> args = extractArgsFromLink(link);
 
-  if(route[0] == Screens.dictionary.name){
+  if(route[0] == Screens.drawing.name){
+    handleDeepLinkText(args);
+  }
+  else if(route[0] == Screens.dictionary.name){
     handleDeepLinkDict(args);
   }
   else if(route[0] == Screens.text.name){
     handleDeepLinkText(args);
   }
+  
 }
 
 /// Extracts all route parts from a link and returns them
@@ -92,13 +98,71 @@ void handleDeepLinkDrawing(Map<String, String> linkArgs){
   if(linkArgs.containsKey("web")){
     // ... 
     
-    //navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
+    String dictType = linkArgs["web"]!;
+    
+    if(dictType == "jisho"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.webDictionaries[0];
+    }
+    else if(dictType == "wadoku"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.webDictionaries[1];
+    }
+    else if(dictType == "weblio"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.webDictionaries[2];
+    }
+    else if(dictType == "custom"){
+      if(linkArgs.containsKey("url")){
+        GetIt.I<Settings>().drawing.selectedDictionary = 
+          GetIt.I<Settings>().drawing.webDictionaries[3];
+        GetIt.I<Settings>().drawing.customURL = linkArgs["url"]!;
+      }
+    }
   }
   /// app search
-  
+  else if(linkArgs.containsKey("app")){
+
+    String dictType = linkArgs["app"]!;
+
+    // Android
+    if(dictType == "system"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.androidDictionaries[0];
+    }
+    else if(dictType == "aedict"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.androidDictionaries[1];
+    }
+    else if(dictType == "akebi"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.androidDictionaries[2];
+    }
+    else if(dictType == "takoboto"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.androidDictionaries[3];
+    }
+    // iOS
+    if(dictType == "shirabe"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.iosDictionaries[0];
+    }
+    else if(dictType == "imiwa"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.iosDictionaries[1];
+    }
+    else if(dictType == "japanese"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.iosDictionaries[2];
+    }
+    else if(dictType == "midori"){
+      GetIt.I<Settings>().drawing.selectedDictionary = 
+        GetIt.I<Settings>().drawing.iosDictionaries[3];
+    }
+  }
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/${Screens.dictionary.name}",
+    "/${Screens.drawing.name}",
     (route) => false,
     arguments: navArgs
   );
@@ -153,9 +217,8 @@ void handleDeepLinkDojg(Map<String, String> linkArgs){
   );
 
   /// set search target to web ...
-  if(linkArgs.containsKey("web")){
-    // ... 
-    
+  if(linkArgs.containsKey("search")){
+    // TODO DoJG deep links
     //navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
   }
   /// app search
@@ -163,6 +226,48 @@ void handleDeepLinkDojg(Map<String, String> linkArgs){
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
     "/${Screens.dictionary.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the kanji table screen
+void handleDeepLinkKanjiTable(Map<String, String> linkArgs){
+
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );  
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.kanji_table.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the clipboard screen
+void handleDeepLinkClipboard(Map<String, String> linkArgs){
+
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.clipboard.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the settings screen
+void handleDeepLinkSettings(Map<String, String> linkArgs){
+
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );  
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.settings.name}",
     (route) => false,
     arguments: navArgs
   );
