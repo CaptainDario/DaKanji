@@ -81,19 +81,24 @@ Map<String, String> extractArgsFromLink(String link){
   return args;
 }
 
-/// Handles deep links that are related to the text screen
-void handleDeepLinkText(Map<String, String> linkArgs){
+/// Handles deep links that are related to the dictionary
+void handleDeepLinkDrawing(Map<String, String> linkArgs){
 
-  NavigationArguments navArgs = NavigationArguments(
-    false,
+  NavigationArguments? navArgs = NavigationArguments(
+    false
   );
 
-  if(linkArgs.containsKey("text")){
-    navArgs.text_InitialText = Uri.decodeFull(linkArgs["text"]!);
+  /// set search target to web ...
+  if(linkArgs.containsKey("web")){
+    // ... 
+    
+    //navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
   }
+  /// app search
   
+
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/${Screens.text.name}",
+    "/${Screens.dictionary.name}",
     (route) => false,
     arguments: navArgs
   );
@@ -114,6 +119,47 @@ void handleDeepLinkDict(Map<String, String> linkArgs){
   else if(linkArgs.containsKey("search")){
     navArgs.dict_InitialSearch = Uri.decodeFull(linkArgs["search"]!);
   }
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.dictionary.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the text screen
+void handleDeepLinkText(Map<String, String> linkArgs){
+
+  NavigationArguments navArgs = NavigationArguments(
+    false,
+  );
+
+  if(linkArgs.containsKey("text")){
+    navArgs.text_InitialText = Uri.decodeFull(linkArgs["text"]!);
+  }
+  
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.text.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the dojg screen
+void handleDeepLinkDojg(Map<String, String> linkArgs){
+
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );
+
+  /// set search target to web ...
+  if(linkArgs.containsKey("web")){
+    // ... 
+    
+    //navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
+  }
+  /// app search
+  
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
     "/${Screens.dictionary.name}",
