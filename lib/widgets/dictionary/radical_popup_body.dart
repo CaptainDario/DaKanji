@@ -224,33 +224,44 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
           ),
         
           // ok / clear / paste buttons
-          Stack(
-            alignment: Alignment.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        color: g_Dakanji_green,
-                        borderRadius: BorderRadius.circular(5000)
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        borderRadius: BorderRadius.circular(5000),
-                        highlightColor: g_Dakanji_green.withOpacity(0.2),
-                        child: SizedBox(
-                          height: 24,
-                          width: 100,
-                          child: Center(
-                            child: Text(
-                              LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                              style: TextStyle(
-                                color: Colors.white
+              if(MediaQuery.of(context).size.width > 400)
+                Flexible(
+                  flex: 1,
+                  child: Center(
+                    child: SizedBox(),
+                  )
+                ),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: g_Dakanji_green,
+                          borderRadius: BorderRadius.circular(5000)
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          borderRadius: BorderRadius.circular(5000),
+                          highlightColor: g_Dakanji_green.withOpacity(0.2),
+                          child: SizedBox(
+                            height: 24,
+                            width: 100,
+                            child: Center(
+                              child: Text(
+                                LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
                               ),
                             ),
                           ),
@@ -258,56 +269,59 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       ),
                     ),
                   ),
-                ),
+                )
               ),
-              Positioned(
-                right: 0,
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          kanjiIsFullscreen = !kanjiIsFullscreen;
-                        });
-                      },
-                      icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
-                    ),
-                    // paste button
-                    IconButton(
-                      onPressed: () async {
-                        // get radicals in clipboard
-                        String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
-                        List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
-                        List<String> bufferRadicals = buffer.split("")
-                          .where((b) => availableRadicals.contains(b)).toList();
-                        
-                        // set new selection
-                        selectedRadicals = bufferRadicals;
-                        kanjisThatUseAllRadicals =
-                          radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
-                        possibleRadicals =
-                          radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
-                        
-                        setState(() {});
-                      },
-                      icon: Icon(Icons.paste)
-                    ),
-                    // icons clear
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          kanjisThatUseAllRadicals.clear();
-                          possibleRadicals.clear();
-                          selectedRadicals.clear();
-                        });
-                      },
-                      icon: Icon(Icons.clear)
-                    ),
-                  ],
-                ),
+              Flexible(
+                flex: 1,
+                child: Center(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            kanjiIsFullscreen = !kanjiIsFullscreen;
+                          });
+                        },
+                        icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
+                      ),
+                      // paste button
+                      IconButton(
+                        onPressed: () async {
+                          // get radicals in clipboard
+                          String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
+                          List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
+                          List<String> bufferRadicals = buffer.split("")
+                            .where((b) => availableRadicals.contains(b)).toList();
+                          
+
+                          // set new selection
+                          selectedRadicals = bufferRadicals;
+                          kanjisThatUseAllRadicals =
+                            radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
+                          possibleRadicals =
+                            radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
+                          
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.paste)
+                      ),
+                      // icons clear
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            kanjisThatUseAllRadicals.clear();
+                            possibleRadicals.clear();
+                            selectedRadicals.clear();
+                          });
+                        },
+                        icon: Icon(Icons.clear)
+                      ),
+                    ],
+                  ),
+                )
               ),
             ],
-          ),
+          )
         ],
       )
     );
