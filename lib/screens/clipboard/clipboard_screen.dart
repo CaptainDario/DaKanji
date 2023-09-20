@@ -69,14 +69,17 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     //   -> periodically read clipboard till there is new value
     if(Platform.isAndroid || Platform.isIOS){
       refreshClipboardTimer = Timer.periodic(const 
+        Duration(milliseconds: 500), (timer) async { 
 
-        String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+          String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
-        if(data != "" && data != currentClipboard)
-          setState(() {
-            currentClipboard = ClipboardData(text: data);
+          if(data != "" && data != currentClipboard.text){
+            setState(() {
+              currentClipboard = ClipboardData(text: data);
+            });
           }
-      ); });
+        }
+      );
     }
     // on other platforms always listen to clipboard
     else{
