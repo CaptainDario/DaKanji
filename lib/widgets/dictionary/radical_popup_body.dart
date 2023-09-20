@@ -293,6 +293,8 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           List<String> bufferRadicals = buffer.split("")
                             .where((b) => availableRadicals.contains(b)).toList();
                           
+                          if(bufferRadicals.isEmpty)
+                            return;
 
                           // set new selection
                           selectedRadicals = bufferRadicals;
