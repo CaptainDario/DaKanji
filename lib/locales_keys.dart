@@ -201,6 +201,8 @@ abstract class  LocaleKeys {
   static const ManualScreen_anki_test_connection_fail = 'ManualScreen.anki_test_connection_fail';
   static const ManualScreen_anki_test_connection_success = 'ManualScreen.anki_test_connection_success';
   static const ManualScreen_anki_title = 'ManualScreen.anki_title';
+  static const ManualScreen_deep_links_text = 'ManualScreen.deep_links_text';
+  static const ManualScreen_deep_links_title = 'ManualScreen.deep_links_title';
   static const ManualScreen_dict_examples_title = 'ManualScreen.dict_examples_title';
   static const ManualScreen_dict_kanji_copy_radicals_text = 'ManualScreen.dict_kanji_copy_radicals_text';
   static const ManualScreen_dict_kanji_copy_radicals_title = 'ManualScreen.dict_kanji_copy_radicals_title';

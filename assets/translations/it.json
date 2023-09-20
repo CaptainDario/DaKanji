@@ -214,6 +214,8 @@
     "anki_test_connection_fail": "Non sei connesso ad Anki! \ud83d\ude22",
     "anki_test_connection_success": "Sei connesso ad Anki! \ud83c\udf89",
     "anki_title": "Anki",
+    "deep_links_text": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e https://dakanji.app/app. Utilizzando questa funzione \u00e8 possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=\u98df\u3079\u308b] (dakanji://dictionary?search=\u98df\u3079\u308b). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Esempi",
     "dict_kanji_copy_radicals_text": "\u00c8 possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiunger\u00e0 il radicale al contenuto degli appunti gi\u00e0 esistente.",
     "dict_kanji_copy_radicals_title": "Copiare i radicali",

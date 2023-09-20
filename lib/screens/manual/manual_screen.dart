@@ -1,9 +1,10 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
-import 'package:da_kanji_mobile/widgets/manual/manual_feedback.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
@@ -27,11 +28,10 @@ class _ManualScreenState extends State<ManualScreen>
   /// the text that is shown on the ManualButtons
   List<String> buttonTexts = [
     //"Drawing",
-    "Dictionary", 
+    LocaleKeys.ManualScreen_dict_title.tr(),
     //"Text",
-    //"Anki"
-    "Feedback",
-    "Deep Links"
+    //LocaleKeys.ManualScreen_anki_title.tr(),
+    LocaleKeys.ManualScreen_deep_links_title.tr()
   ];
   /// the icons that are shown on the ManualButtons
   List<IconData> buttonIcons = [
@@ -40,7 +40,6 @@ class _ManualScreenState extends State<ManualScreen>
     //Icons.text_snippet,
     
     //DaKanjiIcons.anki,
-    Icons.feedback,
     Icons.link
   ];
   /// The size of the manual buttons
@@ -60,7 +59,6 @@ class _ManualScreenState extends State<ManualScreen>
       //ManualTextScreen(),
       //ManualAnki(),
       ManualDeepLinks(),
-      ManualFeedback()
     ];
 
     

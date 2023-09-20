@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -195,6 +193,8 @@ class CodegenLoader extends AssetLoader{
     "anki_test_connection_fail": "你没有连接到Anki!😢",
     "anki_test_connection_success": "你已连接到Anki!🎉",
     "anki_title": "Anki",
+    "deep_links_text": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 https://dakanji.app/app。使用此功能，您可以在点击此链接[dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる)时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "实例",
     "dict_kanji_copy_radicals_text": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
     "dict_kanji_copy_radicals_title": "复制自由基",
@@ -321,63 +321,6 @@ class CodegenLoader extends AssetLoader{
   }
 };
 static const Map<String,dynamic> localizations = {
-  "DojgScreen": {
-    "title": {
-      "en": "DoJG",
-      "de": "DoJG",
-      "ru": "DoJG",
-      "ja": "DoJG",
-      "zh": "DoJG",
-      "it": "DoJG",
-      "fr": "DoJG",
-      "es": "DoJG",
-      "pl": "DoJG"
-    },
-    "tutorial_begin_title": {
-      "en": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
-      "de": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
-      "ru": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
-      "ja": "日本語文法辞典（DoJG）の画面へようこそ！",
-      "zh": "欢迎访问《日语语法词典》（DoJG）屏幕！",
-      "it": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
-      "fr": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
-      "es": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
-      "pl": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    },
-    "refer_to_manual": {
-      "en": "For details refer to the manual",
-      "de": "Einzelheiten finden Sie im Handbuch",
-      "ru": "Более подробная информация приведена в руководстве",
-      "ja": "詳細はマニュアルを参照",
-      "zh": "详情请参阅手册",
-      "it": "Per i dettagli, consultare il manuale",
-      "fr": "Pour plus de détails, voir le manuel",
-      "es": "Para más detalles, consulte el manual",
-      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
-    },
-    "import_dojg": {
-      "en": "Tap to import the DoJG Deck",
-      "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
-      "ru": "Нажмите, чтобы импортировать DoJG Deck",
-      "ja": "タップしてDoJGデッキをインポートする",
-      "zh": "点按导入 DoJG 资料集",
-      "it": "Toccare per importare il mazzo DoJG",
-      "fr": "Tapez pour importer le Deck DoJG",
-      "es": "Pulse para importar la cubierta DoJG",
-      "pl": "Stuknij, aby zaimportować DoJG Deck"
-    }
-  },
   "AboutScreen": {
     "title": {
       "en": "About",
@@ -448,17 +391,28 @@ static const Map<String,dynamic> localizations = {
       "pl": "Historia zmian"
     }
   },
-  "DrawScreen": {
+  "ClipboardScreen": {
+    "title": {
+      "en": "Clipboard",
+      "de": "Zwischenablage",
+      "ru": "Буфер обмена",
+      "ja": "クリップボード",
+      "zh": "剪贴板",
+      "it": "Appunti",
+      "fr": "Presse-papiers",
+      "es": "Portapapeles",
+      "pl": "Schowek"
+    },
     "tutorial_begin_title": {
-      "en": "Welcome to the drawing recognition!",
-      "de": "Wilkommen zu der Zeichenerkennung!",
-      "ru": "Добро пожаловать на распознавание рисунка!",
-      "ja": "漢字を探すへようこそ!",
-      "zh": "欢迎大家对绘画的认可!",
-      "it": "Benvenuti al riconoscimento del disegno!",
-      "fr": "Bienvenue à la reconnaissance du dessin !",
-      "es": "Bienvenido al reconocimiento por dibujo!",
-      "pl": "Witaj do rozpoznawania pisma!"
+      "en": "Welcome to the clipboard screen!",
+      "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
+      "ru": "Добро пожаловать на экран буфера обмена!",
+      "ja": "クリップボード画面へようこそ！",
+      "zh": "欢迎来到剪贴板屏幕!",
+      "it": "Benvenuti nella schermata degli appunti!",
+      "fr": "Bienvenue dans l'écran du presse-papiers !",
+      "es": "Bienvenido a la pantalla del portapapeles",
+      "pl": "Witamy na ekranie schowka!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
@@ -471,1972 +425,38 @@ static const Map<String,dynamic> localizations = {
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     },
-    "tutorial_begin_continue": {
-      "en": "Tap to continue...",
-      "de": "Berühre, um fortzufahren...",
-      "ru": "Нажмите, чтобы продолжить...",
-      "ja": "タップして続ける...",
-      "zh": "点击继续...",
-      "it": "Toccare per continuare...",
-      "fr": "Tapez pour continuer...",
-      "es": "Toca para continuar...",
-      "pl": "Kliknij aby kontynuować..."
-    },
-    "tutorial_clear": {
-      "en": "Erases all strokes",
-      "de": "Lösche all Striche",
-      "ru": "Стирает все штрихи",
-      "ja": "全て消去します",
-      "zh": "擦除所有笔画",
-      "it": "Cancella tutti i tratti",
-      "fr": "Efface tous les traits",
-      "es": "Borrar todos los trazos",
-      "pl": "Wyczyść wszystkie linie"
-    },
-    "tutorial_double_tap_prediction": {
-      "en": "A Double Tap adds the character to the search box",
-      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
-      "ru": "Двойное нажатие добавляет символ в поле поиска",
-      "ja": "ダブルタップで文字を検索ボックスに追加できます",
-      "zh": "双击将该字符添加到搜索框中",
-      "it": "Un doppio tocco aggiunge il carattere alla casella di ricerca.",
-      "fr": "Un double tapotement ajoute le caractère au champ de recherche.",
-      "es": "Tocar dos veces para añadir el caracter a la barra de busqueda",
-      "pl": "Podwójne kliknięcie dodaje znak do pola wyszukiwania"
-    },
-    "tutorial_drawing": {
-      "en": "Draw a character here",
-      "de": "Male ein Zeichen hier",
-      "ru": "Нарисуйте персонажа здесь",
-      "ja": "ここに文字を手書きしてください",
-      "zh": "在这里画一个人物",
-      "it": "Disegnare un personaggio qui",
-      "fr": "Dessinez un personnage ici",
-      "es": "Dibuja un caracter aquí",
-      "pl": "Tutaj namaluj znak"
-    },
-    "tutorial_long_press_prediction": {
-      "en": "A long press opens the prediction in a dictionary",
-      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
-      "ru": "Длительное нажатие открывает предсказание в словаре",
-      "ja": "長押しで予測文字を辞書で閲覧できます",
-      "zh": "长按可打开字典中的预测信息",
-      "it": "Una pressione prolungata apre la previsione in un dizionario.",
-      "fr": "Une pression longue ouvre la prédiction dans un dictionnaire.",
-      "es": "Una pulsación larga abre la predicción en un diccionario",
-      "pl": "Przytrzymanie otwiera predykcję w słowniku"
-    },
-    "tutorial_multi_search_double_tap": {
-      "en": "A double tap empties the field",
-      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
-      "ru": "Двойное нажатие опустошает поле",
-      "ja": "ダブルタップで検索ボックスを空にできます",
-      "zh": "双击就会清空该区域",
-      "it": "Un doppio tocco svuota il campo",
-      "fr": "Un double tapotement vide le champ",
-      "es": "Una pulsación doble vacía el campo",
-      "pl": "Podwójne kliknięcie wymazuje znak"
-    },
-    "tutorial_multi_search_long_press": {
-      "en": "A long press opens the characters in a dictionary",
-      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
-      "ru": "Длительное нажатие открывает символы в словаре",
-      "ja": "長押しで辞書が開きます",
-      "zh": "长按可以打开字典中的字符",
-      "it": "Una pressione prolungata apre i caratteri di un dizionario",
-      "fr": "Un appui long ouvre les caractères d'un dictionnaire",
-      "es": "Una pulsación larga abre los caracteres en un diccionario",
-      "pl": "Przytrzymanie otwiera zawartość w słowniku"
-    },
-    "tutorial_multi_search_short_press": {
-      "en": "A short press copies the characters to the clipboard",
-      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
-      "ru": "Короткое нажатие копирует символы в буфер обмена",
-      "ja": "タップで文字をクリップボードにコピーできます",
-      "zh": "短暂的按下，将字符复制到剪贴板上",
-      "it": "Premendo brevemente si copiano i caratteri negli appunti.",
-      "fr": "Une pression courte permet de copier les caractères dans le presse-papiers.",
-      "es": "Una pulsación breve copia los caracteres al porta papeles",
-      "pl": "Kliknięcie kopiuje znak"
-    },
-    "tutorial_multi_search_swipe_left": {
-      "en": "Swiping left on this field deletes the last character",
-      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
-      "ru": "Свайп влево на этом поле удаляет последний символ",
-      "ja": "左スワイプで、最後の文字が削除されます",
-      "zh": "在这个字段上向左滑动，会删除最后一个字符",
-      "it": "Passando il dito a sinistra su questo campo si cancella l'ultimo carattere.",
-      "fr": "En glissant vers la gauche sur ce champ, vous supprimez le dernier caractère.",
-      "es": "Deslizar a la izquierda para borrar el último caracter",
-      "pl": "Przesunięcie w lewo usuwa ostatni znak"
-    },
-    "tutorial_multi_search": {
-      "en": "Here you can search multiple characters at once",
-      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
-      "ru": "Здесь вы можете искать сразу несколько символов",
-      "ja": "複数の文字を一度に検索することもできます",
-      "zh": "在这里，你可以一次搜索多个字符",
-      "it": "Qui è possibile cercare più caratteri contemporaneamente",
-      "fr": "Ici, vous pouvez rechercher plusieurs caractères à la fois",
-      "es": "Aquí puedes buscar buscar mutiples caracteres a la vez",
-      "pl": "Tutaj możesz wyszukiwać wiele znaków na raz"
-    },
-    "tutorial_predictions": {
-      "en": "The predicted characters will be shown here",
-      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
-      "ru": "Предсказанные символы будут показаны здесь",
-      "ja": "ここに予測が表示されます",
-      "zh": "预测的字符将显示在这里",
-      "it": "I caratteri previsti saranno mostrati qui",
-      "fr": "Les caractères prédits seront affichés ici",
-      "es": "Las predicciones se mostrarán aquí",
-      "pl": "Przewidywane znaki dostępne będą tutaj"
-    },
-    "tutorial_short_press_prediction": {
-      "en": "A short press copies the prediction",
-      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
-      "ru": "Короткое нажатие копирует предсказание",
-      "ja": "タップで予測文字をコピーできます",
-      "zh": "短暂的按语复制了预测的内容",
-      "it": "Una breve pressione copia la previsione",
-      "fr": "Une courte presse copie la prédiction",
-      "es": "Una pulsación breve copia la predicción",
-      "pl": "Kliknięcie kopiuje znak"
-    },
-    "tutorial_skip": {
-      "en": "SKIP",
-      "de": "ÜBERSPRINGEN",
-      "ru": "ПРОПУСК",
-      "ja": "スキップ",
-      "zh": "撇开",
-      "it": "SALTA",
-      "fr": "SKIP",
-      "es": "OMITIR",
-      "pl": "POMIŃ"
-    },
-    "tutorial_undo": {
-      "en": "Press to undo the last stroke",
-      "de": "Macht den letzten Strich rückgängig",
-      "ru": "Нажмите, чтобы отменить последний штрих",
-      "ja": "一画前に戻ります",
-      "zh": "按下撤消最后一笔",
-      "it": "Premere per annullare l'ultima pennellata",
-      "fr": "Appuyez pour annuler le dernier trait",
-      "es": "Presiona para deshacer el último trazo",
-      "pl": "Kliknij aby cofnąć ostatnie pociągnięcie"
-    },
-    "tutorial_dictionary_settings": {
-      "en": "In the settings the translation service can be chosen",
-      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
-      "ru": "В настройках можно выбрать службу перевода",
-      "ja": "設定から辞書サービスを選択することができます",
-      "zh": "在设置中，可以选择翻译服务",
-      "it": "Nelle impostazioni è possibile scegliere il servizio di traduzione",
-      "fr": "Dans les paramètres, le service de traduction peut être choisi",
-      "es": "En los ajustes puedes seleccionar el servicio de traducción",
-      "pl": "W ustawieniach możliwe jest wybranie usługi tłumaczenia"
-    },
-    "title": {
-      "en": "Drawing",
-      "de": "Zeichnen",
-      "ru": "Рисование",
-      "ja": "漢字を探す",
-      "zh": "绘图",
-      "it": "Disegno",
-      "fr": "Dessin",
-      "es": "Dibujo",
-      "pl": "Obraz"
-    },
-    "not_installed": {
-      "en": "{DICTIONARY} not installed",
-      "de": "{DICTIONARY} nicht installiert",
-      "ru": "{DICTIONARY} не установлен",
-      "ja": "{DICTIONARY}はインストールされていません",
-      "zh": "未安装{DICTIONARY}。",
-      "it": "{DICTIONARY} non installato",
-      "fr": "{DICTIONARY} non installé",
-      "es": "{DICTIONARY} no instalado",
-      "pl": "{DICTIONARY} nie zainstalowany"
-    }
-  },
-  "General": {
-    "app": {
-      "en": "app",
-      "de": "App",
-      "ru": "приложение",
-      "ja": "アプリ",
-      "zh": "应用程序",
-      "it": "app",
-      "fr": "application",
-      "es": "aplicación",
-      "pl": "aplikacja"
-    },
-    "close": {
-      "en": "Close",
-      "de": "Schließen",
-      "ru": "Закрыть",
-      "ja": "閉じる",
-      "zh": "关闭",
-      "it": "Chiudere",
-      "fr": "Fermer",
-      "es": "Cerrar",
-      "pl": "Zamknij"
-    },
-    "dark": {
-      "en": "dark",
-      "de": "Dunkel",
-      "ru": "темный",
-      "ja": "ダーク",
-      "zh": "黑",
-      "it": "scuro",
-      "fr": "sombre",
-      "es": "oscuro",
-      "pl": "ciemny"
-    },
-    "light": {
-      "en": "light",
-      "de": "Hell",
-      "ru": "свет",
-      "ja": "ライト",
-      "zh": "光",
-      "it": "luce",
-      "fr": "lumière",
-      "es": "claro",
-      "pl": "jasny"
-    },
-    "system": {
-      "en": "system",
-      "de": "System",
-      "ru": "система",
-      "ja": "システム",
-      "zh": "系统",
-      "it": "sistema",
-      "fr": "système",
-      "es": "sistema",
-      "pl": "system"
-    },
-    "web": {
-      "en": "web",
-      "de": "Web",
-      "ru": "веб-сайт",
-      "ja": "ウェブ",
-      "zh": "网络",
-      "it": "web",
-      "fr": "web",
-      "es": "web",
-      "pl": "web"
-    },
-    "language": {
-      "en": "language",
-      "de": "Sprache",
-      "ru": "язык",
-      "ja": "言語",
-      "zh": "语言",
-      "it": "lingua",
-      "fr": "langue",
-      "es": "idioma",
-      "pl": "język"
-    },
-    "next": {
-      "en": "next",
-      "de": "Weiter",
-      "ru": "следующий",
-      "ja": "次",
-      "zh": "下一个",
-      "it": "prossimo",
-      "fr": "suivant",
-      "es": "siguiente",
-      "pl": "następny"
-    },
-    "skip": {
-      "en": "skip",
-      "de": "Überspingen",
-      "ru": "пропустить",
-      "ja": "スキップ",
-      "zh": "跳过",
-      "it": "saltare",
-      "fr": "sauter",
-      "es": "omitir",
-      "pl": "pomiń"
-    },
-    "download": {
-      "en": "download",
-      "de": "herunterladen",
-      "ru": "скачать",
-      "ja": "ダウンロード",
-      "zh": "下载",
-      "it": "scaricare",
-      "fr": "télécharger",
-      "es": "descargar",
-      "pl": "pobierz"
-    }
-  },
-  "HomeScreen": {
-    "RatePopup_dont_ask_again": {
-      "en": "Don't ask again",
-      "de": "Frag nicht nochmal",
-      "ru": "Не спрашивай больше",
-      "ja": "二度と表示しない",
-      "zh": "不要再问了",
-      "it": "Non chiedetelo più",
-      "fr": "Ne demandez pas à nouveau",
-      "es": "No vuelvas a preguntar",
-      "pl": "Nie pytaj ponownie."
-    },
-    "RatePopup_text": {
-      "en": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
-      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
-      "ru": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
-      "ja": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
-      "zh": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
-      "it": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
-      "fr": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
-      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
-      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
-    },
-    "complete_log": {
-      "en": "complete log",
-      "de": "vollständiges Log",
-      "ru": "полный журнал",
-      "ja": "全てのログ",
-      "zh": "完整日志",
-      "it": "registro completo",
-      "fr": "journal complet",
-      "es": "registro completo",
-      "pl": "pełny rejestr"
-    },
-    "whats_new": {
-      "en": "what's new",
-      "de": "Was gibt's neues",
-      "ru": "что нового",
-      "ja": "最新情報",
-      "zh": "最新信息",
-      "it": "cosa c'è di nuovo",
-      "fr": "Quoi de neuf ?",
-      "es": "qué hay de nuevo",
-      "pl": "co nowego"
-    },
-    "rate_this_app": {
-      "en": "Rate",
-      "de": "Bewerte",
-      "ru": "Тариф",
-      "ja": "評価",
-      "zh": "速率",
-      "it": "Tasso",
-      "fr": "Taux",
-      "es": "Calificar",
-      "pl": "Oceń"
-    },
-    "download_popup_permission": {
-      "en": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
-      "de": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
-      "ru": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
-      "ja": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
-      "zh": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
-      "it": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
-      "fr": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
-      "es": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
-      "pl": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania."
-    },
-    "download_failed_popup_retry": {
-      "en": "Retry",
-      "de": "Wiederholung",
-      "ru": "Повторная попытка",
-      "ja": "再試行",
-      "zh": "重试",
-      "it": "Riprova",
-      "fr": "Réessayer",
-      "es": "Reintentar",
-      "pl": "Ponów"
-    },
-    "download_failed_popup_text": {
-      "en": "Download failed, please assure that you have a stable internet connection.",
-      "de": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
-      "ru": "Загрузка не удалась, пожалуйста, убедитесь, что у вас стабильное интернет-соединение.",
-      "ja": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
-      "zh": "下载失败，请确保你有一个稳定的网络连接。",
-      "it": "Il download non è riuscito, assicurarsi di avere una connessione internet stabile.",
-      "fr": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
-      "es": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
-      "pl": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe."
-    },
-    "new_version_available_heading": {
-      "en": "New version Available!",
-      "de": "Neue Version verfügbar!",
-      "ru": "Доступна новая версия!",
-      "ja": "新バージョンを公開しました！",
-      "zh": "新版本上市!",
-      "it": "Nuova versione disponibile!",
-      "fr": "Nouvelle version disponible !",
-      "es": "Nueva versión disponible",
-      "pl": "Nowa wersja dostępna!"
-    },
-    "new_versions_available_text": {
-      "en": "There are {NEW_VERSIONS} new versions of DaKanji available!",
-      "de": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
-      "ru": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
-      "ja": "Dakanjiの{NEW_VERSIONS}新バージョンを公開しました！",
-      "zh": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
-      "it": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
-      "fr": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
-      "es": "#ERROR!",
-      "pl": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!"
-    },
-    "new_version_available_text": {
-      "en": "There is a new version of DaKanji available!",
-      "de": "Es ist eine neue Version von DaKanji verfügbar!",
-      "ru": "Вышла новая версия DaKanji!",
-      "ja": "Dakanjiの新バージョンを公開しました！",
-      "zh": "大汉字》有了新的版本!",
-      "it": "È disponibile una nuova versione di DaKanji!",
-      "fr": "#ERROR!",
-      "es": "¡Hay una nueva versión de DaKanji disponible!",
-      "pl": "Dostępna jest nowa wersja DaKanji!"
-    },
-    "new_version_comparison": {
-      "en": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
-      "de": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
-      "ru": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
-      "ja": "現在{VERSION_NUMBER}をお使いですが、最新バージョンは{NEW_VERSION_NUMBER}です。",
-      "zh": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
-      "it": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
-      "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
-      "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
-      "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
-    }
-  },
-  "OnBoarding": {
-    "Onboarding_1_title": {
-      "en": "You do not know a Kanji?",
-      "de": "Du kennst ein Kanji nicht?",
-      "ru": "Вы не знаете ни одного кандзи?",
-      "ja": "漢字がわからない？",
-      "zh": "你不知道一个汉字吗？",
-      "it": "Non conosci un kanji?",
-      "fr": "Vous ne connaissez pas un Kanji ?",
-      "es": "No sabes un Kanji?",
-      "pl": "Nie znasz Kanji?"
-    },
-    "Onboarding_1_text": {
-      "en": "Just draw it and \"DaKanji\" will show the character you need.",
-      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
-      "ru": "Просто нарисуйте его, и \"DaKanji\" покажет нужный вам иероглиф.",
-      "ja": "漢字を書くだけで「DaKanji」があなたの知りたい文字を探します",
-      "zh": "只要画出来，\"DaKanji \"就会显示出你需要的字符。",
-      "it": "Basta disegnarlo e \"DaKanji\" mostrerà il carattere desiderato.",
-      "fr": "Il suffit de le dessiner et \"DaKanji\" affichera le caractère dont vous avez besoin.",
-      "es": "Solo dibújalo y DaKanji te mostrará el caracter que necesitas.",
-      "pl": "Po prostu go narysuj i DaKanji pokaże Ci znak którego potrzebujesz"
-    },
-    "Onboarding_2_title": {
-      "en": "Lookup characters and words",
-      "de": "Schlage Zeichen und Wörter nach",
-      "ru": "Поиск символов и слов",
-      "ja": "漢字や単語を調べる",
-      "zh": "查询字符和单词",
-      "it": "Ricerca di caratteri e parole",
-      "fr": "Recherche de caractères et de mots",
-      "es": "Busca caracteres y palabras",
-      "pl": "Podejrzyj znaki i wyrazy"
-    },
-    "Onboarding_2_text": {
-      "en": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
-      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
-      "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
-      "ja": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
-      "zh": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
-      "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
-      "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
-      "es": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
-      "pl": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub użyj skrótu do słownika Internetowego."
-    },
-    "Onboarding_3_title": {
-      "en": "Do not know how to read a sentence?",
-      "de": "Du weißt nicht wie man einen  Satz liest?",
-      "ru": "Не умеете читать предложения?",
-      "ja": "文章の読み方がわからない？",
-      "zh": "不知道如何读懂一个句子？",
-      "it": "Non sapete leggere una frase?",
-      "fr": "Vous ne savez pas comment lire une phrase ?",
-      "es": "¿No sabe leer una frase?",
-      "pl": "Nie wiesz jak przeczytać zdanie?"
-    },
-    "Onboarding_3_text": {
-      "en": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
-      "de": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
-      "ru": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
-      "ja": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
-      "zh": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
-      "it": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
-      "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
-      "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
-      "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie."
-    }
-  },
-  "SettingsScreen": {
-    "title": {
-      "en": "Settings",
-      "de": "Einstellungen",
-      "ru": "Настройки",
-      "ja": "設定",
-      "zh": "设置",
-      "it": "Impostazioni",
-      "fr": "Paramètres",
-      "es": "Ajustes",
-      "pl": "Ustawienia"
-    },
-    "restarts_app": {
-      "en": "restarts app",
-      "de": "startet app neu",
-      "ru": "перезапускает приложение",
-      "ja": "アプリを再起動する",
-      "zh": "重新启动应用程序",
-      "it": "riavvia l'applicazione",
-      "fr": "redémarre l'application",
-      "es": "reinicia la app",
-      "pl": "restart aplikacji"
-    },
-    "requires_restart": {
-      "en": "requires restart",
-      "de": "erfordert Neustart",
-      "ru": "требует перезапуска",
-      "ja": "再起動が必要です",
-      "zh": "需要重新启动",
-      "it": "richiede il riavvio",
-      "fr": "nécessite un redémarrage",
-      "es": "requiere reinicio",
-      "pl": "wymaga ponownego uruchomienia"
-    },
-    "show_tutorial": {
-      "en": "Reshow tutorials (@:SettingsScreen.restarts_app)",
-      "de": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
-      "ru": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
-      "ja": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
-      "zh": "重新展示教程（@:SettingsScreen.restarts_app）。",
-      "it": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
-      "fr": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
-      "es": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
-      "pl": "Powtórz tutorial (@:SettingsScreen.restarts_app)"
-    },
-    "draw_title": {
-      "en": "Drawing",
-      "de": "Zeichnen",
-      "ru": "Рисование",
-      "ja": "漢字を探す",
-      "zh": "绘图",
-      "it": "Disegno",
-      "fr": "Dessin",
-      "es": "Dibujar",
-      "pl": "Obraz"
-    },
-    "draw_custom_url_hint": {
-      "en": "URL of your dictionary",
-      "de": "URL von dem Wörterbuch das benutzt werden soll",
-      "ru": "URL вашего словаря",
-      "ja": "使用したい辞書のURL",
-      "zh": "你的字典的URL",
-      "it": "URL del vostro dizionario",
-      "fr": "URL de votre dictionnaire",
-      "es": "URL de tu diccionario",
-      "pl": "URL twojego słownika"
-    },
-    "draw_dictionary_system_translator": {
-      "en": "OS integrated translator",
-      "de": "betriebssysteminternes Übersetzer",
-      "ru": "Встроенный в ОС переводчик",
-      "ja": "OS統合翻訳",
-      "zh": "操作系统集成翻译器",
-      "it": "Traduttore integrato nel sistema operativo",
-      "fr": "Traducteur intégré au système d'exploitation",
-      "es": "Traductor integrado de tu SO",
-      "pl": "Tłumacz systemowy"
-    },
-    "draw_double_tap_empty_canvas": {
-      "en": "Empty canvas after double tap",
-      "de": "Lösche alle Striche nach doppeltem Tippen",
-      "ru": "Пустой холст после двойного нажатия",
-      "ja": "ダブルタップで文字記入欄を空にする",
-      "zh": "双击后空出画布",
-      "it": "Tela vuota dopo il doppio tocco",
-      "fr": "Toile vide après un double tapotement",
-      "es": "Vaciar lienzo después de una pulsación doble",
-      "pl": "Wyczyść płótno podwójnym kliknięciem"
-    },
-    "draw_invert_short_long_press": {
-      "en": "Invert long/short press",
-      "de": "Invertiere kurzes und langes drücken",
-      "ru": "Инвертировать длинный/короткий пресс",
-      "ja": "長押しとタップを反転する",
-      "zh": "倒置长/短按",
-      "it": "Invertire la pressione lunga/corta",
-      "fr": "Inverser la presse long/short",
-      "es": "Invertir pulsación larga/breve",
-      "pl": "Odwróć długie/krótkie kliknięcie"
-    },
-    "draw_long_press_opens": {
-      "en": "Dictionary selection",
-      "de": "Wörterbuch Auswahl",
-      "ru": "Выбор словаря",
-      "ja": "辞書の選択",
-      "zh": "词典选择",
-      "it": "Selezione del dizionario",
-      "fr": "Sélection de dictionnaires",
-      "es": "Selección de diccionarios",
-      "pl": "Wybór słownika"
-    },
-    "draw_browser_for_online_dict": {
-      "en": "Use a webview for web dictionaries",
-      "de": "Benutze einen webview für web Wörterbücher",
-      "ru": "Использование веб-просмотра для веб-словарей",
-      "ja": "ウェブビューでウェブ辞書を開く",
-      "zh": "为网络字典使用网络视图",
-      "it": "Utilizzare una webview per i dizionari web",
-      "fr": "Utiliser une vue web pour les dictionnaires web",
-      "es": "Usar una webview para los diccionarios en la web",
-      "pl": "Użyj webview dla słowników internetowych"
-    },
-    "draw_custom_url_format": {
-      "en": "Custom URL format",
-      "de": "Benutzerdefiniertes URL format",
-      "ru": "Пользовательский формат URL",
-      "ja": "カスタムURL",
-      "zh": "自定义URL格式",
-      "it": "Formato URL personalizzato",
-      "fr": "Format d'URL personnalisé",
-      "es": "Formato de la URL personalizada",
-      "pl": "Niestandardowy format URL"
-    },
-    "custom_url_explanation": {
-      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "ru": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "ja": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
-      "zh": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
-      "it": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "fr": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
-      "es": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
-      "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
-    },
-    "dict_languages": {
-      "en": "Show translations in (drag to reorder)",
-      "de": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
-      "ru": "Показать переводы в (перетащите, чтобы изменить порядок)",
-      "ja": "翻訳言語を選択する（ドラッグで並び替え可能）",
-      "zh": "显示翻译在（拖动以重新排序）。",
-      "it": "Mostra le traduzioni in (trascinare per riordinare)",
-      "fr": "Afficher les traductions dans (glisser pour réorganiser)",
-      "es": "Mostrar traducciones en (arrastre para reordenar)",
-      "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
-    },
-    "dict_disable_english_info": {
-      "en": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
-      "de": "Ein großer Teil des Wörterbuchs ist nur auf Englisch verfügbar. Wenn Sie es deaktivieren, werden alle diese Einträge ausgeblendet.",
-      "ru": "Значительная часть словаря доступна только на английском языке. Отключение этой функции скроет все эти словарные статьи.",
-      "ja": "辞書の大部分は、英語でしか利用できません。無効にすると、それらの項目がすべて非表示になります。",
-      "zh": "词典的很大一部分只有英文版本。禁用它将隐藏所有这些条目。",
-      "it": "Una parte significativa del dizionario è disponibile solo in inglese. Disabilitandola, tutte queste voci verranno nascoste.",
-      "fr": "Une partie importante du dictionnaire n'est disponible qu'en anglais. En la désactivant, vous masquerez toutes ces entrées.",
-      "es": "Una parte importante del diccionario sólo está disponible en inglés. Si lo desactiva, se ocultarán todas esas entradas.",
-      "pl": "Znaczna część słownika jest dostępna tylko w języku angielskim. Wyłączenie tej opcji spowoduje ukrycie wszystkich tych haseł."
-    },
-    "dict_show_word_freq": {
-      "en": "Show word frequency",
-      "de": "Zeige Wordfrequenz",
-      "ru": "Показать частоту слов",
-      "ja": "単語の使用頻度を表示",
-      "zh": "显示词频",
-      "it": "Mostra la frequenza delle parole",
-      "fr": "Afficher la fréquence des mots",
-      "es": "Mostrar frecuencia de palabras",
-      "pl": "Pokaż częstość występowania słów"
-    },
-    "dict_show_word_freq_body": {
-      "en": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
-      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
-      "ru": "DaKanji использует частоту слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова и основана на различных источниках данных:\n\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете\n\nЧисло, показанное в DaKanji, является вариацией фактической частоты слов, называемой [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law), целью которой является возвращение частоты слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в источниках данных, хотя это должно означать одно появление на миллиард слов.\n[Read more...](https://github.com/rspeer/wordfreq)",
-      "ja": "Dakanjiでは、辞書エントリーのランク付けに単語頻度を使用しています。この単語頻度は、単語の使用頻度を推定したもので、さまざまなデータソースに基づくものです：\n\n* ウィキペディア\n* OPUS OpenSubtitles 2018およびSUBTLEXの字幕\n* ウェブテキスト、OSCAR\n* Twitter\n* Reddit\n\nDakanjiで表示される数値は、実際の単語頻度のバリエーションとして、[Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law)という、人間に優しい対数スケールで単語頻度を返すことを目指したものです。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10進数対数のことを指します。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現します。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。データソースにない単語のZipf値は、10億語に1回出現することを意味するはずですが、デフォルトで0を使用しています。\n[もっと読む...](https://github.com/rspeer/wordfreq)",
-      "zh": "大汉字》使用词频对其词典条目进行排名。这个词频是对一个词的用法的估计，是基于不同的数据来源：\n\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短篇的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n\nDaKanji中显示的数字是实际词频的一种变体，称为[Zipf频率](https://en.wikipedia.org/wiki/Zipf%27s_law)，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。对于没有出现在数据源中的词，我们使用0作为默认的Zipf值，尽管它应该意味着每十亿字中出现一次。\n[阅读全文...](https://github.com/rspeer/wordfreq)",
-      "it": "DaKanji utilizza la frequenza delle parole per classificare le voci del suo dizionario. La frequenza delle parole è una stima dell'uso di una parola e si basa su diverse fonti di dati:\n\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\n\nIl numero mostrato in DaKanji è una variante della frequenza effettiva delle parole, chiamata [frequenza Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law), che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nelle fonti di dati, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.\n[Per saperne di più...](https://github.com/rspeer/wordfreq)",
-      "fr": "Le DaKanji utilise la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'utilisation d'un mot et est basée sur différentes sources de données :\n\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, qui représente les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqué dans DaKanji est une variante de la fréquence réelle des mots appelée [fréquence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans les sources de données, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
-      "es": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
-      "pl": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)"
-    },
-    "dict_deconjugate": {
-      "en": "Convert inputs to base form",
-      "de": "Konvertierung der Eingaben in die Basisform",
-      "ru": "Преобразование входных данных в базовую форму",
-      "ja": "入力内容を基本形に変換する",
-      "zh": "将输入转换为基本形式",
-      "it": "Convertire gli input in forma base",
-      "fr": "Convertir les entrées en forme de base",
-      "es": "Convertir entradas en forma básica",
-      "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
-    },
-    "dict_deconjugate_body": {
-      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
-      "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
-      "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
-      "ja": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
-      "zh": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
-      "it": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
-      "fr": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
-      "es": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
-      "pl": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia."
-    },
-    "dict_kanaize": {
-      "en": "Convert search term to kana",
-      "de": "Suchbegriff in Kana umwandeln",
-      "ru": "Преобразование поискового термина в кану",
-      "ja": "検索語をかなに変換する",
-      "zh": "将搜索词转换为假名",
-      "it": "Convertire i termini di ricerca in kana",
-      "fr": "Convertir les termes de recherche en kana",
-      "es": "Convertir el término de búsqueda en kana",
-      "pl": "Konwertuj wyszukiwane hasła do kany"
-    },
-    "dict_kanaize_body": {
-      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.",
-      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".",
-      "ru": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.",
-      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「たべる」という検索語は、たべるに変換され、食べるを見つけることができますが、意図しないマッチングを引き起こす可能性もあります。\n\n例えば、「man」を検索すると、「まん」に変換されるため、「万」と英語の「man」にマッチします。",
-      "zh": "当启用此设置时，DaKanji会在查找前将任何搜索词转换为统一的假名表示。这意味着查询 \"taberu \"将被转换为たべる，并能找到食べる，但这也可能导致非预期的匹配。\n\n例如，搜索'man'会被转换为まん，因此会匹配到万和英文单词'man'。",
-      "it": "Se si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la query \"taberu\" sarà convertita in たべる e troverà 食べる, ma può anche portare a corrispondenze non volute.\n\nAd esempio, la ricerca di \"man\" verrà convertita in まん e quindi corrisponderà a 万 e alla parola inglese \"man\".",
-      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".",
-      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".",
-      "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'."
-    },
-    "dict_matrix_word_levels": {
-      "en": "Matrix words use JLPT level",
-      "de": "Matrixwörter verwenden JLPT-Niveau",
-      "ru": "Матричные слова используют уровень JLPT",
-      "ja": "マトリックス語は日本語能力試験レベルを使用",
-      "zh": "矩阵词使用JLPT水平",
-      "it": "Le parole della matrice utilizzano il livello JLPT",
-      "fr": "Les mots de la matrice utilisent le niveau JLPT",
-      "es": "Las palabras de la matriz utilizan el nivel JLPT",
-      "pl": "Słowa matrycowe używają poziomu JLPT"
-    },
-    "dict_show_wikipedia_definitions": {
-      "en": "Show definitions from wikipedia",
-      "de": "Definitionen von wikipedia anzeigen",
-      "ru": "Показать определения из Википедии",
-      "ja": "wikipedia上の定義を表示",
-      "zh": "显示来自维基百科的定义",
-      "it": "Mostra le definizioni da wikipedia",
-      "fr": "Afficher les définitions de wikipedia",
-      "es": "Mostrar definiciones de wikipedia",
-      "pl": "Pokaż definicje z wikipedii"
-    },
-    "anki_title": {
-      "en": "Anki",
-      "de": "Anki",
-      "ru": "Anki",
-      "ja": "Anki",
-      "zh": "Anki",
-      "it": "Anki",
-      "fr": "Anki",
-      "es": "Anki",
-      "pl": "Anki"
-    },
-    "anki_default_deck": {
-      "en": "Default deck",
-      "de": "Standard deck",
-      "ru": "Колода по умолчанию",
-      "ja": "デフォルトのデッキ",
-      "zh": "默认甲板",
-      "it": "Mazzo predefinito",
-      "fr": "Pont par défaut",
-      "es": "Cubierta por defecto",
-      "pl": "Pokład domyślny"
-    },
-    "anki_default_no_langs": {
-      "en": "Number of languages on notes",
-      "de": "Anzahl an Sprachen auf Karten",
-      "ru": "Количество языков на банкнотах",
-      "ja": "ノートの言語数",
-      "zh": "笔记上的语言数量",
-      "it": "Numero di lingue sulle note",
-      "fr": "Nombre de langues sur les notes",
-      "es": "Número de lenguas en los billetes",
-      "pl": "Liczba języków w notatkach"
-    },
-    "anki_default_no_translations": {
-      "en": "Number of translations on notes",
-      "de": "Anzahl von Übersetungen auf Karten",
-      "ru": "Количество переводов по векселям",
-      "ja": "ノートの翻訳数",
-      "zh": "笔记上的翻译数量",
-      "it": "Numero di traduzioni sulle note",
-      "fr": "Nombre de traductions sur les notes",
-      "es": "Número de traducciones en los billetes",
-      "pl": "Liczba tłumaczeń na notach"
-    },
-    "dojg_imported": {
-      "en": "DoJG imported",
-      "de": "DoJG importiert",
-      "ru": "DoJG импортный",
-      "ja": "輸入されたDoJG",
-      "zh": "进口的 DoJG",
-      "it": "DoJG importato",
-      "fr": "DoJG importé",
-      "es": "DoJG importado",
-      "pl": "Import DoJG"
-    },
-    "dojg_media_imported": {
-      "en": "DoJG with media imported",
-      "de": "DoJG mit Medien importiert",
-      "ru": "DoJG с импортными СМИ",
-      "ja": "メディアから輸入されたDoJG",
-      "zh": "司法部与进口媒体",
-      "it": "DoJG con i media importati",
-      "fr": "DoJG avec les médias importés",
-      "es": "DoJG con medios de comunicación importados",
-      "pl": "DoJG z zaimportowanymi mediami"
-    },
-    "misc_title": {
-      "en": "Miscellaneous",
-      "de": "Verschiedenes",
-      "ru": "Разное",
-      "ja": "その他",
-      "zh": "杂项",
-      "it": "Varie",
-      "fr": "Divers",
-      "es": "Misceláneo",
-      "pl": "Inne"
-    },
-    "misc_theme": {
-      "en": "theme (@:SettingsScreen.restarts_app)",
-      "de": "Thema (@:SettingsScreen.restarts_app)",
-      "ru": "тема (@:SettingsScreen.restarts_app)",
-      "ja": "テーマ (@:SettingsScreen.restarts_app)",
-      "zh": "主题 (@:SettingsScreen.restarts_app)",
-      "it": "tema (@:SettingsScreen.restarts_app)",
-      "fr": "thème (@:SettingsScreen.restarts_app)",
-      "es": "tema (@:SettingsScreen.restarts_app)",
-      "pl": "Motyw(@:SettingsScreen.restarts_app)"
-    },
-    "misc_settings_window_size": {
-      "en": "Save current window size",
-      "de": "Speicher die momentanige Fenster größe",
-      "ru": "Сохранить текущий размер окна",
-      "ja": "現在のウィンドウサイズを保存",
-      "zh": "保存当前窗口尺寸",
-      "it": "Salva la dimensione attuale della finestra",
-      "fr": "Sauvegarder la taille actuelle de la fenêtre",
-      "es": "Guardar el tamaño actual de la ventana",
-      "pl": "Zapisz bieżący rozmiar okna"
-    },
-    "misc_language": {
-      "en": "language",
-      "de": "Sprache (@:SettingsScreen.restarts_app)",
-      "ru": "язык (@:SettingsScreen.restarts_app)",
-      "ja": "言語 (@:SettingsScreen.restarts_app)",
-      "zh": "语言 (@:SettingsScreen.restarts_app)",
-      "it": "lingua (@:SettingsScreen.restarts_app)",
-      "fr": "langue (@:SettingsScreen.restarts_app)",
-      "es": "idioma (@:SettingsScreen.restarts_app)",
-      "pl": "język (@:SettingsScreen.restarts_app)"
-    },
-    "misc_default_screen": {
-      "en": "Initial screen when starting the app",
-      "de": "Startbildschirm beim öffnen der App",
-      "ru": "Начальный экран при запуске приложения",
-      "ja": "アプリ起動時の初期画面",
-      "zh": "启动应用程序时的初始屏幕",
-      "it": "Schermata iniziale all'avvio dell'applicazione",
-      "fr": "Écran initial au démarrage de l'application",
-      "es": "Pantalla inicial al iniciar la aplicación",
-      "pl": "Ekran początkowy przy uruchamianiu aplikacji"
-    },
-    "misc_window_on_top": {
-      "en": "Should the application always be on top of others",
-      "de": "Sollte die Anwendung immer über anderen sein",
-      "ru": "Должно ли приложение всегда быть на высоте",
-      "ja": "アプリを常に画面トップに表示する",
-      "zh": "应用程序是否应该总是在上面",
-      "it": "L'applicazione deve essere sempre in cima",
-      "fr": "L'application doit-elle toujours être en tête",
-      "es": "¿Debe la aplicación estar siempre encima",
-      "pl": "Czy aplikacja powinna być zawsze na wierzchu"
-    },
-    "misc_window_opacity": {
-      "en": "The transparency of the application",
-      "de": "Die Transparenz der Anwendung",
-      "ru": "Прозрачность приложения",
-      "ja": "アプリ画面の透過性",
-      "zh": "应用程序的透明度",
-      "it": "La trasparenza dell'applicazione",
-      "fr": "La transparence de l'application",
-      "es": "La transparencia de la aplicación",
-      "pl": "Transparentność aplikacji"
-    },
-    "advanced_settings_title": {
-      "en": "Advanced settings",
-      "de": "Erweiterte Einstellungen",
-      "ru": "Дополнительные настройки",
-      "ja": "詳細設定",
-      "zh": "高级设置",
-      "it": "Impostazioni avanzate",
-      "fr": "Paramètres avancés",
-      "es": "Ajustes avanzados",
-      "pl": "Ustawienia zaawansowane"
-    },
-    "advanced_settings_draw_backend": {
-      "en": "Inference backend (requires restart)",
-      "de": "Inferenz Backend (Neustart notwendig)",
-      "ru": "Бэкэнд для выводов (требуется перезапуск)",
-      "ja": "推論バックエンド（再起動します）",
-      "zh": "推理后端（需要重新启动）。",
-      "it": "Backend di inferenza (richiede il riavvio)",
-      "fr": "Backend d'inférence (nécessite un redémarrage)",
-      "es": "Backend de inferencia (reinicio manual requerido)",
-      "pl": "System wnioskowania (wymaga restartu)"
-    },
-    "advanced_settings_snap": {
-      "en": "I am inevitable...",
-      "de": "Ich bin unvermeidbar...",
-      "ru": "Я неизбежен...",
-      "ja": "私は絶対なのだ・・・",
-      "zh": "我是不可避免的...",
-      "it": "Sono inevitabile...",
-      "fr": "Je suis inévitable...",
-      "es": "Soy inevitable...",
-      "pl": "Jestem nieunikniony..."
-    },
-    "advanced_settings_optimize_nn": {
-      "en": "Optimize Neural Networks",
-      "de": "Neuronale Netze optimieren",
-      "ru": "Оптимизация нейронных сетей",
-      "ja": "ニューラルネットの最適化",
-      "zh": "优化神经网络",
-      "it": "Ottimizzare le reti neurali",
-      "fr": "Optimiser les réseaux neuronaux",
-      "es": "Optimizar las redes neuronales",
-      "pl": "Optymalizuj sieć neuronową"
-    },
-    "advanced_settings_optimizing": {
-      "en": "Optimizing...\nPlease do not close the app.",
-      "de": "Optimiert...\nBitte schließen Sie die App nicht.",
-      "ru": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
-      "ja": "最適化中...\nアプリを閉じないでください。",
-      "zh": "正在优化...\n请不要关闭该应用程序。",
-      "it": "Ottimizzazione...\nNon chiudere l'applicazione.",
-      "fr": "Optimisation...\nNe fermez pas l'application.",
-      "es": "Optimizando...\nPor favor, no cierre la aplicación.",
-      "pl": "Optymalizacja...\nProszę nie zamykać aplikacji."
-    },
-    "advanced_settings_optimze_warning": {
-      "en": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
-      "de": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
-      "ru": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
-      "ja": "ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nデバイスによっては時間がかかる場合がありますが、性能が圧倒的に向上します。",
-      "zh": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
-      "it": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
-      "fr": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
-      "es": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
-      "pl": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie."
-    },
-    "advanced_settings_optimize_cancel": {
-      "en": "Cancel",
-      "de": "Abbrechen",
-      "ru": "Отмена",
-      "ja": "キャンセル",
-      "zh": "取消",
-      "it": "Annullamento",
-      "fr": "Annuler",
-      "es": "Cancelar",
-      "pl": "Anuluj"
-    },
-    "advanced_settings_optimize_ok": {
-      "en": "Ok",
-      "de": "Ok",
-      "ru": "Хорошо",
-      "ja": "OK",
-      "zh": "好的",
-      "it": "Ok",
-      "fr": "Ok",
-      "es": "Ok",
-      "pl": "Ok"
-    },
-    "advanced_settings_number_search_procs": {
-      "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
-      "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
-      "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
-      "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
-      "zh": "搜索进程的数量（@:SettingsScreen.required_restart）。",
-      "it": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
-      "fr": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
-      "es": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
-      "pl": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)"
-    },
-    "advanced_settings_number_search_procs_body": {
-      "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
-      "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
-      "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
-      "ja": "Dakanjiは、データベースを検索する際、複数のプロセスを使用します。Dakanjiに標準で付属しているデータベースでは、通常2プロセスで十分ですが、データベースで検索したときに動作が重くなるようであれば、プロセス数を増やしてください。",
-      "zh": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
-      "it": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
-      "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
-      "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
-      "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
-    },
-    "advanced_settings_reset_settings": {
-      "en": "Reset settings",
-      "de": "Einstellungen zurücksetzen",
-      "ru": "Сброс настроек",
-      "ja": "設定のリセット",
-      "zh": "重置设置",
-      "it": "Ripristino delle impostazioni",
-      "fr": "Réinitialiser les paramètres",
-      "es": "Restablecer ajustes",
-      "pl": "Resetowanie ustawień"
-    },
-    "advanced_settings_delete_user_data": {
-      "en": "Delete user data",
-      "de": "Benutzerdaten löschen",
-      "ru": "Удаление пользовательских данных",
-      "ja": "ユーザーデータの削除",
-      "zh": "删除用户数据",
-      "it": "Cancellare i dati dell'utente",
-      "fr": "Supprimer les données de l'utilisateur",
-      "es": "Borrar datos de usuario",
-      "pl": "Usuwanie danych użytkownika"
-    },
-    "advanced_settings_delete_dict": {
-      "en": "Reset dictionary files",
-      "de": "Wörterbuchdateien zurücksetzen",
-      "ru": "Сброс файлов словарей",
-      "ja": "辞書ファイルのリセット",
-      "zh": "重置字典文件",
-      "it": "Reimpostare i file del dizionario",
-      "fr": "Réinitialiser les fichiers du dictionnaire",
-      "es": "Restablecer archivos de diccionario",
-      "pl": "Resetowanie plików słownika"
-    },
-    "advanced_settings_delete_history": {
-      "en": "Delete search history",
-      "de": "Suchverlauf löschen",
-      "ru": "Удаление истории поиска",
-      "ja": "検索履歴の削除",
-      "zh": "删除搜索历史",
-      "it": "Cancellare la cronologia delle ricerche",
-      "fr": "Supprimer l'historique des recherches",
-      "es": "Eliminar el historial de búsqueda",
-      "pl": "Usuwanie historii wyszukiwania"
-    },
-    "advanced_settings_delete_dojg": {
-      "en": "Delete DoJG files",
-      "de": "DoJG-Dateien löschen",
-      "ru": "Удаление файлов DoJG",
-      "ja": "DoJGファイルの削除",
-      "zh": "删除 DoJG 文件",
-      "it": "Eliminare i file DoJG",
-      "fr": "Supprimer les fichiers DoJG",
-      "es": "Eliminar archivos DoJG",
-      "pl": "Usuwanie plików DoJG"
-    }
-  },
-  "WebviewScreen": {
-    "loading": {
-      "en": "Searching",
-      "de": "Suche",
-      "ru": "Поиск",
-      "ja": "検索中",
-      "zh": "搜索",
-      "it": "Ricerca",
-      "fr": "Recherche",
-      "es": "Buscando",
-      "pl": "Ładowanie"
-    },
-    "title": {
-      "en": "Webview",
-      "de": "Webview",
-      "ru": "Webview",
-      "ja": "ウェブビュー",
-      "zh": "网页浏览",
-      "it": "Vista sul web",
-      "fr": "Webview",
-      "es": "Webview",
-      "pl": "Webview"
-    }
-  },
-  "FeedbackScreen": {
-    "title": {
-      "en": "Feedback",
-      "de": "Feedback",
-      "ru": "Обратная связь",
-      "ja": "フィードバック",
-      "zh": "反馈信息",
-      "it": "Feedback",
-      "fr": "Commentaires",
-      "es": "Comentarios",
-      "pl": "Opinia"
-    },
-    "draw": {
-      "en": "draw",
-      "de": "zeichnen",
-      "ru": "нарисовать",
-      "ja": "注釈",
-      "zh": "绘制",
-      "it": "sorteggio",
-      "fr": "dessiner",
-      "es": "dibujar",
-      "pl": "rysuj"
-    },
-    "feedback_description_text": {
-      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
-      "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
-      "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
-      "ja": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
-      "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
-      "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
-      "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
-      "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
-      "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
-    },
-    "navigate": {
-      "en": "navigate",
-      "de": "Navigieren",
-      "ru": "перейдите по ссылке",
-      "ja": "操作",
-      "zh": "导航",
-      "it": "navigare",
-      "fr": "naviguer sur",
-      "es": "navegue por",
-      "pl": "nawigacja"
-    },
-    "submit": {
-      "en": "submit",
-      "de": "Absenden",
-      "ru": "отправить",
-      "ja": "送信",
-      "zh": "提交",
-      "it": "Invia",
-      "fr": "envoyer",
-      "es": "enviar",
-      "pl": "wyślij"
-    }
-  },
-  "ManualScreen": {
-    "title": {
-      "en": "Manual",
-      "de": "Handbuch",
-      "ru": "Руководство",
-      "ja": "マニュアル",
-      "zh": "手册",
-      "it": "Manuale",
-      "fr": "Manuel",
-      "es": "Manual",
-      "pl": "Instrukcja"
-    },
-    "anki_title": {
-      "en": "Anki",
-      "de": "Anki",
-      "ru": "Anki",
-      "ja": "Anki",
-      "zh": "Anki",
-      "it": "Anki",
-      "fr": "Anki",
-      "es": "Anki",
-      "pl": "Anki"
-    },
-    "anki_setup_title": {
-      "en": "Setup",
-      "de": "Einrichtung",
-      "ru": "Настройка",
-      "ja": "セットアップ",
-      "zh": "设置",
-      "it": "Impostazione",
-      "fr": "Mise en place",
-      "es": "Configurar",
-      "pl": "Ustawienie"
-    },
-    "anki_setup_intro": {
-      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
-      "de": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
-      "ru": "DaKanji можно использовать для отправки заметок в Anki. Для этого для каждой платформы требуется своя настройка.",
-      "ja": "Dakanjiは、Ankiにノートを送信することが可能です。端末によって設定方法が異なりますのでご注意ください。",
-      "zh": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。",
-      "it": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.",
-      "fr": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.",
-      "es": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.",
-      "pl": "DaKanji może być używane do wysyłania notatek do Anki. Do tego każda platforma potrzebuje innej konfiguracji."
-    },
-    "anki_setup_android_title": {
-      "en": "Android",
-      "de": "Android",
-      "ru": "Android",
-      "ja": "アンドロイド",
-      "zh": "安卓",
-      "it": "Android",
-      "fr": "Android",
-      "es": "Android",
-      "pl": "Android"
-    },
-    "anki_setup_android_text": {
-      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
-      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
-      "ru": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
-      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
-      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
-      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
-      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
-      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
-      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
-    },
-    "anki_setup_desktop_title": {
-      "en": "Desktop",
-      "de": "Desktop",
-      "ru": "Рабочий стол",
-      "ja": "デスクトップ",
-      "zh": "桌面",
-      "it": "Desktop",
-      "fr": "Bureau",
-      "es": "Escritorio",
-      "pl": "Pulpit"
-    },
-    "anki_setup_desktop_text": {
-      "en": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
-      "de": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
-      "ru": "На MacOS, Windows и Linux необходимо установить [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).",
-      "ja": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)をインストールし、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)となっている必要があります。",
-      "zh": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
-      "it": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
-      "fr": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
-      "es": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
-      "pl": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/)."
-    },
-    "anki_setup_ios_title": {
-      "en": "iOS",
-      "de": "iOS",
-      "ru": "iOS",
-      "ja": "iOS",
-      "zh": "基础设施",
-      "it": "iOS",
-      "fr": "iOS",
-      "es": "iOS",
-      "pl": "iOS"
-    },
-    "anki_setup_ios_text": {
-      "en": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
-      "de": "Die Einrichtung unter iOS ist genauso einfach wie unter Android. Installiere einfach [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.",
-      "ru": "Установка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.",
-      "ja": "iOSでの設定は、Androidと同様に[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、Dakanjiを許可するだけで、簡単に設定できます。",
-      "zh": "在iOS上的设置超级简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在询问时授予DaKanji权限。",
-      "it": "L'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere l'autorizzazione a DaKanji quando viene richiesto.",
-      "fr": "L'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder l'autorisation à DaKanji lorsqu'elle est demandée.",
-      "es": "La configuración en iOS es super sencilla, al igual que en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando te lo pida.",
-      "pl": "Konfiguracja na iOS jest super prosta, podobnie jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni."
-    },
-    "anki_connection_test": {
-      "en": "To test if DaKanji can reach Anki you can press the button below.",
-      "de": "Um zu testen, ob DaKanji Anki erreichen kann, kannst du den Knopf unten drücken.",
-      "ru": "Чтобы проверить, может ли DaKanji достичь Anki, вы можете нажать кнопку ниже.",
-      "ja": "DakanjiとAnkiの同期状況は、以下のボタンで確認することができます。",
-      "zh": "要测试DaKanji是否能到达Anki，你可以按下面的按钮。",
-      "it": "Per verificare se DaKanji può raggiungere Anki è possibile premere il pulsante sottostante.",
-      "fr": "Pour tester si DaKanji peut atteindre Anki, vous pouvez cliquer sur le bouton ci-dessous.",
-      "es": "Para probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
-      "pl": "Aby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej."
-    },
-    "anki_test_connection": {
-      "en": "Test connection to Anki",
-      "de": "Überprüfe Verbindung zu Anki",
-      "ru": "Тестовое подключение к Anki",
-      "ja": "Ankiへの接続をテストする",
-      "zh": "测试与Anki的连接",
-      "it": "Prova la connessione ad Anki",
-      "fr": "Test de connexion à Anki",
-      "es": "Prueba de conexión a Anki",
-      "pl": "Przetestuj połączenie z Anki"
-    },
-    "anki_test_connection_success": {
-      "en": "You are connected to Anki! 🎉",
-      "de": "Du bist mit Anki verbunden! 🎉",
-      "ru": "Вы подключены к Anki! 🎉",
-      "ja": "Ankiに接続されました！🎉",
-      "zh": "你已连接到Anki!🎉",
-      "it": "Sei connesso ad Anki! 🎉",
-      "fr": "Vous êtes connecté à Anki ! 🎉",
-      "es": "¡Estás conectado a Anki! 🎉",
-      "pl": "Jesteś podłączony do Anki! 🎉"
-    },
-    "anki_test_connection_fail": {
-      "en": "You are not connected to Anki! 😢",
-      "de": "Du bist nicht mit Anki verbunde! 😢",
-      "ru": "Вы не подключены к Anki! 😢",
-      "ja": "Ankiに接続されていません！😢",
-      "zh": "你没有连接到Anki!😢",
-      "it": "Non sei connesso ad Anki! 😢",
-      "fr": "Vous n'êtes pas connecté à Anki ! 😢",
-      "es": "¡No estás conectado a Anki! 😢",
-      "pl": "Nie jesteś połączony z Anki! 😢"
-    },
-    "dict_title": {
-      "en": "Dictionary",
-      "de": "Wörterbuch",
-      "ru": "Словарь",
-      "ja": "辞書",
-      "zh": "词典",
-      "it": "Dizionario",
-      "fr": "Dictionnaire",
-      "es": "Diccionario",
-      "pl": "Słownik"
-    },
-    "dict_search_results_title": {
-      "en": "Search results",
-      "de": "Suchergebnisse",
-      "ru": "Результаты поиска",
-      "ja": "検索結果",
-      "zh": "搜索结果",
-      "it": "Risultati della ricerca",
-      "fr": "Résultats de la recherche",
-      "es": "Resultados de la búsqueda",
-      "pl": "Wyniki wyszukiwania"
-    },
-    "dict_search_results_navigate_title": {
-      "en": "Navigate",
-      "de": "Navigieren",
-      "ru": "Перейдите по ссылке",
-      "ja": "ナビゲート",
-      "zh": "导航",
-      "it": "Navigare",
-      "fr": "Naviguer",
-      "es": "Navegue por",
-      "pl": "Nawigacja"
-    },
-    "dict_search_results_navigate_text": {
-      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
-      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
-      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
-      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
-      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
-      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
-      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
-      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
-      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
-    },
-    "dict_search_history_title": {
-      "en": "Search history",
-      "de": "Suchverlauf",
-      "ru": "История поиска",
-      "ja": "検索履歴",
-      "zh": "搜索历史",
-      "it": "Storia della ricerca",
-      "fr": "Historique de la recherche",
-      "es": "Historial de búsqueda",
-      "pl": "Historia wyszukiwania"
-    },
-    "dict_search_history_delete_title": {
-      "en": "Delete",
-      "de": "Löschen",
-      "ru": "Удалить",
-      "ja": "削除",
-      "zh": "删除",
-      "it": "Cancellare",
-      "fr": "Supprimer",
-      "es": "Borrar",
-      "pl": "Usuń"
-    },
-    "dict_search_history_delete_text": {
-      "en": "You can delete elements from the search history by swiping left on them.",
-      "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
-      "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
-      "ja": "左にスワイプして検索履歴を削除できます",
-      "zh": "您可以通过向左滑动从搜索历史中删除元素。",
-      "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
-      "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
-      "es": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
-      "pl": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo."
-    },
-    "dict_kanji_title": {
-      "en": "Kanji",
-      "de": "Kanji",
-      "ru": "Кандзи",
-      "ja": "漢字",
-      "zh": "汉字",
-      "it": "Kanji",
-      "fr": "Kanji",
-      "es": "Kanji",
-      "pl": "Kanji"
-    },
-    "dict_kanji_search_kanji_group_title": {
-      "en": "Search Kanji group",
-      "de": "Kanji-Gruppe suchen",
-      "ru": "Поиск группы кандзи",
-      "ja": "漢字グループ検索",
-      "zh": "搜索汉字组",
-      "it": "Ricerca gruppo Kanji",
-      "fr": "Rechercher un groupe de Kanji",
-      "es": "Buscar grupo de kanji",
-      "pl": "Wyszukaj grupę Kanji"
-    },
-    "dict_kanji_search_kanji_group_text": {
-      "en": "When a Kanji group can be searched in the dictionary it has a green border. Long pressing will search for it in the dictionary and double tapping will copy it to the clipboard.",
-      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen versehen. Durch langes Drücken wird sie im Wörterbuch gesucht und durch doppeltes Tippen wird sie in die Zwischenablage kopiert.",
-      "ru": "Когда группа кандзи может быть найдена в словаре, она имеет зеленую рамку. При длительном нажатии на кнопку она будет найдена в словаре, а при двойном нажатии - скопирована в буфер обмена.",
-      "ja": "辞書で検索できる漢字グループには緑色の枠が表示されます。長押しで辞書検索、ダブルタップでクリップボードにコピーできます。",
-      "zh": "当一个汉字组可以在字典中搜索时，它有一个绿色的边框。长按会在字典中搜索到它，双击会把它复制到剪贴板上。",
-      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde. Premendo a lungo lo si cerca nel dizionario e toccando due volte lo si copia negli appunti.",
-      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'une bordure verte. Un appui long permet de le rechercher dans le dictionnaire et un double appui permet de le copier dans le presse-papiers.",
-      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
-      "pl": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka."
-    },
-    "dict_kanji_copy_radicals_title": {
-      "en": "Copying radicals",
-      "de": "Kopieren von Radikalen",
-      "ru": "Копирование радикалов",
-      "ja": "ラジカルのコピー",
-      "zh": "复制自由基",
-      "it": "Copiare i radicali",
-      "fr": "Copier des radicaux",
-      "es": "Copiar radicales",
-      "pl": "Kopiowanie rodników"
-    },
-    "dict_kanji_copy_radicals_text": {
-      "en": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
-      "de": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
-      "ru": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
-      "ja": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
-      "zh": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
-      "it": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
-      "fr": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
-      "es": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
-      "pl": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka."
-    },
-    "dict_examples_title": {
-      "en": "Examples",
-      "de": "Beispiele",
-      "ru": "Примеры",
-      "ja": "例",
-      "zh": "实例",
-      "it": "Esempi",
-      "fr": "Exemples",
-      "es": "Ejemplos",
-      "pl": "Przykłady"
-    },
-    "dict_text_examples_analyze_title": {
-      "en": "Opening examples in the Text screen",
-      "de": "Beispiele im Bildschirm \"Text\" öffnen",
-      "ru": "Открытие примеров на экране \"Текст",
-      "ja": "テキスト画面で例を開く",
-      "zh": "在文本屏幕中打开例子",
-      "it": "Apertura di esempi nella schermata Testo",
-      "fr": "Ouvrir des exemples dans l'écran Texte",
-      "es": "Abrir ejemplos en la pantalla Texto",
-      "pl": "Otwieranie przykładów na ekranie Tekst"
-    },
-    "dict_text_examples_analyze_text": {
-      "en": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
-      "de": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
-      "ru": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
-      "ja": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
-      "zh": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
-      "it": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
-      "fr": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
-      "es": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
-      "pl": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie."
-    },
-    "dict_radicals_title": {
-      "en": "Radicals",
-      "de": "Radikale",
-      "ru": "Радикалы",
-      "ja": "部首",
-      "zh": "激进主义者",
-      "it": "Radicali",
-      "fr": "Radicaux",
-      "es": "Radicales",
-      "pl": "Radykałowie"
-    },
-    "dict_radicals_paste_title": {
-      "en": "Pasting radicals",
-      "de": "Radikale einfügen",
-      "ru": "Пастообразные радикалы",
-      "ja": "部首の貼り付け",
-      "zh": "粘贴基点",
-      "it": "Incollare i radicali",
-      "fr": "Collage de radicaux",
-      "es": "Pegar radicales",
-      "pl": "Wklejanie rodników"
-    },
-    "dict_radicals_paste_text": {
-      "en": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
-      "de": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
-      "ru": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
-      "ja": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
-      "zh": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
-      "it": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
-      "fr": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
-      "es": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
-      "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
-    }
-  },
-  "KanjiTableScreen": {
-    "title": {
-      "en": "Kanji Table",
-      "de": "Kanji Tabelle",
-      "ru": "Таблица кандзи",
-      "ja": "漢字表",
-      "zh": "汉字表",
-      "it": "Tabella Kanji",
-      "fr": "Tableau des Kanji",
-      "es": "Tabla de Kanji",
-      "pl": "Tabela kanji"
-    },
-    "tutorial_begin_title": {
-      "en": "Welcome to the kanji table screen!",
-      "de": "Willkommen zu den Kanji-Tabellen!",
-      "ru": "Добро пожаловать на экран таблицы кандзи!",
-      "ja": "漢字表画面へようこそ！",
-      "zh": "欢迎来到汉字表屏幕！",
-      "it": "Benvenuti nella schermata della tabella dei kanji!",
-      "fr": "Bienvenue sur l'écran de la table des kanji !",
-      "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
-      "pl": "Witamy na ekranie tabeli kanji!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    },
-    "tutorial_kanjis": {
-      "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
-      "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
-      "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
-      "ja": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
-      "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
-      "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
-      "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
-      "es": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
-      "pl": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów."
-    },
-    "tutorial_filter": {
-      "en": "This dropdown lets you select a way of filtering Kanji.",
-      "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
-      "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
-      "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
-      "zh": "通过该下拉菜单，您可以选择应显示的汉字类别。",
-      "it": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
-      "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
-      "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
-      "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
-    },
-    "tutorial_filter_sub_group": {
-      "en": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
-      "de": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
-      "ru": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
-      "ja": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
-      "zh": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
-      "it": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
-      "fr": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
-      "es": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
-      "pl": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu."
-    },
-    "tutorial_sort": {
-      "en": "This dropdown lets you select an order for the shown kanji.",
-      "de": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
-      "ru": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
-      "ja": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
-      "zh": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
-      "it": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
-      "fr": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
-      "es": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
-      "pl": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
-    },
-    "tutorial_kanji_amount": {
-      "en": "This number indicates how many kanji are currently being shown.",
-      "de": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
-      "ru": "Это число показывает, сколько кандзи отображается в данный момент.",
-      "ja": "現在表示されている漢字の数を示します",
-      "zh": "该数字表示当前显示的汉字数量。",
-      "it": "Questo numero indica il numero di kanji attualmente visualizzati.",
-      "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
-      "es": "Este número indica cuántos kanji se están mostrando actualmente.",
-      "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
-    }
-  },
-  "KanjiTrainerScreen": {
-    "title": {
-      "en": "Kanji Trainer",
-      "de": "Kanji Trainer",
-      "ru": "Тренажер по кандзи",
-      "ja": "漢字トレーナー",
-      "zh": "汉字训练器",
-      "it": "Allenatore di kanji",
-      "fr": "Entraîneur de kanji",
-      "es": "Entrenador de Kanji",
-      "pl": "Kanji Trainer"
-    }
-  },
-  "KanaTableScreen": {
-    "title": {
-      "en": "Kana Table",
-      "de": "Kana Tabelle",
-      "ru": "Стол Kana",
-      "ja": "かな一覧表",
-      "zh": "卡纳桌",
-      "it": "Tavolo Kana",
-      "fr": "Table Kana",
-      "es": "Mesa Kana",
-      "pl": "Stół Kana"
-    },
-    "tutorial_begin_title": {
-      "en": "Welcome to the kana table screen!",
-      "de": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
-      "ru": "Добро пожаловать на экран таблицы kana!",
-      "ja": "かな一覧表画面へようこそ！",
-      "zh": "欢迎来到假名表屏幕！",
-      "it": "Benvenuti nella schermata della tavola kana!",
-      "fr": "Bienvenue sur l'écran de la table kana !",
-      "es": "¡Bienvenido a la pantalla de la tabla de kana!",
-      "pl": "Witamy na ekranie tabeli kana!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    },
-    "tutorial_kana_table": {
-      "en": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
-      "de": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
-      "ru": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
-      "ja": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
-      "zh": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
-      "it": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
-      "fr": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
-      "es": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
-      "pl": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę."
-    },
-    "tutorial_speed_dial": {
-      "en": "This button can be used to change which Kana are shown.",
-      "de": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
-      "ru": "С помощью этой кнопки можно изменить отображение каны.",
-      "ja": "このボタンを使って、表示する「かな」を変更することができます。",
-      "zh": "该按钮可用于更改显示的假名。",
-      "it": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
-      "fr": "Ce bouton permet de modifier les Kana affichés.",
-      "es": "Este botón permite cambiar los kana que se muestran.",
-      "pl": "Za pomocą tego przycisku można zmienić wyświetlane kany."
-    },
-    "tutorial_speed_dial_dakuten": {
-      "en": "This button toggles between Dakuten on and off.",
-      "de": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
-      "ru": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
-      "ja": "ダクテンのオン／オフを切り替えるボタン。",
-      "zh": "该按钮可在打开和关闭 Dakuten 之间切换。",
-      "it": "Questo pulsante consente di attivare e disattivare Dakuten.",
-      "fr": "Ce bouton permet d'activer ou de désactiver Dakuten.",
-      "es": "Este botón activa y desactiva el Dakuten.",
-      "pl": "Przycisk ten służy do włączania i wyłączania Dakutenu."
-    },
-    "tutorial_speed_dial_yoon": {
-      "en": "This button toggles Yoon characters on and off.",
-      "de": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
-      "ru": "Эта кнопка включает и выключает символы Юн.",
-      "ja": "このボタンでユン文字のオン／オフを切り替える。",
-      "zh": "此按钮可打开或关闭 \"尹 \"字符。",
-      "it": "Questo pulsante attiva e disattiva i caratteri Yoon.",
-      "fr": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
-      "es": "Este botón activa y desactiva los caracteres Yoon.",
-      "pl": "Ten przycisk włącza i wyłącza znaki Yoon."
-    },
-    "tutorial_speed_dial_kana": {
-      "en": "This button switches between Katakana and Hiragana.",
-      "de": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
-      "ru": "Эта кнопка переключает между катаканой и хираганой.",
-      "ja": "カタカナとひらがなを切り替えるボタンです。",
-      "zh": "该按钮可在片假名和平假名之间切换。",
-      "it": "Questo pulsante consente di passare da Katakana a Hiragana.",
-      "fr": "Ce bouton permet de passer des Katakana aux Hiragana.",
-      "es": "Este botón alterna entre Katakana e Hiragana.",
-      "pl": "Ten przycisk przełącza między Katakaną i Hiraganą."
-    },
-    "tutorial_speed_dial_romaji": {
-      "en": "This button toggles Romaji on or off.",
-      "de": "Diese Taste schaltet Romaji ein oder aus.",
-      "ru": "Эта кнопка включает или выключает режим Romaji.",
-      "ja": "ローマ字入力のオン・オフを切り替えます。",
-      "zh": "此按钮可打开或关闭罗马字。",
-      "it": "Questo pulsante attiva o disattiva il Romaji.",
-      "fr": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
-      "es": "Este botón activa o desactiva Romaji.",
-      "pl": "Ten przycisk włącza lub wyłącza funkcję Romaji."
-    },
-    "tutorial_speed_dial_yoon_special": {
-      "en": "This button toggles between rare Yoon characters on or off.",
-      "de": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus.",
-      "ru": "Эта кнопка позволяет включать или выключать редкие символы Юна.",
-      "ja": "このボタンでレアなユン文字のオン・オフが切り替わる。",
-      "zh": "该按钮可切换稀有尹氏角色的开启或关闭。",
-      "it": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon.",
-      "fr": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon.",
-      "es": "Este botón activa o desactiva los personajes raros de Yoon.",
-      "pl": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
-    }
-  },
-  "KanaTrainerScreen": {
-    "title": {
-      "en": "Kana Trainer",
-      "de": "Kana Trainer",
-      "ru": "Инструктор Кана",
-      "ja": "カナ・トレーナー",
-      "zh": "卡纳培训师",
-      "it": "Allenatore Kana",
-      "fr": "Formateur Kana",
-      "es": "Entrenador Kana",
-      "pl": "Trener Kana"
-    }
-  },
-  "TextScreen": {
-    "title": {
-      "en": "Text",
-      "de": "Text",
-      "ru": "Текст",
-      "ja": "テキスト",
-      "zh": "文本",
-      "it": "Testo",
-      "fr": "Texte",
-      "es": "Texto",
-      "pl": "Tekst"
-    },
-    "input_text_here": {
-      "en": "Input text here...",
-      "de": "Text hier eingeben...",
-      "ru": "Введите текст здесь...",
-      "ja": "ここにテキストを入力...",
-      "zh": "在这里输入文字...",
-      "it": "Inserire il testo qui...",
-      "fr": "Entrez le texte ici...",
-      "es": "Introduzca aquí el texto...",
-      "pl": "Wprowadź tekst tutaj..."
-    },
-    "tutorial_begin_title": {
-      "en": "Welcome to the text processing!",
-      "de": "Willkommen bei der Textverarbeitung!",
-      "ru": "Добро пожаловать в обработку текста!",
-      "ja": "テキストにようこそ!",
-      "zh": "欢迎来到文本处理!",
-      "it": "Benvenuti nell'elaborazione del testo!",
-      "fr": "Bienvenue dans le traitement de texte !",
-      "es": "¡Bienvenido al tratamiento de textos!",
-      "pl": "Zapraszamy do przetwaczanie tekstu!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    },
-    "tutorial_text_input_text": {
-      "en": "Here you can write or paste any text. This text can be processed with different tools.",
-      "de": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet.",
-      "ru": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов.",
-      "ja": "文章を入力してください。かなを振ったり、品詞を調べたりできます",
-      "zh": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。",
-      "it": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti.",
-      "fr": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils.",
-      "es": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas.",
-      "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
-    },
-    "tutorial_processed_text_text": {
-      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
-      "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
-      "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
-      "ja": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
-      "zh": "处理后的文本将显示在这里。你可以选择文本的部分内容，在字典中进行查询。",
-      "it": "Il testo elaborato viene visualizzato qui. È possibile selezionare parti del testo per cercarle nel dizionario.",
-      "fr": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
-      "es": "El texto procesado se mostrará aquí. Puede seleccionar partes del texto para buscarlas en el diccionario.",
-      "pl": "Przetworzony tekst zostanie pokazany tutaj. Możesz zaznaczyć fragmenty tekstu, aby wyszukać je w słowniku."
-    },
-    "tutorial_processed_text_tap": {
-      "en": "A single tap will select a word.",
-      "de": "Durch einmaliges Antippen wird ein Wort ausgewählt.",
-      "ru": "Одним нажатием можно выбрать слово.",
-      "ja": "シングルタップで単語を選択します",
-      "zh": "点击一下就可以选择一个词。",
-      "it": "Con un solo tocco si seleziona una parola.",
-      "fr": "Une simple pression permet de sélectionner un mot.",
-      "es": "Un solo toque seleccionará una palabra.",
-      "pl": "Pojedyncze stuknięcie spowoduje zaznaczenie słowa."
-    },
-    "tutorial_processed_text_long_press": {
-      "en": "A long press will select a word and show the Part of Speech information.",
-      "de": "Durch langes Drücken wird ein Wort ausgewählt und die Wortartinformation angezeigt.",
-      "ru": "При длительном нажатии выбирается слово и отображается информация о части речи.",
-      "ja": "長押しで単語を選択すると、品詞が表示されます",
-      "zh": "长按会选择一个单词并显示语篇信息。",
-      "it": "Premendo a lungo si seleziona una parola e si visualizzano le informazioni sulla parte del discorso.",
-      "fr": "Une pression longue permet de sélectionner un mot et d'afficher les informations sur la partie du discours.",
-      "es": "Una pulsación larga seleccionará una palabra y mostrará la información de la parte de la oración.",
-      "pl": "Długie naciśnięcie zaznaczy słowo i pokaże informację o części mowy."
-    },
-    "tutorial_processed_text_double_tap": {
-      "en": "A double tap will select a sentence.",
-      "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
-      "ru": "Двойное нажатие позволяет выбрать предложение.",
-      "ja": "ダブルタップで文章を選択します",
-      "zh": "双击将选择一个句子。",
-      "it": "Con un doppio tocco si seleziona una frase.",
-      "fr": "Une double tape permet de sélectionner une phrase.",
-      "es": "Un doble toque seleccionará una frase.",
-      "pl": "Podwójne stuknięcie spowoduje zaznaczenie zdania."
-    },
-    "tutorial_processed_text_triple_tap": {
-      "en": "A triple tap will select a paragraph.",
-      "de": "Durch dreimaliges Antippen wird ein Absatz ausgewählt.",
-      "ru": "Тройное нажатие позволяет выбрать абзац.",
-      "ja": "トリプルタップで段落が選択されます",
-      "zh": "点击三下将选择一个段落。",
-      "it": "Un triplo tocco selezionerà un paragrafo.",
-      "fr": "Une triple tape permet de sélectionner un paragraphe.",
-      "es": "Un triple toque seleccionará un párrafo.",
-      "pl": "Potrójne stuknięcie powoduje zaznaczenie akapitu."
-    },
-    "tutorial_spaces_text": {
-      "en": "With this button spaces are added to the text.",
-      "de": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
-      "ru": "С помощью этой кнопки в текст добавляются пробелы.",
-      "ja": "テキストにスペースを追加します",
-      "zh": "有了这个按钮，就可以在文本中添加空格。",
-      "it": "Con questo pulsante vengono aggiunti spazi al testo.",
-      "fr": "Ce bouton permet d'ajouter des espaces au texte.",
-      "es": "Con este botón se añaden espacios al texto.",
-      "pl": "Za pomocą tego przycisku do tekstu dodawane są spacje."
-    },
-    "tutorial_furigana_text": {
-      "en": "This button adds furigana to the text.",
-      "de": "Diese Schaltfläche fügt Furigana über dem Text ein.",
-      "ru": "Эта кнопка добавляет фуригану в текст.",
-      "ja": "テキストにふりがなをつけます",
-      "zh": "这个按钮可以在文本中添加假名。",
-      "it": "Questo pulsante aggiunge i furigana al testo.",
-      "fr": "Ce bouton ajoute des furigana au texte.",
-      "es": "Este botón añade furigana al texto.",
-      "pl": "Ten przycisk dodaje furiganę do tekstu."
-    },
-    "tutorial_colors_text": {
-      "en": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
-      "de": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
-      "ru": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
-      "ja": "テキストの品詞を色別に表示します（色の意味は、マニュアルから確認できます）",
-      "zh": "这个按钮用不同的颜色显示文字的字样（颜色的含义可以在手册中看到）。",
-      "it": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
-      "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
-      "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
-      "pl": "Ten przycisk oznacza części mowy w tekscie różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
-    },
-    "tutorial_fullscreen_text": {
-      "en": "This button switches the processed text to full screen.",
-      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
-      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
-      "ja": "テキストをフルスクリーンに切り替えます",
-      "zh": "这个按钮将处理后的文本切换到全屏。",
-      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
-      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
-      "es": "Este botón cambia el texto procesado a pantalla completa.",
-      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
-    },
-    "pos_suffix": {
-      "en": "suffix",
-      "de": "Suffix",
-      "ja": "接尾辞",
-      "pl": "przyrostek"
-    },
-    "pos_na_adj": {
-      "en": "na-adjective",
-      "de": "na-Adjektiv",
-      "ja": "な形容詞",
-      "pl": "przymiotnik na-"
-    },
-    "pos_noun": {
-      "en": "noun",
-      "de": "Substantiv",
-      "ja": "名詞",
-      "pl": "rzeczownik"
-    },
-    "pos_prefix": {
-      "en": "prefix",
-      "de": "Präfix",
-      "ja": "接頭辞",
-      "pl": "przedrostek"
-    },
-    "pos_verb": {
-      "en": "verb",
-      "de": "Verb",
-      "ja": "動詞",
-      "pl": "czasownik"
-    },
-    "pos_i_adjective": {
-      "en": "i-adjective",
-      "de": "i-Adjektiv",
-      "ja": "い形容詞",
-      "pl": "przymiotnik i-"
-    },
-    "pos_adverb": {
-      "en": "adverb",
-      "de": "Adverb",
-      "ja": "副詞",
-      "pl": "przysłowek"
-    },
-    "pos_adnominal": {
-      "en": "adnominal",
-      "de": "Adnominal",
-      "ja": "連体詞",
-      "pl": "przydawka"
-    },
-    "pos_conjunction": {
-      "en": "conjunction",
-      "de": "Konjunktion",
-      "ja": "接続詞",
-      "pl": "spójnik"
-    },
-    "pos_particle": {
-      "en": "particle",
-      "de": "Partikel",
-      "ja": "助詞",
-      "pl": "partykuła"
-    },
-    "pos_auxillary_verb": {
-      "en": "auxilary verb",
-      "de": "Hilfsverb",
-      "ja": "助動詞",
-      "pl": "czasownik pomocniczy"
-    },
-    "pos_exclamation": {
-      "en": "exclamation",
-      "de": "Ausruf",
-      "ja": "感嘆詞",
-      "pl": "wykrzyknienie"
-    },
-    "pos_filler": {
-      "en": "filler",
-      "de": "Füller",
-      "ja": "つなぎ言葉",
-      "pl": "wypełniacz"
-    },
-    "pos_interjection": {
-      "en": "interjection",
-      "de": "Zwischenruf",
-      "ja": "間投詞",
-      "pl": "wyraz cząstkowy"
+    "tutorial_explanation": {
+      "en": "Just copy some text and DaKanji will show dictionary entries and more!",
+      "de": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
+      "ru": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
+      "ja": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
+      "zh": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
+      "it": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
+      "fr": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
+      "es": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
+      "pl": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!"
+    },
+    "tutorial_android_limitation": {
+      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. On iOS, you can allow DaKanji to read your clipboard in the settings. This way it will not always ask you to allow pasting. Sorry for the inconvenience.",
+      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Unter iOS können Sie DaKanji in den Einstellungen erlauben, Ihre Zwischenablage zu lesen. Auf diese Weise werden Sie nicht immer gefragt, ob Sie das Einfügen erlauben möchten. Entschuldigung für die Unannehmlichkeiten.",
+      "ru": "На Android этот экран не может автоматически считывать буфер обмена в фоновом режиме. Необходимо, чтобы приложение находилось на переднем плане. На iOS можно разрешить DaKanji считывать буфер обмена в настройках. В этом случае приложение не будет постоянно запрашивать разрешение на вставку. Приносим извинения за доставленные неудобства.",
+      "ja": "Androidでは、この画面はバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリをフォアグラウンドにする必要があります。iOSでは、設定でクリップボードの読み取りを許可することができます。iOSの場合、設定でクリップボードの読み取りを許可することができます。ご迷惑をおかけして申し訳ありません。",
+      "zh": "在安卓系统中，该屏幕无法在后台自动读取剪贴板。您需要将应用程序置于前台。在 iOS 上，你可以在设置中允许 DaKanji 读取剪贴板。这样，它就不会总是要求您允许粘贴。很抱歉给您带来不便。",
+      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Su iOS, è possibile consentire a DaKanji di leggere gli appunti nelle impostazioni. In questo modo non vi chiederà sempre di autorizzare l'incollaggio. Ci scusiamo per l'inconveniente.",
+      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. Vous devez avoir l'application au premier plan. Sur iOS, vous pouvez autoriser DaKanji à lire votre presse-papiers dans les paramètres. Ainsi, il ne vous demandera pas toujours d'autoriser le collage. Désolé pour la gêne occasionnée.",
+      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. En iOS, puedes permitir que DaKanji lea tu portapapeles en los ajustes. De esta forma no te pedirá siempre que permitas pegar. Disculpa las molestias.",
+      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi być uruchomiona na pierwszym planie. W systemie iOS można zezwolić DaKanji na odczytywanie schowka w ustawieniach. W ten sposób nie będzie zawsze pytać o zgodę na wklejanie. Przepraszamy za niedogodności."
+    },
+    "tutorial_pin_button": {
+      "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
+      "de": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
+      "ru": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
+      "ja": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
+      "zh": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
+      "it": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
+      "fr": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
+      "es": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
+      "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
     }
   },
   "DictionaryScreen": {
@@ -3218,28 +1238,28 @@ static const Map<String,dynamic> localizations = {
       "pl": "Na koniec w zakładkach przykłady pokazane są przykładowe zdania, w których użyto wybranego słowa."
     }
   },
-  "ClipboardScreen": {
+  "DojgScreen": {
     "title": {
-      "en": "Clipboard",
-      "de": "Zwischenablage",
-      "ru": "Буфер обмена",
-      "ja": "クリップボード",
-      "zh": "剪贴板",
-      "it": "Appunti",
-      "fr": "Presse-papiers",
-      "es": "Portapapeles",
-      "pl": "Schowek"
+      "en": "DoJG",
+      "de": "DoJG",
+      "ru": "DoJG",
+      "ja": "DoJG",
+      "zh": "DoJG",
+      "it": "DoJG",
+      "fr": "DoJG",
+      "es": "DoJG",
+      "pl": "DoJG"
     },
     "tutorial_begin_title": {
-      "en": "Welcome to the clipboard screen!",
-      "de": "Willkommen auf dem Bildschirm der Zwischenablage!",
-      "ru": "Добро пожаловать на экран буфера обмена!",
-      "ja": "クリップボード画面へようこそ！",
-      "zh": "欢迎来到剪贴板屏幕!",
-      "it": "Benvenuti nella schermata degli appunti!",
-      "fr": "Bienvenue dans l'écran du presse-papiers !",
-      "es": "Bienvenido a la pantalla del portapapeles",
-      "pl": "Witamy na ekranie schowka!"
+      "en": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+      "de": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
+      "ru": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
+      "ja": "日本語文法辞典（DoJG）の画面へようこそ！",
+      "zh": "欢迎访问《日语语法词典》（DoJG）屏幕！",
+      "it": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
+      "fr": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
+      "es": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
+      "pl": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
@@ -3252,38 +1272,2040 @@ static const Map<String,dynamic> localizations = {
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     },
-    "tutorial_explanation": {
-      "en": "Just copy some text and DaKanji will show dictionary entries and more!",
-      "de": "Kopieren Sie einfach einen Text und DaKanji zeigt Wörterbucheinträge und mehr!",
-      "ru": "Просто скопируйте текст, и DaKanji покажет словарные статьи и многое другое!",
-      "ja": "テキストをコピーするだけで、大漢字は辞書の項目などを表示します！",
-      "zh": "只要复制一些文字，DaKanji就会显示字典条目和更多的内容!",
-      "it": "Basta copiare un testo e DaKanji mostrerà le voci del dizionario e molto altro!",
-      "fr": "Copiez simplement un texte et DaKanji affichera les entrées du dictionnaire et bien plus encore !",
-      "es": "Sólo tienes que copiar un texto y DaKanji te mostrará las entradas del diccionario y mucho más.",
-      "pl": "Wystarczy skopiować tekst, a DaKanji wyświetli hasła słownikowe i nie tylko!"
+    "refer_to_manual": {
+      "en": "For details refer to the manual",
+      "de": "Einzelheiten finden Sie im Handbuch",
+      "ru": "Более подробная информация приведена в руководстве",
+      "ja": "詳細はマニュアルを参照",
+      "zh": "详情请参阅手册",
+      "it": "Per i dettagli, consultare il manuale",
+      "fr": "Pour plus de détails, voir le manuel",
+      "es": "Para más detalles, consulte el manual",
+      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
     },
-    "tutorial_android_limitation": {
-      "en": "On Android, this screen cannot automatically read your clipboard in the background. You need to have the app in the foreground. On iOS, you can allow DaKanji to read your clipboard in the settings. This way it will not always ask you to allow pasting. Sorry for the inconvenience.",
-      "de": "Unter Android kann dieser Bildschirm Ihre Zwischenablage nicht automatisch im Hintergrund lesen. Sie müssen die App im Vordergrund haben. Unter iOS können Sie DaKanji in den Einstellungen erlauben, Ihre Zwischenablage zu lesen. Auf diese Weise werden Sie nicht immer gefragt, ob Sie das Einfügen erlauben möchten. Entschuldigung für die Unannehmlichkeiten.",
-      "ru": "На Android этот экран не может автоматически считывать буфер обмена в фоновом режиме. Необходимо, чтобы приложение находилось на переднем плане. На iOS можно разрешить DaKanji считывать буфер обмена в настройках. В этом случае приложение не будет постоянно запрашивать разрешение на вставку. Приносим извинения за доставленные неудобства.",
-      "ja": "Androidでは、この画面はバックグラウンドでクリップボードを自動的に読み取ることはできません。アプリをフォアグラウンドにする必要があります。iOSでは、設定でクリップボードの読み取りを許可することができます。iOSの場合、設定でクリップボードの読み取りを許可することができます。ご迷惑をおかけして申し訳ありません。",
-      "zh": "在安卓系统中，该屏幕无法在后台自动读取剪贴板。您需要将应用程序置于前台。在 iOS 上，你可以在设置中允许 DaKanji 读取剪贴板。这样，它就不会总是要求您允许粘贴。很抱歉给您带来不便。",
-      "it": "Su Android, questa schermata non può leggere automaticamente gli appunti in background. È necessario che l'app sia in primo piano. Su iOS, è possibile consentire a DaKanji di leggere gli appunti nelle impostazioni. In questo modo non vi chiederà sempre di autorizzare l'incollaggio. Ci scusiamo per l'inconveniente.",
-      "fr": "Sur Android, cet écran ne peut pas lire automatiquement votre presse-papiers en arrière-plan. Vous devez avoir l'application au premier plan. Sur iOS, vous pouvez autoriser DaKanji à lire votre presse-papiers dans les paramètres. Ainsi, il ne vous demandera pas toujours d'autoriser le collage. Désolé pour la gêne occasionnée.",
-      "es": "En Android, esta pantalla no puede leer automáticamente el portapapeles en segundo plano. Necesitas tener la aplicación en primer plano. En iOS, puedes permitir que DaKanji lea tu portapapeles en los ajustes. De esta forma no te pedirá siempre que permitas pegar. Disculpa las molestias.",
-      "pl": "W systemie Android ekran ten nie może automatycznie odczytywać schowka w tle. Aplikacja musi być uruchomiona na pierwszym planie. W systemie iOS można zezwolić DaKanji na odczytywanie schowka w ustawieniach. W ten sposób nie będzie zawsze pytać o zgodę na wklejanie. Przepraszamy za niedogodności."
+    "import_dojg": {
+      "en": "Tap to import the DoJG Deck",
+      "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+      "ru": "Нажмите, чтобы импортировать DoJG Deck",
+      "ja": "タップしてDoJGデッキをインポートする",
+      "zh": "点按导入 DoJG 资料集",
+      "it": "Toccare per importare il mazzo DoJG",
+      "fr": "Tapez pour importer le Deck DoJG",
+      "es": "Pulse para importar la cubierta DoJG",
+      "pl": "Stuknij, aby zaimportować DoJG Deck"
+    }
+  },
+  "DrawScreen": {
+    "tutorial_begin_title": {
+      "en": "Welcome to the drawing recognition!",
+      "de": "Wilkommen zu der Zeichenerkennung!",
+      "ru": "Добро пожаловать на распознавание рисунка!",
+      "ja": "漢字を探すへようこそ!",
+      "zh": "欢迎大家对绘画的认可!",
+      "it": "Benvenuti al riconoscimento del disegno!",
+      "fr": "Bienvenue à la reconnaissance du dessin !",
+      "es": "Bienvenido al reconocimiento por dibujo!",
+      "pl": "Witaj do rozpoznawania pisma!"
     },
-    "tutorial_pin_button": {
-      "en": "This button makes DaKanji show always on top of other windows. Additionally, the size is reduced and the frame and appbar are hidden. With this DaKanji can be used as a reading aid over any other application.",
-      "de": "Diese Schaltfläche bewirkt, dass DaKanji immer über anderen Fenstern angezeigt wird. Zusätzlich wird die Größe reduziert und der Rahmen und die Anwendungsleiste werden ausgeblendet. Damit kann DaKanji als Lesehilfe über jeder anderen Anwendung verwendet werden.",
-      "ru": "Эта кнопка заставляет DaKanji отображаться всегда поверх других окон. Кроме того, размер уменьшается, а рамка и панель приложений скрываются. Благодаря этому DaKanji можно использовать в качестве помощника для чтения поверх любого другого приложения.",
-      "ja": "このボタンを押すと、大漢字が他のウィンドウの上に常に表示されるようになります。また、フレームとアプリバーが非表示になり、サイズが小さくなります。これにより、大漢字は他のアプリケーションの上に表示され、読書補助として使用することができます。",
-      "zh": "这个按钮使DaKanji总是显示在其他窗口的上面。此外，尺寸被缩小，框架和应用栏被隐藏。有了这个按钮，《大汉字》就可以在任何其他应用程序上作为阅读辅助工具。",
-      "it": "Questo pulsante fa sì che DaKanji venga visualizzato sempre sopra le altre finestre. Inoltre, le dimensioni sono ridotte e la cornice e la barra delle applicazioni sono nascoste. In questo modo DaKanji può essere utilizzato come ausilio per la lettura sopra qualsiasi altra applicazione.",
-      "fr": "Ce bouton permet d'afficher DaKanji toujours au-dessus des autres fenêtres. De plus, la taille est réduite et le cadre et la barre d'application sont cachés. Grâce à cela, DaKanji peut être utilisé comme aide à la lecture au-dessus de n'importe quelle autre application.",
-      "es": "Este botón hace que DaKanji se muestre siempre encima de otras ventanas. Además, se reduce el tamaño y se ocultan el marco y la barra de aplicaciones. Con esto DaKanji puede ser utilizado como ayuda a la lectura sobre cualquier otra aplicación.",
-      "pl": "Ten przycisk sprawia, że DaKanji jest zawsze wyświetlane nad innymi oknami. Dodatkowo, rozmiar jest zmniejszony, a ramka i pasek aplikacji są ukryte. Dzięki temu DaKanji może być używane jako pomoc w czytaniu nad dowolną inną aplikacją."
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_begin_continue": {
+      "en": "Tap to continue...",
+      "de": "Berühre, um fortzufahren...",
+      "ru": "Нажмите, чтобы продолжить...",
+      "ja": "タップして続ける...",
+      "zh": "点击继续...",
+      "it": "Toccare per continuare...",
+      "fr": "Tapez pour continuer...",
+      "es": "Toca para continuar...",
+      "pl": "Kliknij aby kontynuować..."
+    },
+    "tutorial_clear": {
+      "en": "Erases all strokes",
+      "de": "Lösche all Striche",
+      "ru": "Стирает все штрихи",
+      "ja": "全て消去します",
+      "zh": "擦除所有笔画",
+      "it": "Cancella tutti i tratti",
+      "fr": "Efface tous les traits",
+      "es": "Borrar todos los trazos",
+      "pl": "Wyczyść wszystkie linie"
+    },
+    "tutorial_double_tap_prediction": {
+      "en": "A Double Tap adds the character to the search box",
+      "de": "Tippe doppelt um das Zeichen der Suchbox hinzuzufügen",
+      "ru": "Двойное нажатие добавляет символ в поле поиска",
+      "ja": "ダブルタップで文字を検索ボックスに追加できます",
+      "zh": "双击将该字符添加到搜索框中",
+      "it": "Un doppio tocco aggiunge il carattere alla casella di ricerca.",
+      "fr": "Un double tapotement ajoute le caractère au champ de recherche.",
+      "es": "Tocar dos veces para añadir el caracter a la barra de busqueda",
+      "pl": "Podwójne kliknięcie dodaje znak do pola wyszukiwania"
+    },
+    "tutorial_drawing": {
+      "en": "Draw a character here",
+      "de": "Male ein Zeichen hier",
+      "ru": "Нарисуйте персонажа здесь",
+      "ja": "ここに文字を手書きしてください",
+      "zh": "在这里画一个人物",
+      "it": "Disegnare un personaggio qui",
+      "fr": "Dessinez un personnage ici",
+      "es": "Dibuja un caracter aquí",
+      "pl": "Tutaj namaluj znak"
+    },
+    "tutorial_long_press_prediction": {
+      "en": "A long press opens the prediction in a dictionary",
+      "de": "Lange auf eine Vorhersage drücken öffnet sie in einem Wörterbuch",
+      "ru": "Длительное нажатие открывает предсказание в словаре",
+      "ja": "長押しで予測文字を辞書で閲覧できます",
+      "zh": "长按可打开字典中的预测信息",
+      "it": "Una pressione prolungata apre la previsione in un dizionario.",
+      "fr": "Une pression longue ouvre la prédiction dans un dictionnaire.",
+      "es": "Una pulsación larga abre la predicción en un diccionario",
+      "pl": "Przytrzymanie otwiera predykcję w słowniku"
+    },
+    "tutorial_multi_search_double_tap": {
+      "en": "A double tap empties the field",
+      "de": "Doppelt auf das Feld zutippen löscht den Inhalt",
+      "ru": "Двойное нажатие опустошает поле",
+      "ja": "ダブルタップで検索ボックスを空にできます",
+      "zh": "双击就会清空该区域",
+      "it": "Un doppio tocco svuota il campo",
+      "fr": "Un double tapotement vide le champ",
+      "es": "Una pulsación doble vacía el campo",
+      "pl": "Podwójne kliknięcie wymazuje znak"
+    },
+    "tutorial_multi_search_long_press": {
+      "en": "A long press opens the characters in a dictionary",
+      "de": "Lange auf die Suchbox zu klicken öffnet sie in einem Wörterbuch",
+      "ru": "Длительное нажатие открывает символы в словаре",
+      "ja": "長押しで辞書が開きます",
+      "zh": "长按可以打开字典中的字符",
+      "it": "Una pressione prolungata apre i caratteri di un dizionario",
+      "fr": "Un appui long ouvre les caractères d'un dictionnaire",
+      "es": "Una pulsación larga abre los caracteres en un diccionario",
+      "pl": "Przytrzymanie otwiera zawartość w słowniku"
+    },
+    "tutorial_multi_search_short_press": {
+      "en": "A short press copies the characters to the clipboard",
+      "de": "Kurz auf die Suchbox zu drücken kopiert die Zeichen in den Zwischenspeicher",
+      "ru": "Короткое нажатие копирует символы в буфер обмена",
+      "ja": "タップで文字をクリップボードにコピーできます",
+      "zh": "短暂的按下，将字符复制到剪贴板上",
+      "it": "Premendo brevemente si copiano i caratteri negli appunti.",
+      "fr": "Une pression courte permet de copier les caractères dans le presse-papiers.",
+      "es": "Una pulsación breve copia los caracteres al porta papeles",
+      "pl": "Kliknięcie kopiuje znak"
+    },
+    "tutorial_multi_search_swipe_left": {
+      "en": "Swiping left on this field deletes the last character",
+      "de": "Links auf der Suchbox zu swipen löscht das letzte Zeichen",
+      "ru": "Свайп влево на этом поле удаляет последний символ",
+      "ja": "左スワイプで、最後の文字が削除されます",
+      "zh": "在这个字段上向左滑动，会删除最后一个字符",
+      "it": "Passando il dito a sinistra su questo campo si cancella l'ultimo carattere.",
+      "fr": "En glissant vers la gauche sur ce champ, vous supprimez le dernier caractère.",
+      "es": "Deslizar a la izquierda para borrar el último caracter",
+      "pl": "Przesunięcie w lewo usuwa ostatni znak"
+    },
+    "tutorial_multi_search": {
+      "en": "Here you can search multiple characters at once",
+      "de": "Mit dieser Suchbox können mehrere Zeichen auf einmal gesucht werden",
+      "ru": "Здесь вы можете искать сразу несколько символов",
+      "ja": "複数の文字を一度に検索することもできます",
+      "zh": "在这里，你可以一次搜索多个字符",
+      "it": "Qui è possibile cercare più caratteri contemporaneamente",
+      "fr": "Ici, vous pouvez rechercher plusieurs caractères à la fois",
+      "es": "Aquí puedes buscar buscar mutiples caracteres a la vez",
+      "pl": "Tutaj możesz wyszukiwać wiele znaków na raz"
+    },
+    "tutorial_predictions": {
+      "en": "The predicted characters will be shown here",
+      "de": "Die vorhergesagten Zeichen werden hier angezeigt",
+      "ru": "Предсказанные символы будут показаны здесь",
+      "ja": "ここに予測が表示されます",
+      "zh": "预测的字符将显示在这里",
+      "it": "I caratteri previsti saranno mostrati qui",
+      "fr": "Les caractères prédits seront affichés ici",
+      "es": "Las predicciones se mostrarán aquí",
+      "pl": "Przewidywane znaki dostępne będą tutaj"
+    },
+    "tutorial_short_press_prediction": {
+      "en": "A short press copies the prediction",
+      "de": "Einmal kurz drücken kopiert das vorhergesagte Zeichen",
+      "ru": "Короткое нажатие копирует предсказание",
+      "ja": "タップで予測文字をコピーできます",
+      "zh": "短暂的按语复制了预测的内容",
+      "it": "Una breve pressione copia la previsione",
+      "fr": "Une courte presse copie la prédiction",
+      "es": "Una pulsación breve copia la predicción",
+      "pl": "Kliknięcie kopiuje znak"
+    },
+    "tutorial_skip": {
+      "en": "SKIP",
+      "de": "ÜBERSPRINGEN",
+      "ru": "ПРОПУСК",
+      "ja": "スキップ",
+      "zh": "撇开",
+      "it": "SALTA",
+      "fr": "SKIP",
+      "es": "OMITIR",
+      "pl": "POMIŃ"
+    },
+    "tutorial_undo": {
+      "en": "Press to undo the last stroke",
+      "de": "Macht den letzten Strich rückgängig",
+      "ru": "Нажмите, чтобы отменить последний штрих",
+      "ja": "一画前に戻ります",
+      "zh": "按下撤消最后一笔",
+      "it": "Premere per annullare l'ultima pennellata",
+      "fr": "Appuyez pour annuler le dernier trait",
+      "es": "Presiona para deshacer el último trazo",
+      "pl": "Kliknij aby cofnąć ostatnie pociągnięcie"
+    },
+    "tutorial_dictionary_settings": {
+      "en": "In the settings the translation service can be chosen",
+      "de": "In den Einstellung kann die Methode zum übersetzen gewählt werden",
+      "ru": "В настройках можно выбрать службу перевода",
+      "ja": "設定から辞書サービスを選択することができます",
+      "zh": "在设置中，可以选择翻译服务",
+      "it": "Nelle impostazioni è possibile scegliere il servizio di traduzione",
+      "fr": "Dans les paramètres, le service de traduction peut être choisi",
+      "es": "En los ajustes puedes seleccionar el servicio de traducción",
+      "pl": "W ustawieniach możliwe jest wybranie usługi tłumaczenia"
+    },
+    "title": {
+      "en": "Drawing",
+      "de": "Zeichnen",
+      "ru": "Рисование",
+      "ja": "漢字を探す",
+      "zh": "绘图",
+      "it": "Disegno",
+      "fr": "Dessin",
+      "es": "Dibujo",
+      "pl": "Obraz"
+    },
+    "not_installed": {
+      "en": "{DICTIONARY} not installed",
+      "de": "{DICTIONARY} nicht installiert",
+      "ru": "{DICTIONARY} не установлен",
+      "ja": "{DICTIONARY}はインストールされていません",
+      "zh": "未安装{DICTIONARY}。",
+      "it": "{DICTIONARY} non installato",
+      "fr": "{DICTIONARY} non installé",
+      "es": "{DICTIONARY} no instalado",
+      "pl": "{DICTIONARY} nie zainstalowany"
+    }
+  },
+  "FeedbackScreen": {
+    "title": {
+      "en": "Feedback",
+      "de": "Feedback",
+      "ru": "Обратная связь",
+      "ja": "フィードバック",
+      "zh": "反馈信息",
+      "it": "Feedback",
+      "fr": "Commentaires",
+      "es": "Comentarios",
+      "pl": "Opinia"
+    },
+    "draw": {
+      "en": "draw",
+      "de": "zeichnen",
+      "ru": "нарисовать",
+      "ja": "注釈",
+      "zh": "绘制",
+      "it": "sorteggio",
+      "fr": "dessiner",
+      "es": "dibujar",
+      "pl": "rysuj"
+    },
+    "feedback_description_text": {
+      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+      "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
+      "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
+      "ja": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
+      "zh": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
+      "it": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
+      "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
+      "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
+      "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
+    },
+    "navigate": {
+      "en": "navigate",
+      "de": "Navigieren",
+      "ru": "перейдите по ссылке",
+      "ja": "操作",
+      "zh": "导航",
+      "it": "navigare",
+      "fr": "naviguer sur",
+      "es": "navegue por",
+      "pl": "nawigacja"
+    },
+    "submit": {
+      "en": "submit",
+      "de": "Absenden",
+      "ru": "отправить",
+      "ja": "送信",
+      "zh": "提交",
+      "it": "Invia",
+      "fr": "envoyer",
+      "es": "enviar",
+      "pl": "wyślij"
+    }
+  },
+  "General": {
+    "app": {
+      "en": "app",
+      "de": "App",
+      "ru": "приложение",
+      "ja": "アプリ",
+      "zh": "应用程序",
+      "it": "app",
+      "fr": "application",
+      "es": "aplicación",
+      "pl": "aplikacja"
+    },
+    "close": {
+      "en": "Close",
+      "de": "Schließen",
+      "ru": "Закрыть",
+      "ja": "閉じる",
+      "zh": "关闭",
+      "it": "Chiudere",
+      "fr": "Fermer",
+      "es": "Cerrar",
+      "pl": "Zamknij"
+    },
+    "dark": {
+      "en": "dark",
+      "de": "Dunkel",
+      "ru": "темный",
+      "ja": "ダーク",
+      "zh": "黑",
+      "it": "scuro",
+      "fr": "sombre",
+      "es": "oscuro",
+      "pl": "ciemny"
+    },
+    "light": {
+      "en": "light",
+      "de": "Hell",
+      "ru": "свет",
+      "ja": "ライト",
+      "zh": "光",
+      "it": "luce",
+      "fr": "lumière",
+      "es": "claro",
+      "pl": "jasny"
+    },
+    "system": {
+      "en": "system",
+      "de": "System",
+      "ru": "система",
+      "ja": "システム",
+      "zh": "系统",
+      "it": "sistema",
+      "fr": "système",
+      "es": "sistema",
+      "pl": "system"
+    },
+    "web": {
+      "en": "web",
+      "de": "Web",
+      "ru": "веб-сайт",
+      "ja": "ウェブ",
+      "zh": "网络",
+      "it": "web",
+      "fr": "web",
+      "es": "web",
+      "pl": "web"
+    },
+    "language": {
+      "en": "language",
+      "de": "Sprache",
+      "ru": "язык",
+      "ja": "言語",
+      "zh": "语言",
+      "it": "lingua",
+      "fr": "langue",
+      "es": "idioma",
+      "pl": "język"
+    },
+    "next": {
+      "en": "next",
+      "de": "Weiter",
+      "ru": "следующий",
+      "ja": "次",
+      "zh": "下一个",
+      "it": "prossimo",
+      "fr": "suivant",
+      "es": "siguiente",
+      "pl": "następny"
+    },
+    "skip": {
+      "en": "skip",
+      "de": "Überspingen",
+      "ru": "пропустить",
+      "ja": "スキップ",
+      "zh": "跳过",
+      "it": "saltare",
+      "fr": "sauter",
+      "es": "omitir",
+      "pl": "pomiń"
+    },
+    "download": {
+      "en": "download",
+      "de": "herunterladen",
+      "ru": "скачать",
+      "ja": "ダウンロード",
+      "zh": "下载",
+      "it": "scaricare",
+      "fr": "télécharger",
+      "es": "descargar",
+      "pl": "pobierz"
+    }
+  },
+  "HomeScreen": {
+    "RatePopup_dont_ask_again": {
+      "en": "Don't ask again",
+      "de": "Frag nicht nochmal",
+      "ru": "Не спрашивай больше",
+      "ja": "二度と表示しない",
+      "zh": "不要再问了",
+      "it": "Non chiedetelo più",
+      "fr": "Ne demandez pas à nouveau",
+      "es": "No vuelvas a preguntar",
+      "pl": "Nie pytaj ponownie."
+    },
+    "RatePopup_text": {
+      "en": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
+      "de": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
+      "ru": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
+      "ja": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
+      "zh": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
+      "it": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
+      "fr": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
+      "es": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
+      "pl": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!"
+    },
+    "complete_log": {
+      "en": "complete log",
+      "de": "vollständiges Log",
+      "ru": "полный журнал",
+      "ja": "全てのログ",
+      "zh": "完整日志",
+      "it": "registro completo",
+      "fr": "journal complet",
+      "es": "registro completo",
+      "pl": "pełny rejestr"
+    },
+    "whats_new": {
+      "en": "what's new",
+      "de": "Was gibt's neues",
+      "ru": "что нового",
+      "ja": "最新情報",
+      "zh": "最新信息",
+      "it": "cosa c'è di nuovo",
+      "fr": "Quoi de neuf ?",
+      "es": "qué hay de nuevo",
+      "pl": "co nowego"
+    },
+    "rate_this_app": {
+      "en": "Rate",
+      "de": "Bewerte",
+      "ru": "Тариф",
+      "ja": "評価",
+      "zh": "速率",
+      "it": "Tasso",
+      "fr": "Taux",
+      "es": "Calificar",
+      "pl": "Oceń"
+    },
+    "download_popup_permission": {
+      "en": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
+      "de": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
+      "ru": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
+      "ja": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
+      "zh": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
+      "it": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
+      "fr": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
+      "es": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
+      "pl": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania."
+    },
+    "download_failed_popup_retry": {
+      "en": "Retry",
+      "de": "Wiederholung",
+      "ru": "Повторная попытка",
+      "ja": "再試行",
+      "zh": "重试",
+      "it": "Riprova",
+      "fr": "Réessayer",
+      "es": "Reintentar",
+      "pl": "Ponów"
+    },
+    "download_failed_popup_text": {
+      "en": "Download failed, please assure that you have a stable internet connection.",
+      "de": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
+      "ru": "Загрузка не удалась, пожалуйста, убедитесь, что у вас стабильное интернет-соединение.",
+      "ja": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
+      "zh": "下载失败，请确保你有一个稳定的网络连接。",
+      "it": "Il download non è riuscito, assicurarsi di avere una connessione internet stabile.",
+      "fr": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
+      "es": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
+      "pl": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe."
+    },
+    "new_version_available_heading": {
+      "en": "New version Available!",
+      "de": "Neue Version verfügbar!",
+      "ru": "Доступна новая версия!",
+      "ja": "新バージョンを公開しました！",
+      "zh": "新版本上市!",
+      "it": "Nuova versione disponibile!",
+      "fr": "Nouvelle version disponible !",
+      "es": "Nueva versión disponible",
+      "pl": "Nowa wersja dostępna!"
+    },
+    "new_versions_available_text": {
+      "en": "There are {NEW_VERSIONS} new versions of DaKanji available!",
+      "de": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
+      "ru": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
+      "ja": "Dakanjiの{NEW_VERSIONS}新バージョンを公開しました！",
+      "zh": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
+      "it": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
+      "fr": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
+      "es": "#ERROR!",
+      "pl": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!"
+    },
+    "new_version_available_text": {
+      "en": "There is a new version of DaKanji available!",
+      "de": "Es ist eine neue Version von DaKanji verfügbar!",
+      "ru": "Вышла новая версия DaKanji!",
+      "ja": "Dakanjiの新バージョンを公開しました！",
+      "zh": "大汉字》有了新的版本!",
+      "it": "È disponibile una nuova versione di DaKanji!",
+      "fr": "#ERROR!",
+      "es": "¡Hay una nueva versión de DaKanji disponible!",
+      "pl": "Dostępna jest nowa wersja DaKanji!"
+    },
+    "new_version_comparison": {
+      "en": "You are running {VERSION_NUMBER}, the newest version is {NEW_VERSION_NUMBER}",
+      "de": "Sie verwenden {VERSION_NUMBER}, die neueste Version ist {NEW_VERSION_NUMBER}",
+      "ru": "Вы используете {VERSION_NUMBER}, самая новая версия - {NEW_VERSION_NUMBER}.",
+      "ja": "現在{VERSION_NUMBER}をお使いですが、最新バージョンは{NEW_VERSION_NUMBER}です。",
+      "zh": "你正在运行{VERSION_NUMBER}，最新的版本是{NEW_VERSION_NUMBER}。",
+      "it": "Si sta eseguendo {NUMERO_VERSIONE}, la versione più recente è {NUMERO_NEW_VERSION}.",
+      "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
+      "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
+      "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
+    }
+  },
+  "KanjiTableScreen": {
+    "title": {
+      "en": "Kanji Table",
+      "de": "Kanji Tabelle",
+      "ru": "Таблица кандзи",
+      "ja": "漢字表",
+      "zh": "汉字表",
+      "it": "Tabella Kanji",
+      "fr": "Tableau des Kanji",
+      "es": "Tabla de Kanji",
+      "pl": "Tabela kanji"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kanji table screen!",
+      "de": "Willkommen zu den Kanji-Tabellen!",
+      "ru": "Добро пожаловать на экран таблицы кандзи!",
+      "ja": "漢字表画面へようこそ！",
+      "zh": "欢迎来到汉字表屏幕！",
+      "it": "Benvenuti nella schermata della tabella dei kanji!",
+      "fr": "Bienvenue sur l'écran de la table des kanji !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kanji!",
+      "pl": "Witamy na ekranie tabeli kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kanjis": {
+      "en": "This screen shows you a table of kanji matching different settings. Tapping on one of the kanji will show its details.",
+      "de": "Dieser Bildschirm zeigt Ihnen eine Tabelle mit Kanji, die verschiedenen Einstellungen entsprechen. Tippen Sie auf eines der Kanji, um dessen Details anzuzeigen.",
+      "ru": "На этом экране отображается таблица кандзи, соответствующих различным настройкам. При нажатии на один из кандзи отображается его подробная информация.",
+      "ja": "ここでは、さまざまな設定にマッチした漢字の表が表示されます。漢字をタップすると、その漢字の詳細をご覧になれます。",
+      "zh": "该屏幕显示与不同设置匹配的汉字表。点击其中一个汉字将显示其详细信息。",
+      "it": "Questa schermata mostra una tabella di kanji corrispondenti a diverse impostazioni. Toccando uno dei kanji se ne visualizzano i dettagli.",
+      "fr": "Cet écran affiche un tableau de kanji correspondant à différents paramètres. En tapant sur l'un des kanji, vous obtiendrez des informations détaillées.",
+      "es": "Esta pantalla te muestra una tabla de kanji que corresponden a diferentes configuraciones. Al pulsar sobre uno de los kanji se mostrarán sus detalles.",
+      "pl": "Ten ekran wyświetla tabelę kanji pasujących do różnych ustawień. Stuknięcie jednego z kanji spowoduje wyświetlenie jego szczegółów."
+    },
+    "tutorial_filter": {
+      "en": "This dropdown lets you select a way of filtering Kanji.",
+      "de": "In dieser Dropdown-Liste können Sie eine Kategorie von Kanji auswählen, die angezeigt werden soll.",
+      "ru": "В этом выпадающем списке можно выбрать категорию кандзи, которая должна быть показана.",
+      "ja": "このドロップダウンで、表示する漢字のカテゴリーを選択できます。",
+      "zh": "通过该下拉菜单，您可以选择应显示的汉字类别。",
+      "it": "Questo menu a tendina consente di selezionare una categoria di kanji da visualizzare.",
+      "fr": "Cette liste déroulante vous permet de sélectionner une catégorie de kanji à afficher.",
+      "es": "Este menú desplegable te permite seleccionar la categoría de kanji que debe mostrarse.",
+      "pl": "Ta lista rozwijana pozwala wybrać kategorię kanji, które mają być wyświetlane."
+    },
+    "tutorial_filter_sub_group": {
+      "en": "This menu lets you select a sub-filter corresponding to the selection in the previous menu.",
+      "de": "In diesem Menü können Sie einen Unterfilter auswählen, der der Auswahl im vorherigen Menü entspricht.",
+      "ru": "В этом меню можно выбрать подфильтр, соответствующий выбору в предыдущем меню.",
+      "ja": "このメニューでは、前のメニューで選択したものに対応するサブフィルターを選択することができる。",
+      "zh": "通过该菜单，您可以选择与上一个菜单中的选择相对应的子滤波器。",
+      "it": "Questo menu consente di selezionare un sottofiltro corrispondente alla selezione effettuata nel menu precedente.",
+      "fr": "Ce menu permet de sélectionner un sous-filtre correspondant à la sélection du menu précédent.",
+      "es": "Este menú le permite seleccionar un subfiltro correspondiente a la selección del menú anterior.",
+      "pl": "To menu pozwala wybrać filtr podrzędny odpowiadający wyborowi w poprzednim menu."
+    },
+    "tutorial_sort": {
+      "en": "This dropdown lets you select an order for the shown kanji.",
+      "de": "In dieser Dropdown-Liste können Sie eine Reihenfolge für die angezeigten Kanji auswählen.",
+      "ru": "В этом выпадающем списке можно выбрать порядок отображения кандзи.",
+      "ja": "このドロップダウンメニューでは、表示されている漢字の順序を選択することができます。",
+      "zh": "通过该下拉菜单，您可以为显示的汉字选择一个顺序。",
+      "it": "Questo menu a tendina consente di selezionare un ordine per i kanji visualizzati.",
+      "fr": "Cette liste déroulante vous permet de sélectionner un ordre pour les kanji affichés.",
+      "es": "Este desplegable te permite seleccionar un orden para los kanji mostrados.",
+      "pl": "Ta lista rozwijana pozwala wybrać kolejność dla wyświetlanego kanji."
+    },
+    "tutorial_kanji_amount": {
+      "en": "This number indicates how many kanji are currently being shown.",
+      "de": "Diese Zahl gibt an, wie viele Kanji gerade angezeigt werden.",
+      "ru": "Это число показывает, сколько кандзи отображается в данный момент.",
+      "ja": "現在表示されている漢字の数を示します",
+      "zh": "该数字表示当前显示的汉字数量。",
+      "it": "Questo numero indica il numero di kanji attualmente visualizzati.",
+      "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
+      "es": "Este número indica cuántos kanji se están mostrando actualmente.",
+      "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
+    }
+  },
+  "KanjiTrainerScreen": {
+    "title": {
+      "en": "Kanji Trainer",
+      "de": "Kanji Trainer",
+      "ru": "Тренажер по кандзи",
+      "ja": "漢字トレーナー",
+      "zh": "汉字训练器",
+      "it": "Allenatore di kanji",
+      "fr": "Entraîneur de kanji",
+      "es": "Entrenador de Kanji",
+      "pl": "Kanji Trainer"
+    }
+  },
+  "KanaTrainerScreen": {
+    "title": {
+      "en": "Kana Trainer",
+      "de": "Kana Trainer",
+      "ru": "Инструктор Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
+    }
+  },
+  "KanaTableScreen": {
+    "title": {
+      "en": "Kana Table",
+      "de": "Kana Tabelle",
+      "ru": "Стол Kana",
+      "ja": "かな一覧表",
+      "zh": "卡纳桌",
+      "it": "Tavolo Kana",
+      "fr": "Table Kana",
+      "es": "Mesa Kana",
+      "pl": "Stół Kana"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kana table screen!",
+      "de": "Willkommen auf dem Bildschirm der Kana-Tabelle!",
+      "ru": "Добро пожаловать на экран таблицы kana!",
+      "ja": "かな一覧表画面へようこそ！",
+      "zh": "欢迎来到假名表屏幕！",
+      "it": "Benvenuti nella schermata della tavola kana!",
+      "fr": "Bienvenue sur l'écran de la table kana !",
+      "es": "¡Bienvenido a la pantalla de la tabla de kana!",
+      "pl": "Witamy na ekranie tabeli kana!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_kana_table": {
+      "en": "Tap on any Kana to show more details about this Kana and hear its pronounciation.",
+      "de": "Tippen Sie auf ein beliebiges Kana, um weitere Details zu diesem Kana anzuzeigen und seine Aussprache zu hören.",
+      "ru": "Нажмите на любую кану, чтобы получить более подробную информацию об этой кане и услышать ее произношение.",
+      "ja": "かなをタップすると、そのかなの詳細が表示され、発音を聞くことができます。",
+      "zh": "点击任何假名可显示有关该假名的更多详细信息，并可听到其发音。",
+      "it": "Toccando un Kana qualsiasi si possono visualizzare ulteriori dettagli su questo Kana e ascoltarne la pronuncia.",
+      "fr": "Tapez sur un Kana pour afficher plus de détails sur ce Kana et entendre sa prononciation.",
+      "es": "Pulse sobre cualquier kana para ver más detalles sobre ella y escuchar su pronunciación.",
+      "pl": "Dotknij dowolnego kana, aby wyświetlić więcej szczegółów na jego temat i usłyszeć jego wymowę."
+    },
+    "tutorial_speed_dial": {
+      "en": "This button can be used to change which Kana are shown.",
+      "de": "Mit dieser Schaltfläche können Sie ändern, welche Kana angezeigt werden.",
+      "ru": "С помощью этой кнопки можно изменить отображение каны.",
+      "ja": "このボタンを使って、表示する「かな」を変更することができます。",
+      "zh": "该按钮可用于更改显示的假名。",
+      "it": "Questo pulsante consente di modificare la visualizzazione dei Kana.",
+      "fr": "Ce bouton permet de modifier les Kana affichés.",
+      "es": "Este botón permite cambiar los kana que se muestran.",
+      "pl": "Za pomocą tego przycisku można zmienić wyświetlane kany."
+    },
+    "tutorial_speed_dial_dakuten": {
+      "en": "This button toggles between Dakuten on and off.",
+      "de": "Diese Taste schaltet zwischen Dakuten ein und aus um.",
+      "ru": "С помощью этой кнопки осуществляется переключение между включением и выключением Dakuten.",
+      "ja": "ダクテンのオン／オフを切り替えるボタン。",
+      "zh": "该按钮可在打开和关闭 Dakuten 之间切换。",
+      "it": "Questo pulsante consente di attivare e disattivare Dakuten.",
+      "fr": "Ce bouton permet d'activer ou de désactiver Dakuten.",
+      "es": "Este botón activa y desactiva el Dakuten.",
+      "pl": "Przycisk ten służy do włączania i wyłączania Dakutenu."
+    },
+    "tutorial_speed_dial_yoon": {
+      "en": "This button toggles Yoon characters on and off.",
+      "de": "Diese Taste schaltet die Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка включает и выключает символы Юн.",
+      "ja": "このボタンでユン文字のオン／オフを切り替える。",
+      "zh": "此按钮可打开或关闭 \"尹 \"字符。",
+      "it": "Questo pulsante attiva e disattiva i caratteri Yoon.",
+      "fr": "Ce bouton permet d'activer et de désactiver les caractères Yoon.",
+      "es": "Este botón activa y desactiva los caracteres Yoon.",
+      "pl": "Ten przycisk włącza i wyłącza znaki Yoon."
+    },
+    "tutorial_speed_dial_kana": {
+      "en": "This button switches between Katakana and Hiragana.",
+      "de": "Diese Taste schaltet zwischen Katakana und Hiragana um.",
+      "ru": "Эта кнопка переключает между катаканой и хираганой.",
+      "ja": "カタカナとひらがなを切り替えるボタンです。",
+      "zh": "该按钮可在片假名和平假名之间切换。",
+      "it": "Questo pulsante consente di passare da Katakana a Hiragana.",
+      "fr": "Ce bouton permet de passer des Katakana aux Hiragana.",
+      "es": "Este botón alterna entre Katakana e Hiragana.",
+      "pl": "Ten przycisk przełącza między Katakaną i Hiraganą."
+    },
+    "tutorial_speed_dial_romaji": {
+      "en": "This button toggles Romaji on or off.",
+      "de": "Diese Taste schaltet Romaji ein oder aus.",
+      "ru": "Эта кнопка включает или выключает режим Romaji.",
+      "ja": "ローマ字入力のオン・オフを切り替えます。",
+      "zh": "此按钮可打开或关闭罗马字。",
+      "it": "Questo pulsante attiva o disattiva il Romaji.",
+      "fr": "Ce bouton permet d'activer ou de désactiver la fonction Romaji.",
+      "es": "Este botón activa o desactiva Romaji.",
+      "pl": "Ten przycisk włącza lub wyłącza funkcję Romaji."
+    },
+    "tutorial_speed_dial_yoon_special": {
+      "en": "This button toggles between rare Yoon characters on or off.",
+      "de": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus.",
+      "ru": "Эта кнопка позволяет включать или выключать редкие символы Юна.",
+      "ja": "このボタンでレアなユン文字のオン・オフが切り替わる。",
+      "zh": "该按钮可切换稀有尹氏角色的开启或关闭。",
+      "it": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon.",
+      "fr": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon.",
+      "es": "Este botón activa o desactiva los personajes raros de Yoon.",
+      "pl": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
+    }
+  },
+  "TextScreen": {
+    "title": {
+      "en": "Text",
+      "de": "Text",
+      "ru": "Текст",
+      "ja": "テキスト",
+      "zh": "文本",
+      "it": "Testo",
+      "fr": "Texte",
+      "es": "Texto",
+      "pl": "Tekst"
+    },
+    "input_text_here": {
+      "en": "Input text here...",
+      "de": "Text hier eingeben...",
+      "ru": "Введите текст здесь...",
+      "ja": "ここにテキストを入力...",
+      "zh": "在这里输入文字...",
+      "it": "Inserire il testo qui...",
+      "fr": "Entrez le texte ici...",
+      "es": "Introduzca aquí el texto...",
+      "pl": "Wprowadź tekst tutaj..."
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the text processing!",
+      "de": "Willkommen bei der Textverarbeitung!",
+      "ru": "Добро пожаловать в обработку текста!",
+      "ja": "テキストにようこそ!",
+      "zh": "欢迎来到文本处理!",
+      "it": "Benvenuti nell'elaborazione del testo!",
+      "fr": "Bienvenue dans le traitement de texte !",
+      "es": "¡Bienvenido al tratamiento de textos!",
+      "pl": "Zapraszamy do przetwaczanie tekstu!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_text_input_text": {
+      "en": "Here you can write or paste any text. This text can be processed with different tools.",
+      "de": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet.",
+      "ru": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов.",
+      "ja": "文章を入力してください。かなを振ったり、品詞を調べたりできます",
+      "zh": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。",
+      "it": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti.",
+      "fr": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils.",
+      "es": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas.",
+      "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+    },
+    "tutorial_processed_text_text": {
+      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+      "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
+      "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
+      "ja": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
+      "zh": "处理后的文本将显示在这里。你可以选择文本的部分内容，在字典中进行查询。",
+      "it": "Il testo elaborato viene visualizzato qui. È possibile selezionare parti del testo per cercarle nel dizionario.",
+      "fr": "Le texte traité s'affiche ici. Vous pouvez sélectionner des parties du texte pour les rechercher dans le dictionnaire.",
+      "es": "El texto procesado se mostrará aquí. Puede seleccionar partes del texto para buscarlas en el diccionario.",
+      "pl": "Przetworzony tekst zostanie pokazany tutaj. Możesz zaznaczyć fragmenty tekstu, aby wyszukać je w słowniku."
+    },
+    "tutorial_processed_text_tap": {
+      "en": "A single tap will select a word.",
+      "de": "Durch einmaliges Antippen wird ein Wort ausgewählt.",
+      "ru": "Одним нажатием можно выбрать слово.",
+      "ja": "シングルタップで単語を選択します",
+      "zh": "点击一下就可以选择一个词。",
+      "it": "Con un solo tocco si seleziona una parola.",
+      "fr": "Une simple pression permet de sélectionner un mot.",
+      "es": "Un solo toque seleccionará una palabra.",
+      "pl": "Pojedyncze stuknięcie spowoduje zaznaczenie słowa."
+    },
+    "tutorial_processed_text_long_press": {
+      "en": "A long press will select a word and show the Part of Speech information.",
+      "de": "Durch langes Drücken wird ein Wort ausgewählt und die Wortartinformation angezeigt.",
+      "ru": "При длительном нажатии выбирается слово и отображается информация о части речи.",
+      "ja": "長押しで単語を選択すると、品詞が表示されます",
+      "zh": "长按会选择一个单词并显示语篇信息。",
+      "it": "Premendo a lungo si seleziona una parola e si visualizzano le informazioni sulla parte del discorso.",
+      "fr": "Une pression longue permet de sélectionner un mot et d'afficher les informations sur la partie du discours.",
+      "es": "Una pulsación larga seleccionará una palabra y mostrará la información de la parte de la oración.",
+      "pl": "Długie naciśnięcie zaznaczy słowo i pokaże informację o części mowy."
+    },
+    "tutorial_processed_text_double_tap": {
+      "en": "A double tap will select a sentence.",
+      "de": "Durch doppeltes Antippen wird ein Satz ausgewählt.",
+      "ru": "Двойное нажатие позволяет выбрать предложение.",
+      "ja": "ダブルタップで文章を選択します",
+      "zh": "双击将选择一个句子。",
+      "it": "Con un doppio tocco si seleziona una frase.",
+      "fr": "Une double tape permet de sélectionner une phrase.",
+      "es": "Un doble toque seleccionará una frase.",
+      "pl": "Podwójne stuknięcie spowoduje zaznaczenie zdania."
+    },
+    "tutorial_processed_text_triple_tap": {
+      "en": "A triple tap will select a paragraph.",
+      "de": "Durch dreimaliges Antippen wird ein Absatz ausgewählt.",
+      "ru": "Тройное нажатие позволяет выбрать абзац.",
+      "ja": "トリプルタップで段落が選択されます",
+      "zh": "点击三下将选择一个段落。",
+      "it": "Un triplo tocco selezionerà un paragrafo.",
+      "fr": "Une triple tape permet de sélectionner un paragraphe.",
+      "es": "Un triple toque seleccionará un párrafo.",
+      "pl": "Potrójne stuknięcie powoduje zaznaczenie akapitu."
+    },
+    "tutorial_spaces_text": {
+      "en": "With this button spaces are added to the text.",
+      "de": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
+      "ru": "С помощью этой кнопки в текст добавляются пробелы.",
+      "ja": "テキストにスペースを追加します",
+      "zh": "有了这个按钮，就可以在文本中添加空格。",
+      "it": "Con questo pulsante vengono aggiunti spazi al testo.",
+      "fr": "Ce bouton permet d'ajouter des espaces au texte.",
+      "es": "Con este botón se añaden espacios al texto.",
+      "pl": "Za pomocą tego przycisku do tekstu dodawane są spacje."
+    },
+    "tutorial_furigana_text": {
+      "en": "This button adds furigana to the text.",
+      "de": "Diese Schaltfläche fügt Furigana über dem Text ein.",
+      "ru": "Эта кнопка добавляет фуригану в текст.",
+      "ja": "テキストにふりがなをつけます",
+      "zh": "这个按钮可以在文本中添加假名。",
+      "it": "Questo pulsante aggiunge i furigana al testo.",
+      "fr": "Ce bouton ajoute des furigana au texte.",
+      "es": "Este botón añade furigana al texto.",
+      "pl": "Ten przycisk dodaje furiganę do tekstu."
+    },
+    "tutorial_colors_text": {
+      "en": "This button shows the Part of Speech of words in different colors (the meanings of the colors can be seen in the manual).",
+      "de": "Diese Schaltfläche zeigt die Wörter des Textes in verschiedenen Farben an (die Bedeutungen der Farben sind im Handbuch nachzulesen).",
+      "ru": "Эта кнопка показывает слова текста разными цветами (значения цветов можно посмотреть в руководстве).",
+      "ja": "テキストの品詞を色別に表示します（色の意味は、マニュアルから確認できます）",
+      "zh": "这个按钮用不同的颜色显示文字的字样（颜色的含义可以在手册中看到）。",
+      "it": "Questo pulsante mostra le parole del testo in diversi colori (il significato dei colori è riportato nel manuale).",
+      "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
+      "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
+      "pl": "Ten przycisk oznacza części mowy w tekscie różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
+    },
+    "tutorial_fullscreen_text": {
+      "en": "This button switches the processed text to full screen.",
+      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
+      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
+      "ja": "テキストをフルスクリーンに切り替えます",
+      "zh": "这个按钮将处理后的文本切换到全屏。",
+      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
+      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
+      "es": "Este botón cambia el texto procesado a pantalla completa.",
+      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
+    },
+    "pos_suffix": {
+      "en": "suffix",
+      "de": "Suffix",
+      "ja": "接尾辞",
+      "pl": "przyrostek"
+    },
+    "pos_na_adj": {
+      "en": "na-adjective",
+      "de": "na-Adjektiv",
+      "ja": "な形容詞",
+      "pl": "przymiotnik na-"
+    },
+    "pos_noun": {
+      "en": "noun",
+      "de": "Substantiv",
+      "ja": "名詞",
+      "pl": "rzeczownik"
+    },
+    "pos_prefix": {
+      "en": "prefix",
+      "de": "Präfix",
+      "ja": "接頭辞",
+      "pl": "przedrostek"
+    },
+    "pos_verb": {
+      "en": "verb",
+      "de": "Verb",
+      "ja": "動詞",
+      "pl": "czasownik"
+    },
+    "pos_i_adjective": {
+      "en": "i-adjective",
+      "de": "i-Adjektiv",
+      "ja": "い形容詞",
+      "pl": "przymiotnik i-"
+    },
+    "pos_adverb": {
+      "en": "adverb",
+      "de": "Adverb",
+      "ja": "副詞",
+      "pl": "przysłowek"
+    },
+    "pos_adnominal": {
+      "en": "adnominal",
+      "de": "Adnominal",
+      "ja": "連体詞",
+      "pl": "przydawka"
+    },
+    "pos_conjunction": {
+      "en": "conjunction",
+      "de": "Konjunktion",
+      "ja": "接続詞",
+      "pl": "spójnik"
+    },
+    "pos_particle": {
+      "en": "particle",
+      "de": "Partikel",
+      "ja": "助詞",
+      "pl": "partykuła"
+    },
+    "pos_auxillary_verb": {
+      "en": "auxilary verb",
+      "de": "Hilfsverb",
+      "ja": "助動詞",
+      "pl": "czasownik pomocniczy"
+    },
+    "pos_exclamation": {
+      "en": "exclamation",
+      "de": "Ausruf",
+      "ja": "感嘆詞",
+      "pl": "wykrzyknienie"
+    },
+    "pos_filler": {
+      "en": "filler",
+      "de": "Füller",
+      "ja": "つなぎ言葉",
+      "pl": "wypełniacz"
+    },
+    "pos_interjection": {
+      "en": "interjection",
+      "de": "Zwischenruf",
+      "ja": "間投詞",
+      "pl": "wyraz cząstkowy"
+    }
+  },
+  "OnBoarding": {
+    "Onboarding_1_title": {
+      "en": "You do not know a Kanji?",
+      "de": "Du kennst ein Kanji nicht?",
+      "ru": "Вы не знаете ни одного кандзи?",
+      "ja": "漢字がわからない？",
+      "zh": "你不知道一个汉字吗？",
+      "it": "Non conosci un kanji?",
+      "fr": "Vous ne connaissez pas un Kanji ?",
+      "es": "No sabes un Kanji?",
+      "pl": "Nie znasz Kanji?"
+    },
+    "Onboarding_1_text": {
+      "en": "Just draw it and \"DaKanji\" will show the character you need.",
+      "de": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
+      "ru": "Просто нарисуйте его, и \"DaKanji\" покажет нужный вам иероглиф.",
+      "ja": "漢字を書くだけで「DaKanji」があなたの知りたい文字を探します",
+      "zh": "只要画出来，\"DaKanji \"就会显示出你需要的字符。",
+      "it": "Basta disegnarlo e \"DaKanji\" mostrerà il carattere desiderato.",
+      "fr": "Il suffit de le dessiner et \"DaKanji\" affichera le caractère dont vous avez besoin.",
+      "es": "Solo dibújalo y DaKanji te mostrará el caracter que necesitas.",
+      "pl": "Po prostu go narysuj i DaKanji pokaże Ci znak którego potrzebujesz"
+    },
+    "Onboarding_2_title": {
+      "en": "Lookup characters and words",
+      "de": "Schlage Zeichen und Wörter nach",
+      "ru": "Поиск символов и слов",
+      "ja": "漢字や単語を調べる",
+      "zh": "查询字符和单词",
+      "it": "Ricerca di caratteri e parole",
+      "fr": "Recherche de caractères et de mots",
+      "es": "Busca caracteres y palabras",
+      "pl": "Podejrzyj znaki i wyrazy"
+    },
+    "Onboarding_2_text": {
+      "en": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
+      "de": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
+      "ru": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
+      "ja": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
+      "zh": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
+      "it": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
+      "fr": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
+      "es": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
+      "pl": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub użyj skrótu do słownika Internetowego."
+    },
+    "Onboarding_3_title": {
+      "en": "Do not know how to read a sentence?",
+      "de": "Du weißt nicht wie man einen  Satz liest?",
+      "ru": "Не умеете читать предложения?",
+      "ja": "文章の読み方がわからない？",
+      "zh": "不知道如何读懂一个句子？",
+      "it": "Non sapete leggere una frase?",
+      "fr": "Vous ne savez pas comment lire une phrase ?",
+      "es": "¿No sabe leer una frase?",
+      "pl": "Nie wiesz jak przeczytać zdanie?"
+    },
+    "Onboarding_3_text": {
+      "en": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
+      "de": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
+      "ru": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
+      "ja": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
+      "zh": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
+      "it": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
+      "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
+      "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
+      "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie."
+    }
+  },
+  "SettingsScreen": {
+    "title": {
+      "en": "Settings",
+      "de": "Einstellungen",
+      "ru": "Настройки",
+      "ja": "設定",
+      "zh": "设置",
+      "it": "Impostazioni",
+      "fr": "Paramètres",
+      "es": "Ajustes",
+      "pl": "Ustawienia"
+    },
+    "restarts_app": {
+      "en": "restarts app",
+      "de": "startet app neu",
+      "ru": "перезапускает приложение",
+      "ja": "アプリを再起動する",
+      "zh": "重新启动应用程序",
+      "it": "riavvia l'applicazione",
+      "fr": "redémarre l'application",
+      "es": "reinicia la app",
+      "pl": "restart aplikacji"
+    },
+    "requires_restart": {
+      "en": "requires restart",
+      "de": "erfordert Neustart",
+      "ru": "требует перезапуска",
+      "ja": "再起動が必要です",
+      "zh": "需要重新启动",
+      "it": "richiede il riavvio",
+      "fr": "nécessite un redémarrage",
+      "es": "requiere reinicio",
+      "pl": "wymaga ponownego uruchomienia"
+    },
+    "show_tutorial": {
+      "en": "Reshow tutorials (@:SettingsScreen.restarts_app)",
+      "de": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
+      "ru": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
+      "ja": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
+      "zh": "重新展示教程（@:SettingsScreen.restarts_app）。",
+      "it": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
+      "fr": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
+      "es": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
+      "pl": "Powtórz tutorial (@:SettingsScreen.restarts_app)"
+    },
+    "draw_title": {
+      "en": "Drawing",
+      "de": "Zeichnen",
+      "ru": "Рисование",
+      "ja": "漢字を探す",
+      "zh": "绘图",
+      "it": "Disegno",
+      "fr": "Dessin",
+      "es": "Dibujar",
+      "pl": "Obraz"
+    },
+    "draw_custom_url_hint": {
+      "en": "URL of your dictionary",
+      "de": "URL von dem Wörterbuch das benutzt werden soll",
+      "ru": "URL вашего словаря",
+      "ja": "使用したい辞書のURL",
+      "zh": "你的字典的URL",
+      "it": "URL del vostro dizionario",
+      "fr": "URL de votre dictionnaire",
+      "es": "URL de tu diccionario",
+      "pl": "URL twojego słownika"
+    },
+    "draw_dictionary_system_translator": {
+      "en": "OS integrated translator",
+      "de": "betriebssysteminternes Übersetzer",
+      "ru": "Встроенный в ОС переводчик",
+      "ja": "OS統合翻訳",
+      "zh": "操作系统集成翻译器",
+      "it": "Traduttore integrato nel sistema operativo",
+      "fr": "Traducteur intégré au système d'exploitation",
+      "es": "Traductor integrado de tu SO",
+      "pl": "Tłumacz systemowy"
+    },
+    "draw_double_tap_empty_canvas": {
+      "en": "Empty canvas after double tap",
+      "de": "Lösche alle Striche nach doppeltem Tippen",
+      "ru": "Пустой холст после двойного нажатия",
+      "ja": "ダブルタップで文字記入欄を空にする",
+      "zh": "双击后空出画布",
+      "it": "Tela vuota dopo il doppio tocco",
+      "fr": "Toile vide après un double tapotement",
+      "es": "Vaciar lienzo después de una pulsación doble",
+      "pl": "Wyczyść płótno podwójnym kliknięciem"
+    },
+    "draw_invert_short_long_press": {
+      "en": "Invert long/short press",
+      "de": "Invertiere kurzes und langes drücken",
+      "ru": "Инвертировать длинный/короткий пресс",
+      "ja": "長押しとタップを反転する",
+      "zh": "倒置长/短按",
+      "it": "Invertire la pressione lunga/corta",
+      "fr": "Inverser la presse long/short",
+      "es": "Invertir pulsación larga/breve",
+      "pl": "Odwróć długie/krótkie kliknięcie"
+    },
+    "draw_long_press_opens": {
+      "en": "Dictionary selection",
+      "de": "Wörterbuch Auswahl",
+      "ru": "Выбор словаря",
+      "ja": "辞書の選択",
+      "zh": "词典选择",
+      "it": "Selezione del dizionario",
+      "fr": "Sélection de dictionnaires",
+      "es": "Selección de diccionarios",
+      "pl": "Wybór słownika"
+    },
+    "draw_browser_for_online_dict": {
+      "en": "Use a webview for web dictionaries",
+      "de": "Benutze einen webview für web Wörterbücher",
+      "ru": "Использование веб-просмотра для веб-словарей",
+      "ja": "ウェブビューでウェブ辞書を開く",
+      "zh": "为网络字典使用网络视图",
+      "it": "Utilizzare una webview per i dizionari web",
+      "fr": "Utiliser une vue web pour les dictionnaires web",
+      "es": "Usar una webview para los diccionarios en la web",
+      "pl": "Użyj webview dla słowników internetowych"
+    },
+    "draw_custom_url_format": {
+      "en": "Custom URL format",
+      "de": "Benutzerdefiniertes URL format",
+      "ru": "Пользовательский формат URL",
+      "ja": "カスタムURL",
+      "zh": "自定义URL格式",
+      "it": "Formato URL personalizzato",
+      "fr": "Format d'URL personnalisé",
+      "es": "Formato de la URL personalizada",
+      "pl": "Niestandardowy format URL"
+    },
+    "custom_url_explanation": {
+      "en": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "de": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "ru": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "ja": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
+      "zh": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
+      "it": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "fr": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
+      "es": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
+      "pl": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'."
+    },
+    "dict_languages": {
+      "en": "Show translations in (drag to reorder)",
+      "de": "Übersetzungen anzeigen in (zum Umordnen ziehen)",
+      "ru": "Показать переводы в (перетащите, чтобы изменить порядок)",
+      "ja": "翻訳言語を選択する（ドラッグで並び替え可能）",
+      "zh": "显示翻译在（拖动以重新排序）。",
+      "it": "Mostra le traduzioni in (trascinare per riordinare)",
+      "fr": "Afficher les traductions dans (glisser pour réorganiser)",
+      "es": "Mostrar traducciones en (arrastre para reordenar)",
+      "pl": "Pokaż tłumaczenia w (przeciągnij, aby zmienić kolejność)"
+    },
+    "dict_disable_english_info": {
+      "en": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
+      "de": "Ein großer Teil des Wörterbuchs ist nur auf Englisch verfügbar. Wenn Sie es deaktivieren, werden alle diese Einträge ausgeblendet.",
+      "ru": "Значительная часть словаря доступна только на английском языке. Отключение этой функции скроет все эти словарные статьи.",
+      "ja": "辞書の大部分は、英語でしか利用できません。無効にすると、それらの項目がすべて非表示になります。",
+      "zh": "词典的很大一部分只有英文版本。禁用它将隐藏所有这些条目。",
+      "it": "Una parte significativa del dizionario è disponibile solo in inglese. Disabilitandola, tutte queste voci verranno nascoste.",
+      "fr": "Une partie importante du dictionnaire n'est disponible qu'en anglais. En la désactivant, vous masquerez toutes ces entrées.",
+      "es": "Una parte importante del diccionario sólo está disponible en inglés. Si lo desactiva, se ocultarán todas esas entradas.",
+      "pl": "Znaczna część słownika jest dostępna tylko w języku angielskim. Wyłączenie tej opcji spowoduje ukrycie wszystkich tych haseł."
+    },
+    "dict_show_word_freq": {
+      "en": "Show word frequency",
+      "de": "Zeige Wordfrequenz",
+      "ru": "Показать частоту слов",
+      "ja": "単語の使用頻度を表示",
+      "zh": "显示词频",
+      "it": "Mostra la frequenza delle parole",
+      "fr": "Afficher la fréquence des mots",
+      "es": "Mostrar frecuencia de palabras",
+      "pl": "Pokaż częstość występowania słów"
+    },
+    "dict_show_word_freq_body": {
+      "en": "DaKanji uses word frequency to rank its dictionary entries. This word frequency is an estimation of a word's usage and is based on different data sources:\n\n* Wikipedia, representing encyclopedic text\n* Subtitles, from OPUS OpenSubtitles 2018 and SUBTLEX\n* Web text, from OSCAR\n* Twitter, representing short-form social media\n* Reddit, representing potentially longer Internet comments\n\nThe number shown in DaKanji is a variation on the actual word frequency called [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law) that aims to return the word frequency on a human-friendly logarithmic scale. The Zipf frequency of a word is the base-10 logarithm of the number of times it appears per billion words. A word with Zipf value 6 appears once per thousand words, for example, and a word with Zipf value 3 appears once per million words.\nReasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing in DaKanji is 1.0. We use 0 as the default Zipf value for words that do not appear in the data sources, although it should mean one occurrence per billion words.\n[Read more...](https://github.com/rspeer/wordfreq)",
+      "de": "DaKanji verwendet ein Maß für die Worthäufigkeit, um seine Wörterbucheinträge zu bewerten. Diese Worthäufigkeit ist eine Schätzung der Verwendung eines Wortes. Diese Schätzung basiert auf verschiedenen Datenquellen:\nWikipedia, die enzyklopädischen Text darstellt\nUntertitel, aus OPUS OpenSubtitles 2018 und SUBTLEX\nWebtext, aus OSCAR\nTwitter, stellvertretend für soziale Medien in Kurzform\nReddit, repräsentiert potenziell längere Internetkommentare\nDie angezeigte Zahl ist eine Variante der eigentlichen Worthäufigkeit, die Zipf-Häufigkeit, die darauf abzielt, die Worthäufigkeit auf einer menschenfreundlichen logarithmischen Skala wiederzugeben. Die Zipf-Häufigkeit eines Wortes ist der Logarithmus zur Basis 10, der angibt, wie oft das Wort pro Milliarde Wörter vorkommt. Ein Wort mit dem Zipf-Wert 6 kommt beispielsweise einmal pro tausend Wörter vor, und ein Wort mit dem Zipf-Wert 3 kommt einmal pro Million Wörter vor.\nAngemessene Zipf-Werte liegen zwischen 0 und 8, aber der minimale Zipf-Wert in DaKanji ist 1,0. Wir verwenden 0 als Standard-Zipf-Wert für Wörter, die in der gegebenen Wortliste nicht vorkommen, obwohl dies ein Vorkommen pro Milliarde Wörter bedeuten sollte.",
+      "ru": "DaKanji использует частоту слов для ранжирования своих словарных статей. Эта частота слов является оценкой употребления слова и основана на различных источниках данных:\n\n* Википедия, представляющая энциклопедический текст\n* субтитры, из OPUS OpenSubtitles 2018 и SUBTLEX\n* веб-текст, из OSCAR\n* Twitter, представляющий короткие формы социальных медиа\n* Reddit, представляющий потенциально длинные комментарии в Интернете\n\nЧисло, показанное в DaKanji, является вариацией фактической частоты слов, называемой [Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law), целью которой является возвращение частоты слов в удобной для человека логарифмической шкале. Частота Zipf слова - это логарифм числа раз, которое оно встречается на миллиард слов. Например, слово со значением Zipf 6 появляется один раз на тысячу слов, а слово со значением Zipf 3 - один раз на миллион слов.\nРазумные значения Zipf находятся в диапазоне от 0 до 8, но минимальное значение Zipf, встречающееся в DaKanji, равно 1,0. Мы используем 0 в качестве значения Zipf по умолчанию для слов, которые не встречаются в источниках данных, хотя это должно означать одно появление на миллиард слов.\n[Read more...](https://github.com/rspeer/wordfreq)",
+      "ja": "Dakanjiでは、辞書エントリーのランク付けに単語頻度を使用しています。この単語頻度は、単語の使用頻度を推定したもので、さまざまなデータソースに基づくものです：\n\n* ウィキペディア\n* OPUS OpenSubtitles 2018およびSUBTLEXの字幕\n* ウェブテキスト、OSCAR\n* Twitter\n* Reddit\n\nDakanjiで表示される数値は、実際の単語頻度のバリエーションとして、[Zipf frequency](https://en.wikipedia.org/wiki/Zipf%27s_law)という、人間に優しい対数スケールで単語頻度を返すことを目指したものです。Zipf頻度とは、ある単語が10億語あたりに出現する回数の10進数対数のことを指します。例えば、Zipf値6の単語は1000語に1回、Zipf値3の単語は100万語に1回出現します。\nZipf値は0〜8が妥当ですが、大漢字に現れるZipf値の最小値は1.0です。データソースにない単語のZipf値は、10億語に1回出現することを意味するはずですが、デフォルトで0を使用しています。\n[もっと読む...](https://github.com/rspeer/wordfreq)",
+      "zh": "大汉字》使用词频对其词典条目进行排名。这个词频是对一个词的用法的估计，是基于不同的数据来源：\n\n* 维基百科，代表百科全书式的文本\n* 字幕，来自OPUS OpenSubtitles 2018和SUBTLEX\n* 网络文本，来自OSCAR\n* 推特，代表短篇的社交媒体\n* Reddit，代表潜在的较长的互联网评论\n\nDaKanji中显示的数字是实际词频的一种变体，称为[Zipf频率](https://en.wikipedia.org/wiki/Zipf%27s_law)，旨在以人类友好的对数尺度来返回词频。一个词的Zipf频率是它在每十亿个词中出现次数的基数-10的对数。例如，Zipf值为6的词每千字出现一次，而Zipf值为3的词每百万字出现一次。\n合理的Zipf值在0到8之间，但在《大汉字》中出现的最小Zipf值是1.0。对于没有出现在数据源中的词，我们使用0作为默认的Zipf值，尽管它应该意味着每十亿字中出现一次。\n[阅读全文...](https://github.com/rspeer/wordfreq)",
+      "it": "DaKanji utilizza la frequenza delle parole per classificare le voci del suo dizionario. La frequenza delle parole è una stima dell'uso di una parola e si basa su diverse fonti di dati:\n\n* Wikipedia, che rappresenta un testo enciclopedico\n* Sottotitoli, da OPUS OpenSubtitles 2018 e SUBTLEX\n* Testo web, da OSCAR\n* Twitter, che rappresenta i social media in forma breve\n* Reddit, che rappresenta i commenti potenzialmente più lunghi su Internet\n\nIl numero mostrato in DaKanji è una variante della frequenza effettiva delle parole, chiamata [frequenza Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law), che mira a restituire la frequenza delle parole su una scala logaritmica di facile comprensione. La frequenza Zipf di una parola è il logaritmo in base 10 del numero di volte in cui appare su un miliardo di parole. Ad esempio, una parola con valore Zipf 6 appare una volta ogni mille parole, mentre una parola con valore Zipf 3 appare una volta ogni milione di parole.\nI valori Zipf ragionevoli sono compresi tra 0 e 8, ma il valore Zipf minimo che appare in DaKanji è 1,0. Utilizziamo 0 come valore Zipf predefinito per le parole che non compaiono nelle fonti di dati, anche se dovrebbe significare un'occorrenza ogni miliardo di parole.\n[Per saperne di più...](https://github.com/rspeer/wordfreq)",
+      "fr": "Le DaKanji utilise la fréquence des mots pour classer les entrées de son dictionnaire. Cette fréquence de mots est une estimation de l'utilisation d'un mot et est basée sur différentes sources de données :\n\n* Wikipédia, qui représente un texte encyclopédique\n* Sous-titres, provenant d'OPUS OpenSubtitles 2018 et SUBTLEX\n* Texte Web, à partir d'OSCAR\n* Twitter, qui représente les médias sociaux de courte durée\n* Reddit, représentant des commentaires Internet potentiellement plus longs\n\nLe nombre indiqué dans DaKanji est une variante de la fréquence réelle des mots appelée [fréquence de Zipf] (https://en.wikipedia.org/wiki/Zipf%27s_law) qui vise à restituer la fréquence des mots sur une échelle logarithmique conviviale. La fréquence de Zipf d'un mot est le logarithme en base 10 du nombre de fois qu'il apparaît par milliard de mots. Un mot ayant une valeur de Zipf de 6 apparaît une fois pour mille mots, par exemple, et un mot ayant une valeur de Zipf de 3 apparaît une fois pour un million de mots.\nLes valeurs raisonnables de Zipf se situent entre 0 et 8, mais la valeur minimale de Zipf apparaissant dans le DaKanji est de 1,0. Nous utilisons 0 comme valeur Zipf par défaut pour les mots qui n'apparaissent pas dans les sources de données, bien que cela signifie une occurrence par milliard de mots.\n[Lire la suite...] (https://github.com/rspeer/wordfreq)",
+      "es": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
+      "pl": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)"
+    },
+    "dict_deconjugate": {
+      "en": "Convert inputs to base form",
+      "de": "Konvertierung der Eingaben in die Basisform",
+      "ru": "Преобразование входных данных в базовую форму",
+      "ja": "入力内容を基本形に変換する",
+      "zh": "将输入转换为基本形式",
+      "it": "Convertire gli input in forma base",
+      "fr": "Convertir les entrées en forme de base",
+      "es": "Convertir entradas en forma básica",
+      "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
+    },
+    "dict_deconjugate_body": {
+      "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
+      "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
+      "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
+      "ja": "この設定は、動詞、形容詞、コピュラの「脱字」を有効にします。この設定が有効な場合、大漢字は検索語をその基本形に変換しようとします。たとえば、「食べる、食べられる、食べない」は、「食べる」に変換されます。\n中級者向けには、この設定をオフにすることをお勧めします。",
+      "zh": "这个设置使动词、形容词和副词的 \"去伪存真 \"成为可能。当它被启用时，DaKanji会尝试将搜索词转换成其基本形式。例如，食べます、食べられる、食べない都被转换为食べる。\n对于中等水平的学习者，建议关闭这个设置。",
+      "it": "Questa impostazione abilita la \"deconiugazione\" di verbi, aggettivi e copule. Quando è abilitata, DaKanji cerca di convertire il termine di ricerca nella sua forma base. Ad esempio, 食べます、食べられる、食べない tutti sono convertiti in 食べる.\nPer gli studenti di livello intermedio, si consiglia di disattivare questa impostazione.",
+      "fr": "Ce paramètre active la \"déconjugaison\" des verbes, des adjectifs et des copules. Lorsqu'il est activé, DaKanji essaie de convertir le terme de recherche dans sa forme de base. Par exemple, 食べます、食べられる、食べない all est converti en 食べる.\nPour les apprenants de niveau intermédiaire, il est recommandé de désactiver ce paramètre.",
+      "es": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
+      "pl": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia."
+    },
+    "dict_kanaize": {
+      "en": "Convert search term to kana",
+      "de": "Suchbegriff in Kana umwandeln",
+      "ru": "Преобразование поискового термина в кану",
+      "ja": "検索語をかなに変換する",
+      "zh": "将搜索词转换为假名",
+      "it": "Convertire i termini di ricerca in kana",
+      "fr": "Convertir les termes de recherche en kana",
+      "es": "Convertir el término de búsqueda en kana",
+      "pl": "Konwertuj wyszukiwane hasła do kany"
+    },
+    "dict_kanaize_body": {
+      "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.",
+      "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".",
+      "ru": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.",
+      "ja": "この設定を有効にすると、大漢字は検索語を一律の仮名表現に変換してから検索を行います。つまり、「たべる」という検索語は、たべるに変換され、食べるを見つけることができますが、意図しないマッチングを引き起こす可能性もあります。\n\n例えば、「man」を検索すると、「まん」に変換されるため、「万」と英語の「man」にマッチします。",
+      "zh": "当启用此设置时，DaKanji会在查找前将任何搜索词转换为统一的假名表示。这意味着查询 \"taberu \"将被转换为たべる，并能找到食べる，但这也可能导致非预期的匹配。\n\n例如，搜索'man'会被转换为まん，因此会匹配到万和英文单词'man'。",
+      "it": "Se si attiva questa impostazione, DaKanji converte qualsiasi termine di ricerca in una rappresentazione kana uniforme prima di cercarlo. Ciò significa che la query \"taberu\" sarà convertita in たべる e troverà 食べる, ma può anche portare a corrispondenze non volute.\n\nAd esempio, la ricerca di \"man\" verrà convertita in まん e quindi corrisponderà a 万 e alla parola inglese \"man\".",
+      "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".",
+      "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".",
+      "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'."
+    },
+    "dict_matrix_word_levels": {
+      "en": "Matrix words use JLPT level",
+      "de": "Matrixwörter verwenden JLPT-Niveau",
+      "ru": "Матричные слова используют уровень JLPT",
+      "ja": "マトリックス語は日本語能力試験レベルを使用",
+      "zh": "矩阵词使用JLPT水平",
+      "it": "Le parole della matrice utilizzano il livello JLPT",
+      "fr": "Les mots de la matrice utilisent le niveau JLPT",
+      "es": "Las palabras de la matriz utilizan el nivel JLPT",
+      "pl": "Słowa matrycowe używają poziomu JLPT"
+    },
+    "dict_show_wikipedia_definitions": {
+      "en": "Show definitions from wikipedia",
+      "de": "Definitionen von wikipedia anzeigen",
+      "ru": "Показать определения из Википедии",
+      "ja": "wikipedia上の定義を表示",
+      "zh": "显示来自维基百科的定义",
+      "it": "Mostra le definizioni da wikipedia",
+      "fr": "Afficher les définitions de wikipedia",
+      "es": "Mostrar definiciones de wikipedia",
+      "pl": "Pokaż definicje z wikipedii"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_default_deck": {
+      "en": "Default deck",
+      "de": "Standard deck",
+      "ru": "Колода по умолчанию",
+      "ja": "デフォルトのデッキ",
+      "zh": "默认甲板",
+      "it": "Mazzo predefinito",
+      "fr": "Pont par défaut",
+      "es": "Cubierta por defecto",
+      "pl": "Pokład domyślny"
+    },
+    "anki_default_no_langs": {
+      "en": "Number of languages on notes",
+      "de": "Anzahl an Sprachen auf Karten",
+      "ru": "Количество языков на банкнотах",
+      "ja": "ノートの言語数",
+      "zh": "笔记上的语言数量",
+      "it": "Numero di lingue sulle note",
+      "fr": "Nombre de langues sur les notes",
+      "es": "Número de lenguas en los billetes",
+      "pl": "Liczba języków w notatkach"
+    },
+    "anki_default_no_translations": {
+      "en": "Number of translations on notes",
+      "de": "Anzahl von Übersetungen auf Karten",
+      "ru": "Количество переводов по векселям",
+      "ja": "ノートの翻訳数",
+      "zh": "笔记上的翻译数量",
+      "it": "Numero di traduzioni sulle note",
+      "fr": "Nombre de traductions sur les notes",
+      "es": "Número de traducciones en los billetes",
+      "pl": "Liczba tłumaczeń na notach"
+    },
+    "dojg_imported": {
+      "en": "DoJG imported",
+      "de": "DoJG importiert",
+      "ru": "DoJG импортный",
+      "ja": "輸入されたDoJG",
+      "zh": "进口的 DoJG",
+      "it": "DoJG importato",
+      "fr": "DoJG importé",
+      "es": "DoJG importado",
+      "pl": "Import DoJG"
+    },
+    "dojg_media_imported": {
+      "en": "DoJG with media imported",
+      "de": "DoJG mit Medien importiert",
+      "ru": "DoJG с импортными СМИ",
+      "ja": "メディアから輸入されたDoJG",
+      "zh": "司法部与进口媒体",
+      "it": "DoJG con i media importati",
+      "fr": "DoJG avec les médias importés",
+      "es": "DoJG con medios de comunicación importados",
+      "pl": "DoJG z zaimportowanymi mediami"
+    },
+    "misc_title": {
+      "en": "Miscellaneous",
+      "de": "Verschiedenes",
+      "ru": "Разное",
+      "ja": "その他",
+      "zh": "杂项",
+      "it": "Varie",
+      "fr": "Divers",
+      "es": "Misceláneo",
+      "pl": "Inne"
+    },
+    "misc_theme": {
+      "en": "theme (@:SettingsScreen.restarts_app)",
+      "de": "Thema (@:SettingsScreen.restarts_app)",
+      "ru": "тема (@:SettingsScreen.restarts_app)",
+      "ja": "テーマ (@:SettingsScreen.restarts_app)",
+      "zh": "主题 (@:SettingsScreen.restarts_app)",
+      "it": "tema (@:SettingsScreen.restarts_app)",
+      "fr": "thème (@:SettingsScreen.restarts_app)",
+      "es": "tema (@:SettingsScreen.restarts_app)",
+      "pl": "Motyw(@:SettingsScreen.restarts_app)"
+    },
+    "misc_settings_window_size": {
+      "en": "Save current window size",
+      "de": "Speicher die momentanige Fenster größe",
+      "ru": "Сохранить текущий размер окна",
+      "ja": "現在のウィンドウサイズを保存",
+      "zh": "保存当前窗口尺寸",
+      "it": "Salva la dimensione attuale della finestra",
+      "fr": "Sauvegarder la taille actuelle de la fenêtre",
+      "es": "Guardar el tamaño actual de la ventana",
+      "pl": "Zapisz bieżący rozmiar okna"
+    },
+    "misc_language": {
+      "en": "language",
+      "de": "Sprache (@:SettingsScreen.restarts_app)",
+      "ru": "язык (@:SettingsScreen.restarts_app)",
+      "ja": "言語 (@:SettingsScreen.restarts_app)",
+      "zh": "语言 (@:SettingsScreen.restarts_app)",
+      "it": "lingua (@:SettingsScreen.restarts_app)",
+      "fr": "langue (@:SettingsScreen.restarts_app)",
+      "es": "idioma (@:SettingsScreen.restarts_app)",
+      "pl": "język (@:SettingsScreen.restarts_app)"
+    },
+    "misc_default_screen": {
+      "en": "Initial screen when starting the app",
+      "de": "Startbildschirm beim öffnen der App",
+      "ru": "Начальный экран при запуске приложения",
+      "ja": "アプリ起動時の初期画面",
+      "zh": "启动应用程序时的初始屏幕",
+      "it": "Schermata iniziale all'avvio dell'applicazione",
+      "fr": "Écran initial au démarrage de l'application",
+      "es": "Pantalla inicial al iniciar la aplicación",
+      "pl": "Ekran początkowy przy uruchamianiu aplikacji"
+    },
+    "misc_window_on_top": {
+      "en": "Should the application always be on top of others",
+      "de": "Sollte die Anwendung immer über anderen sein",
+      "ru": "Должно ли приложение всегда быть на высоте",
+      "ja": "アプリを常に画面トップに表示する",
+      "zh": "应用程序是否应该总是在上面",
+      "it": "L'applicazione deve essere sempre in cima",
+      "fr": "L'application doit-elle toujours être en tête",
+      "es": "¿Debe la aplicación estar siempre encima",
+      "pl": "Czy aplikacja powinna być zawsze na wierzchu"
+    },
+    "misc_window_opacity": {
+      "en": "The transparency of the application",
+      "de": "Die Transparenz der Anwendung",
+      "ru": "Прозрачность приложения",
+      "ja": "アプリ画面の透過性",
+      "zh": "应用程序的透明度",
+      "it": "La trasparenza dell'applicazione",
+      "fr": "La transparence de l'application",
+      "es": "La transparencia de la aplicación",
+      "pl": "Transparentność aplikacji"
+    },
+    "advanced_settings_title": {
+      "en": "Advanced settings",
+      "de": "Erweiterte Einstellungen",
+      "ru": "Дополнительные настройки",
+      "ja": "詳細設定",
+      "zh": "高级设置",
+      "it": "Impostazioni avanzate",
+      "fr": "Paramètres avancés",
+      "es": "Ajustes avanzados",
+      "pl": "Ustawienia zaawansowane"
+    },
+    "advanced_settings_draw_backend": {
+      "en": "Inference backend (requires restart)",
+      "de": "Inferenz Backend (Neustart notwendig)",
+      "ru": "Бэкэнд для выводов (требуется перезапуск)",
+      "ja": "推論バックエンド（再起動します）",
+      "zh": "推理后端（需要重新启动）。",
+      "it": "Backend di inferenza (richiede il riavvio)",
+      "fr": "Backend d'inférence (nécessite un redémarrage)",
+      "es": "Backend de inferencia (reinicio manual requerido)",
+      "pl": "System wnioskowania (wymaga restartu)"
+    },
+    "advanced_settings_snap": {
+      "en": "I am inevitable...",
+      "de": "Ich bin unvermeidbar...",
+      "ru": "Я неизбежен...",
+      "ja": "私は絶対なのだ・・・",
+      "zh": "我是不可避免的...",
+      "it": "Sono inevitabile...",
+      "fr": "Je suis inévitable...",
+      "es": "Soy inevitable...",
+      "pl": "Jestem nieunikniony..."
+    },
+    "advanced_settings_optimize_nn": {
+      "en": "Optimize Neural Networks",
+      "de": "Neuronale Netze optimieren",
+      "ru": "Оптимизация нейронных сетей",
+      "ja": "ニューラルネットの最適化",
+      "zh": "优化神经网络",
+      "it": "Ottimizzare le reti neurali",
+      "fr": "Optimiser les réseaux neuronaux",
+      "es": "Optimizar las redes neuronales",
+      "pl": "Optymalizuj sieć neuronową"
+    },
+    "advanced_settings_optimizing": {
+      "en": "Optimizing...\nPlease do not close the app.",
+      "de": "Optimiert...\nBitte schließen Sie die App nicht.",
+      "ru": "Оптимизация...\nПожалуйста, не закрывайте приложение.",
+      "ja": "最適化中...\nアプリを閉じないでください。",
+      "zh": "正在优化...\n请不要关闭该应用程序。",
+      "it": "Ottimizzazione...\nNon chiudere l'applicazione.",
+      "fr": "Optimisation...\nNe fermez pas l'application.",
+      "es": "Optimizando...\nPor favor, no cierre la aplicación.",
+      "pl": "Optymalizacja...\nProszę nie zamykać aplikacji."
+    },
+    "advanced_settings_optimze_warning": {
+      "en": "This will optimize the Neural Network execution for your device.\nThis can take a while depending on your device, but can improve the performance of dramatically.",
+      "de": "Dadurch wird die Ausführung des neuronalen Netzwerks für Ihr Gerät optimiert.\nDies kann je nach Gerät eine Weile dauern, kann aber die Leistung erheblich verbessern.",
+      "ru": "Это позволит оптимизировать выполнение нейронной сети для вашего устройства.\nЭто может занять некоторое время в зависимости от вашего устройства, но может значительно улучшить производительность.",
+      "ja": "ニューラルネットワークの実行がお使いのデバイスに最適化されます。\nデバイスによっては時間がかかる場合がありますが、性能が圧倒的に向上します。",
+      "zh": "这将为你的设备优化神经网络的执行。\n这可能需要一段时间，这取决于你的设备，但可以极大地提高性能。",
+      "it": "In questo modo si ottimizza l'esecuzione della rete neurale per il dispositivo in uso.\nQuesta operazione può richiedere un po' di tempo a seconda del dispositivo, ma può migliorare notevolmente le prestazioni.",
+      "fr": "Cela optimisera l'exécution du réseau neuronal pour votre appareil.\nCela peut prendre un certain temps en fonction de votre appareil, mais peut améliorer considérablement les performances.",
+      "es": "Esto optimizará la ejecución de la Red Neuronal para su dispositivo.\nEsto puede tomar un tiempo dependiendo de su dispositivo, pero puede mejorar el rendimiento de forma espectacular.",
+      "pl": "To zoptymalizuje wykonanie sieci neuronowej dla twojego urządzenia.\nMoże to zająć trochę czasu w zależności od urządzenia, ale może poprawić wydajność dramatycznie."
+    },
+    "advanced_settings_optimize_cancel": {
+      "en": "Cancel",
+      "de": "Abbrechen",
+      "ru": "Отмена",
+      "ja": "キャンセル",
+      "zh": "取消",
+      "it": "Annullamento",
+      "fr": "Annuler",
+      "es": "Cancelar",
+      "pl": "Anuluj"
+    },
+    "advanced_settings_optimize_ok": {
+      "en": "Ok",
+      "de": "Ok",
+      "ru": "Хорошо",
+      "ja": "OK",
+      "zh": "好的",
+      "it": "Ok",
+      "fr": "Ok",
+      "es": "Ok",
+      "pl": "Ok"
+    },
+    "advanced_settings_number_search_procs": {
+      "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
+      "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
+      "ru": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
+      "ja": "検索プロセス数 (@:SettingsScreen.requires_restart)",
+      "zh": "搜索进程的数量（@:SettingsScreen.required_restart）。",
+      "it": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
+      "fr": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
+      "es": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
+      "pl": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)"
+    },
+    "advanced_settings_number_search_procs_body": {
+      "en": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
+      "de": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
+      "ru": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
+      "ja": "Dakanjiは、データベースを検索する際、複数のプロセスを使用します。Dakanjiに標準で付属しているデータベースでは、通常2プロセスで十分ですが、データベースで検索したときに動作が重くなるようであれば、プロセス数を増やしてください。",
+      "zh": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
+      "it": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
+      "fr": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
+      "es": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
+      "pl": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów."
+    },
+    "advanced_settings_reset_settings": {
+      "en": "Reset settings",
+      "de": "Einstellungen zurücksetzen",
+      "ru": "Сброс настроек",
+      "ja": "設定のリセット",
+      "zh": "重置设置",
+      "it": "Ripristino delle impostazioni",
+      "fr": "Réinitialiser les paramètres",
+      "es": "Restablecer ajustes",
+      "pl": "Resetowanie ustawień"
+    },
+    "advanced_settings_delete_user_data": {
+      "en": "Delete user data",
+      "de": "Benutzerdaten löschen",
+      "ru": "Удаление пользовательских данных",
+      "ja": "ユーザーデータの削除",
+      "zh": "删除用户数据",
+      "it": "Cancellare i dati dell'utente",
+      "fr": "Supprimer les données de l'utilisateur",
+      "es": "Borrar datos de usuario",
+      "pl": "Usuwanie danych użytkownika"
+    },
+    "advanced_settings_delete_dict": {
+      "en": "Reset dictionary files",
+      "de": "Wörterbuchdateien zurücksetzen",
+      "ru": "Сброс файлов словарей",
+      "ja": "辞書ファイルのリセット",
+      "zh": "重置字典文件",
+      "it": "Reimpostare i file del dizionario",
+      "fr": "Réinitialiser les fichiers du dictionnaire",
+      "es": "Restablecer archivos de diccionario",
+      "pl": "Resetowanie plików słownika"
+    },
+    "advanced_settings_delete_history": {
+      "en": "Delete search history",
+      "de": "Suchverlauf löschen",
+      "ru": "Удаление истории поиска",
+      "ja": "検索履歴の削除",
+      "zh": "删除搜索历史",
+      "it": "Cancellare la cronologia delle ricerche",
+      "fr": "Supprimer l'historique des recherches",
+      "es": "Eliminar el historial de búsqueda",
+      "pl": "Usuwanie historii wyszukiwania"
+    },
+    "advanced_settings_delete_dojg": {
+      "en": "Delete DoJG files",
+      "de": "DoJG-Dateien löschen",
+      "ru": "Удаление файлов DoJG",
+      "ja": "DoJGファイルの削除",
+      "zh": "删除 DoJG 文件",
+      "it": "Eliminare i file DoJG",
+      "fr": "Supprimer les fichiers DoJG",
+      "es": "Eliminar archivos DoJG",
+      "pl": "Usuwanie plików DoJG"
+    }
+  },
+  "WebviewScreen": {
+    "loading": {
+      "en": "Searching",
+      "de": "Suche",
+      "ru": "Поиск",
+      "ja": "検索中",
+      "zh": "搜索",
+      "it": "Ricerca",
+      "fr": "Recherche",
+      "es": "Buscando",
+      "pl": "Ładowanie"
+    },
+    "title": {
+      "en": "Webview",
+      "de": "Webview",
+      "ru": "Webview",
+      "ja": "ウェブビュー",
+      "zh": "网页浏览",
+      "it": "Vista sul web",
+      "fr": "Webview",
+      "es": "Webview",
+      "pl": "Webview"
+    }
+  },
+  "ManualScreen": {
+    "title": {
+      "en": "Manual",
+      "de": "Handbuch",
+      "ru": "Руководство",
+      "ja": "マニュアル",
+      "zh": "手册",
+      "it": "Manuale",
+      "fr": "Manuel",
+      "es": "Manual",
+      "pl": "Instrukcja"
+    },
+    "anki_title": {
+      "en": "Anki",
+      "de": "Anki",
+      "ru": "Anki",
+      "ja": "Anki",
+      "zh": "Anki",
+      "it": "Anki",
+      "fr": "Anki",
+      "es": "Anki",
+      "pl": "Anki"
+    },
+    "anki_setup_title": {
+      "en": "Setup",
+      "de": "Einrichtung",
+      "ru": "Настройка",
+      "ja": "セットアップ",
+      "zh": "设置",
+      "it": "Impostazione",
+      "fr": "Mise en place",
+      "es": "Configurar",
+      "pl": "Ustawienie"
+    },
+    "anki_setup_intro": {
+      "en": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
+      "de": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
+      "ru": "DaKanji можно использовать для отправки заметок в Anki. Для этого для каждой платформы требуется своя настройка.",
+      "ja": "Dakanjiは、Ankiにノートを送信することが可能です。端末によって設定方法が異なりますのでご注意ください。",
+      "zh": "DaKanji可以用来向Anki发送笔记。为此，每个平台需要不同的设置。",
+      "it": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma ha bisogno di una configurazione diversa.",
+      "fr": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme a besoin d'une configuration différente.",
+      "es": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuración diferente.",
+      "pl": "DaKanji może być używane do wysyłania notatek do Anki. Do tego każda platforma potrzebuje innej konfiguracji."
+    },
+    "anki_setup_android_title": {
+      "en": "Android",
+      "de": "Android",
+      "ru": "Android",
+      "ja": "アンドロイド",
+      "zh": "安卓",
+      "it": "Android",
+      "fr": "Android",
+      "es": "Android",
+      "pl": "Android"
+    },
+    "anki_setup_android_text": {
+      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+      "ru": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
+      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
+      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
+      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
+    },
+    "anki_setup_desktop_title": {
+      "en": "Desktop",
+      "de": "Desktop",
+      "ru": "Рабочий стол",
+      "ja": "デスクトップ",
+      "zh": "桌面",
+      "it": "Desktop",
+      "fr": "Bureau",
+      "es": "Escritorio",
+      "pl": "Pulpit"
+    },
+    "anki_setup_desktop_text": {
+      "en": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
+      "de": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
+      "ru": "На MacOS, Windows и Linux необходимо установить [Anki](https://apps.ankiweb.net/) и [AnkiConnect](https://ankiweb.net/shared/info/2055492159) должен быть [установлен и запущен](https://foosoft.net/projects/anki-connect/).",
+      "ja": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)をインストールし、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)となっている必要があります。",
+      "zh": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
+      "it": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
+      "fr": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
+      "es": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
+      "pl": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/)."
+    },
+    "anki_setup_ios_title": {
+      "en": "iOS",
+      "de": "iOS",
+      "ru": "iOS",
+      "ja": "iOS",
+      "zh": "基础设施",
+      "it": "iOS",
+      "fr": "iOS",
+      "es": "iOS",
+      "pl": "iOS"
+    },
+    "anki_setup_ios_text": {
+      "en": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
+      "de": "Die Einrichtung unter iOS ist genauso einfach wie unter Android. Installiere einfach [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) und erteile DaKanji die Erlaubnis, wenn du gefragt wirst.",
+      "ru": "Установка на iOS очень проста, как и на Android, просто установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) и дайте разрешение DaKanji, когда вас попросят.",
+      "ja": "iOSでの設定は、Androidと同様に[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールし、Dakanjiを許可するだけで、簡単に設定できます。",
+      "zh": "在iOS上的设置超级简单，就像在Android上一样，只需安装[AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)并在询问时授予DaKanji权限。",
+      "it": "L'installazione su iOS è semplicissima, come su Android, basta installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) e concedere l'autorizzazione a DaKanji quando viene richiesto.",
+      "fr": "L'installation sur iOS est très simple, comme sur Android, il suffit d'installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) et d'accorder l'autorisation à DaKanji lorsqu'elle est demandée.",
+      "es": "La configuración en iOS es super sencilla, al igual que en Android, sólo tienes que instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) y conceder permiso a DaKanji cuando te lo pida.",
+      "pl": "Konfiguracja na iOS jest super prosta, podobnie jak na Androidzie, wystarczy zainstalować [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) i przyznać DaKanji uprawnienia, gdy zostaniemy o to poproszeni."
+    },
+    "anki_connection_test": {
+      "en": "To test if DaKanji can reach Anki you can press the button below.",
+      "de": "Um zu testen, ob DaKanji Anki erreichen kann, kannst du den Knopf unten drücken.",
+      "ru": "Чтобы проверить, может ли DaKanji достичь Anki, вы можете нажать кнопку ниже.",
+      "ja": "DakanjiとAnkiの同期状況は、以下のボタンで確認することができます。",
+      "zh": "要测试DaKanji是否能到达Anki，你可以按下面的按钮。",
+      "it": "Per verificare se DaKanji può raggiungere Anki è possibile premere il pulsante sottostante.",
+      "fr": "Pour tester si DaKanji peut atteindre Anki, vous pouvez cliquer sur le bouton ci-dessous.",
+      "es": "Para probar si DaKanji puede llegar a Anki puedes pulsar el botón de abajo.",
+      "pl": "Aby przetestować czy DaKanji może dotrzeć do Anki możesz nacisnąć przycisk poniżej."
+    },
+    "anki_test_connection": {
+      "en": "Test connection to Anki",
+      "de": "Überprüfe Verbindung zu Anki",
+      "ru": "Тестовое подключение к Anki",
+      "ja": "Ankiへの接続をテストする",
+      "zh": "测试与Anki的连接",
+      "it": "Prova la connessione ad Anki",
+      "fr": "Test de connexion à Anki",
+      "es": "Prueba de conexión a Anki",
+      "pl": "Przetestuj połączenie z Anki"
+    },
+    "anki_test_connection_success": {
+      "en": "You are connected to Anki! 🎉",
+      "de": "Du bist mit Anki verbunden! 🎉",
+      "ru": "Вы подключены к Anki! 🎉",
+      "ja": "Ankiに接続されました！🎉",
+      "zh": "你已连接到Anki!🎉",
+      "it": "Sei connesso ad Anki! 🎉",
+      "fr": "Vous êtes connecté à Anki ! 🎉",
+      "es": "¡Estás conectado a Anki! 🎉",
+      "pl": "Jesteś podłączony do Anki! 🎉"
+    },
+    "anki_test_connection_fail": {
+      "en": "You are not connected to Anki! 😢",
+      "de": "Du bist nicht mit Anki verbunde! 😢",
+      "ru": "Вы не подключены к Anki! 😢",
+      "ja": "Ankiに接続されていません！😢",
+      "zh": "你没有连接到Anki!😢",
+      "it": "Non sei connesso ad Anki! 😢",
+      "fr": "Vous n'êtes pas connecté à Anki ! 😢",
+      "es": "¡No estás conectado a Anki! 😢",
+      "pl": "Nie jesteś połączony z Anki! 😢"
+    },
+    "dict_title": {
+      "en": "Dictionary",
+      "de": "Wörterbuch",
+      "ru": "Словарь",
+      "ja": "辞書",
+      "zh": "词典",
+      "it": "Dizionario",
+      "fr": "Dictionnaire",
+      "es": "Diccionario",
+      "pl": "Słownik"
+    },
+    "dict_search_results_title": {
+      "en": "Search results",
+      "de": "Suchergebnisse",
+      "ru": "Результаты поиска",
+      "ja": "検索結果",
+      "zh": "搜索结果",
+      "it": "Risultati della ricerca",
+      "fr": "Résultats de la recherche",
+      "es": "Resultados de la búsqueda",
+      "pl": "Wyniki wyszukiwania"
+    },
+    "dict_search_results_navigate_title": {
+      "en": "Navigate",
+      "de": "Navigieren",
+      "ru": "Перейдите по ссылке",
+      "ja": "ナビゲート",
+      "zh": "导航",
+      "it": "Navigare",
+      "fr": "Naviguer",
+      "es": "Navegue por",
+      "pl": "Nawigacja"
+    },
+    "dict_search_results_navigate_text": {
+      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
+      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
+      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
+      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
+      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
+      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
+      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
+      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
+    },
+    "dict_search_history_title": {
+      "en": "Search history",
+      "de": "Suchverlauf",
+      "ru": "История поиска",
+      "ja": "検索履歴",
+      "zh": "搜索历史",
+      "it": "Storia della ricerca",
+      "fr": "Historique de la recherche",
+      "es": "Historial de búsqueda",
+      "pl": "Historia wyszukiwania"
+    },
+    "dict_search_history_delete_title": {
+      "en": "Delete",
+      "de": "Löschen",
+      "ru": "Удалить",
+      "ja": "削除",
+      "zh": "删除",
+      "it": "Cancellare",
+      "fr": "Supprimer",
+      "es": "Borrar",
+      "pl": "Usuń"
+    },
+    "dict_search_history_delete_text": {
+      "en": "You can delete elements from the search history by swiping left on them.",
+      "de": "Sie können Elemente aus dem Suchverlauf löschen, indem Sie sie nach links streichen.",
+      "ru": "Удалить элементы из истории поиска можно, проведя по ним пальцем влево.",
+      "ja": "左にスワイプして検索履歴を削除できます",
+      "zh": "您可以通过向左滑动从搜索历史中删除元素。",
+      "it": "È possibile eliminare gli elementi dalla cronologia di ricerca passando il dito a sinistra su di essi.",
+      "fr": "Vous pouvez supprimer des éléments de l'historique de recherche en les faisant glisser vers la gauche.",
+      "es": "Puedes eliminar elementos del historial de búsqueda deslizando el dedo hacia la izquierda sobre ellos.",
+      "pl": "Elementy można usuwać z historii wyszukiwania, przesuwając po nich palcem w lewo."
+    },
+    "dict_kanji_title": {
+      "en": "Kanji",
+      "de": "Kanji",
+      "ru": "Кандзи",
+      "ja": "漢字",
+      "zh": "汉字",
+      "it": "Kanji",
+      "fr": "Kanji",
+      "es": "Kanji",
+      "pl": "Kanji"
+    },
+    "dict_kanji_search_kanji_group_title": {
+      "en": "Search Kanji group",
+      "de": "Kanji-Gruppe suchen",
+      "ru": "Поиск группы кандзи",
+      "ja": "漢字グループ検索",
+      "zh": "搜索汉字组",
+      "it": "Ricerca gruppo Kanji",
+      "fr": "Rechercher un groupe de Kanji",
+      "es": "Buscar grupo de kanji",
+      "pl": "Wyszukaj grupę Kanji"
+    },
+    "dict_kanji_search_kanji_group_text": {
+      "en": "When a Kanji group can be searched in the dictionary it has a green border. Long pressing will search for it in the dictionary and double tapping will copy it to the clipboard.",
+      "de": "Wenn eine Kanji-Gruppe im Wörterbuch gesucht werden kann, ist sie mit einem grünen Rahmen versehen. Durch langes Drücken wird sie im Wörterbuch gesucht und durch doppeltes Tippen wird sie in die Zwischenablage kopiert.",
+      "ru": "Когда группа кандзи может быть найдена в словаре, она имеет зеленую рамку. При длительном нажатии на кнопку она будет найдена в словаре, а при двойном нажатии - скопирована в буфер обмена.",
+      "ja": "辞書で検索できる漢字グループには緑色の枠が表示されます。長押しで辞書検索、ダブルタップでクリップボードにコピーできます。",
+      "zh": "当一个汉字组可以在字典中搜索时，它有一个绿色的边框。长按会在字典中搜索到它，双击会把它复制到剪贴板上。",
+      "it": "Quando un gruppo di Kanji può essere cercato nel dizionario, ha un bordo verde. Premendo a lungo lo si cerca nel dizionario e toccando due volte lo si copia negli appunti.",
+      "fr": "Lorsqu'un groupe de Kanji peut être recherché dans le dictionnaire, il est entouré d'une bordure verte. Un appui long permet de le rechercher dans le dictionnaire et un double appui permet de le copier dans le presse-papiers.",
+      "es": "Cuando un grupo kanji puede buscarse en el diccionario, tiene un borde verde. Una pulsación larga lo buscará en el diccionario y una doble pulsación lo copiará en el portapapeles.",
+      "pl": "Gdy grupę kanji można wyszukać w słowniku, jest ona oznaczona zieloną ramką. Długie naciśnięcie wyszuka ją w słowniku, a dwukrotne naciśnięcie skopiuje ją do schowka."
+    },
+    "dict_kanji_copy_radicals_title": {
+      "en": "Copying radicals",
+      "de": "Kopieren von Radikalen",
+      "ru": "Копирование радикалов",
+      "ja": "ラジカルのコピー",
+      "zh": "复制自由基",
+      "it": "Copiare i radicali",
+      "fr": "Copier des radicaux",
+      "es": "Copiar radicales",
+      "pl": "Kopiowanie rodników"
+    },
+    "dict_kanji_copy_radicals_text": {
+      "en": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
+      "de": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
+      "ru": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
+      "ja": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
+      "zh": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
+      "it": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
+      "fr": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
+      "es": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
+      "pl": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka."
+    },
+    "dict_examples_title": {
+      "en": "Examples",
+      "de": "Beispiele",
+      "ru": "Примеры",
+      "ja": "例",
+      "zh": "实例",
+      "it": "Esempi",
+      "fr": "Exemples",
+      "es": "Ejemplos",
+      "pl": "Przykłady"
+    },
+    "dict_text_examples_analyze_title": {
+      "en": "Opening examples in the Text screen",
+      "de": "Beispiele im Bildschirm \"Text\" öffnen",
+      "ru": "Открытие примеров на экране \"Текст",
+      "ja": "テキスト画面で例を開く",
+      "zh": "在文本屏幕中打开例子",
+      "it": "Apertura di esempi nella schermata Testo",
+      "fr": "Ouvrir des exemples dans l'écran Texte",
+      "es": "Abrir ejemplos en la pantalla Texto",
+      "pl": "Otwieranie przykładów na ekranie Tekst"
+    },
+    "dict_text_examples_analyze_text": {
+      "en": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
+      "de": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
+      "ru": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
+      "ja": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
+      "zh": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
+      "it": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
+      "fr": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
+      "es": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
+      "pl": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie."
+    },
+    "dict_radicals_title": {
+      "en": "Radicals",
+      "de": "Radikale",
+      "ru": "Радикалы",
+      "ja": "部首",
+      "zh": "激进主义者",
+      "it": "Radicali",
+      "fr": "Radicaux",
+      "es": "Radicales",
+      "pl": "Radykałowie"
+    },
+    "dict_radicals_paste_title": {
+      "en": "Pasting radicals",
+      "de": "Radikale einfügen",
+      "ru": "Пастообразные радикалы",
+      "ja": "部首の貼り付け",
+      "zh": "粘贴基点",
+      "it": "Incollare i radicali",
+      "fr": "Collage de radicaux",
+      "es": "Pegar radicales",
+      "pl": "Wklejanie rodników"
+    },
+    "dict_radicals_paste_text": {
+      "en": "Pressing the paste button in the lower right corner, will search in your system's clipboard for radicals and use them as the current selection.",
+      "de": "Wenn Sie die Schaltfläche \"Einfügen\" in der unteren rechten Ecke drücken, wird in der Zwischenablage Ihres Systems nach Radikalen gesucht und diese als aktuelle Auswahl verwendet.",
+      "ru": "Нажатие кнопки \"Вставить\" в правом нижнем углу приведет к поиску радикалов в буфере обмена вашей системы и использованию их в качестве текущего выделения.",
+      "ja": "右下の貼り付けボタンを押すと、先ほどコピーした部首を貼り付けます。",
+      "zh": "按右下角的粘贴按钮，将在你的系统剪贴板中搜索基点，并将其作为当前选择。",
+      "it": "Premendo il pulsante Incolla nell'angolo in basso a destra, si cercheranno i radicali negli appunti del sistema e li si utilizzerà come selezione corrente.",
+      "fr": "En appuyant sur le bouton \"coller\" dans le coin inférieur droit, vous rechercherez des radicaux dans le presse-papiers de votre système et les utiliserez comme sélection courante.",
+      "es": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
+      "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
+    },
+    "deep_links_title": {
+      "en": "Deep Links",
+      "de": "Deep Links",
+      "ru": "Deep Links",
+      "ja": "Deep Links",
+      "zh": "Deep Links",
+      "it": "Deep Links",
+      "fr": "Deep Links",
+      "es": "Deep Links",
+      "pl": "Deep Links"
+    },
+    "deep_links_text": {
+      "en": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and https://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "de": "Deep Links sind eine Möglichkeit, Inhalte in einer App direkt zu verlinken. DaKanji bietet dafür zwei Schemata: dakanji:// und https://dakanji.app/app. Mit dieser Funktion können Sie zum Beispiel die Wörterbuchsuche öffnen, wenn Sie auf diesen Link tippen [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Für alle unterstützten Links siehe [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "ru": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и https://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "ja": "ディープリンクは、アプリ内のコンテンツに直接リンクする方法です。大漢字ではdakanji://とhttps://dakanji.app/app。例えば、[dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる)というリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
+      "zh": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 https://dakanji.app/app。使用此功能，您可以在点击此链接[dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる)时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "it": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e https://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+      "fr": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et https://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "es": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y https://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "pl": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i https://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links)."
     }
   },
   "KuzushijiScreen": {
@@ -3734,6 +3756,8 @@ static const Map<String,dynamic> ja = {
     "anki_test_connection_fail": "Ankiに接続されていません！😢",
     "anki_test_connection_success": "Ankiに接続されました！🎉",
     "anki_title": "Anki",
+    "deep_links_text": "ディープリンクは、アプリ内のコンテンツに直接リンクする方法です。大漢字ではdakanji://とhttps://dakanji.app/app。例えば、[dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる)というリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "例",
     "dict_kanji_copy_radicals_text": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
     "dict_kanji_copy_radicals_title": "ラジカルのコピー",
@@ -4089,6 +4113,8 @@ static const Map<String,dynamic> de = {
     "anki_test_connection_fail": "Du bist nicht mit Anki verbunde! 😢",
     "anki_test_connection_success": "Du bist mit Anki verbunden! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Deep Links sind eine Möglichkeit, Inhalte in einer App direkt zu verlinken. DaKanji bietet dafür zwei Schemata: dakanji:// und https://dakanji.app/app. Mit dieser Funktion können Sie zum Beispiel die Wörterbuchsuche öffnen, wenn Sie auf diesen Link tippen [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Für alle unterstützten Links siehe [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Beispiele",
     "dict_kanji_copy_radicals_text": "Sie können ein Radikal in die Zwischenablage kopieren, indem Sie auf das Radikal tippen. Durch doppeltes Antippen wird das Radikal an den bereits vorhandenen Inhalt der Zwischenablage angehängt.",
     "dict_kanji_copy_radicals_title": "Kopieren von Radikalen",
@@ -4407,6 +4433,8 @@ static const Map<String,dynamic> ru = {
     "anki_test_connection_fail": "Вы не подключены к Anki! 😢",
     "anki_test_connection_success": "Вы подключены к Anki! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и https://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Примеры",
     "dict_kanji_copy_radicals_text": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
     "dict_kanji_copy_radicals_title": "Копирование радикалов",
@@ -4746,6 +4774,8 @@ static const Map<String,dynamic> pl = {
     "anki_test_connection_fail": "Nie jesteś połączony z Anki! 😢",
     "anki_test_connection_success": "Jesteś podłączony do Anki! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i https://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Przykłady",
     "dict_kanji_copy_radicals_text": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka.",
     "dict_kanji_copy_radicals_title": "Kopiowanie rodników",
@@ -5101,6 +5131,8 @@ static const Map<String,dynamic> en = {
     "anki_test_connection_fail": "You are not connected to Anki! 😢",
     "anki_test_connection_success": "You are connected to Anki! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and https://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Examples",
     "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
     "dict_kanji_copy_radicals_title": "Copying radicals",
@@ -5419,6 +5451,8 @@ static const Map<String,dynamic> it = {
     "anki_test_connection_fail": "Non sei connesso ad Anki! 😢",
     "anki_test_connection_success": "Sei connesso ad Anki! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e https://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Esempi",
     "dict_kanji_copy_radicals_text": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
     "dict_kanji_copy_radicals_title": "Copiare i radicali",
@@ -5723,6 +5757,8 @@ static const Map<String,dynamic> fr = {
     "anki_test_connection_fail": "Vous n'êtes pas connecté à Anki ! 😢",
     "anki_test_connection_success": "Vous êtes connecté à Anki ! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et https://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien [dakanji://dictionary?search=食べる](dakanji://dictionary?search=食べる). Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Exemples",
     "dict_kanji_copy_radicals_text": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
     "dict_kanji_copy_radicals_title": "Copier des radicaux",
@@ -6027,6 +6063,8 @@ static const Map<String,dynamic> es = {
     "anki_test_connection_fail": "¡No estás conectado a Anki! 😢",
     "anki_test_connection_success": "¡Estás conectado a Anki! 🎉",
     "anki_title": "Anki",
+    "deep_links_text": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y https://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Ejemplos",
     "dict_kanji_copy_radicals_text": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
     "dict_kanji_copy_radicals_title": "Copiar radicales",

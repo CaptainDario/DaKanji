@@ -214,6 +214,8 @@
     "anki_test_connection_fail": "You are not connected to Anki! \ud83d\ude22",
     "anki_test_connection_success": "You are connected to Anki! \ud83c\udf89",
     "anki_title": "Anki",
+    "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and https://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link [dakanji://dictionary?search=\u98df\u3079\u308b](dakanji://dictionary?search=\u98df\u3079\u308b). For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+    "deep_links_title": "Deep Links",
     "dict_examples_title": "Examples",
     "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
     "dict_kanji_copy_radicals_title": "Copying radicals",

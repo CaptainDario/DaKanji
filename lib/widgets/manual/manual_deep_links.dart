@@ -7,6 +7,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 
 
@@ -20,7 +21,12 @@ class ManualDeepLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: MarkdownBody(
-        data: LocaleKeys.ManualScreen_title.tr(),
+        selectable: true,
+        data: LocaleKeys.ManualScreen_deep_links_text.tr(),
+        onTapLink: (text, href, title) {
+          if(href != null)
+            launchUrlString(href);
+        },
       ),
     );
   }
