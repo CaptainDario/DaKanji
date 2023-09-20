@@ -177,55 +177,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           child: LayoutGrid(
                             columnSizes: [auto, 1.fr],
                             columnGap: 0.1,
-                            rowSizes: List.generate(11, (index) => auto),
+                            rowSizes: List.generate(10, (index) => auto),
                             children: [
-                              if(kanjiVGs.isNotEmpty)
-                                ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle,),
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        for (String radical in radicals)
-                                          ...[
-                                            WidgetSpan(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Clipboard.setData(ClipboardData(text: radical));
-                                                  ScaffoldMessenger.of(context).clearSnackBars();
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} ${radical}"
-                                                      )
-                                                    )
-                                                  );
-                                                },
-                                                onDoubleTap: () async {
-                                                  var data = (await Clipboard.getData("text/plain"));
-                                                  String text = data == null ? "" : data.text!;
-                                                  Clipboard.setData(ClipboardData(text: text+radical));
-                                                  ScaffoldMessenger.of(context).clearSnackBars();
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} ${text}${radical}"
-                                                      )
-                                                    )
-                                                  );
-                                                },
-                                                child: Text(radical),
-                                              )
-                                            ),
-                                            if(radical != radicals.last)
-                                              TextSpan(
-                                                text: ","
-                                              )
-                                          ]
-                                      ]
-                                    )
-                                  )
-                                ],
-
                               SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
@@ -279,7 +232,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     // On / Kun readings
                     LayoutGrid(
                       columnSizes: [auto, 1.fr],
-                      rowSizes: List.generate(10, (index) => auto),
+                      rowSizes: List.generate(10 + (radicals.isNotEmpty ? 1 : 0), (index) => auto),
                       children: [
                         Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),
                         SelectableText(onReadings.join(",  ")),
@@ -300,6 +253,52 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           ...[
                             Text("${LocaleKeys.DictionaryScreen_kanji_lookalikes.tr()}: ", style: headerStyle),
                             LinkedKanjiText(widget.kanjidic2entry.lookalikes!)
+                          ],
+                        if(radicals.isNotEmpty)
+                          ...[
+                            Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle,),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  for (String radical in radicals)
+                                    ...[
+                                      WidgetSpan(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Clipboard.setData(ClipboardData(text: radical));
+                                            ScaffoldMessenger.of(context).clearSnackBars();
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} ${radical}"
+                                                )
+                                              )
+                                            );
+                                          },
+                                          onDoubleTap: () async {
+                                            var data = (await Clipboard.getData("text/plain"));
+                                            String text = data == null ? "" : data.text!;
+                                            Clipboard.setData(ClipboardData(text: text+radical));
+                                            ScaffoldMessenger.of(context).clearSnackBars();
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} ${text}${radical}"
+                                                )
+                                              )
+                                            );
+                                          },
+                                          child: Text(radical),
+                                        )
+                                      ),
+                                      if(radical != radicals.last)
+                                        TextSpan(
+                                          text: ", "
+                                        )
+                                    ]
+                                ]
+                              )
+                            )
                           ],
                       ],
                     ),
