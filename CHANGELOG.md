@@ -1,11 +1,27 @@
 
 # DaKanji - changelog
 
-## v3.1.1+60 - 辞書開発 (18.9.2023)
+## v3.2.0+ - 辞書開発 ()
 
-Hotfixes:
+New Features:
 
-- Drawing not working on android devices
+- Deep Links:
+  - Directly open dakanji with dakanji:// or https://dakanji.app/app/
+  - see the manual for more info
+- Brand new website https://dakanji.app
+
+Improvements:
+
+- 
+
+Changes:
+
+- 
+
+Fixed:
+
+- #64 Examples some times repeating
+- #62 Pitch accent still bugged
 
 ## v3.1.0+58 - 辞書開発 (13.9.2023)
 
