@@ -137,6 +137,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   msix: 3.13.2
+  flutter_lints: ^2.0.3
   json_serializable: 6.7.0
   build_runner: 2.4.4
   dependency_validator: 3.2.2
