@@ -239,7 +239,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                 ),
                                 child: Text(
                                   readingWoNonMora[r] +
-                                    (r+moraTillR+1 < reading.length-1 && nonMora.contains(reading[r+moraTillR+1])
+                                    (r+moraTillR+1 < reading.length && nonMora.contains(reading[r+moraTillR+1])
                                       ? reading[r+moraTillR+1]
                                       : ""),
                                   style: TextStyle(
