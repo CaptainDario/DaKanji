@@ -124,8 +124,9 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     }
 
     // reset the state of the always on top option
-    if(g_desktopPlatform)
+    if(g_desktopPlatform) {
       WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+    }
 
     super.dispose();
   }
