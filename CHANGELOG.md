@@ -12,7 +12,7 @@ New Features:
 
 Improvements:
 
-- 
+- Various small UI improvments
 
 Changes:
 
