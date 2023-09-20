@@ -111,6 +111,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       setState(() {});
 
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        if(!mounted) return;
         initEntries();
         setState(() {});
       });
