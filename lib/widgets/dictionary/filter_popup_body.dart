@@ -152,33 +152,39 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                 
             ),
           ),
-          Stack(
-            alignment: Alignment.center,
+          Row(
             children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        color: g_Dakanji_green,
-                        borderRadius: BorderRadius.circular(5000)
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        borderRadius: BorderRadius.circular(5000),
-                        highlightColor: g_Dakanji_green.withOpacity(0.2),
-                        child: SizedBox(
-                          height: 24,
-                          width: 100,
-                          child: Center(
-                            child: Text(
-                              LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                              style: TextStyle(
-                                color: Colors.white
+              Flexible(
+                flex: 1,
+                child: Center(child: SizedBox())
+              ),
+              Flexible(
+                flex: 1,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: g_Dakanji_green,
+                          borderRadius: BorderRadius.circular(5000)
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          borderRadius: BorderRadius.circular(5000),
+                          highlightColor: g_Dakanji_green.withOpacity(0.2),
+                          child: SizedBox(
+                            height: 24,
+                            width: 100,
+                            child: Center(
+                              child: Text(
+                                LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
                               ),
                             ),
                           ),
@@ -188,25 +194,24 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                   ),
                 ),
               ),
-              Positioned(
-                right: 0,
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          showMore = !showMore;
-                          currentFilter = showMore
-                            ? jmDictAllFiltersSorted
-                            : jmDictPosGeneralSorted;
-                        });
-                      },
-                      icon: Icon(showMore ? Icons.expand_less : Icons.expand_more)
-                    ),
-                  ],
+              Flexible(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showMore = !showMore;
+                        currentFilter = showMore
+                          ? jmDictAllFiltersSorted
+                          : jmDictPosGeneralSorted;
+                      });
+                    },
+                    icon: Icon(showMore ? Icons.expand_less : Icons.expand_more)
+                  ),
                 ),
               ),
-            ],
+            ]
           ),
         ],
       ),
