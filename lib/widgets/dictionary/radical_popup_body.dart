@@ -75,7 +75,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             height: !kanjiIsFullscreen
-              ? (MediaQuery.of(context).size.width-(noKanjiButtons*6)) / noKanjiButtons
+              ? (MediaQuery.of(context).size.width) / noKanjiButtons 
               : widget.height * 3/5,
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
