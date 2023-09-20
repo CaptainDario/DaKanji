@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'dart:collection';
 
 import 'package:database_builder/database_builder.dart';
 
@@ -237,8 +238,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                 ),
                                 child: Text(
                                   readingWoNonMora[r] +
-                                    (r+moraTillR+1 < reading.length-1 &&
-                                    nonMora.contains(reading[r+moraTillR+1])
+                                    (r+moraTillR+1 < reading.length-1 && nonMora.contains(reading[r+moraTillR+1])
                                       ? reading[r+moraTillR+1]
                                       : ""),
                                   style: TextStyle(
@@ -249,9 +249,8 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                             );
                           }
-                          // add "," to separate pitch readingss
-                          if(i + a != widget.entry.readings.length-1 +
-                            widget.entry.accents![i]!.attributes.length-1)
+                          // add "," to separate pitch readings
+                          if(i < widget.entry.accents!.whereNotNull().length-1)
                             ret.add(Text("、"));
 
                           return ret;
