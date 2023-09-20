@@ -251,7 +251,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                             );
                           }
                           // add "," to separate pitch readings
-                          if(i < widget.entry.accents!.whereNotNull().length-1)
+                          if(a < widget.entry.accents![i]!.attributes.length-1)
                             ret.add(Text("、"));
 
                           return ret;
