@@ -162,7 +162,8 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           // does the kanji of the entry match
           int match = example.indexOf(item);
           while(match != -1) {
-            matchSpans.last.add(Tuple2(match, match+item.length));
+            if(!matchSpans.last.contains(Tuple2(match, match+item.length)))
+              matchSpans.last.add(Tuple2(match, match+item.length));
             match = example.indexOf(item, min(match+1, example.length));
           }
         }
@@ -245,7 +246,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
       .findAllSync();
   }
 
-  // sort translations by avaiablity of preferred languages
+  // sort translations by availability of preferred languages
   examples.sort((a, b) {
     int aScore = 0, bScore = 0, cnt = 0;
     for (String lang in selectedLangs) {
