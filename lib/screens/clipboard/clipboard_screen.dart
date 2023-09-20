@@ -132,7 +132,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
   @override
   void onClipboardChanged() async {
-    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? ClipboardData(text: "");
+    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? const ClipboardData(text: "");
     setState(() { });
   }
   
@@ -184,8 +184,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         await windowManager.setAlwaysOnTop(isAlwaysOnTop);
 
       if(isAlwaysOnTop){
-        await windowManager.setSize(Size(300, 300));
-        await windowManager.setMinimumSize(Size(300, 300));
+        await windowManager.setSize(const Size(300, 300));
+        await windowManager.setMinimumSize(const Size(300, 300));
         await windowManager.setAsFrameless();
       }
       else {

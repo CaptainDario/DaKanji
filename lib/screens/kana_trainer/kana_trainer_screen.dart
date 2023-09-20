@@ -28,7 +28,7 @@ class _KanaTrainerScreenState extends State<KanaTrainerScreen> {
     return DaKanjiDrawer(
       currentScreen: Screens.kana_trainer,
       drawerClosed: !widget.navigatedByDrawer,
-      child: KanaTrainer()
+      child: const KanaTrainer()
     );
   }
 }

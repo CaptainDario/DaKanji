@@ -112,7 +112,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
             children: [
               Text(
                 convertToRomaji(widget.kana),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 )
@@ -164,11 +164,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       children: [
                         MarkdownBody(
                           styleSheet: MarkdownStyleSheet(
-                            p: TextStyle(
+                            p: const TextStyle(
                               fontSize: 20,
                             ),
                             // bold text
-                            strong: TextStyle(
+                            strong: const TextStyle(
                               fontSize: 20,
                               decoration: TextDecoration.underline,
                             )

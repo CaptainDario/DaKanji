@@ -7,33 +7,33 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 /// Color for showing suffixs
-final Color suffixColor = Color(0xffff0000);
+final Color suffixColor = const Color(0xffff0000);
 /// Color for showing na-adjectives
-final Color naAdjectiveColor = Color(0xff7f0000);
+final Color naAdjectiveColor = const Color(0xff7f0000);
 /// Color for showing nouns
-final Color nounColor = Color(0xff191970);
+final Color nounColor = const Color(0xff191970);
 /// Color for prefixes
-final Color prefixColor = Color(0xff006400);
+final Color prefixColor = const Color(0xff006400);
 /// Color for showing verbs
-final Color verbColor = Color(0xffff8c00);
+final Color verbColor = const Color(0xffff8c00);
 /// Color for showing i-adjectives
-final Color iAdjectiveColor = Color(0xffffff00);
+final Color iAdjectiveColor = const Color(0xffffff00);
 /// Color for showing adverbs
-final Color adverbColor = Color(0xff0000cd);
+final Color adverbColor = const Color(0xff0000cd);
 /// Color for showing adnominals
-final Color adnominalColor = Color(0xffdeb887);
+final Color adnominalColor = const Color(0xffdeb887);
 /// Color for showing conjunctions
-final Color conjunctionColor = Color(0xff00ff00);
+final Color conjunctionColor = const Color(0xff00ff00);
 /// Color for showing particles
-final Color particleColor = Color(0xff00bfff);
+final Color particleColor = const Color(0xff00bfff);
 /// Color for showing auxilary verbs
-final Color auxVerbColor = Color(0xffff00ff);
+final Color auxVerbColor = const Color(0xffff00ff);
 /// Color for showing exclamations
-final Color exclamationColor = Color(0xffdda0dd);
+final Color exclamationColor = const Color(0xffdda0dd);
 /// Color for showing filler
-final Color fillerColor = Color(0xffff1493);
+final Color fillerColor = const Color(0xffff1493);
 /// Color for showing interjections
-final Color interjectionColor = Color(0xff98fb98);
+final Color interjectionColor = const Color(0xff98fb98);
 
 
 

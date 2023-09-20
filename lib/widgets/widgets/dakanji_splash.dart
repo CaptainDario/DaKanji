@@ -27,13 +27,13 @@ class DaKanjiSplash extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: '',
                   style: TextStyle(
                     color: g_Dakanji_red,
                     fontFamily: "theater"
                   ),
-                  children: const <TextSpan>[
+                  children: <TextSpan>[
                     TextSpan(
                       text: 'D', 
                       style: TextStyle(fontSize: 80,),
@@ -57,7 +57,7 @@ class DaKanjiSplash extends StatelessWidget {
               const DaKanjiLoadingIndicator(),
               if(text != null)
                 ...[
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                   Text(
                     text!,
                     style: TextStyle(

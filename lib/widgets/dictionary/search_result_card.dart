@@ -129,7 +129,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                             }
                             // if there is no language selected that is available for this entry
                             if(idx == -1)
-                              return Text("");
+                              return const Text("");
 
                             return Text(
                               widget.dictEntry.meanings[idx].meanings.length > index
@@ -164,7 +164,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                         ),
                       ),
                     if(widget.showWordFrequency)
-                      SizedBox(height: 5,),
+                      const SizedBox(height: 5,),
                     if( widget.showWordFrequency)
                       Text(
                         textAlign: TextAlign.end,

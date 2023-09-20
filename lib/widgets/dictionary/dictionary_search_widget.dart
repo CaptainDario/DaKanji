@@ -109,7 +109,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     searchBarAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
     searchBarAnimation = new Tween(
       begin: 0.0,
@@ -137,7 +137,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
-      reopenPopupTimer = Timer(Duration(seconds: 1), () {
+      reopenPopupTimer = Timer(const Duration(seconds: 1), () {
         if(reshowRadicalPopup)
           showRadicalPopup();
         if(reshowFilterPopup)
@@ -250,12 +250,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     Expanded(
                       child: TextField(
                         focusNode: searchTextFieldFocusNode,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none
                         ),
                         controller: searchInputController,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16
                         ),
                         onTap: () {
@@ -313,7 +313,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           child: Container(
                             width: 30,
                             height: 30,
-                            child: Icon(Icons.brush)
+                            child: const Icon(Icons.brush)
                           ),
                         ),
                       ),
@@ -326,7 +326,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         child: Container(
                           height: 30,
                           width: 30,
-                          child: Icon(
+                          child: const Icon(
                             Icons.filter_alt_outlined,
                             size: 20,
                           ),
@@ -342,13 +342,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         child: Container(
                           height: 30,
                           width: 30,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Transform.translate(
-                              offset: Offset(0, -2),
-                              child: Text(
+                              offset: const Offset(0, -2),
+                              child: const Text(
                                 "部",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -359,7 +359,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         )
                       ),
                     ),
-                    SizedBox(width: 4,)
+                    const SizedBox(width: 4,)
                   ],
                 ),
               ),
@@ -570,7 +570,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   overflow: TextOverflow.ellipsis
                 ),
               ),
-              SizedBox(width: 20,),
+              const SizedBox(width: 20,),
               Expanded(
                 child: InkWell(
                   onTap: () async {

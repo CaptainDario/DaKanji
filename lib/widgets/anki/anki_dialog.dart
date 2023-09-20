@@ -22,7 +22,7 @@ AwesomeDialog AnkiDialog(BuildContext context) {
     btnCancelOnPress: () {
       
     },
-    body: SingleChildScrollView(
+    body: const SingleChildScrollView(
       child: Column(
         children: [
           Text("send")

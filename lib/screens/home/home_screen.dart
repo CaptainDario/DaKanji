@@ -105,14 +105,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: Text(
                   "🔥 ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} 🔥",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24
                   ),
                 )
               ),
-              SizedBox(height: 8,),
+              const SizedBox(height: 8,),
               Text(changelog.first.replaceAll("\n", "")),
-              SizedBox(height: 16,),
+              const SizedBox(height: 16,),
               MarkdownBody(
                 data: changelog.sublist(1).join(),
               ),
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       headerAnimationLoop: false,
       dialogType: DialogType.noHeader,
-      body: WhatsNewDialogue(),
+      body: const WhatsNewDialogue(),
     ).show();
 
     GetIt.I<UserData>().showChangelog = false;

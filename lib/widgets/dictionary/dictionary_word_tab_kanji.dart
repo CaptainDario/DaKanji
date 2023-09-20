@@ -117,7 +117,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                         children: [
                           // first kanji writing + reading
                           Transform.translate(
-                            offset: Offset(0, 6),
+                            offset: const Offset(0, 6),
                             child: Wrap(
                               children: [
                                 for (int j = 0; j < widget.entry.readings.length; j++)
@@ -179,7 +179,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                       if(info != null)
                                         WidgetSpan(
                                           child: Transform.translate(
-                                            offset: Offset(1, -18),
+                                            offset: const Offset(1, -18),
                                             child: SelectionContainer.disabled(
                                               child: Text(
                                                 kanjiInfos[info].toString() +
@@ -209,7 +209,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               ],
             ),
 
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
 
             // pitch accent
             // test: 川蝦, 結構, 誕生日, 上機嫌, 役所, 役所, 役所
@@ -242,7 +242,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                                     (r+moraTillR+1 < reading.length && nonMora.contains(reading[r+moraTillR+1])
                                       ? reading[r+moraTillR+1]
                                       : ""),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey
                                   ),
@@ -252,7 +252,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           }
                           // add "," to separate pitch readings
                           if(a < widget.entry.accents![i]!.attributes.length-1)
-                            ret.add(Text("、"));
+                            ret.add(const Text("、"));
 
                           return ret;
                         } ()
@@ -260,7 +260,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               ),
             ),
         
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
         
             // special information: 刺草 (re_inf & ke_inf), 然う言う (2x rei_inf), 真っ当 (2x ke_inf) 
             Align(
@@ -274,11 +274,11 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                         children: [
                           WidgetSpan(
                             child: Transform.translate(
-                              offset: Offset(0, -5),
+                              offset: const Offset(0, -5),
                               child: SelectionContainer.disabled(
                                 child: Text(
                                   "${readingInfos.values.toList()[i]} ",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                     color: Colors.grey
                                   )
@@ -288,7 +288,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           ),
                           TextSpan(
                             text: ": " + readingInfos.keys.toList()[i],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                               color: Colors.grey
                             )
@@ -303,10 +303,10 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           children: [
                             WidgetSpan(
                               child: Transform.translate(
-                                offset: Offset(0, -5),
+                                offset: const Offset(0, -5),
                                 child: Text(
                                   "${kanjiInfos.values.toList()[i]} ",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                     color: Colors.grey
                                   )
@@ -315,7 +315,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                             ),
                             TextSpan(
                               text: ": " + kanjiInfos.keys.toList()[i],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey
                               )
@@ -345,7 +345,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
   /// `pitchAccent` == `reading.length` - 尾高 <br/>
   BoxDecoration getPitchAccentDecoration(int pitchAccent, String reading, int at) {
     
-    BorderSide empty = BorderSide(
+    BorderSide empty = const BorderSide(
       color: Colors.transparent,
       width: 1.5,
       
@@ -353,11 +353,11 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     BoxDecoration falling = BoxDecoration(
       border: Border(
         left: empty,
-        top: BorderSide(
+        top: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
-        right: BorderSide(
+        right: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
@@ -368,11 +368,11 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
       border: Border(
         left: empty,
         top: empty,
-        right: BorderSide(
+        right: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
-        bottom: BorderSide(
+        bottom: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
@@ -383,7 +383,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
         left: empty,
         top: empty,
         right: empty,
-        bottom: BorderSide(
+        bottom: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),
@@ -392,7 +392,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     BoxDecoration high = BoxDecoration(
       border: Border(
         left: empty,
-        top: BorderSide(
+        top: const BorderSide(
           color: Colors.grey,
           width: 1.5,
         ),

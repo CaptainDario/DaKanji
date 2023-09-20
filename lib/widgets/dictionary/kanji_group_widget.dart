@@ -109,7 +109,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("copied: ${kanjiVGChars[node.key!.value]}"),
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                         )
                       );
                     }

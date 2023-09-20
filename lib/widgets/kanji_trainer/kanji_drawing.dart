@@ -87,7 +87,7 @@ class _KanjiDrawingWidgetState extends State<KanjiDrawingWidget> {
               _penTilts.clear();
             });
           },
-          icon: Icon(Icons.refresh)
+          icon: const Icon(Icons.refresh)
         )
       ],
     );

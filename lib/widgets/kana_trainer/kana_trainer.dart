@@ -12,7 +12,7 @@ class KanaTrainer extends StatefulWidget {
 class _KanaTrainerState extends State<KanaTrainer> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         "Kana trainer widget"
       )

@@ -172,7 +172,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           case "/manual":
             return switchScreen(ManualScreen(args.navigatedByDrawer));
           case "/testScreen":
-            return switchScreen(TestScreen());
+            return switchScreen(const TestScreen());
         }
         throw UnsupportedError("Unknown route: ${settings.name}");
       },

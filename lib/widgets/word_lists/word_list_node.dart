@@ -209,9 +209,9 @@ class _WordListNodeState extends State<WordListNode> {
                       )
                       : Container(
                         width: 48,
-                        child: Icon(Icons.list)
+                        child: const Icon(Icons.list)
                       ),
-                    SizedBox(width: 8.0,),
+                    const SizedBox(width: 8.0,),
                     Expanded(
                       child: TextField(
                         autofocus: true,
@@ -287,13 +287,13 @@ class _WordListNodeState extends State<WordListNode> {
                             ),
                           if(wordListListypes.contains(widget.node.value.type))
                             ...[
-                              PopupMenuItem(
+                              const PopupMenuItem(
                                 value: PopupMenuButtonItems.SendToAnki,
                                 child: Text(
                                   "Send to anki"
                                 )
                               ),
-                              PopupMenuItem(
+                              const PopupMenuItem(
                                 value: PopupMenuButtonItems.ToPdf,
                                 child: Text(
                                   "To PDF"
@@ -361,11 +361,11 @@ class _WordListNodeState extends State<WordListNode> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: PdfPreview(
-                loadingWidget: DaKanjiLoadingIndicator(),
+                loadingWidget: const DaKanjiLoadingIndicator(),
                 actions: [
                   // to portrait
                   IconButton(
-                    icon: Icon(Icons.description),
+                    icon: const Icon(Icons.description),
                     onPressed: () async {
                       pdf = await pdfPortrait();
                       setState(() {});
@@ -375,7 +375,7 @@ class _WordListNodeState extends State<WordListNode> {
                   IconButton(
                     icon: Transform.rotate(
                       angle: 90 * pi / 180,
-                      child: Icon(Icons.description)
+                      child: const Icon(Icons.description)
                     ),
                     onPressed: () async {
                       pdf = await pdfLandscape();
@@ -384,7 +384,7 @@ class _WordListNodeState extends State<WordListNode> {
                   ),
                   IconButton(
                     onPressed: () {}, 
-                    icon: Icon(Icons.more_vert)
+                    icon: const Icon(Icons.more_vert)
                   )
                 ],
                 canChangeOrientation: false,
@@ -464,7 +464,7 @@ class _WordListNodeState extends State<WordListNode> {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         orientation: pw.PageOrientation.portrait,
-        margin: pw.EdgeInsets.all(16),
+        margin: const pw.EdgeInsets.all(16),
         footer: (context) {
           return pdfFooter(context, dakanjiLogo);
         },
@@ -528,7 +528,7 @@ class _WordListNodeState extends State<WordListNode> {
         children: [
           pw.Text(
             '${widget.node.value.name}',
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               color: PdfColors.grey,
               fontSize: 10,
             ),
@@ -542,7 +542,7 @@ class _WordListNodeState extends State<WordListNode> {
           ),
           pw.Text(
             'Page: ${context.pageNumber} of ${context.pagesCount}',
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               color: PdfColors.grey,
               fontSize: 10,
             ),
@@ -573,7 +573,7 @@ class _WordListNodeState extends State<WordListNode> {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4.landscape,
         orientation: pw.PageOrientation.landscape,
-        margin: pw.EdgeInsets.all(32),
+        margin: const pw.EdgeInsets.all(32),
         footer: (context) {
           return pdfFooter(context, dakanjiLogo);
         },

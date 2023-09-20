@@ -100,7 +100,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       builder: (context, snapshot) {
         // Is data loading
         if(!snapshot.hasData){
-          return Center(
+          return const Center(
             child: DaKanjiLoadingIndicator()
           );
         }
@@ -108,7 +108,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           // if a result was selected, but there are no examples for it,
           // show no results icon
           if(examples.isEmpty && widget.entry != null){
-            return Center(
+            return const Center(
               child: Icon(Icons.search_off)
             );
           }

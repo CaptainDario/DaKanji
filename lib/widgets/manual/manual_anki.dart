@@ -13,12 +13,12 @@ import 'package:da_kanji_mobile/application/anki/anki.dart';
 class ManualAnki extends StatelessWidget {
 
   /// heading 1 text style
-  final TextStyle heading_1 = TextStyle(
+  final TextStyle heading_1 = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
   /// heading 2 text style
-  final TextStyle heading_2 = TextStyle(
+  final TextStyle heading_2 = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
@@ -48,38 +48,38 @@ class ManualAnki extends StatelessWidget {
 
             Text(LocaleKeys.ManualScreen_anki_setup_title.tr(), style: heading_1,),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             Text(LocaleKeys.ManualScreen_anki_setup_intro.tr()),
 
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             
             Text(LocaleKeys.ManualScreen_anki_setup_android_title.tr(), style: heading_2,),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             MarkdownBody(
               data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
               onTapLink: handleUrlTap
             ),
 
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
 
             Text(LocaleKeys.ManualScreen_anki_setup_desktop_title.tr(), style: heading_2,),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             MarkdownBody(
               data: LocaleKeys.ManualScreen_anki_setup_desktop_text.tr(),
               onTapLink: handleUrlTap
             ),
 
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
 
             Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             MarkdownBody(
               data: LocaleKeys.ManualScreen_anki_setup_ios_text.tr(),
               onTapLink: handleUrlTap
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             // test connection button
             Center(
               child: ElevatedButton(

@@ -70,7 +70,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           /// all kanjis that use the selected radicals
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
@@ -93,7 +93,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     },
                     child: Text(
                       kanjisThatUseAllRadicals[index],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         fontFamily: g_japaneseFontFamily,
                         color: Colors.white,
@@ -104,9 +104,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
             ),
           ),
 
-          SizedBox(height: 4),
-          Divider(),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
+          const Divider(),
+          const SizedBox(height: 4),
           
           /// all radicals
           Expanded(
@@ -126,7 +126,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 6),
                           child: Text(
                             krad.key.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold
                             ),
@@ -135,7 +135,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       ),
                       GridView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: MediaQuery.of(context).size.width~/50,
                           crossAxisSpacing: 8,
@@ -209,13 +209,13 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                               child: Center(
                                 child: Text(
                                   krad.value[index],
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                 ),
                               )
                             );
                         },
                       ),
-                      SizedBox(height: 16)
+                      const SizedBox(height: 16)
                     ]
                   );
                 },
@@ -228,7 +228,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if(MediaQuery.of(context).size.width > 400)
-                Flexible(
+                const Flexible(
                   flex: 1,
                   child: Center(
                     child: SizedBox(),
@@ -259,7 +259,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                             child: Center(
                               child: Text(
                                 LocaleKeys.DictionaryScreen_search_filter_ok.tr(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white
                                 ),
                               ),
@@ -305,7 +305,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           
                           setState(() {});
                         },
-                        icon: Icon(Icons.paste)
+                        icon: const Icon(Icons.paste)
                       ),
                       // icons clear
                       IconButton(
@@ -316,7 +316,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                             selectedRadicals.clear();
                           });
                         },
-                        icon: Icon(Icons.clear)
+                        icon: const Icon(Icons.clear)
                       ),
                     ],
                   ),

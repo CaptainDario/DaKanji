@@ -319,7 +319,7 @@ class _KanjiTableState extends State<KanjiTable> {
                   },
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               // Amount of kanji in the current selection
               Focus(
                 focusNode: widget.includeTutorial
@@ -343,7 +343,7 @@ class _KanjiTableState extends State<KanjiTable> {
           key: UniqueKey(),
           child: SliverGrid.builder(
             itemCount: kanjis.length,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 60
             ),
             itemBuilder: (context, i) {
@@ -354,7 +354,7 @@ class _KanjiTableState extends State<KanjiTable> {
                 child: AnimationConfiguration.staggeredGrid(
                   columnCount: (MediaQuery.of(context).size.width / 60).ceil(),
                   position: i,
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   child: ScaleAnimation(
                     child: Card(
                       child: InkWell(
@@ -369,7 +369,7 @@ class _KanjiTableState extends State<KanjiTable> {
                           child: FittedBox(
                             child: Text(
                               kanjis[i].character,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 500,
                                 fontFamily: g_japaneseFontFamily
                               ),

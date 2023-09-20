@@ -70,7 +70,7 @@ class _WordMeaningsState extends State<WordMeanings> {
                       GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Text(
                     isoToLanguage[isoToiso639_1[lang]]!
                   )

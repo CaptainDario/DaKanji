@@ -40,10 +40,10 @@ class ManualButton extends StatelessWidget {
                   icon,
                   size: 100,
                 ),
-                SizedBox(height: 2,),
+                const SizedBox(height: 2,),
                 Text(
                   text,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16
                   ),
                 ),

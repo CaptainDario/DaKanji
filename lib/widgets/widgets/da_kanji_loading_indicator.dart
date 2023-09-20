@@ -13,7 +13,7 @@ class DaKanjiLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitSpinningLines(
+    return const SpinKitSpinningLines(
       color: g_Dakanji_green,
       lineWidth: 3,
       size: 30.0,

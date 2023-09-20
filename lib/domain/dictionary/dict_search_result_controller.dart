@@ -63,7 +63,7 @@ class DictSearchResultController {
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(0, currentlyVisible.length-1).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex+1,
           alignment: currentFocusIndex < this.searchResultsFocusses.length-2 ? 1.0 : 0.8
         );
@@ -82,7 +82,7 @@ class DictSearchResultController {
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(1, currentlyVisible.length).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex-1,
           alignment: 0
         );
@@ -102,7 +102,7 @@ class DictSearchResultController {
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(0, currentlyVisible.length-2).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex+2,
           alignment: currentFocusIndex < this.searchResultsFocusses.length-2 ? 1.0 : 0.8
         );

@@ -105,12 +105,12 @@ class _SearchResultListState extends State<SearchResultList> {
             : DismissDirection.none,
           background: Container(
             color: Colors.red,
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.only(right: 20),
               child: Icon(Icons.delete)
             ),
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
           ),
           onDismissed: (DismissDirection direction) {
             widget.onDismissed?.call(direction, widget.searchResults[i], i);

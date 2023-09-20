@@ -73,7 +73,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
       return Container();
     }
     if(kanjiDic2s.isEmpty){
-      return Center(
+      return const Center(
         child: Icon(Icons.search_off)
       );
     }

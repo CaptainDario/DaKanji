@@ -90,7 +90,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250)
+      duration: const Duration(milliseconds: 250)
     );
 
     super.initState();
@@ -156,7 +156,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               icon: Icons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
-              iconTheme: IconThemeData(color: Colors.white),
+              iconTheme: const IconThemeData(color: Colors.white),
               backgroundColor: g_Dakanji_green,
               activeBackgroundColor: g_Dakanji_red,
               spacing: 10,
@@ -237,7 +237,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         setState(() {
                           _controller.reverse(from: 1).then(
                             (value) {
-                              Future.delayed(Duration(milliseconds: 50), () {
+                              Future.delayed(const Duration(milliseconds: 50), () {
                                 setState(() {
                                   currentKana = null;
                                 });

@@ -34,8 +34,8 @@ class DictionarySearch {
   /// Should the search be converted to hiragana
   bool convertToHiragana;
 
-  KanaKit _kKitRomaji = KanaKit();
-  KanaKit _kKitKanji = KanaKit(
+  KanaKit _kKitRomaji = const KanaKit();
+  KanaKit _kKitKanji = const KanaKit(
     config: KanaKitConfig(passRomaji: true, passKanji: true, upcaseKatakana: false)
   );
 

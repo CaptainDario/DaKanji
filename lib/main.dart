@@ -38,7 +38,7 @@ Future<void> main() async {
           future: g_initApp,
           builder: (context, snapshot) {
             if(snapshot.hasData == false)
-              return DaKanjiSplash();
+              return const DaKanjiSplash();
             else
               return EasyLocalization(
                 supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),

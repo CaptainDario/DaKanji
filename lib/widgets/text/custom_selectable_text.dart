@@ -102,7 +102,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// list with selection rects
   final _selectionRects = <Rect>[];
   /// the current text selection
-  TextSelection _textSelection = TextSelection(baseOffset: 0, extentOffset: 0);
+  TextSelection _textSelection = const TextSelection(baseOffset: 0, extentOffset: 0);
   /// is the left text selection handles selected
   bool _leftHandleSelected = false;
   /// is the right text selection handles selected
@@ -418,7 +418,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       tP = TextPosition(offset: tP.offset-1);
     // if the offset is outside of the text, return the previous character (at the beginning)
     if(tP.offset < 0)
-      tP = TextPosition(offset: 0);
+      tP = const TextPosition(offset: 0);
     
     return tP;
   }
@@ -728,7 +728,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 width:  20,
                                 clipBehavior: Clip.none,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(1000000)
                                   ),
                                   color: widget.selectionColor,
@@ -747,7 +747,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 height: 20,
                                 width:  20,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(1000000)
                                   ),
                                   color: widget.selectionColor,

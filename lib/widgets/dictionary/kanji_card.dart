@@ -57,7 +57,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
-  TextStyle headerStyle = TextStyle(color: Colors.grey);
+  TextStyle headerStyle = const TextStyle(color: Colors.grey);
   /// Kanji groups Regex, extracts all tags that are kanji part tags
   RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke(Numbers|Paths)).*?>');
 
@@ -179,7 +179,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             columnGap: 0.1,
                             rowSizes: List.generate(10, (index) => auto),
                             children: [
-                              SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
+                              const SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
 
                               Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
 
@@ -292,7 +292,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                         )
                                       ),
                                       if(radical != radicals.last)
-                                        TextSpan(
+                                        const TextSpan(
                                           text: ", "
                                         )
                                     ]
@@ -317,7 +317,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[e.key]!
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                           Flexible(
                             child: Text(
                               e.value.toString().replaceAll("[", "").replaceAll("]", "")

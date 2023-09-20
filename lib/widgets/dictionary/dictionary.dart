@@ -100,13 +100,13 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                 children: [
                   // create an invisble widget with the same size as the searchbar
                   if(tabsSideBySide <= 2)
-                    Visibility(
+                    const Visibility(
                       maintainSize: true,
                       visible: false,
                       maintainAnimation: true,
                       maintainState: true,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Card(
                           child: TextField(),
                         ),
@@ -137,7 +137,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             child: Focus(
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: FloatingWordStack(
                                   levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
                                   hide: search.selectedResult != null || !widget.includeFallingWords,

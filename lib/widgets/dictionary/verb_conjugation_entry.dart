@@ -42,22 +42,22 @@ class VerbConjugationEntry extends StatefulWidget {
 class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
 
   /// style for negated conjugation
-  TextStyle negativeStyle = TextStyle(fontSize: 20, color: Colors.grey);
+  TextStyle negativeStyle = const TextStyle(fontSize: 20, color: Colors.grey);
   /// style for normal conjugation
-  TextStyle positiveStyle = TextStyle(fontSize: 20);
+  TextStyle positiveStyle = const TextStyle(fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
     
     return widget.conjugationType == ConjugationType.plain && widget.plainFormPositive == "" && widget.plainFormNegative == "" ||
       widget.conjugationType == ConjugationType.polite && widget.politeFormPositive == "" && widget.politeFormNegative == "" 
-    ? SizedBox()
+    ? const SizedBox()
     : Column(
       children: [
         // Grammar "name"
         Text(
           widget.title,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         // Grammar "explanation"
         if(widget.explanation != "")
@@ -75,7 +75,7 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
               ).toList() 
             )
           ),
-        SizedBox(height: 4,),
+        const SizedBox(height: 4,),
         Row(
           children: [
             // plain conjugations

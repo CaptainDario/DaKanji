@@ -57,10 +57,10 @@ class _KanaGridState extends State<KanaGrid> {
       mainAxisSpacing: 0.0,
       crossAxisSpacing: 0.0,
       crossAxisCount: columnCount,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       childAspectRatio: (widget.width / columnCount)
         / (widget.height / (rowCount)),
-      padding: EdgeInsets.all(0.0),
+      padding: const EdgeInsets.all(0.0),
       shrinkWrap: true,
       children: List.generate(rowCount*columnCount, (index) {
 
@@ -72,7 +72,7 @@ class _KanaGridState extends State<KanaGrid> {
         return AnimationConfiguration.staggeredGrid(
           position: index,
           columnCount: columnCount,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           child: currentKana != ""
           ? FadeInAnimation(
             key: Key("${currentKana}_${widget.showRomaji}_${widget.isPortrait}"),
@@ -124,7 +124,7 @@ class _KanaGridState extends State<KanaGrid> {
               ),
             ),
           )
-          : SizedBox()
+          : const SizedBox()
         );
       })
     );

@@ -122,7 +122,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                       },
                       tabs: List.generate(tabNames.length, (index) =>
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             tabNames[index],
                           ),
