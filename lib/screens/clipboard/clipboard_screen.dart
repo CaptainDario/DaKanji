@@ -43,9 +43,9 @@ class ClipboardScreen extends StatefulWidget {
 class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListener, WidgetsBindingObserver {
 
   /// Current state of the OS clipboard
-  ClipboardData currentClipboard = ClipboardData(text: "");
+  ClipboardData currentClipboard = const ClipboardData(text: "");
   /// Timer that refreshes the UI every 1s (android only)
-  late Timer refreshClipboardAndroid;
+  Timer? refreshClipboardTimer;
   /// Is the app currently set to be always on top
   bool isAlwaysOnTop = false;
   /// has the screen been initialized
@@ -68,7 +68,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     // android / iOS do not allow for continous clipboard reading
     //   -> periodically read clipboard till there is new value
     if(Platform.isAndroid || Platform.isIOS){
-      refreshClipboardAndroid = Timer.periodic(Duration(milliseconds: 500), (timer) async { 
+      refreshClipboardTimer = Timer.periodic(const 
 
         String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
@@ -111,8 +111,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
   @override
   void dispose() {
-    if(Platform.isAndroid){
-      refreshClipboardAndroid.cancel();
+    if(refreshClipboardTimer != null){
+      refreshClipboardTimer!.cancel();
     }
     else{
       clipboardWatcher.removeListener(this);
