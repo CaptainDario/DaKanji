@@ -163,7 +163,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wakelock_plus/ios"
 
 SPEC CHECKSUMS:
-  app_links: ab4ba54d10a13d45825336bc9707b5eadee81191
+  app_links: 5ef33d0d295a89d9d16bb81b0e3b0d5f70d6c875
   clipboard_watcher: 86fb70421aca6f4944e0591a8292605da7784666
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
