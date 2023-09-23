@@ -23,6 +23,7 @@ import 'package:da_kanji_mobile/widgets/drawing/draw_screen_prediction_buttons.d
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_responsive_layout.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_undo_button.dart';
 
+
 /// The "draw"-screen.
 /// 
 /// Lets the user draw a kanji and than shows the most likely predictions.
@@ -55,7 +56,7 @@ class DrawScreen extends StatefulWidget {
 
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// the size of the canvas widget
-  late double _canvasSize;
+  double? _canvasSize;
   /// in which layout the DrawScreen is being built
   DrawScreenLayout drawScreenLayout = GetIt.I<DrawScreenState>().drawScreenLayout;
   /// should the welcome screen which introduces the tutorial be shown
@@ -72,24 +73,19 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
     GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;
 
-    GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-        setState(() {});
-      }
-    });
+    GetIt.I<DrawScreenState>().drawingLookup.addListener(reloadWebViewUrl);
 
     // initialize the drawing interpreter if it has not been already
     if(!GetIt.I.isRegistered<DrawingInterpreter>()){
       GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
       initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) => true);
-        
     }
 
     // init tutorial
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && 
-        GetIt.I<UserData>().showTutorialDrawing && widget.includeTutorial) {
+      if (onboarding != null && widget.includeTutorial && 
+        GetIt.I<UserData>().showTutorialDrawing) {
 
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.indexes![0],
@@ -114,6 +110,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     // clear the canvas when leaving the screen
     GetIt.I<DrawScreenState>().strokes.deleteAllStrokes();
+
+    GetIt.I<DrawScreenState>().drawingLookup.removeListener(reloadWebViewUrl);
 
   }
 
@@ -144,25 +142,25 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   
                 return DrawScreenResponsiveLayout(
                   DrawScreenDrawingCanvas(
-                    _canvasSize,
+                    _canvasSize!,
                     GetIt.I<DrawingInterpreter>(),
                     widget.includeTutorial
                   ),
                   DrawScreenPredictionButtons(
                     drawScreenIsLandscape(t.item1),
-                    _canvasSize,
+                    _canvasSize!,
                     widget.includeHeroes,
                     widget.includeTutorial
                   ), 
                   DrawScreenMultiCharSearch(
-                    _canvasSize,
+                    _canvasSize!,
                     drawScreenIsLandscape(t.item1),
                     widget.includeHeroes,
                     widget.includeTutorial
                   ),
-                  DrawScreenUndoButton(_canvasSize, widget.includeTutorial),
-                  DrawScreenClearButton(_canvasSize, widget.includeTutorial),
-                  _canvasSize,
+                  DrawScreenUndoButton(_canvasSize!, widget.includeTutorial),
+                  DrawScreenClearButton(_canvasSize!, widget.includeTutorial),
+                  _canvasSize!,
                   GetIt.I<DrawScreenState>().drawScreenLayout,
                   drawScreenIncludesWebview(t.item1)
                     ? InAppWebView(
@@ -182,5 +180,11 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  void reloadWebViewUrl(){
+    if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
+      setState(() {});
+    }
   }
 }

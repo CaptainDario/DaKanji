@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
@@ -44,7 +45,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       locale: context.locale,
       navigatorKey: g_NavigatorKey,
       navigatorObservers: [
-        SentryNavigatorObserver()
+        SentryNavigatorObserver(),
+        NavigationHistoryObserver()
       ],
       
       onGenerateRoute: (settings) {

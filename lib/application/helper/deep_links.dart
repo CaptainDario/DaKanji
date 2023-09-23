@@ -7,11 +7,13 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:app_links/app_links.dart';
+import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 final AppLinks _appLinks = AppLinks();
@@ -179,11 +181,16 @@ void handleDeepLinkDrawing(Map<String, String> linkArgs){
     }
   }
 
-  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/${Screens.drawing.name}",
-    (route) => false,
-    arguments: navArgs
-  );
+  if(NavigationHistoryObserver().history.isEmpty ||
+    (NavigationHistoryObserver().history.isEmpty &&
+      NavigationHistoryObserver().top!.settings.name != "/${Screens.drawing.name}")
+    ){
+    g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+      "/${Screens.drawing.name}",
+      (route) => false,
+      arguments: navArgs
+    );
+  }
 }
 
 /// Handles deep links that are related to the dictionary
