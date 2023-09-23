@@ -147,6 +147,27 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                                 Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
                               }
                             )
+                            
+                            /*InAppWebView(
+                              gestureRecognizers: 
+                                Set()..add(
+                                  Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                                ),
+                              initialUrlRequest: (
+                                URLRequest(
+                                  url: WebUri("$g_deepLUrl${widget.text}")  
+                                )
+                              ),
+                              onWebViewCreated: (controller) {
+                                webController = controller;
+
+                                webController!.loadUrl(
+                                  urlRequest: URLRequest(
+                                    url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
+                                  )
+                                );
+                              },
+                            ),*/
                           )
                       ]
                     ),
