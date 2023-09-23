@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 
@@ -23,7 +24,7 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  bool loadWebview = false;
+  WebViewController webViewController = WebViewController();
   /// should the loading screen be shown (hides webview)
   bool showLoading = false;
   /// the screen's width 
@@ -85,9 +86,12 @@ class _WebviewScreenState extends State<WebviewScreen>
     void handler(status) {
       if (status == AnimationStatus.completed) {
         route!.animation!.removeStatusListener(handler);
-        setState(() {
-          loadWebview = true;
-        });
+        webViewController.loadRequest(Uri.parse(
+            openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+          )).then((value) => 
+            _controller.forward(from: 0.0)
+          );
+        setState(() {});
       }
     }
     route?.animation?.addStatusListener(handler);
@@ -120,7 +124,10 @@ class _WebviewScreenState extends State<WebviewScreen>
                     (_rotationAnimation.value - 1) * (pi/2))
                   ),
                 alignment: Alignment.centerLeft,
-                child: InAppWebView(
+                child: WebViewWidget(
+                  controller: webViewController,
+                )
+                /*InAppWebView(
                   initialUrlRequest: URLRequest(
                     url: WebUri(
                       openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
@@ -129,7 +136,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                   onLoadStop: (controller, uri) {
                     _controller.forward(from: 0.0);
                   }
-                )
+                )*/
               )
             ),
             

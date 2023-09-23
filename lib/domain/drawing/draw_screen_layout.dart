@@ -20,5 +20,5 @@ bool drawScreenIsPortrait(DrawScreenLayout drawScreenLayout){
 
 bool drawScreenIncludesWebview(DrawScreenLayout drawScreenLayout){
   return (drawScreenLayout == DrawScreenLayout.portraitWithWebview || 
-    drawScreenLayout == DrawScreenLayout.portraitWithWebview);
+    drawScreenLayout == DrawScreenLayout.landscapeWithWebview);
 }
