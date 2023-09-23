@@ -36,7 +36,9 @@ Future<bool> importDoJGDeck () async {
 
       // convert SQLite -> Isar
       List<DojgEntry> entries = convertSQLiteToDojgEntry();
-      Isar isar = Isar.openSync([DojgEntrySchema], directory: copyTo, name: "dojg");
+      Isar isar = Isar.getInstance("dojg") ??
+        Isar.openSync([DojgEntrySchema], directory: copyTo, name: "dojg");
+
       isar.writeTxnSync(() => isar.dojgEntrys.putAllSync(entries));
       
       imported = entries.length == 629;
