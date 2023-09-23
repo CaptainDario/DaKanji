@@ -24,40 +24,42 @@ class DojgSentenceTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutGrid(
-                  
-      columnSizes: [auto, 1.fr],
-      rowSizes: List.generate(
-        (sentencesEn.length*3).floor(),
-        (index) => auto
-      ),
-      children: [
-        for (int i = 0; i < sentencesEn.length; i++)
-          ...[
-            Text("$i. ",
-              style: const TextStyle(color: Colors.grey)
-            ),
-            HtmlWidget(
-              sentencesJp[i],
-              customStylesBuilder: (element) {
-                if (element.classes.contains('cloze')) {
-                  return {'color': 'red'};
-                }
-
-                return null;
-              },
-            ),
-            const SizedBox(),
-            Text(
-              sentencesEn[i],
-              style: const TextStyle(
-                color: Colors.grey
+    return SelectionArea(
+      child: LayoutGrid(
+                    
+        columnSizes: [auto, 1.fr],
+        rowSizes: List.generate(
+          (sentencesEn.length*3).floor(),
+          (index) => auto
+        ),
+        children: [
+          for (int i = 0; i < sentencesEn.length; i++)
+            ...[
+              Text("$i. ",
+                style: const TextStyle(color: Colors.grey)
               ),
-            ),
-            const SizedBox(height: 4,),
-            const SizedBox(height: 4,)
-          ],
-      ]
+              HtmlWidget(
+                sentencesJp[i],
+                customStylesBuilder: (element) {
+                  if (element.classes.contains('cloze')) {
+                    return {'color': 'red'};
+                  }
+    
+                  return null;
+                },
+              ),
+              const SizedBox(),
+              Text(
+                sentencesEn[i],
+                style: const TextStyle(
+                  color: Colors.grey
+                ),
+              ),
+              const SizedBox(height: 4,),
+              const SizedBox(height: 4,)
+            ],
+        ]
+      ),
     );
   }
 }
