@@ -9,6 +9,7 @@ New Features:
   - Directly open dakanji with dakanji:// or https://dakanji.app/app/
   - see the manual for more info
 - Brand new website https://dakanji.app
+- By popular request: flatpak support
 
 Improvements:
 
