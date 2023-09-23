@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +18,7 @@ import 'package:da_kanji_mobile/widgets/drawing/draw_screen_multi_char_search.da
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_prediction_buttons.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_undo_button.dart';
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 
@@ -63,6 +63,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// has been initialized
   Future<void>? initInterpter;
 
+  WebViewController? webViewController;
+
 
   @override
   void initState() {
@@ -73,7 +75,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
     GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
       if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-        setState(() {});
+        webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
+          GetIt.I<DrawScreenState>().drawingLookup.chars
+        )));
+        //setState(() {});
       }
     });
 
@@ -89,7 +94,6 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
       final OnboardingState? onboarding = Onboarding.of(context);
       if (onboarding != null && 
         GetIt.I<UserData>().showTutorialDrawing && widget.includeTutorial) {
-
         onboarding.showWithSteps(
           GetIt.I<Tutorials>().drawScreenTutorial.indexes![0],
           GetIt.I<Tutorials>().drawScreenTutorial.indexes!
@@ -110,6 +114,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         },
       );
     }
+
+    GetIt.I<DrawScreenState>().drawingLookup.dispose();
 
     // clear the canvas when leaving the screen
     GetIt.I<DrawScreenState>().strokes.deleteAllStrokes();
@@ -137,6 +143,12 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   
                 // set layout and canvas size
                 var t = getDrawScreenLayout(constraints);
+                if(drawScreenIncludesWebview(t.item1)){
+                  webViewController = WebViewController()
+                    ..loadRequest(Uri.parse(openWithSelectedDictionary(
+                      GetIt.I<DrawScreenState>().drawingLookup.chars
+                    )));
+                }
                 GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
                 GetIt.I<DrawScreenState>().canvasSize = t.item2;
                 _canvasSize = t.item2;
@@ -163,15 +175,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   DrawScreenClearButton(_canvasSize, widget.includeTutorial),
                   _canvasSize,
                   GetIt.I<DrawScreenState>().drawScreenLayout,
-                  drawScreenIncludesWebview(t.item1)
-                    ? InAppWebView(
-                      initialUrlRequest: URLRequest(
-                        url: WebUri(
-                          openWithSelectedDictionary(
-                            GetIt.I<DrawScreenState>().drawingLookup.chars
-                          ),
-                        )
-                      )
+                  drawScreenIncludesWebview(t.item1) && webViewController != null
+                    ? WebViewWidget(
+                      controller: webViewController!,
                     )
                     : null
                 );

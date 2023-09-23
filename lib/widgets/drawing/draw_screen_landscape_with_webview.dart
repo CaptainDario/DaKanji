@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 
@@ -14,7 +13,7 @@ class DrawScreenLandscapeWithWebview extends StatelessWidget {
   final Widget undoButton;
   final Widget clearButton;
   final double canvasSize;
-  final InAppWebView? webView;
+  final WebViewWidget? webView;
   
   const DrawScreenLandscapeWithWebview(
     this.drawingCanvas,
