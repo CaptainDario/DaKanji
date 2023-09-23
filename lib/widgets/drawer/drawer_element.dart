@@ -59,7 +59,7 @@ class DrawerElement extends StatelessWidget {
 
     double tileHeight = (MediaQuery.of(context).size.height * 0.1).clamp(0, 40);
 
-    return ReorderableDragStartListener(
+    return ReorderableDelayedDragStartListener(
       index: index,
       child: Material(
         child: InkWell(
