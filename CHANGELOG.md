@@ -5,11 +5,7 @@
 
 New Features:
 
-- Dictionary of Japanese Grammar (DoJG)
-  - import anki deck
-  - search content
-- Popup
-  - One-tap-lookup now includes results from DoJG
+- import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly lookup grammar
 
 ## v 3.1.0 - 辞書開発 (8.8.2023)
 
