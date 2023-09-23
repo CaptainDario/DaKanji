@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -176,14 +177,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             children: [
                               AspectRatio(
                                 aspectRatio: 1,
-                                child: InAppWebView(
-                                  gestureRecognizers: 
-                                    Set()..add(
+                                child: WebViewWidget(
+                                  controller: WebViewController()
+                                    ..loadRequest(WebUri("$g_GoogleImgSearchUrl${readingOrKanji}")),
+                                    gestureRecognizers: {
                                       Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                                    ),
-                                  initialUrlRequest: URLRequest(
-                                    url: WebUri("$g_GoogleImgSearchUrl${readingOrKanji}")
-                                  )
+                                    },
                                 )
                               )
                             ],
