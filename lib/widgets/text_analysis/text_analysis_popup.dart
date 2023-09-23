@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -51,7 +51,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
   /// controller for the webview
-  InAppWebViewController? webController;
+  WebViewController? webViewController;
   /// controller for the tabbar
   late TabController popupTabController;
 
@@ -61,8 +61,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     super.initState();
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
-    if(g_webViewSupported)
+    if(g_webViewSupported){
       tabNames.add("Deepl");
+      webViewController = WebViewController()
+        ..loadRequest(Uri.parse(g_deepLUrl));
+    }
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
     widget.onInitialized?.call(popupTabController);
@@ -71,12 +74,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if(webController != null && oldWidget.text != widget.text)
-        await webController!.loadUrl(
-          urlRequest: URLRequest(
-            url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
-          )
+      if(webViewController != null && oldWidget.text != widget.text) {
+        await webViewController!.loadRequest(
+          Uri.parse("$g_deepLUrl${widget.text}") 
         );
+      }
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -115,11 +117,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                       labelColor: Theme.of(context).highlightColor,
                       unselectedLabelColor: Colors.grey,
                       indicatorColor: Theme.of(context).highlightColor,
-                      onTap: (tabNo){
-                        /*if(tabNames[tabNo] != "Deepl"){
-                          webController = null;
-                        }*/
-                      },
                       tabs: List.generate(tabNames.length, (index) =>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -144,7 +141,14 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         ),
                         if(g_webViewSupported)
                           Card(
-                            child: InAppWebView(
+                            child: WebViewWidget(
+                              controller: webViewController!,
+                              gestureRecognizers: {
+                                Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                              }
+                            )
+                            
+                            /*InAppWebView(
                               gestureRecognizers: 
                                 Set()..add(
                                   Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
@@ -163,7 +167,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                                   )
                                 );
                               },
-                            ),
+                            ),*/
                           )
                       ]
                     ),
