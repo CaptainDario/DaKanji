@@ -102,11 +102,11 @@ List<DojgEntry> convertSQLiteToDojgEntry() {
       examplesJp: examplesJp, examplesEn : examplesEn,
 
       note: dataSplit[42] != "" ? dataSplit[42] : null,
-      noteImageName: dataSplit[41] != ""
-      ? dojgMediaMapping[
-        dataSplit[41].replaceFirst("<img src=\"", "").replaceFirst("\" />", "")
-      ]!
-      : dataSplit[41],
+      noteImageName: dataSplit[41] != "" && dojgMediaMapping.isNotEmpty
+        ? dojgMediaMapping[
+          dataSplit[41].replaceFirst("<img src=\"", "").replaceFirst("\" />", "")
+        ]!
+        : null,
     ));
   }
 
