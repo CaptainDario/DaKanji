@@ -20,7 +20,7 @@ final AppLinks _appLinks = AppLinks();
 
 
 /// Initialize the deep link stream, i.e. dakanji listening to the links that
-/// start with "dakanji://"
+/// start with "dakanji://" or "https://dakanji.app/app/"
 Future<void> initDeepLinksStream() async {
 
   /// Subscribe to all events when app is started.
