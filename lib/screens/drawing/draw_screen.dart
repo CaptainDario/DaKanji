@@ -9,7 +9,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
-import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';

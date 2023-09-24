@@ -10,7 +10,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// A empty manual page for reference
 class ManualEmptyPage extends StatelessWidget {
-  ManualEmptyPage({super.key});
+  
+  const ManualEmptyPage({super.key});
 
   final String manualTextScreenText = "";
 

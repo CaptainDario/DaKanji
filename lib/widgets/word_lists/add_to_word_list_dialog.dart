@@ -7,10 +7,10 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as WordListsUI;
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;
+
+
 
 AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget){
   return AwesomeDialog(

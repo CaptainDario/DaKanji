@@ -10,7 +10,8 @@ import 'package:tuple/tuple.dart';
 import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/globals.dart';
+
+
 
 class KanjiGroupWidget extends StatefulWidget {
 

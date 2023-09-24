@@ -11,7 +11,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// A empty manual page for reference
 class ManualDeepLinks extends StatelessWidget {
-  ManualDeepLinks({super.key});
+  
+  const ManualDeepLinks({super.key});
 
   final String manualTextScreenText = "";
 
@@ -22,8 +23,9 @@ class ManualDeepLinks extends StatelessWidget {
         selectable: true,
         data: LocaleKeys.ManualScreen_deep_links_text.tr(),
         onTapLink: (text, href, title) {
-          if(href != null)
+          if(href != null) {
             launchUrlString(href);
+          }
         },
       ),
     );

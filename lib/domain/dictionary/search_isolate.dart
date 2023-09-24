@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:async/async.dart';
-import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';

@@ -17,11 +17,11 @@ Future<void> waitTillFinder(WidgetTester tester, Finder finder, String waitingMe
     cnt < 100){
     cnt++;
     await tester.pumpAndSettle(const Duration(milliseconds: 500));
-    print(waitingMessage);
+    debugPrint(waitingMessage);
   }
 }
 
-Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback = null}) async {
+Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback}) async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
