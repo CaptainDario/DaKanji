@@ -15,7 +15,7 @@ class ResponsiveDropDownTile extends StatefulWidget {
       required this.value,
       required this.items,
       this.translateItemTexts  = false,
-      this.onTap,
+      this.onChanged,
       this.autoSizeGroup,
       Key? key
     }
@@ -29,8 +29,8 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final List<String> items;
   /// should the items be translate using easzlocalization
   final bool translateItemTexts;
-  /// callback which will be executed by every button press
-  final Function (String? value)? onTap;
+  /// callback which will be executed eveytime when the selection changed
+  final Function (String? value)? onChanged;
   /// The autoSizeGroup for this Tile
   final AutoSizeGroup? autoSizeGroup;
 
@@ -94,7 +94,7 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
-                  if(widget.onTap != null) widget.onTap!(newValue);
+                  if(widget.onChanged != null) widget.onChanged!(newValue);
                 },
               ),
             ]

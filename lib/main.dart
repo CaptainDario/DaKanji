@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

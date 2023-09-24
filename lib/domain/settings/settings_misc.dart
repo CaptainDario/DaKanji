@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -131,19 +133,40 @@ class SettingsMisc with ChangeNotifier {
   /// Order of the items in the drawer
   @JsonKey(defaultValue: [])
   List<int> drawerItemOrder = [];
-  /// Order of the items in the drawer
-  /// // ignore: constant_identifier_names
-  //List<int> get drawerItemOrder => _drawerItemOrder;
-  /// Order of the items in the drawer
-  //set drawerItemOrder(List<int> newOrder){
-  //  _drawerItemOrder = newOrder;
-  //  notifyListeners();
-  //}
+
+
+  /// All valid values for `sharingScheme`
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  List<String> sharingSchemes = ["https://", "dakanji://"];
+  /// The default value for `sharingScheme`
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  // ignore: constant_identifier_names
+  static const String d_sharingScheme = "https://";
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platofrms excepet linux
+  @JsonKey(defaultValue: d_sharingScheme)
+  String _sharingScheme = d_sharingScheme;
+
+  String get sharingScheme => _sharingScheme;
+
+  set sharingScheme(String newSharingScheme){
+    if(!sharingSchemes.contains(newSharingScheme)){
+      throw Exception("$newSharingScheme is not a valid scheme, use one of $sharingSchemes");
+    }
+
+    _sharingScheme = newSharingScheme;
+    notifyListeners();
+  }
+  
 
 
   SettingsMisc (){
     selectedTheme = LocaleKeys.General_system;
     selectedStartupScreen = 1;
+
+    if(Platform.isLinux){
+      sharingScheme = sharingSchemes[1];
+    }
   }
 
   ThemeMode? selectedThemeMode() {

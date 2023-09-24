@@ -120,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_draw_long_press_opens.tr(),
                         value: settings.drawing.selectedDictionary,
                         items: settings.drawing.dictionaries,
-                        onTap: (newValue) {
+                        onChanged: (newValue) {
                           settings.drawing.selectedDictionary = newValue
                             ?? settings.drawing.dictionaries[0];
                           settings.save();
@@ -717,7 +717,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: settings.misc.selectedTheme,
                         items: settings.misc.themesLocaleKeys,
                         translateItemTexts: true,
-                        onTap: (value) {
+                        onChanged: (value) {
                           settings.misc.selectedTheme = value ?? settings.misc.themesLocaleKeys[0];
                           debugPrint(settings.misc.selectedTheme);
                           settings.save();
@@ -730,7 +730,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
                         value: settings.misc.startupScreensLocales[settings.misc.selectedStartupScreen].tr(),
                         items: settings.misc.startupScreensLocales.map((e) => e.tr()).toList(),
-                        onTap: (newValue) {
+                        onChanged: (newValue) {
                           if (newValue != null){
                             int i = settings.misc.startupScreensLocales.map(
                               (e) => e.tr()
@@ -746,7 +746,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_misc_language.tr(), 
                         value: context.locale.toString(),
                         items: context.supportedLocales.map((e) => e.toString()).toList(),
-                        onTap: (newValue) {
+                        onChanged: (newValue) {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
                           }
@@ -793,6 +793,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
+                      // url for sharing dakanji
+                      ResponsiveDropDownTile(
+                        text: "Sharing pattern",
+                        value: settings.misc.sharingScheme,
+                        items: settings.misc.sharingSchemes,
+                        onChanged: (value) async {
+                          if(value == null){
+                            return;
+                          }
+                          settings.misc.sharingScheme = value;
+                          await settings.save();
+                        },
+                      ),
                       // #endregion
 
                       const Divider(),
