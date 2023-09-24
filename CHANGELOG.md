@@ -10,12 +10,12 @@ New Features:
   - Share dictionary and DoJG entries
   - see the manual for more info
 - Brand new website https://dakanji.app
-- import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly lookup grammar
+- import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
 - By popular request: flatpak support
 
 Improvements:
 
-- Various UI improvments
+- Various UI improvements
 
 Changes:
 
@@ -23,7 +23,7 @@ Changes:
 
 Fixed:
 
-- #64 Examples some times repeating
+- #64 Examples sometimes repeating
 - #62 Pitch accent still bugged
 - #67 Clipboard screen: search not closable
 
