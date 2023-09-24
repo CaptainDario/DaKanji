@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:io';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -137,18 +138,20 @@ class SettingsMisc with ChangeNotifier {
 
   /// All valid values for `sharingScheme`
   @JsonKey(includeToJson: false, includeFromJson: false)
-  List<String> sharingSchemes = ["https://", "dakanji://"];
+  List<String> sharingSchemes = [g_AppLinkHttps, g_AppLinkDaKanji];
   /// The default value for `sharingScheme`
   @JsonKey(includeToJson: false, includeFromJson: false)
   // ignore: constant_identifier_names
-  static const String d_sharingScheme = "https://";
+  static const String d_sharingScheme = g_AppLinkHttps;
   /// The currently selected sharing scheme, defaults to `https://` on all
-  /// platofrms excepet linux
+  /// platforms excepet linux
   @JsonKey(defaultValue: d_sharingScheme)
   String _sharingScheme = d_sharingScheme;
-
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platforms excepet linux
   String get sharingScheme => _sharingScheme;
-
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platforms excepet linux
   set sharingScheme(String newSharingScheme){
     if(!sharingSchemes.contains(newSharingScheme)){
       throw Exception("$newSharingScheme is not a valid scheme, use one of $sharingSchemes");
