@@ -1,9 +1,9 @@
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:image/image.dart' as image;
 import 'package:tflite_flutter/tflite_flutter.dart';
-
-
 
 /// Class to bundle all data and methods to run the SignDetection TF Lite model.
 /// This includes:

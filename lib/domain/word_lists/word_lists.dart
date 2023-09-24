@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 

@@ -1,23 +1,26 @@
+// Dart imports:
 import 'dart:math';
-import 'package:collection/collection.dart';
-
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-
-
 
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {

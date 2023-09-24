@@ -1,9 +1,12 @@
 
 
 
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node_serializable.dart';
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/domain/tree/tree_node_serializable.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 
 class TreeNodeConverter<T> implements JsonConverter<T, Object> {
 

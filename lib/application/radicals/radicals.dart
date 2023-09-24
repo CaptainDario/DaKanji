@@ -1,9 +1,10 @@
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 /// Finds all radicals used in the given `kanji` and returns them. Optionally
 /// if `radkIsar` si given, sorts the radicals by stroke number.

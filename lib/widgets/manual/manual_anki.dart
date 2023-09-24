@@ -1,13 +1,14 @@
-
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:easy_localization/easy_localization.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
-
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// The manual for the TextScreen
 class ManualAnki extends StatelessWidget {

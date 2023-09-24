@@ -1,30 +1,37 @@
+// Dart imports:
 import 'dart:io';
+
+// Flutter imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab_kanji.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-
-
+import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {
 
@@ -56,9 +63,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
+    "share",
     // TODO v word lists - reenable
     //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
-    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr()
+    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
   /// Gesture recognizers for the webview to be scrollable

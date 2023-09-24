@@ -1,12 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
-import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/drawing/drawing_lookup.dart';
-import 'draw_screen_layout.dart';
+import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
+import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
 import 'package:da_kanji_mobile/widgets/drawing/canvas_snappable.dart';
-
-
+import 'draw_screen_layout.dart';
 
 /// Represents the state of the drawing screen
 class DrawScreenState {

@@ -1,15 +1,16 @@
+// Dart imports:
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+// Package imports:
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 void openStoreListing(){
   if(Platform.isAndroid) {

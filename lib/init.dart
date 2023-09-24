@@ -1,20 +1,22 @@
+// Dart imports:
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yaml/yaml.dart';
-import 'package:isar/isar.dart';
-import 'package:mecab_dart/mecab_dart.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:universal_io/io.dart';
-import 'package:get_it/get_it.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:window_manager/window_manager.dart';
-import 'package:kana_kit/kana_kit.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+import 'package:kana_kit/kana_kit.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_io/io.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:yaml/yaml.dart';
 
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/domain/releases/version.dart';
@@ -38,9 +40,6 @@ import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/application/assets/assets.dart';
-
-
-
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {

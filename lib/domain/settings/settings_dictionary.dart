@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 part 'settings_dictionary.g.dart';

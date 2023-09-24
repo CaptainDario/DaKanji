@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-
-
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 class KanaInfoCard extends StatefulWidget {
 

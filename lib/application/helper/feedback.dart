@@ -1,14 +1,17 @@
+// Dart imports:
 import 'dart:typed_data';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:feedback_sentry/feedback_sentry.dart';
-import 'package:universal_io/io.dart';
+// Package imports:
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:universal_io/io.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// Opens an overlay to share feedback 
 void sendFeedback(BuildContext context) {

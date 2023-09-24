@@ -1,7 +1,8 @@
-import 'package:da_kanji_mobile/data/screens.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 
 /// Class to bundle the data of onedrawer entry
 class DrawerEntry {

@@ -1,14 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
+// Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/widgets/drawing/prediction_button.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-
-
 
 class DrawScreenPredictionButtons extends StatelessWidget {
   const DrawScreenPredictionButtons(

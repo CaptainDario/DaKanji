@@ -1,24 +1,27 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/radicals/radicals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 
 
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
 
 /// Card to show a kanji and all important attribtues of it. This includes
 /// a tree to show the different groups.

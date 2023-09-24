@@ -1,13 +1,14 @@
-import 'package:da_kanji_mobile/globals.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:get_it/get_it.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-
-
+import 'package:da_kanji_mobile/globals.dart';
 
 /// A button which shows the given [char].
 /// 

@@ -8,9 +8,11 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-/// The manual for the TextScreen
-class ManualTextScreen extends StatelessWidget {
-  const ManualTextScreen({super.key});
+
+
+/// A empty manual page for reference
+class ManualEmptyPage extends StatelessWidget {
+  ManualEmptyPage({super.key});
 
   final String manualTextScreenText = "";
 

@@ -1,12 +1,15 @@
+// Dart imports:
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'package:da_kanji_mobile/domain/releases/version.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 part 'user_data.g.dart';

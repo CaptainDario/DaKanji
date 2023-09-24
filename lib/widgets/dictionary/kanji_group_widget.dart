@@ -1,6 +1,7 @@
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:tuple/tuple.dart';
@@ -10,6 +11,9 @@ import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 
 
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 class KanjiGroupWidget extends StatefulWidget {
 
@@ -99,7 +103,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                         '/dictionary', 
                         (route) => false,
                         arguments: NavigationArguments(
-                          false, initialDictSearch: kanjiVGChars[node.key!.value]
+                          false, dict_InitialSearch: kanjiVGChars[node.key!.value]
                         )
                       );
                     }

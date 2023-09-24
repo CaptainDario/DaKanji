@@ -1,11 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 class ResponsiveDropDownTile extends StatefulWidget {
   const ResponsiveDropDownTile(

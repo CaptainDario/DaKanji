@@ -1,12 +1,14 @@
-import 'package:collection/collection.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:collection/collection.dart';
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:database_builder/database_builder.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {

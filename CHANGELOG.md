@@ -14,7 +14,7 @@ New Features:
 
 Improvements:
 
-- Various small UI improvments
+- Various UI improvments
 
 Changes:
 
@@ -25,6 +25,12 @@ Fixed:
 - #64 Examples some times repeating
 - #62 Pitch accent still bugged
 - #67 Clipboard screen: search not closable
+
+## v3.1.1+60 - 辞書開発 (18.9.2023)
+
+Hotfixes:
+
+- Drawing not working on android devices
 
 ## v3.1.0+58 - 辞書開発 (13.9.2023)
 

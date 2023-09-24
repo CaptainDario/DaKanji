@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 /// Color for showing suffixs
 const Color suffixColor = Color(0xffff0000);

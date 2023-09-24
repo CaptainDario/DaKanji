@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:collection/collection.dart';
-
-
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{

@@ -1,13 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/init.dart';
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Popup that asks the user if he wants to optimize the backends for the
 /// tflite models and tells that it will take some time.

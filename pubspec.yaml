@@ -63,6 +63,7 @@ dependencies:
   sentry_flutter: 7.9.0
   feedback_sentry: 2.4.0
   animations: 2.0.7
+  navigation_history_observer: 1.1.0
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
@@ -139,7 +140,8 @@ dependency_overrides:
 
 msix_config:
   display_name: DaKanji
-  protocol_activation: dakanji
+  protocol_activation: https
+  app_uri_handler_hosts: dakanji.app
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
   identity_name: 61015DaAppLab.DaKanji
@@ -158,6 +160,7 @@ dev_dependencies:
   riverpod_lint: ^2.1.0
   msix: 3.13.2
   flutter_lints: ^2.0.3
+  import_sorter: ^4.6.0
   json_serializable: 6.7.0
   build_runner: 2.4.4
   dependency_validator: 3.2.2

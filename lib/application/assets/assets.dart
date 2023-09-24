@@ -1,19 +1,25 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:archive/archive_io.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:archive/archive_io.dart';
 import 'package:universal_io/io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:universal_io/io.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
-import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// Tries to copy `asset` from assets and if that fails,
 /// downloads it from `url` (github). `path` is the destination folder inside of

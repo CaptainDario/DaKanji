@@ -1,13 +1,20 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:reorderables/reorderables.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:window_manager/window_manager.dart';
@@ -16,30 +23,32 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:path/path.dart' as p;
 
+// Project imports:
+import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/settings/custom_url_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/widgets/settings/custom_url_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
+import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
-
-
 
 /// The "settings"-screen.
 /// 

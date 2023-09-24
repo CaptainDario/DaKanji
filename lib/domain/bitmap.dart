@@ -1,9 +1,10 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+// Flutter imports:
 import 'package:flutter/rendering.dart';
-
 
 class Bitmap {
   Bitmap.fromHeadless(this.width, this.height, this.content);

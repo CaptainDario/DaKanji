@@ -1,17 +1,19 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:database_builder/database_builder.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
-
-
-
 
 /// Widget that shows downwards floating words that can be tapped and scrolled
 class FloatingWordStack extends StatefulWidget {
@@ -107,9 +109,12 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     spawnEntriesTimer = Timer(Duration(seconds: widget.secondsTillFirstWord), () {
       dictEntries = getDictEntries();
       setState(() {});
- 
-      initEntries();
-      setState(() {});
+
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        if(!mounted) return;
+        initEntries();
+        setState(() {});
+      });
     });
   }
 

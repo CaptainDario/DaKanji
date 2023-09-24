@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 part 'settings_anki.g.dart';

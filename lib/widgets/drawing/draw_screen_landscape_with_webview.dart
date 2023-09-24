@@ -1,9 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+
+// Project imports:
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-
 
 class DrawScreenLandscapeWithWebview extends StatelessWidget {
   

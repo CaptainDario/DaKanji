@@ -7,10 +7,13 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-/// The manual for the TextScreen
-class ManualTextScreen extends StatelessWidget {
-  const ManualTextScreen({super.key});
+
+
+/// A empty manual page for reference
+class ManualDeepLinks extends StatelessWidget {
+  ManualDeepLinks({super.key});
 
   final String manualTextScreenText = "";
 
@@ -18,7 +21,12 @@ class ManualTextScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: MarkdownBody(
-        data: LocaleKeys.ManualScreen_title.tr(),
+        selectable: true,
+        data: LocaleKeys.ManualScreen_deep_links_text.tr(),
+        onTapLink: (text, href, title) {
+          if(href != null)
+            launchUrlString(href);
+        },
       ),
     );
   }

@@ -1,23 +1,25 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;
-import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/widgets/downloads/download_app_dialogue.dart';
-import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
+import 'package:da_kanji_mobile/widgets/downloads/download_app_dialogue.dart';
 
 /// Convenience classes to handle long and short presses for the 
 /// predictions of the drawing screens.
@@ -91,8 +93,8 @@ void openDictionary(BuildContext context, String char) async {
     else if(GetIt.I<Settings>().drawing.selectedDictionary ==
       GetIt.I<Settings>().drawing.inbuiltDictId){
       Navigator.pushNamedAndRemoveUntil(
-        context, "/dictionary", (route) => false,
-        arguments: NavigationArguments(false, initialDictSearch: char)
+        context, "/${Screens.dictionary.name}", (route) => false,
+        arguments: NavigationArguments(false, dict_InitialSearch: char)
       );
     }
     // handle dictionary opening on ANDROID

@@ -1,22 +1,25 @@
+// Dart imports:
 import 'dart:math';
-import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:get_it/get_it.dart';
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/application/helper/feedback.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
-import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/drawer/drawer_entries.dart';
-
-
+import 'package:da_kanji_mobile/application/helper/feedback.dart';
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
 
 /// Da Kanji's drawer.
 /// 
@@ -68,13 +71,19 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
 
 
   List<DrawerEntry> drawerEntries = [
-    DrawerEntry(Icons.brush, LocaleKeys.DrawScreen_title.tr(), "/drawing", Screens.drawing,
+    DrawerEntry(
+      Icons.brush, LocaleKeys.DrawScreen_title.tr(),
+      "/${Screens.drawing.name}", Screens.drawing,
       null, null,
       true, null),
-    DrawerEntry(Icons.book, LocaleKeys.DictionaryScreen_title.tr(), "/dictionary", Screens.dictionary,
+    DrawerEntry(
+      Icons.book, LocaleKeys.DictionaryScreen_title.tr(),
+      "/${Screens.dictionary.name}", Screens.dictionary,
       null, null,
       true, null),
-    DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
+    DrawerEntry(
+      Icons.text_snippet, LocaleKeys.TextScreen_title.tr(),
+      "/${Screens.text.name}", Screens.text,
       null, null,
       true, null),
     DrawerEntry(DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(), "/dojg", Screens.dojg,
@@ -102,13 +111,19 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
       null, null,
       true, null),
-    DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
+    DrawerEntry(
+      Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(),
+      "/${Screens.settings.name}", Screens.settings,
       null, null,
       true, null),
-    DrawerEntry(Icons.info, LocaleKeys.AboutScreen_title.tr(), "/about", Screens.about,
+    DrawerEntry(
+      Icons.info, LocaleKeys.AboutScreen_title.tr(),
+      "/${Screens.about.name}", Screens.about,
       null, null,
       true, null),
-    DrawerEntry(Icons.help, LocaleKeys.ManualScreen_title.tr(), "/manual", Screens.manual,
+    DrawerEntry(
+      Icons.help, LocaleKeys.ManualScreen_title.tr(),
+      "/${Screens.manual.name}", Screens.manual,
       null, null,
       true, null),
     DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,

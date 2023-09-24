@@ -1,9 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-
-
 
 /// The screen for all kuzushiji related functionalities
 class KuzushijiScreen extends StatefulWidget {

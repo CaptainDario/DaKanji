@@ -1,12 +1,12 @@
+// Dart imports:
 import 'dart:math';
 
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
-
-
 
 /// Checks for the available backends and uses the best available backend.
 /// For this a valid `input`, `output` and function `runInterpreter` (defines

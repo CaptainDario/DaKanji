@@ -1,13 +1,14 @@
-import 'package:da_kanji_mobile/globals.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 class DrawerAppBar extends StatelessWidget {
   const DrawerAppBar({
@@ -28,8 +29,6 @@ class DrawerAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,6 +111,9 @@ class DrawerAppBar extends StatelessWidget {
                     throw Exception("OnBoardingScreen should not be navigated to via drawer");
                   case Screens.webviewDict:
                     title = LocaleKeys.WebviewScreen_title.tr();
+                    break;
+                  case Screens.test:
+                    title = "Testing";
                     break;
                 }
                 return title;

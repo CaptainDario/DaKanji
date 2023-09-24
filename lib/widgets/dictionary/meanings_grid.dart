@@ -1,19 +1,22 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:tuple/tuple.dart';
-
-
 
 /// `LayouGrid` structured to show a list of meanings with a count
 class MeaningsGrid extends StatefulWidget {
@@ -158,11 +161,11 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                       int id = int.parse(widget.meanings.xref![j]!.attributes[i]!);
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
-                                        "/dictionary",
+                                        "/${Screens.dictionary.name}",
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dict_InitialEntryId: id
                                         )
                                       );
                                     },
@@ -195,7 +198,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dict_InitialEntryId: id
                                         )
                                       );
                                     },

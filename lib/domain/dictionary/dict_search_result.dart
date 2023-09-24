@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
-
-
 
 /// Class to store information about a dictionary search.
 /// Notifies its listeners when the selected results changes.

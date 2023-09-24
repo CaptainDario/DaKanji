@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -9,17 +14,15 @@ import 'package:isar/isar.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Project imports:
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-
-
 
 enum  PopupMenuButtonItems {
   rename,

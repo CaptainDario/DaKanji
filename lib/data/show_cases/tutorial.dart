@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-
-
 
 abstract class Tutorial {
 

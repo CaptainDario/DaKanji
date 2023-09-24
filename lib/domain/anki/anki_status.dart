@@ -1,6 +1,5 @@
+// Dart imports:
 import 'dart:convert';
-
-
 
 /// Anki status codes and messages
 class AnkiStatus {

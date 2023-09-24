@@ -1,7 +1,6 @@
-import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/conjugation/conj.dart';
-
-
+import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 
 /// Convenience class grouping together 
 /// 

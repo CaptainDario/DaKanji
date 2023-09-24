@@ -1,8 +1,9 @@
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
 
 /// A widget that shows the given `kanji` separated by comma.
 /// The `kanji` are clickable and open the kanji details page.

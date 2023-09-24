@@ -1,10 +1,10 @@
+// Package imports:
 import "package:easy_localization/easy_localization.dart";
-
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/data/conjugation/conj.dart';
 import 'package:tuple/tuple.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 List<Tuple3<String, String, Conj>> verbConjugations = [
   Tuple3(

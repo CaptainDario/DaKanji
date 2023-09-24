@@ -1,16 +1,17 @@
+// Dart imports:
 import 'dart:collection';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tuple/tuple.dart';
-import 'package:xml/xml.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:isar/isar.dart';
+import 'package:tuple/tuple.dart';
+import 'package:xml/xml.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// Searches in KanjiVG the matching entries to `kanjis` and returns them
 List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){

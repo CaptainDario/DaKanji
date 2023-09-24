@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import "package:database_builder/database_builder.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import "package:database_builder/database_builder.dart";
 import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-
-
 
 /// A card that shows an example sentence
 class ExampleSentenceCard extends StatefulWidget {

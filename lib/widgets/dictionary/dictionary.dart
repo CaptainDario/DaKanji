@@ -1,24 +1,27 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_search_widget.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_kanji_tab.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_search_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 
 class Dictionary extends StatefulWidget {
 
