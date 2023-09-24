@@ -17,6 +17,10 @@ import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
 
 class DojgEntryList extends ConsumerStatefulWidget {
 
+  /// A search term that should be the initial search
+  final String? initialSearch;
+  /// Should the first result of the initial search be openend (if one exists)
+  final bool openFirstResult;
   /// Callback that is called when the user taps on this card. provides
   /// the `this.dojgEntry` as parameter
   final Function(DojgEntry dojgEntry)? onTap;
@@ -24,6 +28,8 @@ class DojgEntryList extends ConsumerStatefulWidget {
 
   const DojgEntryList(
     {
+      this.initialSearch,
+      this.openFirstResult = false,
       this.onTap,
       super.key
     }
@@ -43,13 +49,29 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
   List<bool> currentVolumeSelection = [true, true, true];
   /// the text that is currently in the search bar
   String currentSearch = "";
-
+  /// The text controller of the search text box
   TextEditingController searchTextEditingController = TextEditingController();
+
+  bool readInitialSearch = false;
 
 
   @override
   void initState() {
+
+    if(widget.initialSearch != null){
+      currentSearch = widget.initialSearch!;
+      searchTextEditingController.text = currentSearch;
+    }
+
     updateSearchResults();
+
+    if(widget.openFirstResult){
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        widget.onTap?.call(currentEntries[0]);
+      });
+      
+    }
+
     super.initState();
   }
 
@@ -97,9 +119,15 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
   @override
   Widget build(BuildContext context) {
 
-    currentSearch = ref.watch(dojgSearchProvider);
-    
-    if(searchTextEditingController.text != ref.watch(dojgSearchProvider)){
+    // get the initial search once
+    if(!readInitialSearch && widget.initialSearch != null){
+      readInitialSearch = true;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        ref.watch(dojgSearchProvider.notifier).setCurrentSearchTerm(currentSearch);
+      });
+    }
+    // update the current search if it changed
+    else if(searchTextEditingController.text != ref.watch(dojgSearchProvider)){
       currentSearch = ref.watch(dojgSearchProvider);
       searchTextEditingController.text = currentSearch;
       updateSearchResults();
@@ -129,6 +157,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                     ),
                     onChanged: (value) {
                       ref.read(dojgSearchProvider.notifier).setCurrentSearchTerm(value);
+                      currentSearch = value;
                       setState(() {
                         updateSearchResults();
                       });

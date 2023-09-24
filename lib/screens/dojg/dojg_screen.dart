@@ -21,12 +21,18 @@ class DoJGScreen extends StatefulWidget {
   final bool openedByDrawer;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
+  /// A search term that should be the initial search
+  final String? initialSearch;
+  /// Should the first result of the initial search be openend (if one exists)
+  final bool openFirstResult;
 
 
   const DoJGScreen(
     this.openedByDrawer,
     this.includeTutorial,
     {
+      this.initialSearch,
+      this.openFirstResult = false,
       super.key
     }
   );
@@ -37,6 +43,7 @@ class DoJGScreen extends StatefulWidget {
 
 class _DoJGScreenState extends State<DoJGScreen> {
 
+  /// The currently selected DoJG entry
   DojgEntry? currentSelection;
 
 
@@ -86,6 +93,8 @@ class _DoJGScreenState extends State<DoJGScreen> {
               children: [
                 Expanded(
                   child: DojgEntryList(
+                    initialSearch: widget.initialSearch,
+                    openFirstResult: widget.openFirstResult,
                     onTap: (DojgEntry dojgEntry) {
                       // add new route if screen is small
                       if(constraints.maxWidth < 800){
