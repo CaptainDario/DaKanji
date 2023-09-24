@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -238,11 +241,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           else if(selection == menuItems[4]) {
                             url = Uri.encodeFull("$g_forvo$readingOrKanji");
                           }
+                          else if(selection == menuItems[5]){
+                            await Share.share("${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}");
+                          }
                           // add to word list
-                          else if(selection == menuItems[5]) {
+                          else if(selection == menuItems[6]) {
                             await addToWordListDialog(context, widget).show();
                           }
-                          else if(selection == menuItems[6]){
+                          else if(selection == menuItems[7]){
                             await ankiDialog(context).show();
                           }
 
