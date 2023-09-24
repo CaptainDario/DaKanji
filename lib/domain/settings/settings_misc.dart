@@ -40,12 +40,16 @@ class SettingsMisc with ChangeNotifier {
     LocaleKeys.DrawScreen_title,
     LocaleKeys.DictionaryScreen_title,
     LocaleKeys.TextScreen_title,
+    LocaleKeys.DojgScreen_title,
+    LocaleKeys.ClipboardScreen_title
   ];
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<Screens> startupScreens = [
     Screens.drawing,
     Screens.dictionary,
     Screens.text,
+    Screens.dojg,
+    Screens.clipboard,
   ];
 
   /// The default for the startup screen
