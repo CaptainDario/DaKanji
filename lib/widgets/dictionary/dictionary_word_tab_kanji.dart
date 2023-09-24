@@ -213,7 +213,7 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
             const SizedBox(height: 5,),
 
             // pitch accent
-            // test: 川蝦, 結構, 誕生日, 上機嫌, 役所, 役所, 役所
+            // test: 川蝦, 結構, 誕生日, 上機嫌, 役所
             Align(
               alignment: Alignment.centerLeft,
               child: Wrap(

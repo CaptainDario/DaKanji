@@ -73,7 +73,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
-      animationAtStart: !widget.openedByDrawer,
+      drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.dojg,
       child: !GetIt.I<UserData>().dojgImported
         // show the import widget if the deck has not been imported
