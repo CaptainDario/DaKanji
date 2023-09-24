@@ -63,16 +63,16 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
       currentEntries = [];
     }
     else{
-      String _currentSearch = currentSearch.trim();
+      String preProcessedCurrentSearch = currentSearch.trim();
       currentEntries = GetIt.I<Isars>().dojg!.dojgEntrys.filter()
         // show only entries of currently selected volumes
         .anyOf(volumeTags.indexed.where((e) => currentVolumeSelection[e.$1]),
           (q, tag) => q.volumeTagEqualTo(tag.$2))
         //
-        .optional(_currentSearch != "", (q) => 
-          q.grammaticalConceptContains(_currentSearch, caseSensitive: false)
+        .optional(preProcessedCurrentSearch != "", (q) => 
+          q.grammaticalConceptContains(preProcessedCurrentSearch, caseSensitive: false)
             .or()
-          .usageContains(_currentSearch, caseSensitive: false)
+          .usageContains(preProcessedCurrentSearch, caseSensitive: false)
         )
         .findAllSync()
       // sort found entries

@@ -90,7 +90,10 @@ class _DoJGScreenState extends State<DoJGScreen> {
                       if(constraints.maxWidth < 800){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DojgEntryPage(dojgEntry),)
+                          MaterialPageRoute(
+                            builder: (context) =>
+                              DojgEntryPage(dojgEntry, true),
+                          )
                         );
                       }
                       setState(() {
@@ -103,7 +106,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
                   Expanded(
                     child: currentSelection == null
                       ? const SizedBox()
-                      : DojgEntryPage(currentSelection!)
+                      : DojgEntryPage(currentSelection!, false)
                   ),
               ],
             );

@@ -22,9 +22,12 @@ class DojgEntryPage extends ConsumerStatefulWidget {
 
   /// The DoJG entry of this page
   final DojgEntry dojgEntry;
+  /// Is this dojg entry page is a separate route or is side by side with the search
+  final bool isSeparateRoute;
 
   const DojgEntryPage(
     this.dojgEntry,
+    this.isSeparateRoute,
     {
       super.key
     }
@@ -118,6 +121,9 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                                             // remove excess whitespace
                                             .trim()
                                         );
+                                      if(widget.isSeparateRoute){
+                                        Navigator.of(context).pop();
+                                      }
                                     }
                                   )
                                 ),
