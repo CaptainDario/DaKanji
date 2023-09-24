@@ -976,7 +976,7 @@
       "es": "Para más detalles, consulte el manual",
       "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
     },
-    "import_dojg": {
+    "dojg_import": {
       "en": "Tap to import the DoJG Deck",
       "de": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
       "ru": "Нажмите, чтобы импортировать DoJG Deck",
@@ -986,6 +986,120 @@
       "fr": "Tapez pour importer le Deck DoJG",
       "es": "Pulse para importar la cubierta DoJG",
       "pl": "Stuknij, aby zaimportować DoJG Deck"
+    },
+    "dojg_import_success": {
+      "en": "DoJG has been imported successfully! Resetarting the app...",
+      "de": "DoJG wurde erfolgreich importiert! Starte App neu...",
+      "ru": "DoJG успешно импортирован! Перезапуск приложения...",
+      "ja": "DoJGは正常にインポートされました！アプリを再起動...",
+      "zh": "已成功导入 DoJG！重新启动应用程序...",
+      "it": "DoJG è stato importato con successo! Riavviare l'applicazione...",
+      "fr": "DoJG a été importé avec succès ! Redémarrer l'application...",
+      "es": "DoJG se ha importado correctamente. Reiniciando la aplicación...",
+      "pl": "DoJG został pomyślnie zaimportowany! Ponowne uruchomienie aplikacji..."
+    },
+    "dojg_import_fail": {
+      "en": "The import failed, please assure that you are importing the correct data.\nRefer to the manual for more details.",
+      "de": "Der Import ist fehlgeschlagen. Bitte stellen Sie sicher, dass Sie die richtigen Daten importieren.\nWeitere Einzelheiten finden Sie im Handbuch.",
+      "ru": "Импорт не удался, убедитесь, что вы импортируете правильные данные.\nДля получения более подробной информации обратитесь к руководству.",
+      "ja": "インポートに失敗しました。正しいデータをインポートしているか確認してください。\n詳細はマニュアルを参照してください。",
+      "zh": "导入失败，请确保导入的数据正确。\n有关详细信息，请参阅手册。",
+      "it": "L'importazione non è riuscita, assicurarsi di importare i dati corretti.\nPer ulteriori dettagli, consultare il manuale.",
+      "fr": "L'importation a échoué, veuillez vous assurer que vous importez les bonnes données.\nReportez-vous au manuel pour plus de détails.",
+      "es": "La importación ha fallado, por favor asegúrese de que está importando los datos correctos.\nConsulte el manual para más detalles.",
+      "pl": "Import nie powiódł się, upewnij się, że importujesz prawidłowe dane.\nWięcej informacji można znaleźć w podręczniku."
+    },
+    "dojg_search": {
+      "en": "Search...",
+      "de": "Suche...",
+      "ru": "Поиск...",
+      "ja": "検索...",
+      "zh": "搜索...",
+      "it": "Ricerca...",
+      "fr": "Recherche...",
+      "es": "Busca...",
+      "pl": "Szukaj..."
+    },
+    "dojg_antonym": {
+      "en": "Antonymous expression",
+      "de": "Antonymer Ausdruck",
+      "ru": "Антонимическое выражение",
+      "ja": "反意語表現",
+      "zh": "同义表达",
+      "it": "Espressione antonima",
+      "fr": "Expression antonyme",
+      "es": "Expresión anónima",
+      "pl": "Antonimiczne wyrażenie"
+    },
+    "dojg_related": {
+      "en": "Related expressions",
+      "de": "Verwandte Ausdrücke",
+      "ru": "Связанные выражения",
+      "ja": "関連表現",
+      "zh": "相关表达",
+      "it": "Espressioni correlate",
+      "fr": "Expressions apparentées",
+      "es": "Expresiones relacionadas",
+      "pl": "Powiązane wyrażenia"
+    },
+    "dojg_eng_equivalent": {
+      "en": "English equivalents",
+      "de": "Englische Entsprechungen",
+      "ru": "Английские эквиваленты",
+      "ja": "英語",
+      "zh": "英语等效语",
+      "it": "Equivalenti in inglese",
+      "fr": "Équivalents en anglais",
+      "es": "Equivalencias en inglés",
+      "pl": "Angielskie odpowiedniki"
+    },
+    "dojg_pos": {
+      "en": "Part of Speech",
+      "de": "Part of Speech"
+    },
+    "dojg_formation": {
+      "en": "Formation",
+      "de": "Bildung",
+      "ru": "Формирование",
+      "ja": "フォーメーション",
+      "zh": "形成",
+      "it": "Formazione",
+      "fr": "Formation",
+      "es": "Formación",
+      "pl": "Formacja"
+    },
+    "dojg_key_sentences": {
+      "en": "Key sentences",
+      "de": "Wichtige Sätze",
+      "ru": "Ключевые предложения",
+      "ja": "キーセンテンス",
+      "zh": "关键句",
+      "it": "Frasi chiave",
+      "fr": "Phrases clés",
+      "es": "Frases clave",
+      "pl": "Kluczowe zdania"
+    },
+    "dojg_examples": {
+      "en": "Examples",
+      "de": "Beispiele",
+      "ru": "Примеры",
+      "ja": "例",
+      "zh": "实例",
+      "it": "Esempi",
+      "fr": "Exemples",
+      "es": "Ejemplos",
+      "pl": "Przykłady"
+    },
+    "dojg_image": {
+      "en": "Image",
+      "de": "Bild",
+      "ru": "Изображение",
+      "ja": "画像",
+      "zh": "图片",
+      "it": "Immagine",
+      "fr": "Image",
+      "es": "Imagen",
+      "pl": "Obraz"
     }
   },
   "DrawScreen": {

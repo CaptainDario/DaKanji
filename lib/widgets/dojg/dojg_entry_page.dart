@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:path/path.dart' as p;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
 
@@ -91,7 +93,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                     if(widget.dojgEntry.antonymExpression != null)
                       ...[
                         Text(
-                          "Antonymous expression ",
+                          LocaleKeys.DojgScreen_dojg_antonym.tr(),
                           style: const TextStyle(color: Colors.grey),
                         ),
                         Text(
@@ -102,7 +104,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                     if(widget.dojgEntry.relatedExpression != null)
                       ...[
                         Text(
-                          "Related expressions ",
+                          LocaleKeys.DojgScreen_dojg_related.tr(),
                           style: const TextStyle(color: Colors.grey),
                         ),
                         Row(
@@ -136,7 +138,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                     if(widget.dojgEntry.equivalent != null)
                       ...[
                         Text(
-                          "English equivalents ",
+                          LocaleKeys.DojgScreen_dojg_eng_equivalent.tr(),
                           style: const TextStyle(color: Colors.grey),
                         ),
                         Text(
@@ -147,7 +149,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                     if(widget.dojgEntry.pos != null)
                       ...[
                         Text(
-                          "Part of Speech ",
+                          LocaleKeys.DojgScreen_dojg_pos.tr(),
                           style: const TextStyle(color: Colors.grey),
                         ),
                         Text(
@@ -163,7 +165,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
             // formation ie. conjugation / usage
             if(widget.dojgEntry.formation != null)
               ...[
-                Text("Formation", textScaleFactor: 1.25,),
+                Text(
+                  LocaleKeys.DojgScreen_dojg_formation.tr(),
+                  textScaleFactor: 1.25,
+                ),
                 HtmlWidget(
                   widget.dojgEntry.formation!,
                   customStylesBuilder: (element) {
@@ -182,7 +187,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
             if(widget.dojgEntry.keySentencesEn.isNotEmpty)
               ...[
                 const SizedBox(height: 10,),
-                Text("Key sentences", textScaleFactor: 1.5,),
+                Text(
+                  LocaleKeys.DojgScreen_dojg_key_sentences.tr(),
+                  textScaleFactor: 1.5
+                ),
                 const SizedBox(height: 5,),
                 DojgSentenceTable(
                   widget.dojgEntry.keySentencesJp.map((e) => 
@@ -195,7 +203,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
             if(widget.dojgEntry.examplesEn.isNotEmpty)
               ...[
                 const SizedBox(height: 10,),
-                Text("Examples", textScaleFactor: 1.5,),
+                Text(
+                  LocaleKeys.DojgScreen_dojg_examples.tr(),
+                  textScaleFactor: 1.5,
+                ),
                 const SizedBox(height: 5,),
                 DojgSentenceTable(
                   widget.dojgEntry.examplesJp.map((e) => 
@@ -210,7 +221,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
 
             if(widget.dojgEntry.noteImageName != null)
               ExpansionTile(
-                title: Text("Image"),
+                title: Text(
+                  LocaleKeys.DojgScreen_dojg_image.tr(),
+                  textScaleFactor: 1.5,
+                ),
                 children: [
                   Image.file(File(
                     p.joinAll([g_documentsDirectory.path, "DaKanji", "dojg", widget.dojgEntry.noteImageName!])

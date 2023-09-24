@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
@@ -120,7 +122,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                       fontFamily: g_japaneseFontFamily
                     ),
                     decoration: InputDecoration(
-                      hintText: "Search...",
+                      hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
                       hintStyle: const TextStyle(
                         color: Colors.grey,
                       ),

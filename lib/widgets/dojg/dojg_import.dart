@@ -40,7 +40,7 @@ class _DojgImportState extends State<DojgImport> {
               children: [
                 const Icon(Icons.download),
                 const SizedBox(width: 10.0),
-                Text(LocaleKeys.DojgScreen_import_dojg.tr()),
+                Text(LocaleKeys.DojgScreen_dojg_import.tr()),
               ],
             ),
             const SizedBox(height: 4,),
@@ -75,8 +75,7 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
-        // TODO translate
-        desc: "DoJG has been imported successfully! Resetarting the app..."
+        desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
       ).show();
       // ignore: use_build_context_synchronously
       restartApp(context);
@@ -89,9 +88,7 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
-        // TODO translate
-        desc: "The import failed, please assure that you are importing the correct data. "
-          "Refer to the manual for more details."
+        desc: LocaleKeys.DojgScreen_dojg_import_fail.tr()
       ).show();
     }
 
