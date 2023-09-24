@@ -125,7 +125,10 @@
     "refer_to_manual": "Pour plus de d\u00e9tails, voir le manuel",
     "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran du Dictionnaire de grammaire japonaise (DoJG) !"
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran du Dictionnaire de grammaire japonaise (DoJG) !",
+    "tutorial_results": "Si vous avez trouv\u00e9 un point de grammaire qui vous int\u00e9resse, cliquez dessus pour en voir tous les d\u00e9tails.",
+    "tutorial_search": "Saisissez un point de grammaire japonais ou sa signification en anglais ici pour le rechercher.",
+    "tutorial_volumes": "Vous pouvez masquer le contenu des volumes du DoJG \u00e0 l'aide de ces boutons."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non install\u00e9",

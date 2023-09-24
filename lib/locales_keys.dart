@@ -123,6 +123,9 @@ abstract class  LocaleKeys {
   static const DojgScreen_title = 'DojgScreen.title';
   static const DojgScreen_tutorial_begin_text = 'DojgScreen.tutorial_begin_text';
   static const DojgScreen_tutorial_begin_title = 'DojgScreen.tutorial_begin_title';
+  static const DojgScreen_tutorial_results = 'DojgScreen.tutorial_results';
+  static const DojgScreen_tutorial_search = 'DojgScreen.tutorial_search';
+  static const DojgScreen_tutorial_volumes = 'DojgScreen.tutorial_volumes';
   static const DojgScreen = 'DojgScreen';
   static const DrawScreen_not_installed = 'DrawScreen.not_installed';
   static const DrawScreen_title = 'DrawScreen.title';

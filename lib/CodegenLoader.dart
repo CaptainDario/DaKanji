@@ -103,7 +103,10 @@ class CodegenLoader extends AssetLoader{
     "refer_to_manual": "详情请参阅手册",
     "title": "DoJG",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "欢迎访问《日语语法词典》（DoJG）屏幕！"
+    "tutorial_begin_title": "欢迎访问《日语语法词典》（DoJG）屏幕！",
+    "tutorial_results": "如果您找到感兴趣的语法点，请单击该语法点查看所有详细信息。",
+    "tutorial_search": "在此输入任何日语语法点或其英语含义，即可进行搜索。",
+    "tutorial_volumes": "您可以通过这些按钮隐藏 DoJG 卷的内容。"
   },
   "DrawScreen": {
     "not_installed": "未安装{DICTIONARY}。",
@@ -444,7 +447,10 @@ static const Map<String,dynamic> ja = {
     "refer_to_manual": "詳細はマニュアルを参照",
     "title": "DoJG",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "日本語文法辞典（DoJG）の画面へようこそ！"
+    "tutorial_begin_title": "日本語文法辞典（DoJG）の画面へようこそ！",
+    "tutorial_results": "気になる文法項目が見つかったら、クリックして詳細をご覧ください。",
+    "tutorial_search": "日本語の文法事項や英語の意味を入力して検索してください。",
+    "tutorial_volumes": "これらのボタンでDoJGの各巻の内容を隠すことができる。"
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY}はインストールされていません",
@@ -815,7 +821,10 @@ static const Map<String,dynamic> de = {
     "refer_to_manual": "Einzelheiten finden Sie im Handbuch",
     "title": "DoJG",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!"
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm des Wörterbuchs der japanischen Grammatik (DoJG)!",
+    "tutorial_results": "Wenn Sie einen Grammatikpunkt gefunden haben, der Sie interessiert, klicken Sie ihn an, um alle Details zu sehen.",
+    "tutorial_search": "Geben Sie hier einen beliebigen japanischen Grammatikpunkt oder seine englische Bedeutung ein, um nach ihm zu suchen.",
+    "tutorial_volumes": "Mit diesen Schaltflächen können Sie den Inhalt von Bänden des DoJG ausblenden."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
@@ -1148,7 +1157,10 @@ static const Map<String,dynamic> ru = {
     "refer_to_manual": "Более подробная информация приведена в руководстве",
     "title": "DoJG",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "Добро пожаловать на экран словаря японской грамматики (DoJG)!"
+    "tutorial_begin_title": "Добро пожаловать на экран словаря японской грамматики (DoJG)!",
+    "tutorial_results": "Если вы нашли интересующую вас грамматическую точку, нажмите на нее, чтобы увидеть все ее подробности.",
+    "tutorial_search": "Введите здесь любое японское грамматическое понятие или его английское значение для поиска.",
+    "tutorial_volumes": "С помощью этих кнопок можно скрыть содержимое томов ДНГ."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} не установлен",
@@ -1502,7 +1514,10 @@ static const Map<String,dynamic> pl = {
     "refer_to_manual": "Szczegółowe informacje można znaleźć w instrukcji obsługi",
     "title": "DoJG",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!"
+    "tutorial_begin_title": "Witamy na ekranie Słownika gramatyki japońskiej (DoJG)!",
+    "tutorial_results": "Jeśli znalazłeś interesujący Cię punkt gramatyczny, kliknij go, aby zobaczyć wszystkie jego szczegóły.",
+    "tutorial_search": "Wpisz dowolny japoński punkt gramatyczny lub jego angielskie znaczenie tutaj, aby go wyszukać.",
+    "tutorial_volumes": "Za pomocą tych przycisków można ukryć zawartość woluminów DoJG."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",
@@ -1873,7 +1888,10 @@ static const Map<String,dynamic> en = {
     "refer_to_manual": "For details refer to the manual",
     "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
+    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+    "tutorial_results": "If you found a grammar point that interests you, click on it to see all its details.",
+    "tutorial_search": "Enter any Japanese grammar point or its English meaning here to search for it.",
+    "tutorial_volumes": "You can hide the contents of volumes of the DoJG with these buttons."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",
@@ -2206,7 +2224,10 @@ static const Map<String,dynamic> it = {
     "refer_to_manual": "Per i dettagli, consultare il manuale",
     "title": "DoJG",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!"
+    "tutorial_begin_title": "Benvenuti nella schermata del Dizionario di grammatica giapponese (DoJG)!",
+    "tutorial_results": "Se avete trovato un punto grammaticale che vi interessa, cliccateci sopra per vederne tutti i dettagli.",
+    "tutorial_search": "Inserite qui un punto grammaticale giapponese o il suo significato in inglese per cercarlo.",
+    "tutorial_volumes": "Con questi pulsanti è possibile nascondere il contenuto dei volumi del DoJG."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installato",
@@ -2525,7 +2546,10 @@ static const Map<String,dynamic> fr = {
     "refer_to_manual": "Pour plus de détails, voir le manuel",
     "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !"
+    "tutorial_begin_title": "Bienvenue sur l'écran du Dictionnaire de grammaire japonaise (DoJG) !",
+    "tutorial_results": "Si vous avez trouvé un point de grammaire qui vous intéresse, cliquez dessus pour en voir tous les détails.",
+    "tutorial_search": "Saisissez un point de grammaire japonais ou sa signification en anglais ici pour le rechercher.",
+    "tutorial_volumes": "Vous pouvez masquer le contenu des volumes du DoJG à l'aide de ces boutons."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} non installé",
@@ -2844,7 +2868,10 @@ static const Map<String,dynamic> es = {
     "refer_to_manual": "Para más detalles, consulte el manual",
     "title": "DoJG",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG)."
+    "tutorial_begin_title": "Bienvenido a la pantalla del Diccionario de gramática japonesa (DoJG).",
+    "tutorial_results": "Si has encontrado un punto gramatical que te interesa, haz clic en él para ver todos sus detalles.",
+    "tutorial_search": "Introduzca aquí cualquier punto gramatical japonés o su significado en español para buscarlo.",
+    "tutorial_volumes": "Puede ocultar el contenido de los volúmenes de la DoJG con estos botones."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} no instalado",

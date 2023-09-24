@@ -125,7 +125,10 @@
     "refer_to_manual": "For details refer to the manual",
     "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!"
+    "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
+    "tutorial_results": "If you found a grammar point that interests you, click on it to see all its details.",
+    "tutorial_search": "Enter any Japanese grammar point or its English meaning here to search for it.",
+    "tutorial_volumes": "You can hide the contents of volumes of the DoJG with these buttons."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} not installed",

@@ -125,7 +125,10 @@
     "refer_to_manual": "Szczeg\u00f3\u0142owe informacje mo\u017cna znale\u017a\u0107 w instrukcji obs\u0142ugi",
     "title": "DoJG",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!"
+    "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!",
+    "tutorial_results": "Je\u015bli znalaz\u0142e\u015b interesuj\u0105cy Ci\u0119 punkt gramatyczny, kliknij go, aby zobaczy\u0107 wszystkie jego szczeg\u00f3\u0142y.",
+    "tutorial_search": "Wpisz dowolny japo\u0144ski punkt gramatyczny lub jego angielskie znaczenie tutaj, aby go wyszuka\u0107.",
+    "tutorial_volumes": "Za pomoc\u0105 tych przycisk\u00f3w mo\u017cna ukry\u0107 zawarto\u015b\u0107 wolumin\u00f3w DoJG."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nie zainstalowany",

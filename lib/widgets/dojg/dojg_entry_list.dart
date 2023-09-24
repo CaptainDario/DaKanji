@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,8 @@ class DojgEntryList extends ConsumerStatefulWidget {
   final String? initialSearch;
   /// Should the first result of the initial search be openend (if one exists)
   final bool openFirstResult;
+  /// should the tutorial be included
+  final bool includeTutorial;
   /// Callback that is called when the user taps on this card. provides
   /// the `this.dojgEntry` as parameter
   final Function(DojgEntry dojgEntry)? onTap;
@@ -30,6 +33,7 @@ class DojgEntryList extends ConsumerStatefulWidget {
     {
       this.initialSearch,
       this.openFirstResult = false,
+      this.includeTutorial = false,
       this.onTap,
       super.key
     }
@@ -142,49 +146,59 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
             title: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: searchTextEditingController,
-                    autocorrect: false,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontFamily: g_japaneseFontFamily
-                    ),
-                    decoration: InputDecoration(
-                      hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
-                      hintStyle: const TextStyle(
-                        color: Colors.grey,
+                  child: Focus(
+                    focusNode: widget.includeTutorial
+                      ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![1]
+                      : null,
+                    child: TextField(
+                      controller: searchTextEditingController,
+                      autocorrect: false,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontFamily: g_japaneseFontFamily
                       ),
+                      decoration: InputDecoration(
+                        hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      onChanged: (value) {
+                        ref.read(dojgSearchProvider.notifier).setCurrentSearchTerm(value);
+                        currentSearch = value;
+                        setState(() {
+                          updateSearchResults();
+                        });
+                      },
                     ),
-                    onChanged: (value) {
-                      ref.read(dojgSearchProvider.notifier).setCurrentSearchTerm(value);
-                      currentSearch = value;
-                      setState(() {
-                        updateSearchResults();
-                      });
-                    },
                   )
                 ),
                 const SizedBox(width: 50,),
-                ToggleButtons(
-                  renderBorder: false,
-                  isSelected: currentVolumeSelection,
-                  fillColor: Colors.transparent,
-                  hoverColor: Colors.grey.withOpacity(0.2),
-                  selectedColor: Colors.white,
-                  color: Colors.grey.withOpacity(0.4),
-                  onPressed: (index) {
-                    setState(() {
-                      currentVolumeSelection[index] = !currentVolumeSelection[index];
-                      updateSearchResults();
-                    });
-                  },
-                  children: [
-                    for (int i = 0; i < 3; i++)
-                      Text(
-                        volumeTags[i],
-                        textScaleFactor: 1.25,
-                      )
-                  ],
+                Focus(
+                  focusNode: widget.includeTutorial
+                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
+                    : null,
+                  child: ToggleButtons(
+                    renderBorder: false,
+                    isSelected: currentVolumeSelection,
+                    fillColor: Colors.transparent,
+                    hoverColor: Colors.grey.withOpacity(0.2),
+                    selectedColor: Colors.white,
+                    color: Colors.grey.withOpacity(0.4),
+                    onPressed: (index) {
+                      setState(() {
+                        currentVolumeSelection[index] = !currentVolumeSelection[index];
+                        updateSearchResults();
+                      });
+                    },
+                    children: [
+                      for (int i = 0; i < 3; i++)
+                        Text(
+                          volumeTags[i],
+                          textScaleFactor: 1.25,
+                        )
+                    ],
+                  ),
                 )
               ]
             )
@@ -200,11 +214,16 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
               }
             },
             itemBuilder: (context, i) {
-              return DojgEntryCard(
-                currentEntries[i],
-                onTap: (entry) {
-                  widget.onTap?.call(currentEntries[i]);
-                },
+              return Focus(
+                focusNode: widget.includeTutorial && i == 0
+                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
+                    : null,
+                child: DojgEntryCard(
+                  currentEntries[i],
+                  onTap: (entry) {
+                    widget.onTap?.call(currentEntries[i]);
+                  },
+                ),
               );
             }
           )

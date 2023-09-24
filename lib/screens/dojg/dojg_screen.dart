@@ -95,6 +95,7 @@ class _DoJGScreenState extends State<DoJGScreen> {
                   child: DojgEntryList(
                     initialSearch: widget.initialSearch,
                     openFirstResult: widget.openFirstResult,
+                    includeTutorial: widget.includeTutorial,
                     onTap: (DojgEntry dojgEntry) {
                       // add new route if screen is small
                       if(constraints.maxWidth < 800){

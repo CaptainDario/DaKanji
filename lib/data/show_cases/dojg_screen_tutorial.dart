@@ -14,9 +14,14 @@ class DojgScreenTutorial extends Tutorial {
     titles = [
       LocaleKeys.DojgScreen_tutorial_begin_title.tr(),
       "",
+      "",
+      "",
     ];
     bodies = [
       LocaleKeys.DojgScreen_tutorial_begin_text.tr(),
+      LocaleKeys.DojgScreen_tutorial_search.tr(),
+      LocaleKeys.DojgScreen_tutorial_volumes.tr(),
+      LocaleKeys.DojgScreen_tutorial_results.tr(),
     ];
     
     initTutorial();

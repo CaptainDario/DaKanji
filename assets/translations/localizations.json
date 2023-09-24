@@ -976,6 +976,39 @@
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     },
+    "tutorial_search": {
+      "en": "Enter any Japanese grammar point or its English meaning here to search for it.",
+      "de": "Geben Sie hier einen beliebigen japanischen Grammatikpunkt oder seine englische Bedeutung ein, um nach ihm zu suchen.",
+      "ru": "Введите здесь любое японское грамматическое понятие или его английское значение для поиска.",
+      "ja": "日本語の文法事項や英語の意味を入力して検索してください。",
+      "zh": "在此输入任何日语语法点或其英语含义，即可进行搜索。",
+      "it": "Inserite qui un punto grammaticale giapponese o il suo significato in inglese per cercarlo.",
+      "fr": "Saisissez un point de grammaire japonais ou sa signification en anglais ici pour le rechercher.",
+      "es": "Introduzca aquí cualquier punto gramatical japonés o su significado en español para buscarlo.",
+      "pl": "Wpisz dowolny japoński punkt gramatyczny lub jego angielskie znaczenie tutaj, aby go wyszukać."
+    },
+    "tutorial_volumes": {
+      "en": "You can hide the contents of volumes of the DoJG with these buttons.",
+      "de": "Mit diesen Schaltflächen können Sie den Inhalt von Bänden des DoJG ausblenden.",
+      "ru": "С помощью этих кнопок можно скрыть содержимое томов ДНГ.",
+      "ja": "これらのボタンでDoJGの各巻の内容を隠すことができる。",
+      "zh": "您可以通过这些按钮隐藏 DoJG 卷的内容。",
+      "it": "Con questi pulsanti è possibile nascondere il contenuto dei volumi del DoJG.",
+      "fr": "Vous pouvez masquer le contenu des volumes du DoJG à l'aide de ces boutons.",
+      "es": "Puede ocultar el contenido de los volúmenes de la DoJG con estos botones.",
+      "pl": "Za pomocą tych przycisków można ukryć zawartość woluminów DoJG."
+    },
+    "tutorial_results": {
+      "en": "If you found a grammar point that interests you, click on it to see all its details.",
+      "de": "Wenn Sie einen Grammatikpunkt gefunden haben, der Sie interessiert, klicken Sie ihn an, um alle Details zu sehen.",
+      "ru": "Если вы нашли интересующую вас грамматическую точку, нажмите на нее, чтобы увидеть все ее подробности.",
+      "ja": "気になる文法項目が見つかったら、クリックして詳細をご覧ください。",
+      "zh": "如果您找到感兴趣的语法点，请单击该语法点查看所有详细信息。",
+      "it": "Se avete trovato un punto grammaticale che vi interessa, cliccateci sopra per vederne tutti i dettagli.",
+      "fr": "Si vous avez trouvé un point de grammaire qui vous intéresse, cliquez dessus pour en voir tous les détails.",
+      "es": "Si has encontrado un punto gramatical que te interesa, haz clic en él para ver todos sus detalles.",
+      "pl": "Jeśli znalazłeś interesujący Cię punkt gramatyczny, kliknij go, aby zobaczyć wszystkie jego szczegóły."
+    },
     "refer_to_manual": {
       "en": "For details refer to the manual",
       "de": "Einzelheiten finden Sie im Handbuch",

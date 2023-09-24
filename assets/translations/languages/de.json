@@ -125,7 +125,10 @@
     "refer_to_manual": "Einzelheiten finden Sie im Handbuch",
     "title": "DoJG",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Bildschirm des W\u00f6rterbuchs der japanischen Grammatik (DoJG)!"
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm des W\u00f6rterbuchs der japanischen Grammatik (DoJG)!",
+    "tutorial_results": "Wenn Sie einen Grammatikpunkt gefunden haben, der Sie interessiert, klicken Sie ihn an, um alle Details zu sehen.",
+    "tutorial_search": "Geben Sie hier einen beliebigen japanischen Grammatikpunkt oder seine englische Bedeutung ein, um nach ihm zu suchen.",
+    "tutorial_volumes": "Mit diesen Schaltfl\u00e4chen k\u00f6nnen Sie den Inhalt von B\u00e4nden des DoJG ausblenden."
   },
   "DrawScreen": {
     "not_installed": "{DICTIONARY} nicht installiert",
