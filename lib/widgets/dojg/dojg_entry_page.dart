@@ -107,7 +107,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                           LocaleKeys.DojgScreen_dojg_related.tr(),
                           style: const TextStyle(color: Colors.grey),
                         ),
-                        Row(
+                        Wrap(
                           children: [
                             for (String exp in widget.dojgEntry.relatedExpression!
                               .replaceAll("【Related Expression: ", "")
