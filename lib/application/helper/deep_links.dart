@@ -53,9 +53,9 @@ void handleDeepLink(String link){
     handleDeepLinkText(args);
   }
   // TODO deep link dojg
-  //else if(route[0] == Screens.dojg.name){
-  //  handleDeepLinkDojg(args);
-  //}
+  else if(route[0] == Screens.dojg.name){
+    handleDeepLinkDojg(args);
+  }
   else if(route[0] == Screens.kanjiTable.name.replaceAll("_", "-")){
     handleDeepLinkKanjiTable(args);
   }
@@ -243,14 +243,16 @@ void handleDeepLinkDojg(Map<String, String> linkArgs){
 
   /// set search target to web ...
   if(linkArgs.containsKey("search")){
-    // TODO DoJG deep links
-    //navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
+    navArgs.dojgInitialSearch = linkArgs["search"]!;
+
+    if(linkArgs.containsKey("open")){
+      navArgs.dojgOpenFirstMatch = bool.tryParse(linkArgs["open"]!) ?? false;
+    }
   }
-  /// app search
   
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/${Screens.dictionary.name}",
+    "/${Screens.dojg.name}",
     (route) => false,
     arguments: navArgs
   );

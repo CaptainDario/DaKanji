@@ -25,6 +25,12 @@ class NavigationArguments{
   /// The text that should be shown when opening the text screen
   String? textInitialText;
 
+  // DOJG SCREEN
+  /// The initial grammar that should be searched
+  String? dojgInitialSearch;
+  /// Should the first match from the initial results be opened
+  bool dojgOpenFirstMatch;
+
 
   NavigationArguments(
     this.navigatedByDrawer,
@@ -35,7 +41,10 @@ class NavigationArguments{
       this.dictInitialSearch = "",
       this.dictInitialEntryId,
 
-      this.textInitialText
+      this.textInitialText,
+
+      this.dojgInitialSearch,
+      this.dojgOpenFirstMatch = false,
     }
   );
 
