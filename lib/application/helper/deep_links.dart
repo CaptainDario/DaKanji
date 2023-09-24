@@ -202,11 +202,11 @@ void handleDeepLinkDict(Map<String, String> linkArgs){
 
   /// search by id
   if(linkArgs.containsKey("id")){
-    navArgs.dict_InitialEntryId = int.tryParse(linkArgs["id"]!);
+    navArgs.dictInitialEntryId = int.tryParse(linkArgs["id"]!);
   }
   /// normal dictionary search
   else if(linkArgs.containsKey("search")){
-    navArgs.dict_InitialSearch = Uri.decodeFull(linkArgs["search"]!);
+    navArgs.dictInitialSearch = Uri.decodeFull(linkArgs["search"]!);
   }
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
@@ -224,7 +224,7 @@ void handleDeepLinkText(Map<String, String> linkArgs){
   );
 
   if(linkArgs.containsKey("text")){
-    navArgs.text_InitialText = Uri.decodeFull(linkArgs["text"]!);
+    navArgs.textInitialText = Uri.decodeFull(linkArgs["text"]!);
   }
   
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(

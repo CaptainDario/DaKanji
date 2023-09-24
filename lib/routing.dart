@@ -35,20 +35,20 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   }
   else if(name == "/${Screens.drawing.name}"){
     newRoute = DrawScreen(
-      args.navigatedByDrawer, args.draw_SearchPrefix,
-      args.draw_SearchPostfix, true, true
+      args.navigatedByDrawer, args.drawSearchPrefix,
+      args.drawSearchPostfix, true, true
     );
   }
   else if(name == "/${Screens.dictionary.name}"){
     newRoute = DictionaryScreen(
-      args.navigatedByDrawer, true, args.dict_InitialSearch,
-      initialEntryId: args.dict_InitialEntryId,
+      args.navigatedByDrawer, true, args.dictInitialSearch,
+      initialEntryId: args.dictInitialEntryId,
     );
   }
   else if(name == "/${Screens.text.name}"){
     newRoute = TextScreen(
       args.navigatedByDrawer, true, 
-      initialText: args.text_InitialText,
+      initialText: args.textInitialText,
     );
   }
   else if(name == "/${Screens.clipboard.name}"){

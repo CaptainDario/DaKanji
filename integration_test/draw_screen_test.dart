@@ -28,7 +28,7 @@ void main() {
       GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap = false;
     });
 
-    await navigate_to_screen(Icons.brush, tester);
+    await navigateToScreen(Icons.brush, tester);
 
     await waitTillFinder(tester, find.byType(DrawingCanvas), "Waiting for canvas init");
   

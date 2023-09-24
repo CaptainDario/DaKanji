@@ -36,19 +36,19 @@ Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback}) asyn
   await waitTillFinder(tester, find.byType(OnBoardingPage), 'waiting for app to boot');
   expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
   await tester.tapAt(tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first));
-  print("Passed initDaKanjiTest step: 1");
+  debugPrint("Passed initDaKanjiTest step: 1");
   // #endregion
 
   // #region 2 - check that the dictionary shows up
   await waitTillFinder(tester, find.byType(FloatingWordStack), 'waiting for dictionary to load');
   expect(find.byType(FloatingWordStack), findsOneWidget);
-  print("Passed initDaKanjiTest step: 2");
+  debugPrint("Passed initDaKanjiTest step: 2");
   // #endregion
 
 }
 
 /// Naviagtes to the screen given by `screenIcon`
-Future<void> navigate_to_screen(IconData screenIcon, WidgetTester tester) async {
+Future<void> navigateToScreen(IconData screenIcon, WidgetTester tester) async {
 
   // open drawer
   await tester.tapAt(tester.getCenter(find.byIcon(Icons.menu)));
