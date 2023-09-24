@@ -86,29 +86,43 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       "/${Screens.text.name}", Screens.text,
       null, null,
       true, null),
-    DrawerEntry(DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(), "/dojg", Screens.dojg,
+    DrawerEntry(
+      DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(),
+      "/${Screens.dojg.name}", Screens.dojg,
       null, null,
       true, null),
-    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanjiTable,
+    DrawerEntry(
+      DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(),
+      "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,
       true, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanjiTrainer,
+    DrawerEntry(
+      DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(),
+      "/${Screens.kanjiTrainer.name}", Screens.kanjiTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kanaTable,
+    DrawerEntry(
+      DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(),
+      "/${Screens.kanaTable.name}", Screens.kanaTable,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kanaTrainer,
+    DrawerEntry(
+      DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(),
+      "/${Screens.kanaTrainer.name}", Screens.kanaTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.wordLists,
+    DrawerEntry(
+      Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(),
+    "/${Screens.wordLists.name}", Screens.wordLists,
       null, const Alignment(0, -0.1),
       kDebugMode, null),
-    DrawerEntry(Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+    DrawerEntry(
+      Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(),
+      "/${Screens.clipboard.name}", Screens.clipboard,
       null, null,
       true, null),
     DrawerEntry(
