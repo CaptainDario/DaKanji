@@ -174,6 +174,7 @@
     "RatePopup_dont_ask_again": "Non chiedetelo pi\u00f9",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe \u00e8 cos\u00ec, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
     "complete_log": "registro completo",
+    "downgrade_warning": "Avete declassato DaKanji! Questa non \u00e8 un'azione supportata ed \u00e8 molto probabile che possa danneggiare i dati memorizzati o addirittura rendere DaKanji completamente inutilizzabile! Si prega di ripristinare tutti i dati in \"impostazioni -> impostazioni avanzate\" e di riavviare l'applicazione.",
     "download_failed_popup_retry": "Riprova",
     "download_failed_popup_text": "Il download non \u00e8 riuscito, assicurarsi di avere una connessione internet stabile.",
     "download_popup_permission": "\u00c8 necessario scaricare alcuni file prima di poter iniziare. Questa operazione verr\u00e0 eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download \u00e8 in corso.",

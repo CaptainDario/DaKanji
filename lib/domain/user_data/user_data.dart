@@ -41,6 +41,10 @@ class UserData{
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool newVersionUsed = false;
 
+  /// Does the user use am older version than before
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool olderVersionUsed = false;
+
   /// Should new dictionary be downloaded / copied from the assets folder
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool getNewDict = false;
@@ -157,6 +161,9 @@ class UserData{
       if(g_NewRadicals.any((v) => v > versionUsed!)){
         getNewRadicals = true;
       }
+    }
+    if(versionUsed! > g_Version){
+
     }
     versionUsed = g_Version;
 

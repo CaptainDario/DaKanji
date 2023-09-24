@@ -167,6 +167,7 @@ abstract class  LocaleKeys {
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
   static const HomeScreen_complete_log = 'HomeScreen.complete_log';
+  static const HomeScreen_downgrade_warning = 'HomeScreen.downgrade_warning';
   static const HomeScreen_download_failed_popup_retry = 'HomeScreen.download_failed_popup_retry';
   static const HomeScreen_download_failed_popup_text = 'HomeScreen.download_failed_popup_text';
   static const HomeScreen_download_popup_permission = 'HomeScreen.download_popup_permission';

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -66,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
+    }
+    if(GetIt.I<UserData>().olderVersionUsed){
+      await showDowngradeWarning();
     }
     if(GetIt.I<UserData>().showRateDialog){
       await showRatePopup();
@@ -140,6 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     GetIt.I<UserData>().showChangelog = false;
     GetIt.I<UserData>().save();
+  }
+
+  /// Shows a warning popup advices when downgrading versions
+  Future<void> showDowngradeWarning() async {
+    // opem the changelog popup
+    await AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.noHeader,
+      body: const DowngradeDialog(),
+    ).show();
   }
 
   /// Shows a rate popup which lets the user rate the app

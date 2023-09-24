@@ -1658,6 +1658,17 @@
       "fr": "Vous utilisez {VERSION_NUMBER}, la version la plus récente est {NEW_VERSION_NUMBER}.",
       "es": "Está ejecutando {VERSION_NUMBER}, la versión más reciente es {NEW_VERSION_NUMBER}.",
       "pl": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}."
+    },
+    "downgrade_warning": {
+      "en": "You downgraded DaKanji! This is not a supported action and is very likely to break your stored data or even make DaKanji completely unusable! Please reset all data in \"settings -> advanved settings\" and restart the app.",
+      "de": "Sie haben DaKanji gedowngraded! Dies ist eine nicht unterstützte Aktion und wird mit hoher Wahrscheinlichkeit Ihre gespeicherten Daten zerstören oder DaKanji sogar komplett unbrauchbar machen! Bitte setzen Sie alle Daten unter \"Einstellungen -> Erweiterte Einstellungen\" zurück und starten Sie die App neu.",
+      "ru": "Вы понизили рейтинг DaKanji! Это действие не поддерживается и с большой вероятностью приведет к повреждению сохраненных данных или даже к полному отказу от использования DaKanji! Пожалуйста, сбросьте все данные в разделе \"настройки -> расширенные настройки\" и перезапустите приложение.",
+      "ja": "大漢字をダウングレードしました！大漢字をダウングレードすると、保存されているデータが壊れてしまう可能性があります！設定」→「アドバンス設定」ですべてのデータをリセットし、アプリを再起動してください。",
+      "zh": "您降级了 DaKanji！这不是一个受支持的操作，很可能会破坏您存储的数据，甚至使 DaKanji 完全无法使用！请在 \"设置 -> 高级设置 \"中重置所有数据并重新启动应用程序。",
+      "it": "Avete declassato DaKanji! Questa non è un'azione supportata ed è molto probabile che possa danneggiare i dati memorizzati o addirittura rendere DaKanji completamente inutilizzabile! Si prega di ripristinare tutti i dati in \"impostazioni -> impostazioni avanzate\" e di riavviare l'applicazione.",
+      "fr": "Vous avez dégradé DaKanji ! Cette action n'est pas supportée et risque de détruire vos données stockées ou même de rendre DaKanji complètement inutilisable ! Veuillez réinitialiser toutes les données dans \"Paramètres -> Paramètres avancés\" et redémarrer l'application.",
+      "es": "¡Has degradado DaKanji! Esta acción no está permitida y es muy probable que se rompan tus datos almacenados o incluso que DaKanji quede completamente inutilizable. Por favor, restablece todos los datos en \"ajustes -> ajustes avanzados\" y reinicia la aplicación.",
+      "pl": "DaKanji zostało obniżone! To nie jest obsługiwane działanie i jest bardzo prawdopodobne, że uszkodzi zapisane dane lub nawet sprawi, że DaKanji będzie całkowicie bezużyteczne! Zresetuj wszystkie dane w \"Ustawienia -> Ustawienia zaawansowane\" i uruchom ponownie aplikację."
     }
   },
   "KanjiTableScreen": {

@@ -19,7 +19,7 @@ Improvements:
 
 Changes:
 
-- 
+- Warn the user when downgrading versions
 
 Fixed:
 

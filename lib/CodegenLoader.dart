@@ -2,8 +2,10 @@
 
 // ignore_for_file: prefer_single_quotes
 
+// Dart imports:
 import 'dart:ui';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -152,6 +154,7 @@ class CodegenLoader extends AssetLoader{
     "RatePopup_dont_ask_again": "不要再问了",
     "RatePopup_text": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
     "complete_log": "完整日志",
+    "downgrade_warning": "您降级了 DaKanji！这不是一个受支持的操作，很可能会破坏您存储的数据，甚至使 DaKanji 完全无法使用！请在 \"设置 -> 高级设置 \"中重置所有数据并重新启动应用程序。",
     "download_failed_popup_retry": "重试",
     "download_failed_popup_text": "下载失败，请确保你有一个稳定的网络连接。",
     "download_popup_permission": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
@@ -496,6 +499,7 @@ static const Map<String,dynamic> ja = {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
     "complete_log": "全てのログ",
+    "downgrade_warning": "大漢字をダウングレードしました！大漢字をダウングレードすると、保存されているデータが壊れてしまう可能性があります！設定」→「アドバンス設定」ですべてのデータをリセットし、アプリを再起動してください。",
     "download_failed_popup_retry": "再試行",
     "download_failed_popup_text": "ダウンロードに失敗した場合は、安定したインターネット接続環境をご確認ください。",
     "download_popup_permission": "初回のみ作業を開始する前に、いくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
@@ -870,6 +874,7 @@ static const Map<String,dynamic> de = {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
     "complete_log": "vollständiges Log",
+    "downgrade_warning": "Sie haben DaKanji gedowngraded! Dies ist eine nicht unterstützte Aktion und wird mit hoher Wahrscheinlichkeit Ihre gespeicherten Daten zerstören oder DaKanji sogar komplett unbrauchbar machen! Bitte setzen Sie alle Daten unter \"Einstellungen -> Erweiterte Einstellungen\" zurück und starten Sie die App neu.",
     "download_failed_popup_retry": "Wiederholung",
     "download_failed_popup_text": "Der Download ist fehlgeschlagen, bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben.",
     "download_popup_permission": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
@@ -1206,6 +1211,7 @@ static const Map<String,dynamic> ru = {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
     "RatePopup_text": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
     "complete_log": "полный журнал",
+    "downgrade_warning": "Вы понизили рейтинг DaKanji! Это действие не поддерживается и с большой вероятностью приведет к повреждению сохраненных данных или даже к полному отказу от использования DaKanji! Пожалуйста, сбросьте все данные в разделе \"настройки -> расширенные настройки\" и перезапустите приложение.",
     "download_failed_popup_retry": "Повторная попытка",
     "download_failed_popup_text": "Загрузка не удалась, пожалуйста, убедитесь, что у вас стабильное интернет-соединение.",
     "download_popup_permission": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
@@ -1563,6 +1569,7 @@ static const Map<String,dynamic> pl = {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!",
     "complete_log": "pełny rejestr",
+    "downgrade_warning": "DaKanji zostało obniżone! To nie jest obsługiwane działanie i jest bardzo prawdopodobne, że uszkodzi zapisane dane lub nawet sprawi, że DaKanji będzie całkowicie bezużyteczne! Zresetuj wszystkie dane w \"Ustawienia -> Ustawienia zaawansowane\" i uruchom ponownie aplikację.",
     "download_failed_popup_retry": "Ponów",
     "download_failed_popup_text": "Pobieranie nie powiodło się, upewnij się, że masz stabilne połączenie internetowe.",
     "download_popup_permission": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
@@ -1937,6 +1944,7 @@ static const Map<String,dynamic> en = {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
     "complete_log": "complete log",
+    "downgrade_warning": "You downgraded DaKanji! This is not a supported action and is very likely to break your stored data or even make DaKanji completely unusable! Please reset all data in \"settings -> advanved settings\" and restart the app.",
     "download_failed_popup_retry": "Retry",
     "download_failed_popup_text": "Download failed, please assure that you have a stable internet connection.",
     "download_popup_permission": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
@@ -2273,6 +2281,7 @@ static const Map<String,dynamic> it = {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
     "complete_log": "registro completo",
+    "downgrade_warning": "Avete declassato DaKanji! Questa non è un'azione supportata ed è molto probabile che possa danneggiare i dati memorizzati o addirittura rendere DaKanji completamente inutilizzabile! Si prega di ripristinare tutti i dati in \"impostazioni -> impostazioni avanzate\" e di riavviare l'applicazione.",
     "download_failed_popup_retry": "Riprova",
     "download_failed_popup_text": "Il download non è riuscito, assicurarsi di avere una connessione internet stabile.",
     "download_popup_permission": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
@@ -2595,6 +2604,7 @@ static const Map<String,dynamic> fr = {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
     "complete_log": "journal complet",
+    "downgrade_warning": "Vous avez dégradé DaKanji ! Cette action n'est pas supportée et risque de détruire vos données stockées ou même de rendre DaKanji complètement inutilisable ! Veuillez réinitialiser toutes les données dans \"Paramètres -> Paramètres avancés\" et redémarrer l'application.",
     "download_failed_popup_retry": "Réessayer",
     "download_failed_popup_text": "Le téléchargement a échoué, veuillez vous assurer que vous disposez d'une connexion Internet stable.",
     "download_popup_permission": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
@@ -2917,6 +2927,7 @@ static const Map<String,dynamic> es = {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
     "complete_log": "registro completo",
+    "downgrade_warning": "¡Has degradado DaKanji! Esta acción no está permitida y es muy probable que se rompan tus datos almacenados o incluso que DaKanji quede completamente inutilizable. Por favor, restablece todos los datos en \"ajustes -> ajustes avanzados\" y reinicia la aplicación.",
     "download_failed_popup_retry": "Reintentar",
     "download_failed_popup_text": "La descarga ha fallado, asegúrese de que dispone de una conexión a Internet estable.",
     "download_popup_permission": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
