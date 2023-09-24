@@ -7,6 +7,7 @@ New Features:
 
 - Deep Links:
   - Directly open dakanji with dakanji:// or https://dakanji.app/app/
+  - Share dictionary and DoJG entries
   - see the manual for more info
 - Brand new website https://dakanji.app
 - import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly lookup grammar
