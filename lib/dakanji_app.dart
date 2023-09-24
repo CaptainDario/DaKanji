@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,6 +9,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';

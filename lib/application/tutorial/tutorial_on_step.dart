@@ -1,10 +1,12 @@
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:get_it/get_it.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-
-
 
 /// When the step of tutorial changtes
 void onTutorialStep (int index) async {

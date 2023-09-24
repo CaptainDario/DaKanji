@@ -13,8 +13,6 @@ import 'package:da_kanji_mobile/data/show_cases/kanji_table_screen_tutorial.dart
 import 'package:da_kanji_mobile/data/show_cases/text_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/word_lists_screen_tutorial.dart';
 
-
-
 class Tutorials{
 
   /// the draw screen tutorial

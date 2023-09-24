@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +19,7 @@ import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/feedback_localization.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 Future<void> main() async {

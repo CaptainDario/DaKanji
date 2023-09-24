@@ -16,8 +16,6 @@ import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
-
-
 /// The tf lite interpreter to recognize the hand drawn kanji characters.
 /// 
 /// Notifies listeners when the predictions changed.

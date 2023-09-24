@@ -1,7 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
-import 'package:da_kanji_mobile/globals.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -9,6 +9,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 part 'settings_misc.g.dart';
