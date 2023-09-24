@@ -56,22 +56,22 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       args.navigatedByDrawer, true
     );
   }
-  else if(name == "/${Screens.kanji_trainer.name}"){
+  else if(name == "/${Screens.kanjiTrainer.name}"){
     newRoute = KanjiTrainerScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == "/${Screens.kanji_table.name}"){
+  else if(name == "/${Screens.kanjiTable.name}"){
     newRoute = KanjiTableScreen(
       args.navigatedByDrawer, true
     );
   }
-  else if(name == "/${Screens.kana_trainer.name}"){
+  else if(name == "/${Screens.kanaTrainer.name}"){
     newRoute = KanaTrainerScreen(
       args.navigatedByDrawer
     );
   }
-  else if(name == "/${Screens.kana_table.name}"){
+  else if(name == "/${Screens.kanaTable.name}"){
     newRoute = KanaTableScreen(
       args.navigatedByDrawer, true
     );
@@ -81,7 +81,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       args.navigatedByDrawer, true
     );
   }
-  else if(name == "/${Screens.word_lists.name}"){
+  else if(name == "/${Screens.wordLists.name}"){
     newRoute = WordListsScreen(
       args.navigatedByDrawer, true
     );
