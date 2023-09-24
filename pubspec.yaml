@@ -3,7 +3,8 @@ description: You are learning Japanese? Then you need to give "DaKanji" a try!
 
 repository: https://github.com/captaindario/dakanji
 issue_tracker: https://github.com/captaindario/dakanji/issues
-funding: https://github.com/sponsors/captaindario
+funding:
+  - https://github.com/sponsors/captaindario
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
