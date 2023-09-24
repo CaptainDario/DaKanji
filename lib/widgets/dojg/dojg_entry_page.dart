@@ -227,7 +227,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                 ),
                 children: [
                   Image.file(File(
-                    p.joinAll([g_documentsDirectory.path, "DaKanji", "dojg", widget.dojgEntry.noteImageName!])
+                    p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
                   ))
                 ],
               )

@@ -13,6 +13,7 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/application/helper/path_manager.dart';
 
 /// A logs of the currently running app so that they can be attached when
 /// using the provide feedback widget
@@ -91,8 +92,8 @@ String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G
 const Size g_minDesktopWindowSize = Size(480, 720);
 
 // PATHS
-/// path to the documents directory
-late Directory g_documentsDirectory;
+/// manager of frequently used paths
+late PathManager g_DakanjiPathManager;
 
 //about page
 /// link to the github repo

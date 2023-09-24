@@ -31,7 +31,7 @@ Future<bool> importDoJGDeck () async {
     try {
       // get current file path and dakanji directory
       File dojg = File(result.files.single.path!);
-      String copyTo = p.join(g_documentsDirectory.path, "DaKanji", "dojg");
+      String copyTo = g_DakanjiPathManager.dojgDirectory.path;
 
       // extract the zip to the dakanji directory
       final inputStream = InputFileStream(dojg.path);
@@ -125,7 +125,7 @@ bool checkDojgImported() {
 
   bool imported = false;
 
-  String dojgPath = p.join(g_documentsDirectory.path, "DaKanji", "dojg");
+  String dojgPath = g_DakanjiPathManager.dojgDirectory.path;
 
   if(Directory(dojgPath).existsSync()){
     Isar isar = Isar.getInstance("dojg") ??
@@ -144,7 +144,7 @@ bool checkDojgImported() {
 bool checkDojgWithMediaImported() {
 
   String dojgPath = p.join(
-    g_documentsDirectory.path, "DaKanji", "dojg", "1"
+    g_DakanjiPathManager.dojgDirectory.path, "1"
   );
   
   return File(dojgPath).existsSync() && checkDojgImported();
@@ -155,7 +155,7 @@ bool checkDojgWithMediaImported() {
 List<List<String>> getAllEntries() {
 
   Database dojgDb = sqlite3.open(
-    p.join(g_documentsDirectory.path, "DaKanji", "dojg", "collection.anki2")
+    p.join(g_DakanjiPathManager.dojgDirectory.path, "collection.anki2")
   );
 
   ResultSet r = dojgDb.select("SELECT \"tags\", \"flds\", \"sfld\" FROM \"notes\"");
@@ -172,7 +172,7 @@ List<List<String>> getAllEntries() {
 Map<String, String> getAllMediaFiles(){
   
   String dojgMediaMappingString = File(p.join(
-    g_documentsDirectory.path, "DaKanji", "dojg", "media"
+    g_DakanjiPathManager.dojgDirectory.path, "media"
   )).readAsStringSync();
 
   Map t = json.decode(dojgMediaMappingString);

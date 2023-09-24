@@ -919,9 +919,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               GetIt.I<UserData>().dojgWithMediaImported = false;
                               GetIt.I<UserData>().save();
 
-                              Directory dojgDir = Directory(p.join(
-                                g_documentsDirectory.path, "DaKanji", "dojg"
-                              ));
+                              Directory dojgDir = Directory(g_DakanjiPathManager.dojgDirectory.path);
                               if(dojgDir.existsSync()){
                                 if(GetIt.I<Isars>().dojg != null){
                                   await GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);

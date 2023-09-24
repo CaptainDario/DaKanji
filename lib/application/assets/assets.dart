@@ -30,7 +30,10 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   // Search and create db file destination folder if not exist
 
   // if the file already exists delete it
-  final file = File(p.joinAll([g_documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
+  final file = File(p.joinAll([
+      g_DakanjiPathManager.dakanjiDocumentsDirectory.path,
+      ...asset.path.split("/")
+    ]));
   if (file.existsSync()) {
     file.deleteSync();
     debugPrint("Deleted ${asset.uri.pathSegments.last}");

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/helper/path_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,6 @@ import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
@@ -54,7 +54,8 @@ Future<bool> init() async {
     await windowManager.ensureInitialized();
   }
 
-  await initPaths();
+  g_DakanjiPathManager = PathManager();
+  await g_DakanjiPathManager.init();
 
   await initServices();
 
@@ -78,13 +79,6 @@ Future<void> clearPreferences() async {
   prefs.clear();
 
  debugPrint("CLEARED PREFERENCES AT APP START.");
-}
-
-/// Initializes all the path varaibles that daanji uses 
-Future<void> initPaths() async {
-
-  g_documentsDirectory = (await path_provider.getApplicationDocumentsDirectory());
-
 }
 
 /// Loads all services from disk that DO NOT dpend on data in the documents
@@ -134,7 +128,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir = g_documentsDirectory.path;
+  String documentsDir = g_DakanjiPathManager.documentsDirectory.path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
   String dojgIsarPath = p.joinAll([documentsDir, "DaKanji", "dojg"]);
   GetIt.I.registerSingleton<Isars>(
@@ -200,7 +194,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir = p.join(g_documentsDirectory.path, "DaKanji");
+  String documentsDir = g_DakanjiPathManager.dakanjiDocumentsDirectory.path;
   debugPrint("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
