@@ -15,7 +15,7 @@ New Features:
 
 Improvements:
 
-- Various UI improvements
+- Radical ui layout on narrow screens
 
 Changes:
 
