@@ -35,7 +35,7 @@ class DojgSentenceTable extends StatelessWidget {
         children: [
           for (int i = 0; i < sentencesEn.length; i++)
             ...[
-              Text("$i. ",
+              Text("${i+1}. ",
                 style: const TextStyle(color: Colors.grey)
               ),
               HtmlWidget(

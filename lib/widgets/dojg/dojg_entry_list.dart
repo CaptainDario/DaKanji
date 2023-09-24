@@ -1,8 +1,9 @@
-import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_page.dart';
+import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
@@ -11,7 +12,7 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 
-class DojgEntryList extends StatefulWidget {
+class DojgEntryList extends ConsumerStatefulWidget {
 
   /// Callback that is called when the user taps on this card. provides
   /// the `this.dojgEntry` as parameter
@@ -26,10 +27,10 @@ class DojgEntryList extends StatefulWidget {
   );
 
   @override
-  State<DojgEntryList> createState() => _DojgEntryListState();
+  ConsumerState<DojgEntryList> createState() => _DojgEntryListState();
 }
 
-class _DojgEntryListState extends State<DojgEntryList> {
+class _DojgEntryListState extends ConsumerState<DojgEntryList> {
 
   /// all dojg entries that are currently being shown
   List<DojgEntry> currentEntries = [];
@@ -39,6 +40,8 @@ class _DojgEntryListState extends State<DojgEntryList> {
   List<bool> currentVolumeSelection = [true, true, true];
   /// the text that is currently in the search bar
   String currentSearch = "";
+
+  TextEditingController searchTextEditingController = TextEditingController();
 
 
   @override
@@ -60,15 +63,16 @@ class _DojgEntryListState extends State<DojgEntryList> {
       currentEntries = [];
     }
     else{
+      String _currentSearch = currentSearch.trim();
       currentEntries = GetIt.I<Isars>().dojg!.dojgEntrys.filter()
         // show only entries of currently selected volumes
         .anyOf(volumeTags.indexed.where((e) => currentVolumeSelection[e.$1]),
           (q, tag) => q.volumeTagEqualTo(tag.$2))
         //
-        .optional(currentSearch != "", (q) => 
-          q.grammaticalConceptContains(currentSearch, caseSensitive: false)
+        .optional(_currentSearch != "", (q) => 
+          q.grammaticalConceptContains(_currentSearch, caseSensitive: false)
             .or()
-          .usageContains(currentSearch, caseSensitive: false)
+          .usageContains(_currentSearch, caseSensitive: false)
         )
         .findAllSync()
       // sort found entries
@@ -89,6 +93,15 @@ class _DojgEntryListState extends State<DojgEntryList> {
 
   @override
   Widget build(BuildContext context) {
+
+    currentSearch = ref.watch(dojgSearchProvider);
+    
+    if(searchTextEditingController.text != ref.watch(dojgSearchProvider)){
+      currentSearch = ref.watch(dojgSearchProvider);
+      searchTextEditingController.text = currentSearch;
+      updateSearchResults();
+    }
+
     return Align(
       alignment: Alignment.topCenter,
       child: CustomScrollView(
@@ -99,6 +112,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: searchTextEditingController,
                     autocorrect: false,
                     maxLines: 1,
                     style: const TextStyle(
@@ -111,8 +125,8 @@ class _DojgEntryListState extends State<DojgEntryList> {
                       ),
                     ),
                     onChanged: (value) {
+                      ref.read(dojgSearchProvider.notifier).setCurrentSearchTerm(value);
                       setState(() {
-                        currentSearch = value;
                         updateSearchResults();
                       });
                     },
