@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dojg_search_provider.g.dart';

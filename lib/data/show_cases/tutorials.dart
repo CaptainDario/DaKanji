@@ -3,15 +3,15 @@
 // Package imports:
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/data/show_cases/dojg_screen_tutorial.dart';
-import 'package:da_kanji_mobile/data/show_cases/word_lists_screen_tutorial.dart';
 // Project imports:
 import 'package:da_kanji_mobile/data/show_cases/clipboard_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/dictionary_screen_tutorial.dart';
+import 'package:da_kanji_mobile/data/show_cases/dojg_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/kana_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/text_screen_tutorial.dart';
+import 'package:da_kanji_mobile/data/show_cases/word_lists_screen_tutorial.dart';
 import 'package:da_kanji_mobile/data/show_cases/word_lists_screen_tutorial.dart';
 
 class Tutorials{

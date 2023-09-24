@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
@@ -21,10 +23,6 @@ import 'package:da_kanji_mobile/widgets/drawing/draw_screen_multi_char_search.da
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_prediction_buttons.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_responsive_layout.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_undo_button.dart';
-import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
-
 
 /// The "draw"-screen.
 /// 

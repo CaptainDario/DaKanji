@@ -2,19 +2,19 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:app_links/app_links.dart';
+import 'package:get_it/get_it.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 final AppLinks _appLinks = AppLinks();
 

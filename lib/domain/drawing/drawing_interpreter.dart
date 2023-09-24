@@ -2,29 +2,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:universal_io/io.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tuple/tuple.dart';
-
-import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
-import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
-import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
-import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
 // Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tuple/tuple.dart';
+import 'package:tuple/tuple.dart';
+import 'package:universal_io/io.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
+import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
+import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
+import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
 /// The tf lite interpreter to recognize the hand drawn kanji characters.

@@ -1,10 +1,12 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:isolate';
-import 'package:async/async.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:async/async.dart';
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';

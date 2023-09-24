@@ -1,6 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -8,8 +10,6 @@ import 'package:http/http.dart' as http;
 
 // Project imports:
 import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
-
-
 
 Uri ankiConnectUrl = Uri.http("localhost:8765");
 

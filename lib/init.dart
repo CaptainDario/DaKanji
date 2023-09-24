@@ -1,5 +1,7 @@
 // Dart imports:
 import 'dart:async';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,28 +20,29 @@ import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/application/helper/deep_links.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/domain/changelog.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_lookup.dart';
-import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
-import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/platform_dependent_variables.dart';
-import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
+import 'package:da_kanji_mobile/application/helper/deep_links.dart';
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/changelog.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_lookup.dart';
+import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
+import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
+import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {

@@ -1,13 +1,15 @@
 // Flutter imports:
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+
 // Project imports:
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
 
 /// The screen to show the manual of DaKanji

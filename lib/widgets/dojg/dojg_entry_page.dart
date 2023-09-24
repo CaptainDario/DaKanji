@@ -1,21 +1,23 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:path/path.dart' as p;
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
-import 'package:path/path.dart' as p;
 
+// Project imports:
+import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
+import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_key_sentence_table.dart';
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-
-
 
 /// A page that shows all details about the given dojg entry
 class DojgEntryPage extends ConsumerStatefulWidget {

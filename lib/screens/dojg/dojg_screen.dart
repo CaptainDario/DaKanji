@@ -1,18 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_list.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_page.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_import.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_list.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-
-
 
 class DoJGScreen extends StatefulWidget {
 

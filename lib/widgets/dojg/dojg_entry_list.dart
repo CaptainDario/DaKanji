@@ -1,16 +1,17 @@
-import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
 import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
 
 class DojgEntryList extends ConsumerStatefulWidget {
 

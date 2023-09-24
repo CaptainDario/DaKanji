@@ -1,9 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-
-
 
 /// Table widget that shows japanese example sentences and their matching
 /// english translations

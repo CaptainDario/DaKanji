@@ -1,11 +1,11 @@
 
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorial.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 class DojgScreenTutorial extends Tutorial {
 

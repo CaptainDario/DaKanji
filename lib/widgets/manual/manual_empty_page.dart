@@ -8,8 +8,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-
-
 /// A empty manual page for reference
 class ManualEmptyPage extends StatelessWidget {
   ManualEmptyPage({super.key});
