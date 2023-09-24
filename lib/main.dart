@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:universal_io/io.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -33,36 +34,38 @@ Future<void> main() async {
         : "";
     },
     appRunner: () => runApp(
-      Phoenix(
-        child: FutureBuilder(
-          future: g_initApp,
-          builder: (context, snapshot) {
-            if(snapshot.hasData == false) {
-              return const DaKanjiSplash();
-            } else {
-              return EasyLocalization(
-                supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-                path: 'assets/translations',
-                fallbackLocale: const Locale('en'),
-                useFallbackTranslations: true,
-                useOnlyLangCode: true,
-                assetLoader: const CodegenLoader(),
-                saveLocale: true,
-                startLocale: Platform.isLinux ? const Locale("en") : null,
-                child: BetterFeedback(
-                  theme: FeedbackThemeData(
-                    sheetIsDraggable: true
+      ProviderScope(
+        child: Phoenix(
+          child: FutureBuilder(
+            future: g_initApp,
+            builder: (context, snapshot) {
+              if(snapshot.hasData == false) {
+                return const DaKanjiSplash();
+              } else {
+                return EasyLocalization(
+                  supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+                  path: 'assets/translations',
+                  fallbackLocale: const Locale('en'),
+                  useFallbackTranslations: true,
+                  useOnlyLangCode: true,
+                  assetLoader: const CodegenLoader(),
+                  saveLocale: true,
+                  startLocale: Platform.isLinux ? const Locale("en") : null,
+                  child: BetterFeedback(
+                    theme: FeedbackThemeData(
+                      sheetIsDraggable: true
+                    ),
+                    localizationsDelegates: [
+                      CustomFeedbackLocalizationsDelegate(),
+                    ],
+                    localeOverride: const Locale("en"),
+                    mode: FeedbackMode.navigate,
+                    child: const DaKanjiApp(),
                   ),
-                  localizationsDelegates: [
-                    CustomFeedbackLocalizationsDelegate(),
-                  ],
-                  localeOverride: const Locale("en"),
-                  mode: FeedbackMode.navigate,
-                  child: const DaKanjiApp(),
-                ),
-              );
+                );
+              }
             }
-          }
+          ),
         ),
       )
     )
