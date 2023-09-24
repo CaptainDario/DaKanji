@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:share_plus/share_plus.dart';
@@ -65,7 +67,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
             icon: const Icon(Icons.share),
             onPressed: () async {
               await Share.share(
-                "https://dakanji.app/app/dojg?id=${1}"
+                "${GetIt.I<Settings>().misc.sharingScheme}dojg?search=${widget.dojgEntry.grammaticalConcept}&open=true"
               );
             },
           ),
