@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_dojg.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -33,6 +35,7 @@ class _ManualScreenState extends State<ManualScreen>
     LocaleKeys.ManualScreen_dict_title.tr(),
     //"Text",
     //LocaleKeys.ManualScreen_anki_title.tr(),
+    LocaleKeys.ManualScreen_dojg_title.tr(),
     LocaleKeys.ManualScreen_deep_links_title.tr()
   ];
   /// the icons that are shown on the ManualButtons
@@ -40,8 +43,8 @@ class _ManualScreenState extends State<ManualScreen>
     //Icons.brush,
     Icons.book,
     //Icons.text_snippet,
-    
     //DaKanjiIcons.anki,
+    DaKanjiIcons.dojg,
     Icons.link
   ];
   /// The size of the manual buttons
@@ -60,6 +63,7 @@ class _ManualScreenState extends State<ManualScreen>
       const ManualDictionary(),
       //ManualTextScreen(),
       //ManualAnki(),
+      const ManualDojgPage(),
       const ManualDeepLinks(),
     ];
 

@@ -234,6 +234,8 @@
     "dict_text_examples_analyze_text": "Beispiele aus dem W\u00f6rterbuch k\u00f6nnen im Textverarbeitungsbildschirm durch doppeltes Antippen ge\u00f6ffnet werden.",
     "dict_text_examples_analyze_title": "Beispiele im Bildschirm \"Text\" \u00f6ffnen",
     "dict_title": "W\u00f6rterbuch",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von B\u00fcchern \u00fcber japanische Grammatik. DaKanji erm\u00f6glicht den Import des [Anki deck] (https://dojgdeck.neocities.org/), das es in zwei Versionen gibt: eine mit Bildern und eine ohne. Sie k\u00f6nnen beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auf dem DoJG-Bildschirm ausw\u00e4hlen.",
+    "dojg_title": "DoJG",
     "title": "Handbuch"
   },
   "OnBoarding": {

@@ -234,6 +234,8 @@
     "dict_text_examples_analyze_text": "Les exemples du dictionnaire peuvent \u00eatre ouverts dans l'\u00e9cran de traitement de texte en double-cliquant dessus.",
     "dict_text_examples_analyze_title": "Ouvrir des exemples dans l'\u00e9cran Texte",
     "dict_title": "Dictionnaire",
+    "dojg_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une s\u00e9rie de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck] (https://dojgdeck.neocities.org/) qui existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la t\u00e9l\u00e9chargeant puis en s\u00e9lectionnant le fichier .apkg sur l'\u00e9cran du DoJG.",
+    "dojg_title": "DoJG",
     "title": "Manuel"
   },
   "OnBoarding": {

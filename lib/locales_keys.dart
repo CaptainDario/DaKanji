@@ -221,6 +221,8 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_text_examples_analyze_text = 'ManualScreen.dict_text_examples_analyze_text';
   static const ManualScreen_dict_text_examples_analyze_title = 'ManualScreen.dict_text_examples_analyze_title';
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';
+  static const ManualScreen_dojg_text = 'ManualScreen.dojg_text';
+  static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';
   static const ManualScreen_title = 'ManualScreen.title';
   static const ManualScreen = 'ManualScreen';
   static const OnBoarding_Onboarding_1_text = 'OnBoarding.Onboarding_1_text';
