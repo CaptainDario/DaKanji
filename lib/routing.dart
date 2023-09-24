@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -49,6 +50,11 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     newRoute = TextScreen(
       args.navigatedByDrawer, true, 
       initialText: args.textInitialText,
+    );
+  }
+  else if(name == "/${Screens.dojg.name}"){
+    newRoute = DoJGScreen(
+      args.navigatedByDrawer, true,
     );
   }
   else if(name == "/${Screens.clipboard.name}"){
