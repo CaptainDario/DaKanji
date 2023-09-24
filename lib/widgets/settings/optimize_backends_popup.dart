@@ -46,13 +46,14 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
             const SizedBox(height: 20,)
           ]
         ),
-      )..show();
+      ).show();
       
       // wait a bit so the dialog can be shown
       await Future.delayed(const Duration(seconds: 2));
 
       await optimizeTFLiteBackendsForModels();
       
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     },
     body: Column(

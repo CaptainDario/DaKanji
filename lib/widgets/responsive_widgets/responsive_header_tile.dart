@@ -38,7 +38,7 @@ class ResponsiveHeaderTile extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                this.icon,
+                icon,
                 size: tileHeight*0.3,
               ),
               const SizedBox(

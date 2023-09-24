@@ -21,8 +21,9 @@ class FloatingWord {
   
     word = word.replaceAll("ー", "｜");
 
-    if (word.runes.length > 1)
+    if (word.runes.length > 1) {
       word = word.toString().split("").join("\n");
+    }
 
     return word;
   }

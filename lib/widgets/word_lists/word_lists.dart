@@ -85,7 +85,7 @@ class _WordListsState extends State<WordLists> {
   @override
   Widget build(BuildContext context) {
 
-    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.DFS().toList();
+    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.dfs().toList();
 
     return DragTarget<TreeNode<WordListsData>>(
       hitTestBehavior: HitTestBehavior.opaque,
@@ -117,56 +117,56 @@ class _WordListsState extends State<WordLists> {
             children: [
               Column(
                 children: [
-                  // header with tools 
-                  Container(
-                    child: DragTarget<TreeNode<WordListsData>>(
-                      hitTestBehavior: HitTestBehavior.opaque,
-                      onWillAccept: (data) {
-                        // start animation to the top of the list d
-                        if(scrollController.offset > 60)
-                          scrollController.animateTo(0,
-                            duration: Duration(milliseconds: scrollController.offset.round()*5),
-                            curve: Curves.linear
-                          );
-                        return false;
-                      },
-                      onLeave: (data) {
-                        // cancel animation
-                        scrollController.position.hold(() { });
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        return Row(
-                          children: [
-                            const Expanded(child: SizedBox()),
-                            // add new list button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.wordList);
-                                },
-                                icon: const Icon(Icons.format_list_bulleted_add)
-                              ),
-                            ), 
-                            // add new folder button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.folder);
-                                },
-                                icon: const Icon(Icons.create_new_folder)
-                              ),
-                            ), 
-                          ],
+                  // header with tools
+                  DragTarget<TreeNode<WordListsData>>(
+                    hitTestBehavior: HitTestBehavior.opaque,
+                    onWillAccept: (data) {
+                      // start animation to the top of the list d
+                      if(scrollController.offset > 60) {
+                        scrollController.animateTo(0,
+                          duration: Duration(milliseconds: scrollController.offset.round()*5),
+                          curve: Curves.linear
                         );
                       }
-                    ),
+                      return false;
+                    },
+                    onLeave: (data) {
+                      // cancel animation
+                      scrollController.position.hold(() { });
+                    },
+                    builder: (context, candidateData, rejectedData) {
+                      return Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          // add new list button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.wordList);
+                              },
+                              icon: const Icon(Icons.format_list_bulleted_add)
+                            ),
+                          ), 
+                          // add new folder button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.folder);
+                              },
+                              icon: const Icon(Icons.create_new_folder)
+                            ),
+                          ), 
+                        ],
+                      );
+                    }
                   ),
+                  
                   // the word lists / folders
                   Expanded(
                     child: ListView(
@@ -240,8 +240,9 @@ class _WordListsState extends State<WordLists> {
                                 onWillAccept: (TreeNode<WordListsData>? data) {
 
                                   // do no allow self drags
-                                  if(data == null || i == childrenDFS.indexOf(data)-1)
+                                  if(data == null || i == childrenDFS.indexOf(data)-1) {
                                     return false;
+                                  }
 
                                   draggingOverDividerIndex = i; 
                                   return true;
@@ -310,7 +311,7 @@ class _WordListsState extends State<WordLists> {
                             ),
                             onPressed: (){
                               List<TreeNode<WordListsData>> selection =
-                                widget.parent!.DFS().where(
+                                widget.parent!.dfs().where(
                                   (node) => node.value.isChecked
                                 ).toList();
                               widget.onSelectionConfirmed!(selection);
@@ -343,7 +344,7 @@ class _WordListsState extends State<WordLists> {
                       scrollController.position.hold(() { });
                     },
                     builder: (context, candidateData, rejectedData) {
-                      return Container(
+                      return SizedBox(
                         height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
                         width: MediaQuery.of(context).size.width,
                         //color: Colors.amber

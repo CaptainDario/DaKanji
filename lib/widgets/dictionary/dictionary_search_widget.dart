@@ -111,10 +111,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    searchBarAnimation = new Tween(
+    searchBarAnimation = Tween(
       begin: 0.0,
       end: 1.0,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: searchBarAnimationController,
       curve: Curves.easeIn
     ));
@@ -138,10 +138,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
       reopenPopupTimer = Timer(const Duration(seconds: 1), () {
-        if(reshowRadicalPopup)
+        if(reshowRadicalPopup) {
           showRadicalPopup();
-        if(reshowFilterPopup)
+        }
+        if(reshowFilterPopup) {
           showFilterPopup();
+        }
 
         reshowFilterPopup = false; reshowRadicalPopup = false;
       });
@@ -168,8 +170,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, widget.allowDeconjugation);
       }
-      if(mounted)
+      if(mounted) {
         setState(() {});
+      }
     });
   }
 
@@ -189,14 +192,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             dictSearchResultController.resetCurrentFocusIndex();
             searchTextFieldFocusNode.requestFocus();
           }
-          else
+          else {
             dictSearchResultController.previousFocus();
+          }
         },
         const SingleActivator(LogicalKeyboardKey.arrowDown) : () async {
-          if(dictSearchResultController.currentFocusIndex == -1)
+          if(dictSearchResultController.currentFocusIndex == -1) {
             dictSearchResultController.setFocus(0);
-          else
+          } else {
             dictSearchResultController.nextFocus();
+          }
         }
       },
       child: MultiFocus(
@@ -237,9 +242,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           setState(() {
                             searchBarExpanded = !searchBarExpanded;
                   
-                            if(searchBarExpanded)
+                            if(searchBarExpanded) {
                               searchBarAnimationController.forward();
-                            else{
+                            } else{
                               searchBarAnimationController.reverse();
                             }
                           });
@@ -277,7 +282,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
                         onTap: onClipboardButtonPressed,
-                        child: Container(
+                        child: SizedBox(
                           width: 30,
                           height: 30,
                           child: Icon(
@@ -310,7 +315,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               )
                             );
                           },
-                          child: Container(
+                          child: const SizedBox(
                             width: 30,
                             height: 30,
                             child: const Icon(Icons.brush)
@@ -323,7 +328,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
                         onTap: showFilterPopup,
-                        child: Container(
+                        child: const SizedBox(
                           height: 30,
                           width: 30,
                           child: const Icon(
@@ -367,7 +372,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 AnimatedBuilder(
                   animation: searchBarAnimation,
                   builder: (context, child) {
-                    return Container(
+                    return SizedBox(
                       height: (widget.expandedHeight - searchBarInputHeight)
                         * searchBarAnimation.value,
                       child: child,
@@ -551,8 +556,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       )
     {
       deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(text));
-      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text))
+      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text)) {
         deconjugated = k.toRomaji(deconjugated);
+      }
     }
 
     // if the search query was changed show a snackbar and give the option to

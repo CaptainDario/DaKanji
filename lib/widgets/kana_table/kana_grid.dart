@@ -66,8 +66,9 @@ class _KanaGridState extends State<KanaGrid> {
 
         String currentKana = "";
         if(widget.kanaTable.length >= index~/columnCount+1 &&
-          widget.kanaTable[index~/columnCount].length >= index%columnCount+1)
+          widget.kanaTable[index~/columnCount].length >= index%columnCount+1) {
           currentKana = widget.kanaTable[index~/columnCount][index%columnCount];
+        }
 
         return AnimationConfiguration.staggeredGrid(
           position: index,
@@ -82,7 +83,7 @@ class _KanaGridState extends State<KanaGrid> {
                   ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![1]
                   : null,
                 onPressed: () {
-                  widget.onTap?.call("${currentKana}");
+                  widget.onTap?.call(currentKana);
                 },
                 child: RichText(
                   overflow: TextOverflow.visible,
@@ -109,7 +110,7 @@ class _KanaGridState extends State<KanaGrid> {
                       // romaji
                       if(widget.showRomaji)
                         TextSpan(
-                          text: "\n" + convertToRomaji(currentKana),
+                          text: "\n${convertToRomaji(currentKana)}",
                           style: TextStyle(
                             overflow: TextOverflow.visible,
                             color: Theme.of(context).brightness == Brightness.light ?

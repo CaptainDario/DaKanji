@@ -77,7 +77,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
         child: Icon(Icons.search_off)
       );
     }
-    else
+    else {
       return SingleChildScrollView(
         child: Column(
           children: () {
@@ -90,5 +90,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
           } ()
         ),
       );
+    }
   }
 }

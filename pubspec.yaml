@@ -23,6 +23,8 @@ platforms:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_lints: ^2.0.2
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
@@ -53,6 +55,9 @@ dependencies:
   device_info_plus: 9.0.3
   share_plus: 7.1.0
   cross_file: 0.3.3+4
+  file_picker: 5.3.3
+  sqlite3: 2.1.0
+  sqlite3_flutter_libs: 0.5.15
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
   sentry_flutter: 7.9.0
@@ -61,11 +66,29 @@ dependencies:
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
+  pdf: 3.10.3
+  printing: 5.11.0
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
+
   media_kit: 1.1.7                              # Primary package.
   media_kit_video: 1.1.8                        # For video rendering.
   media_kit_libs_video: 1.0.1                   # Native video dependencies.
   #kana_kit: any # included in dakanji dictionary
+  flutter_widget_from_html_core: 0.10.3
+  tflite_flutter: 0.10.1
+  async: 2.11.0
+  path: 1.8.3
+  http: 1.1.0
+  collection: 1.17.1
+  path_provider: 2.1.0
+  yaml: 3.1.2
+  quiver: 3.2.1
+  flutter_riverpod: 2.4.0
+  riverpod_annotation: 2.1.5
+  kana_kit:
+    git:
+      url: https://github.com/CaptainDario/kana_kit
+
   liquid_swipe:
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
@@ -77,12 +100,9 @@ dependencies:
       ref: v3.1.0
     #path: ../DaKanji-Dictionary/database_builder
   
-
   # Not all platforms supported
   webview_flutter: 4.2.4                # android, iOS
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  pdf: 3.10.4
-  printing: 5.11.0
   clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
 
   #isar: android, iOS, macos, windows, linux
@@ -99,8 +119,6 @@ dependencies:
     git:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
       path: flutter_appavailability
-
-
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
@@ -135,6 +153,9 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  custom_lint: 
+  riverpod_generator: ^2.3.2
+  riverpod_lint: ^2.1.0
   msix: 3.13.2
   flutter_lints: ^2.0.3
   json_serializable: 6.7.0
@@ -152,6 +173,7 @@ flutter_icons:
     generate: true 
   
   image_path: "assets/images/dakanji/icon.png"
+
 
 # The following section is specific to Flutter.
 flutter:

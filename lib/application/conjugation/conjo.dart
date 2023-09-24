@@ -47,22 +47,14 @@ class Conjo {
     this.stem,
     this.okuri,
     {
-      this.euphr = null,
-      this.euphk = null
+      this.euphr,
+      this.euphk
     }
   );
 
   @override
   String toString() {
     return 
-      'Pos: ${this.pos.name.toString()}, ' +
-      'Conj: ${this.conj.name}, ' +
-      'Neg: ${this.neg.toString()}, ' +
-      'Fml: ${this.fml.toString()}, ' +
-      'Onum: ${this.onum.toString()}, ' +
-      'Stem: ${this.stem.toString()}, ' +
-      'Okuri: ${this.okuri}, ' +
-      'Euphr: ${(this.euphr ?? "")}, ' +
-      'Euphk: ${(this.euphk ?? "")}, ';
+      'Pos: ${pos.name.toString()}, Conj: ${conj.name}, Neg: ${neg.toString()}, Fml: ${fml.toString()}, Onum: ${onum.toString()}, Stem: ${stem.toString()}, Okuri: $okuri, Euphr: ${(euphr ?? "")}, Euphk: ${(euphk ?? "")}, ';
   }
 }

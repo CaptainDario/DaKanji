@@ -139,10 +139,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
       isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
       showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
       showSpecial     ? "special_on.svg"  : "special_off.svg", 
-    ].map((e) => "assets/icons/kana/" + e).toList();
+    ].map((e) => "assets/icons/kana/$e").toList();
 
     return DaKanjiDrawer(
-      currentScreen: Screens.kana_table,
+      currentScreen: Screens.kanaTable,
       drawerClosed: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -295,11 +295,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
     // portrait
     if(constraints.maxWidth < constraints.maxHeight){
-      this._setPortraiKanaTable(constraints);
+      _setPortraiKanaTable(constraints);
     }
     // landscape
     else {
-      this._setLandscapeKanaTable(constraints); 
+      _setLandscapeKanaTable(constraints); 
     }
   }
 
@@ -316,10 +316,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     // combinations (normal)
     if(constraints.maxWidth > 800){
       List<List<String>> yoon = isHiragana ? hiraYoon : kataYoon;
-      if(constraints.maxHeight > 1000)
+      if(constraints.maxHeight > 1000) {
         yoon += isHiragana
           ? hiraYoonDakuten + hiraYoonHandakuten
           : kataYoonDakuten + kataYoonHandakuten;
+      }
 
       for (int i = 0; i < yoon.length; i++) {
         kanaTable[i].addAll(yoon[i].where((e) => e != ""));

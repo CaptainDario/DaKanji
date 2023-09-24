@@ -18,8 +18,9 @@ Future<void> initDeepLinksStream() async {
   /// Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
-    if(uri.isScheme("dakanji") && uri.toString().startsWith(g_AppLink))
+    if(uri.isScheme("dakanji") && uri.toString().startsWith(g_AppLink)) {
       handleDeepLink(uri.toString());
+    }
   });
 }
 
@@ -30,10 +31,11 @@ void handleDeepLink(String link){
 
   debugPrint("Deeplink: $short");
 
-  if(short.startsWith("dictionary/"))
+  if(short.startsWith("dictionary/")) {
     handDeepLinkDict(short.replaceFirst("dictionary/", ""));
-  else if(short.startsWith("text/"))
+  } else if(short.startsWith("text/")) {
     handleDeepLinkText(short.replaceFirst("text/", ""));
+  }
 }
 
 /// Handles deep links that are related to the text screen
@@ -73,9 +75,10 @@ void handDeepLinkDict(String dictLink){
     );
   }
   
-  if(args != null)
+  if(args != null) {
     g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
       "/dictionary",
       (route) => false, arguments: args
     );
+  }
 }

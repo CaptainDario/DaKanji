@@ -6,7 +6,7 @@ import 'package:graphview/GraphView.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 
 
 

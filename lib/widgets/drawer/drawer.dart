@@ -77,26 +77,29 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     DrawerEntry(Icons.text_snippet, LocaleKeys.TextScreen_title.tr(), "/text", Screens.text,
       null, null,
       true, null),
-    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanji_table,
+    DrawerEntry(DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(), "/dojg", Screens.dojg,
+      null, null,
+      true, null),
+    DrawerEntry(DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(), "/kanji_table", Screens.kanjiTable,
       null, null,
       true, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanji_trainer,
+    DrawerEntry(DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(), "/kanji_trainer", Screens.kanjiTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kana_table,
+    DrawerEntry(DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(), "/kana_table", Screens.kanaTable,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kana_trainer,
+    DrawerEntry(DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(), "/kana_trainer", Screens.kanaTrainer,
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.word_lists,
+    DrawerEntry(Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(), "/word_lists", Screens.wordLists,
       null, const Alignment(0, -0.1),
       kDebugMode, null),
-    DrawerEntry(Icons.copy, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
+    DrawerEntry(Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(), "/clipboard", Screens.clipboard,
       null, null,
       true, null),
     DrawerEntry(Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(), "/settings", Screens.settings,
@@ -157,17 +160,20 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     // order of drawer elements
     drawerElementsIndexOrder = GetIt.I<Settings>().misc.drawerItemOrder;
     // no order was ever defined
-    if(drawerElementsIndexOrder.isEmpty)
+    if(drawerElementsIndexOrder.isEmpty) {
       drawerElementsIndexOrder = List.generate(drawerEntries.length, (index) => index);
+    }
     // there are new elements in the drawer (migrate old safed values)
-    if(drawerElementsIndexOrder.length < drawerEntries.length)
+    if(drawerElementsIndexOrder.length < drawerEntries.length) {
       drawerElementsIndexOrder.addAll(
         List.generate(drawerEntries.length-drawerElementsIndexOrder.length, 
           (index) => index+drawerElementsIndexOrder.length)
       );
+    }
     // elements have been removed from the drawer -> reset all values
-    if(drawerElementsIndexOrder.length > drawerEntries.length)
+    if(drawerElementsIndexOrder.length > drawerEntries.length) {
       drawerElementsIndexOrder = List.generate(drawerEntries.length, (i) => i);
+    }
 
     GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;
     GetIt.I<Settings>().save();
@@ -177,8 +183,9 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   void dispose() { 
     _drawerController.dispose();
     super.dispose();
-    if(GetIt.I.isRegistered<DrawerListener>())
+    if(GetIt.I.isRegistered<DrawerListener>()) {
       GetIt.I<DrawerListener>().removeListener(_handleDrawer);
+    }
   }
 
   @override
@@ -195,7 +202,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     }
     
 
-    DragStartDetails? _start;
+    DragStartDetails? start;
     
     // add a listener to when the Navigator animation finished
     var route = ModalRoute.of(context);
@@ -259,16 +266,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                       _drawerController.reverse();
                     },
                     onHorizontalDragStart: (DragStartDetails details){
-                      _start ??= details;
+                      start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
-                      var newState = _start!.localPosition.dx - 
+                      var newState = start!.localPosition.dx - 
                         details.localPosition.dx;
                       _drawerController.value = 
                         1 - (newState / _drawerWidth).clamp(0.0, 1.0);
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
-                      _start = null;
+                      start = null;
                       if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
                       } else {
@@ -296,16 +303,16 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onHorizontalDragStart: (DragStartDetails details){
-                      _start ??= details;
+                      start ??= details;
                     },
                     onHorizontalDragUpdate: (DragUpdateDetails details){
-                      var newState = _start!.localPosition.dx - 
+                      var newState = start!.localPosition.dx - 
                         details.localPosition.dx;
                       _drawerController.value = 
                         1 - (newState / _drawerWidth).clamp(0.0, 1.0);
                     },
                     onHorizontalDragEnd: (DragEndDetails details){
-                      _start = null;
+                      start = null;
                       if(_moveDrawer.value < 0.5) {
                         _drawerController.reverse();
                       } else {
@@ -351,8 +358,9 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 buildDefaultDragHandles: false,
                                 padding: EdgeInsets.zero,
                                 onReorder: (oldIndex, newIndex) async {
-                                  if(newIndex > oldIndex)
+                                  if(newIndex > oldIndex) {
                                     newIndex -= 1;
+                                  }
                                   int old = drawerElementsIndexOrder.removeAt(oldIndex);
                                   drawerElementsIndexOrder.insert(newIndex, old);
                                   GetIt.I<Settings>().misc.drawerItemOrder = drawerElementsIndexOrder;

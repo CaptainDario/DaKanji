@@ -76,6 +76,7 @@ class WordListsData with ChangeNotifier implements TreeNodeSerializable {
     => _$WordListsDataFromJson(json);
 
   /// Convert this object to a JSON object.
+  @override
   Map<String, dynamic> toJson()
     => _$WordListsDataToJson(this);
 }

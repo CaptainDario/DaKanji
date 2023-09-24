@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +16,8 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:path/path.dart' as p;
 
+import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
@@ -47,14 +48,18 @@ Future<bool> init() async {
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
   // init window Manager
-  if(g_desktopPlatform)
+  if(g_desktopPlatform) {
     await windowManager.ensureInitialized();
+  }
+
+  await initPaths();
 
   await initServices();
 
   // deep links
-  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows)
+  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows) {
     await initDeepLinksStream();
+  }
   
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();
@@ -70,14 +75,21 @@ Future<void> clearPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
 
- print("CLEARED PREFERENCES AT APP START.");
+ debugPrint("CLEARED PREFERENCES AT APP START.");
+}
+
+/// Initializes all the path varaibles that daanji uses 
+Future<void> initPaths() async {
+
+  g_documentsDirectory = (await path_provider.getApplicationDocumentsDirectory());
+
 }
 
 /// Loads all services from disk that DO NOT dpend on data in the documents
 /// directory.
 Future<void> initServices() async {
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  print("Starting DaKanji ${yaml['version']}");
+  debugPrint("Starting DaKanji ${yaml['version']}");
   g_Version = Version.fromStringFull(yaml['version']);
 
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
@@ -120,9 +132,9 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir =
-    (await path_provider.getApplicationDocumentsDirectory()).path;
+  String documentsDir = g_documentsDirectory.path;
   String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
+  String dojgIsarPath = p.joinAll([documentsDir, "DaKanji", "dojg"]);
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
@@ -145,6 +157,11 @@ Future<void> initDocumentsServices(BuildContext context) async {
         [RadkSchema], directory: isarPath,
         name: "radk", maxSizeMiB: 512
       ),
+      dojg: GetIt.I<UserData>().dojgImported && Directory(dojgIsarPath).existsSync()
+        ? Isar.getInstance("dojg") ?? Isar.openSync(
+          [DojgEntrySchema], directory: dojgIsarPath, name: "dojg"
+        )
+        : null
     )
   );
 
@@ -166,7 +183,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await GetIt.I<Mecab>().init(
     "assets/ipadic",
     true,
-    dicDir: documentsDir + "/DaKanji/assets/ipadic/"
+    dicDir: "$documentsDir/DaKanji/assets/ipadic/"
   );
 
   g_documentsServicesInitialized = true;
@@ -181,9 +198,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir =
-    p.join((await path_provider.getApplicationDocumentsDirectory()).path, "DaKanji");
-  print("documents directory: ${documentsDir.toString()}");
+  String documentsDir = p.join(g_documentsDirectory.path, "DaKanji");
+  debugPrint("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
   bool downloadAllowed = false;
@@ -246,7 +262,7 @@ void desktopWindowSetup() {
 /// be called only once.
 Future<void> optimizeTFLiteBackendsForModels() async {
 
-  print("Optimizing TFLite backends for models...");
+  debugPrint("Optimizing TFLite backends for models...");
 
   // find the best backend for the drawing ml
   DrawingInterpreter d = DrawingInterpreter();
@@ -254,7 +270,7 @@ Future<void> optimizeTFLiteBackendsForModels() async {
   GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
   d.free();
 
-  print("Finished optimizing TFLite backends for models...");
+  debugPrint("Finished optimizing TFLite backends for models...");
   
   await GetIt.I<UserData>().save();
 

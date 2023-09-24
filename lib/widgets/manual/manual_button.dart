@@ -31,7 +31,7 @@ class ManualButton extends StatelessWidget {
       child: Card(
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
-          onTap: this.onPressed,
+          onTap: onPressed,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

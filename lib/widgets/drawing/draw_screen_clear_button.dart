@@ -13,11 +13,11 @@ import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 
 class DrawScreenClearButton extends StatelessWidget {
   
-  DrawScreenClearButton(
+  const DrawScreenClearButton(
     this.canvasSize,
     this.includeTutorial,
     {Key? key}
-  ) : super(key: key){}
+  ) : super(key: key);
 
   /// the size of the DrawingCanvas
   final double canvasSize;

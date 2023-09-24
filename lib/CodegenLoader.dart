@@ -6150,5 +6150,5 @@ static const Map<String,dynamic> es = {
     "tutorial_list": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido."
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "localizations": localizations, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};
+static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};
 }

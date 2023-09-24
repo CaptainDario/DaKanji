@@ -40,7 +40,7 @@ class TextScreen extends StatefulWidget {
   /// The text that should be analyzed when the screen is opened
   final String? initialText;
 
-  TextScreen(
+  const TextScreen(
     this.openedByDrawer, 
     this.includeTutorial, 
     {
@@ -50,7 +50,7 @@ class TextScreen extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _TextScreenState createState() => _TextScreenState();
+  State<TextScreen> createState() => _TextScreenState();
 }
 
 class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
@@ -360,13 +360,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// changes
   void onCustomSelectableTextChange(TextSelection selection){
     // open the dict popup when text is slected and it is not opening
-    if(selection != "" &&
+    if(selection.start != selection.end &&
       popupAnimationController.status != AnimationStatus.forward)
     {
       popupAnimationController.forward();
     }
     // close the dict popup when there is no selection
-    if(selection == "" &&
+    if(selection.start != selection.end &&
       popupAnimationController.isCompleted)
     {
       popupAnimationController.reverse(from: 1.0);
@@ -399,8 +399,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       cnt += mecabSurfaces[i].length;
     }
 
-    if(pos == "")
+    if(pos == "") {
       return;
+    }
 
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -434,38 +435,38 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   void processText(String text){
     
     // analyze text with kagome
-    List<TokenNode> _analyzedText = GetIt.I<Mecab>().parse(text);
+    List<TokenNode> analyzedText = GetIt.I<Mecab>().parse(text);
     // remove EOS symbol
-    _analyzedText.removeLast(); 
+    analyzedText.removeLast(); 
 
     mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
     int txtCnt = 0;
-    for (var i = 0; i < _analyzedText.length; i++) {
+    for (var i = 0; i < analyzedText.length; i++) {
       // remove furigana when: non Japanese, kana only, no reading, reading == word
-      if(!GetIt.I<KanaKit>().isJapanese(_analyzedText[i].surface) ||
-        GetIt.I<KanaKit>().isKana(_analyzedText[i].surface) ||
-        _analyzedText[i].features.length < 8 ||
-        _analyzedText[i].features[7] == _analyzedText[i].surface
+      if(!GetIt.I<KanaKit>().isJapanese(analyzedText[i].surface) ||
+        GetIt.I<KanaKit>().isKana(analyzedText[i].surface) ||
+        analyzedText[i].features.length < 8 ||
+        analyzedText[i].features[7] == analyzedText[i].surface
       )
       {
         mecabReadings.add(" ");
       }
       else{
-        mecabReadings.add(GetIt.I<KanaKit>().toHiragana(_analyzedText[i].features[7]));
+        mecabReadings.add(GetIt.I<KanaKit>().toHiragana(analyzedText[i].features[7]));
       }
-      mecabPOS.add(_analyzedText[i].features.sublist(0, 4).join("-"));
-      mecabSurfaces.add(_analyzedText[i].surface);
+      mecabPOS.add(analyzedText[i].features.sublist(0, 4).join("-"));
+      mecabSurfaces.add(analyzedText[i].surface);
 
       // add line breaks to mecab output
-      if(i < _analyzedText.length-1 && text[txtCnt + _analyzedText[i].surface.length] == "\n"){
-        while(text[txtCnt + _analyzedText[i].surface.length] == "\n"){
+      if(i < analyzedText.length-1 && text[txtCnt + analyzedText[i].surface.length] == "\n"){
+        while(text[txtCnt + analyzedText[i].surface.length] == "\n"){
           mecabPOS.add("");
           mecabSurfaces.add("\n");
           mecabReadings.add("");
           txtCnt += 1;
         }
       }
-      txtCnt += _analyzedText[i].surface.length;
+      txtCnt += analyzedText[i].surface.length;
     }
   }
 }

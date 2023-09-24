@@ -49,7 +49,7 @@ class DrawScreen extends StatefulWidget {
   ) : super(key: key);
 
   @override
-  _DrawScreenState createState() => _DrawScreenState();
+  State<DrawScreen> createState() => _DrawScreenState();
 }
 
 class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
@@ -135,8 +135,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
           builder: (context, snapshot) {
 
             // Assure that the drawing interpreter has been initialized
-            if(!snapshot.hasData)
+            if(!snapshot.hasData) {
               return Container();
+            }
 
             return LayoutBuilder(
               builder: (context, constraints){

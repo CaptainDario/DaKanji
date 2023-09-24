@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 
 
 
@@ -103,8 +103,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       if(widget.targetLanguages.any(
         (l) => l.contains(widget.kanjidic2entry.meanings[i].language!)
       )) {
-        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
+        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language)) {
           meanings[widget.kanjidic2entry.meanings[i].language!] = [];
+        }
 
         meanings[widget.kanjidic2entry.meanings[i].language]!.add(
           widget.kanjidic2entry.meanings[i].meaning!
@@ -146,29 +147,27 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               )
                             );
                           },
-                          child: Container(
-                            child: SizedBox(
-                              width: constrains.maxWidth * 0.5,
-                              height: constrains.maxWidth * 0.5,
-                              child: kanjiVGs.isNotEmpty
-                                ? KanjiVGWidget(
-                                  kanjiVGs.first.svg,
-                                  constrains.maxWidth * 0.5,
-                                  constrains.maxWidth * 0.5,
-                                  colorize: true,
-                                )
-                                : Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-                                  ),
-                                  child: FittedBox(
-                                    child: Text(
-                                      widget.kanjidic2entry.character,
-                                    ),
+                          child: SizedBox(
+                            width: constrains.maxWidth * 0.5,
+                            height: constrains.maxWidth * 0.5,
+                            child: kanjiVGs.isNotEmpty
+                              ? KanjiVGWidget(
+                                kanjiVGs.first.svg,
+                                constrains.maxWidth * 0.5,
+                                constrains.maxWidth * 0.5,
+                                colorize: true,
+                              )
+                              : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                ),
+                                child: FittedBox(
+                                  child: Text(
+                                    widget.kanjidic2entry.character,
                                   ),
                                 ),
-                            ),
-                          )
+                              ),
+                          ),
                         ),
                         
                         const SizedBox(width: 8,),
@@ -270,7 +269,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                  "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} ${radical}"
+                                                  "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical"
                                                 )
                                               )
                                             );

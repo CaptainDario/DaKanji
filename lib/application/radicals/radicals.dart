@@ -17,16 +17,17 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCol
     .findAllSync();
 
   List<String> radicals = [];
-  if(!kanjis.isEmpty) {
+  if(kanjis.isNotEmpty) {
     radicals = kanjis.first;
 
     // sort radicals by stroke order
-    if(radkIsar != null)
+    if(radkIsar != null) {
       radicals = radkIsar.where()
           .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
         .sortByStrokeCount()
         .radicalProperty()
         .findAllSync();
+    }
   }
   
   return radicals;
@@ -65,8 +66,9 @@ Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
   for (Radk rad in rads) {
 
-    if(!radicalsByStrokeOrder.containsKey(rad.strokeCount))
+    if(!radicalsByStrokeOrder.containsKey(rad.strokeCount)) {
       radicalsByStrokeOrder[rad.strokeCount] = <String>[];
+    }
 
     radicalsByStrokeOrder[rad.strokeCount]!.add(rad.radical);
   }

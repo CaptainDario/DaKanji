@@ -10,7 +10,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:da_kanji_mobile/application/assets/assets.dart';
@@ -109,7 +108,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   }
 
   void initDataAsync() async {
-    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+    audioFilesDir = Directory(p.join(g_documentsDirectory.path, "DaKanji", "audios"));
   }
 
   @override
@@ -121,11 +120,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.entry == null)
+    if(widget.entry == null) {
       return Container();
+    }
 
-    if(partOfSpeechStyle == null)
-      partOfSpeechStyle = TextStyle(fontSize: 12, color: Theme.of(context).hintColor);
+    partOfSpeechStyle ??= TextStyle(fontSize: 12, color: Theme.of(context).hintColor);
 
     return Align(
       alignment: Alignment.topCenter,
@@ -186,7 +185,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                               )
                             ],
                           ),
-                        if(conjugationPos != null && !conjugationPos!.isEmpty)
+                        if(conjugationPos != null && conjugationPos!.isNotEmpty)
                           ConjugationExpansionTile(
                             word: readingOrKanji!,
                             pos: conjugationPos!,
@@ -201,8 +200,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           splashRadius: 25,
                           icon: const Icon(Icons.play_arrow),
                           onPressed: () async {
-                            if(!audioFilesDir.existsSync())
+                            if(!audioFilesDir.existsSync()) {
                               downloadAudio();
+                            }
 
                             player.open(Media('file:///${audioFilesDir.path}/${widget.entry!.audio}.mp3'));
                             player.play();
@@ -220,33 +220,34 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           String url = "";
                           // Wiki
                           if(selection == menuItems[0]) {
-                            url = Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}");
+                            url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
                           }
                           else if(selection == menuItems[1]) {
                             url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
                           }
                           else if(selection == menuItems[2]) {
-                            url = Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}");
+                            url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
                           }
                           else if(selection == menuItems[3]) {
-                            url = Uri.encodeFull("$g_Massif${readingOrKanji}");
+                            url = Uri.encodeFull("$g_Massif$readingOrKanji");
                           }
                           else if(selection == menuItems[4]) {
-                            url = Uri.encodeFull("$g_forvo${readingOrKanji}");
+                            url = Uri.encodeFull("$g_forvo$readingOrKanji");
                           }
                           // add to word list
                           else if(selection == menuItems[5]) {
-                            await AddToWordListDialog(context, widget).show();
+                            await addToWordListDialog(context, widget).show();
                           }
                           else if(selection == menuItems[6]){
-                            await AnkiDialog(context).show();
+                            await ankiDialog(context).show();
                           }
 
-                          if(url != "")
+                          if(url != "") {
                             launchUrlString(
                               url,
                               mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
                             );
+                          }
                         },
                         itemBuilder: (context) => List.generate(
                           menuItems.length,
@@ -276,7 +277,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       dismissable: true,
       btnOkOnPress: () async {
         downloadAssetFromGithubRelease(
-          File(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios")),
+          File(p.join(g_documentsDirectory.path, "DaKanji", "audios")),
           g_GithubApiDependenciesRelase,
         ).then((value) {
           Navigator.of(context).pop();
@@ -290,7 +291,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
           body: StreamBuilder(
             stream: g_downloadFromGHStream.stream,
             builder: (context, snapshot) {
-              return Container(
+              return SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 child: Center(
                   child: Column(

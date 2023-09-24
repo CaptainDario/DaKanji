@@ -33,7 +33,7 @@ class _KanjiTrainerScreenState extends State<KanjiTrainerScreen> {
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
-      currentScreen: Screens.kanji_trainer,
+      currentScreen: Screens.kanjiTrainer,
       drawerClosed: !widget.openedByDrawer,
       child: const KanjiDrawingWidget(
     

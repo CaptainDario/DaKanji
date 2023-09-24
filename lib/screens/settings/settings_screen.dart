@@ -14,6 +14,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
@@ -35,7 +36,6 @@ import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
@@ -57,7 +57,7 @@ class SettingsScreen extends StatefulWidget {
   );
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 
@@ -218,16 +218,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onTap: () async {
                                   // do not allow removing the last dictionary
                                   if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     return;
+                                  }
 
                                   // when disabling english dictionary tell user
                                   // that significant part of the dict is only in english
                                   if(lang == iso639_1.en.name &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang))
-                                    await DisableEnglishDictPopup(context).show();
+                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                                    await disableEnglishDictPopup(context).show();
+                                  }
 
-                                  LoadingPopup(context).show();
+                                  // ignore: use_build_context_synchronously
+                                  loadingPopup(context).show();
 
                                   await GetIt.I<DictionarySearch>().kill();
                                   if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
@@ -236,11 +239,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
                                       ).toList();
                                   }
-                                  else
+                                  else {
                                     settings.dictionary.selectedTranslationLanguages.remove(lang);
+                                  }
                                   await settings.save();
                                   await GetIt.I<DictionarySearch>().init();
 
+                                  // ignore: use_build_context_synchronously
                                   Navigator.of(context).pop();
 
                                   setState(() {});
@@ -295,7 +300,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -306,13 +311,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 child: MarkdownBody(
                                   data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
                                   onTapLink: (text, href, title) {
-                                    if(href != null)
+                                    if(href != null) {
                                       launchUrlString(href);
+                                    }
                                   },
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -328,7 +334,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -341,7 +347,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -365,7 +371,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           restartingDictSearch = false;
                         },
                         onLeadingIconPressed: () async {
-                          await AwesomeDialog(
+                          AwesomeDialog(
                             context: context,
                             dialogType: DialogType.noHeader,
                             btnOkColor: g_Dakanji_green,
@@ -378,7 +384,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             )
-                          )..show();
+                          ).show();
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
@@ -410,10 +416,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 String level = SettingsDictionary.d_fallingWordsLevels[index];
                                 return GestureDetector(
                                   onTap: () async {
-                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level))
+                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
                                       settings.dictionary.selectedFallingWordsLevels.remove(level);
-                                    else
+                                    } else {
                                       settings.dictionary.selectedFallingWordsLevels.add(level);
+                                    }
                                     await settings.save();
                                     setState(() {});
                                   },
@@ -464,6 +471,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: Icons.replay_outlined,
                         onButtonPressed: () {
                           GetIt.I<UserData>().showTutorialText = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
+
+                      // #region - DoJG header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.DojgScreen_title.tr(),
+                        DaKanjiIcons.dojg,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // has dojg w/o media been imported
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dojg_imported.tr(),
+                        value: GetIt.I<UserData>().dojgImported
+                      ),
+                      // has dojg w/o media been imported
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dojg_media_imported.tr(),
+                        value: GetIt.I<UserData>().dojgWithMediaImported
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialDojg = true;
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -676,7 +716,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         translateItemTexts: true,
                         onTap: (value) {
                           settings.misc.selectedTheme = value ?? settings.misc.themesLocaleKeys[0];
-                          print(settings.misc.selectedTheme);
+                          debugPrint(settings.misc.selectedTheme);
                           settings.save();
                           Phoenix.rebirth(context);
                         },
@@ -706,7 +746,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: (newValue) {
                           if(newValue != null){
                             context.setLocale(Locale(newValue));
-                            Phoenix.rebirth(context);
                           }
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
@@ -781,7 +820,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
                             icon: Icons.saved_search_sharp,
                             onButtonPressed: () {
-                              optimizeBackendsPopup(context)..show();
+                              optimizeBackendsPopup(context).show();
                             },
                             autoSizeGroup: g_SettingsAutoSizeGroup,
                           ),
@@ -807,7 +846,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     )
                                   ),
                                 )
-                              )..show();
+                              ).show();
                             },
                             onChanged: (double value) {
                               setState(() {
@@ -829,6 +868,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
                               Settings settings = Settings();
                               await settings.save();
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -839,6 +879,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onButtonPressed: () async {
                               UserData uD = UserData();
                               await uD.save();
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -848,6 +889,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
                               await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
@@ -860,29 +902,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
                               await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
+                              // ignore: use_build_context_synchronously
                               await restartApp(context);
                             },
                           ),
                           // Delete dojg
-                          /* TODO v dojg enable
                           ResponsiveIconButtonTile(
                             text: LocaleKeys.SettingsScreen_advanced_settings_delete_dojg.tr(),
                             icon: Icons.delete_forever,
                             onButtonPressed: () async {
 
+                              GetIt.I<UserData>().dojgImported = false;
+                              GetIt.I<UserData>().dojgWithMediaImported = false;
+                              GetIt.I<UserData>().save();
+
                               Directory dojgDir = Directory(p.join(
                                 g_documentsDirectory.path, "DaKanji", "dojg"
                               ));
                               if(dojgDir.existsSync()){
-                                dojgDir.delete(recursive: true);
-                                GetIt.I<UserData>().dojgImported = false;
-                                GetIt.I<UserData>().dojgWithMediaImported = false;
-                                GetIt.I<UserData>().save();
-
+                                if(GetIt.I<Isars>().dojg != null){
+                                  await GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);
+                                }
+                                await dojgDir.delete(recursive: true);
+                                // ignore: use_build_context_synchronously
                                 await restartApp(context);
                               }
                             },
-                          ),*/
+                          ),
                         ],
                       ),
                       // #endregion

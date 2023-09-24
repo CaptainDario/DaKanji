@@ -90,7 +90,7 @@ class CustomSelectableText extends StatefulWidget {
   final void Function(Offset)? onTapOutsideOfText;
 
   @override
-  _CustomSelectableTextState createState() => _CustomSelectableTextState();
+  State<CustomSelectableText> createState() => _CustomSelectableTextState();
 }
 
 class _CustomSelectableTextState extends State<CustomSelectableText> {
@@ -148,7 +148,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   List<String> words = [];
 
   /// The scroll controller group to keep text and handles in sync
-  LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
+  final LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
   /// The scroll controller for the text
   late ScrollController _textScrollController;
   /// The scroll controller for the handles
@@ -242,8 +242,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   /// User started dragging on the text
   void _onDragStart(DragStartDetails details) {
-    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected)
+    if(words.isEmpty || _leftHandleSelected || _rightHandleSelected) {
       return;
+    }
 
     _isDragging = true;
 
@@ -257,19 +258,21 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
 
-    if(words.length == 0)
+    if(words.isEmpty) {
       return;
+    }
 
-    if(_leftHandleSelected)
+    if(_leftHandleSelected) {
       _textSelection = TextSelection(
         baseOffset:   _getTextPositionAtOffset(details.localPosition).offset,
         extentOffset: _textSelection.extentOffset 
       );
-    else  
+    } else {
       _textSelection = TextSelection(
         baseOffset:   _textSelection.baseOffset,
         extentOffset: _getTextPositionAtOffset(details.localPosition).offset,
       );
+    }
 
     setState(() {
       _onUserSelectionChange(_textSelection);
@@ -290,8 +293,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   void _updateSelectionDisplay() {
-    if(!_textSelection.isValid)
+    if(!_textSelection.isValid) {
       return;
+    }
 
     setState(() {
       final selectionRects = _computeSelectionRects(_textSelection);
@@ -410,15 +414,15 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     final selectedBox = _renderParagraph!.getBoxesForSelection(tS);
     
     // if the offset is outside of the text, return the previous character (at the end)
-    if(tP.offset >= words.join("").length)
+    if(tP.offset >= words.join("").length) {
       tP = TextPosition(offset: words.join("").length);
-    // if the offset is closer to the right side of the character
-    // return the previous character 
-    else if(!selectedBox.first.toRect().contains(textOffset))
+    } else if(!selectedBox.first.toRect().contains(textOffset)) {
       tP = TextPosition(offset: tP.offset-1);
+    }
     // if the offset is outside of the text, return the previous character (at the beginning)
-    if(tP.offset < 0)
+    if(tP.offset < 0) {
       tP = const TextPosition(offset: 0);
+    }
     
     return tP;
   }
@@ -482,8 +486,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
       cnt += text.length;
     }
-    if(_textSelection.isValid)
+    if(_textSelection.isValid) {
       _onUserSelectionChange(_textSelection);
+    }
   }
 
   /// Selects the sentance in which the position the user tapped is located
@@ -499,8 +504,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         break;
       }
     }
-    if(_textSelection.isValid)
+    if(_textSelection.isValid) {
       _onUserSelectionChange(_textSelection);
+    }
   }
 
   /// Selects the paragraph that contains the word where `event` happend
@@ -516,8 +522,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         break;
       }
     }
-    if(_textSelection.isValid)
+    if(_textSelection.isValid) {
       _onUserSelectionChange(_textSelection);
+    }
   }
 
   @override
@@ -677,7 +684,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                   behavior: HitTestBehavior.opaque,
                                   onPointerDown: (event) => _leftHandleSelected = true,
                                   onPointerUp: (event) => _leftHandleSelected = false,
-                                  child: Container(
+                                  child: const SizedBox(
                                     height: 40,
                                     width:  40,
                                   ),
@@ -695,7 +702,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                   behavior: HitTestBehavior.opaque,
                                   onPointerDown: (event) => _rightHandleSelected = true,
                                   onPointerUp: (event) => _rightHandleSelected = false,
-                                  child: Container(
+                                  child: const SizedBox(
                                     height: 40,
                                     width:  40,
                                   ),
@@ -775,8 +782,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     if(!_isOffsetOverText(event.localPosition)){
       setState(() => _selectionRects.clear());
       
-      if(widget.onTapOutsideOfText != null)
+      if(widget.onTapOutsideOfText != null) {
         widget.onTapOutsideOfText!(event.localPosition);
+      }
       
       return;
     }
@@ -784,7 +792,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     focuseNode.requestFocus();
     
     // assure that words are in the text fields
-    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
+    if(words.isEmpty || _leftHandleSelected || _rightHandleSelected) return;
 
     tapped++; isTapped = true;
 

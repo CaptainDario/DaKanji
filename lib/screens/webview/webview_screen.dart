@@ -17,7 +17,7 @@ class WebviewScreen extends StatefulWidget {
   const WebviewScreen({Key? key}) : super(key: key);
 
   @override
-  _WebviewScreenState createState() => _WebviewScreenState();
+  State<WebviewScreen> createState() => _WebviewScreenState();
 }
 
 class _WebviewScreenState extends State<WebviewScreen>
@@ -154,9 +154,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                   )),
                 alignment: Alignment.centerRight,
                 child: Hero(
-                  tag: "webviewHero_" 
-                    + (GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : "")
-                    + GetIt.I<DrawScreenState>().drawingLookup.chars,
+                  tag: "webviewHero_${GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : ""}${GetIt.I<DrawScreenState>().drawingLookup.chars}",
                   child: Container(
                     color: Theme.of(context).scaffoldBackgroundColor,
                     child: Center(

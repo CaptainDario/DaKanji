@@ -25,6 +25,7 @@ import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
 import 'package:da_kanji_mobile/screens/about/about_screen.dart';
 import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
@@ -39,7 +40,7 @@ class DaKanjiApp extends StatefulWidget {
   const DaKanjiApp({Key? key}) : super(key: key);
 
   @override
-  _DaKanjiAppState createState() => _DaKanjiAppState();
+  State<DaKanjiApp> createState() => _DaKanjiAppState();
 }
 
 class _DaKanjiAppState extends State<DaKanjiApp> {
@@ -74,40 +75,45 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   autoSizeTexts: true,
                   steps: GetIt.I<Tutorials>().getSteps(),
                   onChanged: (int index) async {
-                    print("Tutorial step: $index");
+                    debugPrint("Tutorial step: $index");
                     if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
-                      print("DrawScreen tutorial done, saving...");
+                      debugPrint("DrawScreen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialDrawing = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
-                      print("DictionaryScreen tutorial done, saving...");
+                      debugPrint("DictionaryScreen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialDictionary = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
-                      print("TextScreen tutorial done, saving...");
+                      debugPrint("TextScreen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialText = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!.last){
-                      print("Clipboard screen tutorial done, saving...");
+                      debugPrint("Clipboard screen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialClipboard = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
-                      print("Kanji table screen tutorial done, saving...");
+                      debugPrint("Kanji table screen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialKanjiTable = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
-                      print("Kana table screen tutorial done, saving...");
+                      debugPrint("Kana table screen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialKanaTable = false;
                       await GetIt.I<UserData>().save();
                     }
                     else if(index == GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!.last){
-                      print("Word lists screen tutorial done, saving...");
+                      debugPrint("Word lists screen tutorial done, saving...");
                       GetIt.I<UserData>().showTutorialWordLists = false;
+                      await GetIt.I<UserData>().save();
+                    }
+                    else if(index == GetIt.I<Tutorials>().dojgScreenTutorial.indexes!.last){
+                      debugPrint("Dojg screen tutorial done, saving...");
+                      GetIt.I<UserData>().showTutorialDojg = false;
                       await GetIt.I<UserData>().save();
                     }
                   },
@@ -144,6 +150,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
               args.navigatedByDrawer, true, args.initialDictSearch,
               initialEntryId: args.initialEntryId,
             ));
+          case "/dojg":
+            return switchScreen(const DoJGScreen(true, true,));
           case "/text":
             return switchScreen(TextScreen(
               args.navigatedByDrawer, true, 

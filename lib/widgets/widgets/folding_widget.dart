@@ -117,7 +117,7 @@ class FoldingWidgetState extends State<FoldingWidget> {
       builder: (context, child) {
 
         return widget.animationController.isDismissed
-          ? Container(
+          ? SizedBox(
             height: widget.unfoldedHeight,
             width: widget.unfoldedWidth,
             child: widget.unfoldedWidget

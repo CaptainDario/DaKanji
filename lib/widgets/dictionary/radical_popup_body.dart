@@ -146,7 +146,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           if(krad.value.length > index &&
                             (possibleRadicals.contains(krad.value[index]) ||
                             selectedRadicals.contains(krad.value[index]) ||
-                            possibleRadicals.isEmpty))
+                            possibleRadicals.isEmpty)) {
                             return AnimationConfiguration.staggeredGrid(
                               position: index,
                               columnCount: MediaQuery.of(context).size.width~/50,
@@ -202,17 +202,17 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                 ),
                               ),
                             );
+                          }
                           // radical that cannot be selected because there are no 
                           // kanjis that use this one + all selected
-                          else
-                            return Container(
-                              child: Center(
-                                child: Text(
-                                  krad.value[index],
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                              )
+                          else {
+                            return Center(
+                              child: Text(
+                                krad.value[index],
+                                style: const TextStyle(color: Colors.grey),
+                              ),
                             );
+                          }
                         },
                       ),
                       const SizedBox(height: 16)

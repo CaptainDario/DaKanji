@@ -25,7 +25,7 @@ class PredictionButton extends StatefulWidget {
   {Key? key}) : super(key : key);
   
   @override
-  _PredictionButtonState createState() => _PredictionButtonState();
+  State<PredictionButton> createState() => _PredictionButtonState();
 }
 
 class _PredictionButtonState extends State<PredictionButton>
@@ -115,13 +115,13 @@ class _PredictionButtonState extends State<PredictionButton>
   }
 
   void longPressed(){
-    print("longPressed");
+    debugPrint("longPressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
     handlePress(context);
   }
 
   void pressed(){
-    print("pressed");
+    debugPrint("pressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
     handlePress(context);
   }

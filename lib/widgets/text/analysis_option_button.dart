@@ -20,7 +20,7 @@ class AnalysisOptionButton extends StatefulWidget {
   /// The off-icon of this button, ignored if `svgAssetPattern` is not null
   final IconData? offIcon;
 
-  AnalysisOptionButton(
+  const AnalysisOptionButton(
     this.on,
     {
       this.svgAssetPattern,
@@ -54,8 +54,9 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
             !widget.on ? widget.onIcon! : widget.offIcon!
           ),
         onPressed: () {
-          if(widget.onPressed != null)
+          if(widget.onPressed != null) {
             widget.onPressed!();
+          }
         },
       ),
     );

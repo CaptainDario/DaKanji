@@ -56,7 +56,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
 
     int crossAxisCount = max([MediaQuery.of(context).size.width ~/ 200, 1])!;
 
-    return Container(
+    return SizedBox(
       height: widget.height,
       child: Column(
         children: [

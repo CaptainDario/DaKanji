@@ -65,7 +65,7 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
             TextSpan(
               children: widget.explanation.split(RegExp(" ")).map((e) => 
                 TextSpan(
-                  text: e + " ",
+                  text: "$e ",
                   style: TextStyle(
                     color: RegExp(r"\[[N|n]ot.*?\]").hasMatch(e)
                       ? Colors.grey

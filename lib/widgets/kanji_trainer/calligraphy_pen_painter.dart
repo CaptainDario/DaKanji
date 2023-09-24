@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as UI;
+import 'dart:ui' as ui;
 
 
 
@@ -12,7 +12,7 @@ class CalligraphyPenPainter extends CustomPainter {
   /// The angle of the stylus at this frame
   final List<double> penTilts;
 
-  final UI.Image brush;
+  final ui.Image brush;
 
   CalligraphyPenPainter(
     {

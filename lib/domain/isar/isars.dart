@@ -15,6 +15,8 @@ class Isars {
   Isar krad;
   /// Isar instance that contains the radical -> kanji data
   Isar radk;
+  /// Isar instance that contains the DoJG data if it has been imported
+  Isar? dojg;
 
   Isars(
     {
@@ -23,6 +25,7 @@ class Isars {
       required this.searchHistory,
       required this.krad,
       required this.radk,
+      this.dojg
     }
   );
 }

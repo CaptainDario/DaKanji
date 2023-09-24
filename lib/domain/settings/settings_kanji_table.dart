@@ -16,19 +16,22 @@ class SettingsKanjiTable with ChangeNotifier {
 
 
   /// the default value for `kanjiCategory`
-  static const KanjiCategory d_kanjiCategory = KanjiCategory.JLPT;
+  // ignore: constant_identifier_names
+  static const KanjiCategory d_kanjiCategory = KanjiCategory.jlpt;
   /// The category of which kanji should be shown
   @JsonKey(defaultValue: d_kanjiCategory)
   KanjiCategory kanjiCategory = d_kanjiCategory;
 
   /// the default value for `kanjiCategoryLevel`
+  // ignore: constant_identifier_names
   static const String d_kanjiCategoryLevel = "5";
   /// The level of `kanjiCategory` of which kanji should be shown
   @JsonKey(defaultValue: d_kanjiCategoryLevel)
   String kanjiCategoryLevel = d_kanjiCategoryLevel;
 
   /// the default value for `kanjiSorting`
-  static const KanjiSorting d_kanjiSorting = KanjiSorting.STROKES_ASC;
+  // ignore: constant_identifier_names
+  static const KanjiSorting d_kanjiSorting = KanjiSorting.strokesAsc;
   /// The way to sort the shown kanji
   @JsonKey(defaultValue: d_kanjiSorting)
   KanjiSorting kanjiSorting = d_kanjiSorting;

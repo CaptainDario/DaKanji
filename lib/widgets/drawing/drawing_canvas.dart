@@ -46,7 +46,7 @@ class DrawingCanvas extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _DrawingCanvasState createState() => _DrawingCanvasState();
+  State<DrawingCanvas> createState() => _DrawingCanvasState();
     
 }
 

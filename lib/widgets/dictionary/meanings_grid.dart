@@ -141,7 +141,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   if(widget.meanings.xref != null && widget.meanings.xref![j] != null)
                     RichText(
                       text: TextSpan(
-                        text: LocaleKeys.DictionaryScreen_word_see_also.tr() + " ",
+                        text: "${LocaleKeys.DictionaryScreen_word_see_also.tr()} ",
                         style: informationStyle,
                         children: [
                           for (int i = 0; i < relatedEntries[j]!.length; i++)
@@ -174,7 +174,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   if(widget.meanings.antonyms != null && widget.meanings.antonyms![j] != null)
                     RichText(
                       text: TextSpan(
-                        text: LocaleKeys.DictionaryScreen_word_antonyms.tr() + " ",
+                        text: "${LocaleKeys.DictionaryScreen_word_antonyms.tr()} ",
                         style: informationStyle,
                         children: [
                           for (int i = 0; i < antonymEntries[j]!.length; i++)
@@ -206,43 +206,37 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   // kanji targets: １つ星
                   if(widget.meanings.senseKanjiTarget != null && widget.meanings.senseKanjiTarget![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
-                      widget.meanings.senseKanjiTarget![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_restricted_to.tr()} ${widget.meanings.senseKanjiTarget![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // reading targets: 空車
                   if(widget.meanings.senseReadingTarget != null && widget.meanings.senseReadingTarget![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
-                      widget.meanings.senseReadingTarget![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_restricted_to.tr()} ${widget.meanings.senseReadingTarget![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // field of usage: 一尉
                   if(widget.meanings.field != null && widget.meanings.field![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
-                      widget.meanings.field![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.meanings.field![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // source language of gairaigo: 金平糖
                   if(widget.meanings.source != null && widget.meanings.source![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_source_language.tr() + " " +
-                      widget.meanings.source![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_source_language.tr()} ${widget.meanings.source![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // dialect where this word is used: 賢い
                   if(widget.meanings.dialect != null && widget.meanings.dialect![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
-                      widget.meanings.dialect![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.meanings.dialect![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // additional information for about this sense: 表す
                   if(widget.meanings.senseInfo != null && widget.meanings.senseInfo![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_info.tr() + " " +
-                      widget.meanings.senseInfo![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // Part of Speech: 食べる
@@ -256,7 +250,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
             );
           }
           // show more button
-          if(hide == 1)
+          if(hide == 1) {
             ret.add(
               InkWell(
                 onTap: () {
@@ -266,15 +260,14 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 },
                 child: Row(
                   children: [
-                    Container(
-                      child: const Icon(Icons.expand_more)
-                    ),
+                    const Icon(Icons.expand_more),
                     const SizedBox(width: 10,),
                     Text(LocaleKeys.DictionaryScreen_word_meanings_more.tr())
                   ],
                 )
               ).withGridPlacement(columnSpan: 2)
             );
+          }
           
           return ret;
         } ()

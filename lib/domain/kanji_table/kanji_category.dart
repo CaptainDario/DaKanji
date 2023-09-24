@@ -1,9 +1,9 @@
 enum KanjiCategory {
-  JLPT,
-  RTK,
-  SCHOOL,
-  FREQ,
-  KLC,
-  KENTEI,
-  WANIKANI
+  jlpt,
+  rtk,
+  school,
+  freq,
+  klc,
+  kentei,
+  wanikani
 }

@@ -67,8 +67,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
     // if this entry does not have any translation that the user has selected in the settings
     if(!GetIt.I<Settings>().dictionary.selectedTranslationLanguages.any((selection) =>
       widget.dictEntry.meanings.map((meaning) => isoToiso639_1[meaning.language]!.name)
-      .contains(selection)))
+      .contains(selection))) {
       return Container();
+    }
 
     return Card(
       child: InkWell(
@@ -128,8 +129,9 @@ class _SearchResultCardState extends State<SearchResultCard> {
                               }
                             }
                             // if there is no language selected that is available for this entry
-                            if(idx == -1)
+                            if(idx == -1) {
                               return const Text("");
+                            }
 
                             return Text(
                               widget.dictEntry.meanings[idx].meanings.length > index
