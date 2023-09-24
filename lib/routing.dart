@@ -31,7 +31,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     newRoute = const HomeScreen();
   }
   else if(name == "/${Screens.onboarding.name}"){
-    newRoute = OnBoardingScreen();
+    newRoute = const OnBoardingScreen();
   }
   else if(name == "/${Screens.drawing.name}"){
     newRoute = DrawScreen(
@@ -97,7 +97,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     );
   }
   else if(name == "/${Screens.changelog.name}"){
-    newRoute = ChangelogScreen();
+    newRoute = const ChangelogScreen();
   }
   else if(name == "/${Screens.manual.name}"){
     newRoute = ManualScreen(
@@ -105,7 +105,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     );
   }
   else if(name == "/${Screens.test.name}"){
-    newRoute = TestScreen();
+    newRoute = const TestScreen();
   }
   else{
     throw UnsupportedError("Unknown route: $name"); 
