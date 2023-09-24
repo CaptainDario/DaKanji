@@ -321,7 +321,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           child: const SizedBox(
                             width: 30,
                             height: 30,
-                            child: const Icon(Icons.brush)
+                            child: Icon(Icons.brush)
                           ),
                         ),
                       ),
@@ -334,7 +334,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         child: const SizedBox(
                           height: 30,
                           width: 30,
-                          child: const Icon(
+                          child: Icon(
                             Icons.filter_alt_outlined,
                             size: 20,
                           ),
