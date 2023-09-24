@@ -104,6 +104,7 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
   static const DictionaryScreen_word_tab_menu_add_to_list = 'DictionaryScreen.word_tab_menu_add_to_list';
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
+  static const DictionaryScreen_word_tab_menu_share = 'DictionaryScreen.word_tab_menu_share';
   static const DictionaryScreen_word_wikipedia = 'DictionaryScreen.word_wikipedia';
   static const DictionaryScreen = 'DictionaryScreen';
   static const DojgScreen_dojg_antonym = 'DojgScreen.dojg_antonym';

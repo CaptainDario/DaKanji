@@ -226,9 +226,20 @@
       "es": "Palabra",
       "pl": "Słowo"
     },
+    "word_tab_menu_share": {
+      "en": "Share",
+      "de": "Teilen",
+      "ru": "Поделиться",
+      "ja": "シェア",
+      "zh": "分享",
+      "it": "Condividi",
+      "fr": "Partager",
+      "es": "Compartir",
+      "pl": "Udział"
+    },
     "word_tab_menu_add_to_list": {
       "en": "Add to list",
-      "de": "Zur Liste hinzufügen",
+      "de": "Zu Liste hinzufügen",
       "ru": "Добавить в список",
       "ja": "リストに追加",
       "zh": "添加到列表",
