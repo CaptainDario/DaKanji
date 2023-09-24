@@ -112,9 +112,11 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                                   recognizer: TapGestureRecognizer()..onTap = (
                                     () {
                                       ref.read(dojgSearchProvider.notifier)
-                                        .setCurrentSearchTerm(
-                                          // remove characters that break the search
-                                          exp.replaceAll(RegExp(r"[\(|\)|\d]"), "")
+                                        .setCurrentSearchTerm(exp
+                                            // remove characters that break the search
+                                            .replaceAll(RegExp(r"[\(|\)|\d]"), "")
+                                            // remove excess whitespace
+                                            .trim()
                                         );
                                     }
                                   )
