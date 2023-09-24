@@ -11,11 +11,11 @@ class PathManager {
 
   /// Applications documents directory
   late final Directory documentsDirectory;
-  ///
+  /// The folder in the documents directory where dakanji does store its files
   late final Directory dakanjiDocumentsDirectory;
-
+  /// The directory where the files of the DoJG are stored
   late final Directory dojgDirectory;
-
+  /// The directory where the audios are stored
   late final Directory audiosDirectory;
 
 
