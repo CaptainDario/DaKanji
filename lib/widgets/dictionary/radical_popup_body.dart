@@ -278,6 +278,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                 flex: 1,
                 child: Center(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         onPressed: () {

@@ -161,7 +161,8 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
               ),
               Flexible(
                 flex: 1,
-                child: Center(
+                child: Align(
+                  alignment: Alignment.centerRight,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Material(
