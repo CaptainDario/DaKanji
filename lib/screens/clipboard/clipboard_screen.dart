@@ -106,9 +106,9 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
       }
 
       // get current always on top state
-      if(g_desktopPlatform)
+      if(g_desktopPlatform) {
         isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
-
+      }
     });
     
     super.initState();

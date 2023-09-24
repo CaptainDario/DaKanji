@@ -181,7 +181,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                                 aspectRatio: 1,
                                 child: WebViewWidget(
                                   controller: WebViewController()
-                                    ..loadRequest(Uri.parse("$g_GoogleImgSearchUrl${readingOrKanji}")),
+                                    ..loadRequest(Uri.parse("$g_GoogleImgSearchUrl$readingOrKanji")),
                                     gestureRecognizers: {
                                       Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
                                     },

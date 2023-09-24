@@ -167,8 +167,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           // does the kanji of the entry match
           int match = example.indexOf(item);
           while(match != -1) {
-            if(!matchSpans.last.contains(Tuple2(match, match+item.length)))
+            if(!matchSpans.last.contains(Tuple2(match, match+item.length))){
               matchSpans.last.add(Tuple2(match, match+item.length));
+            }
             match = example.indexOf(item, min(match+1, example.length));
           }
         }

@@ -214,7 +214,7 @@ class _WordListNodeState extends State<WordListNode> {
                       )
                       : const SizedBox(
                         width: 48,
-                        child: const Icon(Icons.list)
+                        child: Icon(Icons.list)
                       ),
                     const SizedBox(width: 8.0,),
                     Expanded(

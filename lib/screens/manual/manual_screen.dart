@@ -60,7 +60,7 @@ class _ManualScreenState extends State<ManualScreen>
       const ManualDictionary(),
       //ManualTextScreen(),
       //ManualAnki(),
-      ManualDeepLinks(),
+      const ManualDeepLinks(),
     ];
 
     
