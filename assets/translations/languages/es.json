@@ -250,7 +250,7 @@
     "dict_text_examples_analyze_text": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
     "dict_text_examples_analyze_title": "Abrir ejemplos en la pantalla Texto",
     "dict_title": "Diccionario",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gram\u00e1tica japonesa. DaKanji permite importar su [Anki deck](https://dojgdeck.neocities.org/) que existe en dos versiones: una con im\u00e1genes y otra sin ellas. Puedes importar cualquiera de las dos descarg\u00e1ndola primero y luego import\u00e1ndola seleccionando el archivo .apkg en la pantalla del DoJG.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gram\u00e1tica japonesa. DaKanji permite importar su [Anki deck que puedes descargar aqu\u00ed](https://dojgdeck.neocities.org/). Existe en dos versiones: una con im\u00e1genes y otra sin ellas. Puedes importar cualquiera de las dos descarg\u00e1ndola primero y luego import\u00e1ndola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
     "dojg_title": "DoJG",
     "title": "Manual"
   },
