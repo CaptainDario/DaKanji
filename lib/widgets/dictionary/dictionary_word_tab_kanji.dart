@@ -228,8 +228,16 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                           String reading = widget.entry.readings[i];
 
                           for (int r = 0; r < readingWoNonMora.length; r++){
-                            int moraTillR = reading.substring(0,r).characters
-                              .where((p0) => nonMora.contains(p0)).length;
+                            int moraTillR = () {
+                              int moraTillR = 0; int i = 0;
+                              while (i-moraTillR < r){
+                                if(nonMora.contains(reading[i])){
+                                  moraTillR++;
+                                }
+                                i++;
+                              }
+                              return moraTillR;
+                            } ();
                             ret.add(
                               Container(
                                 decoration: getPitchAccentDecoration(
