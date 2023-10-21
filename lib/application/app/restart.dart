@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/init.dart';
 Future<void> restartApp(BuildContext context) async {
 
   g_documentsServicesInitialized = false;
-  g_downloadFromGHStream = StreamController<String>.broadcast();
+  g_initAppInfoStream = StreamController<String>.broadcast();
   await GetIt.I.reset(dispose: true);
   g_initApp = init();
   // ignore: use_build_context_synchronously

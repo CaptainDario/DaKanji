@@ -299,7 +299,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
           customHeader: Image.asset("assets/images/dakanji/icon.png"),
           dialogType: DialogType.noHeader,
           body: StreamBuilder(
-            stream: g_downloadFromGHStream.stream,
+            stream: g_initAppInfoStream.stream,
             builder: (context, snapshot) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height / 4,

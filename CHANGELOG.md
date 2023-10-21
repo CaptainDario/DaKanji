@@ -16,6 +16,7 @@ New Features:
 Improvements:
 
 - Radical ui layout on narrow screens
+- Improved data unpacking: UI does not freeze and progress message is shown
 
 Changes:
 

@@ -45,7 +45,7 @@ var g_initApp = init();
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
-StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
+StreamController<String> g_initAppInfoStream = StreamController<String>.broadcast();
 
 /// the complete version number of this app: version + build number
 Version g_Version = Version(0, 0, 0);

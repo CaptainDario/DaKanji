@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +12,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:path/path.dart' as p;
+import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -44,7 +46,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   }
 
   try {
-    await copyFromAssets(asset.path, file.parent);
+    await copyFromAssets(asset, file.parent);
   }
   catch (e){
     if(askToDownload) {
@@ -81,15 +83,28 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 /// and unzips it, if it does not exist already
 /// 
 /// Caution: throws exception if the asset does not exist
-Future<void> copyFromAssets(String assetPath,  Directory dest) async {
+Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
 
-  assetPath = "${assetPath.split(".").first}.zip";
-  debugPrint(assetPath);
+  String assetPathString = "${assetPath.path.split(".").first}.zip";
+  debugPrint(assetPathString);
 
   // Get the zipped file from assets
-  ByteData data = await rootBundle.load(assetPath);
+  ByteData data = await rootBundle.load(assetPathString);
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
-  extractArchiveToDisk(archive, dest.path);
+  g_initAppInfoStream.add(
+    "Unpacking: ${p.withoutExtension(assetPath.uri.pathSegments.lastWhere((e) => e!=""))}");
+  await compute(
+    extractAssetArchiveToDisk,
+    Tuple2(archive, dest.path),
+    debugLabel: "Extraction isolate: ${dest.uri}"
+  );
+
+}
+
+void extractAssetArchiveToDisk(Tuple2 params){
+
+  extractArchiveToDisk(params.item1, params.item2);
+
 }
 
 /// Downloads the given `assetName` from the GitHub (`url`), uses the release
@@ -125,7 +140,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
       if (total != -1) {
         String progress =
           "${fileName.split(".")[0]}: ${"${(received / total * 100).toStringAsFixed(0)}%"}";
-        g_downloadFromGHStream.add(progress);
+        g_initAppInfoStream.add(progress);
       }
     }
   );

@@ -15,7 +15,6 @@ import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/routing.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';

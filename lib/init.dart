@@ -209,7 +209,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   ].map((f) => File(f)).toList();
 
   for (var asset in assets) {
-    if(checkAssetExists(documentsDir, asset)
+    if(!checkAssetExists(documentsDir, asset)
       || asset == assets[0] && GetIt.I<UserData>().getNewDict //dict
       || asset == assets[1] && GetIt.I<UserData>().getNewExamples //examples
       || asset == assets[2] && GetIt.I<UserData>().getNewRadicals // krad
@@ -225,10 +225,12 @@ Future<void> initDocumentsAssets(BuildContext context) async {
 
 }
 
-/// Checks if an `asset` exists in the `documentsDir`
+/// Checks if an `asset` exists in the `documentsDir` Returns
+/// true if `asset` exists in the `documentsDir`
+/// false otherwise 
 bool checkAssetExists(String documentsDir, FileSystemEntity asset){
 
-  return (!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
+  return !(!File(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync() &&
     !Directory(p.joinAll([documentsDir, ...asset.uri.pathSegments])).existsSync());
 
 }
