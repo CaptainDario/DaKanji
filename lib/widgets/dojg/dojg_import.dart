@@ -106,7 +106,11 @@ class _DojgImportState extends State<DojgImport> {
         btnOkColor: g_Dakanji_green,
         btnOkOnPress: () {},
         dismissOnTouchOutside: false,
-        desc: LocaleKeys.DojgScreen_dojg_import_fail.tr()
+        body: Align(
+          child: Text(
+            LocaleKeys.DojgScreen_dojg_import_fail.tr()
+          ),
+        ),
       ).show();
     }
 
