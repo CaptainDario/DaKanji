@@ -1010,15 +1010,15 @@
       "pl": "Jeśli znalazłeś interesujący Cię punkt gramatyczny, kliknij go, aby zobaczyć wszystkie jego szczegóły."
     },
     "refer_to_manual": {
-      "en": "For details refer to the manual",
-      "de": "Einzelheiten finden Sie im Handbuch",
-      "ru": "Более подробная информация приведена в руководстве",
-      "ja": "詳細はマニュアルを参照してください",
-      "zh": "详情请参阅手册",
-      "it": "Per i dettagli, consultare il manuale",
-      "fr": "Pour plus de détails, voir le manuel",
-      "es": "Para más detalles, consulte el manual",
-      "pl": "Szczegółowe informacje można znaleźć w instrukcji obsługi"
+      "en": "Tap here for more details",
+      "de": "Tippen Sie hier für weitere Details",
+      "ru": "Нажмите здесь для получения более подробной информации",
+      "ja": "詳細はこちらをタップ",
+      "zh": "点击此处了解更多详情",
+      "it": "Toccare qui per maggiori dettagli",
+      "fr": "Cliquez ici pour plus de détails",
+      "es": "Pulse aquí para más detalles",
+      "pl": "Kliknij tutaj, aby uzyskać więcej informacji"
     },
     "dojg_import": {
       "en": "Tap to import the DoJG Deck",
@@ -1043,7 +1043,7 @@
       "pl": "DoJG został pomyślnie zaimportowany! Ponowne uruchomienie aplikacji..."
     },
     "dojg_import_fail": {
-      "en": "The import failed, please assure that you are importing the correct data.\nRefer to the manual for more details.",
+      "en": "The import failed, please assure that you are importing the correct data (the file extension should be '.apkg').\nRefer to the manual for more details.",
       "de": "Der Import ist fehlgeschlagen. Bitte stellen Sie sicher, dass Sie die richtigen Daten importieren.\nWeitere Einzelheiten finden Sie im Handbuch.",
       "ru": "Импорт не удался, убедитесь, что вы импортируете правильные данные.\nДля получения более подробной информации обратитесь к руководству.",
       "ja": "インポートに失敗しました。正しいデータをインポートしているか確認してください。\n詳細はマニュアルをご確認ください。",
@@ -3181,7 +3181,7 @@
       "pl": "DoJG"
     },
     "dojg_text": {
-      "en": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck that you can download here](https://dojgdeck.neocities.org/). It exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
+      "en": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.\nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
       "de": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von Büchern über japanische Grammatik. DaKanji erlaubt es, sein [Anki-Deck, das Sie hier herunterladen können] (https://dojgdeck.neocities.org/) zu importieren. Es existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie können beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auswählen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
       "ru": "Dictionary of Japanese Grammar (DoJG) - серия книг по японской грамматике. DaKanji позволяет импортировать свою [колоду Anki, которую можно скачать здесь](https://dojgdeck.neocities.org/). Она существует в двух вариантах: с картинками и без. Вы можете импортировать любую из них, сначала скачав ее, а затем выбрав файл .apkg в ответ на запрос на экране DoJG.",
       "ja": "日本語文法辞典(DoJG)は、日本語文法に関する書籍のシリーズです。大漢字は[ここからダウンロードできるAnkiデッキ](https://dojgdeck.neocities.org/)をインポートすることができます。DoJGには、画像付きと画像なしの2つのバージョンがあります。ダウンロードした後、DoJGの画面で.apkgファイルを選択してインポートしてください。",
