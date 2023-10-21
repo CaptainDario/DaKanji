@@ -228,7 +228,7 @@ class CodegenLoader extends AssetLoader{
     "dict_text_examples_analyze_text": "词典中的例子可以在文本处理屏幕上通过双击来打开。",
     "dict_text_examples_analyze_title": "在文本屏幕中打开例子",
     "dict_title": "词典",
-    "dojg_text": "日语语法词典》（DoJG）是一套关于日语语法的丛书。DaKanji 允许导入其 [可在此处下载的 Anki 卡组](https://dojgdeck.neocities.org/)。它有两个版本：一个有图像，一个没有。您可以导入任何一个版本，首先下载，然后在 DoJG 屏幕上选择 .apkg 文件进行导入。",
+    "dojg_text": "日语语法词典》（DoJG）是一套有关日语语法的丛书。DaKanji 允许导入其 [Anki 卡组（可在此下载）](https://dojgdeck.neocities.org/) 并搜索其内容。  \n它有两个版本：一个带图片，一个不带图片。您可以导入任何一个版本，首先下载，然后在 DoJG 屏幕上选择 .apkg 文件进行导入。",
     "dojg_title": "DoJG",
     "title": "手册"
   },
@@ -573,7 +573,7 @@ static const Map<String,dynamic> ja = {
     "dict_text_examples_analyze_text": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
     "dict_text_examples_analyze_title": "テキスト画面で例を開く",
     "dict_title": "辞書",
-    "dojg_text": "日本語文法辞典(DoJG)は、日本語文法に関する書籍のシリーズです。大漢字は[ここからダウンロードできるAnkiデッキ](https://dojgdeck.neocities.org/)をインポートすることができます。DoJGには、画像付きと画像なしの2つのバージョンがあります。ダウンロードした後、DoJGの画面で.apkgファイルを選択してインポートしてください。",
+    "dojg_text": "日本語文法辞典(DoJG)は、日本語文法に関する書籍のシリーズです。大漢字は、その[Ankiデッキ(ここからダウンロードできます)](https://dojgdeck.neocities.org/)をインポートして、内容を検索することができます。  \n大漢字には、画像付きと画像なしの2つのバージョンがあります。ダウンロードした後、DoJGの画面で.apkgファイルを選択してインポートしてください。",
     "dojg_title": "DoJG",
     "title": "マニュアル"
   },
@@ -948,7 +948,7 @@ static const Map<String,dynamic> de = {
     "dict_text_examples_analyze_text": "Beispiele aus dem Wörterbuch können im Textverarbeitungsbildschirm durch doppeltes Antippen geöffnet werden.",
     "dict_text_examples_analyze_title": "Beispiele im Bildschirm \"Text\" öffnen",
     "dict_title": "Wörterbuch",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von Büchern über japanische Grammatik. DaKanji erlaubt es, sein [Anki-Deck, das Sie hier herunterladen können] (https://dojgdeck.neocities.org/) zu importieren. Es existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie können beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auswählen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von Büchern über japanische Grammatik. DaKanji erlaubt es, das [Anki-Deck (das Sie hier herunterladen können)](https://dojgdeck.neocities.org/) zu importieren und dann seinen Inhalt zu durchsuchen.  \nEs existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie können beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auswählen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
     "dojg_title": "DoJG",
     "title": "Handbuch"
   },
@@ -1285,7 +1285,7 @@ static const Map<String,dynamic> ru = {
     "dict_text_examples_analyze_text": "Примеры из словаря можно открыть на экране обработки текста, дважды нажав на них.",
     "dict_text_examples_analyze_title": "Открытие примеров на экране \"Текст",
     "dict_title": "Словарь",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) - серия книг по японской грамматике. DaKanji позволяет импортировать свою [колоду Anki, которую можно скачать здесь](https://dojgdeck.neocities.org/). Она существует в двух вариантах: с картинками и без. Вы можете импортировать любую из них, сначала скачав ее, а затем выбрав файл .apkg в ответ на запрос на экране DoJG.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) - это серия книг по японской грамматике. DaKanji позволяет импортировать его [колоду Anki (которую можно скачать здесь)](https://dojgdeck.neocities.org/), а затем осуществлять поиск по его содержимому.  \nОна существует в двух версиях: с картинками и без. Вы можете импортировать любую из них, сначала скачав ее, а затем выбрав файл .apkg на экране DoJG.",
     "dojg_title": "DoJG",
     "title": "Руководство"
   },
@@ -1643,7 +1643,7 @@ static const Map<String,dynamic> pl = {
     "dict_text_examples_analyze_text": "Przykłady ze słownika można otworzyć na ekranie przetwarzania tekstu poprzez dwukrotne stuknięcie w nie.",
     "dict_text_examples_analyze_title": "Otwieranie przykładów na ekranie Tekst",
     "dict_title": "Słownik",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) to seria książek o gramatyce japońskiej. DaKanji pozwala zaimportować swoją [talię Anki, którą można pobrać tutaj](https://dojgdeck.neocities.org/). Istnieje ona w dwóch wersjach: z obrazkami i bez. Możesz zaimportować dowolną z nich, najpierw pobierając ją, a następnie importując, wybierając plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) to seria książek o gramatyce japońskiej. DaKanji pozwala zaimportować [Anki deck (który można pobrać tutaj)](https://dojgdeck.neocities.org/), a następnie przeszukiwać jego zawartość.  \nIstnieje w dwóch wersjach: z obrazkami i bez. Możesz zaimportować dowolną z nich, najpierw pobierając ją, a następnie importując, wybierając plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
     "dojg_title": "DoJG",
     "title": "Instrukcja"
   },
@@ -2018,7 +2018,7 @@ static const Map<String,dynamic> en = {
     "dict_text_examples_analyze_text": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_examples_analyze_title": "Opening examples in the Text screen",
     "dict_title": "Dictionary",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.\nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.  \nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
     "dojg_title": "DoJG",
     "title": "Manual"
   },
@@ -2355,7 +2355,7 @@ static const Map<String,dynamic> it = {
     "dict_text_examples_analyze_text": "Gli esempi del dizionario possono essere aperti nella schermata di elaborazione del testo toccandoli due volte.",
     "dict_text_examples_analyze_title": "Apertura di esempi nella schermata Testo",
     "dict_title": "Dizionario",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) è una serie di libri sulla grammatica giapponese. DaKanji permette di importare il suo [mazzo Anki che potete scaricare qui](https://dojgdeck.neocities.org/). Esiste in due versioni: una con immagini e una senza. È possibile importare una delle due versioni scaricandola e poi importandola selezionando il file .apkg quando viene richiesto nella schermata di DoJG.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) è una serie di libri sulla grammatica giapponese. DaKanji permette di importare il suo [mazzo Anki (che potete scaricare qui)](https://dojgdeck.neocities.org/) e di cercarne il contenuto.  \nEsiste in due versioni: una con immagini e una senza. È possibile importare una delle due versioni scaricandola e poi importandola selezionando il file .apkg quando viene richiesto nella schermata di DoJG.",
     "dojg_title": "DoJG",
     "title": "Manuale"
   },
@@ -2678,7 +2678,7 @@ static const Map<String,dynamic> fr = {
     "dict_text_examples_analyze_text": "Les exemples du dictionnaire peuvent être ouverts dans l'écran de traitement de texte en double-cliquant dessus.",
     "dict_text_examples_analyze_title": "Ouvrir des exemples dans l'écran Texte",
     "dict_title": "Dictionnaire",
-    "dojg_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une série de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck que vous pouvez télécharger ici] (https://dojgdeck.neocities.org/). Il existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la téléchargeant d'abord, puis en sélectionnant le fichier .apkg lorsqu'on vous le demande sur l'écran du DoJG.",
+    "dojg_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une série de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez télécharger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la téléchargeant puis en sélectionnant le fichier .apkg lorsque l'écran de DoJG vous le demande.",
     "dojg_title": "DoJG",
     "title": "Manuel"
   },
@@ -3001,7 +3001,7 @@ static const Map<String,dynamic> es = {
     "dict_text_examples_analyze_text": "Los ejemplos del diccionario pueden abrirse en la pantalla de tratamiento de textos pulsando dos veces sobre ellos.",
     "dict_text_examples_analyze_title": "Abrir ejemplos en la pantalla Texto",
     "dict_title": "Diccionario",
-    "dojg_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gramática japonesa. DaKanji permite importar su [Anki deck que puedes descargar aquí](https://dojgdeck.neocities.org/). Existe en dos versiones: una con imágenes y otra sin ellas. Puedes importar cualquiera de las dos descargándola primero y luego importándola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
+    "dojg_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gramática japonesa. DaKanji permite importar su [Anki deck (que puedes descargar aquí)](https://dojgdeck.neocities.org/) y luego buscar en su contenido.  \nExiste en dos versiones: una con imágenes y otra sin ellas. Puedes importar cualquiera de las dos descargándola primero y luego importándola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
     "dojg_title": "DoJG",
     "title": "Manual"
   },
