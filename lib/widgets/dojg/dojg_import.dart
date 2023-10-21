@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -38,17 +40,34 @@ class _DojgImportState extends State<DojgImport> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(Icons.download),
-                const SizedBox(width: 10.0),
                 Text(LocaleKeys.DojgScreen_dojg_import.tr()),
+                const SizedBox(width: 4.0),
+                const Icon(Icons.download),
               ],
             ),
-            const SizedBox(height: 4,),
-            Text(
-              LocaleKeys.DojgScreen_refer_to_manual.tr(),
-              textScaleFactor: 0.9,
-              style: const TextStyle(
-                color: Colors.grey,
+            const SizedBox(height: 12,),
+            GestureDetector(
+              onTap: () => pushManual(context, ManualTypes.dojg),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      LocaleKeys.DojgScreen_refer_to_manual.tr(),
+                      textScaleFactor: 0.9,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 4,),
+                    const Icon(
+                      Icons.file_open,
+                      size: 20,
+                      color: Colors.grey,
+                    )
+                  ]
+                ),
               ),
             )
           ],
