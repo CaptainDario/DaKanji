@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/application/manual/manual.dart';
 import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -81,11 +82,29 @@ class _DojgImportState extends State<DojgImport> {
 
     importing = true;
 
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.noHeader,
+        dismissOnTouchOutside: false,
+        body: Column(
+          children: [
+            const DaKanjiLoadingIndicator(),
+            const SizedBox(height: 8,),
+            Text(
+              LocaleKeys.DojgScreen_dojg_importing.tr()
+            ),
+            const SizedBox(height: 16,)
+          ],
+        ),
+      ).show();
+
     if(await importDoJGDeck()){
       GetIt.I<UserData>().dojgImported = (checkDojgImported());
       GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
       await GetIt.I<UserData>().save();
 
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop(context);
       // ignore: use_build_context_synchronously
       await AwesomeDialog(
         context: context,
@@ -95,10 +114,13 @@ class _DojgImportState extends State<DojgImport> {
         dismissOnTouchOutside: false,
         desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
       ).show();
+
       // ignore: use_build_context_synchronously
       restartApp(context);
     }
     else {
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop(context);
       // ignore: use_build_context_synchronously
       await AwesomeDialog(
         context: context,

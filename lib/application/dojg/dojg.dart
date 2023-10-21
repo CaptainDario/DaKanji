@@ -11,6 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:isar/isar.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
+import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -33,10 +34,12 @@ Future<bool> importDoJGDeck () async {
       File dojg = File(result.files.single.path!);
       String copyTo = g_DakanjiPathManager.dojgDirectory.path;
 
-      // extract the zip to the dakanji directory
-      final inputStream = InputFileStream(dojg.path);
-      final archive = ZipDecoder().decodeBuffer(inputStream);
-      extractArchiveToDisk(archive, copyTo);
+      // extract the zip (in a separate isolate) to the dakanji directory
+      await compute((Tuple2 params) {
+        final inputStream = InputFileStream(params.item1.path);
+        final archive = ZipDecoder().decodeBuffer(inputStream);
+        extractArchiveToDisk(archive, params.item2);
+      }, Tuple2(dojg, copyTo));
 
       // convert SQLite -> Isar
       List<DojgEntry> entries = convertSQLiteToDojgEntry();

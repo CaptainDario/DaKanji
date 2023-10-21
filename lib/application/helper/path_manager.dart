@@ -13,6 +13,8 @@ class PathManager {
   late final Directory documentsDirectory;
   /// The folder in the documents directory where dakanji does store its files
   late final Directory dakanjiDocumentsDirectory;
+  /// The folder in the documents directory in which all dictionary files are stored
+  late final Directory dictionaryDirectory;
   /// The directory where the files of the DoJG are stored
   late final Directory dojgDirectory;
   /// The directory where the audios are stored
@@ -26,6 +28,8 @@ class PathManager {
     documentsDirectory = (await path_provider.getApplicationDocumentsDirectory());
 
     dakanjiDocumentsDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji"]));
+
+    dictionaryDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "assets", "dict"]));
 
     audiosDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "audios"]));
 

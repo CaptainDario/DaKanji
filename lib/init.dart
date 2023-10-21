@@ -129,8 +129,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   // ISAR / database services
   String documentsDir = g_DakanjiPathManager.documentsDirectory.path;
-  String isarPath = p.joinAll([documentsDir, "DaKanji", "assets", "dict"]);
-  String dojgIsarPath = p.joinAll([documentsDir, "DaKanji", "dojg"]);
+  String isarPath = g_DakanjiPathManager.dictionaryDirectory.path;
+  String dojgIsarPath = g_DakanjiPathManager.dojgDirectory.path;
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
