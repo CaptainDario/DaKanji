@@ -25,7 +25,7 @@ Future<bool> importDoJGDeck () async {
   bool imported = false;
 
   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom, allowedExtensions: ["apkg"]
+    type: FileType.any
   );
   if(result != null){
     try {
