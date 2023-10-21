@@ -45,7 +45,6 @@ class _DojgImportState extends State<DojgImport> {
                 const Icon(Icons.download),
               ],
             ),
-            const SizedBox(height: 12,),
             GestureDetector(
               onTap: () => pushManual(context, ManualTypes.dojg),
               child: Padding(
