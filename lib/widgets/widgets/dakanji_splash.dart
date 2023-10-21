@@ -60,9 +60,9 @@ class DaKanjiSplash extends StatelessWidget {
                   const SizedBox(height: 8,),
                   Text(
                     text!,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey
                     ),
                   ),
                 ]
