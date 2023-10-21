@@ -115,6 +115,7 @@ abstract class  LocaleKeys {
   static const DojgScreen_dojg_import = 'DojgScreen.dojg_import';
   static const DojgScreen_dojg_import_fail = 'DojgScreen.dojg_import_fail';
   static const DojgScreen_dojg_import_success = 'DojgScreen.dojg_import_success';
+  static const DojgScreen_dojg_importing = 'DojgScreen.dojg_importing';
   static const DojgScreen_dojg_key_sentences = 'DojgScreen.dojg_key_sentences';
   static const DojgScreen_dojg_pos = 'DojgScreen.dojg_pos';
   static const DojgScreen_dojg_related = 'DojgScreen.dojg_related';

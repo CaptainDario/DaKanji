@@ -118,6 +118,7 @@
     "dojg_import": "Toccare per importare il mazzo DoJG",
     "dojg_import_fail": "L'importazione non \u00e8 riuscita, assicurarsi di importare i dati corretti.\nPer ulteriori dettagli, consultare il manuale.",
     "dojg_import_success": "DoJG \u00e8 stato importato con successo! Riavviare l'applicazione...",
+    "dojg_importing": "Importazione...",
     "dojg_key_sentences": "Frasi chiave",
     "dojg_pos": "",
     "dojg_related": "Espressioni correlate",

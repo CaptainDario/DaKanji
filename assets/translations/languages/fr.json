@@ -118,6 +118,7 @@
     "dojg_import": "Tapez pour importer le Deck DoJG",
     "dojg_import_fail": "L'importation a \u00e9chou\u00e9, veuillez vous assurer que vous importez les bonnes donn\u00e9es.\nReportez-vous au manuel pour plus de d\u00e9tails.",
     "dojg_import_success": "DoJG a \u00e9t\u00e9 import\u00e9 avec succ\u00e8s ! Red\u00e9marrer l'application...",
+    "dojg_importing": "Importation...",
     "dojg_key_sentences": "Phrases cl\u00e9s",
     "dojg_pos": "",
     "dojg_related": "Expressions apparent\u00e9es",

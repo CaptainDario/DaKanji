@@ -118,6 +118,7 @@
     "dojg_import": "Stuknij, aby zaimportowa\u0107 DoJG Deck",
     "dojg_import_fail": "Import nie powi\u00f3d\u0142 si\u0119, upewnij si\u0119, \u017ce importujesz prawid\u0142owe dane.\nWi\u0119cej informacji mo\u017cna znale\u017a\u0107 w podr\u0119czniku.",
     "dojg_import_success": "DoJG zosta\u0142 pomy\u015blnie zaimportowany! Ponowne uruchomienie aplikacji...",
+    "dojg_importing": "Importowanie...",
     "dojg_key_sentences": "Kluczowe zdania",
     "dojg_pos": "",
     "dojg_related": "Powi\u0105zane wyra\u017cenia",

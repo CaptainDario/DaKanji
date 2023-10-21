@@ -118,6 +118,7 @@
     "dojg_import": "Pulse para importar la cubierta DoJG",
     "dojg_import_fail": "La importaci\u00f3n ha fallado, por favor aseg\u00farese de que est\u00e1 importando los datos correctos.\nConsulte el manual para m\u00e1s detalles.",
     "dojg_import_success": "DoJG se ha importado correctamente. Reiniciando la aplicaci\u00f3n...",
+    "dojg_importing": "Importando...",
     "dojg_key_sentences": "Frases clave",
     "dojg_pos": "",
     "dojg_related": "Expresiones relacionadas",

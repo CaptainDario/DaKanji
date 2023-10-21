@@ -1031,6 +1031,17 @@
       "es": "Pulse para importar la cubierta DoJG",
       "pl": "Stuknij, aby zaimportować DoJG Deck"
     },
+    "dojg_importing": {
+      "en": "Importing...",
+      "de": "Importiere...",
+      "ru": "Импорт...",
+      "ja": "インポート...",
+      "zh": "导入...",
+      "it": "Importazione...",
+      "fr": "Importation...",
+      "es": "Importando...",
+      "pl": "Importowanie..."
+    },
     "dojg_import_success": {
       "en": "DoJG has been imported successfully! Resetarting the app...",
       "de": "DoJG wurde erfolgreich importiert! Starte App neu...",

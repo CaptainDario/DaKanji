@@ -118,6 +118,7 @@
     "dojg_import": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
     "dojg_import_fail": "Der Import ist fehlgeschlagen. Bitte stellen Sie sicher, dass Sie die richtigen Daten importieren.\nWeitere Einzelheiten finden Sie im Handbuch.",
     "dojg_import_success": "DoJG wurde erfolgreich importiert! Starte App neu...",
+    "dojg_importing": "Importiere...",
     "dojg_key_sentences": "Wichtige S\u00e4tze",
     "dojg_pos": "Part of Speech",
     "dojg_related": "Verwandte Ausdr\u00fccke",

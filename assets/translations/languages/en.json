@@ -118,6 +118,7 @@
     "dojg_import": "Tap to import the DoJG Deck",
     "dojg_import_fail": "The import failed, please assure that you are importing the correct data (the file extension should be '.apkg').\nRefer to the manual for more details.",
     "dojg_import_success": "DoJG has been imported successfully! Resetarting the app...",
+    "dojg_importing": "Importing...",
     "dojg_key_sentences": "Key sentences",
     "dojg_pos": "Part of Speech",
     "dojg_related": "Related expressions",
