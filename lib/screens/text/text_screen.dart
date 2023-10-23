@@ -2,6 +2,9 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -96,6 +99,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String selectedText = "";
   /// the text that is currently in the input field
   String inputText = "";
+  /// the controller to manipulate the CustomSelectableText
+  late CustomSelectableTextController customSelectableTextController;
 
   
   @override
@@ -123,6 +128,15 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+
+      // show the sample text in debug mode initially
+      if(kDebugMode){
+        setState(() {
+          inputController.text = g_SampleText;
+          inputText = g_SampleText;
+          processText(inputText);
+        }); 
+      }
 
       // if there is initial text, set it
       if(widget.initialText != null){
@@ -273,6 +287,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         ? Colors.black
                                         : Colors.white,
                                       selectionColor: Theme.of(context).highlightColor,
+                                      init: (controller){
+                                        customSelectableTextController = controller;
+                                      },
                                       onSelectionChange: onCustomSelectableTextChange,
                                       onLongPress: onCustomSelectableTextLongPressed,
                                       onTapOutsideOfText: (Offset location) {
@@ -288,8 +305,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 alignment: Alignment.centerRight,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                  child: Wrap(
+                                    runAlignment: WrapAlignment.end,
                                     children: [
                                       // spaces toggle
                                       Focus(
@@ -338,6 +355,53 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onPressed: onFullScreenButtonPress
                                         )
                                       ),
+                                      if(true)
+                                        ...[
+                                          Focus(
+                                            focusNode: null,
+                                            child: AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_back,
+                                              offIcon: Icons.arrow_back,
+                                              onPressed: () {
+                                                customSelectableTextController.selectPreviousWord(expand: true);
+                                              },
+                                            )
+                                          ),
+                                          Focus(
+                                            focusNode: null,
+                                            child: AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_forward,
+                                              offIcon: Icons.arrow_forward,
+                                              onPressed: () {
+                                                customSelectableTextController.selectNextWord(expand: true);
+                                              },
+                                            )
+                                          ),
+                                          Focus(
+                                            focusNode: null,
+                                            child: AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_left,
+                                              offIcon: Icons.arrow_left,
+                                              onPressed: () {
+                                                customSelectableTextController.selectPreviousWord();
+                                              },
+                                            )
+                                          ),
+                                          Focus(
+                                            focusNode: null,
+                                            child: AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_right,
+                                              offIcon: Icons.arrow_right,
+                                              onPressed: () {
+                                                customSelectableTextController.selectNextWord();
+                                              },
+                                            )
+                                          ),
+                                        ]
                                     ],
                                   ),
                                 ),
