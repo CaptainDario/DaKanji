@@ -74,8 +74,9 @@ class CustomSelectableTextController {
         else{
           currentSelection = TextSelection(
             baseOffset: cnt - words[i-1].runes.length,
-            extentOffset: currentSelection.extentOffset
-              - (expand ? 0 : words[i].runes.length),
+            extentOffset: expand
+              ? currentSelection.extentOffset
+              : cnt,
           );
         }
         break;
