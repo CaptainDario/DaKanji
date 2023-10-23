@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,6 +27,8 @@ class Settings with ChangeNotifier {
   late SettingsAdvanced _advanced;
   /// All settings related to the dictionary part of the app
   late SettingsDictionary _dictionary;
+  /// All settings related to the text part of the app
+  late SettingsText _text;
   /// All settings related to the anki integration
   late SettingsAnki _anki;
   /// All settings related to the 
@@ -37,6 +40,7 @@ class Settings with ChangeNotifier {
     _misc       = SettingsMisc(); 
     _advanced   = SettingsAdvanced();
     _dictionary = SettingsDictionary();
+    _text       = SettingsText();
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
   }
@@ -58,6 +62,10 @@ class Settings with ChangeNotifier {
     return _dictionary;
   }
 
+  SettingsText get text {
+    return _text;
+  }
+
   SettingsAnki get anki {
     return _anki;
   }
@@ -76,6 +84,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsMisc', json.encode(misc.toJson()));
     prefs.setString('settingsAdvanced', json.encode(advanced.toJson()));
     prefs.setString('settingsDictionary', json.encode(dictionary.toJson()));
+    prefs.setString('settingsText', json.encode(text.toJson()));
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
   }
@@ -127,6 +136,17 @@ class Settings with ChangeNotifier {
       _dictionary = SettingsDictionary();
     }
     _dictionary.addListener(() => notifyListeners());
+
+    // DICTIONARY SETTINGS
+    try{
+      String tmp = prefs.getString('settingsText') ?? "";
+      if(tmp != "") {_text = SettingsText.fromJson(json.decode(tmp));}
+      else {_text = SettingsText();}
+    }
+    catch (e) {
+      _text = SettingsText();
+    }
+    _text.addListener(() => notifyListeners());
 
     // ANKI SETTINGS
     try{

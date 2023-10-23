@@ -355,7 +355,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onPressed: onFullScreenButtonPress
                                         )
                                       ),
-                                      if(true)
+                                      if(GetIt.I<Settings>().text.selectionButtonsEnabled)
                                         ...[
                                           Focus(
                                             focusNode: null,

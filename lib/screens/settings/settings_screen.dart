@@ -468,6 +468,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Icons.text_snippet,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
+                      // disable text selection buttons
+                      ResponsiveCheckBoxTile(
+                        text: "Show text selection buttons",
+                        value: settings.text.selectionButtonsEnabled,
+                        onTileTapped: (value) async {
+                          settings.text.selectionButtonsEnabled = value;
+                          await settings.save();
+                        },
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
