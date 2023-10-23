@@ -52,6 +52,4 @@ class _DoJGScreenState extends State<DoJGScreen> {
     );
   }
 
-
-
 }
