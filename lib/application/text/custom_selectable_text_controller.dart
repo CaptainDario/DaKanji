@@ -33,7 +33,10 @@ class CustomSelectableTextController {
       if(cnt+words[i].runes.length == currentSelection.extentOffset){
         // last word
         if(i+1 == words.length){
-          currentSelection = TextSelection(baseOffset: 0, extentOffset: words[0].runes.length);
+          currentSelection = TextSelection(
+            baseOffset: 0,
+            extentOffset: words[0].runes.length
+          );
         }
         else{
           currentSelection = TextSelection(
@@ -70,7 +73,8 @@ class CustomSelectableTextController {
         else{
           currentSelection = TextSelection(
             baseOffset: cnt - words[i-1].runes.length,
-            extentOffset: cnt,
+            extentOffset: currentSelection.extentOffset
+              - (expand ? 0 : words[i].runes.length),
           );
         }
         break;
