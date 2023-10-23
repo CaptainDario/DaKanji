@@ -8,18 +8,18 @@ New Features:
 - Deep Links:
   - Directly open dakanji with dakanji:// or https://dakanji.app/app/
   - Share dictionary and DoJG entries
-  - see the manual for more info
+  - See the manual for more info
 - Brand new website https://dakanji.app
-- import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
+- Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
+- Text
+  - Selection buttons
+  - Automatic DoJG lookup
 - By popular request: flatpak support
 
 Improvements:
 
 - Radical ui layout on narrow screens
 - Improved data unpacking: UI does not freeze and progress message is shown
-
-Changes:
-
 - Warn the user when downgrading versions
 
 Fixed:
