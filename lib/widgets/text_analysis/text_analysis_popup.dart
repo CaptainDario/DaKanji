@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
@@ -62,6 +65,9 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     super.initState();
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
+    if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported){
+      tabNames.add("DoJG");
+    }
     if(g_webViewSupported){
       tabNames.add("Deepl");
       webViewController = WebViewController()
@@ -140,6 +146,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           isExpanded: true,
                           allowDeconjugation: widget.allowDeconjugation,
                         ),
+                        if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: DoJG(false, false),
+                          ),
                         if(g_webViewSupported)
                           Card(
                             child: WebViewWidget(
