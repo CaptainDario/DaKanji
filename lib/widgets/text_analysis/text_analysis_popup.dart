@@ -147,9 +147,14 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           allowDeconjugation: widget.allowDeconjugation,
                         ),
                         if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: DoJG(false, false),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DoJG(
+                              false,
+                              false,
+                              initialSearch: widget.text,
+                              key: Key(widget.text),
+                            ),
                           ),
                         if(g_webViewSupported)
                           Card(
