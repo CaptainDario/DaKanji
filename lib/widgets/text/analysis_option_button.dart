@@ -36,6 +36,16 @@ class AnalysisOptionButton extends StatefulWidget {
 }
 
 class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
+
+  @override
+  void initState() {
+    
+    super.initState();
+
+    assert ((widget.onIcon != null && widget.offIcon != null) ||
+      (widget.svgAssetPattern != null));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
