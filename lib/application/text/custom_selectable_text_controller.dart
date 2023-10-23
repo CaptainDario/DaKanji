@@ -40,8 +40,9 @@ class CustomSelectableTextController {
         }
         else{
           currentSelection = TextSelection(
-            baseOffset: currentSelection.baseOffset
-              + (expand ? 0 : words[i].runes.length),
+            baseOffset: expand
+              ? currentSelection.baseOffset
+              : cnt + words[i].runes.length,
             extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
           );
         }
