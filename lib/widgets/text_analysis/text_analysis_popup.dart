@@ -66,7 +66,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
     if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported){
-      tabNames.add("DoJG");
+      tabNames.add(LocaleKeys.DojgScreen_title.tr());
     }
     if(g_webViewSupported){
       tabNames.add("Deepl");
