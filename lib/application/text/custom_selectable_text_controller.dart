@@ -87,4 +87,43 @@ class CustomSelectableTextController {
     updateSelection();
   }
 
+  /// Shrinks the current selection by `shrinkBy` number of characters.
+  /// If `shrinkBy == 0` removes the last token from the selection
+  void shrinkSelection(int shrinkBy){
+
+    assert (shrinkBy >= 0);
+
+    // shrink selection by fixed amount
+    if(shrinkBy > 0){
+      currentSelection = TextSelection(
+        baseOffset: currentSelection.baseOffset,
+        extentOffset: currentSelection.extentOffset - shrinkBy
+      );
+    }
+    // shrink selection by words
+    else{
+      int cnt = 0;
+      for (int i = 0; i < words.length; i++){
+
+        if(cnt >= currentSelection.extentOffset){
+          // the selection only contains one word -> select previous word
+          if (currentSelection.baseOffset == cnt - words[i-1].runes.length) {
+            selectPrevious();
+          }
+          else {
+            // the selection contains multiple words -> shrink selection by one word
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset,
+              extentOffset: cnt - words[i-1].runes.length
+            );
+          }
+          break;
+        }
+        cnt += words[i].length;
+      }
+    }
+
+    updateSelection();
+  }
+
 }
