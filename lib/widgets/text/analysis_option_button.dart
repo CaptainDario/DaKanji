@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:isar/isar.dart';
 
 /// A analysis option button. Either `svgAssetPattern` or `icon` needs to be 
 /// not null.
@@ -10,8 +11,6 @@ class AnalysisOptionButton extends StatefulWidget {
 
   /// is this analysis option on or off
   final bool on;
-  /// method that is invoked when pressing on the button
-  final void Function()? onPressed;
   /// A path pattern to an svg asset, a `*` indicates which part of the path
   /// should be replaced with `on` or `off` matching the current state
   final String? svgAssetPattern;
@@ -19,6 +18,10 @@ class AnalysisOptionButton extends StatefulWidget {
   final IconData? onIcon;
   /// The off-icon of this button, ignored if `svgAssetPattern` is not null
   final IconData? offIcon;
+  /// method that is invoked when pressing on the button
+  final void Function()? onPressed;
+  /// method that is invoked when double tapping on this button
+  final void Function()? onDoubleTap;
 
   const AnalysisOptionButton(
     this.on,
@@ -27,6 +30,7 @@ class AnalysisOptionButton extends StatefulWidget {
       this.onIcon,
       this.offIcon,
       this.onPressed,
+      this.onDoubleTap,
       super.key
     }
   );
@@ -48,26 +52,28 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).cardColor,
-      child: IconButton(
-        icon: widget.svgAssetPattern != null
-          ? SvgPicture.asset(
-            !widget.on ?
-              widget.svgAssetPattern!.replaceAll("*", "off") :
-              widget.svgAssetPattern!.replaceAll("*", "on"),
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-          )
-          : Icon(
-            !widget.on ? widget.onIcon! : widget.offIcon!
+    return GestureDetector(
+      onTap: widget.onPressed,
+      onDoubleTap: widget.onDoubleTap,
+      child: Material(
+        color: Theme.of(context).cardColor,
+        child: IgnorePointer(
+          child: IconButton(
+            icon: widget.svgAssetPattern != null
+              ? SvgPicture.asset(
+                !widget.on ?
+                  widget.svgAssetPattern!.replaceAll("*", "off") :
+                  widget.svgAssetPattern!.replaceAll("*", "on"),
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
+              )
+              : Icon(
+                !widget.on ? widget.onIcon! : widget.offIcon!
+              ),
+            onPressed: () { },
           ),
-        onPressed: () {
-          if(widget.onPressed != null) {
-            widget.onPressed!();
-          }
-        },
+        ),
       ),
     );
   }

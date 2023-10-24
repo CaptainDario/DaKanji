@@ -355,51 +355,83 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onPressed: onFullScreenButtonPress
                                         )
                                       ),
+                                      
                                       if(GetIt.I<Settings>().text.selectionButtonsEnabled)
                                         ...[
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
-                                              true,
-                                              onIcon: Icons.arrow_back,
-                                              offIcon: Icons.arrow_back,
-                                              onPressed: () {
-                                                customSelectableTextController.selectPreviousWord(expand: true);
-                                              },
-                                            )
+                                          // shrink selection button
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_back,
+                                            offIcon: Icons.arrow_back,
+                                            onPressed: () {
+                                              customSelectableTextController.shrinkSelection(0);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
+                                            onDoubleTap: () {
+                                              customSelectableTextController.shrinkSelection(1);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
                                           ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
-                                              true,
-                                              onIcon: Icons.arrow_forward,
-                                              offIcon: Icons.arrow_forward,
-                                              onPressed: () {
-                                                customSelectableTextController.selectNextWord(expand: true);
-                                              },
-                                            )
+                                          // grow selection button
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_forward,
+                                            offIcon: Icons.arrow_forward,
+                                            onPressed: () {
+                                              customSelectableTextController.selectNext(extendByOneToken: true);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
+                                            onDoubleTap: () {
+                                              customSelectableTextController.selectNext(extendBy: 1);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
                                           ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
-                                              true,
-                                              onIcon: Icons.arrow_left,
-                                              offIcon: Icons.arrow_left,
-                                              onPressed: () {
-                                                customSelectableTextController.selectPreviousWord();
-                                              },
-                                            )
+                                          // select previous word
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_left,
+                                            offIcon: Icons.arrow_left,
+                                            onPressed: () {
+                                              customSelectableTextController.selectPrevious();
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
                                           ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
-                                              true,
-                                              onIcon: Icons.arrow_right,
-                                              offIcon: Icons.arrow_right,
-                                              onPressed: () {
-                                                customSelectableTextController.selectNextWord();
-                                              },
-                                            )
+                                          // select next token / char
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_right,
+                                            offIcon: Icons.arrow_right,
+                                            // word
+                                            onPressed: () {
+                                              customSelectableTextController.selectNext(selectNextToken: true);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
+                                            // char
+                                            onDoubleTap: () {
+                                              customSelectableTextController.selectNext(selectNextChar: true);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
                                           ),
                                         ]
                                     ],

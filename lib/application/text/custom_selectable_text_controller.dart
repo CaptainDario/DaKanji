@@ -23,14 +23,26 @@ class CustomSelectableTextController {
   });
 
   /// Moves the current selection to the next word
-  /// If expand is set to true, the current selection will expanded by the next
-  /// word
-  void selectNextWord({bool expand = false}){
+  /// If `expandBy > 0`, the current selection will expanded by the
+  /// by `expandBy` amount of characters.
+  /// If `extendByOneWord == true` the selection will be expanded by the next
+  /// word.
+  void selectNext({
+    bool selectNextToken = false,
+    bool selectNextChar = false,
+    bool extendByOneToken = false,
+    int extendBy = 0}){
+
+    assert ((selectNextToken && !selectNextChar && !extendByOneToken && extendBy == 0) ||
+      (!selectNextToken && selectNextChar && !extendByOneToken && extendBy == 0) ||
+      (!selectNextToken && !selectNextChar && extendByOneToken && extendBy == 0) ||
+      (!selectNextToken && !selectNextChar && !extendByOneToken && extendBy > 0));
 
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
 
-      if(cnt+words[i].runes.length == currentSelection.extentOffset){
+      if(cnt <= currentSelection.extentOffset &&
+        currentSelection.extentOffset <= cnt+words[i].runes.length){
         // last word
         if(i+1 == words.length){
           currentSelection = TextSelection(
@@ -39,12 +51,36 @@ class CustomSelectableTextController {
           );
         }
         else{
-          currentSelection = TextSelection(
-            baseOffset: expand
-              ? currentSelection.baseOffset
-              : cnt + words[i].runes.length,
-            extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
-          );
+          // extent the current selection by one word
+          if(extendByOneToken){
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset,
+              extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
+            );
+          }
+          // extent the current selection by one character
+          else if(extendBy > 0){
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset,
+              extentOffset: currentSelection.extentOffset + 1
+            );
+          }
+          else{
+            // select the next token
+            if(selectNextToken) {
+              currentSelection = TextSelection(
+                baseOffset: cnt + words[i].runes.length,
+                extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
+              );
+            }
+            // select the next character
+            else {
+              currentSelection = TextSelection(
+                baseOffset: currentSelection.extentOffset,
+                extentOffset: currentSelection.extentOffset + 1
+              );
+            }
+          }
         }
         break;
       }
@@ -55,9 +91,7 @@ class CustomSelectableTextController {
   }
 
   /// Moves the current selection to the previous word
-  /// If expand is set to true, the current selection will expanded by the
-  /// previous word
-  void selectPreviousWord({bool expand = false}){
+  void selectPrevious(){
 
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
@@ -74,9 +108,7 @@ class CustomSelectableTextController {
         else{
           currentSelection = TextSelection(
             baseOffset: cnt - words[i-1].runes.length,
-            extentOffset: expand
-              ? currentSelection.extentOffset
-              : cnt,
+            extentOffset: cnt,
           );
         }
         break;
