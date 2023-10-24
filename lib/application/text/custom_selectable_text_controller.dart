@@ -55,7 +55,10 @@ class CustomSelectableTextController {
           if(extendByOneToken){
             currentSelection = TextSelection(
               baseOffset: currentSelection.baseOffset,
-              extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
+              extentOffset: cnt + words[i].runes.length +
+                (currentSelection.extentOffset == cnt + words[i].runes.length
+                  ? words[i+1].runes.length
+                  : 0)
             );
           }
           // extent the current selection by one character
