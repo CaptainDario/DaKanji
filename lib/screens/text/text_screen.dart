@@ -410,6 +410,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                                 popupAnimationController.forward();
                                               }
                                             },
+                                            onDoubleTap: () {
+                                              customSelectableTextController.selectPrevious(previousChar: true);
+                                              // assure that the popup is open
+                                              if(!popupAnimationController.isCompleted){
+                                                popupAnimationController.forward();
+                                              }
+                                            },
                                           ),
                                           // select next token / char
                                           AnalysisOptionButton(
