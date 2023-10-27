@@ -365,17 +365,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             offIcon: Icons.arrow_back,
                                             onPressed: () {
                                               customSelectableTextController.shrinkSelectionRight(0);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                             onDoubleTap: () {
                                               customSelectableTextController.shrinkSelectionRight(1);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                           ),
                                           // grow selection button
@@ -385,17 +379,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             offIcon: Icons.arrow_forward,
                                             onPressed: () {
                                               customSelectableTextController.growSelectionRight(growBy: 0);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                             onDoubleTap: () {
                                               customSelectableTextController.growSelectionRight(growBy: 1);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                           ),
                                           // select previous token / char
@@ -405,17 +393,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             offIcon: Icons.arrow_left,
                                             onPressed: () {
                                               customSelectableTextController.selectPrevious();
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                             onDoubleTap: () {
                                               customSelectableTextController.selectPrevious(previousChar: true);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                           ),
                                           // select next token / char
@@ -426,18 +408,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             // word
                                             onPressed: () {
                                               customSelectableTextController.selectNext();
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                             // char
                                             onDoubleTap: () {
                                               customSelectableTextController.selectNext(nextChar: true);
-                                              // assure that the popup is open
-                                              if(!popupAnimationController.isCompleted){
-                                                popupAnimationController.forward();
-                                              }
+                                              assurePopupOpen();
                                             },
                                           ),
                                         ]
@@ -459,6 +435,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         }
       )
     );
+  }
+
+  /// assures that the popup is open by opening it if it is closed
+  void assurePopupOpen(){
+    if(!popupAnimationController.isCompleted){
+      popupAnimationController.forward();
+    }
   }
 
   /// Callback that is called when the text selection of the CustomSelectableText
