@@ -231,7 +231,7 @@
     "anki_test_connection_fail": "Nie jeste\u015b po\u0142\u0105czony z Anki! \ud83d\ude22",
     "anki_test_connection_success": "Jeste\u015b pod\u0142\u0105czony do Anki! \ud83c\udf89",
     "anki_title": "Anki",
-    "deep_links_text": "G\u0142\u0119bokie linki to spos\u00f3b na bezpo\u015brednie linkowanie do tre\u015bci w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i https://dakanji.app/app. Korzystaj\u0105c z tej funkcji, mo\u017cesz na przyk\u0142ad otworzy\u0107 wyszukiwanie s\u0142ownika po dotkni\u0119ciu tego linku [dakanji://dictionary?search=\u98df\u3079\u308b](dakanji://dictionary?search=\u98df\u3079\u308b). Wszystkie obs\u0142ugiwane linki mo\u017cna znale\u017a\u0107 na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+    "deep_links_text": "G\u0142\u0119bokie linki to spos\u00f3b na bezpo\u015brednie linkowanie do tre\u015bci w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystaj\u0105c z tej funkcji, mo\u017cesz na przyk\u0142ad otworzy\u0107 wyszukiwanie s\u0142ownika po dotkni\u0119ciu tego linku dakanji://dictionary?search=\u98df\u3079\u308b. Wszystkie obs\u0142ugiwane linki mo\u017cna znale\u017a\u0107 na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Przyk\u0142ady",
     "dict_kanji_copy_radicals_text": "Mo\u017cesz skopiowa\u0107 radyka\u0142 do schowka, dotykaj\u0105c go. Dwukrotne stukni\u0119cie spowoduje do\u0142\u0105czenie radykalnego elementu do ju\u017c istniej\u0105cej zawarto\u015bci schowka.",
