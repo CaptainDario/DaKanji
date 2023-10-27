@@ -13,7 +13,10 @@ New Features:
 - Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
 - Text
   - Selection buttons
+  - Copy button
+  - Paste button
   - Automatic DoJG lookup
+  - Added settings
 - By popular request: flatpak support
 
 Improvements:
