@@ -364,14 +364,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             onIcon: Icons.arrow_back,
                                             offIcon: Icons.arrow_back,
                                             onPressed: () {
-                                              customSelectableTextController.shrinkSelection(0);
+                                              customSelectableTextController.shrinkSelectionRight(0);
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
                                               }
                                             },
                                             onDoubleTap: () {
-                                              customSelectableTextController.shrinkSelection(1);
+                                              customSelectableTextController.shrinkSelectionRight(1);
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
@@ -384,21 +384,21 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             onIcon: Icons.arrow_forward,
                                             offIcon: Icons.arrow_forward,
                                             onPressed: () {
-                                              customSelectableTextController.selectNext(extendByOneToken: true);
+                                              customSelectableTextController.growSelectionRight(growBy: 0);
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
                                               }
                                             },
                                             onDoubleTap: () {
-                                              customSelectableTextController.selectNext(extendBy: 1);
+                                              customSelectableTextController.growSelectionRight(growBy: 1);
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
                                               }
                                             },
                                           ),
-                                          // select previous word
+                                          // select previous token / char
                                           AnalysisOptionButton(
                                             true,
                                             onIcon: Icons.arrow_left,
@@ -418,7 +418,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             offIcon: Icons.arrow_right,
                                             // word
                                             onPressed: () {
-                                              customSelectableTextController.selectNext(selectNextToken: true);
+                                              customSelectableTextController.selectNext();
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
@@ -426,7 +426,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             },
                                             // char
                                             onDoubleTap: () {
-                                              customSelectableTextController.selectNext(selectNextChar: true);
+                                              customSelectableTextController.selectNext(nextChar: true);
                                               // assure that the popup is open
                                               if(!popupAnimationController.isCompleted){
                                                 popupAnimationController.forward();
@@ -532,7 +532,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// mecabPOS, mecabSurfaces and mecabReadings
   void processText(String text){
     
-    // analyze text with kagome
+    // analyze text with mecab
     List<TokenNode> analyzedText = GetIt.I<Mecab>().parse(text);
     // remove EOS symbol
     analyzedText.removeLast(); 
