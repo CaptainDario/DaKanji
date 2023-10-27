@@ -208,7 +208,10 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
             separatorBuilder: (context, i) {
               if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
                 currentEntries[i+1].grammaticalConcept[0]) {
-                return Text(currentEntries[i+1].grammaticalConcept[0]);
+                return Text(
+                  " ${currentEntries[i+1].grammaticalConcept[0]}",
+                  textScaleFactor: 1.5,
+                );
               } else {
                 return const SizedBox();
               }
@@ -218,11 +221,14 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                 focusNode: widget.includeTutorial && i == 0
                     ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
                     : null,
-                child: DojgEntryCard(
-                  currentEntries[i],
-                  onTap: (entry) {
-                    widget.onTap?.call(currentEntries[i]);
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                  child: DojgEntryCard(
+                    currentEntries[i],
+                    onTap: (entry) {
+                      widget.onTap?.call(currentEntries[i]);
+                    },
+                  ),
                 ),
               );
             }
