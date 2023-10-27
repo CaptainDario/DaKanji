@@ -489,6 +489,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           settings.text.openInFullscreen = value;
                           await settings.save();
                         },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // try to deconjugate words before searching
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+                        value: settings.text.searchDeconjugate,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.text.searchDeconjugate = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                                ),
+                              )
+                            )
+                          ).show();
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(

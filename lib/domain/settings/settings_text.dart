@@ -37,6 +37,14 @@ class SettingsText with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Should the search term be deconjugated before searching
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_searchDeconjugate = true;
+  @JsonKey(defaultValue: d_searchDeconjugate)
+  /// Should the search term be deconjugated before searching
+  bool searchDeconjugate = d_searchDeconjugate;
+
   
   SettingsText ();
 

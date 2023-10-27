@@ -108,6 +108,7 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
                   scale: widget.poupAnimationController,
                   child: TextAnalysisPopup(
                     text: widget.textToAnalyze,
+                    allowDeconjugation: widget.allowDeconjugation,
                     onInitialized: (controller) {
                       widget.onPopupInitialized?.call(controller);
                     },
