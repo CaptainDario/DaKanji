@@ -173,7 +173,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     super.initState();
 
     _cstController = CustomSelectableTextController(
-      updateSelection: () => setState(() {
+      updateSelectionGraphics: () => setState(() {
         _onUserSelectionChange(_cstController.currentSelection);
       })
     );

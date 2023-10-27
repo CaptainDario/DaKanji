@@ -15,12 +15,13 @@ class CustomSelectableTextController {
 
   /// The current text selection
   TextSelection currentSelection = const TextSelection.collapsed(offset: -1);
+
   /// Callback that should update the current selection graphics
-  final void Function() updateSelection;
+  final void Function() updateSelectionGraphics;
 
 
   CustomSelectableTextController({
-    required this.updateSelection
+    required this.updateSelectionGraphics
   });
 
   /// Moves the current selection to the next token
@@ -64,7 +65,7 @@ class CustomSelectableTextController {
       cnt += words[i].length;
     }
 
-    updateSelection();
+    updateSelectionGraphics();
   }
 
   /// Moves the current selection to the previous token
@@ -102,7 +103,7 @@ class CustomSelectableTextController {
       cnt += words[i].length;
     }
 
-    updateSelection();
+    updateSelectionGraphics();
   }
 
   /// Shrinks the current selection by `shrinkBy` number of characters, from the
@@ -142,7 +143,7 @@ class CustomSelectableTextController {
       }
     }
 
-    updateSelection();
+    updateSelectionGraphics();
   }
 
   /// Grows the current selection by `growBy` number of characters, to the
@@ -189,6 +190,6 @@ class CustomSelectableTextController {
       
     }
 
-    updateSelection();
+    updateSelectionGraphics();
   }
 }
