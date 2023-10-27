@@ -325,6 +325,26 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           },
                                         )
                                       ),
+                                      Focus(
+                                        child: AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.copy,
+                                          onIcon: Icons.copy,
+                                          onPressed: () {
+
+                                            String currentSelection =
+                                              customSelectableTextController.getCurrentSelectionString();
+                                            Clipboard.setData(
+                                              ClipboardData(text:currentSelection)
+                                            ).then((_){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text("${"teswt"} $currentSelection"))
+                                                );
+                                            });
+                                          },
+                                        )
+                                      ),
                                       // spaces toggle
                                       Focus(
                                         focusNode: widget.includeTutorial ?
