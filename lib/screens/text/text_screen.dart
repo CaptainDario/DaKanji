@@ -37,7 +37,7 @@ class TextScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// If set to true, the app will include a back-arrow instead of the hamburger
-  /// menu (useful if a sceen should just be shown shortly and the user likely
+  /// menu (useful if a screen should just be shown shortly and the user likely
   /// want to go back to the previous screen)
   final bool useBackArrowAppBar;
   /// should the focus nodes for the tutorial be included
@@ -108,9 +108,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     super.initState();
 
+    // check if the screen should open with the processed text in fullscreen
+    fullScreen = GetIt.I<Settings>().text.openInFullscreen;
+
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
-      value: 0.0,
+      value: fullScreen ? 1.0 : 0.0,
       vsync: this,
     );
     _animation = _controller.drive(

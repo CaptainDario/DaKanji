@@ -480,6 +480,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           await settings.save();
                         },
                       ),
+                      // disable text selection buttons
+                      ResponsiveCheckBoxTile(
+                        text: "Open in fullscreen",
+                        value: settings.text.openInFullscreen,
+                        onTileTapped: (value) async {
+                          settings.text.openInFullscreen = value;
+                          await settings.save();
+                        },
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
