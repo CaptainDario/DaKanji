@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,27 +23,17 @@ class CustomSelectableTextController {
     required this.updateSelection
   });
 
-  /// Moves the current selection to the next word
-  /// If `expandBy > 0`, the current selection will expanded by the
-  /// by `expandBy` amount of characters.
-  /// If `extendByOneWord == true` the selection will be expanded by the next
-  /// word.
-  void selectNext({
-    bool selectNextToken = false,
-    bool selectNextChar = false,
-    bool extendByOneToken = false,
-    int extendBy = 0}){
-
-    assert ((selectNextToken && !selectNextChar && !extendByOneToken && extendBy == 0) ||
-      (!selectNextToken && selectNextChar && !extendByOneToken && extendBy == 0) ||
-      (!selectNextToken && !selectNextChar && extendByOneToken && extendBy == 0) ||
-      (!selectNextToken && !selectNextChar && !extendByOneToken && extendBy > 0));
+  /// Moves the current selection to the next token
+  /// If `nextChar == true` selects the next character instead
+  void selectNext({bool nextChar = false}){
 
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
 
-      if(cnt <= currentSelection.extentOffset &&
-        currentSelection.extentOffset <= cnt+words[i].runes.length){
+      if((cnt <= currentSelection.extentOffset &&
+        currentSelection.extentOffset <= cnt+words[i].runes.length) ||
+        currentSelection.extentOffset <= cnt){
+
         // last word
         if(i+1 == words.length){
           currentSelection = TextSelection(
@@ -50,42 +41,25 @@ class CustomSelectableTextController {
             extentOffset: words[0].runes.length
           );
         }
-        else{
-          // extent the current selection by one word
-          if(extendByOneToken){
+
+        // skip punctuation
+        else if(japaneseCharacterRegex.hasMatch(words[i+1])){
+          // select the next token
+          if(!nextChar) {
             currentSelection = TextSelection(
-              baseOffset: currentSelection.baseOffset,
-              extentOffset: cnt + words[i].runes.length +
-                (currentSelection.extentOffset == cnt + words[i].runes.length
-                  ? words[i+1].runes.length
-                  : 0)
+              baseOffset: cnt + words[i].runes.length,
+              extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
             );
           }
-          // extent the current selection by one character
-          else if(extendBy > 0){
+          // select the next character
+          else {
             currentSelection = TextSelection(
-              baseOffset: currentSelection.baseOffset,
+              baseOffset: currentSelection.extentOffset,
               extentOffset: currentSelection.extentOffset + 1
             );
           }
-          else{
-            // select the next token
-            if(selectNextToken) {
-              currentSelection = TextSelection(
-                baseOffset: cnt + words[i].runes.length,
-                extentOffset: cnt + words[i].runes.length + words[i+1].runes.length
-              );
-            }
-            // select the next character
-            else {
-              currentSelection = TextSelection(
-                baseOffset: currentSelection.extentOffset,
-                extentOffset: currentSelection.extentOffset + 1
-              );
-            }
-          }
+          break;
         }
-        break;
       }
       cnt += words[i].length;
     }
@@ -93,8 +67,9 @@ class CustomSelectableTextController {
     updateSelection();
   }
 
-  /// Moves the current selection to the previous word
-  void selectPrevious(){
+  /// Moves the current selection to the previous token
+  /// If `previousChar == true` selects the previous character instead
+  void selectPrevious({bool previousChar = false}){
 
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
@@ -108,13 +83,21 @@ class CustomSelectableTextController {
             extentOffset: len
           );
         }
-        else{
-          currentSelection = TextSelection(
-            baseOffset: cnt - words[i-1].runes.length,
-            extentOffset: cnt,
-          );
+        else if(japaneseCharacterRegex.hasMatch(words[i-1])){
+          if(previousChar){
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset-1,
+              extentOffset: currentSelection.baseOffset
+            );
+          }
+          else {
+            currentSelection = TextSelection(
+              baseOffset: cnt - words[i-1].runes.length,
+              extentOffset: cnt,
+            );
+          }
+          break;
         }
-        break;
       }
       cnt += words[i].length;
     }
@@ -122,9 +105,10 @@ class CustomSelectableTextController {
     updateSelection();
   }
 
-  /// Shrinks the current selection by `shrinkBy` number of characters.
+  /// Shrinks the current selection by `shrinkBy` number of characters, from the
+  /// right side.
   /// If `shrinkBy == 0` removes the last token from the selection
-  void shrinkSelection(int shrinkBy){
+  void shrinkSelectionRight(int shrinkBy){
 
     assert (shrinkBy >= 0);
 
@@ -161,4 +145,50 @@ class CustomSelectableTextController {
     updateSelection();
   }
 
+  /// Grows the current selection by `growBy` number of characters, to the
+  /// right side.
+  /// If `shrinkBy == 0` extends by one token
+  void growSelectionRight({int growBy = 0}){
+
+    assert (growBy >= 0);
+
+    int cnt = 0;
+    for (int i = 0; i < words.length; i++){
+
+      if(cnt <= currentSelection.extentOffset &&
+        currentSelection.extentOffset <= cnt+words[i].runes.length){
+        // last word
+        if(i+1 == words.length){
+          currentSelection = TextSelection(
+            baseOffset: 0,
+            extentOffset: words[0].runes.length
+          );
+        }
+        else{
+          // extent the current selection by one word
+          if(growBy == 0){
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset,
+              extentOffset: cnt + words[i].runes.length +
+                (currentSelection.extentOffset == cnt + words[i].runes.length
+                  ? words[i+1].runes.length
+                  : 0)
+            );
+          }
+          // extent the current selection by one character
+          else if(growBy > 0){
+            currentSelection = TextSelection(
+              baseOffset: currentSelection.baseOffset,
+              extentOffset: currentSelection.extentOffset + growBy
+            );
+          }
+        }
+        break;
+      }
+      cnt += words[i].length;
+      
+    }
+
+    updateSelection();
+  }
 }
