@@ -314,6 +314,8 @@
     "requires_restart": "n\u00e9cessite un red\u00e9marrage",
     "restarts_app": "red\u00e9marre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Ouvrir en plein \u00e9cran",
+    "text_show_selection_buttons": "Afficher les boutons de s\u00e9lection de texte",
     "title": "Param\u00e8tres"
   },
   "TextScreen": {

@@ -2472,6 +2472,28 @@
       "es": "Mostrar definiciones de wikipedia",
       "pl": "Pokaż definicje z wikipedii"
     },
+    "text_show_selection_buttons": {
+      "en": "Show text selection buttons",
+      "de": "Buttons zur Textauswahl anzeigen",
+      "ru": "Показать кнопки выделения текста",
+      "ja": "テキスト選択ボタンを表示する",
+      "zh": "显示文本选择按钮",
+      "it": "Mostra i pulsanti di selezione del testo",
+      "fr": "Afficher les boutons de sélection de texte",
+      "es": "Mostrar botones de selección de texto",
+      "pl": "Pokaż przyciski wyboru tekstu"
+    },
+    "text_open_in_fullscreen": {
+      "en": "Open in fullscreen",
+      "de": "Im Vollbildmodus öffnen",
+      "ru": "Открыть в полноэкранном режиме",
+      "ja": "フルスクリーンで開く",
+      "zh": "全屏打开",
+      "it": "Aprire a schermo intero",
+      "fr": "Ouvrir en plein écran",
+      "es": "Abrir a pantalla completa",
+      "pl": "Otwórz na pełnym ekranie"
+    },
     "anki_title": {
       "en": "Anki",
       "de": "Anki",

@@ -314,6 +314,8 @@
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Im Vollbildmodus \u00f6ffnen",
+    "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
     "title": "Einstellungen"
   },
   "TextScreen": {

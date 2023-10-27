@@ -314,6 +314,8 @@
     "requires_restart": "\u9700\u8981\u91cd\u65b0\u542f\u52a8",
     "restarts_app": "\u91cd\u65b0\u542f\u52a8\u5e94\u7528\u7a0b\u5e8f",
     "show_tutorial": "\u91cd\u65b0\u5c55\u793a\u6559\u7a0b\uff08@:SettingsScreen.restarts_app\uff09\u3002",
+    "text_open_in_fullscreen": "\u5168\u5c4f\u6253\u5f00",
+    "text_show_selection_buttons": "\u663e\u793a\u6587\u672c\u9009\u62e9\u6309\u94ae",
     "title": "\u8bbe\u7f6e"
   },
   "TextScreen": {

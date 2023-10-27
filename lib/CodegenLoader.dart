@@ -292,6 +292,8 @@ class CodegenLoader extends AssetLoader{
     "requires_restart": "需要重新启动",
     "restarts_app": "重新启动应用程序",
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
+    "text_open_in_fullscreen": "全屏打开",
+    "text_show_selection_buttons": "显示文本选择按钮",
     "title": "设置"
   },
   "TextScreen": {
@@ -638,6 +640,8 @@ static const Map<String,dynamic> ja = {
     "requires_restart": "再起動が必要です",
     "restarts_app": "アプリを再起動する",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "フルスクリーンで開く",
+    "text_show_selection_buttons": "テキスト選択ボタンを表示する",
     "title": "設定"
   },
   "TextScreen": {
@@ -1014,6 +1018,8 @@ static const Map<String,dynamic> de = {
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Im Vollbildmodus öffnen",
+    "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
     "title": "Einstellungen"
   },
   "TextScreen": {
@@ -1352,6 +1358,8 @@ static const Map<String,dynamic> ru = {
     "requires_restart": "требует перезапуска",
     "restarts_app": "перезапускает приложение",
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Открыть в полноэкранном режиме",
+    "text_show_selection_buttons": "Показать кнопки выделения текста",
     "title": "Настройки"
   },
   "TextScreen": {
@@ -1711,6 +1719,8 @@ static const Map<String,dynamic> pl = {
     "requires_restart": "wymaga ponownego uruchomienia",
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Otwórz na pełnym ekranie",
+    "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
     "title": "Ustawienia"
   },
   "TextScreen": {
@@ -2087,6 +2097,8 @@ static const Map<String,dynamic> en = {
     "requires_restart": "requires restart",
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Open in fullscreen",
+    "text_show_selection_buttons": "Show text selection buttons",
     "title": "Settings"
   },
   "TextScreen": {
@@ -2425,6 +2437,8 @@ static const Map<String,dynamic> it = {
     "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Aprire a schermo intero",
+    "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
     "title": "Impostazioni"
   },
   "TextScreen": {
@@ -2749,6 +2763,8 @@ static const Map<String,dynamic> fr = {
     "requires_restart": "nécessite un redémarrage",
     "restarts_app": "redémarre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Ouvrir en plein écran",
+    "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
     "title": "Paramètres"
   },
   "TextScreen": {
@@ -3073,6 +3089,8 @@ static const Map<String,dynamic> es = {
     "requires_restart": "requiere reinicio",
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Abrir a pantalla completa",
+    "text_show_selection_buttons": "Mostrar botones de selección de texto",
     "title": "Ajustes"
   },
   "TextScreen": {

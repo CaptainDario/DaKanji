@@ -314,6 +314,8 @@
     "requires_restart": "requiere reinicio",
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Abrir a pantalla completa",
+    "text_show_selection_buttons": "Mostrar botones de selecci\u00f3n de texto",
     "title": "Ajustes"
   },
   "TextScreen": {

@@ -314,6 +314,8 @@
     "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
+    "text_open_in_fullscreen": "Aprire a schermo intero",
+    "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
     "title": "Impostazioni"
   },
   "TextScreen": {

@@ -473,16 +473,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // disable text selection buttons
                       ResponsiveCheckBoxTile(
-                        text: "Show text selection buttons",
+                        text: LocaleKeys.SettingsScreen_text_show_selection_buttons.tr(),
                         value: settings.text.selectionButtonsEnabled,
                         onTileTapped: (value) async {
                           settings.text.selectionButtonsEnabled = value;
                           await settings.save();
                         },
                       ),
-                      // disable text selection buttons
+                      // should the text screen open with the processed text
+                      // maximized
                       ResponsiveCheckBoxTile(
-                        text: "Open in fullscreen",
+                        text: LocaleKeys.SettingsScreen_text_open_in_fullscreen.tr(),
                         value: settings.text.openInFullscreen,
                         onTileTapped: (value) async {
                           settings.text.openInFullscreen = value;

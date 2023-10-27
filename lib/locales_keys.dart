@@ -299,6 +299,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_requires_restart = 'SettingsScreen.requires_restart';
   static const SettingsScreen_restarts_app = 'SettingsScreen.restarts_app';
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
+  static const SettingsScreen_text_open_in_fullscreen = 'SettingsScreen.text_open_in_fullscreen';
+  static const SettingsScreen_text_show_selection_buttons = 'SettingsScreen.text_show_selection_buttons';
   static const SettingsScreen_title = 'SettingsScreen.title';
   static const SettingsScreen = 'SettingsScreen';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';
