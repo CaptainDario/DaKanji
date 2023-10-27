@@ -36,6 +36,14 @@ class CustomSelectableTextController {
       currentSelection.extentOffset
     );
   }
+
+  /// Resets the current selection to an empty one
+  void resetSelection() {
+
+    currentSelection = const TextSelection.collapsed(offset: -1);
+
+  }
+
   /// Moves the current selection to the next token
   /// If `nextChar == true` selects the next character instead
   void selectNext({bool nextChar = false}){
