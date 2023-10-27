@@ -308,6 +308,23 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   child: Wrap(
                                     runAlignment: WrapAlignment.end,
                                     children: [
+                                      Focus(
+                                        child: AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.paste,
+                                          onIcon: Icons.paste,
+                                          onPressed: () async {
+                                            ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+                                            String clipboardString = clipboardData?.text ?? "";
+                                            setState(() {
+                                              customSelectableTextController.resetSelection();
+                                              inputController.text = clipboardString;
+                                              inputText = clipboardString;
+                                              processText(clipboardString);
+                                            });
+                                          },
+                                        )
+                                      ),
                                       // spaces toggle
                                       Focus(
                                         focusNode: widget.includeTutorial ?
