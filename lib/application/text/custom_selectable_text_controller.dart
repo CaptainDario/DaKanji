@@ -24,6 +24,18 @@ class CustomSelectableTextController {
     required this.updateSelectionGraphics
   });
 
+
+  /// Get the current text selection in text format
+  String getCurrentSelectionString() {
+    if(currentSelection.isCollapsed){
+      return "";
+    }
+
+    return words.join().substring(
+      currentSelection.baseOffset,
+      currentSelection.extentOffset
+    );
+  }
   /// Moves the current selection to the next token
   /// If `nextChar == true` selects the next character instead
   void selectNext({bool nextChar = false}){
