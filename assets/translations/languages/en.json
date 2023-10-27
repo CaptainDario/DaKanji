@@ -288,7 +288,7 @@
     "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, \u98df\u3079\u307e\u3059\u3001\u98df\u3079\u3089\u308c\u308b\u3001\u98df\u3079\u306a\u3044 all are converted into \u98df\u3079\u308b.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
     "dict_disable_english_info": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",
     "dict_kanaize": "Convert search term to kana",
-    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to \u305f\u3079\u308b and will find \u98df\u3079\u308b, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to \u307e\u3093 and therfore, matches \u4e07 and the english word 'man'.",
+    "dict_kanaize_body": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to \u305f\u3079\u308b and will find \u98df\u3079\u308b, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to \u307e\u3093 and therfore, matches \u4e07 and the english word 'man'.\n\nNote: this is a global setting and is applied everywhere the dictionary is used",
     "dict_languages": "Show translations in (drag to reorder)",
     "dict_matrix_word_levels": "Matrix words use JLPT level",
     "dict_show_wikipedia_definitions": "Show definitions from wikipedia",
