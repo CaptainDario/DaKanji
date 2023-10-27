@@ -308,43 +308,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   child: Wrap(
                                     runAlignment: WrapAlignment.end,
                                     children: [
-                                      Focus(
-                                        child: AnalysisOptionButton(
-                                          true,
-                                          offIcon: Icons.paste,
-                                          onIcon: Icons.paste,
-                                          onPressed: () async {
-                                            ClipboardData? clipboardData = await Clipboard.getData('text/plain');
-                                            String clipboardString = clipboardData?.text ?? "";
-                                            setState(() {
-                                              customSelectableTextController.resetSelection();
-                                              inputController.text = clipboardString;
-                                              inputText = clipboardString;
-                                              processText(clipboardString);
-                                            });
-                                          },
-                                        )
-                                      ),
-                                      Focus(
-                                        child: AnalysisOptionButton(
-                                          true,
-                                          offIcon: Icons.copy,
-                                          onIcon: Icons.copy,
-                                          onPressed: () {
-
-                                            String currentSelection =
-                                              customSelectableTextController.getCurrentSelectionString();
-                                            Clipboard.setData(
-                                              ClipboardData(text:currentSelection)
-                                            ).then((_){
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(
-                                                  content: Text("${"teswt"} $currentSelection"))
-                                                );
-                                            });
-                                          },
-                                        )
-                                      ),
                                       // spaces toggle
                                       Focus(
                                         focusNode: widget.includeTutorial ?
@@ -391,6 +354,41 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           offIcon: Icons.fullscreen_exit,
                                           onPressed: onFullScreenButtonPress
                                         )
+                                      ),
+                                      // paste text button
+                                      AnalysisOptionButton(
+                                        true,
+                                        offIcon: Icons.paste,
+                                        onIcon: Icons.paste,
+                                        onPressed: () async {
+                                          ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+                                          String clipboardString = clipboardData?.text ?? "";
+                                          setState(() {
+                                            customSelectableTextController.resetSelection();
+                                            inputController.text = clipboardString;
+                                            inputText = clipboardString;
+                                            processText(clipboardString);
+                                          });
+                                        },
+                                      ),
+                                      // copy button
+                                      AnalysisOptionButton(
+                                        true,
+                                        offIcon: Icons.copy,
+                                        onIcon: Icons.copy,
+                                        onPressed: () {
+
+                                          String currentSelection =
+                                            customSelectableTextController.getCurrentSelectionString();
+                                          Clipboard.setData(
+                                            ClipboardData(text:currentSelection)
+                                          ).then((_){
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text("${"teswt"} $currentSelection"))
+                                              );
+                                          });
+                                        },
                                       ),
                                       
                                       if(GetIt.I<Settings>().text.selectionButtonsEnabled)
