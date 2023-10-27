@@ -253,23 +253,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                   setState(() {});
                                 },
-                                child: Chip(
-                                  backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
-                                    ? Theme.of(context).highlightColor
-                                    : null,
-                                  label: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 10,
-                                        height: 10,
-                                        child: SvgPicture.asset(
-                                          settings.dictionary.translationLanguagesToSvgPath[lang]!
-                                        )
-                                      ),
-                                      Text("   $lang"),
-                                    ],
-                                  )
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.grab,
+                                  child: Chip(
+                                    backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
+                                      ? Theme.of(context).highlightColor
+                                      : null,
+                                    label: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                          height: 10,
+                                          child: SvgPicture.asset(
+                                            settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                          )
+                                        ),
+                                        Text("   $lang"),
+                                      ],
+                                    )
+                                  ),
                                 ),
                               );
                             }
