@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings_clipboard.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -31,8 +32,10 @@ class Settings with ChangeNotifier {
   late SettingsText _text;
   /// All settings related to the anki integration
   late SettingsAnki _anki;
-  /// All settings related to the 
+  /// All settings related to the kanji table screen
   late SettingsKanjiTable _kanjiTable;
+  /// All settings realted to the clipboard screen
+  late SettingsClipboard _clipboard;
 
 
   Settings(){
@@ -43,6 +46,7 @@ class Settings with ChangeNotifier {
     _text       = SettingsText();
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
+    _clipboard  = SettingsClipboard();
   }
 
 
@@ -74,6 +78,10 @@ class Settings with ChangeNotifier {
     return _kanjiTable;
   }
 
+  SettingsClipboard get clipboard{
+    return _clipboard;
+  }
+
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
     // obtain shared preferences
@@ -87,6 +95,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsText', json.encode(text.toJson()));
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
+    prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -137,7 +146,7 @@ class Settings with ChangeNotifier {
     }
     _dictionary.addListener(() => notifyListeners());
 
-    // DICTIONARY SETTINGS
+    // TEXT SETTINGS
     try{
       String tmp = prefs.getString('settingsText') ?? "";
       if(tmp != "") {_text = SettingsText.fromJson(json.decode(tmp));}
@@ -169,6 +178,17 @@ class Settings with ChangeNotifier {
       _kanjiTable = SettingsKanjiTable();
     }
     _kanjiTable.addListener(() => notifyListeners());
+
+    // CLIPBOARD SETTINGS
+    try{
+      String tmp = prefs.getString('settingsClipboard') ?? "";
+      if(tmp != "") {_clipboard = SettingsClipboard.fromJson(json.decode(tmp));}
+      else {_clipboard = SettingsClipboard();}
+    }
+    catch (e) {
+      _clipboard = SettingsClipboard();
+    }
+    _clipboard.addListener(() => notifyListeners());
   }
 }
 
