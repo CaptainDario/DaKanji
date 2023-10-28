@@ -65,16 +65,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     ));
     _controller.repeat(reverse: true);
 
-    _controller.addListener(() {
-      liquidController.provider?.setIconSize(Size(scaleAnimation.value*15, 50));
-      setState(() {});
-    });
+    _controller.addListener(updateDraggerSize);
   }
 
   @override
   void dispose(){
+    liquidController.provider?.removeListener(updateDraggerSize);
     _controller.dispose();
     super.dispose();
+  }
+
+  void updateDraggerSize(){
+    liquidController.provider?.setIconSize(Size(scaleAnimation.value*15, 50));
+    setState(() {});
   }
 
   @override

@@ -51,6 +51,8 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -68,7 +70,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     double imgSize  = canvasSize * 0.75;
     double textSize = sHeight * 0.3;
 
-    widget.liquidController.provider?.addListener(() {setState(() {});});
 
     return Container(
       height: sHeight,
