@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Allenatore Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
@@ -253,6 +253,15 @@
     "dict_title": "Dizionario",
     "dojg_text": "Dictionary of Japanese Grammar (DoJG) \u00e8 una serie di libri sulla grammatica giapponese. DaKanji permette di importare il suo [mazzo Anki (che potete scaricare qui)](https://dojgdeck.neocities.org/) e di cercarne il contenuto.  \nEsiste in due versioni: una con immagini e una senza. \u00c8 possibile importare una delle due versioni scaricandola e poi importandola selezionando il file .apkg quando viene richiesto nella schermata di DoJG.",
     "dojg_title": "DoJG",
+    "text_selection_grow_text": "Questo pulsante consente di aumentare la selezione di testo corrente. Premendolo una volta, la selezione corrente crescer\u00e0 di un token (parola). Toccandolo due volte, la selezione corrente crescer\u00e0 di un carattere.",
+    "text_selection_grow_title": "Selezione della coltivazione",
+    "text_selection_left_text": "Questo pulsante consente di cambiare la selezione del testo corrente. Premendolo si seleziona il token (parola) precedente. Toccandolo due volte si seleziona il carattere precedente.",
+    "text_selection_left_title": "Selezionare il precedente",
+    "text_selection_right_text": "Questo pulsante consente di modificare la selezione del testo corrente. Premendolo si seleziona il token (parola) successivo. Toccandolo due volte si seleziona il carattere successivo.",
+    "text_selection_right_title": "Selezionare il prossimo",
+    "text_selection_shrink_text": "Questo pulsante consente di ridurre la selezione di testo corrente. Premendolo una volta, la selezione corrente si ridurr\u00e0 di un token (parola). Toccandolo due volte, la selezione corrente si ridurr\u00e0 di un carattere.",
+    "text_selection_shrink_title": "Selezione del restringimento",
+    "text_selection_title": "Pulsanti di selezione del testo",
     "title": "Manuale"
   },
   "OnBoarding": {
@@ -369,7 +378,7 @@
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "\u00c8 possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. \u00c8 anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante \u00e8 possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, \u00e8 anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa \u00e8 una cartella di elenchi di parole. In essa \u00e8 possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta \u00e8 anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",

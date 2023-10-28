@@ -240,6 +240,15 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';
   static const ManualScreen_dojg_text = 'ManualScreen.dojg_text';
   static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';
+  static const ManualScreen_text_selection_grow_text = 'ManualScreen.text_selection_grow_text';
+  static const ManualScreen_text_selection_grow_title = 'ManualScreen.text_selection_grow_title';
+  static const ManualScreen_text_selection_left_text = 'ManualScreen.text_selection_left_text';
+  static const ManualScreen_text_selection_left_title = 'ManualScreen.text_selection_left_title';
+  static const ManualScreen_text_selection_right_text = 'ManualScreen.text_selection_right_text';
+  static const ManualScreen_text_selection_right_title = 'ManualScreen.text_selection_right_title';
+  static const ManualScreen_text_selection_shrink_text = 'ManualScreen.text_selection_shrink_text';
+  static const ManualScreen_text_selection_shrink_title = 'ManualScreen.text_selection_shrink_title';
+  static const ManualScreen_text_selection_title = 'ManualScreen.text_selection_title';
   static const ManualScreen_title = 'ManualScreen.title';
   static const ManualScreen = 'ManualScreen';
   static const OnBoarding_Onboarding_1_text = 'OnBoarding.Onboarding_1_text';

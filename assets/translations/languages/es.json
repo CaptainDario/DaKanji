@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Este bot\u00f3n activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Entrenador Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
@@ -253,6 +253,15 @@
     "dict_title": "Diccionario",
     "dojg_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gram\u00e1tica japonesa. DaKanji permite importar su [Anki deck (que puedes descargar aqu\u00ed)](https://dojgdeck.neocities.org/) y luego buscar en su contenido.  \nExiste en dos versiones: una con im\u00e1genes y otra sin ellas. Puedes importar cualquiera de las dos descarg\u00e1ndola primero y luego import\u00e1ndola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
     "dojg_title": "DoJG",
+    "text_selection_grow_text": "Este bot\u00f3n le permite aumentar la selecci\u00f3n de texto actual. Si lo pulsa una vez, la selecci\u00f3n aumentar\u00e1 un token (palabra). Si lo pulsa dos veces, la selecci\u00f3n aumentar\u00e1 un car\u00e1cter.",
+    "text_selection_grow_title": "Selecci\u00f3n de cultivos",
+    "text_selection_left_text": "Este bot\u00f3n le permite cambiar la selecci\u00f3n de texto actual. Si lo pulsa, seleccionar\u00e1 la palabra anterior. Si lo pulsa dos veces, seleccionar\u00e1 el car\u00e1cter anterior.",
+    "text_selection_left_title": "Seleccionar anterior",
+    "text_selection_right_text": "Este bot\u00f3n le permite cambiar la selecci\u00f3n de texto actual. Si lo pulsa, seleccionar\u00e1 el siguiente token (palabra). Si lo pulsa dos veces, seleccionar\u00e1 el siguiente car\u00e1cter.",
+    "text_selection_right_title": "Seleccionar siguiente",
+    "text_selection_shrink_text": "Este bot\u00f3n le permite reducir la selecci\u00f3n de texto actual. Si lo pulsa una vez, reducir\u00e1 la selecci\u00f3n actual en un token (palabra). Si lo pulsa dos veces, la selecci\u00f3n se reducir\u00e1 un car\u00e1cter.",
+    "text_selection_shrink_title": "Selecci\u00f3n de retractilado",
+    "text_selection_title": "Botones de selecci\u00f3n de texto",
     "title": "Manual"
   },
   "OnBoarding": {
@@ -369,7 +378,7 @@
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este bot\u00f3n o arrastrando una lista de palabras sobre otra. Tambi\u00e9n puede reorganizar sus carpetas y listas arrastr\u00e1ndolas.",
     "tutorial_create_list": "Con este bot\u00f3n puede crear una nueva lista de palabras. Mediante el bot\u00f3n de men\u00fa situado a la derecha de esta lista, tambi\u00e9n puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambi\u00e9n es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de b\u00fasqueda, etc..",

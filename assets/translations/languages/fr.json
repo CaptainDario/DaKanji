@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de d\u00e9sactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Formateur Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
@@ -253,6 +253,15 @@
     "dict_title": "Dictionnaire",
     "dojg_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une s\u00e9rie de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez t\u00e9l\u00e9charger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la t\u00e9l\u00e9chargeant puis en s\u00e9lectionnant le fichier .apkg lorsque l'\u00e9cran de DoJG vous le demande.",
     "dojg_title": "DoJG",
+    "text_selection_grow_text": "Ce bouton vous permet d'agrandir la s\u00e9lection de texte actuelle. En appuyant une fois sur ce bouton, vous agrandirez la s\u00e9lection actuelle d'un token (mot). En appuyant deux fois sur ce bouton, vous agrandirez la s\u00e9lection actuelle d'un caract\u00e8re.",
+    "text_selection_grow_title": "S\u00e9lection des cultures",
+    "text_selection_left_text": "Ce bouton vous permet de modifier la s\u00e9lection de texte en cours. En appuyant sur ce bouton, vous s\u00e9lectionnez l'\u00e9l\u00e9ment (mot) pr\u00e9c\u00e9dent. Une double pression sur ce bouton permet de s\u00e9lectionner le caract\u00e8re pr\u00e9c\u00e9dent.",
+    "text_selection_left_title": "S\u00e9lectionner le pr\u00e9c\u00e9dent",
+    "text_selection_right_text": "Ce bouton vous permet de modifier la s\u00e9lection de texte en cours. En appuyant sur ce bouton, vous s\u00e9lectionnerez l'\u00e9l\u00e9ment suivant (mot). Une double pression sur ce bouton permet de s\u00e9lectionner le caract\u00e8re suivant.",
+    "text_selection_right_title": "S\u00e9lectionner la suite",
+    "text_selection_shrink_text": "Ce bouton vous permet de r\u00e9duire la s\u00e9lection de texte en cours. En appuyant une fois sur ce bouton, vous r\u00e9duisez la s\u00e9lection actuelle d'un token (mot). Une double pression permet de r\u00e9duire la s\u00e9lection actuelle d'un caract\u00e8re.",
+    "text_selection_shrink_title": "S\u00e9lection de la r\u00e9traction",
+    "text_selection_title": "Boutons de s\u00e9lection de texte",
     "title": "Manuel"
   },
   "OnBoarding": {
@@ -369,7 +378,7 @@
     "send_to_anki": "Envoyer \u00e0 anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue dans l'\u00e9cran des listes de mots !",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Vous pouvez cr\u00e9er un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez \u00e9galement r\u00e9organiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de cr\u00e9er une nouvelle liste de mots. En utilisant le bouton de menu \u00e0 droite de cette liste, vous pouvez \u00e9galement exporter votre liste dans diff\u00e9rents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit \u00e9galement du dossier de listes de mots par d\u00e9faut. Il contient des listes de mots bas\u00e9es sur le JLPT, votre historique de recherche, etc.",

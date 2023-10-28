@@ -1788,14 +1788,14 @@
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
-      "de": "Kana Trainer",
-      "ru": "Инструктор Кана",
-      "ja": "カナ・トレーナー",
-      "zh": "卡纳培训师",
-      "it": "Allenatore Kana",
-      "fr": "Formateur Kana",
-      "es": "Entrenador Kana",
-      "pl": "Trener Kana"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     }
   },
   "KanaTableScreen": {
@@ -3180,6 +3180,105 @@
       "es": "Pulsando el botón de pegar en la esquina inferior derecha, buscará radicales en el portapapeles de su sistema y los utilizará como selección actual.",
       "pl": "Naciśnięcie przycisku wklejania w prawym dolnym rogu spowoduje wyszukanie rodników w schowku systemowym i użycie ich jako bieżącego zaznaczenia."
     },
+    "text_selection_title": {
+      "en": "Text selection buttons",
+      "de": "Buttons zur Textauswahl",
+      "ru": "Кнопки выбора текста",
+      "ja": "テキスト選択ボタン",
+      "zh": "文本选择按钮",
+      "it": "Pulsanti di selezione del testo",
+      "fr": "Boutons de sélection de texte",
+      "es": "Botones de selección de texto",
+      "pl": "Przyciski wyboru tekstu"
+    },
+    "text_selection_shrink_title": {
+      "en": "Shrink selection",
+      "de": "Auswahl verkleinern",
+      "ru": "Выбор усадки",
+      "ja": "シュリンク選択",
+      "zh": "收缩选择",
+      "it": "Selezione del restringimento",
+      "fr": "Sélection de la rétraction",
+      "es": "Selección de retractilado",
+      "pl": "Wybór kurczenia"
+    },
+    "text_selection_shrink_text": {
+      "en": "This button allows you to shrink the current text selection. Pressing it once will shrink the current selection by one token (word). Double-tapping it will shrink the current selection by one character.",
+      "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl verkleinern. Wenn Sie sie einmal drücken, wird die aktuelle Auswahl um ein Token (Wort) verkleinert. Doppeltes Antippen verkleinert die aktuelle Auswahl um ein Zeichen.",
+      "ru": "Эта кнопка позволяет уменьшить текущее выделение текста. При однократном нажатии текущее выделение уменьшится на одну лексему (слово). При двойном нажатии текущее выделение уменьшится на один символ.",
+      "ja": "このボタンを押すと、現在の選択テキストを縮小することができます。このボタンを1回押すと、現在の選択範囲が1トークン（単語）分縮小されます。ダブルタップすると、現在の選択範囲を1文字分縮小します。",
+      "zh": "通过该按钮可以缩小当前文本选区。按一次可将当前选区缩小一个标记（单词）。双击该按钮可将当前选区缩小一个字符。",
+      "it": "Questo pulsante consente di ridurre la selezione di testo corrente. Premendolo una volta, la selezione corrente si ridurrà di un token (parola). Toccandolo due volte, la selezione corrente si ridurrà di un carattere.",
+      "fr": "Ce bouton vous permet de réduire la sélection de texte en cours. En appuyant une fois sur ce bouton, vous réduisez la sélection actuelle d'un token (mot). Une double pression permet de réduire la sélection actuelle d'un caractère.",
+      "es": "Este botón le permite reducir la selección de texto actual. Si lo pulsa una vez, reducirá la selección actual en un token (palabra). Si lo pulsa dos veces, la selección se reducirá un carácter.",
+      "pl": "Ten przycisk umożliwia zmniejszenie bieżącego zaznaczenia tekstu. Jednokrotne naciśnięcie powoduje zmniejszenie bieżącego zaznaczenia o jeden token (słowo). Dwukrotne naciśnięcie spowoduje zmniejszenie bieżącego zaznaczenia o jeden znak."
+    },
+    "text_selection_grow_title": {
+      "en": "Grow selection",
+      "de": "Auswahl vergrößern",
+      "ru": "Выбор выращивания",
+      "ja": "グロウ・セレクション",
+      "zh": "种植选择",
+      "it": "Selezione della coltivazione",
+      "fr": "Sélection des cultures",
+      "es": "Selección de cultivos",
+      "pl": "Wybór uprawy"
+    },
+    "text_selection_grow_text": {
+      "en": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Double-tapping it will grow the current selection by one character.",
+      "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl vergrößern. Wenn Sie sie einmal drücken, wird die aktuelle Auswahl um ein Token (Wort) erweitert. Durch doppeltes Antippen wird die aktuelle Auswahl um ein Zeichen erweitert.",
+      "ru": "Эта кнопка позволяет увеличить текущее выделение текста. При однократном нажатии текущее выделение увеличивается на одну лексему (слово). При двойном нажатии текущее выделение увеличивается на один символ.",
+      "ja": "このボタンを押すと、現在のテキストの選択範囲が大きくなります。このボタンを1回押すと、現在の選択範囲が1トークン（単語）分大きくなります。ダブルタップすると、選択範囲が1文字分大きくなります。",
+      "zh": "通过该按钮可以扩大当前文本选区。按一次将使当前选区增加一个标记（单词）。双击它将使当前选区增加一个字符。",
+      "it": "Questo pulsante consente di aumentare la selezione di testo corrente. Premendolo una volta, la selezione corrente crescerà di un token (parola). Toccandolo due volte, la selezione corrente crescerà di un carattere.",
+      "fr": "Ce bouton vous permet d'agrandir la sélection de texte actuelle. En appuyant une fois sur ce bouton, vous agrandirez la sélection actuelle d'un token (mot). En appuyant deux fois sur ce bouton, vous agrandirez la sélection actuelle d'un caractère.",
+      "es": "Este botón le permite aumentar la selección de texto actual. Si lo pulsa una vez, la selección aumentará un token (palabra). Si lo pulsa dos veces, la selección aumentará un carácter.",
+      "pl": "Ten przycisk umożliwia powiększenie bieżącego zaznaczenia tekstu. Jednokrotne naciśnięcie powoduje powiększenie bieżącego zaznaczenia o jeden token (słowo). Dwukrotne naciśnięcie spowoduje powiększenie bieżącego zaznaczenia o jeden znak."
+    },
+    "text_selection_left_title": {
+      "en": "Select previous",
+      "de": "Vorheriges auswählen",
+      "ru": "Выберите предыдущий",
+      "ja": "前を選択",
+      "zh": "选择前一个",
+      "it": "Selezionare il precedente",
+      "fr": "Sélectionner le précédent",
+      "es": "Seleccionar anterior",
+      "pl": "Wybierz poprzedni"
+    },
+    "text_selection_left_text": {
+      "en": "This button allows you to change the current text selection. Presing it will select the previous token (word). Double-tapping it will select the previous charatcer.",
+      "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl ändern. Wenn Sie sie antippen, wird das vorherige Token (Wort) ausgewählt. Durch doppeltes Antippen wird das vorherige Zeichen ausgewählt.",
+      "ru": "Эта кнопка позволяет изменить текущее выделение текста. При нажатии на нее будет выделена предыдущая лексема (слово). Двойное нажатие - выделение предыдущего символа.",
+      "ja": "このボタンで現在のテキスト選択を変更できます。押すと前のトークン（単語）が選択されます。ダブルタップすると、前の文字が選択されます。",
+      "zh": "该按钮允许您更改当前的文本选择。按下它将选择前一个标记（单词）。双击它将选择前一个字符。",
+      "it": "Questo pulsante consente di cambiare la selezione del testo corrente. Premendolo si seleziona il token (parola) precedente. Toccandolo due volte si seleziona il carattere precedente.",
+      "fr": "Ce bouton vous permet de modifier la sélection de texte en cours. En appuyant sur ce bouton, vous sélectionnez l'élément (mot) précédent. Une double pression sur ce bouton permet de sélectionner le caractère précédent.",
+      "es": "Este botón le permite cambiar la selección de texto actual. Si lo pulsa, seleccionará la palabra anterior. Si lo pulsa dos veces, seleccionará el carácter anterior.",
+      "pl": "Ten przycisk umożliwia zmianę bieżącego zaznaczenia tekstu. Jego naciśnięcie spowoduje zaznaczenie poprzedniego tokenu (słowa). Dwukrotne naciśnięcie spowoduje wybranie poprzedniego znaku."
+    },
+    "text_selection_right_title": {
+      "en": "Select next",
+      "de": "Nächstes auswählen",
+      "ru": "Выберите следующий",
+      "ja": "次を選択",
+      "zh": "选择下一个",
+      "it": "Selezionare il prossimo",
+      "fr": "Sélectionner la suite",
+      "es": "Seleccionar siguiente",
+      "pl": "Wybierz następny"
+    },
+    "text_selection_right_text": {
+      "en": "This button allows you to change the current text selection. Presing it will select the next token (word). Double-tapping it will select the next charatcer.",
+      "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl ändern. Wenn Sie sie antippen, wird das nächste Token (Wort) ausgewählt. Doppeltes Antippen wählt das nächste Zeichen aus.",
+      "ru": "Эта кнопка позволяет изменить текущее выделение текста. При нажатии будет выделена следующая лексема (слово). Двойное нажатие приведет к выделению следующего символа.",
+      "ja": "このボタンで現在のテキスト選択を変更できます。押すと次のトークン（単語）が選択されます。ダブルタップすると次の文字が選択されます。",
+      "zh": "该按钮允许您更改当前文本选择。按下它将选择下一个标记（单词）。双击它将选择下一个字符。",
+      "it": "Questo pulsante consente di modificare la selezione del testo corrente. Premendolo si seleziona il token (parola) successivo. Toccandolo due volte si seleziona il carattere successivo.",
+      "fr": "Ce bouton vous permet de modifier la sélection de texte en cours. En appuyant sur ce bouton, vous sélectionnerez l'élément suivant (mot). Une double pression sur ce bouton permet de sélectionner le caractère suivant.",
+      "es": "Este botón le permite cambiar la selección de texto actual. Si lo pulsa, seleccionará el siguiente token (palabra). Si lo pulsa dos veces, seleccionará el siguiente carácter.",
+      "pl": "Ten przycisk umożliwia zmianę bieżącego zaznaczenia tekstu. Jego naciśnięcie spowoduje zaznaczenie następnego tokenu (słowa). Dwukrotne naciśnięcie spowoduje zaznaczenie następnego znaku."
+    },
     "deep_links_title": {
       "en": "Deep Links",
       "de": "Deep Links",
@@ -3406,14 +3505,14 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
-      "ru": "Добро пожаловать на экран списков слов!",
-      "ja": "単語リスト画面へようこそ！",
-      "zh": "欢迎来到单词列表屏幕！",
-      "it": "Benvenuti nella schermata degli elenchi di parole!",
-      "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
-      "pl": "Witamy na ekranie list słów!"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",

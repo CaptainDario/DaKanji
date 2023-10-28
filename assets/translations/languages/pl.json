@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Ten przycisk w\u0142\u0105cza lub wy\u0142\u0105cza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Trener Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
@@ -253,6 +253,15 @@
     "dict_title": "S\u0142ownik",
     "dojg_text": "Dictionary of Japanese Grammar (DoJG) to seria ksi\u0105\u017cek o gramatyce japo\u0144skiej. DaKanji pozwala zaimportowa\u0107 [Anki deck (kt\u00f3ry mo\u017cna pobra\u0107 tutaj)](https://dojgdeck.neocities.org/), a nast\u0119pnie przeszukiwa\u0107 jego zawarto\u015b\u0107.  \nIstnieje w dw\u00f3ch wersjach: z obrazkami i bez. Mo\u017cesz zaimportowa\u0107 dowoln\u0105 z nich, najpierw pobieraj\u0105c j\u0105, a nast\u0119pnie importuj\u0105c, wybieraj\u0105c plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
     "dojg_title": "DoJG",
+    "text_selection_grow_text": "Ten przycisk umo\u017cliwia powi\u0119kszenie bie\u017c\u0105cego zaznaczenia tekstu. Jednokrotne naci\u015bni\u0119cie powoduje powi\u0119kszenie bie\u017c\u0105cego zaznaczenia o jeden token (s\u0142owo). Dwukrotne naci\u015bni\u0119cie spowoduje powi\u0119kszenie bie\u017c\u0105cego zaznaczenia o jeden znak.",
+    "text_selection_grow_title": "Wyb\u00f3r uprawy",
+    "text_selection_left_text": "Ten przycisk umo\u017cliwia zmian\u0119 bie\u017c\u0105cego zaznaczenia tekstu. Jego naci\u015bni\u0119cie spowoduje zaznaczenie poprzedniego tokenu (s\u0142owa). Dwukrotne naci\u015bni\u0119cie spowoduje wybranie poprzedniego znaku.",
+    "text_selection_left_title": "Wybierz poprzedni",
+    "text_selection_right_text": "Ten przycisk umo\u017cliwia zmian\u0119 bie\u017c\u0105cego zaznaczenia tekstu. Jego naci\u015bni\u0119cie spowoduje zaznaczenie nast\u0119pnego tokenu (s\u0142owa). Dwukrotne naci\u015bni\u0119cie spowoduje zaznaczenie nast\u0119pnego znaku.",
+    "text_selection_right_title": "Wybierz nast\u0119pny",
+    "text_selection_shrink_text": "Ten przycisk umo\u017cliwia zmniejszenie bie\u017c\u0105cego zaznaczenia tekstu. Jednokrotne naci\u015bni\u0119cie powoduje zmniejszenie bie\u017c\u0105cego zaznaczenia o jeden token (s\u0142owo). Dwukrotne naci\u015bni\u0119cie spowoduje zmniejszenie bie\u017c\u0105cego zaznaczenia o jeden znak.",
+    "text_selection_shrink_title": "Wyb\u00f3r kurczenia",
+    "text_selection_title": "Przyciski wyboru tekstu",
     "title": "Instrukcja"
   },
   "OnBoarding": {
@@ -369,7 +378,7 @@
     "send_to_anki": "Wy\u015blij do anki",
     "title": "Listy s\u0142owne",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie list s\u0142\u00f3w!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Mo\u017cesz utworzy\u0107 nowy folder z list\u0105 s\u0142\u00f3w, naciskaj\u0105c ten przycisk lub przeci\u0105gaj\u0105c list\u0119 s\u0142\u00f3w do innego folderu. Mo\u017cesz tak\u017ce zmieni\u0107 kolejno\u015b\u0107 folder\u00f3w i list, przeci\u0105gaj\u0105c je.",
     "tutorial_create_list": "Za pomoc\u0105 tego przycisku mo\u017cna utworzy\u0107 now\u0105 list\u0119 s\u0142\u00f3w. Za pomoc\u0105 przycisku menu po prawej stronie tej listy mo\u017cna r\u00f3wnie\u017c wyeksportowa\u0107 list\u0119 do r\u00f3\u017cnych format\u00f3w.",
     "tutorial_folder": "Jest to folder listy s\u0142\u00f3w. Mo\u017cna w nim przechowywa\u0107 inne foldery lub listy s\u0142\u00f3w.\nJest to r\u00f3wnie\u017c domy\u015blny folder listy s\u0142\u00f3w. Zawiera on niekt\u00f3re listy s\u0142\u00f3w oparte na JLPT, historii wyszukiwania itp.",

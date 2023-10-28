@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "Kana Trainer"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
@@ -253,6 +253,15 @@
     "dict_title": "W\u00f6rterbuch",
     "dojg_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von B\u00fcchern \u00fcber japanische Grammatik. DaKanji erlaubt es, das [Anki-Deck (das Sie hier herunterladen k\u00f6nnen)](https://dojgdeck.neocities.org/) zu importieren und dann seinen Inhalt zu durchsuchen.  \nEs existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie k\u00f6nnen beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei ausw\u00e4hlen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
     "dojg_title": "DoJG",
+    "text_selection_grow_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie die aktuelle Textauswahl vergr\u00f6\u00dfern. Wenn Sie sie einmal dr\u00fccken, wird die aktuelle Auswahl um ein Token (Wort) erweitert. Durch doppeltes Antippen wird die aktuelle Auswahl um ein Zeichen erweitert.",
+    "text_selection_grow_title": "Auswahl vergr\u00f6\u00dfern",
+    "text_selection_left_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie die aktuelle Textauswahl \u00e4ndern. Wenn Sie sie antippen, wird das vorherige Token (Wort) ausgew\u00e4hlt. Durch doppeltes Antippen wird das vorherige Zeichen ausgew\u00e4hlt.",
+    "text_selection_left_title": "Vorheriges ausw\u00e4hlen",
+    "text_selection_right_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie die aktuelle Textauswahl \u00e4ndern. Wenn Sie sie antippen, wird das n\u00e4chste Token (Wort) ausgew\u00e4hlt. Doppeltes Antippen w\u00e4hlt das n\u00e4chste Zeichen aus.",
+    "text_selection_right_title": "N\u00e4chstes ausw\u00e4hlen",
+    "text_selection_shrink_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie die aktuelle Textauswahl verkleinern. Wenn Sie sie einmal dr\u00fccken, wird die aktuelle Auswahl um ein Token (Wort) verkleinert. Doppeltes Antippen verkleinert die aktuelle Auswahl um ein Zeichen.",
+    "text_selection_shrink_title": "Auswahl verkleinern",
+    "text_selection_title": "Buttons zur Textauswahl",
     "title": "Handbuch"
   },
   "OnBoarding": {
@@ -369,7 +378,7 @@
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Sie k\u00f6nnen einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste dr\u00fccken oder eine Wortliste auf einen anderen Ordner ziehen. Sie k\u00f6nnen Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie eine neue Wortliste erstellen. Mit dem Men\u00fc-Button auf der rechten Seite dieser Liste k\u00f6nnen Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie k\u00f6nnen andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enth\u00e4lt einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
