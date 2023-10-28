@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/domain/settings/settings_clipboard.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Project imports:
 import 'package:da_kanji_mobile/domain/settings/settings_advanced.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_clipboard.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
