@@ -3312,7 +3312,18 @@
       "es": "DoJG",
       "pl": "DoJG"
     },
-    "dojg_text": {
+    "dojg_import_title": {
+      "en": "How to setup DoJG",
+      "de": "Wie man DoJG einrichtet",
+      "ru": "Как настроить DoJG",
+      "ja": "DoJGの設定方法",
+      "zh": "如何设置 DoJG",
+      "it": "Come impostare DoJG",
+      "fr": "Comment configurer DoJG",
+      "es": "Cómo configurar DoJG",
+      "pl": "Jak skonfigurować DoJG"
+    },
+    "dojg_import_text": {
       "en": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.  \nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
       "de": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von Büchern über japanische Grammatik. DaKanji erlaubt es, das [Anki-Deck (das Sie hier herunterladen können)](https://dojgdeck.neocities.org/) zu importieren und dann seinen Inhalt zu durchsuchen.  \nEs existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie können beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auswählen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
       "ru": "Dictionary of Japanese Grammar (DoJG) - это серия книг по японской грамматике. DaKanji позволяет импортировать его [колоду Anki (которую можно скачать здесь)](https://dojgdeck.neocities.org/), а затем осуществлять поиск по его содержимому.  \nОна существует в двух версиях: с картинками и без. Вы можете импортировать любую из них, сначала скачав ее, а затем выбрав файл .apkg на экране DoJG.",

@@ -238,7 +238,8 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_text_examples_analyze_text = 'ManualScreen.dict_text_examples_analyze_text';
   static const ManualScreen_dict_text_examples_analyze_title = 'ManualScreen.dict_text_examples_analyze_title';
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';
-  static const ManualScreen_dojg_text = 'ManualScreen.dojg_text';
+  static const ManualScreen_dojg_import_text = 'ManualScreen.dojg_import_text';
+  static const ManualScreen_dojg_import_title = 'ManualScreen.dojg_import_title';
   static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';
   static const ManualScreen_text_selection_grow_text = 'ManualScreen.text_selection_grow_text';
   static const ManualScreen_text_selection_grow_title = 'ManualScreen.text_selection_grow_title';

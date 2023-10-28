@@ -42,7 +42,10 @@ class ManualDictionary extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
 
-                Text(LocaleKeys.ManualScreen_dict_search_results_navigate_title.tr(), style: heading_2,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(LocaleKeys.ManualScreen_dict_search_results_navigate_title.tr(), style: heading_2,),
+                ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_search_results_navigate_text.tr()),
 
@@ -56,7 +59,12 @@ class ManualDictionary extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
 
-                Text(LocaleKeys.ManualScreen_dict_search_history_delete_title.tr(), style: heading_2,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    LocaleKeys.ManualScreen_dict_search_history_delete_title.tr(), style: heading_2,
+                  ),
+                ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_search_history_delete_text.tr()),
                 
@@ -70,13 +78,19 @@ class ManualDictionary extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
             
-                Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_title.tr(), style: heading_2,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_title.tr(), style: heading_2,)
+                ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_kanji_search_kanji_group_text.tr()),
         
                 const SizedBox(height: 10),
                 
-                Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_title.tr(), style: heading_2,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_title.tr(), style: heading_2,)
+                ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_text.tr()),
         
@@ -90,7 +104,10 @@ class ManualDictionary extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
             
-                Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_title.tr(), style: heading_2,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_title.tr(), style: heading_2,)
+                ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_text_examples_analyze_text.tr()),
         
@@ -105,11 +122,11 @@ class ManualDictionary extends StatelessWidget {
                 const SizedBox(height: 15),
             
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
-                    const SizedBox(width: 8,),
                     const Icon(Icons.paste, size: 18,),
+                    const SizedBox(width: 8,),
+                    Text(LocaleKeys.ManualScreen_dict_radicals_paste_title.tr(), style: heading_2,),
                   ]
                 ),
                 const SizedBox(height: 5),
