@@ -63,9 +63,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       parent: _controller,
       curve: Curves.bounceOut
     ));
+    _controller.repeat(reverse: true);
 
     _controller.addListener(() {
       liquidController.provider?.setIconSize(Size(scaleAnimation.value*15, 50));
+      setState(() {});
     });
   }
 
