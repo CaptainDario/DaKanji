@@ -80,11 +80,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     
     List<Color> pageColors = [
       g_Dakanji_red,
-      Colors.grey.shade900,
+      g_Dakanji_grey,
       g_Dakanji_green,
-      g_Dakanji_red,
-      Colors.grey.shade900,
-      g_Dakanji_green,
+      g_Dakanji_blue
     ];
 
     return Scaffold(

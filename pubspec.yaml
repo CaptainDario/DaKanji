@@ -41,7 +41,7 @@ dependencies:
   flutter_layout_grid: 2.0.4
   tuple: 2.0.1
   lottie: 1.2.1
-  flutter_svg: 1.1.6
+  flutter_svg: 2.0.8
   onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
   keybinder: 1.0.1
@@ -230,15 +230,13 @@ flutter:
     - assets/dict/krad.zip
     - assets/dict/radk.zip
     # onboarding graphics
-    - assets/images/onboarding/onboarding_1_1.png
-    - assets/images/onboarding/onboarding_1_2.png
-    - assets/images/onboarding/onboarding_2_1.png
-    - assets/images/onboarding/onboarding_2_2.png
-    - assets/images/onboarding/onboarding_3_1.png
-    - assets/images/onboarding/onboarding_3_2.png
+    - assets/images/onboarding/onboarding_1_1.svg
+    - assets/images/onboarding/onboarding_1_2.svg
+    - assets/images/onboarding/onboarding_2_1.svg
+    - assets/images/onboarding/onboarding_2_2.svg
+    - assets/images/onboarding/onboarding_3_1.svg
+    - assets/images/onboarding/onboarding_3_2.svg
 
-    #- assets/images/onboarding/study_hard_1_1.svg
-    #- assets/images/onboarding/study_hard_1_2.svg
     - assets/animations/
     # kana mnemonics / sounds
     - assets/images/kana/individuals/
