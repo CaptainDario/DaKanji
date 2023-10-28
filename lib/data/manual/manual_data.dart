@@ -19,7 +19,7 @@ class ManualData {
   List<IconData> manualIcons = [];
   /// The different manual pages and their actual content
   List<Widget> manualPages = [];
-
+  /// List with all manual types
   List<ManualTypes> manualTypes = [];
 
 
