@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +7,7 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_import.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 

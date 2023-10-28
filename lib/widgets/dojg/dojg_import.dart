@@ -1,7 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,9 +9,12 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/application/dojg/dojg.dart';
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 class DojgImport extends StatefulWidget {
   const DojgImport({super.key});
