@@ -152,6 +152,8 @@ class CustomSelectableTextController {
         if(cnt >= currentSelection.extentOffset){
           // the selection only contains one word -> select previous word
           if (currentSelection.baseOffset == cnt - words[i-1].runes.length) {
+            // do not go to end of text
+            if(currentSelection.baseOffset == 0) return;
             selectPrevious();
           }
           else {
