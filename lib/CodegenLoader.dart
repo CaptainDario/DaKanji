@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -179,7 +177,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "卡纳培训师"
   },
   "KanjiTableScreen": {
     "title": "汉字表",
@@ -345,7 +343,7 @@ class CodegenLoader extends AssetLoader{
     "send_to_anki": "发送到anki",
     "title": "词表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
     "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
     "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
     "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
@@ -537,7 +535,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_speed_dial_yoon_special": "このボタンでレアなユン文字のオン・オフが切り替わる。"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "カナ・トレーナー"
   },
   "KanjiTableScreen": {
     "title": "漢字表",
@@ -717,7 +715,7 @@ static const Map<String,dynamic> ja = {
     "send_to_anki": "ankiに送る",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
     "tutorial_create_list": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
     "tutorial_folder": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
@@ -925,7 +923,7 @@ static const Map<String,dynamic> de = {
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
@@ -1105,7 +1103,7 @@ static const Map<String,dynamic> de = {
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -1275,7 +1273,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Инструктор Кана"
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
@@ -1441,7 +1439,7 @@ static const Map<String,dynamic> ru = {
     "send_to_anki": "Отправить в anki",
     "title": "Списки слов",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
     "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
     "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
     "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
@@ -1646,7 +1644,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Trener Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
@@ -1826,7 +1824,7 @@ static const Map<String,dynamic> pl = {
     "send_to_anki": "Wyślij do anki",
     "title": "Listy słowne",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Witamy na ekranie list słów!",
     "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
     "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
     "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
@@ -2089,13 +2087,13 @@ static const Map<String,dynamic> en = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.  \nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
     "dojg_import_title": "How to setup DoJG",
     "dojg_title": "DoJG",
-    "text_selection_grow_text": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Double-tapping it will grow the current selection by one character.",
+    "text_selection_grow_text": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Long-pressing it will grow the current selection by one character.",
     "text_selection_grow_title": "Grow selection",
-    "text_selection_left_text": "This button allows you to change the current text selection. Presing it will select the previous token (word). Double-tapping it will select the previous charatcer.",
+    "text_selection_left_text": "This button allows you to change the current text selection. Pressing it will select the previous token (word). Long-pressing it will select the previous charatcer.",
     "text_selection_left_title": "Select previous",
-    "text_selection_right_text": "This button allows you to change the current text selection. Presing it will select the next token (word). Double-tapping it will select the next charatcer.",
+    "text_selection_right_text": "This button allows you to change the current text selection. Pressing it will select the next token (word). Long-pressing it will select the next charatcer.",
     "text_selection_right_title": "Select next",
-    "text_selection_shrink_text": "This button allows you to shrink the current text selection. Pressing it once will shrink the current selection by one token (word). Double-tapping it will shrink the current selection by one character.",
+    "text_selection_shrink_text": "This button allows you to shrink the current text selection. Pressing it once will shrink the current selection by one token (word). Long-pressing it will shrink the current selection by one character.",
     "text_selection_shrink_title": "Shrink selection",
     "text_selection_title": "Text selection buttons",
     "title": "Manual"
@@ -2384,7 +2382,7 @@ static const Map<String,dynamic> it = {
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Allenatore Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
@@ -2550,7 +2548,7 @@ static const Map<String,dynamic> it = {
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
     "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
@@ -2720,7 +2718,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
@@ -2886,7 +2884,7 @@ static const Map<String,dynamic> fr = {
     "send_to_anki": "Envoyer à anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
     "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
@@ -3056,7 +3054,7 @@ static const Map<String,dynamic> es = {
     "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Entrenador Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
@@ -3222,7 +3220,7 @@ static const Map<String,dynamic> es = {
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

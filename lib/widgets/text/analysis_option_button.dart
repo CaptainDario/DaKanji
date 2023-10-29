@@ -18,10 +18,10 @@ class AnalysisOptionButton extends StatefulWidget {
   final IconData? onIcon;
   /// The off-icon of this button, ignored if `svgAssetPattern` is not null
   final IconData? offIcon;
-  /// method that is invoked when pressing on the button
+  /// method that is invoked when pressing this button
   final void Function()? onPressed;
-  /// method that is invoked when double tapping on this button
-  final void Function()? onDoubleTap;
+  /// method that is invoked when long pressing this button
+  final void Function()? onLongPressed;
 
   const AnalysisOptionButton(
     this.on,
@@ -30,7 +30,7 @@ class AnalysisOptionButton extends StatefulWidget {
       this.onIcon,
       this.offIcon,
       this.onPressed,
-      this.onDoubleTap,
+      this.onLongPressed,
       super.key
     }
   );
@@ -54,7 +54,7 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onPressed,
-      onDoubleTap: widget.onDoubleTap,
+      onLongPress: widget.onLongPressed,
       child: Material(
         color: Theme.of(context).cardColor,
         child: IgnorePointer(

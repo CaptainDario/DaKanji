@@ -199,7 +199,7 @@
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
@@ -379,7 +379,7 @@
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie k\u00f6nnen einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste dr\u00fccken oder eine Wortliste auf einen anderen Ordner ziehen. Sie k\u00f6nnen Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie eine neue Wortliste erstellen. Mit dem Men\u00fc-Button auf der rechten Seite dieser Liste k\u00f6nnen Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie k\u00f6nnen andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enth\u00e4lt einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",

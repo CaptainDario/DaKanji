@@ -405,7 +405,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               customSelectableTextController.shrinkSelectionRight(0);
                                               assurePopupOpen();
                                             },
-                                            onDoubleTap: () {
+                                            onLongPressed: () {
                                               customSelectableTextController.shrinkSelectionRight(1);
                                               assurePopupOpen();
                                             },
@@ -419,7 +419,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               customSelectableTextController.growSelectionRight(growBy: 0);
                                               assurePopupOpen();
                                             },
-                                            onDoubleTap: () {
+                                            onLongPressed: () {
                                               customSelectableTextController.growSelectionRight(growBy: 1);
                                               assurePopupOpen();
                                             },
@@ -433,7 +433,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               customSelectableTextController.selectPrevious();
                                               assurePopupOpen();
                                             },
-                                            onDoubleTap: () {
+                                            onLongPressed: () {
                                               customSelectableTextController.selectPrevious(previousChar: true);
                                               assurePopupOpen();
                                             },
@@ -449,7 +449,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               assurePopupOpen();
                                             },
                                             // char
-                                            onDoubleTap: () {
+                                            onLongPressed: () {
                                               customSelectableTextController.selectNext(nextChar: true);
                                               assurePopupOpen();
                                             },

@@ -1788,14 +1788,14 @@
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kana Trainer",
+      "ru": "Инструктор Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
     }
   },
   "KanaTableScreen": {
@@ -3203,7 +3203,7 @@
       "pl": "Wybór kurczenia"
     },
     "text_selection_shrink_text": {
-      "en": "This button allows you to shrink the current text selection. Pressing it once will shrink the current selection by one token (word). Double-tapping it will shrink the current selection by one character.",
+      "en": "This button allows you to shrink the current text selection. Pressing it once will shrink the current selection by one token (word). Long-pressing it will shrink the current selection by one character.",
       "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl verkleinern. Wenn Sie sie einmal drücken, wird die aktuelle Auswahl um ein Token (Wort) verkleinert. Doppeltes Antippen verkleinert die aktuelle Auswahl um ein Zeichen.",
       "ru": "Эта кнопка позволяет уменьшить текущее выделение текста. При однократном нажатии текущее выделение уменьшится на одну лексему (слово). При двойном нажатии текущее выделение уменьшится на один символ.",
       "ja": "このボタンを押すと、現在の選択テキストを縮小することができます。このボタンを1回押すと、現在の選択範囲が1トークン（単語）分縮小されます。ダブルタップすると、現在の選択範囲を1文字分縮小します。",
@@ -3225,7 +3225,7 @@
       "pl": "Wybór uprawy"
     },
     "text_selection_grow_text": {
-      "en": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Double-tapping it will grow the current selection by one character.",
+      "en": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Long-pressing it will grow the current selection by one character.",
       "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl vergrößern. Wenn Sie sie einmal drücken, wird die aktuelle Auswahl um ein Token (Wort) erweitert. Durch doppeltes Antippen wird die aktuelle Auswahl um ein Zeichen erweitert.",
       "ru": "Эта кнопка позволяет увеличить текущее выделение текста. При однократном нажатии текущее выделение увеличивается на одну лексему (слово). При двойном нажатии текущее выделение увеличивается на один символ.",
       "ja": "このボタンを押すと、現在のテキストの選択範囲が大きくなります。このボタンを1回押すと、現在の選択範囲が1トークン（単語）分大きくなります。ダブルタップすると、選択範囲が1文字分大きくなります。",
@@ -3247,7 +3247,7 @@
       "pl": "Wybierz poprzedni"
     },
     "text_selection_left_text": {
-      "en": "This button allows you to change the current text selection. Presing it will select the previous token (word). Double-tapping it will select the previous charatcer.",
+      "en": "This button allows you to change the current text selection. Pressing it will select the previous token (word). Long-pressing it will select the previous charatcer.",
       "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl ändern. Wenn Sie sie antippen, wird das vorherige Token (Wort) ausgewählt. Durch doppeltes Antippen wird das vorherige Zeichen ausgewählt.",
       "ru": "Эта кнопка позволяет изменить текущее выделение текста. При нажатии на нее будет выделена предыдущая лексема (слово). Двойное нажатие - выделение предыдущего символа.",
       "ja": "このボタンで現在のテキスト選択を変更できます。押すと前のトークン（単語）が選択されます。ダブルタップすると、前の文字が選択されます。",
@@ -3269,7 +3269,7 @@
       "pl": "Wybierz następny"
     },
     "text_selection_right_text": {
-      "en": "This button allows you to change the current text selection. Presing it will select the next token (word). Double-tapping it will select the next charatcer.",
+      "en": "This button allows you to change the current text selection. Pressing it will select the next token (word). Long-pressing it will select the next charatcer.",
       "de": "Mit dieser Schaltfläche können Sie die aktuelle Textauswahl ändern. Wenn Sie sie antippen, wird das nächste Token (Wort) ausgewählt. Doppeltes Antippen wählt das nächste Zeichen aus.",
       "ru": "Эта кнопка позволяет изменить текущее выделение текста. При нажатии будет выделена следующая лексема (слово). Двойное нажатие приведет к выделению следующего символа.",
       "ja": "このボタンで現在のテキスト選択を変更できます。押すと次のトークン（単語）が選択されます。ダブルタップすると次の文字が選択されます。",
@@ -3516,14 +3516,14 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "ru": "Добро пожаловать на экран списков слов!",
+      "ja": "単語リスト画面へようこそ！",
+      "zh": "欢迎来到单词列表屏幕！",
+      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "fr": "Bienvenue dans l'écran des listes de mots !",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
