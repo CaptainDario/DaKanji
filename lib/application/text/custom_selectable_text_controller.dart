@@ -83,7 +83,7 @@ class CustomSelectableTextController {
           break;
         }
       }
-      cnt += words[i].length;
+      cnt += words[i].runes.length;
     }
 
     updateSelectionGraphics();
@@ -93,10 +93,12 @@ class CustomSelectableTextController {
   /// If `previousChar == true` selects the previous character instead
   void selectPrevious({bool previousChar = false}){
 
-    int cnt = 0;
-    for (int i = 0; i < words.length; i++){
+    int cnt = words.join("").runes.length;
+    for (int i = words.length-1; i >= 0; i--){
 
-      if(cnt == currentSelection.baseOffset){
+      if((cnt <= currentSelection.extentOffset &&
+        currentSelection.extentOffset <= cnt-words[i].runes.length) ||
+        cnt <= currentSelection.baseOffset){
         // first word
         if(i-1 == -1){
           int len = words.join().runes.length;
@@ -105,7 +107,7 @@ class CustomSelectableTextController {
             extentOffset: len
           );
         }
-        else if(japaneseCharacterRegex.hasMatch(words[i-1])){
+        else if(japaneseCharacterRegex.hasMatch(words[i])){
           if(previousChar){
             currentSelection = TextSelection(
               baseOffset: currentSelection.baseOffset-1,
@@ -114,14 +116,15 @@ class CustomSelectableTextController {
           }
           else {
             currentSelection = TextSelection(
-              baseOffset: cnt - words[i-1].runes.length,
+              baseOffset: cnt - words[i].runes.length,
               extentOffset: cnt,
             );
           }
           break;
         }
       }
-      cnt += words[i].length;
+      cnt -= words[i].runes.length;
+      
     }
 
     updateSelectionGraphics();
