@@ -85,6 +85,7 @@ dependencies:
   quiver: 3.2.1
   flutter_riverpod: 2.4.0
   riverpod_annotation: 2.1.5
+  another_flushbar: 1.12.30
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit

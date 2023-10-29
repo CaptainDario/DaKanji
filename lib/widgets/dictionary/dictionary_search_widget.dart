@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -104,6 +105,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   bool reshowRadicalPopup = false;
   /// should the filter popup be openend when `reopenPopupTimer` finishes
   bool reshowFilterPopup = false;
+
+  Flushbar? deconjugationFlushbar;
 
   
   @override
@@ -567,37 +570,45 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(deconjugated != "" && deconjugated != text){
-      ScaffoldMessenger.of(widget.context).clearSnackBars();
-      ScaffoldMessenger.of(widget.context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
-                  overflow: TextOverflow.ellipsis
+      deconjugationFlushbar?.dismiss();
+      deconjugationFlushbar = Flushbar(
+        backgroundColor: Colors.white,
+        messageText: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black
                 ),
               ),
-              const SizedBox(width: 20,),
-              Expanded(
-                child: InkWell(
-                  onTap: () async {
-                    await updateSearchResults(text, false);
-                  },
-                  child: Text(
-                    "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Theme.of(widget.context).highlightColor
-                    ),                
-                  ),
+            ),
+            const SizedBox(width: 20,),
+            Expanded(
+              child: InkWell(
+                onTap: () async {
+                  await updateSearchResults(text, false);
+                },
+                child: Text(
+                  "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(widget.context).highlightColor
+                  ),                
                 ),
-              )
-            ],
-          )
-        )
-      );
+              ),
+            )
+          ],
+        ),
+        flushbarPosition: FlushbarPosition.TOP,
+        isDismissible: true,
+        duration: const Duration(milliseconds: 4000),
+      )..show(context).then((value) {
+        deconjugationFlushbar = null;
+        return value;
+      });
     }
     else{
       deconjugated = text;
