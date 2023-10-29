@@ -388,7 +388,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           ).then((_){
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               SnackBar(
-                                                content: Text("${"teswt"} $currentSelection"))
+                                                content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
                                               );
                                           });
                                         },

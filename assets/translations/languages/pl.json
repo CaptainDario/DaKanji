@@ -329,6 +329,7 @@
     "title": "Ustawienia"
   },
   "TextScreen": {
+    "copy_button_copy": "Skopiowane:",
     "input_text_here": "Wprowad\u017a tekst tutaj...",
     "pos_adnominal": "przydawka",
     "pos_adverb": "przys\u0142owek",

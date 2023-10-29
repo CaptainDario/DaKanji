@@ -329,6 +329,7 @@
     "title": "Settings"
   },
   "TextScreen": {
+    "copy_button_copy": "Copied:",
     "input_text_here": "Input text here...",
     "pos_adnominal": "adnominal",
     "pos_adverb": "adverb",

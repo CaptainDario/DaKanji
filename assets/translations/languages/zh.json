@@ -329,6 +329,7 @@
     "title": "\u8bbe\u7f6e"
   },
   "TextScreen": {
+    "copy_button_copy": "\u5df2\u590d\u5236\uff1a",
     "input_text_here": "\u5728\u8fd9\u91cc\u8f93\u5165\u6587\u5b57...",
     "pos_adnominal": "",
     "pos_adverb": "",

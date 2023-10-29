@@ -313,6 +313,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_text_show_selection_buttons = 'SettingsScreen.text_show_selection_buttons';
   static const SettingsScreen_title = 'SettingsScreen.title';
   static const SettingsScreen = 'SettingsScreen';
+  static const TextScreen_copy_button_copy = 'TextScreen.copy_button_copy';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';
   static const TextScreen_pos_adnominal = 'TextScreen.pos_adnominal';
   static const TextScreen_pos_adverb = 'TextScreen.pos_adverb';

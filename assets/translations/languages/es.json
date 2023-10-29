@@ -329,6 +329,7 @@
     "title": "Ajustes"
   },
   "TextScreen": {
+    "copy_button_copy": "Copiado:",
     "input_text_here": "Introduzca aqu\u00ed el texto...",
     "pos_adnominal": "",
     "pos_adverb": "",

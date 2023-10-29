@@ -329,6 +329,7 @@
     "title": "Param\u00e8tres"
   },
   "TextScreen": {
+    "copy_button_copy": "Copi\u00e9 :",
     "input_text_here": "Entrez le texte ici...",
     "pos_adnominal": "",
     "pos_adverb": "",

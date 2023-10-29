@@ -307,6 +307,7 @@ class CodegenLoader extends AssetLoader{
     "title": "设置"
   },
   "TextScreen": {
+    "copy_button_copy": "已复制：",
     "input_text_here": "在这里输入文字...",
     "title": "文本",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
@@ -665,6 +666,7 @@ static const Map<String,dynamic> ja = {
     "title": "設定"
   },
   "TextScreen": {
+    "copy_button_copy": "コピーした：",
     "input_text_here": "ここにテキストを入力...",
     "pos_adnominal": "連体詞",
     "pos_adverb": "副詞",
@@ -1053,6 +1055,7 @@ static const Map<String,dynamic> de = {
     "title": "Einstellungen"
   },
   "TextScreen": {
+    "copy_button_copy": "Kopiert:",
     "input_text_here": "Text hier eingeben...",
     "pos_adnominal": "Adnominal",
     "pos_adverb": "Adverb",
@@ -1403,6 +1406,7 @@ static const Map<String,dynamic> ru = {
     "title": "Настройки"
   },
   "TextScreen": {
+    "copy_button_copy": "Копирование:",
     "input_text_here": "Введите текст здесь...",
     "title": "Текст",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
@@ -1774,6 +1778,7 @@ static const Map<String,dynamic> pl = {
     "title": "Ustawienia"
   },
   "TextScreen": {
+    "copy_button_copy": "Skopiowane:",
     "input_text_here": "Wprowadź tekst tutaj...",
     "pos_adnominal": "przydawka",
     "pos_adverb": "przysłowek",
@@ -2162,6 +2167,7 @@ static const Map<String,dynamic> en = {
     "title": "Settings"
   },
   "TextScreen": {
+    "copy_button_copy": "Copied:",
     "input_text_here": "Input text here...",
     "pos_adnominal": "adnominal",
     "pos_adverb": "adverb",
@@ -2512,6 +2518,7 @@ static const Map<String,dynamic> it = {
     "title": "Impostazioni"
   },
   "TextScreen": {
+    "copy_button_copy": "Copiato:",
     "input_text_here": "Inserire il testo qui...",
     "title": "Testo",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -2848,6 +2855,7 @@ static const Map<String,dynamic> fr = {
     "title": "Paramètres"
   },
   "TextScreen": {
+    "copy_button_copy": "Copié :",
     "input_text_here": "Entrez le texte ici...",
     "title": "Texte",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -3184,6 +3192,7 @@ static const Map<String,dynamic> es = {
     "title": "Ajustes"
   },
   "TextScreen": {
+    "copy_button_copy": "Copiado:",
     "input_text_here": "Introduzca aquí el texto...",
     "title": "Texto",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",

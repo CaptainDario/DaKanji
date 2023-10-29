@@ -2065,6 +2065,17 @@
       "es": "Este botón cambia el texto procesado a pantalla completa.",
       "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
     },
+    "copy_button_copy": {
+      "en": "Copied:",
+      "de": "Kopiert:",
+      "ru": "Копирование:",
+      "ja": "コピーした：",
+      "zh": "已复制：",
+      "it": "Copiato:",
+      "fr": "Copié :",
+      "es": "Copiado:",
+      "pl": "Skopiowane:"
+    },
     "pos_suffix": {
       "en": "suffix",
       "de": "Suffix",
