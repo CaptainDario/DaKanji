@@ -16,8 +16,8 @@ class SettingsText with ChangeNotifier {
 
 
   /// are the text selection buttons enabled
-  @JsonKey(defaultValue: false)
-  bool _selectionButtonsEnabled = false;
+  @JsonKey(defaultValue: true)
+  bool _selectionButtonsEnabled = true;
   /// are the text selection buttons enabled
   bool get selectionButtonsEnabled => _selectionButtonsEnabled;
   /// are the text selection buttons enabled
