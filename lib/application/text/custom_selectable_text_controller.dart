@@ -138,7 +138,7 @@ class CustomSelectableTextController {
     assert (shrinkBy >= 0);
 
     // shrink selection by fixed amount
-    if(shrinkBy > 0){
+    if(shrinkBy > 0 && currentSelection.extentOffset - currentSelection.baseOffset > 1){
       currentSelection = TextSelection(
         baseOffset: currentSelection.baseOffset,
         extentOffset: currentSelection.extentOffset - shrinkBy
