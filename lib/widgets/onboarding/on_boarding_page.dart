@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:core';
-import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
