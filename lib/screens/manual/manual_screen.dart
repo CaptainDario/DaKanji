@@ -47,16 +47,18 @@ class _ManualScreenState extends State<ManualScreen>
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.topCenter,
-          child: Wrap(
-            runSpacing: 8,
-            spacing: 8,
-            children: List.generate(manualData.manualTypes.length, (index) => 
-              ManualButton(
-                size: manualButtonSize,
-                icon: manualData.manualIcons[index],
-                text: manualData.manualTitles[index],
-                onPressed: () => pushManual(context, manualData.manualTypes[index]),
-              )
+          child: SingleChildScrollView(
+            child: Wrap(
+              runSpacing: 8,
+              spacing: 8,
+              children: List.generate(manualData.manualTypes.length, (index) => 
+                ManualButton(
+                  size: manualButtonSize,
+                  icon: manualData.manualIcons[index],
+                  text: manualData.manualTitles[index],
+                  onPressed: () => pushManual(context, manualData.manualTypes[index]),
+                )
+              ),
             ),
           ),
         ),
