@@ -96,18 +96,20 @@ class CustomSelectableTextController {
     int cnt = words.join("").runes.length;
     for (int i = words.length-1; i >= 0; i--){
 
-      if((cnt <= currentSelection.extentOffset &&
+      // first word
+      if(i == 0 && currentSelection.baseOffset == 0){
+        int len = words.join().runes.length;
+        currentSelection = TextSelection(
+          baseOffset: len - words.last.runes.length,
+          extentOffset: len
+        );
+      }
+
+      else if((cnt <= currentSelection.extentOffset &&
         currentSelection.extentOffset <= cnt-words[i].runes.length) ||
         cnt <= currentSelection.baseOffset){
-        // first word
-        if(i-1 == -1){
-          int len = words.join().runes.length;
-          currentSelection = TextSelection(
-            baseOffset: len - words.last.runes.length,
-            extentOffset: len
-          );
-        }
-        else if(japaneseCharacterRegex.hasMatch(words[i])){
+        // next token is a Japanese one
+        if(japaneseCharacterRegex.hasMatch(words[i])){
           if(previousChar){
             currentSelection = TextSelection(
               baseOffset: currentSelection.baseOffset-1,
