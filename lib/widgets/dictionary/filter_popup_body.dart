@@ -64,91 +64,96 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
           const SizedBox(height: 8,),
           Expanded(
             child: AnimationLimiter(
-              child: GridView.builder(
-                clipBehavior: Clip.hardEdge,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  childAspectRatio: (MediaQuery.of(context).size.width / crossAxisCount) /
-                    (MediaQuery.of(context).size.height / 10),
-                  crossAxisSpacing: 4,
-                  mainAxisSpacing: 4
-                ),
-                itemCount: currentFilter.length+1,
-                itemBuilder: (context, index) {
-            
-                  MapEntry<String, String> item = const MapEntry("", "");
-            
-                  int cnt = 0;
-                  for (MapEntry<String, String> i in currentFilter.entries) {
-                    if (cnt == index) {
-                      item = i;
-                      break;
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                removeBottom: true,
+                child: GridView.builder(
+                  clipBehavior: Clip.hardEdge,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    childAspectRatio: (MediaQuery.of(context).size.width / crossAxisCount) /
+                      (MediaQuery.of(context).size.height / 10),
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 4
+                  ),
+                  itemCount: currentFilter.length+1,
+                  itemBuilder: (context, index) {
+                          
+                    MapEntry<String, String> item = const MapEntry("", "");
+                          
+                    int cnt = 0;
+                    for (MapEntry<String, String> i in currentFilter.entries) {
+                      if (cnt == index) {
+                        item = i;
+                        break;
+                      }
+                      cnt++;
                     }
-                    cnt++;
-                  }
-          
-                  if(item .key != "") {
-                    return AnimationConfiguration.staggeredGrid(
-                      position: index, 
-                      columnCount: crossAxisCount, 
-                      child: ScaleAnimation(
-                        key: Key(item.key),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: selectedFilters.contains(item.key)
-                              ? g_Dakanji_green.withOpacity(0.5)
-                              : null,
-                            border: Border.all(
-                              color: Colors.grey.withOpacity(0.5),
+                        
+                    if(item .key != "") {
+                      return AnimationConfiguration.staggeredGrid(
+                        position: index, 
+                        columnCount: crossAxisCount, 
+                        child: ScaleAnimation(
+                          key: Key(item.key),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: selectedFilters.contains(item.key)
+                                ? g_Dakanji_green.withOpacity(0.5)
+                                : null,
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.5),
+                              ),
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: InkWell(
-                            onTap: selectedFilters.contains(item.key)
-                              // deselect a filter
-                              ? () {
-                                widget.searchController.text = widget.searchController.text
-                                  .replaceAll("#${item.key} ", "");
-                                setState(() {
-                                  selectedFilters.remove(item.key);
-                                });
-                              }
-                              // select a filter
-                              : () {
-                                String newText = "#${item.key} ${widget.searchController.text}";
-                                selectedFilters.add(item.key);
-                                setState(() {
-                                  widget.searchController.text = newText;
-                                });
-                              },
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  item.value,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: selectedFilters.contains(item.key)
-                                      ? Theme.of(context).brightness == Brightness.dark
-                                        ? Colors.white.withOpacity(0.5)
-                                        : Colors.black.withOpacity(0.5)
-                                      : Theme.of(context).brightness == Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black
+                            child: InkWell(
+                              onTap: selectedFilters.contains(item.key)
+                                // deselect a filter
+                                ? () {
+                                  widget.searchController.text = widget.searchController.text
+                                    .replaceAll("#${item.key} ", "");
+                                  setState(() {
+                                    selectedFilters.remove(item.key);
+                                  });
+                                }
+                                // select a filter
+                                : () {
+                                  String newText = "#${item.key} ${widget.searchController.text}";
+                                  selectedFilters.add(item.key);
+                                  setState(() {
+                                    widget.searchController.text = newText;
+                                  });
+                                },
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    item.value,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: selectedFilters.contains(item.key)
+                                        ? Theme.of(context).brightness == Brightness.dark
+                                          ? Colors.white.withOpacity(0.5)
+                                          : Colors.black.withOpacity(0.5)
+                                        : Theme.of(context).brightness == Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    );
+                        )
+                      );
+                    }
+                    return null;
                   }
-                  return null;
-                }
+                ),
               ),
                 
             ),
