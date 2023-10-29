@@ -154,7 +154,8 @@ class CustomSelectableTextController {
           if (currentSelection.baseOffset == cnt - words[i-1].runes.length) {
             // do not go to end of text
             if(currentSelection.baseOffset == 0) return;
-            selectPrevious();
+
+            selectPrevious(previousChar: shrinkBy > 0);
           }
           else {
             // the selection contains multiple words -> shrink selection by one word
