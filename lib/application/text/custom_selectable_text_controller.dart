@@ -177,6 +177,9 @@ class CustomSelectableTextController {
 
     assert (growBy >= 0);
 
+    // assure there is a token to select
+    if(currentSelection.extentOffset == words.join("").length) return;
+
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
 
