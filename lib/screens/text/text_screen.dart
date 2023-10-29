@@ -26,6 +26,7 @@ import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fading_single_child_scroll_view.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 
 /// The "draw"-screen.
@@ -306,156 +307,159 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Wrap(
-                                    runAlignment: WrapAlignment.end,
-                                    children: [
-                                      // spaces toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          addSpaces,
-                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {addSpaces = !addSpaces;})
+                                child: FadingSingleChildScrollView(
+                                  fadePercentage: 0.2,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Wrap(
+                                      runAlignment: WrapAlignment.end,
+                                      children: [
+                                        // spaces toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                          child: AnalysisOptionButton(
+                                            addSpaces,
+                                            svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {addSpaces = !addSpaces;})
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      // furigana toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                        child: AnalysisOptionButton(
-                                          showRubys,
-                                          svgAssetPattern: "assets/icons/furigana_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {showRubys = !showRubys;})
-                                          ),
-                                        )
-                                      ),
-                                      // button to colorize words matching POS
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          colorizePos,
-                                          svgAssetPattern: "assets/icons/pos_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {colorizePos = !colorizePos;})
-                                          ),
-                                        )
-                                      ),
-                                      // full screen toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                        child: AnalysisOptionButton(
-                                          fullScreen,
-                                          onIcon: Icons.fullscreen,
-                                          offIcon: Icons.fullscreen_exit,
-                                          onPressed: onFullScreenButtonPress
-                                        )
-                                      ),
-                                      // paste text button
-                                      AnalysisOptionButton(
-                                        true,
-                                        offIcon: Icons.paste,
-                                        onIcon: Icons.paste,
-                                        onPressed: () async {
-                                          ClipboardData? clipboardData = await Clipboard.getData('text/plain');
-                                          String clipboardString = clipboardData?.text ?? "";
-                                          setState(() {
-                                            customSelectableTextController.resetSelection();
-                                            inputController.text = clipboardString;
-                                            inputText = clipboardString;
-                                            processText(clipboardString);
-                                          });
-                                        },
-                                      ),
-                                      // copy button
-                                      AnalysisOptionButton(
-                                        true,
-                                        offIcon: Icons.copy,
-                                        onIcon: Icons.copy,
-                                        onPressed: () {
-
-                                          String currentSelection =
-                                            customSelectableTextController.getCurrentSelectionString();
-                                          Clipboard.setData(
-                                            ClipboardData(text:currentSelection)
-                                          ).then((_){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
-                                              );
-                                          });
-                                        },
-                                      ),
-                                      
-                                      if(GetIt.I<Settings>().text.selectionButtonsEnabled)
-                                        ...[
-                                          // shrink selection button
-                                          AnalysisOptionButton(
-                                            true,
-                                            onIcon: Icons.arrow_back,
-                                            offIcon: Icons.arrow_back,
-                                            onPressed: () {
-                                              customSelectableTextController.shrinkSelectionRight(0);
-                                              assurePopupOpen();
-                                            },
-                                            onLongPressed: () {
-                                              customSelectableTextController.shrinkSelectionRight(1);
-                                              assurePopupOpen();
-                                            },
-                                          ),
-                                          // grow selection button
-                                          AnalysisOptionButton(
-                                            true,
-                                            onIcon: Icons.arrow_forward,
-                                            offIcon: Icons.arrow_forward,
-                                            onPressed: () {
-                                              customSelectableTextController.growSelectionRight(growBy: 0);
-                                              assurePopupOpen();
-                                            },
-                                            onLongPressed: () {
-                                              customSelectableTextController.growSelectionRight(growBy: 1);
-                                              assurePopupOpen();
-                                            },
-                                          ),
-                                          // select previous token / char
-                                          AnalysisOptionButton(
-                                            true,
-                                            onIcon: Icons.arrow_left,
-                                            offIcon: Icons.arrow_left,
-                                            onPressed: () {
-                                              customSelectableTextController.selectPrevious();
-                                              assurePopupOpen();
-                                            },
-                                            onLongPressed: () {
-                                              customSelectableTextController.selectPrevious(previousChar: true);
-                                              assurePopupOpen();
-                                            },
-                                          ),
-                                          // select next token / char
-                                          AnalysisOptionButton(
-                                            true,
-                                            onIcon: Icons.arrow_right,
-                                            offIcon: Icons.arrow_right,
-                                            // word
-                                            onPressed: () {
-                                              customSelectableTextController.selectNext();
-                                              assurePopupOpen();
-                                            },
-                                            // char
-                                            onLongPressed: () {
-                                              customSelectableTextController.selectNext(nextChar: true);
-                                              assurePopupOpen();
-                                            },
-                                          ),
-                                        ]
-                                    ],
+                                        // furigana toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                          child: AnalysisOptionButton(
+                                            showRubys,
+                                            svgAssetPattern: "assets/icons/furigana_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {showRubys = !showRubys;})
+                                            ),
+                                          )
+                                        ),
+                                        // button to colorize words matching POS
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                          child: AnalysisOptionButton(
+                                            colorizePos,
+                                            svgAssetPattern: "assets/icons/pos_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {colorizePos = !colorizePos;})
+                                            ),
+                                          )
+                                        ),
+                                        // full screen toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                          child: AnalysisOptionButton(
+                                            fullScreen,
+                                            onIcon: Icons.fullscreen,
+                                            offIcon: Icons.fullscreen_exit,
+                                            onPressed: onFullScreenButtonPress
+                                          )
+                                        ),
+                                        // paste text button
+                                        AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.paste,
+                                          onIcon: Icons.paste,
+                                          onPressed: () async {
+                                            ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+                                            String clipboardString = clipboardData?.text ?? "";
+                                            setState(() {
+                                              customSelectableTextController.resetSelection();
+                                              inputController.text = clipboardString;
+                                              inputText = clipboardString;
+                                              processText(clipboardString);
+                                            });
+                                          },
+                                        ),
+                                        // copy button
+                                        AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.copy,
+                                          onIcon: Icons.copy,
+                                          onPressed: () {
+                                  
+                                            String currentSelection =
+                                              customSelectableTextController.getCurrentSelectionString();
+                                            Clipboard.setData(
+                                              ClipboardData(text:currentSelection)
+                                            ).then((_){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
+                                                );
+                                            });
+                                          },
+                                        ),
+                                        
+                                        if(GetIt.I<Settings>().text.selectionButtonsEnabled)
+                                          ...[
+                                            // shrink selection button
+                                            AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_back,
+                                              offIcon: Icons.arrow_back,
+                                              onPressed: () {
+                                                customSelectableTextController.shrinkSelectionRight(0);
+                                                assurePopupOpen();
+                                              },
+                                              onLongPressed: () {
+                                                customSelectableTextController.shrinkSelectionRight(1);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // grow selection button
+                                            AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_forward,
+                                              offIcon: Icons.arrow_forward,
+                                              onPressed: () {
+                                                customSelectableTextController.growSelectionRight(growBy: 0);
+                                                assurePopupOpen();
+                                              },
+                                              onLongPressed: () {
+                                                customSelectableTextController.growSelectionRight(growBy: 1);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // select previous token / char
+                                            AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_left,
+                                              offIcon: Icons.arrow_left,
+                                              onPressed: () {
+                                                customSelectableTextController.selectPrevious();
+                                                assurePopupOpen();
+                                              },
+                                              onLongPressed: () {
+                                                customSelectableTextController.selectPrevious(previousChar: true);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // select next token / char
+                                            AnalysisOptionButton(
+                                              true,
+                                              onIcon: Icons.arrow_right,
+                                              offIcon: Icons.arrow_right,
+                                              // word
+                                              onPressed: () {
+                                                customSelectableTextController.selectNext();
+                                                assurePopupOpen();
+                                              },
+                                              // char
+                                              onLongPressed: () {
+                                                customSelectableTextController.selectNext(nextChar: true);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                          ]
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )
