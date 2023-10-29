@@ -67,7 +67,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     double sHeight = MediaQuery.sizeOf(context).height;
 
     double canvasSize = sWidth*0.95 > sHeight*0.75 ? sHeight*0.75 : sWidth*0.95;
-    double imgSize  = canvasSize * 0.75;
+    double imgCanvasFraction = 0.9;
+    double imgSize  = canvasSize * imgCanvasFraction;
+    double padding  = 1 - imgCanvasFraction;
     double textSize = sHeight * 0.3;
 
 
@@ -109,10 +111,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     }
 
                     return ret;
-                  } () + imgSize * 0.25,
+                  } () + imgSize * padding,
                   child: SvgPicture.asset(
                     'assets/images/onboarding/onboarding_${widget.nr}_1.svg',
-                    allowDrawingOutsideViewBox: true,
                   ),
                 ),
                 Positioned(
@@ -138,11 +139,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       ret = ret + parallaxHigh;
                     }
                     return ret;
-                  } () + imgSize*0.25,
+                  } () + imgSize*padding,
                   child: SvgPicture.asset(
                     'assets/images/onboarding/onboarding_${widget.nr}_2.svg',
-                    width: imgSize,
-                    height: imgSize,
                   ),
                 ),
               ],
@@ -151,7 +150,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           Positioned(
             height: textSize,
             width: imgSize,
-            top: imgSize*1.25,
+            top: imgSize*(1+padding),
             child: Column(
               children: [
                 const SizedBox(height: 5,),
