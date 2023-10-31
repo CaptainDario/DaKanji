@@ -12,7 +12,18 @@ class CustomSelectableTextController {
   /// lines in a word the rubys need to be split
   List<String> rubys = [];
   /// a list of all words
-  List<String> words = [];
+  List<String> _words = [];
+  /// a list of all words
+  List<String> get words {
+    return _words;
+  }
+  /// a list of all words
+  set words(List<String> newWords){
+    _words = newWords;
+    currentCharCount = words.join("").runes.length;
+  }
+  /// the amount of characters in the current text
+  int currentCharCount = 0;
 
   /// The current text selection
   TextSelection currentSelection = const TextSelection.collapsed(offset: -1);
@@ -93,7 +104,7 @@ class CustomSelectableTextController {
   /// If `previousChar == true` selects the previous character instead
   void selectPrevious({bool previousChar = false}){
 
-    int cnt = words.join("").runes.length;
+    int cnt = currentCharCount;
     for (int i = words.length-1; i >= 0; i--){
 
       // first word
@@ -149,12 +160,12 @@ class CustomSelectableTextController {
     // shrink selection by words
     else{
       int cnt = 0;
-      for (int i = 0; i < words.length; i++){
+      for (int i = 0; i <= words.length; i++){
 
         if(cnt >= currentSelection.extentOffset){
           // the selection only contains one word -> select previous word
           if (currentSelection.baseOffset == cnt - words[i-1].runes.length) {
-            // do not go to end of text
+            // do not go to end of text when curently on beginning
             if(currentSelection.baseOffset == 0) return;
 
             selectPrevious(previousChar: shrinkBy > 0);
