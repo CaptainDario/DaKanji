@@ -50,15 +50,15 @@ void handleDeepLink(String link){
   else if(route[0] == Screens.text.name){
     handleDeepLinkText(args);
   }
-  else if(route[0] == Screens.text.name){
-    handleDeepLinkText(args);
-  }
-  // TODO deep link dojg
   else if(route[0] == Screens.dojg.name){
     handleDeepLinkDojg(args);
   }
   else if(route[0] == Screens.kanjiTable.name.replaceAll("_", "-")){
     handleDeepLinkKanjiTable(args);
+  }
+  // clipboard
+  else if(route[0] == Screens.clipboard.name){
+    handleDeepLinkClipboard(args);
   }
   else if(route[0] == Screens.settings.name){
     handleDeepLinkSettings(args);
