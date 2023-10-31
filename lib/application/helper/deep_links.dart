@@ -182,10 +182,12 @@ void handleDeepLinkDrawing(Map<String, String> linkArgs){
     }
   }
 
-  if(NavigationHistoryObserver().history.isEmpty ||
-    (NavigationHistoryObserver().history.isEmpty &&
-      NavigationHistoryObserver().top!.settings.name != "/${Screens.drawing.name}")
-    ){
+  String? currentPath;
+  g_NavigatorKey.currentState?.popUntil((route) {
+    currentPath = route.settings.name;
+    return true;
+  }); 
+  if(currentPath != "/drawing") {
     g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
       "/${Screens.drawing.name}",
       (route) => false,
