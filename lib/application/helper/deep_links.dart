@@ -26,7 +26,8 @@ Future<void> initDeepLinksStream() async {
   /// Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
-    if(uri.toString().startsWith(g_AppLinkDaKanji)){
+    if(uri.toString().startsWith(g_AppLinkDaKanji) || 
+      uri.toString().startsWith(g_AppLinkHttps)){
       handleDeepLink(uri.toString());
     }
   });
