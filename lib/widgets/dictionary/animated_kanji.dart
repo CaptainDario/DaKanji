@@ -61,7 +61,9 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       ).toColor();*/
       double strokeWidth = double.parse(svgPathMatch.group(5)!);
       paints.add(Paint()
-        ..color = Colors.white//strokeColor
+        ..color = Theme.of(context).brightness == Brightness.light
+          ? Colors.black
+          : Colors.white//strokeColor
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth
         ..strokeCap = StrokeCap.round
