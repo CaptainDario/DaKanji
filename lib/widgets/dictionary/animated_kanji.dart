@@ -39,6 +39,8 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
   @override
   void initState() {
 
+    super.initState();
+
     // parse kanjiVG entry for paths
     RegExp pathsRegex = RegExp(r' d="(.+?)" stroke="hsl\((\d+).+?(\d+).+?(\d+).*\)" stroke-width="(.+?)');
     List<RegExpMatch> svgPathMatches = pathsRegex.allMatches(widget.kanjiVGString)
@@ -52,7 +54,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       writeSvgPathDataToPath(svgPath, pM);
       paths.add(pM.path);
 
-      // get color and width
+      // get stroke color and width
       /*Color strokeColor = HSLColor.fromAHSL(
         1.0,
         double.parse(svgPathMatch.group(2)!),
@@ -61,9 +63,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       ).toColor();*/
       double strokeWidth = double.parse(svgPathMatch.group(5)!);
       paints.add(Paint()
-        ..color = Theme.of(context).brightness == Brightness.light
-          ? Colors.black
-          : Colors.white//strokeColor
+        ..color = Colors.white //strokeColor
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth
         ..strokeCap = StrokeCap.round
@@ -78,7 +78,14 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
 
     widget.init(kanjiVGAnimationController);
 
-    super.initState();
+    // set the stroke color after the first frame matching the current theme
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      for (var paint in paints) {
+        paint.color = Theme.of(context).brightness == Brightness.light
+          ? Colors.black
+          : Colors.white;
+      }
+    });
   }
 
   @override
@@ -98,6 +105,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
             paths,
             paints,
             kanjiVGAnimationController,
+            
           ),
         );
       }
