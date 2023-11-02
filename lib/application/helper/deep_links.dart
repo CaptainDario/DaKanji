@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:app_links/app_links.dart';
 import 'package:get_it/get_it.dart';
-import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
