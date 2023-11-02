@@ -1,10 +1,17 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:xml/xml.dart';
 
+
+
+ /// Widget that shows an animated KanjiVG entry. After the animation finished,
+ /// a static kanji is shown with stroke numbers.
+ /// If `colorize == true` the static kanji will have different colors for each 
+ /// stroke, otherwise it will be black / white depending of the current theme. 
 class KanjiVGWidget extends StatefulWidget {
   const KanjiVGWidget(
     this.kanjiVGString,
@@ -31,7 +38,11 @@ class KanjiVGWidget extends StatefulWidget {
 
 class _KanjiVGWidgetState extends State<KanjiVGWidget> {
 
+  /// String that contains the color coded kanji vg string
   late String colorizedKanjiVG;
+  /// `AnimationController` to control the KanjiVG animation
+  AnimationController? kanjiVGAnimationController;
+
 
   @override
   void initState() {
@@ -49,14 +60,31 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      height: widget.height,
-      width: widget.width,
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-      ),
-      child: SvgPicture.string(
-        widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (child, animation) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      child: Container(
+        key: ValueKey<bool>(kanjiVGAnimationController == null ||
+          (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)),
+        height: widget.height,
+        width: widget.width,
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+        ),
+        child: kanjiVGAnimationController == null ||
+          (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)
+          ? AnimatedKanji(
+            colorizedKanjiVG,
+            (AnimationController controller) {
+              kanjiVGAnimationController = controller;
+              controller.repeat();//.forward().then((value) => setState((){}));
+            }
+          )
+          : SvgPicture.string(
+            widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
+          ),
       ),
     );
   }
