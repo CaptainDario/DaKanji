@@ -79,7 +79,8 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
             colorizedKanjiVG,
             (AnimationController controller) {
               kanjiVGAnimationController = controller;
-              controller.repeat();//.forward().then((value) => setState((){}));
+              controller//.repeat();
+                .forward().then((value) => setState((){}));
             }
           )
           : SvgPicture.string(

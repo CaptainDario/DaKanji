@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:math';
+
+import 'package:path/path.dart';
 
 
 /// A custom painter that can draw animated kanjiVG kanjis
@@ -12,57 +16,59 @@ class AnimatedKanjiPainter extends CustomPainter {
   final List<Paint> paints;
   /// The animation controller to draw `strokes` animated on this canvas
   final AnimationController animationController;
+  /// Length of each individual stroke
+  late final List<double> strokeLengths;
+  /// The total length of all strokes combined
+  double totalLength = 0;
 
 
-  const AnimatedKanjiPainter(
+  AnimatedKanjiPainter(
     this.strokes,
     this.paints,
     this.animationController,
-  );
+  ){
+    // calculate how long each path should be depending on their length
+    strokeLengths = List.generate(strokes.length, (index) => 0.0);
+    for (var i = 0; i < strokes.length; i++) {
+      ui.PathMetrics metrics = strokes[i].computeMetrics();
+      for (var metric in metrics) {
+        strokeLengths[i] += metric.length + (i > 0 ? strokeLengths[i-1] : 0);
+        totalLength += metric.length;
+      }
+    }
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
 
+    // scale kanjivg canvas size (109) to current canvas size
     canvas.scale(size.width/109, size.height/109);
 
     for (int i = 0; i < strokes.length; i++) {
       
-      Path path = strokes[i];
-      Paint paint = paints[i];
+      ui.PathMetrics metrics = strokes[i].computeMetrics();
+      for (ui.PathMetric metric in metrics){
 
-      if(animationController.value >= i+1) {
-        canvas.drawPath(path, paint);
-      }
-      else if (animationController.value.truncate() == i){
-        ui.PathMetrics metrics = path.computeMetrics();
-        int metricsAmount = path.computeMetrics().length;
-        int metricsCount = 0;
-        for (ui.PathMetric metric in metrics){
-          double percentage;
+        double currentValue = animationController.value*totalLength;
 
-          // draw all paths except the last one at full length
-          if(metricsAmount > metricsCount+1) {
-            percentage = metric.length;
-          } else {
-            percentage = metric.length *
-              (animationController.value - animationController.value.truncate());
-          }
-          Path extractPath = metric.extractPath(0.0, percentage);
-          canvas.drawPath(
-            extractPath,
-            paint
-          );
-          metricsCount += 1;
-        }
+        double percentage = (currentValue - strokeLengths[i]) + metric.length;
+
+        canvas.drawPath(
+          metric.extractPath(0.0, percentage),
+          paints[i]
+        );
       }
+      
     }
   
   }
 
   @override
-  bool shouldRepaint(AnimatedKanjiPainter oldDelegate) => true;
+  bool shouldRepaint(AnimatedKanjiPainter oldDelegate)
+    => animationController.isAnimating;
 
   @override
-  bool shouldRebuildSemantics(AnimatedKanjiPainter oldDelegate) => false;
+  bool shouldRebuildSemantics(AnimatedKanjiPainter oldDelegate)
+    => false;
 }
 

@@ -71,9 +71,9 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
     }
 
     kanjiVGAnimationController = AnimationController(
-        duration: Duration(seconds: paths.length~/4),
+        duration: Duration(seconds: paths.length~/2),
         vsync: this,
-        upperBound: paths.length.toDouble(),
+        //upperBound: paths.length.toDouble(),
       );
 
     widget.init(kanjiVGAnimationController);
