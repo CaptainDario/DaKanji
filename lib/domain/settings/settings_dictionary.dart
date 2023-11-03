@@ -90,7 +90,7 @@ class SettingsDictionary with ChangeNotifier {
   /// How many seconds should the animation take for one stroke
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const double d_kanjiAnimationStrokesPerSecond = 0.5;
+  static const double d_kanjiAnimationStrokesPerSecond = 5;
   /// How many seconds should the animation take for one stroke
   @JsonKey(defaultValue: d_kanjiAnimationStrokesPerSecond)
   double kanjiAnimationStrokesPerSecond = d_kanjiAnimationStrokesPerSecond;
