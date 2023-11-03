@@ -38,97 +38,133 @@ class KanjiVGWidget extends StatefulWidget {
   State<KanjiVGWidget> createState() => _KanjiVGWidgetState();
 }
 
-class _KanjiVGWidgetState extends State<KanjiVGWidget> {
+class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateMixin{
 
   /// String that contains the color coded kanji vg string
   late String colorizedKanjiVG;
   /// `AnimationController` to control the KanjiVG animation
   AnimationController? kanjiVGAnimationController;
 
+  late AnimationController switchAnimation;
+
 
   @override
   void initState() {
-    
-    colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+    init();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant KanjiVGWidget oldWidget) {
-    colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+    init();
     super.didUpdateWidget(oldWidget);
+  }
+
+  /// Initializes the variales of this widget
+  void init(){
+    switchAnimation = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this
+    );
+    colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
   }
 
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      // on double tap restart animation
       onDoubleTap: () {
-        resetAnimation();
+        // stop animation if it is running
+        if(kanjiVGAnimationController!.isAnimating){
+          kanjiVGAnimationController!.stop();
+        }
+        // continue animation if it is stopped somwhere
+        else if(!kanjiVGAnimationController!.isCompleted){
+          switchAnimation.reverse();
+          startDrawingAnimation();
+        }
+        // restart animation if stopped at the end
+        else if(kanjiVGAnimationController!.isCompleted){
+          switchAnimation.reverse();
+          startDrawingAnimation(reverseSwitch: true, startFrom: 0);
+        }
       },
+      behavior: HitTestBehavior.translucent,
       onHorizontalDragStart: (details) {
-        resetAnimation();
+        if(kanjiVGAnimationController == null) return;
+
+        switchAnimation.reverse();
       },
       onHorizontalDragUpdate: (details) {
-        if(kanjiVGAnimationController == null || kanjiVGAnimationController!.isCompleted) {
+        if(kanjiVGAnimationController == null) {
           return;
         }
 
         double progress = clampDouble(details.localPosition.dx / widget.width, 0, 0.99999);
+        if(progress == 0.99999 || switchAnimation.value != 0){
+          switchAnimation.value = clampDouble(((details.localPosition.dx / widget.width)-1)*4, 0, 1);
+        }
 
         setState(() {
           kanjiVGAnimationController!.value = progress;
         });
       },
       onHorizontalDragEnd: (details) {
-
-        if(kanjiVGAnimationController == null || kanjiVGAnimationController!.isCompleted) return;
-
-        kanjiVGAnimationController!.forward()
-          .then((value) => setState((){}));
+        //startDrawingAnimation(reverseSwitch: false);
       },
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        transitionBuilder: (child, animation) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-        child: Container(
-          key: ValueKey<bool>(kanjiVGAnimationController == null ||
-            (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)),
-          height: widget.height,
-          width: widget.width,
-          decoration: BoxDecoration(
-            border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-          ),
-          child: kanjiVGAnimationController == null ||
-            (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)
-            ? AnimatedKanji(
-              colorizedKanjiVG,
-              (AnimationController controller) {
-                kanjiVGAnimationController = controller;
-                controller//.repeat();
-                  .forward().then((value) => setState((){}));
-              }
-            )
-            : SvgPicture.string(
+      child: Container(
+        height: widget.height,
+        width: widget.width,
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+        ),
+        child: AnimatedBuilder(
+          animation: switchAnimation,
+          child: SvgPicture.string(
               widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
             ),
-        ),
+          builder: (context, child) {
+            return Stack(
+              children: [
+                // finished colorized svg
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: switchAnimation.value,
+                    child: child
+                  ),
+                ),
+                // drawing animation
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 1 - switchAnimation.value,
+                    child: AnimatedKanji(
+                      colorizedKanjiVG,
+                      (AnimationController controller) {
+                        kanjiVGAnimationController = controller;
+                        startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                      }
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        )
       ),
     );
   }
 
-  /// 
-  void resetAnimation() {
-    setState(() {
-      if(kanjiVGAnimationController != null && kanjiVGAnimationController!.isAnimating){
-        kanjiVGAnimationController!.stop();
-      }
-      else if(kanjiVGAnimationController!.isCompleted) {
-        kanjiVGAnimationController = null;
-      }
-    });
+  void startDrawingAnimation({double? startFrom, bool reverseSwitch = false}) {
+
+    if(reverseSwitch) {
+      switchAnimation.reverse();
+    }
+    kanjiVGAnimationController!.forward(from: startFrom)
+      .then((value) {
+        switchAnimation.forward();
+        setState(() {});
+      });
+
   }
 
   /// Changes the colors of the strokes and text of the given `kanjiVGEntry`
