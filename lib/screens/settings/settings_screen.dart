@@ -170,6 +170,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
+                      
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -446,6 +447,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                         ),
+                      ),
+
+                      // play animation when opening kanji tab
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_play_kanji_animation_when_opened.tr(),
+                        value: settings.dictionary.playKanjiAnimationWhenOpened,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.playKanjiAnimationWhenOpened = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // animation speed
+                      ResponsiveSliderTile(
+                        text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
+                        value: settings.dictionary.kanjiAnimationStrokesPerSecond,
+                        min: 0.1,
+                        max: 2,
+                        //divisions: settings.dictionary.translationLanguageCodes.length-1,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                        onChanged: (value) {
+                          setState(() {
+                            settings.dictionary.kanjiAnimationStrokesPerSecond = value;
+                            settings.save();
+                          });
+                        },
+                      ),
+
+                      // animation continues playing after double tap
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_scroll.tr(),
+                        value: settings.dictionary.resumeAnimationAfterStopScroll,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.resumeAnimationAfterStopScroll = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
 
                       // reshow tutorial
