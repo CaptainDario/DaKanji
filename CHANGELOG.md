@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.2.0+64 - 辞書開発 (29.10.2023)
+## v3.2.0+65 - 辞書開発 (3.11.2023)
 
 New Features:
 
@@ -9,15 +9,19 @@ New Features:
   - Directly open dakanji with dakanji:// or https://dakanji.app/app/
   - Share dictionary and DoJG entries
   - See the manual for more info
-- Brand new website https://dakanji.app
-- Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
+- Dictionary
+  - Animated Kanji stroke order diagrams
 - Text
   - Selection buttons
   - Copy button
   - Paste button
   - Automatic DoJG lookup
   - Added settings
-- By popular request: flatpak support
+- Brand new website https://dakanji.app
+- Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
+
+- By popular request:
+  - flatpak support
 
 Improvements:
 
