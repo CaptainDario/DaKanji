@@ -290,7 +290,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
   static const SettingsScreen_dict_matrix_word_levels = 'SettingsScreen.dict_matrix_word_levels';
   static const SettingsScreen_dict_play_kanji_animation_when_opened = 'SettingsScreen.dict_play_kanji_animation_when_opened';
-  static const SettingsScreen_dict_resume_animation_after_stop_scroll = 'SettingsScreen.dict_resume_animation_after_stop_scroll';
+  static const SettingsScreen_dict_resume_animation_after_stop_swipe = 'SettingsScreen.dict_resume_animation_after_stop_swipe';
   static const SettingsScreen_dict_show_wikipedia_definitions = 'SettingsScreen.dict_show_wikipedia_definitions';
   static const SettingsScreen_dict_show_word_freq = 'SettingsScreen.dict_show_word_freq';
   static const SettingsScreen_dict_show_word_freq_body = 'SettingsScreen.dict_show_word_freq_body';

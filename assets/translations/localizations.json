@@ -2505,7 +2505,7 @@
       "es": "Animación: golpes por segundo",
       "pl": "Animacja: uderzenia na sekundę"
     },
-    "dict_resume_animation_after_stop_scroll": {
+    "dict_resume_animation_after_stop_swipe": {
       "en": "Resume animation after swipe",
       "de": "Animation nach Wischen fortsetzen",
       "ru": "Возобновление анимации после пролистывания",

@@ -479,7 +479,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       // animation continues playing after double tap
                       ResponsiveCheckBoxTile(
-                        text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_scroll.tr(),
+                        text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_swipe.tr(),
                         value: settings.dictionary.resumeAnimationAfterStopSwipe,
                         onTileTapped: (value) {
                           setState(() {
