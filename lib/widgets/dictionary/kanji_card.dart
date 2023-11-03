@@ -133,6 +133,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       children: [
                         // Kanji preview
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           // on tap copy to clipboard and show snakbar
                           onTap: () {
                             Clipboard.setData(

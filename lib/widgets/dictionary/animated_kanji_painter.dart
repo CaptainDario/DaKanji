@@ -14,7 +14,7 @@ class AnimatedKanjiPainter extends CustomPainter {
   final List<Path> strokes;
   /// List of all `Paint` that should be usde when drawing `strokes`
   final List<Paint> paints;
-  /// The animation controller to draw `strokes` animated on this canvas
+  /// The animation controller to draw animated `strokes` on this canvas
   final AnimationController animationController;
   /// Length of each individual stroke
   late final List<double> strokeLengths;
@@ -65,7 +65,7 @@ class AnimatedKanjiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(AnimatedKanjiPainter oldDelegate)
-    => animationController.isAnimating;
+    => true;
 
   @override
   bool shouldRebuildSemantics(AnimatedKanjiPainter oldDelegate)

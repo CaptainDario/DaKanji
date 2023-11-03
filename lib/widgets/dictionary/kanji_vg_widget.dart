@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:ui';
+
 import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
 import 'package:flutter/material.dart';
 
@@ -60,34 +62,73 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> {
   @override
   Widget build(BuildContext context) {
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      transitionBuilder: (child, animation) {
-        return FadeTransition(opacity: animation, child: child);
+    return GestureDetector(
+      // on double tap restart animation
+      onDoubleTap: () {
+        resetAnimation();
       },
-      child: Container(
-        key: ValueKey<bool>(kanjiVGAnimationController == null ||
-          (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)),
-        height: widget.height,
-        width: widget.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-        ),
-        child: kanjiVGAnimationController == null ||
-          (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)
-          ? AnimatedKanji(
-            colorizedKanjiVG,
-            (AnimationController controller) {
-              kanjiVGAnimationController = controller;
-              controller//.repeat();
-                .forward().then((value) => setState((){}));
-            }
-          )
-          : SvgPicture.string(
-            widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
+      onHorizontalDragStart: (details) {
+        resetAnimation();
+      },
+      onHorizontalDragUpdate: (details) {
+        if(kanjiVGAnimationController == null || kanjiVGAnimationController!.isCompleted) {
+          return;
+        }
+
+        double progress = clampDouble(details.localPosition.dx / widget.width, 0, 0.99999);
+
+        setState(() {
+          kanjiVGAnimationController!.value = progress;
+        });
+      },
+      onHorizontalDragEnd: (details) {
+
+        if(kanjiVGAnimationController == null || kanjiVGAnimationController!.isCompleted) return;
+
+        kanjiVGAnimationController!.forward()
+          .then((value) => setState((){}));
+      },
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: Container(
+          key: ValueKey<bool>(kanjiVGAnimationController == null ||
+            (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)),
+          height: widget.height,
+          width: widget.width,
+          decoration: BoxDecoration(
+            border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
           ),
+          child: kanjiVGAnimationController == null ||
+            (kanjiVGAnimationController != null && !kanjiVGAnimationController!.isCompleted)
+            ? AnimatedKanji(
+              colorizedKanjiVG,
+              (AnimationController controller) {
+                kanjiVGAnimationController = controller;
+                controller//.repeat();
+                  .forward().then((value) => setState((){}));
+              }
+            )
+            : SvgPicture.string(
+              widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
+            ),
+        ),
       ),
     );
+  }
+
+  /// 
+  void resetAnimation() {
+    setState(() {
+      if(kanjiVGAnimationController != null && kanjiVGAnimationController!.isAnimating){
+        kanjiVGAnimationController!.stop();
+      }
+      else if(kanjiVGAnimationController!.isCompleted) {
+        kanjiVGAnimationController = null;
+      }
+    });
   }
 
   /// Changes the colors of the strokes and text of the given `kanjiVGEntry`
