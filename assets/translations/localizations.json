@@ -2483,6 +2483,39 @@
       "es": "Mostrar definiciones de wikipedia",
       "pl": "Pokaż definicje z wikipedii"
     },
+    "dict_play_kanji_animation_when_opened": {
+      "en": "Automatically start Kanji animation",
+      "de": "Automatischer Start der Kanji-Animation",
+      "ru": "Автоматический запуск анимации кандзи",
+      "ja": "漢字アニメーションを自動的に開始",
+      "zh": "自动启动汉字动画",
+      "it": "Avvio automatico dell'animazione Kanji",
+      "fr": "Lancer automatiquement l'animation des Kanji",
+      "es": "Iniciar automáticamente la animación Kanji",
+      "pl": "Automatyczne uruchamianie animacji Kanji"
+    },
+    "dict_kanji_animation_strokes_per_second": {
+      "en": "Animation: strokes per second",
+      "de": "Animation: Striche pro Sekunde",
+      "ru": "Анимация: ударов в секунду",
+      "ja": "アニメーション：ストローク/秒",
+      "zh": "动画：每秒笔画",
+      "it": "Animazione: colpi al secondo",
+      "fr": "Animation : coups par seconde",
+      "es": "Animación: golpes por segundo",
+      "pl": "Animacja: uderzenia na sekundę"
+    },
+    "dict_resume_animation_after_stop_scroll": {
+      "en": "Resume animation after swipe",
+      "de": "Animation nach Wischen fortsetzen",
+      "ru": "Возобновление анимации после пролистывания",
+      "ja": "スワイプ後のアニメーション再開",
+      "zh": "轻扫后恢复动画",
+      "it": "Riprendere l'animazione dopo il passaggio del dito",
+      "fr": "Reprise de l'animation après le balayage",
+      "es": "Reanudar la animación después de deslizar el dedo",
+      "pl": "Wznowienie animacji po przesunięciu"
+    },
     "text_show_selection_buttons": {
       "en": "Show text selection buttons",
       "de": "Buttons zur Textauswahl anzeigen",
