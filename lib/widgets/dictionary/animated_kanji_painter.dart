@@ -41,6 +41,8 @@ class AnimatedKanjiPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
+    if(animationController.value == 0) return;
+
     // scale kanjivg canvas size (109) to current canvas size
     canvas.scale(size.width/109, size.height/109);
 
