@@ -93,6 +93,15 @@ class ManualDictionary extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(LocaleKeys.ManualScreen_dict_kanji_copy_radicals_text.tr()),
+
+                const SizedBox(height: 10),
+                
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(LocaleKeys.ManualScreen_dict_kanji_animation_title.tr(), style: heading_2,)
+                ),
+                const SizedBox(height: 5),
+                Text(LocaleKeys.ManualScreen_dict_kanji_animation_text.tr()),
         
                 const SizedBox(height: 15),
               ],

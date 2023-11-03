@@ -221,6 +221,8 @@ abstract class  LocaleKeys {
   static const ManualScreen_deep_links_text = 'ManualScreen.deep_links_text';
   static const ManualScreen_deep_links_title = 'ManualScreen.deep_links_title';
   static const ManualScreen_dict_examples_title = 'ManualScreen.dict_examples_title';
+  static const ManualScreen_dict_kanji_animation_text = 'ManualScreen.dict_kanji_animation_text';
+  static const ManualScreen_dict_kanji_animation_title = 'ManualScreen.dict_kanji_animation_title';
   static const ManualScreen_dict_kanji_copy_radicals_text = 'ManualScreen.dict_kanji_copy_radicals_text';
   static const ManualScreen_dict_kanji_copy_radicals_title = 'ManualScreen.dict_kanji_copy_radicals_title';
   static const ManualScreen_dict_kanji_search_kanji_group_text = 'ManualScreen.dict_kanji_search_kanji_group_text';
