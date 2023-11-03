@@ -21,6 +21,8 @@ class ResponsiveSliderTile extends StatefulWidget {
   /// when set to a value shows a leading info icon and when the user presses
   /// this icon a info dialog will open
   final String? infoText;
+  /// Should the label that indicates the current value be rounded to an int value
+  final bool showLabelAsInt;
   /// The autoSizeGroup to use for the text
   final AutoSizeGroup? autoSizeGroup;
   /// callback which is executed when the user moves the slider
@@ -39,6 +41,7 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.divisions,
       this.leadingIcon,
       this.infoText,
+      this.showLabelAsInt = false,
       this.autoSizeGroup,
       this.onChanged,
       this.onChangeEnd,
@@ -70,19 +73,25 @@ class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
           )
         ),
         Expanded(
-          flex: 4,
-          child: Slider(
-            value: widget.value,
-            min: widget.min,
-            max: widget.max,
-            label: widget.value.toInt().toString(),
-            divisions: widget.divisions,
-            onChanged: (double value) {
-              widget.onChanged?.call(value);
-            },
-            onChangeEnd: (value) {
-              widget.onChangeEnd?.call(value);
-            },
+          flex: 0,
+          child: SliderTheme(
+            data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
+            child: Slider(
+              value: widget.value,
+              min: widget.min,
+              max: widget.max,
+              label: widget.showLabelAsInt
+                ? widget.value.round().toString()
+                : widget.value.toStringAsFixed(2),
+              divisions: widget.divisions,
+              
+              onChanged: (double value) {
+                widget.onChanged?.call(value);
+              },
+              onChangeEnd: (value) {
+                widget.onChangeEnd?.call(value);
+              },
+            ),
           ),
         ),
       ],
