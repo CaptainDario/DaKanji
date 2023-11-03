@@ -95,15 +95,15 @@ class SettingsDictionary with ChangeNotifier {
   @JsonKey(defaultValue: d_kanjiAnimationStrokesPerSecond)
   double kanjiAnimationStrokesPerSecond = d_kanjiAnimationStrokesPerSecond;
 
-  /// When stopping to scroll to modify the kanji animation, should the animation
+  /// When stopping to swipe to modify the kanji animation, should the animation
   /// continue playing
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_resumeAnimationAfterStopScroll = false;
-  /// When stopping to scroll to modify the kanji animation, should the animation
+  static const bool d_resumeAnimationAfterStopSwipe = false;
+  /// When swipe to scroll to modify the kanji animation, should the animation
   /// continue playing
-  @JsonKey(defaultValue: d_resumeAnimationAfterStopScroll)
-  bool resumeAnimationAfterStopScroll = d_resumeAnimationAfterStopScroll;
+  @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
+  bool resumeAnimationAfterStopSwipe = d_resumeAnimationAfterStopSwipe;
 
 
   SettingsDictionary();
