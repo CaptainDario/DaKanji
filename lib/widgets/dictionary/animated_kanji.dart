@@ -6,16 +6,22 @@ import 'package:path_parsing/path_parsing.dart';
 
 
 
+/// Widget that shows an animated version of a kanjiVG entry
 class AnimatedKanji extends StatefulWidget {
   
   /// The kanji VG that should be shown and animated in this widget
   final String kanjiVGString;
-
+  /// Amount of strokes that should be rendered per stroke
+  final double strokesPerSecond;
+  /// Callback that is invoked after this widget has been initialized
+  /// Provides the [AnimationController] that controls the animated kanji as
+  /// parameter
   final Function(AnimationController controller) init;
   
 
   const AnimatedKanji(
     this.kanjiVGString,
+    this.strokesPerSecond,
     this.init,
     {
       super.key
@@ -28,11 +34,11 @@ class AnimatedKanji extends StatefulWidget {
 
 class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateMixin{
 
-
+  /// List of paths that are the kanji strokes that will be animated
   List<Path> paths = [];
-
+  /// List of paints that are used to draw the paths in `paths`
   List<Paint> paints = [];
-
+  /// [AnimationController] used to control the kanji animation
   late AnimationController kanjiVGAnimationController;
 
 
@@ -83,9 +89,10 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
     }
 
     kanjiVGAnimationController = AnimationController(
-        duration: Duration(seconds: paths.length~/2),
+        duration: Duration(
+          milliseconds: ((paths.length/widget.strokesPerSecond)*1000).toInt()
+        ),
         vsync: this,
-        //upperBound: paths.length.toDouble(),
       );
 
     widget.init(kanjiVGAnimationController);

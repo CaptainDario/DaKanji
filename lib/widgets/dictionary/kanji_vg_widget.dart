@@ -15,15 +15,6 @@ import 'package:xml/xml.dart';
  /// If `colorize == true` the static kanji will have different colors for each 
  /// stroke, otherwise it will be black / white depending of the current theme. 
 class KanjiVGWidget extends StatefulWidget {
-  const KanjiVGWidget(
-    this.kanjiVGString,
-    this.height,
-    this.width,
-    {
-      this.colorize = false,
-      Key? key
-    }
-  ) : super(key: key);
 
   /// String containing a KanjiVG entry
   final String kanjiVGString;
@@ -33,6 +24,26 @@ class KanjiVGWidget extends StatefulWidget {
   final double width;
   /// should the strokes and text of the KanjiVG be colorized
   final bool colorize;
+  /// Should the animation automatically play when instantiating this widget
+  final bool playKanjiAnimationWhenOpened;
+  /// Amount of strokes that should be shown per second
+  final double strokesPerSecond;
+  /// When user stops swiping should the animation automatically continue
+  final bool resumeAnimationAfterStopSwipe;
+
+
+  const KanjiVGWidget(
+    this.kanjiVGString,
+    this.height,
+    this.width,
+    this.playKanjiAnimationWhenOpened,
+    this.strokesPerSecond,
+    this.resumeAnimationAfterStopSwipe,
+    {
+      this.colorize = false,
+      Key? key
+    }
+  ) : super(key: key);
 
   @override
   State<KanjiVGWidget> createState() => _KanjiVGWidgetState();
@@ -44,7 +55,8 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
   late String colorizedKanjiVG;
   /// `AnimationController` to control the KanjiVG animation
   AnimationController? kanjiVGAnimationController;
-
+  /// [AnimationController] that handles switching between the animation and
+  /// the colored result 
   late AnimationController switchAnimation;
 
 
@@ -63,6 +75,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
   /// Initializes the variales of this widget
   void init(){
     switchAnimation = AnimationController(
+      value: widget.playKanjiAnimationWhenOpened 
+        ? 0.0
+        : 1.0,
       duration: const Duration(milliseconds: 250),
       vsync: this
     );
@@ -110,7 +125,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         });
       },
       onHorizontalDragEnd: (details) {
-        //startDrawingAnimation(reverseSwitch: false);
+        if(widget.resumeAnimationAfterStopSwipe){
+          startDrawingAnimation(reverseSwitch: false);
+        }
       },
       child: Container(
         height: widget.height,
@@ -139,9 +156,12 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                     opacity: 1 - switchAnimation.value,
                     child: AnimatedKanji(
                       colorizedKanjiVG,
+                      widget.strokesPerSecond,
                       (AnimationController controller) {
                         kanjiVGAnimationController = controller;
-                        startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                        if(widget.playKanjiAnimationWhenOpened){
+                          startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                        }
                       }
                     ),
                   ),

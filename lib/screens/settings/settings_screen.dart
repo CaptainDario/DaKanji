@@ -467,8 +467,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
                         value: settings.dictionary.kanjiAnimationStrokesPerSecond,
                         min: 0.1,
-                        max: 2,
-                        //divisions: settings.dictionary.translationLanguageCodes.length-1,
+                        max: 10.0,
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                         onChanged: (value) {
                           setState(() {
@@ -481,10 +480,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // animation continues playing after double tap
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_scroll.tr(),
-                        value: settings.dictionary.resumeAnimationAfterStopScroll,
+                        value: settings.dictionary.resumeAnimationAfterStopSwipe,
                         onTileTapped: (value) {
                           setState(() {
-                            settings.dictionary.resumeAnimationAfterStopScroll = value;
+                            settings.dictionary.resumeAnimationAfterStopSwipe = value;
                             settings.save();
                           });
                         },

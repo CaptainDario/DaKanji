@@ -157,6 +157,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                 kanjiVGs.first.svg,
                                 constrains.maxWidth * 0.5,
                                 constrains.maxWidth * 0.5,
+                                GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
+                                GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                 colorize: true,
                               )
                               : Container(
@@ -370,6 +373,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   alternative.svg,
                                   constrains.maxWidth * 0.4,
                                   constrains.maxWidth * 0.4,
+                                  GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                  GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
+                                  GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                   colorize: true,
                                 ),
                               ),
