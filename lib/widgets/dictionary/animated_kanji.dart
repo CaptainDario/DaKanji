@@ -38,8 +38,20 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
 
   @override
   void initState() {
-
     super.initState();
+    init();
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedKanji oldWidget) {
+    if(oldWidget.kanjiVGString != widget.kanjiVGString){
+      init();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init() {
+    paths.clear(); paints.clear();
 
     // parse kanjiVG entry for paths
     RegExp pathsRegex = RegExp(r' d="(.+?)" stroke="hsl\((\d+).+?(\d+).+?(\d+).*\)" stroke-width="(.+?)');
