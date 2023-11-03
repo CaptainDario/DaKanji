@@ -233,7 +233,14 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     // On / Kun readings
                     LayoutGrid(
                       columnSizes: [auto, 1.fr],
-                      rowSizes: List.generate(10 + (radicals.isNotEmpty ? 1 : 0), (index) => auto),
+                      rowSizes: List.generate(4 +
+                        [
+                          widget.kanjidic2entry.antonyms != null,
+                          widget.kanjidic2entry.synonyms != null,
+                          widget.kanjidic2entry.lookalikes != null,
+                          radicals.isNotEmpty
+                        ].where((e) => e).length * 2,
+                        (index) => auto),
                       children: [
                         Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),
                         SelectableText(onReadings.join(",  ")),
