@@ -2,8 +2,6 @@
 
 ## v3.2.0+66b7 - 辞書開発 (4.11.2023)
 
-New Features:
-
 Improvements:
 
 - Text screen:
