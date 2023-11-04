@@ -91,32 +91,36 @@ Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
 }
 
-/// Returns all kanjis that use all `radicals`
+/// Returns all kanjis that use all `radicals`, sorted by stroke order
 List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radkIsar){
 
-  // get the kanjis that use the selected radicals
-  List<List<String>> kanjis = radkIsar
-  .where()
-    .anyOf(radicals, (q, radical) => 
-      q.radicalEqualTo(radical)
-    )
-  .sortByStrokeCount()
-  .kanjisProperty()
-  .findAllSync();
+  List<String> kanjiByStrokeOrder = [];
 
-  // find the kanjis that are in common
-  List<String> uniqueKanjis = kanjis
-    .map((e) => e.toSet())
-    .reduce((value, element) => value.intersection(element))
-    .toList();
-
-  // sort by stroke order
-  List<String> kanjiByStrokeOrder = GetIt.I<Isars>().dictionary.kanjidic2s
+  if(radicals.isNotEmpty) {
+    // get the kanjis that use the selected radicals
+    List<List<String>> kanjis = radkIsar
     .where()
-      .anyOf(uniqueKanjis, (q, kanji) => q.characterEqualTo(kanji))
+      .anyOf(radicals, (q, radical) => 
+        q.radicalEqualTo(radical)
+      )
     .sortByStrokeCount()
-    .characterProperty()
+    .kanjisProperty()
     .findAllSync();
+
+    // find the kanjis that are in common
+    List<String> uniqueKanjis = kanjis
+      .map((e) => e.toSet())
+      .reduce((value, element) => value.intersection(element))
+      .toList();
+
+    // sort by stroke order
+    kanjiByStrokeOrder = GetIt.I<Isars>().dictionary.kanjidic2s
+      .where()
+        .anyOf(uniqueKanjis, (q, kanji) => q.characterEqualTo(kanji))
+      .sortByStrokeCount()
+      .characterProperty()
+      .findAllSync();
+  }
 
   return kanjiByStrokeOrder;
 }
