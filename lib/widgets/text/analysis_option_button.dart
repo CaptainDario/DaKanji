@@ -52,11 +52,11 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onPressed,
-      onLongPress: widget.onLongPressed,
-      child: Material(
-        color: Theme.of(context).cardColor,
+    return Material(
+      color: Theme.of(context).cardColor,
+      child: InkWell(
+        onTap: widget.onPressed,
+        onLongPress: widget.onLongPressed,
         child: IgnorePointer(
           child: IconButton(
             icon: widget.svgAssetPattern != null
