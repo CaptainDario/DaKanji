@@ -513,8 +513,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // collapse the search bar
     if(widget.canCollapse){
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        searchBarExpanded = false;
-        searchBarAnimationController.reverse(from: 1.0);
+        
+        searchBarAnimationController.reverse(from: 1.0).then((value) {
+          setState(() {
+            searchBarExpanded = false;
+          });
+        });
       }); 
     }
 
