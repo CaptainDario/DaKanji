@@ -23,6 +23,7 @@ Fixed:
     - Opening an example in the text screen raised an excpetion
   - Search bar
     - Separator line does not always disappear when closing the search bar
+    - When closing searchbar using back button, divider disappeared immediately
 
 ## v3.2.0+65b6 - 辞書開発 (3.11.2023)
 
