@@ -28,6 +28,7 @@ Improvements:
 - Radical ui layout on narrow screens
 - Improved data unpacking: UI does not freeze and progress message is shown
 - Warn the user when downgrading versions
+- Radical search speed improved
 
 Fixed:
 
