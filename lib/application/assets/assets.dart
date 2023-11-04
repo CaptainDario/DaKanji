@@ -93,6 +93,7 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
   g_initAppInfoStream.add(
     "Unpacking: ${p.withoutExtension(assetPath.uri.pathSegments.lastWhere((e) => e!=""))}");
+
   await compute(
     extractAssetArchiveToDisk,
     Tuple2(archive, dest.path),
@@ -101,6 +102,7 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
 
 }
 
+/// Wrapper for `extractArchiveToDisk` to run it in an isolate
 void extractAssetArchiveToDisk(Tuple2 params){
 
   extractArchiveToDisk(params.item1, params.item2);
