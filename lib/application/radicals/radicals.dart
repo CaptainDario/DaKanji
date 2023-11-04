@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
@@ -110,18 +111,22 @@ List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radk
 
 /// Returns all radicals that can be used with the `radicals` to find other
 /// kanjis
-List<String> getPossibleRadicals(List<String> radicals, IsarCollection<Radk> radkIsar){
+List<String> getPossibleRadicals(List<String> radicals, IsarCollection<Krad> kradIsar){
 
-  List<String> possibleKanjis = getKanjisByRadical(radicals, radkIsar);
+  Stopwatch s = Stopwatch()..start();
 
   // get the kanjis that use the selected radicals
-  List<String> possiblRadicals = radkIsar.where()
-      .anyOf(radicals, (q, radical) => q.radicalNotEqualTo(radical))
+  List<String> possiblRadicals = kradIsar.where()
+      // quickly (where) filter out all that do not have any matching radical
+      .anyOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
     .filter()
-      .anyOf(possibleKanjis, (q, kanji) => q.kanjisElementEqualTo(kanji))
-      
-  .radicalProperty()
-  .findAllSync();
+      // from the remaining ones, find the ones where all radicals match
+      .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+  .radicalsProperty()
+  .findAllSync()
+  .flattened.toSet().toList();
+
+  print("getPossibleRadicals: ${s.elapsed}");
 
   return possiblRadicals;
 

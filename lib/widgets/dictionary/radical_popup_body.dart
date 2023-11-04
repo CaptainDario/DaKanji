@@ -190,7 +190,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                           radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
                                   
                                         possibleRadicals =
-                                          radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
+                                          radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
                                   
                                         setState(() {});
                                       }
@@ -317,7 +317,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                           kanjisThatUseAllRadicals =
                             radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
                           possibleRadicals =
-                            radk.getPossibleRadicals(selectedRadicals, widget.radkIsar);
+                            radk.getPossibleRadicals(selectedRadicals, widget.kradIsar);
                           
                           setState(() {});
                         },
