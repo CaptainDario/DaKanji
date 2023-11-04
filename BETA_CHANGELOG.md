@@ -18,7 +18,9 @@ Fixed:
   - Asset unpacking became very slow with archive > 3.3.2
 - Dictionary
   - Radical search
-    - Manually clearing all selected radicals showed all available kanji
+    - Manually clearing all selected radicals showed all available kanji instead of none
+  - Examples
+    - Opening an example in the text screen raised an excpetion
 
 ## v3.2.0+65b6 - 辞書開発 (3.11.2023)
 
