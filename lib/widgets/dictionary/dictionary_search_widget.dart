@@ -246,12 +246,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           FocusManager.instance.primaryFocus?.unfocus();
                   
                           setState(() {
-                            searchBarExpanded = !searchBarExpanded;
                   
-                            if(searchBarExpanded) {
+                            if(!searchBarExpanded) {
+                              searchBarExpanded = true;
                               searchBarAnimationController.forward();
-                            } else{
-                              searchBarAnimationController.reverse();
+                            }
+                            else{
+                              searchBarAnimationController.reverse().then((value) {
+                                setState(() {
+                                  searchBarExpanded = false;
+                                });
+                              });
                             }
                           });
                         },
