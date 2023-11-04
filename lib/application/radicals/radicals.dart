@@ -35,11 +35,23 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCol
   return radicals;
 }
 
-/// Returns all radicals from the krad isar, sorted by the number of strokes.
+/// Returns all radicals from the krad isar
 List<Radk> getAllRadicals(IsarCollection<Radk> radkIsar) {
 
   List<Radk> radicals = radkIsar.where()
     .radicalNotEqualTo("")
+  .findAllSync();
+
+  return radicals;
+
+}
+
+/// Returns all radicals from the krad isar as a List of strings
+List<String> getAllRadicalsString(IsarCollection<Radk> radkIsar) {
+
+  List<String> radicals = radkIsar.where()
+    .radicalNotEqualTo("")
+    .radicalProperty()
   .findAllSync();
 
   return radicals;
@@ -111,20 +123,28 @@ List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radk
 
 /// Returns all radicals that can be used with the `radicals` to find other
 /// kanjis
-List<String> getPossibleRadicals(List<String> radicals, IsarCollection<Krad> kradIsar){
+List<String> getPossibleRadicals(List<String> radicals,
+  IsarCollection<Krad> kradIsar, IsarCollection<Radk> radkIsar){
 
   Stopwatch s = Stopwatch()..start();
 
-  // get the kanjis that use the selected radicals
-  List<String> possiblRadicals = kradIsar.where()
-      // quickly (where) filter out all that do not have any matching radical
-      .anyOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
-    .filter()
-      // from the remaining ones, find the ones where all radicals match
-      .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
-  .radicalsProperty()
-  .findAllSync()
-  .flattened.toSet().toList();
+  List<String> possiblRadicals;
+
+  if(radicals.isNotEmpty){
+    // get the kanjis that use the selected radicals
+    possiblRadicals = kradIsar.where()
+        // quickly (where) filter out all that do not have any matching radical
+        .anyOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+      .filter()
+        // from the remaining ones, find the ones where all radicals match
+        .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+    .radicalsProperty()
+    .findAllSync()
+    .flattened.toSet().toList();
+  }
+  else{
+    possiblRadicals = getAllRadicalsString(radkIsar);
+  }
 
   print("getPossibleRadicals: ${s.elapsed}");
 
