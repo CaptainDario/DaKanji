@@ -79,7 +79,7 @@ List<Version> g_NewExamples = [
 ];
 /// all versions that implemented new radiclas data (ISAR DB)
 List<Version> g_NewRadicals = [
-  Version(3, 1, 0)
+  Version(3, 1, 0), Version(3, 2, 0, build: 67)
 ];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
