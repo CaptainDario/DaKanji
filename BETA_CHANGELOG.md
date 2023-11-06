@@ -7,7 +7,7 @@ Improvements:
 - Dictionary
   - Radical search
     - Speed of searching kanjis that use all current radicals improved
-    - Show **only** radicals when no radical is selected
+    - Show **only** radicals (no kanjis) when no radical is selected
 
 ## v3.2.0+66b7 - 辞書開発 (4.11.2023)
 
