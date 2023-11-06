@@ -357,9 +357,11 @@ packages:
   database_builder:
     dependency: "direct main"
     description:
-      path: "../DaKanji-Dictionary/database_builder"
-      relative: true
-    source: path
+      path: database_builder
+      ref: "r3.2.0"
+      resolved-ref: "056b1c09bb20a90f701f76d23df81bf507953d85"
+      url: "https://github.com/CaptainDario/DaKanji-Dictionary"
+    source: git
     version: "1.0.0"
   dbus:
     dependency: transitive

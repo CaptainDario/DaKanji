@@ -73,7 +73,6 @@ dependencies:
   media_kit: 1.1.7                              # Primary package.
   media_kit_video: 1.1.8                        # For video rendering.
   media_kit_libs_video: 1.0.1                   # Native video dependencies.
-  #kana_kit: any # included in dakanji dictionary
   flutter_widget_from_html_core: 0.10.3
   tflite_flutter: 0.10.1
   async: 2.11.0
@@ -95,12 +94,10 @@ dependencies:
       url: https://github.com/CaptainDario/DaKanji-Dependencies
       path: liquid_swipe_flutter
   database_builder:
-    path: ../DaKanji-Dictionary/database_builder
-    #git:
-      #url: https://github.com/CaptainDario/DaKanji-Dictionary
-      #path: database_builder
-      #ref: v3.1.0
-    #path: ../DaKanji-Dictionary/database_builder
+    git:
+      url: https://github.com/CaptainDario/DaKanji-Dictionary
+      path: database_builder
+      ref: v3.2.0
   
   # Not all platforms supported
   webview_flutter: 4.2.4                # android, iOS
