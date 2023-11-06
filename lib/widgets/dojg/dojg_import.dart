@@ -41,8 +41,15 @@ class _DojgImportState extends State<DojgImport> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(LocaleKeys.DojgScreen_dojg_import.tr()),
-                const SizedBox(width: 4.0),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width*0.7,
+
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(LocaleKeys.DojgScreen_dojg_import.tr())
+                  ),
+                ),
+                //const SizedBox(width: 4.0),
                 const Icon(Icons.download),
               ],
             ),
