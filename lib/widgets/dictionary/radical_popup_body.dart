@@ -47,10 +47,14 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   List<String> possibleRadicals = [];
   /// all kanjis that use all selected radicals
   List<String> kanjisThatUseAllRadicals = [];
+
+  List<String> newKanjisThatUseAllRadicals = [];
   /// radicals sorted by stroke order and returns a map of this
   late Map<int, List<String>> radicalsByStrokeOrder;
   /// Is the kanji part of the popup larger
   bool kanjiIsFullscreen = false;
+
+  bool animateKanjiOut = false;
 
 
   @override
@@ -76,39 +80,58 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
           /// all kanjis that use the selected radicals
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
+            onEnd: () {
+              if(animateKanjiOut){
+                setState(() {
+                  kanjisThatUseAllRadicals = newKanjisThatUseAllRadicals;
+                  animateKanjiOut = false;
+                  newKanjisThatUseAllRadicals.clear();
+                });
+              }
+            },
             height: !kanjiIsFullscreen
-              ? (MediaQuery.of(context).size.width) / noKanjiButtons 
+              ? kanjisThatUseAllRadicals.isEmpty || animateKanjiOut
+                ? 0
+                : (MediaQuery.of(context).size.width) / noKanjiButtons 
               : widget.height * 3/5,
-            child: MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              removeBottom: true,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: noKanjiButtons,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8
-                ),
-                itemCount: kanjisThatUseAllRadicals.length,
-                itemBuilder: (context, index) {
-                  return kanjisThatUseAllRadicals.isEmpty
-                    ? Container()
-                    : ElevatedButton(
-                      onPressed: () {
-                        widget.searchController.text += kanjisThatUseAllRadicals[index];
-                      },
-                      child: Text(
-                        kanjisThatUseAllRadicals[index],
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontFamily: g_japaneseFontFamily,
-                          color: Colors.white,
+            child: kanjisThatUseAllRadicals.isEmpty && !animateKanjiOut
+              ? const SizedBox()
+              : AnimationLimiter(
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  removeBottom: true,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: noKanjiButtons,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8
+                    ),
+                    itemCount: kanjisThatUseAllRadicals.length,
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredGrid(
+                        position: index,
+                        columnCount: noKanjiButtons,
+                        child: ScaleAnimation(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              widget.searchController.text += kanjisThatUseAllRadicals[index];
+                            },
+                            child: Text(
+                              kanjisThatUseAllRadicals[index],
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontFamily: g_japaneseFontFamily,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
           ),
 
           const SizedBox(height: 4),
@@ -185,14 +208,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                           selectedRadicals.add(krad.value[index]);
                                         }
                                   
-                                        // find all kanji that use this
-                                        kanjisThatUseAllRadicals =
-                                          radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
-                                  
-                                        possibleRadicals =
-                                          radk.getPossibleRadicals(selectedRadicals, widget.kradIsar, widget.radkIsar);
-                                  
-                                        setState(() {});
+                                        updateKanjiWithRadicalSelection();
                                       }
                                       : null,
                                       child: Center(
@@ -237,7 +253,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
             ),
           ),
         
-          // ok / clear / paste buttons
+          // ok / maximixe / clear / paste buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -291,6 +307,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // maximize button
                       IconButton(
                         onPressed: () {
                           setState(() {
@@ -301,6 +318,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       ),
                       // paste button
                       IconButton(
+                        icon: const Icon(Icons.paste),
                         onPressed: () async {
                           // get radicals in clipboard
                           String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
@@ -314,20 +332,14 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
 
                           // set new selection
                           selectedRadicals = bufferRadicals;
-                          kanjisThatUseAllRadicals =
-                            radk.getKanjisByRadical(selectedRadicals, widget.radkIsar);
-                          possibleRadicals =
-                            radk.getPossibleRadicals(selectedRadicals, widget.kradIsar, widget.radkIsar);
-                          
-                          setState(() {});
+                          updateKanjiWithRadicalSelection();
                         },
-                        icon: const Icon(Icons.paste)
                       ),
                       // icons clear
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            kanjisThatUseAllRadicals.clear();
+                            animateKanjiOut = true;
                             possibleRadicals.clear();
                             selectedRadicals.clear();
                           });
@@ -343,5 +355,27 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
         ],
       )
     );
+  }
+
+  /// Updates the currently found kanji using the currently selected radicals
+  void updateKanjiWithRadicalSelection(){
+    setState(() {
+      possibleRadicals = radk.getPossibleRadicals(
+        selectedRadicals, widget.kradIsar, widget.radkIsar
+      );
+      // find all kanji that use this
+      newKanjisThatUseAllRadicals = radk.getKanjisByRadical(
+          selectedRadicals, widget.kradIsar,
+        );
+
+      // if there are no kanjis, hide the kanji preview
+      if(newKanjisThatUseAllRadicals.isEmpty){
+        animateKanjiOut = true;
+      }
+      else{
+        kanjisThatUseAllRadicals = 
+          newKanjisThatUseAllRadicals;
+      }
+    });
   }
 }
