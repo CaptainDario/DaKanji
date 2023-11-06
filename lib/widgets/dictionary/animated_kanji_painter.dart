@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'dart:typed_data';
+// Dart imports:
 import 'dart:ui' as ui;
-import 'dart:math';
 
-import 'package:path/path.dart';
-
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 /// A custom painter that can draw animated kanjiVG kanjis
 class AnimatedKanjiPainter extends CustomPainter {

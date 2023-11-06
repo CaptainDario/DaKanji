@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:isar/isar.dart';
 
 /// A analysis option button. Either `svgAssetPattern` or `icon` needs to be 
 /// not null.

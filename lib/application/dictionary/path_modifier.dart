@@ -1,7 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:path_parsing/path_parsing.dart';
-
-
 
 /// A [PathProxy] that saves Path command in path
 class PathModifier extends PathProxy {

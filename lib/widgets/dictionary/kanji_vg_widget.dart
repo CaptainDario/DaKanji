@@ -1,14 +1,15 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:ui';
 
-import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:xml/xml.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
 
  /// Widget that shows an animated KanjiVG entry. After the animation finished,
  /// a static kanji is shown with stroke numbers.
