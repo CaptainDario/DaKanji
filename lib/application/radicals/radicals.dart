@@ -87,46 +87,34 @@ Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
 }
 
-/// Returns all kanjis that use all `radicals`, sorted by stroke order
-List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radkIsar){
 
-  List<String> kanjiByStrokeOrder = [];
+/// Returns all kanjis that use all `radicals`, sorted by stroke order.
+List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Krad> kradIsar) {
+
+  List<String> kanjisThatUseAllRadicals = [];
 
   if(radicals.isNotEmpty) {
-    // get the kanjis that use the selected radicals
-    List<List<String>> kanjis = radkIsar
-    .where()
-      .anyOf(radicals, (q, radical) => 
-        q.radicalEqualTo(radical)
-      )
-    .sortByStrokeCount()
-    .kanjisProperty()
-    .findAllSync();
 
-    // find the kanjis that are in common
-    List<String> uniqueKanjis = kanjis
-      .map((e) => e.toSet())
-      .reduce((value, element) => value.intersection(element))
-      .toList();
-
-    // sort by stroke order
-    kanjiByStrokeOrder = GetIt.I<Isars>().dictionary.kanjidic2s
+    kanjisThatUseAllRadicals = kradIsar
       .where()
-        .anyOf(uniqueKanjis, (q, kanji) => q.characterEqualTo(kanji))
-      .sortByStrokeCount()
-      .characterProperty()
+        .anyKanjiStrokeCount()
+      .filter()
+        .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+      .sortByKanjiStrokeCount()
+      .thenByKanji()
+      .limit(250)
+      .kanjiProperty()
       .findAllSync();
-  }
 
-  return kanjiByStrokeOrder;
+  }
+  
+  return kanjisThatUseAllRadicals;
 }
 
 /// Returns all radicals that can be used with the `radicals` to find other
 /// kanjis
 List<String> getPossibleRadicals(List<String> radicals,
   IsarCollection<Krad> kradIsar, IsarCollection<Radk> radkIsar){
-
-  Stopwatch s = Stopwatch()..start();
 
   List<String> possiblRadicals;
 
@@ -145,8 +133,6 @@ List<String> getPossibleRadicals(List<String> radicals,
   else{
     possiblRadicals = getAllRadicalsString(radkIsar);
   }
-
-  print("getPossibleRadicals: ${s.elapsed}");
 
   return possiblRadicals;
 
