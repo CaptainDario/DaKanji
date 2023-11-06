@@ -13,7 +13,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:universal_io/io.dart';
