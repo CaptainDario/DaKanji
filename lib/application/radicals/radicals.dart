@@ -1,11 +1,7 @@
 // Package imports:
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 /// Finds all radicals used in the given `kanji` and returns them. Optionally
 /// if `radkIsar` si given, sorts the radicals by stroke number.
@@ -26,7 +22,7 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCol
     if(radkIsar != null) {
       radicals = radkIsar.where()
           .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
-        .sortByStrokeCount()
+        .sortByRadicalStrokeCount()
         .radicalProperty()
         .findAllSync();
     }
@@ -74,17 +70,17 @@ List<String> getRadicalsString(IsarCollection<Radk> radkIsar) {
 Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
   List<Radk> rads = getAllRadicals(radkIsar)
-    ..sort((a, b) => a.strokeCount.compareTo(b.strokeCount));
+    ..sort((a, b) => a.radicalStrokeCount.compareTo(b.radicalStrokeCount));
 
   Map<int, List<String>> radicalsByStrokeOrder = {};
 
   for (Radk rad in rads) {
 
-    if(!radicalsByStrokeOrder.containsKey(rad.strokeCount)) {
-      radicalsByStrokeOrder[rad.strokeCount] = <String>[];
+    if(!radicalsByStrokeOrder.containsKey(rad.radicalStrokeCount)) {
+      radicalsByStrokeOrder[rad.radicalStrokeCount] = <String>[];
     }
 
-    radicalsByStrokeOrder[rad.strokeCount]!.add(rad.radical);
+    radicalsByStrokeOrder[rad.radicalStrokeCount]!.add(rad.radical);
   }
 
   return radicalsByStrokeOrder;
