@@ -1,5 +1,14 @@
 # DaKanji Beta - changelog
 
+## v3.3.0+67b8 - 辞書開発 (5.11.2023)
+
+Improvements:
+
+- Dictionary
+  - Radical search
+    - Speed of searching kanjis that use all current radicals improved
+    - Show **only** radicals when no radical is selected
+
 ## v3.2.0+66b7 - 辞書開発 (4.11.2023)
 
 Improvements:
