@@ -853,7 +853,7 @@ static const Map<String,dynamic> de = {
     "dojg_examples": "Beispiele",
     "dojg_formation": "Bildung",
     "dojg_image": "Bild",
-    "dojg_import": "Tippen Sie auf , um das DoJG-Deck zu importieren.",
+    "dojg_import": "Tippen Sie um das DoJG-Deck zu importieren.",
     "dojg_import_fail": "Der Import ist fehlgeschlagen. Bitte stellen Sie sicher, dass Sie die richtigen Daten importieren.\nWeitere Einzelheiten finden Sie im Handbuch.",
     "dojg_import_success": "DoJG wurde erfolgreich importiert! Starte App neu...",
     "dojg_importing": "Importiere...",
