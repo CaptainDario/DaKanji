@@ -26,7 +26,8 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  WebViewController webViewController = WebViewController();
+  WebViewController webViewController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted);
   /// should the loading screen be shown (hides webview)
   bool showLoading = false;
   /// the screen's width 

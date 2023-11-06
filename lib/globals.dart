@@ -89,7 +89,7 @@ final bool g_webViewSupported =
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 /// browser user agent to fake a mobile device on desktop
-String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
+String g_mobileUserAgentArg = 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.66 Mobile Safari/537.36';
 
 
 /// The minimum size of the desktop window in normal mode
@@ -182,7 +182,7 @@ const g_forvo = "https://forvo.com/word/";
 /// URL to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 /// url to look up a word in deepL 
-const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en/";
+const g_deepLUrl = "https://www.deepl.com/translator#jp/en/";
 /// url to open a kanji in thekanjimap.com
 const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com

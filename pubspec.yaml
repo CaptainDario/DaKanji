@@ -67,7 +67,7 @@ dependencies:
   scrollable_positioned_list: 0.3.8
   pdf: 3.10.3
   printing: 5.11.0
-  path_parsing: any # included in svg_flutte
+  path_parsing: any               # included in svg_flutter
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
 
   media_kit: 1.1.7                              # Primary package.
@@ -100,7 +100,7 @@ dependencies:
       ref: v3.2.0
   
   # Not all platforms supported
-  webview_flutter: 4.2.4                # android, iOS
+  webview_flutter: 4.4.2                # android, iOS
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
 

@@ -498,8 +498,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       popupAnimationController.forward();
     }
     // close the dict popup when there is no selection
-    if(selection.start != selection.end &&
-      popupAnimationController.isCompleted)
+    if(selection.isCollapsed && popupAnimationController.isCompleted)
     {
       popupAnimationController.reverse(from: 1.0);
     }
