@@ -1,5 +1,21 @@
 # DaKanji Beta - changelog
 
+## v3.3.0+68b9 - 辞書開発 (7.11.2023)
+
+Improvments
+
+- Onboarding
+  - Faster transisiton between pages
+  - Improved rendering performance when swiping as SVGs led to stutttering
+  - Animates back when stop swiping instead of a hard reset
+  - Onboarding images scale down a bit when transitioning in / out
+
+Fixed:
+
+- Text
+  - DeepL not loading
+  - Tapping closed popup when it is already open
+
 ## v3.3.0+67b8 - 辞書開発 (5.11.2023)
 
 Improvements:
