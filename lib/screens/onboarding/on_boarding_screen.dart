@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
@@ -36,25 +37,49 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   with TickerProviderStateMixin {
 
   /// total number of onboarding pages (excluding the final drawing screen)
-  int totalPages = 3;
-    
+  int totalPages = 3;  
   /// the size of the blob to indicate that the page can be turned by swiping
   double blobSize = 75.0;
-
+  /// the height of the buttons to advance the onboaridng
   double buttonHeight = 50.0;
-
+  /// the controller to progress the liquid swipe
   LiquidController liquidController = LiquidController();
-
+  /// the controller to animate the onboarding pictures
+  late final AnimationController _swipeController = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this
+  );
+  /// controller for the movemnet of the liquid swipe dragger
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 1),
     vsync: this,
   );
+  /// animation for the movemnet of the liquid swipe dragger
   late final Animation scaleAnimation;
+  /// background colors for the pages
+  List<Color> pageColors = [
+      g_Dakanji_red,
+      g_Dakanji_grey,
+      g_Dakanji_green,
+      g_Dakanji_blue
+    ];
+  /// Svg vector data preloaded to prevent stuttering
+  List<AssetBytesLoader> svgLoaders = [];
+  /// Is the user currently dragging the liquid swipe onboarding
+  bool isDragging = false;
 
 
   @override
   void initState() { 
     super.initState();
+
+    for (var i = 1; i <= totalPages; i++) {
+      for (var j = 1; j <= 2; j++) {
+        svgLoaders.add(AssetBytesLoader(
+          'assets/images/onboarding/onboarding_${i}_$j.vec'
+        ));
+      }
+    }
     
     scaleAnimation = Tween(
       begin: 0.5,
@@ -66,6 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     _controller.repeat(reverse: true);
 
     _controller.addListener(updateDraggerSize);
+
   }
 
   @override
@@ -82,13 +108,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   Widget build(BuildContext context) {
-    
-    List<Color> pageColors = [
-      g_Dakanji_red,
-      g_Dakanji_grey,
-      g_Dakanji_green,
-      g_Dakanji_blue
-    ];
 
     return Scaffold(
       body: AnimatedBuilder(
@@ -98,37 +117,39 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             positionSlideIcon: 0.85,           
             enableSideReveal: true,
             liquidController: liquidController,
-            fullTransitionValue: 880,
+            fullTransitionValue: 600,
             enableLoop: false,
             slideIconWidget: const SizedBox(
               width:  15, 
               height: 15,
             ),
-            pages: [
-              OnBoardingPage(
-                1, totalPages,
-                pageColors[0],
-                LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
-                liquidController
-              ),
-              OnBoardingPage(
-                2, totalPages,
-                pageColors[1],
-                LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
-                liquidController
-              ),
-              OnBoardingPage(
-                3, totalPages,
-                pageColors[2],
-                LocaleKeys.OnBoarding_Onboarding_3_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
-                liquidController
-              ),
-              const DictionaryScreen(false, false, ""),
-            ],
+            slidePercentCallback: (slidePercentHorizontal, slidePercentVertical) {
+              if(liquidController.provider == null) return;
+
+              if(isDragging){
+                _swipeController.value = liquidController.provider!.slidePercentHor;
+              }
+            },
+            currentUpdateTypeCallback: (updateType) {
+              if(liquidController.provider == null) return;
+
+              if(updateType == UpdateType.doneDragging){
+                isDragging = false;
+                if(liquidController.provider!.slidePercentHor < 0.2){
+                  _swipeController.reverse();
+                }
+                else{
+                  _swipeController.forward();
+                }
+              }
+              else if(updateType == UpdateType.dragging){
+                isDragging = true;
+              }
+            },
             onPageChangeCallback: (int activePageIndex) {
+              if(liquidController.provider!.activePageIndex != activePageIndex){
+                _swipeController.value = 0;
+              }
               // change the current route to the drawing screen
               if (activePageIndex == totalPages){
                 GetIt.I<UserData>().showOnboarding = false;
@@ -142,6 +163,39 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 );
               }
             },
+            pages: [
+              OnBoardingPage(
+                1,
+                svgLoaders[0], svgLoaders[1],
+                totalPages,
+                pageColors[0],
+                LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
+                liquidController,
+                _swipeController
+              ),
+              OnBoardingPage(
+                2,
+                svgLoaders[2], svgLoaders[3],
+                totalPages,
+                pageColors[1],
+                LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
+                liquidController,
+                _swipeController
+              ),
+              OnBoardingPage(
+                3,
+                svgLoaders[4], svgLoaders[5],
+                totalPages,
+                pageColors[2],
+                LocaleKeys.OnBoarding_Onboarding_3_title.tr(),
+                LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
+                liquidController,
+                _swipeController
+              ),
+              const DictionaryScreen(false, false, ""),
+            ],
           );
         }
       ),
