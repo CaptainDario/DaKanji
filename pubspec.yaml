@@ -229,12 +229,12 @@ flutter:
     - assets/dict/krad.zip
     - assets/dict/radk.zip
     # onboarding graphics
-    - assets/images/onboarding/onboarding_1_1.svg
-    - assets/images/onboarding/onboarding_1_2.svg
-    - assets/images/onboarding/onboarding_2_1.svg
-    - assets/images/onboarding/onboarding_2_2.svg
-    - assets/images/onboarding/onboarding_3_1.svg
-    - assets/images/onboarding/onboarding_3_2.svg
+    - assets/images/onboarding/onboarding_1_1.vec
+    - assets/images/onboarding/onboarding_1_2.vec
+    - assets/images/onboarding/onboarding_2_1.vec
+    - assets/images/onboarding/onboarding_2_2.vec
+    - assets/images/onboarding/onboarding_3_1.vec
+    - assets/images/onboarding/onboarding_3_2.vec
 
     - assets/animations/
     # kana mnemonics / sounds
