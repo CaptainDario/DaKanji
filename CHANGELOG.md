@@ -29,6 +29,8 @@ Improvements:
 - Improved data unpacking: UI does not freeze and progress message is shown
 - Warn the user when downgrading versions
 - Radical search speed improved
+- Onboarding UI and performance
+- Various UI improvments
 
 Fixed:
 
