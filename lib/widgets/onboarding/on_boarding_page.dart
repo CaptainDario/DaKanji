@@ -1,15 +1,13 @@
 // Dart imports:
 import 'dart:core';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -25,10 +23,10 @@ class OnBoardingPage extends StatefulWidget {
 
   /// the number of this onboarding
   final int nr;
-  /// Svg loader for the fßoreground onboarding image
-  final AssetBytesLoader foregroundSvgLoader;
-  /// Svg loader for the background onboarding image
-  final AssetBytesLoader backgroundSvgLoader;
+  /// Svg picture info of the foreground onboarding image
+  final ui.Image foregroundSvgPictureInfo;
+  /// Svg picture info of the background onboarding image
+  final ui.Image backgroundSvgPictureInfo;
   /// how many pages does the onboarding have in total
   final int totalPages;
   ///back ground color of this onboarding page
@@ -44,8 +42,8 @@ class OnBoardingPage extends StatefulWidget {
 
   const OnBoardingPage(
     this.nr,
-    this.foregroundSvgLoader,
-    this.backgroundSvgLoader,
+    this.foregroundSvgPictureInfo,
+    this.backgroundSvgPictureInfo,
     this.totalPages, 
     this.bgColor,
     this.headerText,
@@ -62,31 +60,49 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
 
-    /// the size of the indicators showing on which page the user currently is
-    double indicatorSize = 5;
-    /// the amount of parallax for the background image
-    double parallaxBackground  = 25.0;
-    /// the amount of parallax for the foreground image
-    double parallaxForeground = 100.0;
-    /// the minimum size the image will take during swiping through the onboarding
-    double minImgSwipeSize = 0.5;
-    /// how much space the iamge should take of available space as a fraction
-    /// of the canvas space also see `canvasSize`
-    double imgCanvasFraction = 0.9;
+  /// the size of the indicators showing on which page the user currently is
+  double indicatorSize = 5;
+  /// the amount of parallax for the background image
+  double parallaxBackground  = 25.0;
+  /// the amount of parallax for the foreground image
+  double parallaxForeground = 100.0;
+  /// the minimum size the image will take during swiping through the onboarding
+  double minImgSwipeSize = 0.5;
+  /// how much space the iamge should take of available space as a fraction
+  /// of the canvas space also see `canvasSize`
+  double imgCanvasFraction = 0.9;
+  /// screen width
+  double sWidth = 0;
+  /// screen height
+  double sHeight = 0;
+  /// size of the total canvas where the onboarding images are shown
+  double canvasSize = 0;
+  /// the size of the actual svg image shown on the canvas
+  double imgSize = 0;
+  /// padding around the canvs (percent)
+  double padding = 0;
+  /// size of the text
+  double textSize = 0;
+
+  double imageTopPadding = 0;
+
 
   @override
   Widget build(BuildContext context) {
 
-    double sWidth  = MediaQuery.sizeOf(context).width;
-    double sHeight = MediaQuery.sizeOf(context).height;
+    // if size changed update sizes
+    if(sWidth != MediaQuery.sizeOf(context).width ||
+      sHeight != MediaQuery.sizeOf(context).height){
+      sWidth  = MediaQuery.sizeOf(context).width;
+      sHeight = MediaQuery.sizeOf(context).height;
 
-    double canvasSize = sWidth*0.95 > sHeight*0.75 ? sHeight*0.75 : sWidth*0.95;
-    
-    double imgSize  = canvasSize * imgCanvasFraction;
-    double padding  = 1 - imgCanvasFraction;
-    double textSize = sHeight * 0.3;
-    double imageTopPadding = (sHeight*0.33)-imgSize/2;
-
+      canvasSize = sWidth*0.95 > sHeight*0.75 ? sHeight*0.75 : sWidth*0.95;
+      
+      imgSize  = canvasSize * imgCanvasFraction;
+      padding  = 1 - imgCanvasFraction;
+      textSize = sHeight * 0.3;
+      imageTopPadding = (sHeight*0.33)-imgSize/2;
+    }
 
     return Container(
       height: sHeight,
@@ -105,24 +121,27 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 Positioned(
                   width: imgSize *
                     (widget.liquidController.currentPage == widget.nr-1
-                      ? lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
-                      : lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
+                      ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
+                      : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
                   height: imgSize,
                   left: calculateLeftOffset(imgSize, parallaxBackground) + imgSize*padding,
                   child: RepaintBoundary(
-                    child: SvgPicture(widget.foregroundSvgLoader),
+                    child: RawImage(
+                      image: widget.foregroundSvgPictureInfo,
+                    ),
                   ),
                 ),
-                
                 Positioned(
                   height: imgSize *
                     (widget.liquidController.currentPage == widget.nr-1
-                      ? lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
-                      : lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
+                      ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
+                      : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
                   width: imgSize,
                   left: calculateLeftOffset(imgSize, parallaxForeground) + imgSize*padding,
                   child: RepaintBoundary(
-                    child: SvgPicture(widget.backgroundSvgLoader),
+                    child: RawImage(
+                      image: widget.backgroundSvgPictureInfo,
+                    ),
                   ),
                 ),
               ],

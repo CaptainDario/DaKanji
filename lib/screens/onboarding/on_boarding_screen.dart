@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:ui' as ui;
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -64,22 +67,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       g_Dakanji_blue
     ];
   /// Svg vector data preloaded to prevent stuttering
-  List<AssetBytesLoader> svgLoaders = [];
+  List<ui.Image> svgImages = [];
   /// Is the user currently dragging the liquid swipe onboarding
-  bool isDragging = false;
+  bool isDragging = true;
 
 
   @override
   void initState() { 
     super.initState();
-
-    for (var i = 1; i <= totalPages; i++) {
-      for (var j = 1; j <= 2; j++) {
-        svgLoaders.add(AssetBytesLoader(
-          'assets/images/onboarding/onboarding_${i}_$j.vec'
-        ));
-      }
-    }
     
     scaleAnimation = Tween(
       begin: 0.5,
@@ -92,6 +87,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
     _controller.addListener(updateDraggerSize);
 
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      init().then((value) => setState((){}));
+    });
+  }
+
+  Future<void> init() async {
+    for (var i = 1; i <= totalPages; i++) {
+      for (var j = 1; j <= 2; j++) {
+        AssetBytesLoader aBL = AssetBytesLoader(
+          'assets/images/onboarding/onboarding_${i}_$j.vec'
+        );
+        PictureInfo pI = await vg.loadPicture(aBL, context);
+        svgImages.add(pI.picture.toImageSync(3000, 3000));
+      }
+    }
   }
 
   @override
@@ -113,6 +123,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, widget) {
+          
+          if(svgImages.length < totalPages*2) return const SizedBox();
+
           return LiquidSwipe(
             positionSlideIcon: 0.85,           
             enableSideReveal: true,
@@ -166,7 +179,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             pages: [
               OnBoardingPage(
                 1,
-                svgLoaders[0], svgLoaders[1],
+                svgImages[0], svgImages[1],
                 totalPages,
                 pageColors[0],
                 LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
@@ -176,7 +189,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               ),
               OnBoardingPage(
                 2,
-                svgLoaders[2], svgLoaders[3],
+                svgImages[2], svgImages[3],
                 totalPages,
                 pageColors[1],
                 LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
@@ -186,7 +199,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               ),
               OnBoardingPage(
                 3,
-                svgLoaders[4], svgLoaders[5],
+                svgImages[4], svgImages[5],
                 totalPages,
                 pageColors[2],
                 LocaleKeys.OnBoarding_Onboarding_3_title.tr(),
