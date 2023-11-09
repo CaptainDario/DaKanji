@@ -1,6 +1,6 @@
 # DaKanji Beta - changelog
 
-## v3.2.0+69b10 - 辞書開発 (9.11.2023)
+## v3.2.0+69b10 - 文法 (9.11.2023)
 
 - Onboarding
   - Improved rendering performance EVEN MORE when swiping as SVGs led to stuttering
@@ -9,7 +9,7 @@
   - Allow zooming in images of DoJG
   - Double tap to open DoJG image in fullscreen
 
-## v3.2.0+68b9 - 辞書開発 (7.11.2023)
+## v3.2.0+68b9 - 文法 (7.11.2023)
 
 Improvements
 
@@ -25,7 +25,7 @@ Fixed:
   - DeepL not loading
   - Tapping popup closed it when it was already open
 
-## v3.2.0+67b8 - 辞書開発 (5.11.2023)
+## v3.2.0+67b8 - 文法 (5.11.2023)
 
 Improvements:
 
@@ -34,7 +34,7 @@ Improvements:
     - Speed of searching kanjis that use all current radicals improved
     - Show **only** radicals (no kanjis) when no radical is selected
 
-## v3.2.0+66b7 - 辞書開発 (4.11.2023)
+## v3.2.0+66b7 - 文法 (4.11.2023)
 
 Improvements:
 
@@ -57,7 +57,7 @@ Fixed:
     - Separator line does not always disappear when closing the search bar
     - When closing searchbar using back button, divider disappeared immediately
 
-## v3.2.0+65b6 - 辞書開発 (3.11.2023)
+## v3.2.0+65b6 - 文法 (3.11.2023)
 
 - Text screen selection buttons
   - cannot shrink selection at the end of text
@@ -68,7 +68,7 @@ Fixed:
   - Fixed: clipboard deep link
   - Fixed: opening the draw screen when it is already open breaks it  
 
-## v3.2.0+64b5 - 辞書開発 (29.10.2023)
+## v3.2.0+64b5 - 文法 (29.10.2023)
 
 - Text screen selection buttons
   - Enabled by default
@@ -82,7 +82,7 @@ Fixed:
 - Make text screen buttons fade at the side to indicate that they are scrollable
 - Manual not scrollable on tiny/narrow screens
 
-## v3.2.0+63b4 - 辞書開発 (29.10.2023)
+## v3.2.0+63b4 - 文法 (29.10.2023)
 
 - Text screen selection buttons slow
 - The deconjugate message covers the text selection buttons

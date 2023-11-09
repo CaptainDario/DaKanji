@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.2.0+65 - 辞書開発 (3.11.2023)
+## v3.2.0+65 - 文法 (3.11.2023)
 
 New Features:
 
@@ -30,7 +30,7 @@ Improvements:
 - Warn the user when downgrading versions
 - Radical search speed improved
 - Onboarding UI and performance
-- Various UI improvments
+- Various UI and performance improvments
 
 Fixed:
 
