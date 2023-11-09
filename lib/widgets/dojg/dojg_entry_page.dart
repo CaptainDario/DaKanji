@@ -45,7 +45,7 @@ class DojgEntryPage extends ConsumerStatefulWidget {
 
 class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
 
-
+  int pointerCount = 0;
 
   @override
   void initState() {
@@ -73,169 +73,231 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
           ),
         ]
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8 , 0),
-        child: ListView(
-          children: [
-
-            const SizedBox(height: 16,),
-            if(widget.dojgEntry.usage != null)
-              Text(widget.dojgEntry.usage!),
-
-            if([widget.dojgEntry.antonymExpression,
-              widget.dojgEntry.relatedExpression,
-              widget.dojgEntry.equivalent,
-              widget.dojgEntry.pos].any((e) => e != null))
-              ...[
-                const SizedBox(height: 8,),
-                LayoutGrid(
-                  columnSizes: [auto, 1.fr],
-                  rowSizes: const [auto, auto, auto, auto],
-                  children: [
-                    if(widget.dojgEntry.antonymExpression != null)
-                      ...[
-                        Text(
-                          LocaleKeys.DojgScreen_dojg_antonym.tr(),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          widget.dojgEntry.antonymExpression!,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    if(widget.dojgEntry.relatedExpression != null)
-                      ...[
-                        Text(
-                          LocaleKeys.DojgScreen_dojg_related.tr(),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        Wrap(
-                          children: [
-                            for (String exp in widget.dojgEntry.relatedExpression!
-                              .replaceAll("【Related Expression: ", "")
-                              .replaceAll("】", "").split(";")
-                            )
-                              RichText(
-                                text: TextSpan(
-                                  text: "$exp   ",
-                                  recognizer: TapGestureRecognizer()..onTap = (
-                                    () {
-                                      ref.read(dojgSearchProvider.notifier)
-                                        .setCurrentSearchTerm(exp
-                                            // remove characters that break the search
-                                            .replaceAll(RegExp(r"[\(|\)|\d]"), "")
-                                            // remove excess whitespace
-                                            .trim()
-                                        );
-                                      if(widget.isSeparateRoute){
-                                        Navigator.of(context).pop();
-                                      }
-                                    }
-                                  )
-                                ),
+      body: Listener(
+        onPointerDown: (event) {
+          setState(() {
+            pointerCount++;
+          });
+        },
+        onPointerUp: (event) {
+          setState(() {
+            pointerCount--;
+          });
+        },
+        onPointerCancel: (event) {
+          setState(() {
+            pointerCount--;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 0, 8 , 0),
+          child: ListView(
+            physics: pointerCount > 1
+              ? const NeverScrollableScrollPhysics()
+              : const ScrollPhysics(),
+            children: [
+      
+              const SizedBox(height: 16,),
+              if(widget.dojgEntry.usage != null)
+                Text(widget.dojgEntry.usage!),
+      
+              if([widget.dojgEntry.antonymExpression,
+                widget.dojgEntry.relatedExpression,
+                widget.dojgEntry.equivalent,
+                widget.dojgEntry.pos].any((e) => e != null))
+                ...[
+                  const SizedBox(height: 8,),
+                  LayoutGrid(
+                    columnSizes: [auto, 1.fr],
+                    rowSizes: const [auto, auto, auto, auto],
+                    children: [
+                      if(widget.dojgEntry.antonymExpression != null)
+                        ...[
+                          Text(
+                            LocaleKeys.DojgScreen_dojg_antonym.tr(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            widget.dojgEntry.antonymExpression!,
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      if(widget.dojgEntry.relatedExpression != null)
+                        ...[
+                          Text(
+                            LocaleKeys.DojgScreen_dojg_related.tr(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          Wrap(
+                            children: [
+                              for (String exp in widget.dojgEntry.relatedExpression!
+                                .replaceAll("【Related Expression: ", "")
+                                .replaceAll("】", "").split(";")
                               )
-                          ],
-                        ),
-                      ],
-                    if(widget.dojgEntry.equivalent != null)
-                      ...[
-                        Text(
-                          LocaleKeys.DojgScreen_dojg_eng_equivalent.tr(),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          widget.dojgEntry.equivalent!,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    if(widget.dojgEntry.pos != null)
-                      ...[
-                        Text(
-                          LocaleKeys.DojgScreen_dojg_pos.tr(),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          widget.dojgEntry.pos!,
-                          style: const TextStyle(color: Colors.grey), 
-                        ),
-                      ],
-                  ],
-                ),
-                const SizedBox(height: 16,),
-              ],
-
-            // formation ie. conjugation / usage
-            if(widget.dojgEntry.formation != null)
-              ...[
-                Text(
-                  LocaleKeys.DojgScreen_dojg_formation.tr(),
-                  textScaleFactor: 1.25,
-                ),
-                HtmlWidget(
-                  widget.dojgEntry.formation!,
-                  customStylesBuilder: (element) {
-                    if (element.classes.contains('concept')) {
-                      return {'font-weight': 'bold'};
-                    }
-                    return null;
-                  },
-                  textStyle: const TextStyle(
-                    fontFamily: g_japaneseFontFamily
+                                RichText(
+                                  text: TextSpan(
+                                    text: "$exp   ",
+                                    recognizer: TapGestureRecognizer()..onTap = (
+                                      () {
+                                        ref.read(dojgSearchProvider.notifier)
+                                          .setCurrentSearchTerm(exp
+                                              // remove characters that break the search
+                                              .replaceAll(RegExp(r"[\(|\)|\d]"), "")
+                                              // remove excess whitespace
+                                              .trim()
+                                          );
+                                        if(widget.isSeparateRoute){
+                                          Navigator.of(context).pop();
+                                        }
+                                      }
+                                    )
+                                  ),
+                                )
+                            ],
+                          ),
+                        ],
+                      if(widget.dojgEntry.equivalent != null)
+                        ...[
+                          Text(
+                            LocaleKeys.DojgScreen_dojg_eng_equivalent.tr(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            widget.dojgEntry.equivalent!,
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      if(widget.dojgEntry.pos != null)
+                        ...[
+                          Text(
+                            LocaleKeys.DojgScreen_dojg_pos.tr(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            widget.dojgEntry.pos!,
+                            style: const TextStyle(color: Colors.grey), 
+                          ),
+                        ],
+                    ],
                   ),
-                )
-              ],
-
-            // key sentences
-            if(widget.dojgEntry.keySentencesEn.isNotEmpty)
-              ...[
-                const SizedBox(height: 10,),
-                Text(
-                  LocaleKeys.DojgScreen_dojg_key_sentences.tr(),
-                  textScaleFactor: 1.5
-                ),
-                const SizedBox(height: 5,),
-                DojgSentenceTable(
-                  widget.dojgEntry.keySentencesJp.map((e) => 
-                    e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
-                  ).toList(),
-                  widget.dojgEntry.keySentencesEn
-                )
-              ],
-            // examples
-            if(widget.dojgEntry.examplesEn.isNotEmpty)
-              ...[
-                const SizedBox(height: 10,),
-                Text(
-                  LocaleKeys.DojgScreen_dojg_examples.tr(),
-                  textScaleFactor: 1.5,
-                ),
-                const SizedBox(height: 5,),
-                DojgSentenceTable(
-                  widget.dojgEntry.examplesJp.map((e) => 
-                    e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
-                  ).toList(),
-                  widget.dojgEntry.examplesEn
-                )
-              ],
-
-            // small margin at the end of the list
-            const SizedBox(height: 8,),
-
-            if(widget.dojgEntry.noteImageName != null)
-              ExpansionTile(
-                title: Text(
-                  LocaleKeys.DojgScreen_dojg_image.tr(),
-                  textScaleFactor: 1.5,
-                ),
-                children: [
-                  Image.file(File(
-                    p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
-                  ))
+                  const SizedBox(height: 16,),
                 ],
-              )
-          ],
+      
+              // formation ie. conjugation / usage
+              if(widget.dojgEntry.formation != null)
+                ...[
+                  Text(
+                    LocaleKeys.DojgScreen_dojg_formation.tr(),
+                    textScaleFactor: 1.25,
+                  ),
+                  HtmlWidget(
+                    widget.dojgEntry.formation!,
+                    customStylesBuilder: (element) {
+                      if (element.classes.contains('concept')) {
+                        return {'font-weight': 'bold'};
+                      }
+                      return null;
+                    },
+                    textStyle: const TextStyle(
+                      fontFamily: g_japaneseFontFamily
+                    ),
+                  )
+                ],
+      
+              // key sentences
+              if(widget.dojgEntry.keySentencesEn.isNotEmpty)
+                ...[
+                  const SizedBox(height: 10,),
+                  Text(
+                    LocaleKeys.DojgScreen_dojg_key_sentences.tr(),
+                    textScaleFactor: 1.5
+                  ),
+                  const SizedBox(height: 5,),
+                  DojgSentenceTable(
+                    widget.dojgEntry.keySentencesJp.map((e) => 
+                      e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
+                    ).toList(),
+                    widget.dojgEntry.keySentencesEn
+                  )
+                ],
+              // examples
+              if(widget.dojgEntry.examplesEn.isNotEmpty)
+                ...[
+                  const SizedBox(height: 10,),
+                  Text(
+                    LocaleKeys.DojgScreen_dojg_examples.tr(),
+                    textScaleFactor: 1.5,
+                  ),
+                  const SizedBox(height: 5,),
+                  DojgSentenceTable(
+                    widget.dojgEntry.examplesJp.map((e) => 
+                      e.replaceAll(RegExp(r'<span class="green".*?n>'), "")
+                    ).toList(),
+                    widget.dojgEntry.examplesEn
+                  )
+                ],
+      
+              // small margin at the end of the list
+              const SizedBox(height: 8,),
+      
+              if(widget.dojgEntry.noteImageName != null)
+                ExpansionTile(
+                  title: Text(
+                    LocaleKeys.DojgScreen_dojg_image.tr(),
+                    textScaleFactor: 1.5,
+                  ),
+                  children: [
+                    GestureDetector(
+                      onDoubleTap: () {
+                        openDojgImageFullScreen();
+                      },
+                      child: InteractiveViewer(
+                        panEnabled: true, // Set it to false
+                        boundaryMargin: const EdgeInsets.all(100),
+                        child: Image.file(File(
+                          p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
+                        )),
+                      ),
+                    )
+                  ],
+                )
+            ],
+          ),
         ),
       )
     );
+  }
+
+  void openDojgImageFullScreen(){
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(widget.dojgEntry.grammaticalConcept)
+            ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: InteractiveViewer(
+                boundaryMargin: const EdgeInsets.all(100),
+                minScale: 0.1,
+                maxScale: 10,
+                clipBehavior: Clip.none,
+                child: Image.file(File(
+                  p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
+                )),
+              ),
+            ),
+          ),
+        );
+      }
+    ));
   }
 }

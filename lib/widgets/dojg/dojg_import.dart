@@ -29,56 +29,53 @@ class _DojgImportState extends State<DojgImport> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: importDojgPressed,
-      child: Container(
-        constraints: const BoxConstraints.expand(),
-        color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width*0.7,
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
 
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(LocaleKeys.DojgScreen_dojg_import.tr())
+          GestureDetector(
+            onTap: importDojgPressed,
+            child: Container(
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
+                child: Center(
+                  child: Flexible(
+                    child: Text(
+                      LocaleKeys.DojgScreen_dojg_import.tr(),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-                //const SizedBox(width: 4.0),
-                const Icon(Icons.download),
-              ],
+              ),
             ),
-            GestureDetector(
-              onTap: () => pushManual(context, ManualTypes.dojg),
+          ),
+          // info text
+          GestureDetector(
+            onTap: () => pushManual(context, ManualTypes.dojg),
+            child: Container(
+              color: Colors.transparent,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
+                padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
+                child: Center(
+                  child: Flexible(
+                    child: Text(
                       LocaleKeys.DojgScreen_refer_to_manual.tr(),
                       textScaleFactor: 0.9,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),
-                    const SizedBox(width: 4,),
-                    const Icon(
-                      Icons.file_open,
-                      size: 20,
-                      color: Colors.grey,
-                    )
-                  ]
+                  ),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
