@@ -1,6 +1,15 @@
 # DaKanji Beta - changelog
 
-## v3.3.0+68b9 - 辞書開発 (7.11.2023)
+## v3.2.0+69b10 - 辞書開発 (9.11.2023)
+
+- Onboarding
+  - Improved rendering performance EVEN MORE when swiping as SVGs led to stuttering
+- DoJG
+  - Text misaligned
+  - Allow zooming in images of DoJG
+  - Double tap to open DoJG image in fullscreen
+
+## v3.2.0+68b9 - 辞書開発 (7.11.2023)
 
 Improvements
 
@@ -16,7 +25,7 @@ Fixed:
   - DeepL not loading
   - Tapping popup closed it when it was already open
 
-## v3.3.0+67b8 - 辞書開発 (5.11.2023)
+## v3.2.0+67b8 - 辞書開発 (5.11.2023)
 
 Improvements:
 
