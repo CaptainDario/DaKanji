@@ -2,8 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,15 +15,18 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/part_of_speech.dart';
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/widgets/widgets/fading_single_child_scroll_view.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 
 /// The "draw"-screen.
@@ -37,7 +38,7 @@ class TextScreen extends StatefulWidget {
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
   /// If set to true, the app will include a back-arrow instead of the hamburger
-  /// menu (useful if a sceen should just be shown shortly and the user likely
+  /// menu (useful if a screen should just be shown shortly and the user likely
   /// want to go back to the previous screen)
   final bool useBackArrowAppBar;
   /// should the focus nodes for the tutorial be included
@@ -108,9 +109,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
     super.initState();
 
+    // check if the screen should open with the processed text in fullscreen
+    fullScreen = GetIt.I<Settings>().text.openInFullscreen;
+
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
-      value: 0.0,
+      value: fullScreen ? 1.0 : 0.0,
       vsync: this,
     );
     _animation = _controller.drive(
@@ -148,13 +152,15 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       }
 
       // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if(widget.includeTutorial && onboarding != null && 
-        GetIt.I<UserData>().showTutorialText) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().textScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if(widget.includeTutorial && onboarding != null && 
+          GetIt.I<UserData>().showTutorialText) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().textScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().textScreenTutorial.indexes!
+          );
+        }
       }
     });
   }
@@ -185,7 +191,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                 poupAnimationController: popupAnimationController,
                 padding: 8.0,
                 constraints: constraints,
-                allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
+                allowDeconjugation: GetIt.I<Settings>().text.searchDeconjugate,
                 onPopupInitialized: (tabController) {
                   popupTabController = tabController;
                 },
@@ -303,106 +309,159 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Wrap(
-                                    runAlignment: WrapAlignment.end,
-                                    children: [
-                                      // spaces toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          addSpaces,
-                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {addSpaces = !addSpaces;})
+                                child: FadingSingleChildScrollView(
+                                  fadePercentage: 0.2,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Wrap(
+                                      runAlignment: WrapAlignment.end,
+                                      children: [
+                                        // spaces toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                          child: AnalysisOptionButton(
+                                            addSpaces,
+                                            svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {addSpaces = !addSpaces;})
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      // furigana toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                        child: AnalysisOptionButton(
-                                          showRubys,
-                                          svgAssetPattern: "assets/icons/furigana_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {showRubys = !showRubys;})
-                                          ),
-                                        )
-                                      ),
-                                      // button to colorize words matching POS
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                        child: AnalysisOptionButton(
-                                          colorizePos,
-                                          svgAssetPattern: "assets/icons/pos_*.svg",
-                                          onPressed: (() => 
-                                            setState(() {colorizePos = !colorizePos;})
-                                          ),
-                                        )
-                                      ),
-                                      // full screen toggle
-                                      Focus(
-                                        focusNode: widget.includeTutorial ?
-                                          GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
-                                        child: AnalysisOptionButton(
-                                          fullScreen,
-                                          onIcon: Icons.fullscreen,
-                                          offIcon: Icons.fullscreen_exit,
-                                          onPressed: onFullScreenButtonPress
-                                        )
-                                      ),
-                                      if(GetIt.I<Settings>().text.selectionButtonsEnabled)
-                                        ...[
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
+                                        // furigana toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                          child: AnalysisOptionButton(
+                                            showRubys,
+                                            svgAssetPattern: "assets/icons/furigana_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {showRubys = !showRubys;})
+                                            ),
+                                          )
+                                        ),
+                                        // button to colorize words matching POS
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                          child: AnalysisOptionButton(
+                                            colorizePos,
+                                            svgAssetPattern: "assets/icons/pos_*.svg",
+                                            onPressed: (() => 
+                                              setState(() {colorizePos = !colorizePos;})
+                                            ),
+                                          )
+                                        ),
+                                        // full screen toggle
+                                        Focus(
+                                          focusNode: widget.includeTutorial ?
+                                            GetIt.I<Tutorials>().textScreenTutorial.fullscreenSteps : null,
+                                          child: AnalysisOptionButton(
+                                            fullScreen,
+                                            onIcon: Icons.fullscreen,
+                                            offIcon: Icons.fullscreen_exit,
+                                            onPressed: onFullScreenButtonPress
+                                          )
+                                        ),
+                                        // paste text button
+                                        AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.paste,
+                                          onIcon: Icons.paste,
+                                          onPressed: () async {
+                                            ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+                                            String clipboardString = clipboardData?.text ?? "";
+                                            setState(() {
+                                              customSelectableTextController.resetSelection();
+                                              inputController.text = clipboardString;
+                                              inputText = clipboardString;
+                                              processText(clipboardString);
+                                            });
+                                          },
+                                        ),
+                                        // copy button
+                                        AnalysisOptionButton(
+                                          true,
+                                          offIcon: Icons.copy,
+                                          onIcon: Icons.copy,
+                                          onPressed: () {
+                                  
+                                            String currentSelection =
+                                              customSelectableTextController.getCurrentSelectionString();
+                                            Clipboard.setData(
+                                              ClipboardData(text:currentSelection)
+                                            ).then((_){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
+                                                );
+                                            });
+                                          },
+                                        ),
+                                        
+                                        if(GetIt.I<Settings>().text.selectionButtonsEnabled)
+                                          ...[
+                                            // shrink selection button
+                                            AnalysisOptionButton(
                                               true,
                                               onIcon: Icons.arrow_back,
                                               offIcon: Icons.arrow_back,
                                               onPressed: () {
-                                                customSelectableTextController.selectPreviousWord(expand: true);
+                                                customSelectableTextController.shrinkSelectionRight(0);
+                                                assurePopupOpen();
                                               },
-                                            )
-                                          ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
+                                              onLongPressed: () {
+                                                customSelectableTextController.shrinkSelectionRight(1);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // grow selection button
+                                            AnalysisOptionButton(
                                               true,
                                               onIcon: Icons.arrow_forward,
                                               offIcon: Icons.arrow_forward,
                                               onPressed: () {
-                                                customSelectableTextController.selectNextWord(expand: true);
+                                                customSelectableTextController.growSelectionRight(growBy: 0);
+                                                assurePopupOpen();
                                               },
-                                            )
-                                          ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
+                                              onLongPressed: () {
+                                                customSelectableTextController.growSelectionRight(growBy: 1);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // select previous token / char
+                                            AnalysisOptionButton(
                                               true,
                                               onIcon: Icons.arrow_left,
                                               offIcon: Icons.arrow_left,
                                               onPressed: () {
-                                                customSelectableTextController.selectPreviousWord();
+                                                customSelectableTextController.selectPrevious();
+                                                assurePopupOpen();
                                               },
-                                            )
-                                          ),
-                                          Focus(
-                                            focusNode: null,
-                                            child: AnalysisOptionButton(
+                                              onLongPressed: () {
+                                                customSelectableTextController.selectPrevious(previousChar: true);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                            // select next token / char
+                                            AnalysisOptionButton(
                                               true,
                                               onIcon: Icons.arrow_right,
                                               offIcon: Icons.arrow_right,
+                                              // word
                                               onPressed: () {
-                                                customSelectableTextController.selectNextWord();
+                                                customSelectableTextController.selectNext();
+                                                assurePopupOpen();
                                               },
-                                            )
-                                          ),
-                                        ]
-                                    ],
+                                              // char
+                                              onLongPressed: () {
+                                                customSelectableTextController.selectNext(nextChar: true);
+                                                assurePopupOpen();
+                                              },
+                                            ),
+                                          ]
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )
@@ -422,6 +481,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     );
   }
 
+  /// assures that the popup is open by opening it if it is closed
+  void assurePopupOpen(){
+    if(!popupAnimationController.isCompleted){
+      popupAnimationController.forward();
+    }
+  }
+
   /// Callback that is called when the text selection of the CustomSelectableText
   /// changes
   void onCustomSelectableTextChange(TextSelection selection){
@@ -432,8 +498,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
       popupAnimationController.forward();
     }
     // close the dict popup when there is no selection
-    if(selection.start != selection.end &&
-      popupAnimationController.isCompleted)
+    if(selection.isCollapsed && popupAnimationController.isCompleted)
     {
       popupAnimationController.reverse(from: 1.0);
     }
@@ -500,7 +565,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// mecabPOS, mecabSurfaces and mecabReadings
   void processText(String text){
     
-    // analyze text with kagome
+    // analyze text with mecab
     List<TokenNode> analyzedText = GetIt.I<Mecab>().parse(text);
     // remove EOS symbol
     analyzedText.removeLast(); 

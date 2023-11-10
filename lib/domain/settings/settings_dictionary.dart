@@ -79,6 +79,31 @@ class SettingsDictionary with ChangeNotifier {
   @JsonKey(defaultValue: ["N5", "N4", "N3"])
   List<String> selectedFallingWordsLevels = ["N5", "N4", "N3"];
 
+  /// When opening the kanji page, should the animation be played
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_playKanjiAnimationWhenOpened = true;
+  /// When opening the kanji page, should the animation be played
+  @JsonKey(defaultValue: d_playKanjiAnimationWhenOpened)
+  bool playKanjiAnimationWhenOpened = d_playKanjiAnimationWhenOpened;
+
+  /// How many seconds should the animation take for one stroke
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const double d_kanjiAnimationStrokesPerSecond = 5;
+  /// How many seconds should the animation take for one stroke
+  @JsonKey(defaultValue: d_kanjiAnimationStrokesPerSecond)
+  double kanjiAnimationStrokesPerSecond = d_kanjiAnimationStrokesPerSecond;
+
+  /// When stopping to swipe to modify the kanji animation, should the animation
+  /// continue playing
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_resumeAnimationAfterStopSwipe = false;
+  /// When swipe to scroll to modify the kanji animation, should the animation
+  /// continue playing
+  @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
+  bool resumeAnimationAfterStopSwipe = d_resumeAnimationAfterStopSwipe;
 
 
   SettingsDictionary();

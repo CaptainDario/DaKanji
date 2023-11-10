@@ -1,13 +1,15 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/data/manual/manual_data.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/data/manual/manual_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
-import 'package:da_kanji_mobile/application/manual/manual.dart';
+
+// Project imports:
+
 
 /// The screen to show the manual of DaKanji
 class ManualScreen extends StatefulWidget {
@@ -45,16 +47,18 @@ class _ManualScreenState extends State<ManualScreen>
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.topCenter,
-          child: Wrap(
-            runSpacing: 8,
-            spacing: 8,
-            children: List.generate(manualData.manualTypes.length, (index) => 
-              ManualButton(
-                size: manualButtonSize,
-                icon: manualData.manualIcons[index],
-                text: manualData.manualTitles[index],
-                onPressed: () => pushManual(context, manualData.manualTypes[index]),
-              )
+          child: SingleChildScrollView(
+            child: Wrap(
+              runSpacing: 8,
+              spacing: 8,
+              children: List.generate(manualData.manualTypes.length, (index) => 
+                ManualButton(
+                  size: manualButtonSize,
+                  icon: manualData.manualIcons[index],
+                  text: manualData.manualTitles[index],
+                  onPressed: () => pushManual(context, manualData.manualTypes[index]),
+                )
+              ),
             ),
           ),
         ),

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:app_links/app_links.dart';
 import 'package:get_it/get_it.dart';
-import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
@@ -26,7 +25,8 @@ Future<void> initDeepLinksStream() async {
   /// Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
-    if(uri.toString().startsWith(g_AppLinkDaKanji)){
+    if(uri.toString().startsWith(g_AppLinkDaKanji) || 
+      uri.toString().startsWith(g_AppLinkHttps)){
       handleDeepLink(uri.toString());
     }
   });
@@ -49,15 +49,15 @@ void handleDeepLink(String link){
   else if(route[0] == Screens.text.name){
     handleDeepLinkText(args);
   }
-  else if(route[0] == Screens.text.name){
-    handleDeepLinkText(args);
-  }
-  // TODO deep link dojg
   else if(route[0] == Screens.dojg.name){
     handleDeepLinkDojg(args);
   }
   else if(route[0] == Screens.kanjiTable.name.replaceAll("_", "-")){
     handleDeepLinkKanjiTable(args);
+  }
+  // clipboard
+  else if(route[0] == Screens.clipboard.name){
+    handleDeepLinkClipboard(args);
   }
   else if(route[0] == Screens.settings.name){
     handleDeepLinkSettings(args);
@@ -181,10 +181,12 @@ void handleDeepLinkDrawing(Map<String, String> linkArgs){
     }
   }
 
-  if(NavigationHistoryObserver().history.isEmpty ||
-    (NavigationHistoryObserver().history.isEmpty &&
-      NavigationHistoryObserver().top!.settings.name != "/${Screens.drawing.name}")
-    ){
+  String? currentPath;
+  g_NavigatorKey.currentState?.popUntil((route) {
+    currentPath = route.settings.name;
+    return true;
+  }); 
+  if(currentPath != "/drawing") {
     g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
       "/${Screens.drawing.name}",
       (route) => false,

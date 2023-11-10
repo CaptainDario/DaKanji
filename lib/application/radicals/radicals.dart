@@ -1,10 +1,7 @@
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 /// Finds all radicals used in the given `kanji` and returns them. Optionally
 /// if `radkIsar` si given, sorts the radicals by stroke number.
@@ -25,7 +22,7 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCol
     if(radkIsar != null) {
       radicals = radkIsar.where()
           .anyOf(radicals, (q, radical) => q.radicalEqualTo(radical))
-        .sortByStrokeCount()
+        .sortByRadicalStrokeCount()
         .radicalProperty()
         .findAllSync();
     }
@@ -34,11 +31,23 @@ List<String> getRadicalsOf(String kanji, IsarCollection<Krad> kradIsar, {IsarCol
   return radicals;
 }
 
-/// Returns all radicals from the krad isar, sorted by the number of strokes.
+/// Returns all radicals from the krad isar
 List<Radk> getAllRadicals(IsarCollection<Radk> radkIsar) {
 
   List<Radk> radicals = radkIsar.where()
     .radicalNotEqualTo("")
+  .findAllSync();
+
+  return radicals;
+
+}
+
+/// Returns all radicals from the krad isar as a List of strings
+List<String> getAllRadicalsString(IsarCollection<Radk> radkIsar) {
+
+  List<String> radicals = radkIsar.where()
+    .radicalNotEqualTo("")
+    .radicalProperty()
   .findAllSync();
 
   return radicals;
@@ -61,67 +70,69 @@ List<String> getRadicalsString(IsarCollection<Radk> radkIsar) {
 Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 
   List<Radk> rads = getAllRadicals(radkIsar)
-    ..sort((a, b) => a.strokeCount.compareTo(b.strokeCount));
+    ..sort((a, b) => a.radicalStrokeCount.compareTo(b.radicalStrokeCount));
 
   Map<int, List<String>> radicalsByStrokeOrder = {};
 
   for (Radk rad in rads) {
 
-    if(!radicalsByStrokeOrder.containsKey(rad.strokeCount)) {
-      radicalsByStrokeOrder[rad.strokeCount] = <String>[];
+    if(!radicalsByStrokeOrder.containsKey(rad.radicalStrokeCount)) {
+      radicalsByStrokeOrder[rad.radicalStrokeCount] = <String>[];
     }
 
-    radicalsByStrokeOrder[rad.strokeCount]!.add(rad.radical);
+    radicalsByStrokeOrder[rad.radicalStrokeCount]!.add(rad.radical);
   }
 
   return radicalsByStrokeOrder;
 
 }
 
-/// Returns all kanjis that use all `radicals`
-List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Radk> radkIsar){
 
-  // get the kanjis that use the selected radicals
-  List<List<String>> kanjis = radkIsar
-  .where()
-    .anyOf(radicals, (q, radical) => 
-      q.radicalEqualTo(radical)
-    )
-  .sortByStrokeCount()
-  .kanjisProperty()
-  .findAllSync();
+/// Returns all kanjis that use all `radicals`, sorted by stroke order.
+List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Krad> kradIsar) {
 
-  // find the kanjis that are in common
-  List<String> uniqueKanjis = kanjis
-    .map((e) => e.toSet())
-    .reduce((value, element) => value.intersection(element))
-    .toList();
+  List<String> kanjisThatUseAllRadicals = [];
 
-  // sort by stroke order
-  List<String> kanjiByStrokeOrder = GetIt.I<Isars>().dictionary.kanjidic2s
-    .where()
-      .anyOf(uniqueKanjis, (q, kanji) => q.characterEqualTo(kanji))
-    .sortByStrokeCount()
-    .characterProperty()
-    .findAllSync();
+  if(radicals.isNotEmpty) {
 
-  return kanjiByStrokeOrder;
+    kanjisThatUseAllRadicals = kradIsar
+      .where()
+        .anyKanjiStrokeCount()
+      .filter()
+        .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+      .sortByKanjiStrokeCount()
+      .thenByKanji()
+      .limit(250)
+      .kanjiProperty()
+      .findAllSync();
+
+  }
+  
+  return kanjisThatUseAllRadicals;
 }
 
 /// Returns all radicals that can be used with the `radicals` to find other
 /// kanjis
-List<String> getPossibleRadicals(List<String> radicals, IsarCollection<Radk> radkIsar){
+List<String> getPossibleRadicals(List<String> radicals,
+  IsarCollection<Krad> kradIsar, IsarCollection<Radk> radkIsar){
 
-  List<String> possibleKanjis = getKanjisByRadical(radicals, radkIsar);
+  List<String> possiblRadicals;
 
-  // get the kanjis that use the selected radicals
-  List<String> possiblRadicals = radkIsar.where()
-      .anyOf(radicals, (q, radical) => q.radicalNotEqualTo(radical))
-    .filter()
-      .anyOf(possibleKanjis, (q, kanji) => q.kanjisElementEqualTo(kanji))
-      
-  .radicalProperty()
-  .findAllSync();
+  if(radicals.isNotEmpty){
+    // get the kanjis that use the selected radicals
+    possiblRadicals = kradIsar.where()
+        // quickly (where) filter out all that do not have any matching radical
+        .anyOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+      .filter()
+        // from the remaining ones, find the ones where all radicals match
+        .allOf(radicals, (q, radical) => q.radicalsElementEqualTo(radical))
+    .radicalsProperty()
+    .findAllSync()
+    .flattened.toSet().toList();
+  }
+  else{
+    possiblRadicals = getAllRadicalsString(radkIsar);
+  }
 
   return possiblRadicals;
 

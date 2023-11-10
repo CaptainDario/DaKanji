@@ -4,13 +4,17 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 
 /// String that can be used for Regex that matches any Kana character
-String kanaRegexString = "([\u3040-\u309f]|[\u3040-\u30ff])";
+const String kanaRegexGroupString = "ぁ-んァ-ン";
 /// Regex that matches any Kana character
-RegExp kanaRegex = RegExp(kanaRegexString);
+final RegExp kanaRegex = RegExp("([$kanaRegexGroupString])");
 /// String that can be used for Regex that matches any Kanji character
-String kanjiRegexString = "([\u4e00-\u9faf]|[\u3400-\u4dbf])";
+const String kanjiRegexGroupString = "\u4e00-\u9faf\u3400-\u4dbf々";
 /// Regex that matches any Kanji character
-RegExp kanjiRegex = RegExp(kanjiRegexString);
+final RegExp kanjiRegex = RegExp("([$kanjiRegexGroupString])");
+/// Regex that matches everything except Japnaese characters ie.: Kanji / Kana
+final RegExp japaneseCharacterRegex =
+  RegExp("[$kanaRegexGroupString$kanjiRegexGroupString]", multiLine: true);
+
 
 /// Given the list of string `words` removes all kana from it and returns a list
 /// containing all kanji

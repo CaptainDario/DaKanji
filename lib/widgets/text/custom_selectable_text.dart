@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,6 +10,9 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
@@ -173,7 +175,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     super.initState();
 
     _cstController = CustomSelectableTextController(
-      updateSelection: () => setState(() {
+      updateSelectionGraphics: () => setState(() {
         _onUserSelectionChange(_cstController.currentSelection);
       })
     );

@@ -13,7 +13,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:universal_io/io.dart';
@@ -170,6 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
+                      
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -253,23 +253,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                   setState(() {});
                                 },
-                                child: Chip(
-                                  backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
-                                    ? Theme.of(context).highlightColor
-                                    : null,
-                                  label: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 10,
-                                        height: 10,
-                                        child: SvgPicture.asset(
-                                          settings.dictionary.translationLanguagesToSvgPath[lang]!
-                                        )
-                                      ),
-                                      Text("   $lang"),
-                                    ],
-                                  )
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.grab,
+                                  child: Chip(
+                                    backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
+                                      ? Theme.of(context).highlightColor
+                                      : null,
+                                    label: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                          height: 10,
+                                          child: SvgPicture.asset(
+                                            settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                          )
+                                        ),
+                                        Text("   $lang"),
+                                      ],
+                                    )
+                                  ),
                                 ),
                               );
                             }
@@ -445,6 +448,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
 
+                      // play animation when opening kanji tab
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_play_kanji_animation_when_opened.tr(),
+                        value: settings.dictionary.playKanjiAnimationWhenOpened,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.playKanjiAnimationWhenOpened = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // animation speed
+                      ResponsiveSliderTile(
+                        text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
+                        value: settings.dictionary.kanjiAnimationStrokesPerSecond,
+                        min: 0.1,
+                        max: 10.0,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                        onChanged: (value) {
+                          setState(() {
+                            settings.dictionary.kanjiAnimationStrokesPerSecond = value;
+                            settings.save();
+                          });
+                        },
+                      ),
+
+                      // animation continues playing after double tap
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_swipe.tr(),
+                        value: settings.dictionary.resumeAnimationAfterStopSwipe,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.dictionary.resumeAnimationAfterStopSwipe = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -470,12 +514,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // disable text selection buttons
                       ResponsiveCheckBoxTile(
-                        text: "Show text selection buttons",
+                        text: LocaleKeys.SettingsScreen_text_show_selection_buttons.tr(),
                         value: settings.text.selectionButtonsEnabled,
                         onTileTapped: (value) async {
                           settings.text.selectionButtonsEnabled = value;
                           await settings.save();
                         },
+                      ),
+                      // should the text screen open with the processed text
+                      // maximized
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_text_open_in_fullscreen.tr(),
+                        value: settings.text.openInFullscreen,
+                        onTileTapped: (value) async {
+                          settings.text.openInFullscreen = value;
+                          await settings.save();
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // try to deconjugate words before searching
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+                        value: settings.text.searchDeconjugate,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.text.searchDeconjugate = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                                ),
+                              )
+                            )
+                          ).show();
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
@@ -697,6 +781,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         LocaleKeys.ClipboardScreen_title.tr(),
                         Icons.paste,
                         autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // try to deconjugate words before searching
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+                        value: settings.clipboard.searchDeconjugate,
+                        leadingIcon: Icons.info_outline,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.clipboard.searchDeconjugate = value;
+                            settings.save();
+                          });
+                        },
+                        onLeadingIconPressed: () async {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.noHeader,
+                            btnOkColor: g_Dakanji_green,
+                            btnOkOnPress: (){},
+                            body: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MarkdownBody(
+                                  data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                                ),
+                              )
+                            )
+                          ).show();
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(

@@ -81,6 +81,6 @@ Here is a list of things that would help this project:
 
 I want to thank all the people involved in this project, without you the project would not be where it's right now!
 
-But a special thanks goes to [michalpatryk](https://github.com/michalpatryk).
+But a special thanks goes to [michalpatryk](https://github.com/michalpatryk) and ゆうか 田村村.
 
 Please take the time and read the full [credits.](CREDITS.md)

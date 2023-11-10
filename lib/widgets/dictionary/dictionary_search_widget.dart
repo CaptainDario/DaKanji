@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -104,6 +105,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   bool reshowRadicalPopup = false;
   /// should the filter popup be openend when `reopenPopupTimer` finishes
   bool reshowFilterPopup = false;
+
+  Flushbar? deconjugationFlushbar;
 
   
   @override
@@ -243,12 +246,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           FocusManager.instance.primaryFocus?.unfocus();
                   
                           setState(() {
-                            searchBarExpanded = !searchBarExpanded;
                   
-                            if(searchBarExpanded) {
+                            if(!searchBarExpanded) {
+                              searchBarExpanded = true;
                               searchBarAnimationController.forward();
-                            } else{
-                              searchBarAnimationController.reverse();
+                            }
+                            else{
+                              searchBarAnimationController.reverse().then((value) {
+                                setState(() {
+                                  searchBarExpanded = false;
+                                });
+                              });
                             }
                           });
                         },
@@ -510,8 +518,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // collapse the search bar
     if(widget.canCollapse){
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        searchBarExpanded = false;
-        searchBarAnimationController.reverse(from: 1.0);
+        
+        searchBarAnimationController.reverse(from: 1.0).then((value) {
+          setState(() {
+            searchBarExpanded = false;
+          });
+        });
       }); 
     }
 
@@ -567,37 +579,45 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(deconjugated != "" && deconjugated != text){
-      ScaffoldMessenger.of(widget.context).clearSnackBars();
-      ScaffoldMessenger.of(widget.context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
-                  overflow: TextOverflow.ellipsis
+      deconjugationFlushbar?.dismiss();
+      deconjugationFlushbar = Flushbar(
+        backgroundColor: Colors.white,
+        messageText: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black
                 ),
               ),
-              const SizedBox(width: 20,),
-              Expanded(
-                child: InkWell(
-                  onTap: () async {
-                    await updateSearchResults(text, false);
-                  },
-                  child: Text(
-                    "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Theme.of(widget.context).highlightColor
-                    ),                
-                  ),
+            ),
+            const SizedBox(width: 20,),
+            Expanded(
+              child: InkWell(
+                onTap: () async {
+                  await updateSearchResults(text, false);
+                },
+                child: Text(
+                  "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(widget.context).highlightColor
+                  ),                
                 ),
-              )
-            ],
-          )
-        )
-      );
+              ),
+            )
+          ],
+        ),
+        flushbarPosition: FlushbarPosition.TOP,
+        isDismissible: true,
+        duration: const Duration(milliseconds: 4000),
+      )..show(context).then((value) {
+        deconjugationFlushbar = null;
+        return value;
+      });
     }
     else{
       deconjugated = text;

@@ -1,6 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +10,11 @@ import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 
 /// A popup used for showing dictionary entries and translations. Given a
 /// text.
@@ -58,6 +58,8 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   WebViewController? webViewController;
   /// controller for the tabbar
   late TabController popupTabController;
+  /// The last word that has been lookeup in the webview with deepl
+  String lastWebViewLookup = "";
 
 
   @override
@@ -71,23 +73,32 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     if(g_webViewSupported){
       tabNames.add("Deepl");
       webViewController = WebViewController()
-        ..loadRequest(Uri.parse(g_deepLUrl));
+        ..setUserAgent(g_mobileUserAgentArg)
+        ..setJavaScriptMode(JavaScriptMode.unrestricted);
     }
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
+    popupTabController.addListener(() {
+      updateWebview();
+    });
     widget.onInitialized?.call(popupTabController);
   }
 
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if(webViewController != null && oldWidget.text != widget.text) {
-        await webViewController!.loadRequest(
-          Uri.parse("$g_deepLUrl${widget.text}") 
-        );
-      }
+      updateWebview();
     });
     super.didUpdateWidget(oldWidget);
+  }
+
+  void updateWebview() async {
+    if(webViewController != null && lastWebViewLookup != widget.text) {
+      await webViewController!.loadRequest(
+        Uri.parse("$g_deepLUrl${widget.text}") 
+      );
+      lastWebViewLookup = widget.text;
+    }
   }
 
   @override

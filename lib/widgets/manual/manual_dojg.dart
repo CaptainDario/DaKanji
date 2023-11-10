@@ -11,6 +11,17 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// A empty manual page for reference
 class ManualDojgPage extends StatelessWidget {
+
+  /// heading 1 text style
+  final TextStyle heading_1 = const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+  /// heading 2 text style
+  final TextStyle heading_2 = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
   
   const ManualDojgPage({super.key});
 
@@ -19,13 +30,24 @@ class ManualDojgPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: MarkdownBody(
-        data: LocaleKeys.ManualScreen_dojg_text.tr(),
-        onTapLink: (text, href, title) {
-          if(href != null){
-            launchUrlString(href);
-          }
-        },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExpansionTile(
+            title: Text(LocaleKeys.ManualScreen_dojg_import_title.tr(), style: heading_1,),
+            children: [
+              MarkdownBody(
+                data: LocaleKeys.ManualScreen_dojg_import_text.tr(),
+                onTapLink: (text, href, title) {
+                  if(href != null){
+                    launchUrlString(href);
+                  }
+                },
+              ),
+              const SizedBox(height: 15),
+            ],
+          ),
+        ],
       ),
     );
   }
