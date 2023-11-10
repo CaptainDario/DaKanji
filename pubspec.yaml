@@ -140,8 +140,8 @@ dependency_overrides:
 
 msix_config:
   display_name: DaKanji
-  protocol_activation: dakanji,http,https
-  app_uri_handler_hosts: dakanji.app
+  protocol_activation: dakanji
+  app_uri_handler_hosts: dakanji.app, www.dakanji.app
   # package family name: 61015DaAppLab.DaKanji_t0074r350qa7p
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
@@ -159,7 +159,7 @@ dev_dependencies:
   custom_lint: 
   riverpod_generator: ^2.3.2
   riverpod_lint: ^2.1.0
-  msix: 3.16.4
+  msix: 3.16.6
   flutter_lints: ^2.0.3
   import_sorter: ^4.6.0
   json_serializable: 6.7.0
