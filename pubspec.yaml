@@ -67,6 +67,7 @@ dependencies:
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   pdf: 3.10.3
+  rive: 0.11.17
   printing: 5.11.0
   app_links: 3.4.2                # android, iOS, web, macos, windows (msix), linux (snap?)
 
@@ -79,7 +80,7 @@ dependencies:
   async: 2.11.0
   path: 1.8.3
   http: 1.1.0
-  collection: 1.17.1
+  collection: 1.17.2
   path_provider: 2.1.0
   yaml: 3.1.2
   quiver: 3.2.1
@@ -139,7 +140,7 @@ dependency_overrides:
 
 msix_config:
   display_name: DaKanji
-  protocol_activation: https
+  protocol_activation: dakanji,http,https
   app_uri_handler_hosts: dakanji.app
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
@@ -157,7 +158,7 @@ dev_dependencies:
   custom_lint: 
   riverpod_generator: ^2.3.2
   riverpod_lint: ^2.1.0
-  msix: 3.13.2
+  msix: 3.16.4
   flutter_lints: ^2.0.3
   import_sorter: ^4.6.0
   json_serializable: 6.7.0
