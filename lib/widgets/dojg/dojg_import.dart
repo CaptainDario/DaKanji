@@ -36,18 +36,16 @@ class _DojgImportState extends State<DojgImport> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
-          GestureDetector(
-            onTap: importDojgPressed,
-            child: Container(
-              color: Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
-                child: Center(
-                  child: Flexible(
-                    child: Text(
-                      LocaleKeys.DojgScreen_dojg_import.tr(),
-                      textAlign: TextAlign.center,
-                    ),
+          Center(
+            child: GestureDetector(
+              onTap: importDojgPressed,
+              child: Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
+                  child: Text(
+                    LocaleKeys.DojgScreen_dojg_import.tr(),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -60,16 +58,12 @@ class _DojgImportState extends State<DojgImport> {
               color: Colors.transparent,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
-                child: Center(
-                  child: Flexible(
-                    child: Text(
-                      LocaleKeys.DojgScreen_refer_to_manual.tr(),
-                      textScaleFactor: 0.9,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
+                child: Text(
+                  LocaleKeys.DojgScreen_refer_to_manual.tr(),
+                  textScaleFactor: 0.9,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.grey,
                   ),
                 ),
               ),
