@@ -12,7 +12,7 @@
 	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
-	<lastBuildDate>Sat, 16 Sep 2023 10:56:27 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 14 Nov 2023 22:59:18 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -28,6 +28,496 @@
 	<height>32</height>
 </image> 
 	<item>
+		<title>DaKanji 3.1 released</title>
+		<link>/dakanji-3-1-released/</link>
+		
+		<dc:creator><![CDATA[dario]]></dc:creator>
+		<pubDate>Fri, 15 Sep 2023 21:54:07 +0000</pubDate>
+				<category><![CDATA[Development]]></category>
+		<guid isPermaLink="false">/?p=2611</guid>
+
+					<description><![CDATA[Hi there, hope you are doing well!I am glad to tell you that DaKanji v3.1 is out now and available...]]></description>
+										<content:encoded><![CDATA[		<div data-elementor-type="wp-post" data-elementor-id="2611" class="elementor elementor-2611">
+						<div class="elementor-inner">
+				<div class="elementor-section-wrap">
+									<section class="elementor-section elementor-top-section elementor-element elementor-element-1d1f0e9 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="1d1f0e9" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-dcbfca3" data-id="dcbfca3" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-8609168 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-text-editor" data-id="8609168" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>					<div class="elementor-text-editor elementor-clearfix">
+				<p>Hi there, hope you are doing well!<br />I am glad to tell you that DaKanji v3.1 is out now and available in all stores! This release has mainly been focused on fixing and polishing the 3.0 release. But there are also some</p><p>New Features:</p><ul><li>Kanji charts: filter and sort kanjis by categories such as JLPT, 漢検, KLC and more</li><li>Clipboard screen to lookup words that are in the OS&#8217;s clipboard</li><li>Drawer elements reorderable</li><li>Periodically, check for updates at app start</li><li>Dictionary<ul><li>Mark the current word in example sentences (#31)</li><li>English dictionary can be disabled (#30)</li><li>Show more kanji information<ul><li>KLC, new JLPT, RTK, 漢検</li><li>antonyms, synonyms, lookalikes</li></ul></li><li>Radical lookup<ul><li>Clear selection</li><li>Selection from clipboard</li><li>Sort kanji by stroke order</li><li>Improved radical rendering</li><li>UI improvements</li></ul></li><li>Navigate search results with keyboard</li></ul></li><li>Sentry for feedback collection</li><li>マトリックス (#39)</li></ul><p>Fixed:</p><ul><li>Pitch accent not correct for words that include 2 character mora (#29)</li><li>Radical popup does not close (#27)</li><li>Navigating dictionary -&gt; drawing -&gt; dictionary</li><li>Some Searches lead to seemingly incorrect results (#49)</li><li>Sometimes radicals were missing</li><li>JLPT data for some entries wrong</li></ul><p> </p><p>If you have any ideas, bugs, improvements, etc. let me know I will try my best to solve the problem!</p><p>ダ漢字使ってくれてありがとう。<br />日本語頑張ってね。</p>					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-ba07d5c flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="ba07d5c" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-column .elementor-spacer-inner{height:var(--spacer-size)}.e-con{--container-widget-width:100%}.e-con-inner>.elementor-widget-spacer,.e-con>.elementor-widget-spacer{width:var(--container-widget-width,var(--spacer-size));--align-self:var(--container-widget-align-self,initial);--flex-shrink:0}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container,.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,.e-con>.elementor-widget-spacer>.elementor-widget-container,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer{height:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner{height:var(--container-widget-height,var(--spacer-size))}</style>		<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-cec9b87 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="cec9b87" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-ba14327 elementor-invisible" data-id="ba14327" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:200}">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-807ffbe elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="807ffbe" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-6c0860a" data-id="6c0860a" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-39e507a flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-invisible elementor-widget elementor-widget-heading" data-id="39e507a" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.15.0 - 20-08-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><div class="title-h2 elementor-heading-title elementor-size-default">Join the Japanese learning revolution now!</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-47d80c2 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="47d80c2" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-728a3e1" data-id="728a3e1" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-27db062 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="27db062" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				iOS			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-c38fb12 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="c38fb12" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-b4d8baa elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="b4d8baa" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.microsoft.com/store/detail/dakanji/9N08051T2XTV" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-microsoft"></i>				</span>
+						<span class="gem-text-button">
+				Windows			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-98f539d" data-id="98f539d" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-f0d057b elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="f0d057b" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-google-play"></i>				</span>
+						<span class="gem-text-button">
+				Android			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-a272c99 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="a272c99" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-663a6a6 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="663a6a6" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://github.com/CaptainDario/DaKanji/releases/latest" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><path d="m12 2.604-.43.283L0 10.459v6.752l6.393 4.184L12 17.725l5.607 3.671L24 17.211v-6.752L12 2.604zm0 .828 5.434 3.556-2.717 1.778L12 10.545l-2.717-1.78-2.717-1.777L12 3.432zM6.39 7.104l5.434 3.556-5.408 3.54-5.434-3.557 5.409-3.54zm11.22 0 5.431 3.554-5.434 3.557-5.433-3.555 5.435-3.556zM.925 10.867l5.379 3.52a.123.08 0 0 0 .027.013v5.647l-5.406-3.54v-5.64zm11.213.115 5.408 3.54v5.664l-5.408-3.54v-5.664z"></path></svg>				</span>
+						<span class="gem-text-button">
+				flatpak			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-fc6ab27" data-id="fc6ab27" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-b823ae4 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="b823ae4" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				Mac			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-04cacc8 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="04cacc8" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-df8800c elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="df8800c" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://snapcraft.io/dakanji" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><title>Snapcraft icon</title><path d="M13.804 13.367V5.69l5.292 2.362-5.292 5.315zM3.701 23.514l6.49-12.22 2.847 2.843L3.7 23.514zM0 .486l13.355 4.848v8.484L0 .486zM21.803 5.334H14.11L24 9.748z"></path></svg>				</span>
+						<span class="gem-text-button">
+				Snap			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+									</div>
+			</div>
+					</div>
+		]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>DaKanji 3.1 beta available</title>
+		<link>/dakanji-3-1-beta-available/</link>
+		
+		<dc:creator><![CDATA[dario]]></dc:creator>
+		<pubDate>Sat, 26 Aug 2023 00:15:17 +0000</pubDate>
+				<category><![CDATA[Development]]></category>
+		<guid isPermaLink="false">/?p=2554</guid>
+
+					<description><![CDATA[Hi there,hope you are doing well! I am happy to announce DaKanji v3.1 is now available for testing on all...]]></description>
+										<content:encoded><![CDATA[		<div data-elementor-type="wp-post" data-elementor-id="2554" class="elementor elementor-2554">
+						<div class="elementor-inner">
+				<div class="elementor-section-wrap">
+									<section class="elementor-section elementor-top-section elementor-element elementor-element-359bff7e elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="359bff7e" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-18faa8c4" data-id="18faa8c4" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-35328544 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-text-editor" data-id="35328544" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+								<div class="elementor-text-editor elementor-clearfix">
+				<p></p>
+<p>Hi there,<br />hope you are doing well! I am happy to announce DaKanji v3.1 is now available for testing on all platforms. This release focuses mainly on refining some rough edges of the previous 3.0 release. However, there has already been made significant progress for the next release 3.2 so stay tuned! If you have some time I would be very happy if you could give v3.1 a test ride!<br />And this is the full changelog</p>
+<p>v 3.1.0 &#8211; 辞書開発</p>
+<p>New Features:</p>
+<ul>
+<li>Kanji charts: filter and sort kanjis by categories such as JLPT, 漢検, KLC and more</li>
+<li>Clipboard screen to lookup words that are in the OS&#8217;s clipboard</li>
+<li>Drawer elements reorderable</li>
+<li>Periodically, check for updates at app start</li>
+<li>Dictionary
+<ul>
+<li>Mark the current word in example sentences (#31)</li>
+<li>English dictionary can be disabled (#30)</li>
+<li>Show more kanji information
+<ul>
+<li>KLC, new JLPT, RTK, 漢検</li>
+<li>antonyms, synonyms, lookalikes</li>
+</ul>
+</li>
+<li>Radical lookup
+<ul>
+<li>Clear selection</li>
+<li>Selection from clipboard</li>
+<li>Sort kanji by stroke order</li>
+<li>Improved radical rendering</li>
+<li>UI improvements</li>
+</ul>
+</li>
+<li>Navigate search results with keyboard</li>
+</ul>
+</li>
+<li>Sentry for feedback collection</li>
+<li>マトリックス (#39)</li>
+</ul>
+<p>Fixed:</p>
+<ul>
+<li>Pitch accent not correct for words that include 2 character mora (#29)</li>
+<li>Radical popup does not close (#27)</li>
+<li>Navigating dictionary -&gt; drawing -&gt; dictionary</li>
+<li>Some Searches lead to seemingly incorrect results (#49)</li>
+<li>Sometimes radicals were missing</li>
+<li>JLPT data for some entries wrong</li>
+</ul>
+<p>The testing release is available as usual from <span style="color: #000080;"><a style="color: #000080;" href="https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer" target="_blank" rel="noopener">Google Play</a></span> (Android), Test Flight (Mac, iOS), <span style="color: #000080;"><a style="color: #000080;" href="https://github.com/CaptainDario/DaKanji/releases/tag/v3.0.2" target="_blank" rel="noopener">Github</a></span> (Windows, Linux, Android, Mac)</p>
+<p></p>
+<p><!-- /wp:list --></p>					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-d44b643 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="d44b643" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-721b885 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="721b885" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-41b69da elementor-invisible" data-id="41b69da" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeIn&quot;,&quot;animation_delay&quot;:200}">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-acf08d3 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="acf08d3" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-51e85d7" data-id="51e85d7" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-898c68e flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-invisible elementor-widget elementor-widget-heading" data-id="898c68e" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<div class="title-h2 elementor-heading-title elementor-size-default">Join the Japanese learning revolution now!</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-3b9189c elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3b9189c" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-thegem">
+							<div class="elementor-row">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-decc14d" data-id="decc14d" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-d282706 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="d282706" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				iOS			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-663376d flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="663376d" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-24d9872 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="24d9872" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.microsoft.com/store/detail/dakanji/9N08051T2XTV" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-microsoft"></i>				</span>
+						<span class="gem-text-button">
+				Windows			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-af8a8dd" data-id="af8a8dd" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-a456865 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="a456865" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-google-play"></i>				</span>
+						<span class="gem-text-button">
+				Android			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-0e901a0 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="0e901a0" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-adad1a0 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="adad1a0" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://github.com/CaptainDario/DaKanji/releases/latest" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><path d="m12 2.604-.43.283L0 10.459v6.752l6.393 4.184L12 17.725l5.607 3.671L24 17.211v-6.752L12 2.604zm0 .828 5.434 3.556-2.717 1.778L12 10.545l-2.717-1.78-2.717-1.777L12 3.432zM6.39 7.104l5.434 3.556-5.408 3.54-5.434-3.557 5.409-3.54zm11.22 0 5.431 3.554-5.434 3.557-5.433-3.555 5.435-3.556zM.925 10.867l5.379 3.52a.123.08 0 0 0 .027.013v5.647l-5.406-3.54v-5.64zm11.213.115 5.408 3.54v5.664l-5.408-3.54v-5.664z"></path></svg>				</span>
+						<span class="gem-text-button">
+				flatpak			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-537699e" data-id="537699e" data-element_type="column">
+			<div class="elementor-column-wrap elementor-element-populated">
+							<div class="elementor-widget-wrap">
+						<div class="elementor-element elementor-element-72d7911 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="72d7911" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+						<span class="gem-text-button">
+				Mac			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-539d02e flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="539d02e" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-bef5c73 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="bef5c73" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://snapcraft.io/dakanji" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><title>Snapcraft icon</title><path d="M13.804 13.367V5.69l5.292 2.362-5.292 5.315zM3.701 23.514l6.49-12.22 2.847 2.843L3.7 23.514zM0 .486l13.355 4.848v8.484L0 .486zM21.803 5.334H14.11L24 9.748z"></path></svg>				</span>
+						<span class="gem-text-button">
+				Snap			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+						</div>
+					</div>
+		</div>
+								</div>
+					</div>
+		</section>
+									</div>
+			</div>
+					</div>
+		]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>DaKanji 3.0 released</title>
 		<link>/dakanji_3_0_released/</link>
 		
@@ -60,15 +550,13 @@
 							<div class="elementor-widget-wrap">
 						<div class="elementor-element elementor-element-d0bdef3 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-text-editor" data-id="d0bdef3" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-			<style>/*! elementor - v3.15.0 - 20-08-2023 */
-.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>					<div class="elementor-text-editor elementor-clearfix">
+								<div class="elementor-text-editor elementor-clearfix">
 				<p>At the beginning of 2021, I first published DaKanji as an offline stroke order independent Kanji lookup tool for Linux, Mac, and Windows written in Python. Because of the positive Feedback I received, I was motivated to continue working on DaKanji. Fast forward a bit, I rewrote DaKanji in Dart and published it first for Android, slowly extending it to iOS, MacOS, Linux, and Windows.</p><p>After taking a break from DaKanji (and randomly starting to learn Spanish), I decided to apply for a scholarship to study in Japan. For this, I wanted to have something stand out in my application and I decided to add an offline dictionary to DaKanji.<br />And finally, after a long, long development time, DaKanji 3 is finally out. I am super excited that this new version has finally shipped! DaKanji is a passion project of mine, and I have worked really hard the last year to build the best fully offline, responsive, and cross-platform (Android, iOS, MacOS, Linux, Windows) Japanese &lt;-&gt; English, German, French, Russian, &#8230; dictionary I could. Therefore, I would greatly appreciate you checking it out and letting me know what you think, what to improve, giving a positive review, or maybe even recommending it to your friends</p><p>Here are the new Features:</p><ul><li>Inbuilt dictionary<ul><li>Search with kanji, kana or romaji</li><li>Search Kanji by radical or draw them</li><li>Multi-language support: English, German, French, Spanish, &#8230;</li><li>Conjugation of verbs, adjectives, copula</li><li>Detailed information about Kanjis</li><li>6000+ audios</li><li>Pitch accent</li><li>Example sentences</li></ul></li><li>Text processing screen<ul><li>Add furigana to any text</li><li>Look up unknown words using the inbuilt dictionary</li><li>Colorize words based on their Part of Speech</li><li>Translate using DeepL (currently mobile only)</li></ul></li></ul><p>Lastly, I would like to give you a rough idea of in which direction this project is heading, the next 3.x versions will add more features to make DaKanji not only a word lookup dictionary but a tool to understand Japanese texts and effectively learn from them. This includes features such as word lists, Anki integration, grammar lookup, chat GPT integration, a discussion section to ask questions, and likely, yomichan dictionary support. After that, DaKanji will receive support for directly using the dictionary on different sources such as videos, PDFs, and ebooks, &#8230;</p><p>Thank you a lot for reading till the (and maybe using DaKanji). If you have any problems with it, let me know.</p>					</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-271d9cb flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="271d9cb" data-element_type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
-			<style>/*! elementor - v3.15.0 - 20-08-2023 */
-.elementor-column .elementor-spacer-inner{height:var(--spacer-size)}.e-con{--container-widget-width:100%}.e-con-inner>.elementor-widget-spacer,.e-con>.elementor-widget-spacer{width:var(--container-widget-width,var(--spacer-size));--align-self:var(--container-widget-align-self,initial);--flex-shrink:0}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container,.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,.e-con>.elementor-widget-spacer>.elementor-widget-container,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer{height:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner{height:var(--container-widget-height,var(--spacer-size))}</style>		<div class="elementor-spacer">
+					<div class="elementor-spacer">
 			<div class="elementor-spacer-inner"></div>
 		</div>
 				</div>
@@ -93,8 +581,7 @@
 							<div class="elementor-widget-wrap">
 						<div class="elementor-element elementor-element-7bfbcdf flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-invisible elementor-widget elementor-widget-heading" data-id="7bfbcdf" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-			<style>/*! elementor - v3.15.0 - 20-08-2023 */
-.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><div class="title-h2 elementor-heading-title elementor-size-default">Join the Japanese learning revolution now!</div>		</div>
+			<div class="title-h2 elementor-heading-title elementor-size-default">Join the Japanese learning revolution now!</div>		</div>
 				</div>
 						</div>
 					</div>
@@ -102,68 +589,18 @@
 								</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-49122ba elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="49122ba" data-element_type="section">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-826868b elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="826868b" data-element_type="section">
 						<div class="elementor-container elementor-column-gap-thegem">
 							<div class="elementor-row">
-					<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-ab536d3" data-id="ab536d3" data-element_type="column">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-cc201f9" data-id="cc201f9" data-element_type="column">
 			<div class="elementor-column-wrap elementor-element-populated">
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-8637e8c flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-counter" data-id="8637e8c" data-element_type="widget" data-widget_type="counter.default">
-				<div class="elementor-widget-container">
-			<style>/*! elementor - v3.15.0 - 20-08-2023 */
-.elementor-counter .elementor-counter-number-wrapper{display:flex;font-size:69px;font-weight:600;line-height:1}.elementor-counter .elementor-counter-number-prefix,.elementor-counter .elementor-counter-number-suffix{flex-grow:1;white-space:pre-wrap}.elementor-counter .elementor-counter-number-prefix{text-align:right}.elementor-counter .elementor-counter-number-suffix{text-align:left}.elementor-counter .elementor-counter-title{text-align:center;font-size:19px;font-weight:400;line-height:2.5}</style>		<div class="elementor-counter">
-			<div class="elementor-counter-number-wrapper">
-				<span class="elementor-counter-number-prefix"></span>
-				<span class="elementor-counter-number" data-duration="2000" data-to-value="5000" data-from-value="0" data-delimiter=",">0</span>
-				<span class="elementor-counter-number-suffix">+</span>
-			</div>
-							<div class="elementor-counter-title">Downloads</div>
-					</div>
-				</div>
-				</div>
-						</div>
-					</div>
-		</div>
-				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-b0a1b93" data-id="b0a1b93" data-element_type="column">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-e4b9ada flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-counter" data-id="e4b9ada" data-element_type="widget" data-widget_type="counter.default">
-				<div class="elementor-widget-container">
-					<div class="elementor-counter">
-			<div class="elementor-counter-number-wrapper">
-				<span class="elementor-counter-number-prefix"></span>
-				<span class="elementor-counter-number" data-duration="2000" data-to-value="75" data-from-value="0" data-delimiter=",">0</span>
-				<span class="elementor-counter-number-suffix">+</span>
-			</div>
-							<div class="elementor-counter-title">5 Star ratings</div>
-					</div>
-				</div>
-				</div>
-						</div>
-					</div>
-		</div>
-								</div>
-					</div>
-		</section>
-				<div class="elementor-element elementor-element-364aecc flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="364aecc" data-element_type="widget" data-widget_type="spacer.default">
-				<div class="elementor-widget-container">
-					<div class="elementor-spacer">
-			<div class="elementor-spacer-inner"></div>
-		</div>
-				</div>
-				</div>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-246645e elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="246645e" data-element_type="section">
-						<div class="elementor-container elementor-column-gap-thegem">
-							<div class="elementor-row">
-					<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-44885aa" data-id="44885aa" data-element_type="column">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-22e83a8 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="22e83a8" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+						<div class="elementor-element elementor-element-0feaf68 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="0feaf68" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
 				<div class="elementor-widget-container">
 			
-<div class="gem-button-container gem-widget-button">
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
 
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
 		<span class="gem-inner-wrapper-btn">
 							<span class="gem-button-icon">
 					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
@@ -175,41 +612,19 @@
 	
 </div>		</div>
 				</div>
-						</div>
-					</div>
-		</div>
-				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-e0ea7f0" data-id="e0ea7f0" data-element_type="column">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-b391fee flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="b391fee" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-element elementor-element-d1d2582 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="d1d2582" data-element_type="widget" data-widget_type="spacer.default">
 				<div class="elementor-widget-container">
-			
-<div class="gem-button-container gem-widget-button">
-
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
-		<span class="gem-inner-wrapper-btn">
-							<span class="gem-button-icon">
-					<i aria-hidden="true" class="fab fa-google-play"></i>				</span>
-						<span class="gem-text-button">
-				Android			</span>
-		</span>
-	</a>
-
-	
-</div>		</div>
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
 				</div>
-						</div>
-					</div>
-		</div>
-				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-45573e2" data-id="45573e2" data-element_type="column">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-644fbf2 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="644fbf2" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				</div>
+				<div class="elementor-element elementor-element-40609f3 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="40609f3" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
 				<div class="elementor-widget-container">
 			
-<div class="gem-button-container gem-widget-button">
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
 
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.microsoft.com/store/detail/dakanji/9N08051T2XTV" target="_blank" rel="noopener">
 		<span class="gem-inner-wrapper-btn">
 							<span class="gem-button-icon">
 					<i aria-hidden="true" class="fab fa-microsoft"></i>				</span>
@@ -224,15 +639,39 @@
 						</div>
 					</div>
 		</div>
-				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-fade13b" data-id="fade13b" data-element_type="column">
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-8681262" data-id="8681262" data-element_type="column">
 			<div class="elementor-column-wrap elementor-element-populated">
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-95561e1 flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="95561e1" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+						<div class="elementor-element elementor-element-50aed92 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="50aed92" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
 				<div class="elementor-widget-container">
 			
-<div class="gem-button-container gem-widget-button">
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
 
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer" target="_blank" rel="noopener">
+		<span class="gem-inner-wrapper-btn">
+							<span class="gem-button-icon">
+					<i aria-hidden="true" class="fab fa-google-play"></i>				</span>
+						<span class="gem-text-button">
+				Android			</span>
+		</span>
+	</a>
+
+	
+</div>		</div>
+				</div>
+				<div class="elementor-element elementor-element-2f28e5f flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="2f28e5f" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-2ee8e8a elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="2ee8e8a" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				<div class="elementor-widget-container">
+			
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
+
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://github.com/CaptainDario/DaKanji/releases/latest" target="_blank" rel="noopener">
 		<span class="gem-inner-wrapper-btn">
 							<span class="gem-button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><path d="m12 2.604-.43.283L0 10.459v6.752l6.393 4.184L12 17.725l5.607 3.671L24 17.211v-6.752L12 2.604zm0 .828 5.434 3.556-2.717 1.778L12 10.545l-2.717-1.78-2.717-1.777L12 3.432zM6.39 7.104l5.434 3.556-5.408 3.54-5.434-3.557 5.409-3.54zm11.22 0 5.431 3.554-5.434 3.557-5.433-3.555 5.435-3.556zM.925 10.867l5.379 3.52a.123.08 0 0 0 .027.013v5.647l-5.406-3.54v-5.64zm11.213.115 5.408 3.54v5.664l-5.408-3.54v-5.664z"></path></svg>				</span>
@@ -247,43 +686,44 @@
 						</div>
 					</div>
 		</div>
-				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-6b7b160" data-id="6b7b160" data-element_type="column">
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1868243" data-id="1868243" data-element_type="column">
 			<div class="elementor-column-wrap elementor-element-populated">
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-8bd5c0e flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="8bd5c0e" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+						<div class="elementor-element elementor-element-7f9ba49 elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="7f9ba49" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
 				<div class="elementor-widget-container">
 			
-<div class="gem-button-container gem-widget-button">
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
 
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://apps.apple.com/de/app/dakanji/id1593741764" target="_blank" rel="noopener">
 		<span class="gem-inner-wrapper-btn">
 							<span class="gem-button-icon">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><title>Snapcraft icon</title><path d="M13.804 13.367V5.69l5.292 2.362-5.292 5.315zM3.701 23.514l6.49-12.22 2.847 2.843L3.7 23.514zM0 .486l13.355 4.848v8.484L0 .486zM21.803 5.334H14.11L24 9.748z"></path></svg>				</span>
+					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
 						<span class="gem-text-button">
-				Snap			</span>
+				Mac			</span>
 		</span>
 	</a>
 
 	
 </div>		</div>
 				</div>
-						</div>
-					</div>
+				<div class="elementor-element elementor-element-00b94cc flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-spacer" data-id="00b94cc" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
 		</div>
-				<div class="elementor-column elementor-col-16 elementor-inner-column elementor-element elementor-element-8b4060d" data-id="8b4060d" data-element_type="column">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-7eac88f flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="7eac88f" data-element_type="widget" data-settings="{&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-8fee01e elementor-widget__width-initial flex-horizontal-align-default flex-horizontal-align-tablet-default flex-horizontal-align-mobile-default flex-vertical-align-default flex-vertical-align-tablet-default flex-vertical-align-mobile-default elementor-widget elementor-widget-thegem-styledbutton" data-id="8fee01e" data-element_type="widget" data-settings="{&quot;stretch_full_width&quot;:&quot;yes&quot;,&quot;thegem_button_skin&quot;:&quot;flat&quot;,&quot;add_icon&quot;:&quot;yes&quot;}" data-widget_type="thegem-styledbutton.default">
 				<div class="elementor-widget-container">
 			
-<div class="gem-button-container gem-widget-button">
+<div class="gem-button-container gem-widget-button gem-button-position-fullwidth">
 
-		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="#">
+		<a class="gem-button gem-button-size-medium gem-button-text-weight-bold gem-button-style-flat" href="https://snapcraft.io/dakanji" target="_blank" rel="noopener">
 		<span class="gem-inner-wrapper-btn">
 							<span class="gem-button-icon">
-					<i aria-hidden="true" class="fab fa-app-store"></i>				</span>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"><title>Snapcraft icon</title><path d="M13.804 13.367V5.69l5.292 2.362-5.292 5.315zM3.701 23.514l6.49-12.22 2.847 2.843L3.7 23.514zM0 .486l13.355 4.848v8.484L0 .486zM21.803 5.334H14.11L24 9.748z"></path></svg>				</span>
 						<span class="gem-text-button">
-				Mac			</span>
+				Snap			</span>
 		</span>
 	</a>
 
@@ -320,5 +760,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-11-12 18:18:00 by W3 Total Cache
+Served from: dakanji.local @ 2023-11-14 23:23:07 by W3 Total Cache
 -->

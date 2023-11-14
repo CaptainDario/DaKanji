@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>/blog/</loc>
-		<lastmod>2023-09-04T09:25:14+00:00</lastmod>
-	</url>
-	<url>
 		<loc>/</loc>
-		<lastmod>2023-11-12T18:15:35+00:00</lastmod>
+		<lastmod>2023-11-14T23:20:30+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/09/phone.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/phone.svg</image:loc>
 		</image:image>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/chat_bubble_small.svg</image:loc>
@@ -23,19 +19,22 @@
 			<image:loc>/wp-content/uploads/2023/09/chat_bubble_large.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2020/11/people.png</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/welcome_girl.svg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/09/mockups_2.webp</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/mockups_1.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/09/mockups_2.webp</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/mockups_2.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/09/circle_full_light_trans.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/mockups_3.webp</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
+			<image:loc>/wp-content/uploads/2023/11/mockups_4.webp</image:loc>
+		</image:image>
+		<image:image>
+			<image:loc>/wp-content/uploads/2023/11/girl_kiss.svg</image:loc>
 		</image:image>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/circle_half_outlined_top_right.svg</image:loc>
@@ -43,6 +42,10 @@
 		<image:image>
 			<image:loc>/wp-content/uploads/2020/12/24.png</image:loc>
 		</image:image>
+	</url>
+	<url>
+		<loc>/blog/</loc>
+		<lastmod>2023-11-14T23:00:36+00:00</lastmod>
 	</url>
 	<url>
 		<loc>/deep-links/</loc>
@@ -71,5 +74,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-11-12 18:18:03 by W3 Total Cache
+Served from: dakanji.local @ 2023-11-14 23:23:12 by W3 Total Cache
 -->
