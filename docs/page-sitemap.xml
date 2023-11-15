@@ -44,18 +44,18 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>/dakanji-app-privacy-policy/</loc>
-		<lastmod>2023-11-15T18:16:06+00:00</lastmod>
-	</url>
-	<url>
 		<loc>/dakanji-not-installed-deep-link/</loc>
-		<lastmod>2023-11-15T18:14:40+00:00</lastmod>
+		<lastmod>2023-11-15T19:33:38+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
 		<image:image>
 			<image:loc>/wp-content/uploads/2020/11/1-1.png</image:loc>
 		</image:image>
+	</url>
+	<url>
+		<loc>/dakanji-app-privacy-policy/</loc>
+		<lastmod>2023-11-15T18:16:06+00:00</lastmod>
 	</url>
 	<url>
 		<loc>/blog/</loc>
@@ -84,5 +84,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-11-15 18:25:45 by W3 Total Cache
+Served from: dakanji.local @ 2023-11-15 19:34:39 by W3 Total Cache
 -->
