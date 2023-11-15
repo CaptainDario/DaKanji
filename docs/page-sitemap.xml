@@ -44,8 +44,8 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>/404-2/</loc>
-		<lastmod>2023-11-15T19:56:50+00:00</lastmod>
+		<loc>/dakanji-not-installed-deep-link/</loc>
+		<lastmod>2023-11-15T20:04:30+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
@@ -54,8 +54,8 @@
 		</image:image>
 	</url>
 	<url>
-		<loc>/dakanji-not-installed-deep-link/</loc>
-		<lastmod>2023-11-15T19:33:38+00:00</lastmod>
+		<loc>/404-2/</loc>
+		<lastmod>2023-11-15T19:56:50+00:00</lastmod>
 		<image:image>
 			<image:loc>/wp-content/uploads/2023/09/landingpage_dots.svg</image:loc>
 		</image:image>
@@ -84,5 +84,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-11-15 19:58:27 by W3 Total Cache
+Served from: dakanji.local @ 2023-11-15 20:06:23 by W3 Total Cache
 -->
