@@ -218,11 +218,12 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
               child: Wrap(
                 direction: Axis.horizontal,
                 children: [
-                  for (int i = 0; i < widget.entry.readings.length; i++)
-                    if(accents[i] != null)
-                      for (var a = 0; a < accents[i]!.length; a++)
-                        ...() {
-                          List<Widget> ret = [];
+                  ...() {
+                    List<Widget> ret = [];
+
+                    for (int i = 0; i < widget.entry.readings.length; i++){
+                      if(accents[i] != null){
+                        for (var a = 0; a < accents[i]!.length; a++){
                           String readingWoNonMora = 
                             widget.entry.readings[i].replaceAll(RegExp(nonMora.join("|")), "");
                           String reading = widget.entry.readings[i];
@@ -258,13 +259,16 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                             );
                           }
-                          // add "," to separate pitch readings
-                          if(a < widget.entry.accents![i]!.attributes.length-1){
-                            ret.add(const Text("、"));
-                          }
+                        }
+                        // add "," to separate pitch readings
+                        if(i < widget.entry.readings.length-1){
+                          ret.add(const Text("、"));
+                        }
+                      }
+                    }
 
-                          return ret;
-                        } ()
+                    return ret;
+                  } ()
                 ]
               ),
             ),
