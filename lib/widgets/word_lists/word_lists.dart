@@ -70,15 +70,15 @@ class _WordListsState extends State<WordLists> {
   void initState() {
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
-
-      // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialWordLists) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        // init tutorial
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && GetIt.I<UserData>().showTutorialWordLists) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().wordListsScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!
+          );
+        }
       }
     });
 

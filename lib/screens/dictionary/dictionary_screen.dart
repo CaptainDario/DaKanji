@@ -62,14 +62,16 @@ class _DictionaryScreenState
 
     // init tutorial
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && 
-        GetIt.I<UserData>().showTutorialDictionary && widget.includeTutorial) {
+      if(widget.includeTutorial){
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && 
+          GetIt.I<UserData>().showTutorialDictionary && widget.includeTutorial) {
 
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!
-        );
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!
+          );
+        }
       }
     });
   }

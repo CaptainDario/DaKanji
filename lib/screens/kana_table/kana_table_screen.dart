@@ -101,16 +101,18 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
 
-      // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialKanaTable) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!
-        );
-        onboarding.controller.addListener(() => tutorialToggleSpeedDial(onboarding));
+      if(widget.includeTutorial){
+        // init tutorial
+        final OnboardingState? onboarding = Onboarding.of(context);
+        
+        if (onboarding != null && widget.includeTutorial && 
+          GetIt.I<UserData>().showTutorialKanaTable) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!
+          );
+          onboarding.controller.addListener(() => tutorialToggleSpeedDial(onboarding));
+        }
       }
     });
   }

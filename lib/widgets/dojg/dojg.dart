@@ -61,15 +61,17 @@ class _DoJGState extends State<DoJG> {
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
 
-      // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if(widget.includeTutorial && onboarding != null && 
-        GetIt.I<UserData>().showTutorialDojg &&
-        GetIt.I<UserData>().dojgImported) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().dojgScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().dojgScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        // init tutorial
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if(onboarding != null && 
+          GetIt.I<UserData>().showTutorialDojg &&
+          GetIt.I<UserData>().dojgImported) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().dojgScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().dojgScreenTutorial.indexes!
+          );
+        }
       }
     });
   }

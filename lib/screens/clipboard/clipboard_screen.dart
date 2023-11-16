@@ -95,14 +95,16 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
 
       // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialClipboard) {
-        showTutorial = true;
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && 
+          GetIt.I<UserData>().showTutorialClipboard) {
+          showTutorial = true;
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
+          );
+        }
       }
 
       // get current always on top state
