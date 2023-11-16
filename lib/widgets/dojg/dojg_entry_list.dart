@@ -58,7 +58,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
   String currentSearch = "";
   /// The text controller of the search text box
   TextEditingController searchTextEditingController = TextEditingController();
-
+  /// Has the initial search been read
   bool readInitialSearch = false;
 
 
@@ -95,33 +95,84 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
       currentEntries = [];
     }
     else{
-      String preProcessedCurrentSearch = currentSearch.trim();
+      currentSearch = currentSearch.trim();
       currentEntries = GetIt.I<Isars>().dojg!.dojgEntrys.filter()
         // show only entries of currently selected volumes
         .anyOf(volumeTags.indexed.where((e) => currentVolumeSelection[e.$1]),
           (q, tag) => q.volumeTagEqualTo(tag.$2))
         //
-        .optional(preProcessedCurrentSearch != "", (q) => 
-          q.grammaticalConceptContains(preProcessedCurrentSearch, caseSensitive: false)
+        .optional(currentSearch != "", (q) => 
+          q.grammaticalConceptContains(currentSearch, caseSensitive: false)
             .or()
-          .usageContains(preProcessedCurrentSearch, caseSensitive: false)
+          .usageContains(currentSearch, caseSensitive: false)
         )
-        .findAllSync()
-      // sort found entries
-      ..sort(((a, b) {
-        // first by the starting kana
-        if(a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]) != 0) {
-          return a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]);
-        } else if (a.volumeTag.compareTo(b.volumeTag) != 0) {
-          return a.volumeTag[0].compareTo(b.volumeTag[0]);
-        // then by the page
-        } else {
-          return a.page.compareTo(b.page);
-        }
-      }));
+        .findAllSync();
+      // sort entries when no filter has been applied
+      if(currentSearch.isEmpty){
+        
+      }
+      // sort entries when a filter has been applied
+      else {
+        sortFilteredEntries();
+      }
     }
   }
 
+  /// Sorts all entries by the following rule
+  /// 1. By first character
+  /// 2. By DoJG volume tag
+  /// 3. by DoJG page
+  void sortAllEntries(){
+    currentEntries.sort(((a, b) {
+      // first by the starting kana
+      if(a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]) != 0) {
+        return a.grammaticalConcept[0].compareTo(b.grammaticalConcept[0]);
+      }
+      // then by tag
+      else if (a.volumeTag.compareTo(b.volumeTag) != 0) {
+        return a.volumeTag[0].compareTo(b.volumeTag[0]);
+      // then by the page
+      }
+      else {
+        return a.page.compareTo(b.page);
+      }
+    }));
+  }
+
+  /// Sorts entries when a filter has been applied. Sorts first by
+  /// 1. Full match
+  /// 2. Match starts at the beginning
+  /// 3. Matches somwhere
+  /// Then those are sorted by length
+  void sortFilteredEntries(){
+    List<DojgEntry> full = [], start = [], other = [];
+    for (var i = 0; i < currentEntries.length; i++) {
+
+      String gC = currentEntries[i].grammaticalConcept
+        .replaceAll(RegExp(r"[(|（|)|）|～|~|\d|\s]"), "");
+      List<String> gCs = gC.split(RegExp(r"[・|/|]／"));
+
+      if(gCs.any((e) => e == currentSearch)){
+        full.add(currentEntries[i]);
+      }
+      else if(gCs.any((e) => e.startsWith(currentSearch))){
+        start.add(currentEntries[i]);
+      }
+      else {
+        other.add(currentEntries[i]);
+      }
+    }
+    currentEntries = 
+      (full..sort(((a, b) {
+        return a.grammaticalConcept.length.compareTo(b.grammaticalConcept.length);
+      }))) +
+      (start..sort(((a, b) {
+        return a.grammaticalConcept.length.compareTo(b.grammaticalConcept.length);
+      }))) + 
+      (other..sort(((a, b) {
+        return a.grammaticalConcept.length.compareTo(b.grammaticalConcept.length);
+      })));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +269,9 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
           SliverList.separated(
             itemCount: currentEntries.length,
             separatorBuilder: (context, i) {
+              // hide separators when the user searched smth
+              if(currentSearch.isNotEmpty) return const SizedBox();
+              
               if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
                 currentEntries[i+1].grammaticalConcept[0]) {
                 return Text(
@@ -231,21 +285,17 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
             itemBuilder: (context, i) {
               return Focus(
                 focusNode: widget.includeTutorial && i == 0
-                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
-                    : null,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                  child: DojgEntryCard(
-                    currentEntries[i],
-                    onTap: (entry) {
-                      widget.onTap?.call(currentEntries[i]);
-                    },
-                  ),
+                  ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
+                  : null,
+                child: DojgEntryCard(
+                  currentEntries[i],
+                  onTap: (entry) {
+                    widget.onTap?.call(currentEntries[i]);
+                  },
                 ),
               );
             }
           )
-            
         ],
       ),
     );
