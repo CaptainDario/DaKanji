@@ -84,36 +84,21 @@ class _DoJGState extends State<DoJG> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Row(
+        return Stack(
           children: [
-            Expanded(
-              child: DojgEntryList(
-                initialSearch: widget.initialSearch,
-                openFirstResult: widget.openFirstResult,
-                includeTutorial: widget.includeTutorial,
-                onTap: (DojgEntry dojgEntry) {
-                  // add new route if screen is small
-                  if(constraints.maxWidth < 800){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                          DojgEntryPage(dojgEntry, true),
-                      )
-                    );
-                  }
-                  setState(() {
-                    currentSelection = dojgEntry;  
-                  });
-                },
-              )
+            DojgEntryList(
+              initialSearch: widget.initialSearch,
+              openFirstResult: widget.openFirstResult,
+              includeTutorial: widget.includeTutorial,
+              includeVolumeTags: widget.includeVolumeTags,
+              onTap: (DojgEntry dojgEntry) {
+                setState(() {
+                  currentSelection = dojgEntry;  
+                });
+              },
             ),
-            if(constraints.maxWidth > 800)
-              Expanded(
-                child: currentSelection == null
-                  ? const SizedBox()
-                  : DojgEntryPage(currentSelection!, false)
-              ),
+            if(currentSelection != null)
+              DojgEntryPage(currentSelection!, false)
           ],
         );
       },
