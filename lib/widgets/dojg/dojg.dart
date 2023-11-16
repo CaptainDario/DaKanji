@@ -22,6 +22,8 @@ class DoJG extends StatefulWidget {
   final String? initialSearch;
   /// Should the first result of the initial search be openend (if one exists)
   final bool openFirstResult;
+  /// should the filters for the volumes be included
+  final bool includeVolumeTags;
 
 
   const DoJG(
@@ -30,6 +32,7 @@ class DoJG extends StatefulWidget {
     {
       this.initialSearch,
       this.openFirstResult = false,
+      this.includeVolumeTags = true,
       super.key
     }
   );

@@ -24,6 +24,8 @@ class DojgEntryList extends ConsumerStatefulWidget {
   final bool openFirstResult;
   /// should the tutorial be included
   final bool includeTutorial;
+  /// should the filters for the volumes be included
+  final bool includeVolumeTags;
   /// Callback that is called when the user taps on this card. provides
   /// the `this.dojgEntry` as parameter
   final Function(DojgEntry dojgEntry)? onTap;
@@ -34,6 +36,7 @@ class DojgEntryList extends ConsumerStatefulWidget {
       this.initialSearch,
       this.openFirstResult = false,
       this.includeTutorial = false,
+      this.includeVolumeTags = true,
       this.onTap,
       super.key
     }
@@ -178,27 +181,36 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                   focusNode: widget.includeTutorial
                     ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
                     : null,
-                  child: ToggleButtons(
-                    renderBorder: false,
-                    isSelected: currentVolumeSelection,
-                    fillColor: Colors.transparent,
-                    hoverColor: Colors.grey.withOpacity(0.2),
-                    selectedColor: Colors.white,
-                    color: Colors.grey.withOpacity(0.4),
-                    onPressed: (index) {
-                      setState(() {
-                        currentVolumeSelection[index] = !currentVolumeSelection[index];
-                        updateSearchResults();
-                      });
-                    },
-                    children: [
-                      for (int i = 0; i < 3; i++)
-                        Text(
-                          volumeTags[i],
-                          textScaleFactor: 1.25,
-                        )
-                    ],
-                  ),
+                  child: widget.includeVolumeTags
+                    ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ToggleButtons(
+                            renderBorder: false,
+                            isSelected: currentVolumeSelection,
+                            fillColor: Colors.transparent,
+                            hoverColor: Colors.grey.withOpacity(0.2),
+                            selectedColor: Colors.white,
+                            color: Colors.grey.withOpacity(0.4),
+                            onPressed: (index) {
+                              setState(() {
+                                currentVolumeSelection[index] = !currentVolumeSelection[index];
+                                updateSearchResults();
+                              });
+                            },
+                            children: [
+                              for (int i = 0; i < 3; i++)
+                                Text(
+                                  volumeTags[i],
+                                  textScaleFactor: 1.25,
+                                )
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                    : const SizedBox(),
                 )
               ]
             )

@@ -159,11 +159,12 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         ),
                         if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
                             child: DoJG(
                               false,
                               false,
                               initialSearch: widget.text,
+                              includeVolumeTags: false,
                               key: Key(widget.text),
                             ),
                           ),
