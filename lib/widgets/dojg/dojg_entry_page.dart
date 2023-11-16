@@ -30,11 +30,16 @@ class DojgEntryPage extends ConsumerStatefulWidget {
   final DojgEntry dojgEntry;
   /// Is this dojg entry page is a separate route or is side by side with the search
   final bool isSeparateRoute;
+  /// Callback that is executed when the use taps on the back button of the 
+  /// DoJG screen
+  final Function()? onTapBack;
+
 
   const DojgEntryPage(
     this.dojgEntry,
     this.isSeparateRoute,
     {
+      this.onTapBack,
       super.key
     }
   );
@@ -56,6 +61,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: widget.onTapBack,
+        ),
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -141,10 +150,10 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                                       () {
                                         ref.read(dojgSearchProvider.notifier)
                                           .setCurrentSearchTerm(exp
-                                              // remove characters that break the search
-                                              .replaceAll(RegExp(r"[\(|\)|\d]"), "")
-                                              // remove excess whitespace
-                                              .trim()
+                                            // remove characters that break the search
+                                            .replaceAll(RegExp(r"[\(|\)|\d]"), "")
+                                            // remove excess whitespace
+                                            .trim()
                                           );
                                         if(widget.isSeparateRoute){
                                           Navigator.of(context).pop();

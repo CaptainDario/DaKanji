@@ -98,7 +98,11 @@ class _DoJGState extends State<DoJG> {
               },
             ),
             if(currentSelection != null)
-              DojgEntryPage(currentSelection!, false)
+              DojgEntryPage(
+                currentSelection!,
+                false,
+                onTapBack: () => setState(() {currentSelection = null;}),
+              )
           ],
         );
       },
