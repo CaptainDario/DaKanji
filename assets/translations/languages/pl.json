@@ -123,7 +123,7 @@
     "dojg_pos": "",
     "dojg_related": "Powi\u0105zane wyra\u017cenia",
     "dojg_search": "Szukaj...",
-    "refer_to_manual": "Kliknij tutaj, aby uzyska\u0107 wi\u0119cej informacji",
+    "refer_to_manual": "Kliknij tutaj, aby uzyska\u0107 szczeg\u00f3\u0142owe informacje",
     "title": "DoJG",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie S\u0142ownika gramatyki japo\u0144skiej (DoJG)!",
@@ -171,6 +171,10 @@
     "system": "system",
     "web": "web"
   },
+  "GrammarScreen": {
+    "import_dojg": "",
+    "title": ""
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
@@ -185,6 +189,11 @@
     "new_versions_available_text": "Dost\u0119pne s\u0105 {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
+  },
+  "ImmersionScreen": {
+    "title": "Zanurzenie",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie immersji!"
   },
   "KanaTableScreen": {
     "title": "St\u00f3\u0142 Kana",
@@ -253,6 +262,9 @@
     "dict_text_examples_analyze_text": "Przyk\u0142ady ze s\u0142ownika mo\u017cna otworzy\u0107 na ekranie przetwarzania tekstu poprzez dwukrotne stukni\u0119cie w nie.",
     "dict_text_examples_analyze_title": "Otwieranie przyk\u0142ad\u00f3w na ekranie Tekst",
     "dict_title": "S\u0142ownik",
+    "dojg_entry_title": "Wpis DoJG",
+    "dojg_image_full_screen_text": "Niekt\u00f3re wpisy DoJG maj\u0105 do\u0142\u0105czony obraz (dotyczy to tylko zaimportowanej talii Anki zawieraj\u0105cej multimedia). Obrazy te mo\u017cna wy\u015bwietli\u0107 na pe\u0142nym ekranie, dotykaj\u0105c ich dwukrotnie.",
+    "dojg_image_full_screen_title": "Obraz pe\u0142noekranowy",
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) to seria ksi\u0105\u017cek o gramatyce japo\u0144skiej. DaKanji pozwala zaimportowa\u0107 [Anki deck (kt\u00f3ry mo\u017cna pobra\u0107 tutaj)](https://dojgdeck.neocities.org/), a nast\u0119pnie przeszukiwa\u0107 jego zawarto\u015b\u0107.  \nIstnieje w dw\u00f3ch wersjach: z obrazkami i bez. Mo\u017cesz zaimportowa\u0107 dowoln\u0105 z nich, najpierw pobieraj\u0105c j\u0105, a nast\u0119pnie importuj\u0105c, wybieraj\u0105c plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
     "dojg_import_title": "Jak skonfigurowa\u0107 DoJG",
     "dojg_title": "DoJG",

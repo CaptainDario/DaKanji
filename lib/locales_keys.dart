@@ -165,6 +165,9 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
+  static const GrammarScreen_import_dojg = 'GrammarScreen.import_dojg';
+  static const GrammarScreen_title = 'GrammarScreen.title';
+  static const GrammarScreen = 'GrammarScreen';
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
   static const HomeScreen_complete_log = 'HomeScreen.complete_log';
@@ -179,6 +182,10 @@ abstract class  LocaleKeys {
   static const HomeScreen_rate_this_app = 'HomeScreen.rate_this_app';
   static const HomeScreen_whats_new = 'HomeScreen.whats_new';
   static const HomeScreen = 'HomeScreen';
+  static const ImmersionScreen_title = 'ImmersionScreen.title';
+  static const ImmersionScreen_tutorial_begin_text = 'ImmersionScreen.tutorial_begin_text';
+  static const ImmersionScreen_tutorial_begin_title = 'ImmersionScreen.tutorial_begin_title';
+  static const ImmersionScreen = 'ImmersionScreen';
   static const KanaTableScreen_title = 'KanaTableScreen.title';
   static const KanaTableScreen_tutorial_begin_text = 'KanaTableScreen.tutorial_begin_text';
   static const KanaTableScreen_tutorial_begin_title = 'KanaTableScreen.tutorial_begin_title';
@@ -240,6 +247,9 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_text_examples_analyze_text = 'ManualScreen.dict_text_examples_analyze_text';
   static const ManualScreen_dict_text_examples_analyze_title = 'ManualScreen.dict_text_examples_analyze_title';
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';
+  static const ManualScreen_dojg_entry_title = 'ManualScreen.dojg_entry_title';
+  static const ManualScreen_dojg_image_full_screen_text = 'ManualScreen.dojg_image_full_screen_text';
+  static const ManualScreen_dojg_image_full_screen_title = 'ManualScreen.dojg_image_full_screen_title';
   static const ManualScreen_dojg_import_text = 'ManualScreen.dojg_import_text';
   static const ManualScreen_dojg_import_title = 'ManualScreen.dojg_import_title';
   static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';

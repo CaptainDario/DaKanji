@@ -33,6 +33,7 @@ class ManualDojgPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // import dojg
           ExpansionTile(
             title: Text(LocaleKeys.ManualScreen_dojg_import_title.tr(), style: heading_1,),
             children: [
@@ -44,6 +45,23 @@ class ManualDojgPage extends StatelessWidget {
                   }
                 },
               ),
+              const SizedBox(height: 15),
+            ],
+          ),
+
+          //
+          ExpansionTile(
+            title: Text(LocaleKeys.ManualScreen_dojg_entry_title.tr(), style: heading_1,),
+            children: [
+              const SizedBox(height: 15),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(LocaleKeys.ManualScreen_dojg_image_full_screen_title.tr(), style: heading_2,),
+              ),
+              const SizedBox(height: 5),
+              Text(LocaleKeys.ManualScreen_dojg_image_full_screen_text.tr()),
+
               const SizedBox(height: 15),
             ],
           ),

@@ -123,7 +123,7 @@
     "dojg_pos": "",
     "dojg_related": "Expressions apparent\u00e9es",
     "dojg_search": "Recherche...",
-    "refer_to_manual": "Cliquez ici pour plus de d\u00e9tails",
+    "refer_to_manual": "Cliquez ici pour plus d'informations",
     "title": "DoJG",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
     "tutorial_begin_title": "Bienvenue sur l'\u00e9cran du Dictionnaire de grammaire japonaise (DoJG) !",
@@ -171,6 +171,10 @@
     "system": "syst\u00e8me",
     "web": "web"
   },
+  "GrammarScreen": {
+    "import_dojg": "",
+    "title": ""
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas \u00e0 nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une \u00e9valuation serait g\u00e9niale et cela aiderait beaucoup ce projet !",
@@ -185,6 +189,11 @@
     "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue \u00e0 l'\u00e9cran d'immersion !"
   },
   "KanaTableScreen": {
     "title": "Table Kana",
@@ -253,6 +262,9 @@
     "dict_text_examples_analyze_text": "Les exemples du dictionnaire peuvent \u00eatre ouverts dans l'\u00e9cran de traitement de texte en double-cliquant dessus.",
     "dict_text_examples_analyze_title": "Ouvrir des exemples dans l'\u00e9cran Texte",
     "dict_title": "Dictionnaire",
+    "dojg_entry_title": "Entr\u00e9e du DoJG",
+    "dojg_image_full_screen_text": "Certaines entr\u00e9es du DoJG sont accompagn\u00e9es d'une image (ce n'est le cas que si vous avez import\u00e9 le jeu Anki qui comprend des m\u00e9dias). Ces images peuvent \u00eatre affich\u00e9es en plein \u00e9cran en double-cliquant dessus.",
+    "dojg_image_full_screen_title": "Image en plein \u00e9cran",
     "dojg_import_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une s\u00e9rie de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez t\u00e9l\u00e9charger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la t\u00e9l\u00e9chargeant puis en s\u00e9lectionnant le fichier .apkg lorsque l'\u00e9cran de DoJG vous le demande.",
     "dojg_import_title": "Comment configurer DoJG",
     "dojg_title": "DoJG",

@@ -123,7 +123,7 @@
     "dojg_pos": "Part of Speech",
     "dojg_related": "Related expressions",
     "dojg_search": "Search...",
-    "refer_to_manual": "Tap here for more details",
+    "refer_to_manual": "Tap here fo details",
     "title": "DoJG",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the Dictionary of Japanese Grammar (DoJG) screen!",
@@ -171,6 +171,10 @@
     "system": "system",
     "web": "web"
   },
+  "GrammarScreen": {
+    "import_dojg": "Tap to import the DoJG deck",
+    "title": "Grammar"
+  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
@@ -185,6 +189,11 @@
     "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the immersion screen!"
   },
   "KanaTableScreen": {
     "title": "Kana Table",
@@ -253,6 +262,9 @@
     "dict_text_examples_analyze_text": "Examples from the dictionary can be opened in the text processing screen by double tapping on them.",
     "dict_text_examples_analyze_title": "Opening examples in the Text screen",
     "dict_title": "Dictionary",
+    "dojg_entry_title": "DoJG entry",
+    "dojg_image_full_screen_text": "Some DoJG entries have an image attached (this is only true when you imported the Anki deck that includes media). Those images can be viewed in full screen by double tapping on them.",
+    "dojg_image_full_screen_title": "Full screen image",
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.  \nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
     "dojg_import_title": "How to setup DoJG",
     "dojg_title": "DoJG",

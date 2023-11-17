@@ -1010,15 +1010,15 @@
       "pl": "Jeśli znalazłeś interesujący Cię punkt gramatyczny, kliknij go, aby zobaczyć wszystkie jego szczegóły."
     },
     "refer_to_manual": {
-      "en": "Tap here for more details",
-      "de": "Tippen Sie hier für weitere Details",
-      "ru": "Нажмите здесь для получения более подробной информации",
+      "en": "Tap here fo details",
+      "de": "Tippen Sie hier für Details",
+      "ru": "Нажмите здесь для получения подробной информации",
       "ja": "詳細はこちらをタップ",
-      "zh": "点击此处了解更多详情",
-      "it": "Toccare qui per maggiori dettagli",
-      "fr": "Cliquez ici pour plus de détails",
+      "zh": "点击此处了解详情",
+      "it": "Tocca qui per i dettagli",
+      "fr": "Cliquez ici pour plus d'informations",
       "es": "Pulse aquí para más detalles",
-      "pl": "Kliknij tutaj, aby uzyskać więcej informacji"
+      "pl": "Kliknij tutaj, aby uzyskać szczegółowe informacje"
     },
     "dojg_import": {
       "en": "Tap to import the DoJG Deck",
@@ -1682,6 +1682,19 @@
       "pl": "DaKanji zostało obniżone! To nie jest obsługiwane działanie i jest bardzo prawdopodobne, że uszkodzi zapisane dane lub nawet sprawi, że DaKanji będzie całkowicie bezużyteczne! Zresetuj wszystkie dane w \"Ustawienia -> Ustawienia zaawansowane\" i uruchom ponownie aplikację."
     }
   },
+  "KanjiTrainerScreen": {
+    "title": {
+      "en": "Kanji Trainer",
+      "de": "Kanji Trainer",
+      "ru": "Тренажер по кандзи",
+      "ja": "漢字トレーナー",
+      "zh": "汉字训练器",
+      "it": "Allenatore di kanji",
+      "fr": "Entraîneur de kanji",
+      "es": "Entrenador de Kanji",
+      "pl": "Kanji Trainer"
+    }
+  },
   "KanjiTableScreen": {
     "title": {
       "en": "Kanji Table",
@@ -1770,19 +1783,6 @@
       "fr": "Ce nombre indique combien de kanji sont actuellement affichés.",
       "es": "Este número indica cuántos kanji se están mostrando actualmente.",
       "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
-    }
-  },
-  "KanjiTrainerScreen": {
-    "title": {
-      "en": "Kanji Trainer",
-      "de": "Kanji Trainer",
-      "ru": "Тренажер по кандзи",
-      "ja": "漢字トレーナー",
-      "zh": "汉字训练器",
-      "it": "Allenatore di kanji",
-      "fr": "Entraîneur de kanji",
-      "es": "Entrenador de Kanji",
-      "pl": "Kanji Trainer"
     }
   },
   "KanaTrainerScreen": {
@@ -2847,6 +2847,14 @@
       "pl": "Usuwanie plików DoJG"
     }
   },
+  "GrammarScreen": {
+    "title": {
+      "en": "Grammar"
+    },
+    "import_dojg": {
+      "en": "Tap to import the DoJG deck"
+    }
+  },
   "WebviewScreen": {
     "loading": {
       "en": "Searching",
@@ -3399,6 +3407,74 @@
       "fr": "Le Dictionnaire de grammaire japonaise (DoJG) est une série de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez télécharger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la téléchargeant puis en sélectionnant le fichier .apkg lorsque l'écran de DoJG vous le demande.",
       "es": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gramática japonesa. DaKanji permite importar su [Anki deck (que puedes descargar aquí)](https://dojgdeck.neocities.org/) y luego buscar en su contenido.  \nExiste en dos versiones: una con imágenes y otra sin ellas. Puedes importar cualquiera de las dos descargándola primero y luego importándola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
       "pl": "Dictionary of Japanese Grammar (DoJG) to seria książek o gramatyce japońskiej. DaKanji pozwala zaimportować [Anki deck (który można pobrać tutaj)](https://dojgdeck.neocities.org/), a następnie przeszukiwać jego zawartość.  \nIstnieje w dwóch wersjach: z obrazkami i bez. Możesz zaimportować dowolną z nich, najpierw pobierając ją, a następnie importując, wybierając plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG."
+    },
+    "dojg_entry_title": {
+      "en": "DoJG entry",
+      "de": "DoJG-Eintrag",
+      "ru": "Вступление в DoJG",
+      "ja": "DoJGエントリー",
+      "zh": "DoJG 条目",
+      "it": "Voce DoJG",
+      "fr": "Entrée du DoJG",
+      "es": "Entrada DoJG",
+      "pl": "Wpis DoJG"
+    },
+    "dojg_image_full_screen_title": {
+      "en": "Full screen image",
+      "de": "Fullscreen-Bild",
+      "ru": "Полноэкранное изображение",
+      "ja": "フルスクリーン画像",
+      "zh": "全屏图像",
+      "it": "Immagine a schermo intero",
+      "fr": "Image en plein écran",
+      "es": "Imagen a pantalla completa",
+      "pl": "Obraz pełnoekranowy"
+    },
+    "dojg_image_full_screen_text": {
+      "en": "Some DoJG entries have an image attached (this is only true when you imported the Anki deck that includes media). Those images can be viewed in full screen by double tapping on them.",
+      "de": "Einige DoJG-Einträge sind mit einem Bild versehen (dies ist nur der Fall, wenn Sie ein Anki-Deck mit Medien importiert haben). Diese Bilder können im Vollbildmodus angezeigt werden, indem Sie doppelt auf sie tippen.",
+      "ru": "К некоторым записям DoJG прилагается изображение (это справедливо только в том случае, если вы импортировали колоду Anki, содержащую медиафайлы). Эти изображения можно просмотреть в полноэкранном режиме, дважды нажав на них.",
+      "ja": "一部のDoJGエントリーには画像が添付されています（これはメディアを含むAnkiデッキをインポートした場合に限ります）。これらの画像はダブルタップするとフルスクリーンで見ることができます。",
+      "zh": "有些 DoJG 词条附有图片（只有在导入包含媒体的 Anki 卡组时才会出现这种情况）。双击这些图片可以全屏查看。",
+      "it": "Alcune voci del DoJG hanno un'immagine allegata (questo vale solo se si è importato il mazzo Anki che include i media). Queste immagini possono essere visualizzate a schermo intero toccandole due volte.",
+      "fr": "Certaines entrées du DoJG sont accompagnées d'une image (ce n'est le cas que si vous avez importé le jeu Anki qui comprend des médias). Ces images peuvent être affichées en plein écran en double-cliquant dessus.",
+      "es": "Algunas entradas de DoJG tienen una imagen adjunta (esto sólo ocurre cuando has importado el mazo Anki que incluye medios). Esas imágenes se pueden ver a pantalla completa pulsando dos veces sobre ellas.",
+      "pl": "Niektóre wpisy DoJG mają dołączony obraz (dotyczy to tylko zaimportowanej talii Anki zawierającej multimedia). Obrazy te można wyświetlić na pełnym ekranie, dotykając ich dwukrotnie."
+    }
+  },
+  "ImmersionScreen": {
+    "title": {
+      "en": "Immersion",
+      "de": "Immersion",
+      "ru": "Погружение",
+      "ja": "イマージョン",
+      "zh": "浸入式",
+      "it": "Immersione",
+      "fr": "Immersion",
+      "es": "Inmersión",
+      "pl": "Zanurzenie"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the immersion screen!",
+      "de": "Willkommen auf dem Immersionsbildschirm!",
+      "ru": "Добро пожаловать на экран погружения!",
+      "ja": "イマージョン・スクリーンへようこそ！",
+      "zh": "欢迎来到浸入式屏幕！",
+      "it": "Benvenuti nella schermata di immersione!",
+      "fr": "Bienvenue à l'écran d'immersion !",
+      "es": "¡Bienvenido a la pantalla de inmersión!",
+      "pl": "Witamy na ekranie immersji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     }
   },
   "KuzushijiScreen": {
