@@ -115,10 +115,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       null, null,
       kDebugMode, null),
     if(kDebugMode)
-    DrawerEntry(
-      Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(),
-    "/${Screens.wordLists.name}", Screens.wordLists,
-      null, const Alignment(0, -0.1),
+      DrawerEntry(
+        Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(),
+        "/${Screens.wordLists.name}", Screens.wordLists,
+        null, const Alignment(0, -0.1),
       kDebugMode, null),
     DrawerEntry(
       Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(),
@@ -144,9 +144,17 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       null, null,
       true, sendFeedback),
     if(kDebugMode)
-    DrawerEntry(const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(), "/kuzushiji", Screens.kuzushiji,
-      0.7, const Alignment(-1000, 0),
-      kDebugMode, null),
+      DrawerEntry(
+        Icons.visibility_sharp, LocaleKeys.ImmersionScreen_title.tr(),
+        "/${Screens.immersion.name}", Screens.immersion,
+        null, null,
+        kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(),
+        "/${Screens.kuzushiji.name}", Screens.kuzushiji,
+        0.7, const Alignment(-1000, 0),
+        kDebugMode, null),
   ];
 
   late List<int> drawerElementsIndexOrder;

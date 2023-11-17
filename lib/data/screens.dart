@@ -3,6 +3,7 @@ enum Screens{
   changelog,
   drawing,
   dictionary,
+  immersion,
   dojg,
   text,
   clipboard,
