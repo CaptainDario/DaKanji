@@ -1,7 +1,9 @@
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/immersion/web_browser.dart';
 import 'package:da_kanji_mobile/widgets/immersion/youtube_browser.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 
 
@@ -28,24 +30,24 @@ class ImmersionScreen extends StatefulWidget {
 class _ImmersionScreenState extends State<ImmersionScreen> {
 
   List<IconData> navigationIcons = const [
+    Icons.auto_stories,
     Icons.youtube_searched_for,
     Icons.video_library,
     Icons.public,
-    Icons.auto_stories,
     Icons.computer
   ];
 
   List<String> navigationLabels = const [
+    "Read",
     "YT",
     "Video",
     "Web",
-    "Read",
     "Screen"
   ];
 
   int _selectedIndex = 0;
 
-  Widget currentNavigationTarget = YoutubeBrowser();
+  Widget currentNavigationTarget = Container();
 
 
   @override
@@ -101,7 +103,13 @@ class _ImmersionScreenState extends State<ImmersionScreen> {
     if(value == currentNavigationTarget) return;
 
     if(value == 0){
+      currentNavigationTarget = Container();
+    }
+    else if(value == 1){
       currentNavigationTarget = const YoutubeBrowser();
+    }
+    else if(value == 3){
+      currentNavigationTarget = const WebBrowser();
     }
     else{
       currentNavigationTarget = Container();
