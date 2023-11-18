@@ -54,13 +54,15 @@ class _WebBrowserState extends State<WebBrowser> {
           },
         )
       )
-      ..setOnConsoleMessage((message) {print(message.message);});
+      ..setOnConsoleMessage((message) {
+        print("testtest: ${message.message}");
+      });
   }
 
   void _setUpJavascriptChannel() {
     _webViewController.runJavaScript('''
 document.addEventListener("selectionchange", () => {
-  console.log(document.getSelection());
+  console.log(document.getSelection().toString());
 });
     ''');
 
