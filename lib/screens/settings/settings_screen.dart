@@ -633,28 +633,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
-                      // #region - Kana table header TODO: v Kana table - enable
-                      if(kDebugMode)
-                        ...[
-                          ResponsiveHeaderTile(
-                            LocaleKeys.KanaTableScreen_title.tr(),
-                            DaKanjiIcons.kana_table,
-                            autoSizeGroup: g_SettingsAutoSizeGroup
-                          ),
-                          // reshow tutorial
-                          ResponsiveIconButtonTile(
-                            text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
-                            icon: Icons.replay_outlined,
-                            onButtonPressed: () {
-                              GetIt.I<UserData>().showTutorialKanaTable = true;
-                              settings.save();
-                              Phoenix.rebirth(context);
-                            },
-                            autoSizeGroup: g_SettingsAutoSizeGroup,
-                          ),
-                          // move down between enreegon and region anki header
-                          const Divider(),
-                        ],
+                      // #region - Kana table header
+                      ResponsiveHeaderTile(
+                        LocaleKeys.KanaTableScreen_title.tr(),
+                        DaKanjiIcons.kana_table,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      ResponsiveCheckBoxTile(
+                        text: "play audio",
+                        value: settings.kanaTable.playAudio,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                        onTileTapped: (value) async {
+                          setState(() {
+                            settings.kanaTable.playAudio = value;
+                            settings.save();
+                          });
+                        },
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialKanaTable = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+                      // move down between enreegon and region anki header
+                      const Divider(),
 
                       // #endregion
 

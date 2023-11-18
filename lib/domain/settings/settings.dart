@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings_kana_table.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,6 +35,8 @@ class Settings with ChangeNotifier {
   late SettingsAnki _anki;
   /// All settings related to the kanji table screen
   late SettingsKanjiTable _kanjiTable;
+  /// All settings related to the kana table screen
+  late SettingsKanaTable _kanaTable;
   /// All settings realted to the clipboard screen
   late SettingsClipboard _clipboard;
 
@@ -46,6 +49,7 @@ class Settings with ChangeNotifier {
     _text       = SettingsText();
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
+    _kanaTable  = SettingsKanaTable();
     _clipboard  = SettingsClipboard();
   }
 
@@ -78,6 +82,10 @@ class Settings with ChangeNotifier {
     return _kanjiTable;
   }
 
+  SettingsKanaTable get kanaTable {
+    return _kanaTable;
+  }
+
   SettingsClipboard get clipboard{
     return _clipboard;
   }
@@ -95,6 +103,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsText', json.encode(text.toJson()));
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
+    prefs.setString('settingsKanaTable', json.encode(kanaTable.toJson()));
     prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
   }
 
@@ -178,6 +187,17 @@ class Settings with ChangeNotifier {
       _kanjiTable = SettingsKanjiTable();
     }
     _kanjiTable.addListener(() => notifyListeners());
+
+    // KANA TABLE SETTINGS
+    try{
+      String tmp = prefs.getString('settingsKanaTable') ?? "";
+      if(tmp != "") {_kanaTable = SettingsKanaTable.fromJson(json.decode(tmp));}
+      else {_kanaTable = SettingsKanaTable();}
+    }
+    catch (e) {
+      _kanaTable = SettingsKanaTable();
+    }
+    _kanaTable.addListener(() => notifyListeners());
 
     // CLIPBOARD SETTINGS
     try{
