@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -220,12 +219,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
                     onTap: (String kana) {
-                      if(GetIt.I<Settings>().kanaTable.playAudio){
-                        kanaSoundPlayer.open(
-                          Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
-                          play: true
-                        );
-                      }
+                      kanaSoundPlayer.open(
+                        Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
+                        play: true
+                      );
                       setState(() {
                         currentKana = kana;
                         currentKanaX = constraints.maxWidth /

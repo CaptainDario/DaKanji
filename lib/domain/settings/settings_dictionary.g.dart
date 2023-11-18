@@ -24,13 +24,7 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
           (json['selectedFallingWordsLevels'] as List<dynamic>?)
                   ?.map((e) => e as String)
                   .toList() ??
-              ['N5', 'N4', 'N3']
-      ..playKanjiAnimationWhenOpened =
-          json['playKanjiAnimationWhenOpened'] as bool? ?? true
-      ..kanjiAnimationStrokesPerSecond =
-          (json['kanjiAnimationStrokesPerSecond'] as num?)?.toDouble() ?? 5.0
-      ..resumeAnimationAfterStopSwipe =
-          json['resumeAnimationAfterStopSwipe'] as bool? ?? false;
+              ['N5', 'N4', 'N3'];
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
@@ -40,7 +34,4 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
       'searchDeconjugate': instance.searchDeconjugate,
       'convertToHiragana': instance.convertToHiragana,
       'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
-      'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
-      'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,
-      'resumeAnimationAfterStopSwipe': instance.resumeAnimationAfterStopSwipe,
     };
