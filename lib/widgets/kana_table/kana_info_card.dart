@@ -114,7 +114,6 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
             children: [
               Text(
                 convertToRomaji(widget.kana),
-                maxLines: 1,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
