@@ -55,7 +55,9 @@ void handleDeepLink(String link){
   else if(route[0] == "kanji-table"){
     handleDeepLinkKanjiTable(args);
   }
-  // clipboard
+  else if(route[0] == "kana-table"){
+    handleDeepLinkKanaTable(args);
+  }
   else if(route[0] == Screens.clipboard.name){
     handleDeepLinkClipboard(args);
   }
@@ -269,6 +271,20 @@ void handleDeepLinkKanjiTable(Map<String, String> linkArgs){
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
     "/${Screens.kanjiTable.name}",
+    (route) => false,
+    arguments: navArgs
+  );
+}
+
+/// Handles deep links that are related to the kana table screen
+void handleDeepLinkKanaTable(Map<String, String> linkArgs){
+
+  NavigationArguments? navArgs = NavigationArguments(
+    false
+  );  
+
+  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
+    "/${Screens.kanaTable.name}",
     (route) => false,
     arguments: navArgs
   );
