@@ -238,6 +238,8 @@ flutter:
     - assets/images/onboarding/onboarding_2_2.vec
     - assets/images/onboarding/onboarding_3_1.vec
     - assets/images/onboarding/onboarding_3_2.vec
+    - assets/images/onboarding/onboarding_4_1.vec
+    - assets/images/onboarding/onboarding_4_2.vec
 
     - assets/animations/
     # kana mnemonics / sounds
