@@ -249,16 +249,6 @@ flutter:
     - assets/images/brush.png
     # icons
     - assets/icons/
-    - assets/icons/kana/switch_hira.svg
-    - assets/icons/kana/switch_kata.svg
-    - assets/icons/kana/yoon_on.svg
-    - assets/icons/kana/yoon_off.svg
-    - assets/icons/kana/dakuten_on.svg
-    - assets/icons/kana/dakuten_off.svg
-    - assets/icons/kana/romaji_on.svg
-    - assets/icons/kana/romaji_off.svg
-    - assets/icons/kana/special_on.svg
-    - assets/icons/kana/special_off.svg
     # misc
     - CHANGELOG.md
     - pubspec.yaml
