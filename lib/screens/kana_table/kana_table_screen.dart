@@ -48,9 +48,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// Is the speed dial open
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   /// The functions to be called when the menu items are pressed
-  late List<Function> menuFunctions;  
-  /// The menu items to be displayed in the speed dial
-  late List<String> menuItems;
+  late List<Function> menuFunctions;
 
   /// The table of kana selected from the user before applying responsivess-modifications
   List<List<String>> baseKanaTable = hiragana;
@@ -139,14 +137,6 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
 
-    menuItems = [
-      showDaku        ? "dakuten_on.svg"  : "dakuten_off.svg",
-      showYoon        ? "yoon_on.svg"     : "yoon_off.svg",
-      isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
-      showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
-      showSpecial     ? "special_on.svg"  : "special_off.svg", 
-    ].map((e) => "assets/icons/kana/$e").toList();
-
     return DaKanjiDrawer(
       currentScreen: Screens.kanaTable,
       drawerClosed: !widget.navigatedByDrawer,
@@ -168,16 +158,84 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               spacing: 10,
               
               children: [
-                for (int i = 0; i < menuItems.length; i++)
+                for (int i = 0; i < 5; i++)
                   SpeedDialChild(
                     child: Focus(
                       focusNode: widget.includeTutorial
                         ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![3+i]
                         : null,
-                      child: SvgPicture.asset(
-                        menuItems[i],
-                        width: 35,
-                        height: 35,
+                      child: SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              // show kana with dakuten
+                              if(i == 0)
+                                const FittedBox(
+                                  child: Text(
+                                    "だ",
+                                    style: TextStyle(fontSize: 1000),
+                                  )
+                                ),
+                              // show kana with small kana
+                              if(i == 1)
+                                const FittedBox(
+                                  child: Text(
+                                    "きゅ",
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200),
+                                  )
+                                ),
+                              // hiragana / katakana toggle
+                              if(i == 2)
+                                FittedBox(
+                                  child: Text(
+                                    isHiragana ? "ア" : "あ",
+                                    style: const TextStyle(fontSize: 1000),
+                                  )
+                                ),
+                              // romaji
+                              if(i == 3)
+                              ...[
+                                  const Positioned(
+                                    height: 30,
+                                    width: 30,
+                                    top: -4,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "あ",
+                                        style: TextStyle(fontSize: 1000),
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    bottom: -4,
+                                    child: Text("a"),
+                                  )
+                                ],
+                              // rare kana
+                              if(i == 4)
+                                const FittedBox(
+                                  child: Text(
+                                    "ファ",
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200),
+                                  )
+                                ),
+                              
+                              if(showDaku   && i == 0 || showYoon    && i == 1 ||
+                                showRomaji && i == 3 || showSpecial && i == 4 )
+                                Transform.rotate(
+                                  angle: 45,
+                                  child: Container(
+                                    width: 3, height: 40, color: Colors.white,
+                                  )
+                                )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     backgroundColor: g_Dakanji_green,
@@ -290,6 +348,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
       ),
     );
   }
+
 
   /// based on the screen size, returns the current kana table
   void setResponsiveKanaTable(BoxConstraints constraints){
