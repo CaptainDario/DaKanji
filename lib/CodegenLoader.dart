@@ -149,8 +149,6 @@ class CodegenLoader extends AssetLoader{
     "system": "系统",
     "web": "网络"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "不要再问了",
     "RatePopup_text": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
@@ -261,7 +259,9 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_2_text": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
     "Onboarding_2_title": "查询字符和单词",
     "Onboarding_3_text": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
-    "Onboarding_3_title": "不知道如何读懂一个句子？"
+    "Onboarding_3_title": "不知道如何读懂一个句子？",
+    "Onboarding_4_text": "DaKanji 有汉字和假名表，可让您高效地学习汉字和假名。",
+    "Onboarding_4_title": "学习汉字和假名"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "重置字典文件",
@@ -523,8 +523,6 @@ static const Map<String,dynamic> ja = {
     "system": "システム",
     "web": "ウェブ"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
@@ -635,7 +633,9 @@ static const Map<String,dynamic> ja = {
     "Onboarding_2_text": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
     "Onboarding_2_title": "漢字や単語を調べる",
     "Onboarding_3_text": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
-    "Onboarding_3_title": "文章の読み方がわからない？"
+    "Onboarding_3_title": "文章の読み方がわからない？",
+    "Onboarding_4_text": "大漢字には漢字表と仮名表があり、効率よく学習することができます。",
+    "Onboarding_4_title": "漢字と仮名を学ぶ"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルのリセット",
@@ -927,8 +927,6 @@ static const Map<String,dynamic> de = {
     "system": "System",
     "web": "Web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
@@ -1039,7 +1037,9 @@ static const Map<String,dynamic> de = {
     "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
     "Onboarding_2_title": "Schlage Zeichen und Wörter nach",
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
-    "Onboarding_3_title": "Du weißt nicht wie man einen Satz liest?"
+    "Onboarding_3_title": "Du weißt nicht wie man einen Satz liest?",
+    "Onboarding_4_text": "DaKanji verfügt über Kanji- und Kana-Tabellen, damit Sie sie effizient lernen können.",
+    "Onboarding_4_title": "Kanji und Kana lernen"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Wörterbuchdateien zurücksetzen",
@@ -1293,8 +1293,6 @@ static const Map<String,dynamic> ru = {
     "system": "система",
     "web": "веб-сайт"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
     "RatePopup_text": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
@@ -1405,7 +1403,9 @@ static const Map<String,dynamic> ru = {
     "Onboarding_2_text": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
     "Onboarding_2_title": "Поиск символов и слов",
     "Onboarding_3_text": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
-    "Onboarding_3_title": "Не умеете читать предложения?"
+    "Onboarding_3_title": "Не умеете читать предложения?",
+    "Onboarding_4_text": "DaKanji содержит таблицы кандзи и кана, позволяющие эффективно их изучать.",
+    "Onboarding_4_title": "Изучение кандзи и каны"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Сброс файлов словарей",
@@ -1680,8 +1680,6 @@ static const Map<String,dynamic> pl = {
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!",
@@ -1792,7 +1790,9 @@ static const Map<String,dynamic> pl = {
     "Onboarding_2_text": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub użyj skrótu do słownika Internetowego.",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie.",
-    "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
+    "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?",
+    "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, które pozwalają na efektywną naukę.",
+    "Onboarding_4_title": "Nauka kanji i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plików słownika",
@@ -2084,10 +2084,6 @@ static const Map<String,dynamic> en = {
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
@@ -2198,7 +2194,9 @@ static const Map<String,dynamic> en = {
     "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
-    "Onboarding_3_title": "Do not know how to read a sentence?"
+    "Onboarding_3_title": "Do not know how to read a sentence?",
+    "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+    "Onboarding_4_title": "Study Kanji and Kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -2452,8 +2450,6 @@ static const Map<String,dynamic> it = {
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
@@ -2564,7 +2560,9 @@ static const Map<String,dynamic> it = {
     "Onboarding_2_text": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
     "Onboarding_2_title": "Ricerca di caratteri e parole",
     "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
-    "Onboarding_3_title": "Non sapete leggere una frase?"
+    "Onboarding_3_title": "Non sapete leggere una frase?",
+    "Onboarding_4_text": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
+    "Onboarding_4_title": "Studiare i kanji e i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reimpostare i file del dizionario",
@@ -2804,8 +2802,6 @@ static const Map<String,dynamic> fr = {
     "system": "système",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
@@ -2916,7 +2912,9 @@ static const Map<String,dynamic> fr = {
     "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
     "Onboarding_2_title": "Recherche de caractères et de mots",
     "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
-    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
+    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?",
+    "Onboarding_4_text": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les étudier efficacement.",
+    "Onboarding_4_title": "Étudier les kanji et les kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Réinitialiser les fichiers du dictionnaire",
@@ -3156,8 +3154,6 @@ static const Map<String,dynamic> es = {
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
@@ -3268,7 +3264,9 @@ static const Map<String,dynamic> es = {
     "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
     "Onboarding_2_title": "Busca caracteres y palabras",
     "Onboarding_3_text": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
-    "Onboarding_3_title": "¿No sabe leer una frase?"
+    "Onboarding_3_title": "¿No sabe leer una frase?",
+    "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+    "Onboarding_4_title": "Estudiar kanji y kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",

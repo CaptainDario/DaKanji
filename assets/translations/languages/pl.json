@@ -171,10 +171,6 @@
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "",
-    "title": ""
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
@@ -285,7 +281,9 @@
     "Onboarding_2_text": "Z \"DaKanji\" mo\u017cesz szybko wyszuka\u0107 s\u0142owa u\u017cywaj\u0105c wbudowanego s\u0142ownika lub u\u017cyj skr\u00f3tu do s\u0142ownika Internetowego.",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "U\u017cyj narz\u0119dzi analizy tekstu DaKanji, aby doda\u0107 furigan\u0119, spacje i inne, lub przet\u0142umacz ca\u0142e zdanie.",
-    "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?"
+    "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?",
+    "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, kt\u00f3re pozwalaj\u0105 na efektywn\u0105 nauk\u0119.",
+    "Onboarding_4_title": "Nauka kanji i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plik\u00f3w s\u0142ownika",

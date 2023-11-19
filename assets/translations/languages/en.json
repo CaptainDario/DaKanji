@@ -171,10 +171,6 @@
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
@@ -285,7 +281,9 @@
     "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
-    "Onboarding_3_title": "Do not know how to read a sentence?"
+    "Onboarding_3_title": "Do not know how to read a sentence?",
+    "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+    "Onboarding_4_title": "Study Kanji and Kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",

@@ -171,10 +171,6 @@
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "",
-    "title": ""
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificaci\u00f3n ser\u00eda genial y ayudar\u00eda mucho al proyecto!",
@@ -285,7 +281,9 @@
     "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras r\u00e1pidamente utilizando el diccionario incorporado o en Internet.",
     "Onboarding_2_title": "Busca caracteres y palabras",
     "Onboarding_3_text": "Utiliza las herramientas de an\u00e1lisis de texto de DaKanji para a\u00f1adir furiganas, espacios y mucho m\u00e1s, o traduce la frase entera.",
-    "Onboarding_3_title": "\u00bfNo sabe leer una frase?"
+    "Onboarding_3_title": "\u00bfNo sabe leer una frase?",
+    "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+    "Onboarding_4_title": "Estudiar kanji y kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",

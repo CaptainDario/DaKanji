@@ -54,7 +54,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     LocaleKeys.OnBoarding_Onboarding_1_title.tr(), LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
     LocaleKeys.OnBoarding_Onboarding_2_title.tr(), LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
     LocaleKeys.OnBoarding_Onboarding_3_title.tr(), LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
-    LocaleKeys.OnBoarding_Onboarding_3_title.tr(), LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
+    LocaleKeys.OnBoarding_Onboarding_4_title.tr(), LocaleKeys.OnBoarding_Onboarding_4_text.tr(),
   ];
   //----------------------------------------------------------------------------
 

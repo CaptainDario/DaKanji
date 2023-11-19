@@ -2227,6 +2227,28 @@
       "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
       "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
       "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie."
+    },
+    "Onboarding_4_title": {
+      "en": "Study Kanji and Kana",
+      "de": "Kanji und Kana lernen",
+      "ru": "Изучение кандзи и каны",
+      "ja": "漢字と仮名を学ぶ",
+      "zh": "学习汉字和假名",
+      "it": "Studiare i kanji e i kana",
+      "fr": "Étudier les kanji et les kana",
+      "es": "Estudiar kanji y kana",
+      "pl": "Nauka kanji i kana"
+    },
+    "Onboarding_4_text": {
+      "en": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+      "de": "DaKanji verfügt über Kanji- und Kana-Tabellen, damit Sie sie effizient lernen können.",
+      "ru": "DaKanji содержит таблицы кандзи и кана, позволяющие эффективно их изучать.",
+      "ja": "大漢字には漢字表と仮名表があり、効率よく学習することができます。",
+      "zh": "DaKanji 有汉字和假名表，可让您高效地学习汉字和假名。",
+      "it": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
+      "fr": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les étudier efficacement.",
+      "es": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+      "pl": "DaKanji zawiera tabele Kanji i Kana, które pozwalają na efektywną naukę."
     }
   },
   "SettingsScreen": {
@@ -2845,14 +2867,6 @@
       "fr": "Supprimer les fichiers DoJG",
       "es": "Eliminar archivos DoJG",
       "pl": "Usuwanie plików DoJG"
-    }
-  },
-  "GrammarScreen": {
-    "title": {
-      "en": "Grammar"
-    },
-    "import_dojg": {
-      "en": "Tap to import the DoJG deck"
     }
   },
   "WebviewScreen": {

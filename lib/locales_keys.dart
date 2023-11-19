@@ -165,9 +165,6 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
-  static const GrammarScreen_import_dojg = 'GrammarScreen.import_dojg';
-  static const GrammarScreen_title = 'GrammarScreen.title';
-  static const GrammarScreen = 'GrammarScreen';
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
   static const HomeScreen_complete_log = 'HomeScreen.complete_log';
@@ -270,6 +267,8 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_2_title = 'OnBoarding.Onboarding_2_title';
   static const OnBoarding_Onboarding_3_text = 'OnBoarding.Onboarding_3_text';
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
+  static const OnBoarding_Onboarding_4_text = 'OnBoarding.Onboarding_4_text';
+  static const OnBoarding_Onboarding_4_title = 'OnBoarding.Onboarding_4_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
