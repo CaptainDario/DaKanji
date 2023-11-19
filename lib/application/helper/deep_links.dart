@@ -52,7 +52,7 @@ void handleDeepLink(String link){
   else if(route[0] == Screens.dojg.name){
     handleDeepLinkDojg(args);
   }
-  else if(route[0] == Screens.kanjiTable.name.replaceAll("_", "-")){
+  else if(route[0] == "kanji-table"){
     handleDeepLinkKanjiTable(args);
   }
   // clipboard
