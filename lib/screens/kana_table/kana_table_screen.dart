@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
@@ -291,7 +290,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                           gridColumnCount * getKanaX(kana) + cellWidth/2;
                         currentKanaY = (constraints.maxHeight-actionButtonHeigt) /
                           gridRowCount * getKanaY(kana) + cellHeight/2;
-                        _controller.forward(from: 0);
+                        _controller.forward(from: 0).then((value) => setState((){}));
                       });
                     },
                   ),
@@ -322,6 +321,13 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                 if(currentKana != null)
                   AnimatedBuilder(
                     animation: _controller,
+                    child: KanaInfoCard(
+                      currentKana!,
+                      showAnimatedKana: _controller.isCompleted,
+                      onPlayPressed: () {
+                        kanaSoundPlayer.play();
+                      },
+                    ),
                     builder: (context, child) {
                       return Positioned(
                         left: lerpDouble(currentKanaX,
@@ -336,13 +342,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         height: popupHeight * _controller.value,
                         child: Opacity(
                           opacity: _controller.value,
-                          child: KanaInfoCard(
-                            currentKana!,
-                            showAnimatedKana: _controller.isCompleted,
-                            onPlayPressed: () {
-                              kanaSoundPlayer.play();
-                            },
-                          )
+                          child: child!
                         ),
                       );
                     }
