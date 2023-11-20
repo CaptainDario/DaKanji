@@ -313,6 +313,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_draw_invert_short_long_press = 'SettingsScreen.draw_invert_short_long_press';
   static const SettingsScreen_draw_long_press_opens = 'SettingsScreen.draw_long_press_opens';
   static const SettingsScreen_draw_title = 'SettingsScreen.draw_title';
+  static const SettingsScreen_kana_table_play_audio = 'SettingsScreen.kana_table_play_audio';
+  static const SettingsScreen_kana_table_play_kana_animation_when_opened = 'SettingsScreen.kana_table_play_kana_animation_when_opened';
   static const SettingsScreen_misc_default_screen = 'SettingsScreen.misc_default_screen';
   static const SettingsScreen_misc_language = 'SettingsScreen.misc_language';
   static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';

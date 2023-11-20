@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
     "draw_long_press_opens": "Wyb\u00f3r s\u0142ownika",
     "draw_title": "Obraz",
+    "kana_table_play_audio": "Odtwarzanie d\u017awi\u0119ku po stukni\u0119ciu w Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatyczne uruchamianie animacji Kana",
     "misc_default_screen": "Ekran pocz\u0105tkowy przy uruchamianiu aplikacji",
     "misc_language": "j\u0119zyk (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Zapisz bie\u017c\u0105cy rozmiar okna",

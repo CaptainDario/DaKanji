@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "Invertir pulsaci\u00f3n larga/breve",
     "draw_long_press_opens": "Selecci\u00f3n de diccionarios",
     "draw_title": "Dibujar",
+    "kana_table_play_audio": "Reproducir audio al pulsar sobre Kana",
+    "kana_table_play_kana_animation_when_opened": "Iniciar autom\u00e1ticamente la animaci\u00f3n Kana",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicaci\u00f3n",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Guardar el tama\u00f1o actual de la ventana",

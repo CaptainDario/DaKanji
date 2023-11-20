@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "Inverser la presse long/short",
     "draw_long_press_opens": "S\u00e9lection de dictionnaires",
     "draw_title": "Dessin",
+    "kana_table_play_audio": "Jouer le son lorsque l'on tape sur le Kana",
+    "kana_table_play_kana_animation_when_opened": "Lancer automatiquement l'animation des Kana",
     "misc_default_screen": "\u00c9cran initial au d\u00e9marrage de l'application",
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",

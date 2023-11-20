@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "\u9577\u62bc\u3057\u3068\u30bf\u30c3\u30d7\u3092\u53cd\u8ee2\u3059\u308b",
     "draw_long_press_opens": "\u8f9e\u66f8\u306e\u9078\u629e",
     "draw_title": "\u6f22\u5b57\u3092\u63a2\u3059",
+    "kana_table_play_audio": "\u304b\u306a\u3092\u30bf\u30c3\u30d7\u3059\u308b\u3068\u97f3\u58f0\u304c\u518d\u751f\u3055\u308c\u308b",
+    "kana_table_play_kana_animation_when_opened": "\u304b\u306a\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u3092\u81ea\u52d5\u7684\u306b\u958b\u59cb",
     "misc_default_screen": "\u30a2\u30d7\u30ea\u8d77\u52d5\u6642\u306e\u521d\u671f\u753b\u9762",
     "misc_language": "\u8a00\u8a9e (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "\u73fe\u5728\u306e\u30a6\u30a3\u30f3\u30c9\u30a6\u30b5\u30a4\u30ba\u3092\u4fdd\u5b58",

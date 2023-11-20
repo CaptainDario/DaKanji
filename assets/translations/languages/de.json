@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "Invertiere kurzes und langes dr\u00fccken",
     "draw_long_press_opens": "W\u00f6rterbuch Auswahl",
     "draw_title": "Zeichnen",
+    "kana_table_play_audio": "Audio abspielen, wenn Sie auf Kana tippen",
+    "kana_table_play_kana_animation_when_opened": "Automatischer Start der Kana-Animation",
     "misc_default_screen": "Startbildschirm beim \u00f6ffnen der App",
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Speicher die momentanige Fenster gr\u00f6\u00dfe",

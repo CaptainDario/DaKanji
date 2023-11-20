@@ -26,8 +26,8 @@ class SettingsKanaTable with ChangeNotifier {
   @JsonKey(defaultValue: true)
   bool playKanjiAnimationWhenOpened = true;
   /// How many strokes should be drawn during the animation
-  @JsonKey(defaultValue: 1)
-  double kanjiAnimationStrokesPerSecond = 1;
+  @JsonKey(defaultValue: 2)
+  double kanjiAnimationStrokesPerSecond = 2;
   /// When swipe to scroll to modify the kana animation, should the animation
   /// continue playing
   @JsonKey(defaultValue: false)

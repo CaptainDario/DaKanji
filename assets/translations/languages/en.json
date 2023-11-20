@@ -329,6 +329,8 @@
     "draw_invert_short_long_press": "Invert long/short press",
     "draw_long_press_opens": "Dictionary selection",
     "draw_title": "Drawing",
+    "kana_table_play_audio": "Play audio when tapping on Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatically start Kana animation",
     "misc_default_screen": "Initial screen when starting the app",
     "misc_language": "language",
     "misc_settings_window_size": "Save current window size",

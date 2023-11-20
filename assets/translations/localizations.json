@@ -2626,6 +2626,28 @@
       "es": "DoJG con medios de comunicación importados",
       "pl": "DoJG z zaimportowanymi mediami"
     },
+    "kana_table_play_audio": {
+      "en": "Play audio when tapping on Kana",
+      "de": "Audio abspielen, wenn Sie auf Kana tippen",
+      "ru": "Воспроизведение звука при нажатии на кану",
+      "ja": "かなをタップすると音声が再生される",
+      "zh": "点击假名时播放音频",
+      "it": "Riproduzione dell'audio quando si tocca il Kana",
+      "fr": "Jouer le son lorsque l'on tape sur le Kana",
+      "es": "Reproducir audio al pulsar sobre Kana",
+      "pl": "Odtwarzanie dźwięku po stuknięciu w Kana"
+    },
+    "kana_table_play_kana_animation_when_opened": {
+      "en": "Automatically start Kana animation",
+      "de": "Automatischer Start der Kana-Animation",
+      "ru": "Автоматический запуск анимации каны",
+      "ja": "かなアニメーションを自動的に開始",
+      "zh": "自动启动假名动画",
+      "it": "Avvio automatico dell'animazione Kana",
+      "fr": "Lancer automatiquement l'animation des Kana",
+      "es": "Iniciar automáticamente la animación Kana",
+      "pl": "Automatyczne uruchamianie animacji Kana"
+    },
     "misc_title": {
       "en": "Miscellaneous",
       "de": "Verschiedenes",
