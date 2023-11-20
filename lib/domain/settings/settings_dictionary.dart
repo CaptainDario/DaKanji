@@ -87,11 +87,11 @@ class SettingsDictionary with ChangeNotifier {
   @JsonKey(defaultValue: d_playKanjiAnimationWhenOpened)
   bool playKanjiAnimationWhenOpened = d_playKanjiAnimationWhenOpened;
 
-  /// How many seconds should the animation take for one stroke
+  /// How many strokes should be drawn during the animation
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
   static const double d_kanjiAnimationStrokesPerSecond = 5;
-  /// How many seconds should the animation take for one stroke
+  /// How many strokes should be drawn during the animation
   @JsonKey(defaultValue: d_kanjiAnimationStrokesPerSecond)
   double kanjiAnimationStrokesPerSecond = d_kanjiAnimationStrokesPerSecond;
 
