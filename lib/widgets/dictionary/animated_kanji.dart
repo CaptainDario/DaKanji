@@ -127,7 +127,6 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
             paths,
             paints,
             kanjiVGAnimationController,
-            
           ),
         );
       }

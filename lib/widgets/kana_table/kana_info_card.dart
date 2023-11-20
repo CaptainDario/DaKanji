@@ -27,6 +27,8 @@ class KanaInfoCard extends StatefulWidget {
 
   /// current kana
   final String kana;
+  /// Should the kana be animated
+  final bool showAnimatedKana;
   /// Callback that is executed when the user presses the play button
   final Function()? onPlayPressed;
 
@@ -34,6 +36,7 @@ class KanaInfoCard extends StatefulWidget {
   const KanaInfoCard(
     this.kana,
     {
+      this.showAnimatedKana = false,
       this.onPlayPressed,
       super.key
     }
@@ -154,15 +157,20 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                         // kana
                         Expanded(
                           child: Center(
-                            child: KanjiVGWidget(
-                              kanaSvg,
-                              MediaQuery.of(context).size.height * 0.2,
-                              MediaQuery.of(context).size.height * 0.2,
-                              GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
-                              GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
-                              GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
-                              borderAround: false,
-                            )
+                            child: widget.showAnimatedKana
+                              ? KanjiVGWidget(
+                                kanaSvg,
+                                MediaQuery.of(context).size.height * 0.2,
+                                MediaQuery.of(context).size.height * 0.2,
+                                GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
+                                GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
+                                GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
+                                borderAround: false,
+                              )
+                              : SizedBox(
+                                width: MediaQuery.of(context).size.height * 0.2,
+                                height: MediaQuery.of(context).size.height * 0.2,
+                              )
                           )
                         ),
                         // mnemonic (if there is one)
@@ -172,6 +180,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                               child: SvgPicture.string(
                                 mnemonicSvg!,
                                 height: MediaQuery.of(context).size.height * 0.2,
+                                width: MediaQuery.of(context).size.height * 0.2,
                               )
                             )
                           ),

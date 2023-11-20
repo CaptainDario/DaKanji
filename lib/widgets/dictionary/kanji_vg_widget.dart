@@ -89,6 +89,12 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
   }
 
   @override
+  void dispose() {
+    switchAnimation.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return GestureDetector(

@@ -338,6 +338,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                           opacity: _controller.value,
                           child: KanaInfoCard(
                             currentKana!,
+                            showAnimatedKana: _controller.isCompleted,
                             onPlayPressed: () {
                               kanaSoundPlayer.play();
                             },
