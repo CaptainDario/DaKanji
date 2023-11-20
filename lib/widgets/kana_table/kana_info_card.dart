@@ -167,9 +167,13 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                                 GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
                                 borderAround: false,
                               )
-                              : SizedBox(
-                                width: MediaQuery.of(context).size.height * 0.2,
+                              : SvgPicture.string(
+                                kanaSvg,
                                 height: MediaQuery.of(context).size.height * 0.2,
+                                width: MediaQuery.of(context).size.height * 0.2,
+                                color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
                               )
                           )
                         ),
