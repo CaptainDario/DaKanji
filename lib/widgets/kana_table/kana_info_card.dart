@@ -159,7 +159,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                               MediaQuery.of(context).size.height * 0.2,
                               MediaQuery.of(context).size.height * 0.2,
                               GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
-                              GetIt.I<Settings>().kanaTable.kanjiAnimationStrokesPerSecond,
+                              GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
                               GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
                               borderAround: false,
                             )

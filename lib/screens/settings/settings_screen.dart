@@ -640,7 +640,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
                       ResponsiveCheckBoxTile(
-                        text: "play audio",
+                        text: LocaleKeys.SettingsScreen_kana_table_play_audio.tr(),
                         value: settings.kanaTable.playAudio,
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                         onTileTapped: (value) async {
@@ -666,13 +666,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // animation speed
                       ResponsiveSliderTile(
                         text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
-                        value: settings.kanaTable.kanjiAnimationStrokesPerSecond,
+                        value: settings.kanaTable.kanaAnimationStrokesPerSecond,
                         min: 0.1,
                         max: 10.0,
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                         onChanged: (value) {
                           setState(() {
-                            settings.kanaTable.kanjiAnimationStrokesPerSecond = value;
+                            settings.kanaTable.kanaAnimationStrokesPerSecond = value;
                             settings.save();
                           });
                         },
