@@ -118,97 +118,102 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   @override
   Widget build(BuildContext context) {
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    convertToRomaji(widget.kana),
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )
-                  ),
-                  IconButton(
-                    onPressed: widget.onPlayPressed,
-                    icon: const Icon(Icons.play_arrow)
-                  )
-                ],
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // kana
-                    Expanded(
-                      child: Center(
-                        child: SvgPicture.string(
-                          kanaSvg,
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                      )
-                    ),
-                    // mnemonic (if there is one)
-                    if(widget.kana.length < 2 && mnemonicSvg != null)
-                      Expanded(
-                        child: Center(
-                          child: SvgPicture.string(
-                            mnemonicSvg!,
-                            height: MediaQuery.of(context).size.height * 0.2,
+                  if(constraints.maxWidth > 100)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          convertToRomaji(widget.kana),
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           )
+                        ),
+                        IconButton(
+                          onPressed: widget.onPlayPressed,
+                          icon: const Icon(Icons.play_arrow)
                         )
-                      ),
-                    // yoon if there are two kana
-                    if(widget.kana.length > 1 && yoonSVG != null)
-                      Expanded(
-                        child: Transform.translate(
-                          offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                      ],
+                    ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // kana
+                        Expanded(
                           child: Center(
                             child: SvgPicture.string(
-                              yoonSVG!,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                            )
-                          ),
-                        )
-                      )
-                  ],
-                ),
-              ),
-              if(mnemonic != null)
-                Expanded(
-                  child: Center(
-                    child: Wrap(
-                      clipBehavior: Clip.hardEdge,
-                      children: [
-                        MarkdownBody(
-                          styleSheet: MarkdownStyleSheet(
-                            p: const TextStyle(
-                              fontSize: 20,
+                              kanaSvg,
+                              height: MediaQuery.of(context).size.height * 0.2,
                             ),
-                            // bold text
-                            strong: const TextStyle(
-                              fontSize: 20,
-                              decoration: TextDecoration.underline,
+                          )
+                        ),
+                        // mnemonic (if there is one)
+                        if(widget.kana.length < 2 && mnemonicSvg != null)
+                          Expanded(
+                            child: Center(
+                              child: SvgPicture.string(
+                                mnemonicSvg!,
+                                height: MediaQuery.of(context).size.height * 0.2,
+                              )
                             )
                           ),
-                          data: mnemonic!,
-                          softLineBreak: true,
-                        ),
+                        // yoon if there are two kana
+                        if(widget.kana.length > 1 && yoonSVG != null)
+                          Expanded(
+                            child: Transform.translate(
+                              offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                              child: Center(
+                                child: SvgPicture.string(
+                                  yoonSVG!,
+                                  height: MediaQuery.of(context).size.height * 0.15,
+                                )
+                              ),
+                            )
+                          )
                       ],
                     ),
                   ),
-                ),
-            ],
-          ),
-        ),
-      )
+                  if(mnemonic != null)
+                    Expanded(
+                      child: Center(
+                        child: Wrap(
+                          clipBehavior: Clip.hardEdge,
+                          children: [
+                            MarkdownBody(
+                              styleSheet: MarkdownStyleSheet(
+                                p: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                                // bold text
+                                strong: const TextStyle(
+                                  fontSize: 20,
+                                  decoration: TextDecoration.underline,
+                                )
+                              ),
+                              data: mnemonic!,
+                              softLineBreak: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          )
+        );
+      }
     );
   }
 

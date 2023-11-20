@@ -339,12 +339,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         ),
                         width: popupWidth * _controller.value,
                         height: popupHeight * _controller.value,
-                        child: _controller.value > 0.1
-                          ? Opacity(
-                            opacity: _controller.value,
-                            child: child!
-                          )
-                          : const SizedBox(),
+                        child: Opacity(
+                          opacity: _controller.value,
+                          child: child!
+                        ),
                       );
                     }
                   ),
