@@ -650,6 +650,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                       ),
+                      // play animation when opening kanji tab
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_play_kanji_animation_when_opened.tr(),
+                        value: settings.kanaTable.playKanjiAnimationWhenOpened,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.kanaTable.playKanjiAnimationWhenOpened = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // animation speed
+                      ResponsiveSliderTile(
+                        text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
+                        value: settings.kanaTable.kanjiAnimationStrokesPerSecond,
+                        min: 0.1,
+                        max: 10.0,
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                        onChanged: (value) {
+                          setState(() {
+                            settings.kanaTable.kanjiAnimationStrokesPerSecond = value;
+                            settings.save();
+                          });
+                        },
+                      ),
+
+                      // animation continues playing after double tap
+                      ResponsiveCheckBoxTile(
+                        text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_swipe.tr(),
+                        value: settings.kanaTable.resumeAnimationAfterStopSwipe,
+                        onTileTapped: (value) {
+                          setState(() {
+                            settings.kanaTable.resumeAnimationAfterStopSwipe = value;
+                            settings.save();
+                          });
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
                       // reshow tutorial
                       ResponsiveIconButtonTile(
                         text: LocaleKeys.SettingsScreen_show_tutorial.tr(),

@@ -22,6 +22,18 @@ class SettingsKanaTable with ChangeNotifier {
   @JsonKey(defaultValue: d_playAudio)
   bool playAudio = d_playAudio;
 
+  /// When opening the kana popup, should the animation be played
+  @JsonKey(defaultValue: true)
+  bool playKanjiAnimationWhenOpened = true;
+  /// How many strokes should be drawn during the animation
+  @JsonKey(defaultValue: 1)
+  double kanjiAnimationStrokesPerSecond = 1;
+  /// When swipe to scroll to modify the kana animation, should the animation
+  /// continue playing
+  @JsonKey(defaultValue: false)
+  bool resumeAnimationAfterStopSwipe = false;
+
+  /// SETTINGS THAT ARE AUTOMATICALLY SET DURING USAGE
   /// Are currently hiragana being shown
   @JsonKey(defaultValue: true)
   bool isHiragana = true;
