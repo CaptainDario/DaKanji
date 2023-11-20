@@ -13,14 +13,26 @@ import 'package:isar/isar.dart';
 import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
+
+
+/// Widget that shows information about a given kana. This information is
+/// * romaji
+/// * stroke order diagram
+/// * mnemonic image
+/// * mnemonic text
+/// Additionally, a sound of the kana is played.
 class KanaInfoCard extends StatefulWidget {
 
   /// current kana
   final String kana;
+  /// Callback that is executed when the user presses the play button
+  final Function()? onPlayPressed;
+
 
   const KanaInfoCard(
     this.kana,
     {
+      this.onPlayPressed,
       super.key
     }
   );
@@ -111,14 +123,24 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                convertToRomaji(widget.kana),
-                maxLines: 1,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    convertToRomaji(widget.kana),
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ),
+                  IconButton(
+                    onPressed: widget.onPlayPressed,
+                    icon: const Icon(Icons.play_arrow)
+                  )
+                ],
               ),
               Expanded(
                 child: Row(
@@ -184,7 +206,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                   ),
                 ),
             ],
-          )
+          ),
         ),
       )
     );
