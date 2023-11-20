@@ -322,12 +322,6 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                 if(currentKana != null)
                   AnimatedBuilder(
                     animation: _controller,
-                    child: KanaInfoCard(
-                      currentKana!,
-                      onPlayPressed: () {
-                        kanaSoundPlayer.play();
-                      },
-                    ),
                     builder: (context, child) {
                       return Positioned(
                         left: lerpDouble(currentKanaX,
@@ -342,7 +336,12 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         height: popupHeight * _controller.value,
                         child: Opacity(
                           opacity: _controller.value,
-                          child: child!
+                          child: KanaInfoCard(
+                            currentKana!,
+                            onPlayPressed: () {
+                              kanaSoundPlayer.play();
+                            },
+                          )
                         ),
                       );
                     }
