@@ -24,7 +24,7 @@ class SettingsKanaTable with ChangeNotifier {
 
   /// When opening the kana popup, should the animation be played
   @JsonKey(defaultValue: true)
-  bool playKanjiAnimationWhenOpened = true;
+  bool playKanaAnimationWhenOpened = true;
   /// How many strokes should be drawn during the animation
   @JsonKey(defaultValue: 2)
   double kanjiAnimationStrokesPerSecond = 2;

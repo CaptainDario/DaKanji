@@ -653,10 +653,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // play animation when opening kana popup
                       ResponsiveCheckBoxTile(
                         text: LocaleKeys.SettingsScreen_kana_table_play_kana_animation_when_opened.tr(),
-                        value: settings.kanaTable.playKanjiAnimationWhenOpened,
+                        value: settings.kanaTable.playKanaAnimationWhenOpened,
                         onTileTapped: (value) {
                           setState(() {
-                            settings.kanaTable.playKanjiAnimationWhenOpened = value;
+                            settings.kanaTable.playKanaAnimationWhenOpened = value;
                             settings.save();
                           });
                         },
