@@ -1,5 +1,17 @@
 # DaKanji Beta - changelog
 
+## v3.2.0+71b12 - 文法 (19.11.2023)
+
+- No separator between pitch accent patterns
+- Opening virtual keyboard resets the matrix-style words
+- Improved DoJG searching
+- Improved DoJG navigation and updated manual
+
+## v3.2.0+70b11 - 文法 (7.11.2023)
+
+- DoJG
+  - Import screen raised parent data exception
+
 ## v3.2.0+69b10 - 文法 (9.11.2023)
 
 - Onboarding
