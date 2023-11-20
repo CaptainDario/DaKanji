@@ -31,6 +31,8 @@ class KanjiVGWidget extends StatefulWidget {
   final double strokesPerSecond;
   /// When user stops swiping should the animation automatically continue
   final bool resumeAnimationAfterStopSwipe;
+  ///Should a border be drawn around the kanjiVG entry
+  final bool borderAround;
 
 
   const KanjiVGWidget(
@@ -41,6 +43,7 @@ class KanjiVGWidget extends StatefulWidget {
     this.strokesPerSecond,
     this.resumeAnimationAfterStopSwipe,
     {
+      this.borderAround = true,
       this.colorize = false,
       Key? key
     }
@@ -133,9 +136,11 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
       child: Container(
         height: widget.height,
         width: widget.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-        ),
+        decoration: widget.borderAround
+          ? BoxDecoration(
+            border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+          )
+          : null,
         child: AnimatedBuilder(
           animation: switchAnimation,
           child: SvgPicture.string(
