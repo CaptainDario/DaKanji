@@ -48,6 +48,10 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
+    kanjiVGAnimationController = AnimationController(
+      duration: Duration.zero,
+      vsync: this,
+    );
     init();
   }
 
@@ -91,11 +95,8 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       );
     }
 
-    kanjiVGAnimationController = AnimationController(
-        duration: Duration(
-          milliseconds: ((paths.length/widget.strokesPerSecond)*1000).toInt()
-        ),
-        vsync: this,
+    kanjiVGAnimationController.duration = Duration(
+        milliseconds: ((paths.length/widget.strokesPerSecond)*1000).toInt()
       );
 
     widget.init(kanjiVGAnimationController);
