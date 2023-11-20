@@ -66,7 +66,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
 
   @override
   void didUpdateWidget(covariant KanaInfoCard oldWidget) {
-    init();
+    if(oldWidget.kana != widget.kana) init(); 
     super.didUpdateWidget(oldWidget);
   }
 
