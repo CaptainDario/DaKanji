@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -157,9 +158,9 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                               kanaSvg,
                               MediaQuery.of(context).size.height * 0.2,
                               MediaQuery.of(context).size.height * 0.2,
-                              true,
-                              0.5,
-                              true,
+                              GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
+                              GetIt.I<Settings>().kanaTable.kanjiAnimationStrokesPerSecond,
+                              GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
                               borderAround: false,
                             )
                           )
