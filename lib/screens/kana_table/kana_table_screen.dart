@@ -55,15 +55,15 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// The table of kana to be displayed
   List<List<String>> kanaTable = hiragana;
   /// Are currently hiragana being shown
-  bool isHiragana = true;
+  bool isHiragana = GetIt.I<Settings>().kanaTable.isHiragana;
   /// Are romaji being shown
-  bool showRomaji = true;
+  bool showRomaji = GetIt.I<Settings>().kanaTable.showRomaji;
   /// Are dakuten being shown
-  bool showDaku = false;
+  bool showDaku = GetIt.I<Settings>().kanaTable.showDaku;
   /// Are yoon being shown
-  bool showYoon = false;
+  bool showYoon = GetIt.I<Settings>().kanaTable.showYoon;
   /// Are special yoon being shown
-  bool showSpecial = false;
+  bool showSpecial = GetIt.I<Settings>().kanaTable.showSpecial;
 
   /// The currently selected kana
   String? currentKana;
@@ -130,6 +130,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   void dispose() {
     _controller.dispose();
     kanaSoundPlayer.dispose();
+    updateSettings();
     super.dispose();
   }
 
@@ -566,5 +567,16 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     } else {
       showRomaji = true;
     }
+  }
+
+  /// Update the values in the settings with the values currently set by the
+  /// user
+  void updateSettings(){
+    GetIt.I<Settings>().kanaTable.isHiragana = isHiragana;
+    GetIt.I<Settings>().kanaTable.showRomaji = showRomaji;
+    GetIt.I<Settings>().kanaTable.showDaku = showDaku;
+    GetIt.I<Settings>().kanaTable.showYoon = showYoon;
+    GetIt.I<Settings>().kanaTable.showSpecial = showSpecial;
+    GetIt.I<Settings>().save();
   }
 }

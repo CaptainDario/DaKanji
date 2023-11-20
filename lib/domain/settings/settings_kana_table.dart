@@ -22,6 +22,22 @@ class SettingsKanaTable with ChangeNotifier {
   @JsonKey(defaultValue: d_playAudio)
   bool playAudio = d_playAudio;
 
+  /// Are currently hiragana being shown
+  @JsonKey(defaultValue: true)
+  bool isHiragana = true;
+  /// Are romaji being shown
+  @JsonKey(defaultValue: true)
+  bool showRomaji = true;
+  /// Are dakuten being shown
+  @JsonKey(defaultValue: false)
+  bool showDaku = false;
+  /// Are yoon being shown
+  @JsonKey(defaultValue: false)
+  bool showYoon = false;
+  /// Are special yoon being shown
+  @JsonKey(defaultValue: false)
+  bool showSpecial = false;
+
 
 
   SettingsKanaTable();
