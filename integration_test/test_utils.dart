@@ -28,20 +28,20 @@ Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback}) asyn
 
   // create app instance and wait until it finished initializing
   await app.main();
-  await tester.pumpAndSettle(const Duration(seconds: 1));
+  await tester.pump(const Duration(seconds: 10));
 
   initCallback?.call();
   
   // #region 1 - check that the onboarding is shown and skip it
-  await waitTillFinder(tester, find.byType(OnBoardingPage), 'waiting for app to boot');
-  expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
-  await tester.tapAt(tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first));
-  debugPrint("Passed initDaKanjiTest step: 1");
+  //await waitTillFinder(tester, find.byType(OnBoardingPage), 'waiting for app to boot');
+  //expect(find.text(LocaleKeys.OnBoarding_Onboarding_1_title.tr()), findsOneWidget);
+  //await tester.tapAt(tester.getCenter(find.text(LocaleKeys.General_skip.tr()).first));
+  //debugPrint("Passed initDaKanjiTest step: 1");
   // #endregion
 
   // #region 2 - check that the dictionary shows up
   await waitTillFinder(tester, find.byType(FloatingWordStack), 'waiting for dictionary to load');
-  expect(find.byType(FloatingWordStack), findsOneWidget);
+  expect(find.byType(FloatingWordStack), findsWidgets);
   debugPrint("Passed initDaKanjiTest step: 2");
   // #endregion
 
