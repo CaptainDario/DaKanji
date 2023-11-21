@@ -39,10 +39,10 @@ jobs:
           flutter-version: ${{env.FLUTTER_VERSION}}
           channel: stable
 
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.14.3
+      #- name: setup-cocoapods
+      #  uses: maxim-lobanov/setup-cocoapods@v1
+      #  with:
+      #    version: 1.14.3
           
       - name: Restore packages
         run: flutter pub get
