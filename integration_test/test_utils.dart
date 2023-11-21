@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
 import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 import 'package:da_kanji_mobile/main.dart' as app;
 
 

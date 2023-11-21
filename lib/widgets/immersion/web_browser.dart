@@ -1,8 +1,9 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
-
-
 
 class WebBrowser extends StatefulWidget {
   const WebBrowser({super.key});

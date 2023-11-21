@@ -1,10 +1,13 @@
-import 'package:da_kanji_mobile/widgets/immersion/youtube_fullscreen.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/widgets/immersion/youtube_fullscreen.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 class YoutubeBrowser extends StatefulWidget {
   const YoutubeBrowser({super.key});
