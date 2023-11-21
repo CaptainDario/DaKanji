@@ -39,7 +39,7 @@ Improvements:
 - Warn the user when downgrading versions
 - Radical search speed improved
 - Onboarding UI and performance
-- Various UI and performance improvments
+- Various UI and performance improvements
 
 Fixed:
 
