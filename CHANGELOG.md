@@ -10,7 +10,7 @@ New Features:
   - Mnemonics for the main kana
   - Sounds for all available kana
 
-## v3.2.0 - 文法 (3.11.2023)
+## v3.2.0 - 文法 (26.11.2023)
 
 New Features:
 
