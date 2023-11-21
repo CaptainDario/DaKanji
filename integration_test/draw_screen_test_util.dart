@@ -29,9 +29,7 @@ String kuchiPrediction = "囗";
 String nichiPrediction = "日";
 String mePrediction    = '目';
 
-String kanjiBuffer_1 = "目";
-String kanjiBuffer_2 = "目日";
-String kanjiBuffer_3 = "目日囗";
+List<String> kanjiBuffer = ["目", "日", "囗"];
 
 
 /// Creates a pointer and moves it to the given `points` in relation to 
