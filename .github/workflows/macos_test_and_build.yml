@@ -80,7 +80,7 @@ jobs:
           
       - name: build macos executable
         run: |
-          flutter build macos --release
+          flutter build macos --release -v
           ditto -c -k --sequesterRsrc --keepParent build/macos/Build/Products/Release/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
