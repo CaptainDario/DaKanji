@@ -166,11 +166,11 @@ SPEC CHECKSUMS:
   share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
   shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
   sqlite3: fd89671d969f3e73efe503ce203e28b016b58f68
-  sqlite3_flutter_libs: 00a50503d69f7ab0fe85a5ff25b33082f4df4ce9
+  sqlite3_flutter_libs: 01f6f1a7e23e5b22dcbeb49fddab75ecfc1de530
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
 PODFILE CHECKSUM: 8db8422821fdc0a6504ce149b58d8839fdb535b8
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3
