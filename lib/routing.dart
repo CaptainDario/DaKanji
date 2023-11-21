@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -12,6 +11,7 @@ import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
 import 'package:da_kanji_mobile/screens/home/home_screen.dart';
+import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
