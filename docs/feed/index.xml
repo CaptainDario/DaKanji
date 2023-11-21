@@ -12,7 +12,7 @@
 	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
-	<lastBuildDate>Tue, 21 Nov 2023 22:39:51 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 21 Nov 2023 22:54:42 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -51,19 +51,19 @@
 			<style>/*! elementor - v3.15.0 - 20-08-2023 */
 .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>					<div class="elementor-text-editor elementor-clearfix">
 				<p></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">Hi there!</span></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">I am happy to announce that DaKanji v3.2 has reached a point where I consider it stable and would like to ask you to check a beta release out. This release focused on further refining the current app but also added some new features. Those features include importing the dictionary of Japanese grammar anki deck to effortlessly lookup grammar, deep links to open DaKanji from other apps and websites, animated kanji stroke order diagrams and more. Additionally, DaKanji has now a website which you can find at dakanji.app. Thanks to @ibrakap a lot of performance improvements were made and now DaKanji is even greater on a wide variety of devices. You can find the [full changelog here](https://github.com/CaptainDario/DaKanji/releases/tag/v3.2.0b13).</span></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><br></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">You can join the beta program or download a beta version as usual from</span></p>
-<ul style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;">
-<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">[PlayStore](https://play.google.com/apps/testing/com.DaAppLab.DaKanjiRecognizer)</span></li>
-<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">iOS + mac: [join TestFlight](https://testflight.apple.com/join/FWUSPfo7)</span></li>
-<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">[snap](https://snapcraft.io/dakanji)</span></li>
-<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">[Github (linux executable, flatpak, snap, windows, android, mac)](https://github.com/CaptainDario/DaKanji/releases/tag/v3.2.0b13)</span></li>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">Hi there!</span></p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">I am happy to announce that DaKanji v3.2 has reached a point where I consider it stable and would like to ask you to check a beta release out. This release focused on further refining the current app but also added some new features. Those features include importing the dictionary of Japanese grammar anki deck to effortlessly lookup grammar, deep links to open DaKanji from other apps and websites, animated kanji stroke order diagrams and more. Additionally, DaKanji now has a website which you can find at dakanji.app. Thanks to @ibrakap a lot of performance improvements were made and now DaKanji is even greater on a wide variety of devices. You can find the <span style="color: #1a5d47;"><a style="color: #1a5d47;" href="https://github.com/CaptainDario/DaKanji/releases/tag/v3.2.0b13" target="_blank" rel="noopener">full changelog here</a></span>.</span></p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"> </p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">You can join the beta program or download a beta version as usual from</span></p>
+<ul style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;">
+<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt; color: #1a5d47;" data-preserver-spaces="true"><a style="color: #1a5d47;" href="https://play.google.com/apps/testing/com.DaAppLab.DaKanjiRecognizer" target="_blank" rel="noopener">PlayStore</a></span></li>
+<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt; color: #1a5d47;" data-preserver-spaces="true"><a style="color: #1a5d47;" href="https://testflight.apple.com/join/FWUSPfo7" target="_blank" rel="noopener">AppStore TestFlight</a></span></li>
+<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span style="color: #1a5d47;"><a style="color: #1a5d47;" href="https://snapcraft.io/dakanji" target="_blank" rel="noopener"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">Snap</span></a></span></li>
+<li style="background: none; margin-top: 0pt; margin-bottom: 0pt; list-style-type: disc;"><span style="color: #1a5d47;"><a style="color: #1a5d47;" href="https://github.com/CaptainDario/DaKanji/releases/tag/v3.2.0b13" target="_blank" rel="noopener"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">Github (linux executable, flatpak, snap, windows, android, mac)</span></a></span></li>
 </ul>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><br></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">Thank you for reading this and using DaKanji if you have any problems with it, let me know.</span></p>
-<p style="color: rgb(14, 16, 26); background: none; margin-top: 0pt; margin-bottom: 0pt;"><span data-preserver-spaces="true" style="background: none; margin-top: 0pt; margin-bottom: 0pt;">日本語頑張ってね！</span></p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"> </p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">Thank you for reading this and using DaKanji if you have any problems with it, let me know.</span></p>
+<p style="color: #0e101a; background: none; margin-top: 0pt; margin-bottom: 0pt;"><span style="background: none; margin-top: 0pt; margin-bottom: 0pt;" data-preserver-spaces="true">日本語頑張ってね！</span></p>
 <p></p>
 <p><!-- /wp:list --></p>					</div>
 						</div>
@@ -996,5 +996,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2023-11-21 22:43:46 by W3 Total Cache
+Served from: dakanji.local @ 2023-11-21 22:58:18 by W3 Total Cache
 -->
