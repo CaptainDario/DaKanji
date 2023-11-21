@@ -76,8 +76,8 @@ jobs:
       - name: Run integration tests
         run: |
           pod --version
-          python3 ./integration_test/run_tests.py
-        #  flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart --profile -d mac
+        
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/draw_screen_test.dart --profile -d mac
           
       - name: build macos executable
         run: |
