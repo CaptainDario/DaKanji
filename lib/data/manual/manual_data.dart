@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/manual/manual_kana_table.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,6 +35,7 @@ class ManualData {
       LocaleKeys.TextScreen_title.tr(),
       //LocaleKeys.ManualScreen_anki_title.tr(),
       LocaleKeys.DojgScreen_title.tr(),
+      LocaleKeys.KanaTableScreen_title.tr(),
       LocaleKeys.ManualScreen_deep_links_title.tr()
     ];
 
@@ -43,6 +45,7 @@ class ManualData {
       Icons.text_snippet,
       //DaKanjiIcons.anki,
       DaKanjiIcons.dojg,
+      DaKanjiIcons.kana_table,
       Icons.link
     ];
 
@@ -51,6 +54,7 @@ class ManualData {
       const ManualTextScreen(),
       //ManualAnki(),
       const ManualDojgPage(),
+      const ManualKanaTablePage(),
       const ManualDeepLinks(),
     ];
 
@@ -58,6 +62,7 @@ class ManualData {
       ManualTypes.dictionary,
       ManualTypes.text,
       ManualTypes.dojg,
+      ManualTypes.kanaTable,
       ManualTypes.deepLinks,
     ];
 

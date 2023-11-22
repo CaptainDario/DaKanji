@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -219,7 +217,7 @@ class CodegenLoader extends AssetLoader{
     "deep_links_text": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 http(s)://dakanji.app/app。使用此功能，您可以在点击此链接dakanji://dictionary?search=食べる时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "实例",
-    "dict_kanji_animation_text": "DaKanji 可以显示大多数汉字的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，如果动画处于暂停状态，则会继续播放动画。最后，如果动画已经结束，双击将从头开始重新播放动画。\n通过轻扫汉字可以控制动画进度。向左轻扫会使动画倒退，而向右轻扫则会使动画前进。",
+    "dict_kanji_animation_text": "DaKanji 可以显示大多数汉字/假名的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，当动画处于暂停状态时，它将继续播放动画。最后，如果动画已经结束，双击将从头开始重启动画。\n通过轻扫汉字可以控制动画进度。向左轻扫可使动画倒退，向右轻扫可使动画前进。",
     "dict_kanji_animation_title": "动画",
     "dict_kanji_copy_radicals_text": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
     "dict_kanji_copy_radicals_title": "复制自由基",
@@ -595,7 +593,7 @@ static const Map<String,dynamic> ja = {
     "deep_links_text": "Deep links は、アプリ内のコンテンツに直接リンクする方法です。Dakanjiではdakanji://とhttp(s)://dakanji.app/app. 例えば、dakanji://dictionary?search=食べるというリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "例",
-    "dict_kanji_animation_text": "大漢字は、収録されているほとんどの漢字の筆順図をアニメーションで表示することができます。これらのアニメーションは、さまざまな方法でコントロールすることができます。\nダブルタップは、アニメーションの現在の状態によって結果が異なります。アニメーションが再生中の場合、一時停止します。アニメーションが一時停止している場合も同様に、アニメーションを再生し続けます。最後に、アニメーションが終了している場合、ダブルタップするとアニメーションが最初から再開されます。\n漢字をスワイプすると、アニメーションの進行をコントロールできます。左にスワイプするとアニメーションが巻き戻り、右にスワイプするとアニメーションが進みます。",
+    "dict_kanji_animation_text": "大漢字は、収録されているほとんどの漢字・かなの筆順図をアニメーションで表示することができます。これらのアニメーションは、さまざまな方法でコントロールすることができます。\nダブルタップは、現在のアニメーションの状態によって結果が異なります。アニメーションが再生中の場合、一時停止します。同様に、アニメーションが一時停止中の場合は、アニメーションを再生し続けます。最後に、アニメーションが終了している場合、ダブルタップするとアニメーションが最初から再開されます。\n漢字をスワイプすると、アニメーションの進行をコントロールできます。左にスワイプするとアニメーションが巻き戻り、右にスワイプするとアニメーションが進みます。",
     "dict_kanji_animation_title": "アニメーション",
     "dict_kanji_copy_radicals_text": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
     "dict_kanji_copy_radicals_title": "部首のコピー",
@@ -1369,7 +1367,7 @@ static const Map<String,dynamic> ru = {
     "deep_links_text": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и http(s)://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку dakanji://dictionary?search=食べる. Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Примеры",
-    "dict_kanji_animation_text": "DaKanji может показывать анимированные диаграммы порядка начертания большинства кандзи. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация приостановлена, она продолжит воспроизведение. Наконец, если анимация закончилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Свайп влево перематывает анимацию назад, а свайп вправо - вперед.",
+    "dict_kanji_animation_text": "DaKanji может показывать анимированные диаграммы порядка следования штрихов для большинства кандзи/кана. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация в данный момент приостановлена, она продолжит воспроизведение. Наконец, если анимация завершилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Пролистывание влево приводит к перемотке анимации назад, а пролистывание вправо - к ее продвижению вперед.",
     "dict_kanji_animation_title": "Анимация",
     "dict_kanji_copy_radicals_text": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
     "dict_kanji_copy_radicals_title": "Копирование радикалов",
@@ -1758,7 +1756,7 @@ static const Map<String,dynamic> pl = {
     "deep_links_text": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Przykłady",
-    "dict_kanji_animation_text": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych kanji. Animacje te można kontrolować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, gdy animacja jest aktualnie wstrzymana, będzie kontynuować jej odtwarzanie. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie.",
+    "dict_kanji_animation_text": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych Kanji / Kana. Animacjami tymi można sterować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, jeśli animacja jest aktualnie wstrzymana, będzie ona kontynuowana. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie.",
     "dict_kanji_animation_title": "Animacje",
     "dict_kanji_copy_radicals_text": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka.",
     "dict_kanji_copy_radicals_title": "Kopiowanie rodników",
@@ -2164,7 +2162,7 @@ static const Map<String,dynamic> en = {
     "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=食べる. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Examples",
-    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included kanji. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similar when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left, will rewind the animation, while swiping right will advance the animation.",
+    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included Kanji / Kana. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similarly, when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left will rewind the animation while swiping right will advance the animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
     "dict_kanji_copy_radicals_title": "Copying radicals",
@@ -2532,7 +2530,7 @@ static const Map<String,dynamic> it = {
     "deep_links_text": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e http(s)://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Esempi",
-    "dict_kanji_animation_text": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei kanji inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte, si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji è possibile controllare l'avanzamento dell'animazione. Scorrendo a sinistra si riavvolge l'animazione, mentre scorrendo a destra si avanza.",
+    "dict_kanji_animation_text": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei Kanji / Kana inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji si può controllare l'avanzamento dell'animazione. Passando il dito a sinistra si riavvolge l'animazione, mentre passando il dito a destra la si fa avanzare.",
     "dict_kanji_animation_title": "Animazioni",
     "dict_kanji_copy_radicals_text": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
     "dict_kanji_copy_radicals_title": "Copiare i radicali",
@@ -2886,7 +2884,7 @@ static const Map<String,dynamic> fr = {
     "deep_links_text": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=食べる. Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Exemples",
-    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des kanji inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nEn glissant sur le kanji, la progression de l'animation peut être contrôlée. Un glissement vers la gauche rembobine l'animation, tandis qu'un glissement vers la droite la fait avancer.",
+    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des Kanji / Kana inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nIl est possible de contrôler la progression de l'animation en balayant le kanji. Un glissement vers la gauche permet de rembobiner l'animation, tandis qu'un glissement vers la droite permet d'avancer l'animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
     "dict_kanji_copy_radicals_title": "Copier des radicaux",
@@ -3240,7 +3238,7 @@ static const Map<String,dynamic> es = {
     "deep_links_text": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Ejemplos",
-    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los kanji incluidos. Estas animaciones pueden controlarse de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Si deslizas el dedo hacia la izquierda, la animación se rebobinará, mientras que si deslizas el dedo hacia la derecha, la animación avanzará.",
+    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los Kanji / Kana incluidos. Estas animaciones se pueden controlar de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Deslizar a la izquierda rebobinará la animación mientras que deslizar a la derecha la hará avanzar.",
     "dict_kanji_animation_title": "Animaciones",
     "dict_kanji_copy_radicals_text": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
     "dict_kanji_copy_radicals_title": "Copiar radicales",
