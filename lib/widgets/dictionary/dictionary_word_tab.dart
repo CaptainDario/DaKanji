@@ -63,7 +63,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     // TODO v word lists - reenable
-    //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
+    if(kDebugMode) LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
     //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
