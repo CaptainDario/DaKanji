@@ -187,7 +187,8 @@ class _WordListsState extends State<WordLists> {
                                   : null,
                                 child: WordListNode(
                                   // if the tutorial should be shown, open the default lists
-                                  i == 0 && widget.includeTutorial
+                                  i == 0 && widget.includeTutorial &&
+                                    GetIt.I<UserData>().showTutorialWordLists
                                     ? (childrenDFS[i]..value.isExpanded=true)
                                     : childrenDFS[i],
                                   i,
