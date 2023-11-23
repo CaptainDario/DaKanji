@@ -364,7 +364,14 @@ class _WordListsState extends State<WordLists> {
                       return SizedBox(
                         height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
                         width: MediaQuery.of(context).size.width,
-                        //color: Colors.amber
+                        //color: Theme.of(context).canvasColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Drag here to scroll "),
+                            const Icon(Icons.arrow_downward),
+                          ],
+                        ),
                       );
                     }
                   ),
