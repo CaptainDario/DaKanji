@@ -338,9 +338,9 @@ class _WordListsState extends State<WordLists> {
                       scrollController.animateTo(
                         scrollController.position.maxScrollExtent,
                         duration: Duration(milliseconds: 
-                          ((scrollController.position.maxScrollExtent - scrollController.offset) * 5).toInt()
+                          max(1, ((scrollController.position.maxScrollExtent - scrollController.offset) * 5).toInt())
                         ),
-                        curve: Curves.easeOut
+                        curve: Curves.linear
                       );
                       return false;
                     },
