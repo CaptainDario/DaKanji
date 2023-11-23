@@ -60,6 +60,8 @@ class _WordListsState extends State<WordLists> {
   TreeNode<WordListsData>? addedNewNode;
   /// Is currently an word lists node dragged over list
   bool itemDraggingOverThis = false;
+  /// Is a WordListNode currently being dragged
+  bool draggingWordListNode = false;
   /// The index of the divider that is currently being dragged over
   int? draggingOverDividerIndex;
   /// The controller for the list view
@@ -83,6 +85,12 @@ class _WordListsState extends State<WordLists> {
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -192,6 +200,12 @@ class _WordListsState extends State<WordLists> {
                                     ? (childrenDFS[i]..value.isExpanded=true)
                                     : childrenDFS[i],
                                   i,
+                                  onDragStarted: (){
+                                    draggingWordListNode = true;
+                                  },
+                                  onDragEnd: (){
+                                    draggingWordListNode = false;
+                                  },
                                   onTap: (TreeNode<WordListsData> node) {
                                     // if the node is a word list, navigate to the word list screen
                                     if(wordListListypes.contains(node.value.type)){
@@ -232,14 +246,14 @@ class _WordListsState extends State<WordLists> {
                               
                               // if this is not the last element in the list and
                               // the next visible node is not a default node
-                              if(i < childrenDFS.length - 1 &&
+                              if(i < childrenDFS.length-1 &&
                                 wordListUserTypes.contains(
                                   childrenDFS.sublist(i+1).firstWhereOrNull(
                                     (e) => e.parent!.value.isExpanded
                                   )?.value.type
                                 )
                               )
-                              // add a divider in which lists can be dragged (eaier reorder)
+                              // add a divider in which lists can be dragged (easier reorder)
                               DragTarget<TreeNode<WordListsData>>(
                                 onWillAccept: (TreeNode<WordListsData>? data) {
 
@@ -253,8 +267,7 @@ class _WordListsState extends State<WordLists> {
                                 },
                                 onAccept: (data) {
 
-                                  TreeNode<WordListsData> thisNode =
-                                    childrenDFS[i+1];
+                                  TreeNode<WordListsData> thisNode = childrenDFS[i+1];
                                   if(thisNode.parent!.value.type == WordListNodeType.folderDefault) {
                                     thisNode = childrenDFS.firstWhere((n) => 
                                       wordListUserTypes.contains(n.value.type)
@@ -289,7 +302,7 @@ class _WordListsState extends State<WordLists> {
                                   );
                                 }
                               )
-                            ]
+                            ],
                       ],
                     ),
                   ),
