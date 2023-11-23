@@ -203,7 +203,7 @@ class _WordListsState extends State<WordLists> {
                                         ),
                                       );
                                     }
-                                    // if the node is a folder, toggle the expanded state
+                                    // if the node is a folder, toggle the expanded state (whole tile callback)
                                     else if(wordListFolderTypes.contains(node.value.type)) {
                                       setState(() {
                                         node.value.isExpanded = !node.value.isExpanded;

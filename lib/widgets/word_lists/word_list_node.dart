@@ -203,6 +203,7 @@ class _WordListNodeState extends State<WordListNode> {
                           ? Icons.arrow_drop_down
                           : Icons.arrow_right
                         ),
+                        // icon button callback
                         onPressed: () {
                           if(widget.node.level < 1) return;
     
