@@ -62,10 +62,10 @@ class _WordListScreenState extends State<WordListScreen> {
         searchHistoryIds
       );
     }
-    else if(widget.node.value.name.contains('JLPT') &&
+    else if(widget.node.value.name.contains('jlpt') &&
       wordListDefaultTypes.contains(widget.node.value.type)){
       List<int> jlptIds = GetIt.I<Isars>().dictionary.jmdict.filter()
-        .jlptLevelElementContains(widget.node.value.name.replaceAll("JLPT", ""))
+        .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
         .sortByFrequencyDesc()
         .idProperty()
         .findAllSync().toSet().toList();  
