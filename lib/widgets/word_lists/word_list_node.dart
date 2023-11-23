@@ -42,6 +42,10 @@ class WordListNode extends StatefulWidget {
   /// Callback that is executed when the user taps on this tile, provides the
   /// `TreeNode` as a parameter
   final void Function(TreeNode<WordListsData> node)? onTap;
+  /// Callback that is executed when the user starts dragging this tile
+  final void Function()? onDragEnd;
+  /// Callback that is executed when the user ends dragging this tile
+  final void Function()? onDragStarted;
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
   final void Function(TreeNode<WordListsData> destinationNode, TreeNode thisNode)? onDragAccept;
@@ -62,6 +66,8 @@ class WordListNode extends StatefulWidget {
     {
       this.editTextOnCreate = false,
       this.onTap,
+      this.onDragStarted,
+      this.onDragEnd,
       this.onDragAccept,
       this.onDeletePressed,
       this.onFolderPressed,
@@ -121,6 +127,12 @@ class _WordListNodeState extends State<WordListNode> {
             child: widget
           )
         ),
+        onDragStarted: () {
+          widget.onDragStarted?.call();
+        },
+        onDragEnd: (details) {
+          widget.onDragEnd?.call();
+        },
         onDraggableCanceled: (velocity, offset) => setState(() => {}),
         // make tile droppable
         child: DragTarget<TreeNode>(
