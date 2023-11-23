@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:path/path.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
