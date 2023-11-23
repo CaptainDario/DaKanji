@@ -343,7 +343,10 @@ class _WordListsState extends State<WordLists> {
                     ]
                 ],
               ),
-              if(scrollController.hasClients)
+              // the list is scrollable and
+              // the scroll position is not at the end
+              if(draggingWordListNode &&
+                !(scrollController.positions.first.atEdge && scrollController.positions.first.pixels != 0))
                 Positioned(
                   bottom: 0,
                   child: DragTarget<TreeNode<WordListsData>>(
@@ -361,8 +364,10 @@ class _WordListsState extends State<WordLists> {
                       scrollController.position.hold(() { });
                     },
                     builder: (context, candidateData, rejectedData) {
-                      return SizedBox(
-                        height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
+                      if(!draggingWordListNode) return const SizedBox();
+
+                      return Container(
+                        height: 48,
                         width: MediaQuery.of(context).size.width,
                         //color: Theme.of(context).canvasColor,
                         child: Row(
@@ -401,6 +406,7 @@ class _WordListsState extends State<WordLists> {
 
   Widget proxyDecorator(
     Widget child, int index, Animation<double> animation) {
+    
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget? child) {
