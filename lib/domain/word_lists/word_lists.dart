@@ -82,7 +82,7 @@ class WordLists {
     for (var element in WordListsDefaults.values) {
       defaults.addChild(
         TreeNode<WordListsData>(
-          WordListsData(element.name, WordListNodeType.wordListDefault, [], true),
+          WordListsData(element.name, WordListNodeType.wordListDefault, [], false),
         )
       );
     }
