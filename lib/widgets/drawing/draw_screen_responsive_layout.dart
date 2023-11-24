@@ -7,8 +7,8 @@ import 'package:tuple/tuple.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape_with_webview.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';

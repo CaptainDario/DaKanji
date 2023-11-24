@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
+import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
 import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
 
 class DrawScreenDrawingCanvas extends StatelessWidget {
