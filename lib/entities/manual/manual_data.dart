@@ -7,7 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
