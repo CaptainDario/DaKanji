@@ -14,7 +14,6 @@ import 'package:mecab_dart/mecab_dart.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
@@ -28,6 +27,7 @@ import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/fading_single_child_scroll_view.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/application/text/pos.dart';
 
 /// The "draw"-screen.
 /// 

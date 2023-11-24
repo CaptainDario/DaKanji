@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/repositories/dictionary/kanji_vg.dart';
-import 'package:da_kanji_mobile/application/radicals/radicals.dart';
+import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';

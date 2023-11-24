@@ -21,8 +21,8 @@ import 'package:yaml/yaml.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
-import 'package:da_kanji_mobile/application/helper/deep_links.dart';
-import 'package:da_kanji_mobile/application/helper/path_manager.dart';
+import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/entities/files/path_manager.dart';
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/changelog.dart';

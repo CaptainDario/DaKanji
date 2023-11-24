@@ -14,23 +14,6 @@ import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-void openStoreListing(){
-  if(Platform.isAndroid) {
-    launchUrlString(g_PlaystorePage);
-  }
-  else if(Platform.isIOS || Platform.isMacOS) {
-    launchUrlString(g_AppStorePage);
-  }
-  else if(Platform.isWindows) {
-    launchUrlString(g_MicrosoftStorePage);
-  }
-  else if(Platform.isLinux) {
-    launchUrlString(g_SnapStorePage);
-  }
-  else {
-    throw Exception("Platform not supported");
-  }
-}
 
 /// Checks if a new version of DaKanji is available on Github.
 /// Returns the changelog of the newest version if there is a new version,

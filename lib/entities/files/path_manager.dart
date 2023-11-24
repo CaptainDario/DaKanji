@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as path_provider;
 
-/// Class to manage frequently paths / directories and to bundle them
+/// Class to manage frequently used paths / directories and to bundle them
 /// in one place
 class PathManager {
 

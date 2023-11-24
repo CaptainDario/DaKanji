@@ -15,7 +15,7 @@ import 'package:da_kanji_mobile/data/theme/light_theme.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/routing.dart';
+import 'package:da_kanji_mobile/application/routing/routing.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 /// The starting widget of the app

@@ -1,13 +1,10 @@
-// Dart imports:
-import 'dart:math';
-
 // Package imports:
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/repositories/tf_lite/backend.dart';
 
 /// Checks for the available backends and uses the best available backend.
 /// For this a valid `input`, `output` and function `runInterpreter` (defines
@@ -41,7 +38,7 @@ Future<Map<InferenceBackend, double>> testBackends(
 
   
   if (Platform.isAndroid) {
-    backendStats = await _testInterpreterAndroid(
+    backendStats = await testInterpreterAndroid(
       tfLiteAssetPath,
       (Interpreter interpreter) => runInterpreter(interpreter, input, output),
       exclude: exclude,
@@ -50,7 +47,7 @@ Future<Map<InferenceBackend, double>> testBackends(
   }
   
   else if (Platform.isIOS) {
-    backendStats = await _testInterpreterIOS(
+    backendStats = await testInterpreterIOS(
       tfLiteAssetPath,
       (Interpreter interpreter) => runInterpreter(interpreter, input, output),
       exclude: exclude,
@@ -58,7 +55,7 @@ Future<Map<InferenceBackend, double>> testBackends(
     );
   }
   else if(Platform.isWindows) {
-    backendStats = await _testInterpreterWindows(
+    backendStats = await testInterpreterWindows(
       tfLiteAssetPath,
       (Interpreter interpreter) => runInterpreter(interpreter, input, output),
       exclude: exclude,
@@ -66,7 +63,7 @@ Future<Map<InferenceBackend, double>> testBackends(
     );
   }
   else if(Platform.isLinux) {
-    backendStats = await _testInterpreterLinux(
+    backendStats = await testInterpreterLinux(
       tfLiteAssetPath,
       (Interpreter interpreter) => runInterpreter(interpreter, input, output),
       exclude: exclude,
@@ -74,7 +71,7 @@ Future<Map<InferenceBackend, double>> testBackends(
     );
   }
   else if(Platform.isMacOS) {
-    backendStats = await _testInterpreterMac(
+    backendStats = await testInterpreterMac(
       tfLiteAssetPath,
       (Interpreter interpreter) => runInterpreter(interpreter, input, output),
       exclude: exclude,
@@ -97,491 +94,33 @@ Future<Interpreter> initInterpreterFromBackend(
   ) async
 {
   if(inferenceBackend == InferenceBackend.cpu){
-    return _cpuInterpreter(assetPath, 1);
+    return cpuInterpreter(assetPath, 1);
   }
   else if(inferenceBackend.name.startsWith(InferenceBackend.cpu.name)){
-    return _cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
+    return cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.xnnPack){
-    return _xnnPackInterpreter(assetPath, 1);
+    return xnnPackInterpreter(assetPath, 1);
   }
   else if(inferenceBackend.name.startsWith(InferenceBackend.xnnPack.name)){
-    return await _xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
+    return await xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
   else if(inferenceBackend == InferenceBackend.gpu){
-    return await _gpuInterpreter(assetPath);
+    return await gpuInterpreter(assetPath);
   }
   else if(inferenceBackend == InferenceBackend.nnapi){
-    return await _nnapiInterpreter(assetPath);
+    return await nnapiInterpreter(assetPath);
   }
   else if(inferenceBackend == InferenceBackend.metal){
-    return await _metalInterpreterIOS(assetPath);
+    return await metalInterpreterIOS(assetPath);
   }
   else if(inferenceBackend == InferenceBackend.coreMl_2){
-    return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
+    return await coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
   }
   else if(inferenceBackend == InferenceBackend.coreMl_3){
-    return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
+    return await coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
   }
   else{
     throw Exception("Unknown inference backend $inferenceBackend.");
   }
-}
-
-/// Initializes the TFLite interpreter on android. Uses either NNAPI, GPU,
-/// XNNPack or CPU delegate. For each backend an interpreter is created and
-/// the time to run inference measured. 
-/// 
-/// See `initOptimalInterpreter()` for parameter usage
-Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
-  String assetPath,
-  void Function(Interpreter interpreter) runInterpreter,
-  {
-    List<InferenceBackend> exclude = const [],
-    int iterations = 1
-  }
-  ) async 
-{
-  Map<InferenceBackend, double> inferenceBackend = {};
-
-  // NNAPI delegate
-  if(!exclude.contains(InferenceBackend.nnapi)){
-    try{
-      Interpreter interpreter = await _nnapiInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.nnapi, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // GPU delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await _gpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.xnnPack)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
-        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // CPU delegate
-  if(!exclude.contains(InferenceBackend.cpu)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
-        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-
-  return inferenceBackend;
-}
-
-/// Initializes the TFLite interpreter on iOS.
-///
-/// Uses either CoreML (2|3), Metal, XNNPack or CPU delegate
-Future<Map<InferenceBackend, double>> _testInterpreterIOS(
-    String assetPath,
-    void Function(Interpreter interpreter) runInterpreter,
-    {
-      List<InferenceBackend> exclude = const [],
-      int iterations = 1
-    }
-  ) async 
-{
-
-  Map<InferenceBackend, double> inferenceBackend = {};
-
-  // CoreML 3 delegate
-  if(!exclude.contains(InferenceBackend.coreMl_3)){
-    try{
-      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.coreMl_3, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // CoreML 2 delegate
-  if(!exclude.contains(InferenceBackend.coreMl_2)){
-    try{
-      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.coreMl_2, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // Metal delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await _metalInterpreterIOS(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.metal, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.xnnPack)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
-        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e) {
-      Sentry.captureException(e);
-    }
-  }
-  // CPU delegate
-  if(!exclude.contains(InferenceBackend.cpu)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
-        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-
-  return inferenceBackend;
-}
-
-
-/// Initializes the TFLite interpreter on Windows.
-///
-/// Uses the GPU (OpenCL), XNNPack or CPU mode
-Future<Map<InferenceBackend, double>> _testInterpreterWindows(
-  String assetPath,
-  void Function(Interpreter interpreter) runInterpreter,
-  {
-    List<InferenceBackend> exclude = const [],
-    int iterations = 1
-  }
-  ) async 
-{
-  Map<InferenceBackend, double> inferenceBackend = {};
-
-  // GPU delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await _gpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.xnnPack)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
-        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // CPU delegate
-  if(!exclude.contains(InferenceBackend.cpu)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
-        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-
-  return inferenceBackend;
-}
-
-/// Initializes the TFLite interpreter on Linux.
-///
-/// Uses the GPU (OpenCL), XNNPack or CPU mode
-Future<Map<InferenceBackend, double>> _testInterpreterLinux(
-  String assetPath,
-  void Function(Interpreter interpreter) runInterpreter,
-  {
-    List<InferenceBackend> exclude = const [],
-    int iterations = 1
-  }
-  ) async 
-{
-  Map<InferenceBackend, double> inferenceBackend = {};
-
-  // GPU delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await _gpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.xnnPack)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
-        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // CPU delegate
-  if(!exclude.contains(InferenceBackend.cpu)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
-        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-
-  return inferenceBackend;
-}
-
-/// Initializes the TFLite interpreter on Mac.
-///
-/// Uses the GPU (OpenCL), XNNPack or CPU mode
-Future<Map<InferenceBackend, double>> _testInterpreterMac(
-  String assetPath,
-  void Function(Interpreter interpreter) runInterpreter,
-  {
-    List<InferenceBackend> exclude = const [],
-    int iterations = 1
-  }
-  ) async 
-{
-  Map<InferenceBackend, double> inferenceBackend = {};
-
-  // GPU delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await _gpuInterpreter(assetPath);
-      inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
-      );
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.xnnPack)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
-        Interpreter interpreter = await _xnnPackInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-  // CPU delegate
-  if(!exclude.contains(InferenceBackend.cpu)){
-    try{
-      for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
-        Interpreter interpreter = await _cpuInterpreter(assetPath, i);
-        inferenceBackend.addEntries(
-          [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
-        );
-      }
-    }
-    catch (e){
-      Sentry.captureException(e);
-    }
-  }
-
-  return inferenceBackend;
-}
-
-
-/// Initializes the interpreter with NPU acceleration for Android.
-Future<Interpreter> _nnapiInterpreter(String assetPath) async {
-  final options = InterpreterOptions()..useNnApiForAndroid = true;
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath, 
-    options: options
-  );
-
-  return i; 
-}
-
-/// Initializes the interpreter with GPU acceleration.
-Future<Interpreter> _gpuInterpreter(String assetPath) async {
-  final gpuDelegateV2 = GpuDelegateV2(
-    options: GpuDelegateOptionsV2(
-      isPrecisionLossAllowed: true
-    )
-  );
-  final options = InterpreterOptions()..addDelegate(gpuDelegateV2);
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
-    options: options
-  );
-
-  return i;
-}
-
-/// Initializes the interpreter with metal acceleration for iOS.
-Future<Interpreter> _metalInterpreterIOS(String assetPath) async {
-
-  final gpuDelegate = GpuDelegate(
-    options: GpuDelegateOptions(
-      allowPrecisionLoss: true,
-    ),
-  );
-  var interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegate);
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
-    options: interpreterOptions
-  );
-  
-  return i;
-}
-
-/// Initializes the interpreter with coreML acceleration for iOS.
-Future<Interpreter> _coreMLInterpreterIOS(
-  String assetPath,
-  {
-    int coreMLVersion = 1
-  }
-  ) async 
-{
-
-  var interpreterOptions = InterpreterOptions()..addDelegate(
-    CoreMlDelegate(
-      options: CoreMlDelegateOptions(
-        coremlVersion: coreMLVersion,
-      )
-    )
-  );
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
-    options: interpreterOptions
-  );
-
-  return i;
-}
-
-/// Initializes the interpreter with CPU mode set.
-Future<Interpreter> _cpuInterpreter(String assetPath, int threads) async {
-  final options = InterpreterOptions()
-    ..threads = threads;
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath, options: options);
-
-  return i;
-}
-
-/// Initializes the interpreter with XNNPack-CPU mode set.
-Future<Interpreter> _xnnPackInterpreter(String assetPath, int threads) async {
-
-  Interpreter interpreter;
-  final options = InterpreterOptions()..addDelegate(
-    XNNPackDelegate(
-      options: XNNPackDelegateOptions(
-        numThreads: threads 
-      )
-    )
-  );
-  interpreter = await Interpreter.fromAsset(
-    assetPath,
-    options: options
-  );
-
-  return interpreter;
-}
-
-
-MapEntry<InferenceBackend, double> testBackend (
-  Interpreter interpreter, 
-  InferenceBackend i,
-  int iterations,
-  void Function(Interpreter interpreter) runInterpreter
-)
-{
-
-  Stopwatch s = Stopwatch();
-
-  s.start();
-  for (var i = 0; i < iterations; i++) {
-    runInterpreter(interpreter);
-  }
-  s.stop();
-  
-  return MapEntry(i, s.elapsed.inMilliseconds / iterations);
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/conjugation/conjugate.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/conjugate.dart';
 import 'package:da_kanji_mobile/entities/conjugation/conj.dart';
 import 'package:da_kanji_mobile/entities/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/entities/conjugation/conjugation_descriptions.dart';

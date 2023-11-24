@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 
 /// Controller for the `CustomSelectableText`-widget to control the widget from
 /// outside itself.
