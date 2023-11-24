@@ -20,7 +20,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';

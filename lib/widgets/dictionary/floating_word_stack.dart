@@ -11,8 +11,8 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Widget that shows downwards floating words that can be tapped and scrolled

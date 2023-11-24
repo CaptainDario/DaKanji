@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/repositories/dictionary/kanjidic2.dart';
 import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
 
 class DictionaryKanjiTab extends StatefulWidget {
