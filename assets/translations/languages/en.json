@@ -383,8 +383,9 @@
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
-    "defaults": "defaults",
+    "defaults": "Defaults",
     "delete": "Delete",
+    "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",
     "no_entries": "No entries in this word list",

@@ -374,14 +374,14 @@ class _WordListsState extends State<WordLists> {
                     builder: (context, candidateData, rejectedData) {
                       if(!draggingWordListNode) return const SizedBox();
     
-                      return Container(
+                      return SizedBox(
                         height: 48,
                         width: MediaQuery.of(context).size.width,
                         //color: Theme.of(context).canvasColor,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Drag here to scroll "),
+                            Text(LocaleKeys.WordListsScreen_drag_to_scroll.tr()),
                             const Icon(Icons.arrow_downward),
                           ],
                         ),

@@ -366,6 +366,7 @@ abstract class  LocaleKeys {
   static const WordListsScreen_create_pdf = 'WordListsScreen.create_pdf';
   static const WordListsScreen_defaults = 'WordListsScreen.defaults';
   static const WordListsScreen_delete = 'WordListsScreen.delete';
+  static const WordListsScreen_drag_to_scroll = 'WordListsScreen.drag_to_scroll';
   static const WordListsScreen_new_folder = 'WordListsScreen.new_folder';
   static const WordListsScreen_new_list = 'WordListsScreen.new_list';
   static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';
