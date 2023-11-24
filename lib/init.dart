@@ -41,7 +41,7 @@ import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.

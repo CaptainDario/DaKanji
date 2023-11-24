@@ -2,80 +2,18 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 
 part 'word_lists.g.dart';
 
 
-
-/// types of nodes in the word lists
-enum WordListNodeType{
-  folder,
-  folderDefault,
-  wordList,
-  wordListDefault,
-  root
-}
-
-/// List containing all types that are a folders
-List<WordListNodeType> get wordListFolderTypes => [
-  WordListNodeType.folder,
-  WordListNodeType.folderDefault,
-];
-
-/// List containing all types that are a word lists
-List<WordListNodeType> get wordListListypes => [
-  WordListNodeType.wordList,
-  WordListNodeType.wordListDefault,
-];
-
-/// List containing all types that are a default nodes
-List<WordListNodeType>  get wordListDefaultTypes => [
-  WordListNodeType.folderDefault,
-  WordListNodeType.wordListDefault,
-];
-
-/// List containing all types that are a user created nodes
-List<WordListNodeType> get wordListUserTypes => [
-  WordListNodeType.folder,
-  WordListNodeType.wordList,
-];
-
-enum DefaultNames {
-  // lists
-  searchHistory,
-  jlptN5, jlptN4, jlptN3, jlptN2, jlptN1,
-  // folder
-  defaults
-}
-
-
-String wordListsDefaultsStringToTranslation(String w){
-  
-  String converted = "";
-
-  if(w.contains("jlpt")){
-    converted = w.replaceAll("jlpt", "JLPT ");
-  }
-  else if(w == DefaultNames.searchHistory.name){
-    converted = LocaleKeys.WordListsScreen_search_history.tr();
-  }
-  else if(w == DefaultNames.defaults.name){
-    converted = LocaleKeys.WordListsScreen_defaults.tr();
-  }
-  else{
-    converted = w;
-  }
-
-  return converted;
-}
 
 /// The tree of word lists and folders that the user has created
 ///

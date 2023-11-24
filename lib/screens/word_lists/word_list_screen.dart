@@ -12,8 +12,9 @@ import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 

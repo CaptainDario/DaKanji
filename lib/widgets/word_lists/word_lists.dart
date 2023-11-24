@@ -15,8 +15,8 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
@@ -410,25 +410,5 @@ class _WordListsState extends State<WordLists> {
       addedNewNode = null;
     });
 
-  }
-
-  Widget proxyDecorator(
-    Widget child, int index, Animation<double> animation) {
-    
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (BuildContext context, Widget? child) {
-        final double animValue = Curves.easeInOut.transform(animation.value);
-        final double elevation = lerpDouble(0, 6, animValue)!;
-        return Center(
-          child: Material(
-            elevation: elevation,
-            shadowColor: Colors.grey,
-            child: child,
-          ),
-        );
-      },
-      child: child,
-    );
   }
 }
