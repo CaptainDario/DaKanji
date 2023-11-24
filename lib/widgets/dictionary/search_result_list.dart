@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
+import 'package:da_kanji_mobile/entities/dictionary/dict_search_result_controller.dart';
 import 'search_result_card.dart';
 
 /// List that shows the search results of `DictSearch`

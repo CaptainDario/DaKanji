@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 class DojgEntryCard extends StatelessWidget {

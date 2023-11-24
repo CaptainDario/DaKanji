@@ -10,8 +10,8 @@ import 'package:isar/isar.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
