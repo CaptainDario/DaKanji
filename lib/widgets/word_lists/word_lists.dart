@@ -307,6 +307,10 @@ class _WordListsState extends State<WordLists> {
                                 }
                               )
                             ],
+                        // if the list is scrollable add a gap
+                        const SizedBox(
+                          height: 48,
+                        )
                       ],
                     ),
                   ),
