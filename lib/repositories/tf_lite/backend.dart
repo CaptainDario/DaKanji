@@ -7,7 +7,7 @@ import 'package:universal_io/io.dart';
 import 'package:sentry/sentry_io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 
 
 
