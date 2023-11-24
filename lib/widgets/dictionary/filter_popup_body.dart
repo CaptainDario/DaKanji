@@ -7,7 +7,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:quiver/iterables.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/dictionary_filters/filter_options.dart';
+import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
