@@ -11,11 +11,11 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/kanji_table/kanji_category.dart';
-import 'package:da_kanji_mobile/domain/kanji_table/kanji_sorting.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/kanji_table/kanji_category.dart';
+import 'package:da_kanji_mobile/entities/kanji_table/kanji_sorting.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';

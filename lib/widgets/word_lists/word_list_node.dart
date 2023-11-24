@@ -8,7 +8,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/application/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';

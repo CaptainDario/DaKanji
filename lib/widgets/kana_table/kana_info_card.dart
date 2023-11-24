@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:isar/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
 
 
 

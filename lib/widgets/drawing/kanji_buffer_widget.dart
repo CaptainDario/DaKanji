@@ -11,7 +11,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// A draggable `OutlinedButton` that moves back to `Alignment.center` when it's

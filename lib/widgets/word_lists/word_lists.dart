@@ -12,8 +12,8 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
