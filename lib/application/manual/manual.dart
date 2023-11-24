@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/manual/manual_data.dart';
-import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 
 void pushManual(BuildContext context, ManualTypes manualType){
   
