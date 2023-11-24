@@ -66,6 +66,9 @@ class _WordListsState extends State<WordLists> {
   int? draggingOverDividerIndex;
   /// The controller for the list view
   ScrollController scrollController = ScrollController();
+  /// Global key for the listview, because without a key it resets the scroll
+  /// position after each setState
+  final _scrollKey = GlobalKey();
 
 
   @override
@@ -181,6 +184,7 @@ class _WordListsState extends State<WordLists> {
                   // the word lists / folders
                   Expanded(
                     child: ListView(
+                      key: _scrollKey,
                       controller: scrollController,
                       children: [
                         for (int i = 0; i < childrenDFS.length; i++)
