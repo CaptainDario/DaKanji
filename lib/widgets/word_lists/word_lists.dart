@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:math';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';

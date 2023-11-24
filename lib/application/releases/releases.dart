@@ -1,13 +1,9 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/domain/releases/version.dart';

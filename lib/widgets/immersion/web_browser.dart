@@ -56,7 +56,7 @@ class _WebBrowserState extends State<WebBrowser> {
         )
       )
       ..setOnConsoleMessage((message) {
-        print("testtest: ${message.message}");
+        //print("testtest: ${message.message}");
       });
   }
 
@@ -83,9 +83,7 @@ document.addEventListener("selectionchange", () => {
     return Column(
       
       children: [
-        Container(
-          child: Text("Test"),
-        ),
+        const Text("Test"),
         Expanded(
           child: WebViewWidget(
             controller: _webViewController,

@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
