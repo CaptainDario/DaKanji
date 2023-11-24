@@ -16,8 +16,8 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
