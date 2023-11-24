@@ -139,10 +139,8 @@ class _WordListNodeState extends State<WordListNode> {
           onWillAccept: (data) {
             // do not allow dropping ...
             if(data == null ||
-              data == widget.node || // ... in itself
-              wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
-              widget.node.getPath().contains(data)) {
-              // ... in a child
+              wordListDefaultTypes.contains(widget.node.value.type) // .. in a non-user-entry
+            ) {
               return false;
             }
     
@@ -155,6 +153,12 @@ class _WordListNodeState extends State<WordListNode> {
             setState(() {itemDraggingOverThis = false;});
           },
           onAccept: (TreeNode data) {
+
+            // dragging the tile in itself should do nothing
+            if(data == widget.node){
+              itemDraggingOverThis = false;
+              return;
+            }
     
             var d = data as TreeNode<WordListsData>;
     
@@ -174,11 +178,10 @@ class _WordListNodeState extends State<WordListNode> {
                 widget.node.value.type == WordListNodeType.wordList){
                 // add a new folder
                 TreeNode<WordListsData> newFolder = TreeNode<WordListsData>(
-                  WordListsData(
-                    "New Folder", WordListNodeType.folder, [], true
-                  )
+                  WordListsData("New Folder", WordListNodeType.folder, [], true)
                 );
-                widget.node.parent!.addChild(newFolder);
+                int idx = widget.node.parent!.children.indexOf(widget.node);
+                widget.node.parent!.insertChild(newFolder, idx);
     
                 // add this and the drag target to the new folder and remove them from their old parents
                 d.parent!.removeChild(d);
@@ -189,8 +192,6 @@ class _WordListNodeState extends State<WordListNode> {
                 _controller.text = widget.node.value.name;
                 itemDraggingOverThis = false;
               }
-    
-              
             });
     
             widget.onDragAccept?.call(data, widget.node);
