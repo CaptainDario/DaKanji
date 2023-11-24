@@ -15,7 +15,7 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Let the user select the anki DoJG deck and import it.

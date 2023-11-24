@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
+import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`

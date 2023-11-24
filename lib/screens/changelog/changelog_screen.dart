@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/changelog.dart';
+import 'package:da_kanji_mobile/entities/changelog.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 

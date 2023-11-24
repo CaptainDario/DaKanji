@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/reviews.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/domain/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';

@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
+import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 
 
 Uri ankiConnectUrl = Uri.http("localhost:8765");
