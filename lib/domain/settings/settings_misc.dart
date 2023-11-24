@@ -1,3 +1,6 @@
+
+
+
 // Dart imports:
 import 'dart:io';
 
@@ -8,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
