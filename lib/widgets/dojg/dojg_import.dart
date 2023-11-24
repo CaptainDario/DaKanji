@@ -98,14 +98,7 @@ class _DojgImportState extends State<DojgImport> {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pop(context);
         // ignore: use_build_context_synchronously
-        await AwesomeDialog(
-          context: context,
-          dialogType: DialogType.noHeader,
-          btnOkColor: g_Dakanji_green,
-          btnOkOnPress: () {},
-          dismissOnTouchOutside: false,
-          desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
-        ).show();
+        await dojgImportSucceededDialog(context).show();
 
         // ignore: use_build_context_synchronously
         restartApp(context);
