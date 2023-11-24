@@ -4,7 +4,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:kana_kit/kana_kit.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
+import 'package:da_kanji_mobile/application/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'search_isolate.dart';
 

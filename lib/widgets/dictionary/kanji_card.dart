@@ -11,7 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
+import 'package:da_kanji_mobile/repositories/dictionary/kanji_vg.dart';
 import 'package:da_kanji_mobile/application/radicals/radicals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';

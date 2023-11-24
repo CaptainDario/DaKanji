@@ -2,28 +2,13 @@
 import 'dart:collection';
 
 // Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
 import 'package:graphview/GraphView.dart';
-import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:xml/xml.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
-/// Searches in KanjiVG the matching entries to `kanjis` and returns them
-List<KanjiSVG> findMatchingKanjiSVG(List<String> kanjis){
-
-  if(kanjis.isEmpty) {
-    return [];
-  }
-  
-  return GetIt.I<Isars>().dictionary.kanjiSVGs.where()
-    .anyOf(kanjis, (q, element) => q.characterEqualTo(element))
-  .findAllSync().toList();
-}
 
 /// Parses a KanjiVG entry `kanjiVGEntry` and adds it to the given `graph`
 /// Returns a List with all SVG strings that were added to `graph` matching

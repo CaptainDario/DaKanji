@@ -8,7 +8,7 @@
 import 'package:flutter/foundation.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/conjugation/conjo.dart';
+import 'package:da_kanji_mobile/entities/conjugation/conjo.dart';
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/entities/conjugation/conj.dart';
 import 'package:da_kanji_mobile/entities/conjugation/conjos.dart';

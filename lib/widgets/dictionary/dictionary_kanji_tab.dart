@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/kanjidic2.dart';
+import 'package:da_kanji_mobile/repositories/dictionary/kanjidic2.dart';
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/application/radicals/radicals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
