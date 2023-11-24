@@ -10,7 +10,7 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';

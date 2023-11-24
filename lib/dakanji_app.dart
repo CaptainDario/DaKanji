@@ -9,9 +9,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
-import 'package:da_kanji_mobile/data/theme/light_theme.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/theme/dark_theme.dart';
+import 'package:da_kanji_mobile/entities/theme/light_theme.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';

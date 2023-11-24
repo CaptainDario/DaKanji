@@ -3,7 +3,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/repositories/tf_lite/backend.dart';
 
 /// Checks for the available backends and uses the best available backend.
