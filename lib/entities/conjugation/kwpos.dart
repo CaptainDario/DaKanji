@@ -3,6 +3,8 @@
 
 
 
+// ignore_for_file: constant_identifier_names
+
 /// An enum containing the pos tags to identify pos elements
 enum Pos {
 	adj_i,
