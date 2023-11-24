@@ -2,7 +2,7 @@
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
 // Project imports:
-import 'package:da_kanji_mobile/application/conjugation/conjo.dart';
+import 'package:da_kanji_mobile/entities/conjugation/conjo.dart';
 import 'conj.dart';
 import 'kwpos.dart';
 
