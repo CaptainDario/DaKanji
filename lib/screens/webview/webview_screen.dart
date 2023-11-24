@@ -10,7 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 
 /// This screen opens the given [url]
 /// and shows [char] fullscreen while loading.

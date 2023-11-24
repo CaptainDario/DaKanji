@@ -15,8 +15,8 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';

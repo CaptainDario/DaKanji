@@ -8,10 +8,10 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';

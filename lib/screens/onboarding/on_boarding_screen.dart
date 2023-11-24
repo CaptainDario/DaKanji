@@ -12,7 +12,7 @@ import 'package:vector_graphics/vector_graphics.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
