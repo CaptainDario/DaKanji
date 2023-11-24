@@ -2,8 +2,10 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
@@ -46,10 +48,33 @@ List<WordListNodeType> get wordListUserTypes => [
   WordListNodeType.wordList,
 ];
 
-
-enum WordListsDefaults{
+enum DefaultNames {
+  // lists
   searchHistory,
   jlptN5, jlptN4, jlptN3, jlptN2, jlptN1,
+  // folder
+  defaults
+}
+
+
+String wordListsDefaultsStringToTranslation(String w){
+  
+  String converted = "";
+
+  if(w.contains("jlpt")){
+    converted = w.replaceAll("jlpt", "JLPT ");
+  }
+  else if(w == DefaultNames.searchHistory.name){
+    converted = LocaleKeys.WordListsScreen_search_history.tr();
+  }
+  else if(w == DefaultNames.defaults.name){
+    converted = LocaleKeys.WordListsScreen_defaults.tr();
+  }
+  else{
+    converted = w;
+  }
+
+  return converted;
 }
 
 /// The tree of word lists and folders that the user has created
@@ -62,13 +87,13 @@ class WordLists {
   /// The root node of the word lists
   @JsonKey(includeFromJson: false, includeToJson: false)
   late TreeNode<WordListsData> root = TreeNode<WordListsData>(
-      WordListsData("Word Lists", WordListNodeType.root, [], true),
+      WordListsData("", WordListNodeType.root, [], true),
     );
 
   /// the node that contains the default word lists
   @JsonKey(includeFromJson: false, includeToJson: false)
   TreeNode<WordListsData> defaults = TreeNode<WordListsData>(
-      WordListsData("Defaults", WordListNodeType.folderDefault, [], false),
+      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
     );
 
   @JsonKey(includeFromJson: true, includeToJson: true)
@@ -79,7 +104,9 @@ class WordLists {
     
     /// add the defaults folder / lists
     root.addChild(defaults);
-    for (var element in WordListsDefaults.values) {
+    for (var element in DefaultNames.values) {
+      if(element == DefaultNames.defaults) continue;
+
       defaults.addChild(
         TreeNode<WordListsData>(
           WordListsData(element.name, WordListNodeType.wordListDefault, [], false),

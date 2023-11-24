@@ -104,7 +104,12 @@ class _WordListNodeState extends State<WordListNode> {
   }
 
   void init(){
-    _controller.text = widget.node.value.name;
+    if(!wordListDefaultTypes.contains(widget.node.value.type)){
+      _controller.text = widget.node.value.name;
+    }
+    else {
+      _controller.text = wordListsDefaultsStringToTranslation(widget.node.value.name);
+    }
 
     if(widget.editTextOnCreate) nameEditing = true;
   }
@@ -306,16 +311,16 @@ class _WordListNodeState extends State<WordListNode> {
                             ),
                           if(wordListListypes.contains(widget.node.value.type))
                             ...[
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: PopupMenuButtonItems.sendToAnki,
                                 child: Text(
-                                  "Send to anki"
+                                  LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: PopupMenuButtonItems.toPdf,
                                 child: Text(
-                                  "To PDF"
+                                  LocaleKeys.WordListsScreen_create_pdf.tr()
                                 )
                               ),
                             ]

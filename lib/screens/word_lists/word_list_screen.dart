@@ -50,7 +50,7 @@ class _WordListScreenState extends State<WordListScreen> {
     }
 
     // search history (assure it is a default list and not a user created one)
-    if(widget.node.value.name == WordListsDefaults.searchHistory.name &&
+    if(widget.node.value.name == DefaultNames.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
 
       List<int> searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
