@@ -10,7 +10,7 @@ import 'package:isar/isar.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_category.dart';
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_sorting.dart';

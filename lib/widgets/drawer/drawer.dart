@@ -13,8 +13,8 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/application/helper/feedback.dart';
-import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

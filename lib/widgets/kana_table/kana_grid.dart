@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 
 class KanaGrid extends StatefulWidget {
 

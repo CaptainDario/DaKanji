@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
 import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
