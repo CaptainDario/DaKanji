@@ -45,3 +45,16 @@ AwesomeDialog dojgImportFailedDialog(BuildContext context) {
     ),
   );
 }
+
+/// [AwesomeDialog] that informs the user that the import of the DoJG deck
+/// has failed
+AwesomeDialog dojgImportSucceededDialog(BuildContext context) {
+  return AwesomeDialog(
+    context: context,
+    dialogType: DialogType.noHeader,
+    btnOkColor: g_Dakanji_green,
+    btnOkOnPress: () {},
+    dismissOnTouchOutside: false,
+    desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
+  );
+}
