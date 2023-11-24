@@ -1,20 +1,22 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/dojg/dojg_import_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:file_picker/file_picker.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
-import 'package:da_kanji_mobile/application/dojg/dojg.dart';
 import 'package:da_kanji_mobile/application/manual/manual.dart';
 import 'package:da_kanji_mobile/domain/manual/manual_types.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/repositories/dojg/dojg.dart';
+
 
 class DojgImport extends StatefulWidget {
   const DojgImport({super.key});
@@ -80,59 +82,39 @@ class _DojgImportState extends State<DojgImport> {
 
     importing = true;
 
-    AwesomeDialog(
-        context: context,
-        dialogType: DialogType.noHeader,
-        dismissOnTouchOutside: false,
-        body: Column(
-          children: [
-            const DaKanjiLoadingIndicator(),
-            const SizedBox(height: 8,),
-            Text(
-              LocaleKeys.DojgScreen_dojg_importing.tr()
-            ),
-            const SizedBox(height: 16,)
-          ],
-        ),
-      ).show();
+    // let user pick a file
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any);
+    
+    // ignore: use_build_context_synchronously
+    dojgImportLoadingDialog(context).show();
 
-    if(await importDoJGDeck()){
-      GetIt.I<UserData>().dojgImported = (checkDojgImported());
-      GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
-      await GetIt.I<UserData>().save();
+    if(result != null){
+      if(await importDoJGDeck()){
+        GetIt.I<UserData>().dojgImported = (checkDojgImported());
+        GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
+        await GetIt.I<UserData>().save();
 
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop(context);
-      // ignore: use_build_context_synchronously
-      await AwesomeDialog(
-        context: context,
-        dialogType: DialogType.noHeader,
-        btnOkColor: g_Dakanji_green,
-        btnOkOnPress: () {},
-        dismissOnTouchOutside: false,
-        desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
-      ).show();
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pop(context);
+        // ignore: use_build_context_synchronously
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.noHeader,
+          btnOkColor: g_Dakanji_green,
+          btnOkOnPress: () {},
+          dismissOnTouchOutside: false,
+          desc: LocaleKeys.DojgScreen_dojg_import_success.tr()
+        ).show();
 
-      // ignore: use_build_context_synchronously
-      restartApp(context);
+        // ignore: use_build_context_synchronously
+        restartApp(context);
+      }
     }
-    else {
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop(context);
-      // ignore: use_build_context_synchronously
-      await AwesomeDialog(
-        context: context,
-        dialogType: DialogType.noHeader,
-        btnOkColor: g_Dakanji_green,
-        btnOkOnPress: () {},
-        dismissOnTouchOutside: false,
-        body: Align(
-          child: Text(
-            LocaleKeys.DojgScreen_dojg_import_fail.tr()
-          ),
-        ),
-      ).show();
-    }
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop(context);
+    // ignore: use_build_context_synchronously
+    await dojgImportFailedDialog(context).show();
 
     importing = false;
   }
