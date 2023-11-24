@@ -104,11 +104,12 @@ class _WordListsState extends State<WordLists> {
     return DragTarget<TreeNode<WordListsData>>(
       hitTestBehavior: HitTestBehavior.opaque,
       onWillAccept: (data) {
-
-        if(widget.parent!.children.contains(data)) return false;
-
+    
         // mark this widget as accepting the element
-        setState(() {itemDraggingOverThis = true;});
+        setState(() {
+          itemDraggingOverThis = true;  
+        });
+        
         return true;
       },
       onLeave: (data) {
@@ -205,10 +206,10 @@ class _WordListsState extends State<WordLists> {
                                     : childrenDFS[i],
                                   i,
                                   onDragStarted: (){
-                                    draggingWordListNode = true;
+                                    setState(() => draggingWordListNode = true);
                                   },
                                   onDragEnd: (){
-                                    draggingWordListNode = false;
+                                    setState(() => draggingWordListNode = false);
                                   },
                                   onTap: (TreeNode<WordListsData> node) {
                                     // if the node is a word list, navigate to the word list screen
@@ -260,24 +261,24 @@ class _WordListsState extends State<WordLists> {
                               // add a divider in which lists can be dragged (easier reorder)
                               DragTarget<TreeNode<WordListsData>>(
                                 onWillAccept: (TreeNode<WordListsData>? data) {
-
+    
                                   // do no allow self drags
                                   if(data == null || i == childrenDFS.indexOf(data)-1) {
                                     return false;
                                   }
-
-                                  draggingOverDividerIndex = i; 
+    
+                                  draggingOverDividerIndex = i;
                                   return true;
                                 },
                                 onAccept: (data) {
-
+    
                                   TreeNode<WordListsData> thisNode = childrenDFS[i+1];
                                   if(thisNode.parent!.value.type == WordListNodeType.folderDefault) {
                                     thisNode = childrenDFS.firstWhere((n) => 
                                       wordListUserTypes.contains(n.value.type)
                                     );
                                   }
-
+    
                                   setState(() {
                                     data.parent!.removeChild(data);
                                     thisNode.parent!.insertChild(
@@ -288,9 +289,7 @@ class _WordListsState extends State<WordLists> {
                                   draggingOverDividerIndex = null;
                                 },
                                 onLeave: (node) {
-                                  setState(() {
-                                    draggingOverDividerIndex = null;
-                                  });
+                                  draggingOverDividerIndex = null;
                                 },
                                 builder: (context, candidateData, rejectedData) {
                                   return Padding(
@@ -354,7 +353,7 @@ class _WordListsState extends State<WordLists> {
               // the list is scrollable and
               // the scroll position is not at the end
               if(draggingWordListNode &&
-                !(scrollController.positions.first.atEdge && scrollController.positions.first.pixels != 0))
+                !(scrollController.positions.first.pixels == scrollController.positions.first.maxScrollExtent))
                 Positioned(
                   bottom: 0,
                   child: DragTarget<TreeNode<WordListsData>>(
@@ -365,7 +364,7 @@ class _WordListsState extends State<WordLists> {
                           max(1, ((scrollController.position.maxScrollExtent - scrollController.offset) * 5).toInt())
                         ),
                         curve: Curves.linear
-                      );
+                      ).then((value) => setState((){}));
                       return false;
                     },
                     onLeave: (data) {
@@ -373,7 +372,7 @@ class _WordListsState extends State<WordLists> {
                     },
                     builder: (context, candidateData, rejectedData) {
                       if(!draggingWordListNode) return const SizedBox();
-
+    
                       return Container(
                         height: 48,
                         width: MediaQuery.of(context).size.width,
