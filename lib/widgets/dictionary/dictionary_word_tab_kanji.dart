@@ -259,6 +259,10 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
                               ),
                             );
                           }
+                          // add "," to separate pitch readings
+                          if(a < accents[i]!.length-1){
+                            ret.add(const Text("、"));
+                          }
                         }
                         // add "," to separate pitch readings
                         if(i < widget.entry.readings.length-1){
