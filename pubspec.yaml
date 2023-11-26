@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.3.0+72
+version: 3.3.0+75
 
 environment:
   sdk: ">=3.0.0"
@@ -59,9 +59,9 @@ dependencies:
   sqlite3_flutter_libs: 0.5.15
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
-  sentry_flutter: 7.9.0
+  sentry_flutter: 7.13.2
   feedback_sentry: 2.4.0
-  sentry: 7.13.2
+  sentry: any
   animations: 2.0.7
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
@@ -105,7 +105,7 @@ dependencies:
   
   # Not all platforms supported
   webview_flutter: 4.4.2                # android, iOS
-  webview_flutter_wkwebview: 3.9.4
+  webview_flutter_wkwebview: any
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
 

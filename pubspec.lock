@@ -1379,21 +1379,21 @@ packages:
     source: hosted
     version: "0.3.8"
   sentry:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sentry
-      sha256: "39c23342fc96105da449914f7774139a17a0ca8a4e70d9ad5200171f7e47d6ba"
+      sha256: e7ded42974bac5f69e4ca4ddc57d30499dd79381838f24b7e8fd9aa4139e7b79
       url: "https://pub.dev"
     source: hosted
-    version: "7.9.0"
+    version: "7.13.2"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: ff68ab31918690da004a42e20204242a3ad9ad57da7e2712da8487060ac9767f
+      sha256: d6f55ec7a1f681784165021f749007712a72ff57eadf91e963331b6ae326f089
       url: "https://pub.dev"
     source: hosted
-    version: "7.9.0"
+    version: "7.13.2"
   share_plus:
     dependency: "direct main"
     description:
@@ -1874,13 +1874,13 @@ packages:
     source: hosted
     version: "2.6.0"
   webview_flutter_wkwebview:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter_wkwebview
-      sha256: af6f5ab05918070b33507b0d453ba9fb7d39338a3256c23cf9433dc68100774a
+      sha256: accdaaa49a2aca2dc3c3230907988954cdd23fed0a19525d6c9789d380f4dc76
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.3"
+    version: "3.9.4"
   win32:
     dependency: transitive
     description:
