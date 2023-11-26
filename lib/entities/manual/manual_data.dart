@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/manual/manual_kana_table.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +11,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dojg.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_kana_table.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_text.dart';
 
 /// Data class to store all data related to the manual

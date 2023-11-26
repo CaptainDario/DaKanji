@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/screens/about/about_screen.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';

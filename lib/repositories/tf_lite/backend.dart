@@ -2,14 +2,12 @@
 import 'dart:math';
 
 // Package imports:
+import 'package:sentry/sentry_io.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
-import 'package:sentry/sentry_io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
-
-
 
 /// Initializes the TFLite interpreter on android. Uses either NNAPI, GPU,
 /// XNNPack or CPU delegate. For each backend an interpreter is created and

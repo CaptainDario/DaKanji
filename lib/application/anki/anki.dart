@@ -7,10 +7,8 @@ import 'package:flutter/foundation.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
-
-
+import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
 
 /// Addes the given note to Anki
 /// 

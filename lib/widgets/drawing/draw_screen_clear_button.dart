@@ -6,10 +6,10 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/widgets/drawing/drawing_painter.dart';
 
 class DrawScreenClearButton extends StatelessWidget {

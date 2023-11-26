@@ -13,9 +13,9 @@ import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// `LayouGrid` structured to show a list of meanings with a count

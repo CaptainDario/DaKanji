@@ -16,21 +16,21 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result_controller.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 
 /// The search widget for the dictionary.
 /// 

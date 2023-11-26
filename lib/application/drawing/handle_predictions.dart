@@ -10,10 +10,10 @@ import 'package:universal_io/io.dart' show Platform;
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/globals.dart';

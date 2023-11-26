@@ -9,9 +9,9 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/repositories/radicals/radicals.dart' as radk;
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/radicals/radicals.dart' as radk;
 
 /// Popup body of the popup to select radicals
 class RadicalPopupBody extends StatefulWidget {

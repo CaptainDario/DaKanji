@@ -7,9 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 
 part 'word_lists.g.dart';
 

@@ -1,7 +1,6 @@
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 
-
 /// Platform specific (desktop via anki connect) implementation of `add_note`
 void addNoteIos(AnkiNote note) async {
   // TODO v word lists - implement iOS

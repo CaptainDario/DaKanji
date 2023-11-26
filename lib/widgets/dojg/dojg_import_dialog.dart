@@ -1,13 +1,14 @@
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:awesome_dialog/awesome_dialog.dart';
-
+// Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 /// [AwesomeDialog] that shows a loading indicator while the dojg deck is
 /// being imported

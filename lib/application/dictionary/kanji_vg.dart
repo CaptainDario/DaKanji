@@ -9,7 +9,6 @@ import 'package:xml/xml.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 
-
 /// Parses a KanjiVG entry `kanjiVGEntry` and adds it to the given `graph`
 /// Returns a List with all SVG strings that were added to `graph` matching
 /// the order of the Id in `graph` and if the character is available as unicode

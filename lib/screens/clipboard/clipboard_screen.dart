@@ -14,8 +14,8 @@ import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';

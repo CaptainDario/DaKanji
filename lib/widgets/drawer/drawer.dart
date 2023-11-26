@@ -11,11 +11,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/entities/drawer/drawer_listener.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';

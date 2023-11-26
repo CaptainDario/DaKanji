@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/grammar/pos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 /// Converts a ipadic style part of speech string to a unique color
 Color? posToColor(String pos){

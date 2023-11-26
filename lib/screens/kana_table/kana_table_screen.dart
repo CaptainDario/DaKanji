@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,6 +15,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';

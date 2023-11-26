@@ -14,8 +14,8 @@ import 'package:mecab_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';

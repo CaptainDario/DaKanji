@@ -1,8 +1,6 @@
 // Package imports:
 import 'package:kana_kit/kana_kit.dart';
 
-
-
 /// 1D list of all kana (`hiragana` + `katakana`)
 List<String> kana = hiragana.expand((e) => e).toList() +
   katakana.expand((e) => e).toList();

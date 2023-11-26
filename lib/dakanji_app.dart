@@ -8,14 +8,14 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/routing/routing.dart';
 import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
+import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/entities/theme/light_theme.dart';
-import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/application/routing/routing.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 /// The starting widget of the app

@@ -22,10 +22,10 @@ import 'package:window_manager/window_manager.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';

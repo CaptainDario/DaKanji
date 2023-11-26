@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 
-
 Uri ankiConnectUrl = Uri.http("localhost:8765");
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`

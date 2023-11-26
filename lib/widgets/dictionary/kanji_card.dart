@@ -11,12 +11,12 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/repositories/dictionary/kanji_vg.dart';
-import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/dictionary/kanji_vg.dart';
+import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
