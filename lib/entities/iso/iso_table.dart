@@ -2,6 +2,8 @@
 
 
 
+// ignore_for_file: camel_case_types
+
 /// Enum containing the iso639_1 codes for languages
 /// 
 /// Note: Some ISO codes have been because of conflicts with dart's keywords.
