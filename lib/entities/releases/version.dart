@@ -6,7 +6,7 @@ part 'version.g.dart';
 
 
 
-/// Represents a version in the format major.minor.patch
+/// Represents a version in the format major.minor.patch+build
 @JsonSerializable(checked: false)
 class Version implements Comparable<Version>{
 
