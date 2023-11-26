@@ -11,8 +11,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/path_manager.dart';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
+import 'package:da_kanji_mobile/entities/files/path_manager.dart';
+import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
 
 /// A logs of the currently running app so that they can be attached when
