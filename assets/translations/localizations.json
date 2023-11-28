@@ -1785,11 +1785,46 @@
       "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
     }
   },
+  "KanjiMapScreen": {
+    "title": {
+      "en": "Kanji Map",
+      "de": "Kanji-Karte",
+      "ru": "Карта Кандзи",
+      "ja": "漢字マップ",
+      "zh": "汉字地图",
+      "it": "Mappa Kanji",
+      "fr": "Carte de Kanji",
+      "es": "Mapa Kanji",
+      "pl": "Mapa Kanji"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kanji map screen!",
+      "de": "Willkommen auf dem Bildschirm mit der Kanji-Karte!",
+      "ru": "Добро пожаловать на экран карты кандзи!",
+      "ja": "漢字マップ画面へようこそ！",
+      "zh": "欢迎来到汉字地图屏幕！",
+      "it": "Benvenuti nella schermata della mappa kanji!",
+      "fr": "Bienvenue sur l'écran de la carte des kanji !",
+      "es": "¡Bienvenido a la pantalla del mapa kanji!",
+      "pl": "Witamy na ekranie mapy kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    }
+  },
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
       "de": "Kana Trainer",
-      "ru": "Инструктор Кана",
+      "ru": "Тренер Кана",
       "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",

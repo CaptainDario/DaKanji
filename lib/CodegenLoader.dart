@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -185,6 +183,11 @@ class CodegenLoader extends AssetLoader{
   },
   "KanaTrainerScreen": {
     "title": "卡纳培训师"
+  },
+  "KanjiMapScreen": {
+    "title": "汉字地图",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到汉字地图屏幕！"
   },
   "KanjiTableScreen": {
     "title": "汉字表",
@@ -562,6 +565,11 @@ static const Map<String,dynamic> ja = {
   },
   "KanaTrainerScreen": {
     "title": "カナ・トレーナー"
+  },
+  "KanjiMapScreen": {
+    "title": "漢字マップ",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "漢字マップ画面へようこそ！"
   },
   "KanjiTableScreen": {
     "title": "漢字表",
@@ -970,6 +978,11 @@ static const Map<String,dynamic> de = {
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
   },
+  "KanjiMapScreen": {
+    "title": "Kanji-Karte",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit der Kanji-Karte!"
+  },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
@@ -1337,7 +1350,12 @@ static const Map<String,dynamic> ru = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "Инструктор Кана"
+    "title": "Тренер Кана"
+  },
+  "KanjiMapScreen": {
+    "title": "Карта Кандзи",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран карты кандзи!"
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
@@ -1728,6 +1746,11 @@ static const Map<String,dynamic> pl = {
   },
   "KanaTrainerScreen": {
     "title": "Trener Kana"
+  },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie mapy kanji!"
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
@@ -2136,6 +2159,11 @@ static const Map<String,dynamic> en = {
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
   },
+  "KanjiMapScreen": {
+    "title": "Kanji Map",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji map screen!"
+  },
   "KanjiTableScreen": {
     "title": "Kanji Table",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -2505,6 +2533,11 @@ static const Map<String,dynamic> it = {
   "KanaTrainerScreen": {
     "title": "Allenatore Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mappa Kanji",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della mappa kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -2860,6 +2893,11 @@ static const Map<String,dynamic> fr = {
   "KanaTrainerScreen": {
     "title": "Formateur Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Carte de Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la carte des kanji !"
+  },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -3214,6 +3252,11 @@ static const Map<String,dynamic> es = {
   },
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"
+  },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla del mapa kanji!"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",

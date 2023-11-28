@@ -206,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Trener Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie mapy kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",

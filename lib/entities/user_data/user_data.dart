@@ -84,6 +84,10 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialKanjiTable = true;
 
+  /// should the tutorial of the kanji table screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialKanjiMap = true;
+
   /// should the tutorial of the kana table screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialKanaTable = true;

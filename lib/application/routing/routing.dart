@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/screens/kanji_map/kanji_map_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -28,7 +29,7 @@ import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
 Widget getWidgetFromScreen(String? name, NavigationArguments args){
 
   Widget newRoute;
-
+  
   if(name == "/${Screens.home.name}"){
     newRoute = const HomeScreen();
   }
@@ -70,6 +71,11 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   }
   else if(name == "/${Screens.kanjiTrainer.name}"){
     newRoute = KanjiTrainerScreen(
+      args.navigatedByDrawer, true
+    );
+  }
+  else if(name == "/${Screens.kanjiMap.name}"){
+    newRoute = KanjiMapScreen(
       args.navigatedByDrawer, true
     );
   }

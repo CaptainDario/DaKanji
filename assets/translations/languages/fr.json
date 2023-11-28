@@ -206,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Formateur Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Carte de Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran de la carte des kanji !"
+  },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
