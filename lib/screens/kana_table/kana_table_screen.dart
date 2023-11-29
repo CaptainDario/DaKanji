@@ -157,7 +157,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               backgroundColor: g_Dakanji_green,
               activeBackgroundColor: g_Dakanji_red,
               spacing: 10,
-              
+              onClose: () => updateSettings(),
               children: [
                 for (int i = 0; i < 5; i++)
                   SpeedDialChild(
@@ -285,12 +285,13 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     height: constraints.maxHeight-actionButtonHeigt,
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
-                    onTap: (String kana) {
+                    onTap: (String kana) async {
                       if(GetIt.I<Settings>().kanaTable.playAudio){
-                        kanaSoundPlayer.open(
+                        await kanaSoundPlayer.open(
                           Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
-                          play: true
+                          play: false
                         );
+                        kanaSoundPlayer.play();
                       }
                       setState(() {
                         currentKana = kana;
