@@ -179,7 +179,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                 const FittedBox(
                                   child: Text(
                                     "だ",
-                                    style: TextStyle(fontSize: 1000),
+                                    style: TextStyle(fontSize: 1000, color: Colors.white),
                                   )
                                 ),
                               // show kana with small kana
@@ -187,7 +187,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                 const FittedBox(
                                   child: Text(
                                     "きゅ",
-                                    style: TextStyle(fontSize: 1000, letterSpacing: -200),
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200, color: Colors.white),
                                   )
                                 ),
                               // hiragana / katakana toggle
@@ -195,7 +195,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                 FittedBox(
                                   child: Text(
                                     isHiragana ? "ア" : "あ",
-                                    style: const TextStyle(fontSize: 1000),
+                                    style: const TextStyle(fontSize: 1000, color: Colors.white),
                                   )
                                 ),
                               // romaji
@@ -208,13 +208,16 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                     child: FittedBox(
                                       child: Text(
                                         "あ",
-                                        style: TextStyle(fontSize: 1000),
+                                        style: TextStyle(fontSize: 1000, color: Colors.white),
                                       ),
                                     ),
                                   ),
                                   const Positioned(
                                     bottom: -4,
-                                    child: Text("a"),
+                                    child: Text(
+                                      "a",
+                                      style: TextStyle(fontSize: 1000, color: Colors.white)
+                                    ),
                                   )
                                 ],
                               // rare kana
@@ -222,7 +225,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                 const FittedBox(
                                   child: Text(
                                     "ファ",
-                                    style: TextStyle(fontSize: 1000, letterSpacing: -200),
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200, color: Colors.white),
                                   )
                                 ),
                               
