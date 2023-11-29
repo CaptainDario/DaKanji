@@ -214,9 +214,13 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                   ),
                                   const Positioned(
                                     bottom: -4,
-                                    child: Text(
-                                      "a",
-                                      style: TextStyle(fontSize: 1000, color: Colors.white)
+                                    height: 18,
+                                    width: 18,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "a",
+                                        style: TextStyle(fontSize: 1000, color: Colors.white)
+                                      ),
                                     ),
                                   )
                                 ],
