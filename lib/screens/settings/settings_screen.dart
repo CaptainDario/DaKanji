@@ -633,6 +633,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       const Divider(),
 
+                      // #region - Kanji map header
+
+                      ResponsiveHeaderTile(
+                        LocaleKeys.KanjiMapScreen_title.tr(),
+                        Icons.map,
+                        autoSizeGroup: g_SettingsAutoSizeGroup
+                      ),
+                      // reshow tutorial
+                      ResponsiveIconButtonTile(
+                        text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
+                        icon: Icons.replay_outlined,
+                        onButtonPressed: () {
+                          GetIt.I<UserData>().showTutorialKanjiMap = true;
+                          settings.save();
+                          Phoenix.rebirth(context);
+                        },
+                        autoSizeGroup: g_SettingsAutoSizeGroup,
+                      ),
+
+                      // #endregion
+
+                      const Divider(),
+
                       // #region - Kana table header
                       ResponsiveHeaderTile(
                         LocaleKeys.KanaTableScreen_title.tr(),
