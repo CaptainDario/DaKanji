@@ -12,6 +12,10 @@
 ///       lib/entities/show_cases/<<SCREEN_NAME>>_screen_tutorial.dart
 ///   2.4 add tutorial to
 ///       lib/entities/show_cases/tutorials.dart
+///   2.5 save tutorial finished in
+///       lib/application/tutorial/tutorial_on_step.dart
+///   2.6 regenerate serialization code
+///       `flutter pub run build_runner build --delete-conflicting-outputs`
 /// 3. Add the new name screen to the `Screens` enum below
 /// 4. Add the new screen as a navigation in the drawer
 ///     lib/widgets/drawer/drawer.dart
@@ -19,6 +23,8 @@
 ///     lib/widgets/drawer/drawer_app_bar.dart
 /// 6. Add the new screen to the routing in
 ///     lib/application/routing/routing.dart
+/// 7. Add the new screen in with the option to reset the tutorial
+///     lib/screens/settings/settings_screen.dart
 /// 7. Add deep links in 
 ///     lib/application/manual/routing/deep_links.dart
 /// 8. Add deep links to https://dakanji.app/deep-links/
