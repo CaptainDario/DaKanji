@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:math';
 import 'dart:ui' as ui;
 
 // Flutter imports:
@@ -41,7 +42,8 @@ class AnimatedKanjiPainter extends CustomPainter {
     if(animationController.value == 0) return;
 
     // scale kanjivg canvas size (109) to current canvas size
-    canvas.scale(size.width/109, size.height/109);
+    double minSize = min(size.width, size.height);
+    canvas.scale(minSize/109, minSize/109);
 
     for (int i = 0; i < strokes.length; i++) {
       
