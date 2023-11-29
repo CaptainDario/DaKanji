@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,6 +30,8 @@ class KanaInfoCard extends StatefulWidget {
   final String kana;
   /// Should the kana be animated
   final bool showAnimatedKana;
+
+  final bool playKanaAnimationWhenOpened;
   /// Callback that is executed when the user presses the play button
   final Function()? onPlayPressed;
 
@@ -35,7 +39,8 @@ class KanaInfoCard extends StatefulWidget {
   const KanaInfoCard(
     this.kana,
     {
-      this.showAnimatedKana = false,
+      this.showAnimatedKana = true,
+      this.playKanaAnimationWhenOpened = false,
       this.onPlayPressed,
       super.key
     }
@@ -156,24 +161,26 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                         // kana
                         Expanded(
                           child: Center(
-                            child: widget.showAnimatedKana
-                              ? KanjiVGWidget(
-                                kanaSvg,
-                                MediaQuery.of(context).size.height * 0.2,
-                                MediaQuery.of(context).size.height * 0.2,
-                                GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
-                                GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
-                                GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
-                                borderAround: false,
-                              )
-                              : SvgPicture.string(
-                                kanaSvg,
-                                height: MediaQuery.of(context).size.height * 0.2,
-                                width: MediaQuery.of(context).size.height * 0.2,
-                                color: Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black,
-                              )
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 100),
+                              child: widget.showAnimatedKana && // should show animation
+                                !(widget.kana.length > 1 && yoonSVG != null) // do not animate if there is a yoon
+                                ? KanjiVGWidget(
+                                    kanaSvg,
+                                    MediaQuery.of(context).size.height * 0.2,
+                                    MediaQuery.of(context).size.height * 0.2,
+                                    widget.playKanaAnimationWhenOpened,
+                                    GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
+                                    GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
+                                    borderAround: false,
+                                    key: Key(widget.showAnimatedKana.toString()),
+                                  )
+                                : SvgPicture.string(
+                                  kanaSvg,
+                                  height: MediaQuery.of(context).size.height * 0.2,
+                                  width: MediaQuery.of(context).size.height * 0.2,
+                                ),
+                            ),
                           )
                         ),
                         // mnemonic (if there is one)

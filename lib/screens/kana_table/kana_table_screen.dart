@@ -325,6 +325,8 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     child: KanaInfoCard(
                       currentKana!,
                       showAnimatedKana: _controller.isCompleted,
+                      playKanaAnimationWhenOpened: _controller.isCompleted &&
+                        GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
                       onPlayPressed: () {
                         kanaSoundPlayer.play();
                       },
