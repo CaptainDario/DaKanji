@@ -96,6 +96,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,
       true, null),
+    // TODO reenable v3.4
     if(kDebugMode)
       DrawerEntry(
         DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(),
