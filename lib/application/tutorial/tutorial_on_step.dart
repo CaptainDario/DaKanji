@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 
-/// When the step of tutorial changtes
+/// When the step of tutorial changes
 void onTutorialStep (int index) async {
   debugPrint("Tutorial step: $index");
   if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
@@ -34,6 +34,11 @@ void onTutorialStep (int index) async {
   else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
     debugPrint("Kanji table screen tutorial done, saving...");
     GetIt.I<UserData>().showTutorialKanjiTable = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().kanjiMapScreenTutorial.indexes!.last){
+    debugPrint("Kanji map screen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialKanjiMap = false;
     await GetIt.I<UserData>().save();
   }
   else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
