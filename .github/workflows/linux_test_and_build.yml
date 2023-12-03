@@ -89,7 +89,7 @@ jobs:
         run: |
           sudo apt-get install flatpak flatpak-builder
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y flathub org.gnome.Sdk//44 org.gnome.Platform//44
+          flatpak install -y flathub org.freedesktop.Sdk//22.08 org.freedesktop.Platform//22.08
           
           flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
           flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
