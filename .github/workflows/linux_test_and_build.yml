@@ -95,15 +95,15 @@ jobs:
           flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
           flatpak build-bundle repo com.DaAppLab.DaKanji.flatpak com.DaAppLab.DaKanji
 
-          mv com.DaAppLab.DaKanji.flatpak ../com.DaAppLab.DaKanji.flatpak
+          mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: com.DaAppLab.DaKanji.flatpak
-          path: com.DaAppLab.DaKanji.flatpak
+          name: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
+          path: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Clean after flatpak
         run: |
-          rm com.DaAppLab.DaKanji.flatpak
+          rm DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           rm -rf flatpak/repo
           rm -rf flatpak/build-dir
 
