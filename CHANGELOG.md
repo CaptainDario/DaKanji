@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.2.0 - 文法 (4.12.2023)
+## v3.2.0+74 - 文法 (4.12.2023)
 
 New Features:
 
