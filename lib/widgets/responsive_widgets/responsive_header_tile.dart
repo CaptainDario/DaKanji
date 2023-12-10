@@ -47,7 +47,7 @@ class ResponsiveHeaderTile extends StatelessWidget {
               Text(
                 text,
                 overflow: TextOverflow.ellipsis,
-                textScaleFactor: 1.25,
+                textScaler: const TextScaler.linear(1.25),
                 maxLines: 1,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,

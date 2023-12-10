@@ -254,7 +254,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                               for (int i = 0; i < 3; i++)
                                 Text(
                                   volumeTags[i],
-                                  textScaleFactor: 1.25,
+                                  textScaler: const TextScaler.linear(1.25),
                                 )
                             ],
                           ),
@@ -276,7 +276,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                 currentEntries[i+1].grammaticalConcept[0]) {
                 return Text(
                   " ${currentEntries[i+1].grammaticalConcept[0]}",
-                  textScaleFactor: 1.5,
+                  textScaler: const TextScaler.linear(1.5),
                 );
               } else {
                 return const SizedBox();

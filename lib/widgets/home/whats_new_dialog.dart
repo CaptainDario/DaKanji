@@ -86,7 +86,7 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                       child: Center(
                         child: Text(
                           "🎉 ${LocaleKeys.HomeScreen_whats_new.tr()} 🎉",
-                          textScaleFactor: 2,
+                          textScaler: const TextScaler.linear(2),
                         ),
                       ),
                     ),

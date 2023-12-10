@@ -158,7 +158,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   child: Text(
                     widget.headerText,
                     textAlign: TextAlign.center,
-                    textScaleFactor: 1.5,
+                    textScaler: const TextScaler.linear(1.5),
                     style: const TextStyle(
                       color: Colors.white
                     ),
@@ -168,7 +168,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 Text(
                   widget.text,
                   textAlign: TextAlign.center,
-                  textScaleFactor: 1,
+                  textScaler: const TextScaler.linear(1),
                   style: const TextStyle(
                     color: Colors.white
                   ),

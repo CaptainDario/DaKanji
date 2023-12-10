@@ -59,7 +59,7 @@ class _DojgImportState extends State<DojgImport> {
                 padding: const EdgeInsets.fromLTRB(0, 32, 0, 32),
                 child: Text(
                   LocaleKeys.DojgScreen_refer_to_manual.tr(),
-                  textScaleFactor: 0.9,
+                  textScaler: const TextScaler.linear(0.9),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.grey,

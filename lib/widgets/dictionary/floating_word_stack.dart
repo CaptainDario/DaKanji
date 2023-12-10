@@ -199,7 +199,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
     return (TextPainter(
         text: TextSpan(text: text, style: textStyle),
-        textScaleFactor: MediaQuery.of(context).textScaleFactor,
+        textScaler: MediaQuery.of(context).textScaler,
         textDirection: TextDirection.ltr)
       ..layout())
     .size;
