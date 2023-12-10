@@ -27,7 +27,7 @@ dependencies:
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
-  platform: 3.1.0
+  platform: 3.1.2
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
