@@ -12,7 +12,7 @@ version: 3.3.0+76
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.10.6"
+  flutter: "3.16.3"
 
 platforms:
   android:
@@ -81,7 +81,7 @@ dependencies:
   async: 2.11.0
   path: 1.8.3
   http: 1.1.0
-  collection: 1.17.1
+  collection: 1.18.0
   path_provider: 2.1.0
   yaml: 3.1.2
   quiver: 3.2.1
