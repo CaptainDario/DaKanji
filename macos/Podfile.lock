@@ -57,6 +57,8 @@ PODS:
     - sqlite3/fts5
     - sqlite3/perf-threadsafe
     - sqlite3/rtree
+  - tflite_flutter (0.0.1):
+    - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
   - wakelock_plus (0.0.1):
@@ -85,6 +87,7 @@ DEPENDENCIES:
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
   - sqlite3_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/sqlite3_flutter_libs/macos`)
+  - tflite_flutter (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
@@ -136,6 +139,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos
   sqlite3_flutter_libs:
     :path: Flutter/ephemeral/.symlinks/plugins/sqlite3_flutter_libs/macos
+  tflite_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
   wakelock_plus:
@@ -167,6 +172,7 @@ SPEC CHECKSUMS:
   shared_preferences_macos: 8b221d457159a85f478c0b9d2f19aeae9feff475
   sqlite3: fd89671d969f3e73efe503ce203e28b016b58f68
   sqlite3_flutter_libs: 01f6f1a7e23e5b22dcbeb49fddab75ecfc1de530
+  tflite_flutter: b186ea3c62c076a90652f47c01005fe36c75171e
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
