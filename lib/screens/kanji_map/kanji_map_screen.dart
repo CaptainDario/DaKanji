@@ -1,9 +1,10 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kanji_map/kanji_map.dart';
-import 'package:flutter/material.dart';
-
-
 
 class KanjiMapScreen extends StatefulWidget {
 

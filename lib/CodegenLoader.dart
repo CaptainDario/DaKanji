@@ -2,8 +2,10 @@
 
 // ignore_for_file: prefer_single_quotes
 
+// Dart imports:
 import 'dart:ui';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{

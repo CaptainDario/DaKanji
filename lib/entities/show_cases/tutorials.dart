@@ -9,8 +9,8 @@ import 'package:da_kanji_mobile/entities/show_cases/dictionary_screen_tutorial.d
 import 'package:da_kanji_mobile/entities/show_cases/dojg_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kana_table_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kanji_map_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/text_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/word_lists_screen_tutorial.dart';
 
