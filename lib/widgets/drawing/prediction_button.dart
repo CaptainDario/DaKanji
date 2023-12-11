@@ -83,6 +83,7 @@ class _PredictionButtonState extends State<PredictionButton>
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
           ),
           // handle a short press
           onPressed: pressed,
@@ -92,9 +93,10 @@ class _PredictionButtonState extends State<PredictionButton>
             child: Text(
               widget.char,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 600,
-                fontFamily: g_japaneseFontFamily
+                fontFamily: g_japaneseFontFamily,
+                color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
               ),
             )
           )
