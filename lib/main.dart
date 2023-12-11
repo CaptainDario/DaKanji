@@ -33,9 +33,7 @@ Future<void> main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kReleaseMode
-        ? Env.SENTRY_DSN
-        : "";
+      options.dsn = kReleaseMode ? Env.SENTRY_DSN : "";
     },
     appRunner: () => runApp(
       ProviderScope(
