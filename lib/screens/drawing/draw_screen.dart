@@ -74,14 +74,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
     GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;
 
-    GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-        webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
-          GetIt.I<DrawScreenState>().drawingLookup.chars
-        )));
-        //setState(() {});
-      }
-    });
+    GetIt.I<DrawScreenState>().drawingLookup.addListener(reloadWebViewUrl);
 
     // initialize the drawing interpreter if it has not been already
     if(!GetIt.I.isRegistered<DrawingInterpreter>()){
@@ -116,9 +109,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         },
       );
     }
-
-    GetIt.I<DrawScreenState>().drawingLookup.dispose();
-
+    
     // clear the canvas when leaving the screen
     GetIt.I<DrawScreenState>().strokes.deleteAllStrokes();
 
@@ -196,7 +187,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
   void reloadWebViewUrl(){
     if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-      setState(() {});
+      webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
+        GetIt.I<DrawScreenState>().drawingLookup.chars
+      )));
     }
   }
 }
