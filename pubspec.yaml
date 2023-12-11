@@ -77,6 +77,8 @@ dependencies:
   media_kit_video: 1.2.4                        # For video rendering.
   media_kit_libs_video: 1.0.4                   # Native video dependencies.
   flutter_widget_from_html_core: 0.14.9
+  envied: 0.5.2
+  envied_generator: 0.5.2
   async: 2.11.0
   path: 1.8.3
   http: 1.1.0

@@ -18,6 +18,7 @@ import 'package:universal_io/io.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
+import 'package:da_kanji_mobile/env/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
@@ -33,7 +34,7 @@ Future<void> main() async {
   await SentryFlutter.init(
     (options) {
       options.dsn = kReleaseMode
-        ? 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880'
+        ? Env.SENTRY_DSN
         : "";
     },
     appRunner: () => runApp(
