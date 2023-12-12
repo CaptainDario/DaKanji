@@ -114,6 +114,14 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                         columnCount: noKanjiButtons,
                         child: ScaleAnimation(
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                            ),
                             onPressed: () {
                               widget.searchController.text += kanjisThatUseAllRadicals[index];
                             },
