@@ -327,10 +327,17 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                           });
                         });
                       },
-                      child: Container(
-                        color: Colors.black.withOpacity(0.5),
+                      child: AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Container(
+                            color: Colors.black.withOpacity(
+                              lerpDouble(0, 0.5, _controller.value) ?? 0
+                            )
+                          );
+                        }
                       ),
-                    )
+                    ),
                   ),
                 // popup
                 if(currentKana != null)
