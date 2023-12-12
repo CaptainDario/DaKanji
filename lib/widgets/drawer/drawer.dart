@@ -96,18 +96,18 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,
       true, null),
-    // TODO reenable v3.4
     if(kDebugMode)
       DrawerEntry(
         DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(),
         "/${Screens.kanjiTrainer.name}", Screens.kanjiTrainer,
         null, null,
         kDebugMode, null),
-    DrawerEntry(
-      Icons.map, LocaleKeys.KanjiMapScreen_title.tr(),
-      "/${Screens.kanjiMap.name}", Screens.kanjiMap,
-      null, null,
-      kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        Icons.map, LocaleKeys.KanjiMapScreen_title.tr(),
+        "/${Screens.kanjiMap.name}", Screens.kanjiMap,
+        null, null,
+        kDebugMode, null),
     DrawerEntry(
       DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(),
       "/${Screens.kanaTable.name}", Screens.kanaTable,
