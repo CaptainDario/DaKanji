@@ -69,9 +69,9 @@ PODS:
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - SDWebImage (5.18.6):
-    - SDWebImage/Core (= 5.18.6)
-  - SDWebImage/Core (5.18.6)
+  - SDWebImage (5.18.7):
+    - SDWebImage/Core (= 5.18.7)
+  - SDWebImage/Core (5.18.7)
   - Sentry/HybridSDK (8.15.2):
     - SentryPrivate (= 8.15.2)
   - sentry_flutter (0.0.1):
@@ -99,18 +99,28 @@ PODS:
     - sqlite3/perf-threadsafe
     - sqlite3/rtree
   - SwiftyGif (5.4.4)
-  - TensorFlowLiteC (2.11.0):
-    - TensorFlowLiteC/Core (= 2.11.0)
-  - TensorFlowLiteC/Core (2.11.0)
-  - TensorFlowLiteC/CoreML (2.11.0):
+  - TensorFlowLiteC (2.12.0):
+    - TensorFlowLiteC/Core (= 2.12.0)
+  - TensorFlowLiteC/Core (2.12.0)
+  - TensorFlowLiteC/CoreML (2.12.0):
     - TensorFlowLiteC/Core
-  - TensorFlowLiteC/Metal (2.11.0):
+  - TensorFlowLiteC/Metal (2.12.0):
     - TensorFlowLiteC/Core
-  - tflite_flutter (0.1.0):
+  - TensorFlowLiteSwift (2.12.0):
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - TensorFlowLiteSwift/Core (2.12.0):
+    - TensorFlowLiteC (= 2.12.0)
+  - TensorFlowLiteSwift/CoreML (2.12.0):
+    - TensorFlowLiteC/CoreML (= 2.12.0)
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - TensorFlowLiteSwift/Metal (2.12.0):
+    - TensorFlowLiteC/Metal (= 2.12.0)
+    - TensorFlowLiteSwift/Core (= 2.12.0)
+  - tflite_flutter (0.0.1):
     - Flutter
-    - TensorFlowLiteC (~> 2.11.0)
-    - TensorFlowLiteC/CoreML (~> 2.11.0)
-    - TensorFlowLiteC/Metal (~> 2.11.0)
+    - TensorFlowLiteSwift (= 2.12.0)
+    - TensorFlowLiteSwift/CoreML (= 2.12.0)
+    - TensorFlowLiteSwift/Metal (= 2.12.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - volume_controller (0.0.1):
@@ -160,6 +170,7 @@ SPEC REPOS:
     - sqlite3
     - SwiftyGif
     - TensorFlowLiteC
+    - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
   app_links:
@@ -236,12 +247,12 @@ SPEC CHECKSUMS:
   media_kit_libs_ios_video: a5fe24bc7875ccd6378a0978c13185e1344651c1
   media_kit_native_event_loop: e6b2ab20cf0746eb1c33be961fcf79667304fa2a
   media_kit_video: 5da63f157170e5bf303bf85453b7ef6971218a2e
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   rive_common: 8a159d68033a8b073e5853acc50f03aa486a2888
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  SDWebImage: 3d8caa2430f3d674dbb3e515df4a100a2105af5f
+  SDWebImage: f9258c58221ed854cfa0e2b80ee4033710b1c6d3
   Sentry: 6f5742b4c47c17c9adcf265f6f328cf4a0ed1923
   sentry_flutter: 2c309a1d4b45e59d02cfa15795705687f1e2081b
   SentryPrivate: b2f7996f37781080f04a946eb4e377ff63c64195
@@ -250,9 +261,10 @@ SPEC CHECKSUMS:
   sqlite3: fd89671d969f3e73efe503ce203e28b016b58f68
   sqlite3_flutter_libs: 04ba0d14a04335a2fbf9a331e8664f401fbccdd5
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
-  TensorFlowLiteC: 8a8cb6fa20ad74dff29b5e490d02c36a14d48148
-  tflite_flutter: 57bfede7ef02c24fb20d8cbc0c99259469fc5d7c
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
+  TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793
+  tflite_flutter: 9433d086a3060431bbc9f3c7c20d017db0e72d08
+  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
