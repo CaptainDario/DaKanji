@@ -12,6 +12,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   printing
   screen_retriever
   sentry_flutter
+  sqlite3_flutter_libs
   url_launcher_linux
   window_manager
 )

@@ -1,11 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// One list tile for drawer
 /// 
@@ -59,7 +60,7 @@ class DrawerElement extends StatelessWidget {
 
     double tileHeight = (MediaQuery.of(context).size.height * 0.1).clamp(0, 40);
 
-    return ReorderableDragStartListener(
+    return ReorderableDelayedDragStartListener(
       index: index,
       child: Material(
         child: InkWell(
@@ -90,7 +91,7 @@ class DrawerElement extends StatelessWidget {
                 Center(
                   child: Align(
                     alignment: leadingAlignment,
-                    child: Container(
+                    child: SizedBox(
                       width: drawerWidth*0.1,
                       child: Icon(
                         leading,

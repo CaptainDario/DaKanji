@@ -22,7 +22,7 @@ def main():
             for row in conj_reader:
                 if(row[0] == "id"):
                     continue
-                print(row)
+                debugPrint(row)
                 r1 = (row[1]).replace("'", '"')
                 f.write(f"\t{row[0]} : '{r1}',\n")
         

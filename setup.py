@@ -45,19 +45,6 @@ def get_release_url():
 
     return repo_url + "v" + assets_version
 
-def download_assets():
-    """ Downloads all assets for DaKanji
-    """
-
-    # get url to latest download
-    req = urllib.request.Request(release_url)
-    asset_names, asset_urls = [], []
-    with urllib.request.urlopen(req) as response:
-        the_page = json.loads(response.read())
-        for release_json in the_page:
-            if(release_json["tag_name"] == f"v{version}"):
-                return release_json["assets_url"]
-
 def download_assets(url: str):
     """ Downloads all assets for DaKanji from the given url
 
@@ -69,13 +56,15 @@ def download_assets(url: str):
     asset_names, asset_urls = [], []
     with urllib.request.urlopen(req) as response:
         the_page = json.loads(response.read())
-        #print(json.dumps(the_page, sort_keys=True, indent=4))
-        for i in the_page:
-            for k, v in i.items():
-                if(k == "browser_download_url"):
-                    asset_urls.append(v)
-                if(k == "name"):
-                    asset_names.append(v)
+        print(json.dumps(the_page, sort_keys=True, indent=4))
+        for k, v in the_page.items():
+            if(k == "assets"):
+                for asset in the_page[k]:
+                    for aK, aV in asset.items():
+                        if(aK == "browser_download_url"):
+                            asset_urls.append(aV)
+                        if(aK == "name"):
+                            asset_names.append(aV)
 
     # download to temp dir and unzip
     if not os.path.exists(tmp_dir):
@@ -132,7 +121,7 @@ if __name__ == "__main__":
     
     if("--no-download" not in args):
         release_url = get_release_url()
-        download_assets()
+        download_assets(release_url)
 
     move_assets()
 

@@ -1,11 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-
-
 
 class ResponsiveDropDownTile extends StatefulWidget {
   const ResponsiveDropDownTile(
@@ -14,7 +15,7 @@ class ResponsiveDropDownTile extends StatefulWidget {
       required this.value,
       required this.items,
       this.translateItemTexts  = false,
-      this.onTap,
+      this.onChanged,
       this.autoSizeGroup,
       Key? key
     }
@@ -28,8 +29,8 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final List<String> items;
   /// should the items be translate using easzlocalization
   final bool translateItemTexts;
-  /// callback which will be executed by every button press
-  final Function (String? value)? onTap;
+  /// callback which will be executed eveytime when the selection changed
+  final Function (String? value)? onChanged;
   /// The autoSizeGroup for this Tile
   final AutoSizeGroup? autoSizeGroup;
 
@@ -93,7 +94,7 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
-                  if(widget.onTap != null) widget.onTap!(newValue);
+                  if(widget.onChanged != null) widget.onChanged!(newValue);
                 },
               ),
             ]

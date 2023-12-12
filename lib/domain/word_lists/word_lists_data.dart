@@ -1,9 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/tree/tree_node_serializable.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 
 part 'word_lists_data.g.dart';
 
@@ -76,6 +79,7 @@ class WordListsData with ChangeNotifier implements TreeNodeSerializable {
     => _$WordListsDataFromJson(json);
 
   /// Convert this object to a JSON object.
+  @override
   Map<String, dynamic> toJson()
     => _$WordListsDataToJson(this);
 }

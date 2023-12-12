@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:collection/collection.dart';
-
-
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{
@@ -8,7 +7,7 @@ class AnkiNote{
   /// The name of the deck to add the note to
   String deckName;
   /// The card type of this note, always "DaKanji"
-  String _cardType = "DaKanji";
+  final String _cardType = "DaKanji";
   /// The card type of this note, always "DaKanji"
   get cardType => _cardType;
   List<String> tags = [];
@@ -44,15 +43,15 @@ class AnkiNote{
 
   /// Creates a new note with testing values
   AnkiNote.testNote() :
-    this.deckName = "DaKanji testing",
-    this.tags = ["DaKanji", "testing"],
+    deckName = "DaKanji testing",
+    tags = ["DaKanji", "testing"],
 
-    this.translations = ["apple", "banana", "orange"],
-    this.kanji = ["来", "林檎"],
-    this.kana = ["くる", "りんご"],
+    translations = ["apple", "banana", "orange"],
+    kanji = ["来", "林檎"],
+    kana = ["くる", "りんご"],
     
-    this.googleImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    this.auido = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    this.encounteredImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+    googleImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    auido = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    encounteredImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
 
 }

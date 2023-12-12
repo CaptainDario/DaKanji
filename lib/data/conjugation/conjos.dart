@@ -1,11 +1,10 @@
 //based on conj.csv which was scraped from
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
+// Project imports:
 import 'package:da_kanji_mobile/application/conjugation/conjo.dart';
 import 'conj.dart';
 import 'kwpos.dart';
-
-
 
 // Convenience constants
 const bool f = false;

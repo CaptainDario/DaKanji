@@ -1,21 +1,24 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/init.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+// Project imports:
+import 'package:da_kanji_mobile/application/releases/releases.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as ratePopup;
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
+import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:da_kanji_mobile/application/releases/releases.dart';
-
-
 
 /// The "home"-screen
 /// 
@@ -36,7 +39,7 @@ class HomeScreen extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -57,22 +60,28 @@ class _HomeScreenState extends State<HomeScreen> {
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
       List<String> updates = await updateAvailable();
-      if(updates.isNotEmpty)
+      if(updates.isNotEmpty) {
         await showUpdatePopup(updates);
+      }
     }
 
     if(GetIt.I<UserData>().showChangelog){
       await showChangelog();
     }
+    if(GetIt.I<UserData>().olderVersionUsed){
+      await showDowngradeWarning();
+    }
     if(GetIt.I<UserData>().showRateDialog){
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-        context, "/onboarding", (route) => false
+        context, "/${Screens.onboarding.name}", (route) => false
       );
     }
     else {
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(context, 
         "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
         (route) => false
@@ -97,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
         await GetIt.I<UserData>().save();
       },
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height * 0.5,
         child: SingleChildScrollView(
           child: Column(
@@ -105,14 +114,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: Text(
                   "🔥 ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} 🔥",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24
                   ),
                 )
               ),
-              SizedBox(height: 8,),
+              const SizedBox(height: 8,),
               Text(changelog.first.replaceAll("\n", "")),
-              SizedBox(height: 16,),
+              const SizedBox(height: 16,),
               MarkdownBody(
                 data: changelog.sublist(1).join(),
               ),
@@ -130,21 +139,32 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       headerAnimationLoop: false,
       dialogType: DialogType.noHeader,
-      body: WhatsNewDialogue(),
+      body: const WhatsNewDialogue(),
     ).show();
 
     GetIt.I<UserData>().showChangelog = false;
     GetIt.I<UserData>().save();
   }
 
+  /// Shows a warning popup advices when downgrading versions
+  Future<void> showDowngradeWarning() async {
+    // opem the changelog popup
+    await AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.noHeader,
+      body: const DowngradeDialog(),
+    ).show();
+  }
+
   /// Shows a rate popup which lets the user rate the app
   Future<void> showRatePopup() async {
     // show a rating dialogue WITHOUT "do not show again"-option
     if(GetIt.I<UserData>().appOpenedTimes < g_MinTimesOpenedToAsknotShowRate) {
-      await ratePopup.showRateDialog(context, false);
+      await rate_popup.showRateDialog(context, false);
     }
     else {
-      await ratePopup.showRateDialog(context, true);
+      await rate_popup.showRateDialog(context, true);
     }
 
     GetIt.I<UserData>().showRateDialog = false;
@@ -157,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: StreamBuilder<String>(
-        stream: g_downloadFromGHStream.stream,
+        stream: g_initAppInfoStream.stream,
         builder: (context, snapshot) {
           return DaKanjiSplash(
             text: snapshot.data,

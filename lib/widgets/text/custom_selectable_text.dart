@@ -1,12 +1,18 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
@@ -20,7 +26,6 @@ class CustomSelectableText extends StatefulWidget {
     this.addSpaces = false,
     this.showColors = false,
 
-    this.initialSelection,
     this.selectionColor = Colors.blueAccent,
     this.textColor = Colors.black,
     this.caretColor = Colors.black,
@@ -29,6 +34,7 @@ class CustomSelectableText extends StatefulWidget {
     this.paintTextBoxes = false,
     this.textBoxesColor = Colors.grey,
     
+    this.init,
     this.onSelectionChange,
     this.onTap,
     this.onLongPress,
@@ -53,8 +59,6 @@ class CustomSelectableText extends StatefulWidget {
   /// should the text be rendered in colors matching the POS
   final bool showColors;
 
-  /// the initial selection of this widget
-  final TextSelection? initialSelection;
   /// the color that should be used when selecting text
   final Color selectionColor;
   /// The color in which the text should be rendered
@@ -70,6 +74,10 @@ class CustomSelectableText extends StatefulWidget {
   /// the color of the boxss create by `paintTextBoxes`
   final Color textBoxesColor;
 
+  /// Callback that is called once this `CustomSelectableText` has been
+  /// initialized, provides a controller to manipuilate this object as 
+  /// parameter
+  final void Function(CustomSelectableTextController controller)? init;
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current `TextSelection` as parameter
   final void Function(TextSelection)? onSelectionChange;
@@ -90,7 +98,7 @@ class CustomSelectableText extends StatefulWidget {
   final void Function(Offset)? onTapOutsideOfText;
 
   @override
-  _CustomSelectableTextState createState() => _CustomSelectableTextState();
+  State<CustomSelectableText> createState() => _CustomSelectableTextState();
 }
 
 class _CustomSelectableTextState extends State<CustomSelectableText> {
@@ -101,8 +109,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   final _textBoxRects = <Rect>[];
   /// list with selection rects
   final _selectionRects = <Rect>[];
-  /// the current text selection
-  TextSelection _textSelection = TextSelection(baseOffset: 0, extentOffset: 0);
+  /// controller to manipulate this widget from outside
+  late final CustomSelectableTextController _cstController;
   /// is the left text selection handles selected
   bool _leftHandleSelected = false;
   /// is the right text selection handles selected
@@ -141,14 +149,8 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     dotAll: true
   );
 
-  /// the current split of ruby texts, this is used because when a text breaks
-  /// lines in a word the rubys need to be split
-  List<String> rubys = [];
-  /// a list of all words
-  List<String> words = [];
-
   /// The scroll controller group to keep text and handles in sync
-  LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
+  final LinkedScrollControllerGroup _scrollControllerGroup = LinkedScrollControllerGroup();
   /// The scroll controller for the text
   late ScrollController _textScrollController;
   /// The scroll controller for the handles
@@ -171,7 +173,13 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   void initState() {
     super.initState();
-    _textSelection = widget.initialSelection ?? const TextSelection.collapsed(offset: -1);
+
+    _cstController = CustomSelectableTextController(
+      updateSelectionGraphics: () => setState(() {
+        _onUserSelectionChange(_cstController.currentSelection);
+      })
+    );
+
     _scheduleTextLayoutUpdate();
 
     /// allow copying the text
@@ -183,9 +191,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         }
       ) : () async => await Clipboard.setData(
         ClipboardData(
-          text: words.join().substring(
-            _textSelection.start,
-            _textSelection.end
+          text: _cstController.words.join().substring(
+            _cstController.currentSelection.start,
+            _cstController.currentSelection.end
           )
         )
       ),
@@ -195,9 +203,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           LogicalKeyboardKey.keyA
         }
       ) : () async => setState(() {
-        _textSelection = TextSelection(
+        _cstController.currentSelection = TextSelection(
           baseOffset: 0, 
-          extentOffset: words.join().length
+          extentOffset: _cstController.words.join().length
         );
         _updateSelectionDisplay();
       }) 
@@ -207,6 +215,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     _textScrollController = _scrollControllerGroup.addAndGet();
     _textScrollController.addListener(() => setState(() {}));
     _handlesScrollController = _scrollControllerGroup.addAndGet();
+
+
+    widget.init?.call(_cstController);
   }
 
   @override
@@ -221,10 +232,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       || widget.addSpaces != oldWidget.addSpaces) {
       _textBoxRects.clear();
       _selectionRects.clear();
-      _textSelection = const TextSelection.collapsed(offset: -1);
+      _cstController.currentSelection
+        = const TextSelection.collapsed(offset: -1);
       _caretRect = null;
       _scheduleTextLayoutUpdate();
-      words = widget.words;
+      _cstController.words = widget.words;
       dimChanged = false;
     }
   }
@@ -242,37 +254,41 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
   /// User started dragging on the text
   void _onDragStart(DragStartDetails details) {
-    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected)
+    if(_cstController.words.isEmpty || _leftHandleSelected || _rightHandleSelected) {
       return;
+    }
 
     _isDragging = true;
 
     setState(() {
       int offset = _getTextPositionAtOffset(details.localPosition).offset;
-      _textSelection = TextSelection.collapsed(offset: offset);
-      _onUserSelectionChange(_textSelection);
+      _cstController.currentSelection  
+        = TextSelection.collapsed(offset: offset);
+      _onUserSelectionChange(_cstController.currentSelection);
     });
   }
 
   /// User updated an existing drag on the text
   void _onDragUpdate(DragUpdateDetails details) {
 
-    if(words.length == 0)
+    if(_cstController.words.isEmpty) {
       return;
+    }
 
-    if(_leftHandleSelected)
-      _textSelection = TextSelection(
+    if(_leftHandleSelected) {
+      _cstController.currentSelection = TextSelection(
         baseOffset:   _getTextPositionAtOffset(details.localPosition).offset,
-        extentOffset: _textSelection.extentOffset 
+        extentOffset: _cstController.currentSelection.extentOffset 
       );
-    else  
-      _textSelection = TextSelection(
-        baseOffset:   _textSelection.baseOffset,
+    } else {
+      _cstController.currentSelection = TextSelection(
+        baseOffset:   _cstController.currentSelection.baseOffset,
         extentOffset: _getTextPositionAtOffset(details.localPosition).offset,
       );
+    }
 
     setState(() {
-      _onUserSelectionChange(_textSelection);
+      _onUserSelectionChange(_cstController.currentSelection);
     });
   }
 
@@ -284,21 +300,24 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   }
 
   void _onUserSelectionChange(TextSelection textSelection) {
-    _textSelection = textSelection;
+    _cstController.currentSelection = textSelection;
     _updateSelectionDisplay();
-    widget.onSelectionChange?.call(_textSelection);
+    widget.onSelectionChange?.call(
+      _cstController.currentSelection
+    );
   }
 
   void _updateSelectionDisplay() {
-    if(!_textSelection.isValid)
+    if(!_cstController.currentSelection.isValid) {
       return;
+    }
 
     setState(() {
-      final selectionRects = _computeSelectionRects(_textSelection);
+      final selectionRects = _computeSelectionRects(_cstController.currentSelection);
       _selectionRects
         ..clear()
         ..addAll(selectionRects);
-      _caretRect = _computeCursorRectForTextOffset(_textSelection.extentOffset);
+      _caretRect = _computeCursorRectForTextOffset(_cstController.currentSelection.extentOffset);
     });
   }
 
@@ -315,10 +334,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   /// and writes them to `widget.rubys` and `widget.rubyPos`
   void recalculateRubys(){
     rubyPositions.clear();
-    rubys.clear();
+    _cstController.rubys.clear();
 
     int cnt = 0, i = 0;
-    for (String word in words) {
+    for (String word in _cstController.words) {
 
       // get the rect surrounding the current word (this COULD span more than one line)
       List<Rect> charRects = _computeSelectionRects(
@@ -331,13 +350,13 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       } 
       else if(charRects.isEmpty || widget.rubys[i] == ""){
         rubyPositions.add(Rect.zero);
-        rubys.add(widget.rubys[i]);
+        _cstController.rubys.add(widget.rubys[i]);
         i += 1;
       }
       // the text DOES NOT span more than one line
       else if(charRects.length == 1){
         rubyPositions.add(charRects[0]);
-        rubys.add(widget.rubys[i]);
+        _cstController.rubys.add(widget.rubys[i]);
         i += 1;
       }
       // the text DOES span more than one line
@@ -359,7 +378,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
             (cumPercent * ruby.length).floor(),
             ((cumPercent + rectPercentag) * ruby.length).ceil(),
           );
-          rubys.add(rubySplit);
+          _cstController.rubys.add(rubySplit);
           cumPercent += rectPercentag;
           
         }
@@ -410,15 +429,15 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     final selectedBox = _renderParagraph!.getBoxesForSelection(tS);
     
     // if the offset is outside of the text, return the previous character (at the end)
-    if(tP.offset >= words.join("").length)
-      tP = TextPosition(offset: words.join("").length);
-    // if the offset is closer to the right side of the character
-    // return the previous character 
-    else if(!selectedBox.first.toRect().contains(textOffset))
+    if(tP.offset >= _cstController.words.join("").length) {
+      tP = TextPosition(offset: _cstController.words.join("").length);
+    } else if(!selectedBox.first.toRect().contains(textOffset)) {
       tP = TextPosition(offset: tP.offset-1);
+    }
     // if the offset is outside of the text, return the previous character (at the beginning)
-    if(tP.offset < 0)
-      tP = TextPosition(offset: 0);
+    if(tP.offset < 0) {
+      tP = const TextPosition(offset: 0);
+    }
     
     return tP;
   }
@@ -449,7 +468,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return _computeSelectionRects(
       TextSelection(
         baseOffset: 0,
-        extentOffset: words.join().length,
+        extentOffset: _cstController.words.join().length,
       ),
     );  
   }
@@ -471,9 +490,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     TextPosition tapTextPos = _getTextPositionAtOffset(event.localPosition);
 
     var cnt = 0;
-    for (var text in words) {
+    for (var text in _cstController.words) {
       if(cnt + text.length > tapTextPos.offset){
-        _textSelection = TextSelection(
+        _cstController.currentSelection = TextSelection(
           baseOffset: cnt,
           extentOffset: cnt + text.length
         );
@@ -482,42 +501,45 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
 
       cnt += text.length;
     }
-    if(_textSelection.isValid)
-      _onUserSelectionChange(_textSelection);
+    if(_cstController.currentSelection.isValid) {
+      _onUserSelectionChange(_cstController.currentSelection);
+    }
   }
 
   /// Selects the sentance in which the position the user tapped is located
   void selectSentence(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
 
-    for (var match in sentenceRegex.allMatches(words.join(""))) {
+    for (var match in sentenceRegex.allMatches(_cstController.words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
-        _textSelection = TextSelection(
+        _cstController.currentSelection = TextSelection(
           baseOffset: match.start, 
           extentOffset: match.end
         );
         break;
       }
     }
-    if(_textSelection.isValid)
-      _onUserSelectionChange(_textSelection);
+    if(_cstController.currentSelection.isValid) {
+      _onUserSelectionChange(_cstController.currentSelection);
+    }
   }
 
   /// Selects the paragraph that contains the word where `event` happend
   void selectParagraph(TapDownDetails event){
     int tapTextPos = _getTextPositionAtOffset(event.localPosition).offset;
     
-    for (var match in paragraphRegex.allMatches(words.join(""))) {
+    for (var match in paragraphRegex.allMatches(_cstController.words.join(""))) {
       if (match.start <= tapTextPos && tapTextPos <= match.end) {
-        _textSelection = TextSelection(
+        _cstController.currentSelection = TextSelection(
           baseOffset: match.start, 
           extentOffset: match.end-1
         );
         break;
       }
     }
-    if(_textSelection.isValid)
-      _onUserSelectionChange(_textSelection);
+    if(_cstController.currentSelection.isValid) {
+      _onUserSelectionChange(_cstController.currentSelection);
+    }
   }
 
   @override
@@ -599,7 +621,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 ),
                                 children: 
                                 [
-                                  for (int i = 0; i < words.length; i++)
+                                  for (int i = 0; i < _cstController.words.length; i++)
                                     ... () {
                                       Color? color = widget.showColors
                                         && widget.wordColors != null
@@ -608,9 +630,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                       : widget.textColor;
           
                                       return [
-                                        if(words[i].characters.length > 1)
+                                        if(_cstController.words[i].characters.length > 1)
                                           TextSpan(
-                                            text: words[i].substring(0, words[i].length-1),
+                                            text: _cstController.words[i].substring(0, _cstController.words[i].length-1),
                                             style: TextStyle(
                                               // show the color if the user enabled it
                                               // and the color is not null
@@ -618,7 +640,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                             )
                                           ),
                                         TextSpan(
-                                          text: words[i].characters.last,
+                                          text: _cstController.words[i].characters.last,
                                           style: TextStyle(
                                             letterSpacing: widget.addSpaces ? 10 : 0,
                                             color: color
@@ -653,7 +675,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                       ) : null,
                                       child: Center(
                                         child: Text(
-                                          rubys[index],
+                                          _cstController.rubys[index],
                                           maxLines: 1,
                                           style: TextStyle(
                                             fontSize: 10,
@@ -677,7 +699,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                   behavior: HitTestBehavior.opaque,
                                   onPointerDown: (event) => _leftHandleSelected = true,
                                   onPointerUp: (event) => _leftHandleSelected = false,
-                                  child: Container(
+                                  child: const SizedBox(
                                     height: 40,
                                     width:  40,
                                   ),
@@ -695,7 +717,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                   behavior: HitTestBehavior.opaque,
                                   onPointerDown: (event) => _rightHandleSelected = true,
                                   onPointerUp: (event) => _rightHandleSelected = false,
-                                  child: Container(
+                                  child: const SizedBox(
                                     height: 40,
                                     width:  40,
                                   ),
@@ -728,7 +750,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 width:  20,
                                 clipBehavior: Clip.none,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(1000000)
                                   ),
                                   color: widget.selectionColor,
@@ -747,7 +769,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
                                 height: 20,
                                 width:  20,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(1000000)
                                   ),
                                   color: widget.selectionColor,
@@ -775,8 +797,9 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     if(!_isOffsetOverText(event.localPosition)){
       setState(() => _selectionRects.clear());
       
-      if(widget.onTapOutsideOfText != null)
+      if(widget.onTapOutsideOfText != null) {
         widget.onTapOutsideOfText!(event.localPosition);
+      }
       
       return;
     }
@@ -784,7 +807,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     focuseNode.requestFocus();
     
     // assure that words are in the text fields
-    if(words.length == 0 || _leftHandleSelected || _rightHandleSelected) return;
+    if(_cstController.words.isEmpty || _leftHandleSelected || _rightHandleSelected) return;
 
     tapped++; isTapped = true;
 
@@ -799,20 +822,20 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         
         if (tapped == 1 && !isTapped){
           selectWord(event);
-          widget.onTap?.call(_textSelection);
+          widget.onTap?.call(_cstController.currentSelection);
         }
         else if (tapped == 1 && isTapped){
           selectWord(event);
-          widget.onLongPress?.call(_textSelection);
+          widget.onLongPress?.call(_cstController.currentSelection);
         }
         else if (tapped == 2){
           selectSentence(event);
-          widget.onDoubleTap?.call(_textSelection);
+          widget.onDoubleTap?.call(_cstController.currentSelection);
         }
         else if (tapped >= 3){
           selectParagraph(event);
           
-          widget.onTripleTap?.call(_textSelection);
+          widget.onTripleTap?.call(_cstController.currentSelection);
         }
         tapped = 0;
       }

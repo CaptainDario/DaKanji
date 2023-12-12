@@ -1,23 +1,24 @@
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:isar/isar.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_category.dart';
 import 'package:da_kanji_mobile/domain/kanji_table/kanji_sorting.dart';
-
-
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/kanji_table/kanji_details_page.dart';
 
 class KanjiTable extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
@@ -42,18 +43,18 @@ class _KanjiTableState extends State<KanjiTable> {
 
   /// Lookup to convert the [KanjiCategory] to a localized string
   Map<KanjiCategory, String> kanjiCategoryToString = {
-    KanjiCategory.JLPT     : "JLPT",
-    KanjiCategory.RTK      : "RTK",
-    KanjiCategory.SCHOOL   : "School",
-    KanjiCategory.FREQ     : "Freq",
-    KanjiCategory.KLC      : "KLC",
-    KanjiCategory.KENTEI   : "漢字検定",
-    KanjiCategory.WANIKANI : "Wanikani"
+    KanjiCategory.jlpt     : "JLPT",
+    KanjiCategory.rtk      : "RTK",
+    KanjiCategory.school   : "School",
+    KanjiCategory.freq     : "Freq",
+    KanjiCategory.klc      : "KLC",
+    KanjiCategory.kentei   : "漢字検定",
+    KanjiCategory.wanikani : "Wanikani"
   };
   /// [DropdownMenuItem]s for the catgeroy selction
   List<DropdownMenuItem> categoryDropDowns = [];
   /// The currently selected category
-  KanjiCategory categorySelection = KanjiCategory.JLPT;
+  KanjiCategory categorySelection = KanjiCategory.jlpt;
 
   /// the available categories matching `categorySelection`
   List<String> categoryLevels = [];
@@ -62,16 +63,16 @@ class _KanjiTableState extends State<KanjiTable> {
   /// The currently selected category level
   String categoryLevelSelection = "5";
   /// the available sorting orders
-  Map<KanjiSorting, String> KanjiSortingToString = {
-    KanjiSorting.STROKES_ASC : "Strokes ↑", KanjiSorting.STROKES_DSC : "Strokes ↓",
-    KanjiSorting.FREQ_ASC    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.FREQ_DSC : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
-    KanjiSorting.RTK_ASC     : "RTK ↑"    , KanjiSorting.RTK_DSC : "RTK ↓",
-    KanjiSorting.KLC_ASC     : "KLC ↑"    , KanjiSorting.KLC_DSC : "KLC ↓"
+  Map<KanjiSorting, String> kanjiSortingToString = {
+    KanjiSorting.strokesAsc : "Strokes ↑", KanjiSorting.strokesDsc : "Strokes ↓",
+    KanjiSorting.freqAsc    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.freqDsc : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
+    KanjiSorting.rtkAsc     : "RTK ↑"    , KanjiSorting.rtkDsc : "RTK ↓",
+    KanjiSorting.klcAsc     : "KLC ↑"    , KanjiSorting.klcDsc : "KLC ↓"
   };
   /// [DropdownMenuItem]s for the sorting selction
   List<DropdownMenuItem> sortingDropDowns = [];
   /// The currently selected sorting order
-  KanjiSorting sortingSelection = KanjiSorting.STROKES_ASC;
+  KanjiSorting sortingSelection = KanjiSorting.strokesAsc;
   /// has the user changed the category
   bool changedCategories = false;
 
@@ -121,25 +122,25 @@ class _KanjiTableState extends State<KanjiTable> {
     // get the available levels for the current category
     var k = GetIt.I<Isars>().dictionary.kanjidic2s; QueryBuilder<Kanjidic2, int, QQueryOperations>? query;
     switch (categorySelection) {
-      case KanjiCategory.JLPT:
+      case KanjiCategory.jlpt:
         query = k.where().distinctByJlptNew().jlptNewProperty();
         break;
-      case KanjiCategory.RTK:
+      case KanjiCategory.rtk:
         categoryLevels = List.generate(30, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.SCHOOL:
+      case KanjiCategory.school:
         query = k.where().distinctByGrade().gradeProperty();
         break;
-      case KanjiCategory.FREQ:
+      case KanjiCategory.freq:
         categoryLevels = List.generate(26, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.KLC:
+      case KanjiCategory.klc:
         categoryLevels = List.generate(23, (i) => "${1+i*100}-${i*100+100}");
         break;
-      case KanjiCategory.KENTEI:
+      case KanjiCategory.kentei:
         categoryLevels = ["1", "1.5", "2", "2.5", "3", "4", "5", "6", "7", "8", "9", "10"];
         break;
-      case KanjiCategory.WANIKANI:
+      case KanjiCategory.wanikani:
         query = k.where().distinctByWanikani().wanikaniProperty();
         break;
     }
@@ -154,31 +155,31 @@ class _KanjiTableState extends State<KanjiTable> {
 
     // find all kanji for the current selection
     kanjis = GetIt.I<Isars>().dictionary.kanjidic2s.filter()
-      .optional(categorySelection == KanjiCategory.JLPT, (q) => q.jlptNewEqualTo(int.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.RTK, (q) => q.rtkNewBetween(
+      .optional(categorySelection == KanjiCategory.jlpt, (q) => q.jlptNewEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.rtk, (q) => q.rtkNewBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.SCHOOL, (q) => q.gradeEqualTo(int.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.FREQ, (q) => q.frequencyBetween(
+      .optional(categorySelection == KanjiCategory.school, (q) => q.gradeEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.freq, (q) => q.frequencyBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.KLC, (q) => q.klcBetween(
+      .optional(categorySelection == KanjiCategory.klc, (q) => q.klcBetween(
         int.parse(categoryLevelSelection.substring(0, categoryLevelSelection.indexOf("-"))),
         int.parse(categoryLevelSelection.substring(categoryLevelSelection.indexOf("-")+1))
       ))
-      .optional(categorySelection == KanjiCategory.KENTEI, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
-      .optional(categorySelection == KanjiCategory.WANIKANI, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.kentei, (q) => q.kankenEqualTo(double.parse(categoryLevelSelection)))
+      .optional(categorySelection == KanjiCategory.wanikani, (q) => q.wanikaniEqualTo(int.parse(categoryLevelSelection)))
     // apply sorting
-    .optional(sortingSelection == KanjiSorting.STROKES_ASC, (q) => q.sortByStrokeCount())
-    .optional(sortingSelection == KanjiSorting.STROKES_DSC, (q) => q.thenByStrokeCountDesc())
-    .optional(sortingSelection == KanjiSorting.FREQ_ASC,    (q) => q.thenByFrequency())
-    .optional(sortingSelection == KanjiSorting.FREQ_DSC,    (q) => q.thenByFrequencyDesc())
-    .optional(sortingSelection == KanjiSorting.RTK_ASC,     (q) => q.thenByRtkNew())
-    .optional(sortingSelection == KanjiSorting.RTK_DSC,     (q) => q.thenByRtkNewDesc())
-    .optional(sortingSelection == KanjiSorting.KLC_ASC,     (q) => q.thenByKlc())
-    .optional(sortingSelection == KanjiSorting.KLC_DSC,     (q) => q.thenByKlcDesc())
+    .optional(sortingSelection == KanjiSorting.strokesAsc, (q) => q.sortByStrokeCount())
+    .optional(sortingSelection == KanjiSorting.strokesDsc, (q) => q.thenByStrokeCountDesc())
+    .optional(sortingSelection == KanjiSorting.freqAsc,    (q) => q.thenByFrequency())
+    .optional(sortingSelection == KanjiSorting.freqDsc,    (q) => q.thenByFrequencyDesc())
+    .optional(sortingSelection == KanjiSorting.rtkAsc,     (q) => q.thenByRtkNew())
+    .optional(sortingSelection == KanjiSorting.rtkDsc,     (q) => q.thenByRtkNewDesc())
+    .optional(sortingSelection == KanjiSorting.klcAsc,     (q) => q.thenByKlc())
+    .optional(sortingSelection == KanjiSorting.klcDsc,     (q) => q.thenByKlcDesc())
     .findAllSync();
   }
 
@@ -196,7 +197,7 @@ class _KanjiTableState extends State<KanjiTable> {
     categoryLevelDropDowns = List.generate(categoryLevels.length, (index) => 
       DropdownMenuItem(
         value: categoryLevels[index],
-        child: Text("${categoryLevels[index]}")
+        child: Text(categoryLevels[index])
       )
     );
 
@@ -204,7 +205,7 @@ class _KanjiTableState extends State<KanjiTable> {
     sortingDropDowns = List.generate(KanjiSorting.values.length, (index) => 
       DropdownMenuItem(
         value: KanjiSorting.values[index],
-        child: Text("${KanjiSortingToString[KanjiSorting.values[index]]}")
+        child: Text("${kanjiSortingToString[KanjiSorting.values[index]]}")
       )
     );
   }
@@ -308,18 +309,18 @@ class _KanjiTableState extends State<KanjiTable> {
                   },
                   selectedItemBuilder: (context) {
                     return KanjiSorting.values.map<Widget>((KanjiSorting item) {
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        KanjiSortingToString[item]!,
-                        style: const TextStyle(color: Colors.white,),
-                      ),
-                    );
-                  }).toList();
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          kanjiSortingToString[item]!,
+                          style: const TextStyle(color: Colors.white,),
+                        ),
+                      );
+                    }).toList();
                   },
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               // Amount of kanji in the current selection
               Focus(
                 focusNode: widget.includeTutorial
@@ -343,7 +344,7 @@ class _KanjiTableState extends State<KanjiTable> {
           key: UniqueKey(),
           child: SliverGrid.builder(
             itemCount: kanjis.length,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 60
             ),
             itemBuilder: (context, i) {
@@ -354,7 +355,7 @@ class _KanjiTableState extends State<KanjiTable> {
                 child: AnimationConfiguration.staggeredGrid(
                   columnCount: (MediaQuery.of(context).size.width / 60).ceil(),
                   position: i,
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   child: ScaleAnimation(
                     child: Card(
                       child: InkWell(
@@ -369,7 +370,7 @@ class _KanjiTableState extends State<KanjiTable> {
                           child: FittedBox(
                             child: Text(
                               kanjis[i].character,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 500,
                                 fontFamily: g_japaneseFontFamily
                               ),

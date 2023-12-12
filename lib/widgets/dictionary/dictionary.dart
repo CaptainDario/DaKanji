@@ -1,24 +1,27 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:database_builder/database_builder.dart';
 
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_search_widget.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_kanji_tab.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_search_widget.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 
 class Dictionary extends StatefulWidget {
 
@@ -52,7 +55,7 @@ class Dictionary extends StatefulWidget {
   ) : super(key: key);
 
   @override
-  _DictionaryState createState() => _DictionaryState();
+  State<Dictionary> createState() => _DictionaryState();
 }
 
 class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
@@ -100,13 +103,13 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                 children: [
                   // create an invisble widget with the same size as the searchbar
                   if(tabsSideBySide <= 2)
-                    Visibility(
+                    const Visibility(
                       maintainSize: true,
                       visible: false,
                       maintainAnimation: true,
                       maintainState: true,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Card(
                           child: TextField(),
                         ),
@@ -137,7 +140,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                             child: Focus(
                               focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: FloatingWordStack(
                                   levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
                                   hide: search.selectedResult != null || !widget.includeFallingWords,

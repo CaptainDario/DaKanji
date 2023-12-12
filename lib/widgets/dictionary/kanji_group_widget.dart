@@ -1,15 +1,15 @@
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
-
-
-
 
 class KanjiGroupWidget extends StatefulWidget {
 
@@ -99,7 +99,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                         '/dictionary', 
                         (route) => false,
                         arguments: NavigationArguments(
-                          false, initialDictSearch: kanjiVGChars[node.key!.value]
+                          false, dictInitialSearch: kanjiVGChars[node.key!.value]
                         )
                       );
                     }
@@ -109,7 +109,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("copied: ${kanjiVGChars[node.key!.value]}"),
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                         )
                       );
                     }

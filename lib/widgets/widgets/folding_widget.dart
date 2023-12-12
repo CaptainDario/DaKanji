@@ -1,8 +1,8 @@
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// Folding Cell Widget
 /// 
@@ -117,7 +117,7 @@ class FoldingWidgetState extends State<FoldingWidget> {
       builder: (context, child) {
 
         return widget.animationController.isDismissed
-          ? Container(
+          ? SizedBox(
             height: widget.unfoldedHeight,
             width: widget.unfoldedWidth,
             child: widget.unfoldedWidget

@@ -40,15 +40,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             
+            <intent-filter android:autoVerify="true">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <!-- Deep Links https://dakanji.app/app/-->
+              <data android:scheme="http" />
+              <data android:scheme="https"/>
+              <data android:host="dakanji.app"/>
+              <data android:host="www.dakanji.app"/>
+              <data android:pathPrefix="/app"/>
+            </intent-filter>
+
             <intent-filter>
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
-              <!-- Deep Links -->
-              <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
-              <data
-                android:scheme="dakanji"
-                android:host="dakanji" />
+              <!-- Accepts URIs that begin with dakanji:// -->
+              <data android:scheme="dakanji"/>
             </intent-filter>
 
         </activity>

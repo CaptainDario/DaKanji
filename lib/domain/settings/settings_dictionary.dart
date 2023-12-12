@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 part 'settings_dictionary.g.dart';
@@ -15,6 +17,7 @@ class SettingsDictionary with ChangeNotifier {
 
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_translationLanguageCodes = [
     "en", "de", "ru", "it", "fr", "es", "pl",
   ];
@@ -26,15 +29,12 @@ class SettingsDictionary with ChangeNotifier {
   /// All languages that are available in the dictionary
   @JsonKey(includeFromJson: false, includeToJson: false)
   Map<String, String> translationLanguagesToSvgPath = 
-    Map<String, String>.fromIterable(
-      (d_translationLanguageCodes),
-      key : (item) => item,
-      value : (item) => "assets/icons/$item.svg"
-    );
+    { for (var item in d_translationLanguageCodes) item : "assets/icons/$item.svg" };
   
 
   /// The default value for `selectedTranslationLanguagesDefault` 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_selectedTranslationLanguages = ["en"];
   /// All languages that are selected to be shown in the dict UI
   @JsonKey(defaultValue: d_selectedTranslationLanguages)
@@ -48,18 +48,21 @@ class SettingsDictionary with ChangeNotifier {
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_showWordFruequency = false;
   @JsonKey(defaultValue: d_showWordFruequency)
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_searchDeconjugate = true;
   @JsonKey(defaultValue: d_searchDeconjugate)
   /// Should the search term be deconjugated before searching
   bool searchDeconjugate = d_searchDeconjugate;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_convertToHiragana = true;
   @JsonKey(defaultValue: d_convertToHiragana)
   /// Should the search term be converted to kana if it is written in romaji
@@ -68,13 +71,39 @@ class SettingsDictionary with ChangeNotifier {
 
   /// The deafult value for `selectedFallingWordsLevels`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const List<String> d_fallingWordsLevels = [
     "N5", "N4", "N3", "N2", "N1",
   ];
   /// All levels that can be selected for the falling words in the dictionary
-  @JsonKey(defaultValue: const ["N5", "N4", "N3"])
+  @JsonKey(defaultValue: ["N5", "N4", "N3"])
   List<String> selectedFallingWordsLevels = ["N5", "N4", "N3"];
 
+  /// When opening the kanji page, should the animation be played
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_playKanjiAnimationWhenOpened = true;
+  /// When opening the kanji page, should the animation be played
+  @JsonKey(defaultValue: d_playKanjiAnimationWhenOpened)
+  bool playKanjiAnimationWhenOpened = d_playKanjiAnimationWhenOpened;
+
+  /// How many seconds should the animation take for one stroke
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const double d_kanjiAnimationStrokesPerSecond = 5;
+  /// How many seconds should the animation take for one stroke
+  @JsonKey(defaultValue: d_kanjiAnimationStrokesPerSecond)
+  double kanjiAnimationStrokesPerSecond = d_kanjiAnimationStrokesPerSecond;
+
+  /// When stopping to swipe to modify the kanji animation, should the animation
+  /// continue playing
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_resumeAnimationAfterStopSwipe = false;
+  /// When swipe to scroll to modify the kanji animation, should the animation
+  /// continue playing
+  @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
+  bool resumeAnimationAfterStopSwipe = d_resumeAnimationAfterStopSwipe;
 
 
   SettingsDictionary();

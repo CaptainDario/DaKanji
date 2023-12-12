@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 class ObjectDetections extends ChangeNotifier {
 
@@ -16,19 +15,19 @@ class ObjectDetections extends ChangeNotifier {
 
 class ObjectDetection {
   /// Index of the result
-  int _id;
+  final int _id;
 
   /// Label of the result
-  String _label;
+  final String _label;
 
   /// Confidence [0.0, 1.0]
-  double _score;
+  final double _score;
 
   /// Location of bounding box rect
   ///
   /// The rectangle corresponds to the raw input image
   /// passed for inference
-  Rect _location;
+  final Rect _location;
 
   ObjectDetection(this._id, this._label, this._score, this._location);
 

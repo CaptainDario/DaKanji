@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 class ResponsiveInputFieldTile extends StatefulWidget {
   const ResponsiveInputFieldTile(
@@ -35,14 +34,15 @@ class ResponsiveInputFieldTile extends StatefulWidget {
 class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
 
   /// the controller for the input field
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
 
   @override
   void initState() {
     super.initState();
-    if(widget.text != null)
+    if(widget.text != null) {
       _controller.text = widget.text!;
+    }
   }
 
   @override

@@ -1,13 +1,16 @@
+// Dart imports:
 import 'dart:math';
 
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-import 'package:da_kanji_mobile/application/kana/kana.dart';
+// Package imports:
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 
 class KanaGrid extends StatefulWidget {
 
@@ -57,22 +60,23 @@ class _KanaGridState extends State<KanaGrid> {
       mainAxisSpacing: 0.0,
       crossAxisSpacing: 0.0,
       crossAxisCount: columnCount,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       childAspectRatio: (widget.width / columnCount)
         / (widget.height / (rowCount)),
-      padding: EdgeInsets.all(0.0),
+      padding: const EdgeInsets.all(0.0),
       shrinkWrap: true,
       children: List.generate(rowCount*columnCount, (index) {
 
         String currentKana = "";
         if(widget.kanaTable.length >= index~/columnCount+1 &&
-          widget.kanaTable[index~/columnCount].length >= index%columnCount+1)
+          widget.kanaTable[index~/columnCount].length >= index%columnCount+1) {
           currentKana = widget.kanaTable[index~/columnCount][index%columnCount];
+        }
 
         return AnimationConfiguration.staggeredGrid(
           position: index,
           columnCount: columnCount,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           child: currentKana != ""
           ? FadeInAnimation(
             key: Key("${currentKana}_${widget.showRomaji}_${widget.isPortrait}"),
@@ -82,7 +86,7 @@ class _KanaGridState extends State<KanaGrid> {
                   ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![1]
                   : null,
                 onPressed: () {
-                  widget.onTap?.call("${currentKana}");
+                  widget.onTap?.call(currentKana);
                 },
                 child: RichText(
                   overflow: TextOverflow.visible,
@@ -109,7 +113,7 @@ class _KanaGridState extends State<KanaGrid> {
                       // romaji
                       if(widget.showRomaji)
                         TextSpan(
-                          text: "\n" + convertToRomaji(currentKana),
+                          text: "\n${convertToRomaji(currentKana)}",
                           style: TextStyle(
                             overflow: TextOverflow.visible,
                             color: Theme.of(context).brightness == Brightness.light ?
@@ -124,7 +128,7 @@ class _KanaGridState extends State<KanaGrid> {
               ),
             ),
           )
-          : SizedBox()
+          : const SizedBox()
         );
       })
     );

@@ -1,16 +1,15 @@
 //based on conjo_notes.csv which was scraped from
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
+// Project imports:
 import '../../application/conjugation/conjo_note.dart';
-
-
 
 // convenience vars  
 const String f = 'f';
 const String t = 't';
 
 /// list containing example `ConjoNote`s from the JMDict project 
-const List conjo_notes = [
+const List conjoNotes = [
 	ConjoNote(2, 1, f, f, 1, 7),
 	ConjoNote(15, 1, t, f, 1, 3),
 	ConjoNote(15, 1, t, t, 1, 3),

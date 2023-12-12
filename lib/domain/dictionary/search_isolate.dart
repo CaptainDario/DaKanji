@@ -1,14 +1,18 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:isolate';
-import 'package:async/async.dart';
 
-import 'package:isar/isar.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search_util.dart';
-
-
 
 class DictionarySearchIsolate {
 
@@ -43,7 +47,7 @@ class DictionarySearchIsolate {
     this.name,
     {
       this.debugName,
-      int no_processes = 2
+      int noProcesses = 2
     }
   );
 
@@ -92,7 +96,7 @@ class DictionarySearchIsolate {
 
     isolateSendPort!.send(null);
     var s  = await events!.next;
-    print("killed: $s");
+    debugPrint("killed: $s");
 
     _initialized = false;
   }
@@ -153,7 +157,7 @@ Future<void> _searchInIsar(SendPort p) async {
   int idRangeStart = (ids[(noEntries/noIsolates*isolateNo).floor()]).floor();
   int idRangeEnd   = (ids[(noEntries/noIsolates*(isolateNo+1)).floor()]).floor();
 
-  print('Spawned isolate started, args: langs - ${langs}; isolateNo - ${isolateNo}; idRangeStart - ${idRangeStart}; idRangeEnd - ${idRangeEnd}');
+  debugPrint('Spawned isolate started, args: langs - $langs; isolateNo - $isolateNo; idRangeStart - $idRangeStart; idRangeEnd - $idRangeEnd');
 
   // Wait for messages from the main isolate.
   await for (final message in events.rest) {
@@ -177,10 +181,10 @@ Future<void> _searchInIsar(SendPort p) async {
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      print("Query: $query, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
+      debugPrint("Query: $query, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
     }    
   }
 
-  print('Spawned isolate finished.');
+  debugPrint('Spawned isolate finished.');
   Isolate.exit(p, name);
 }

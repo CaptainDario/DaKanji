@@ -1,23 +1,26 @@
+// Dart imports:
 import 'dart:math';
-import 'package:collection/collection.dart';
-
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-
-
 
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {
@@ -67,15 +70,15 @@ class _WordListsState extends State<WordLists> {
   void initState() {
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
-
-      // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialWordLists) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        // init tutorial
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && GetIt.I<UserData>().showTutorialWordLists) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().wordListsScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!
+          );
+        }
       }
     });
 
@@ -85,7 +88,7 @@ class _WordListsState extends State<WordLists> {
   @override
   Widget build(BuildContext context) {
 
-    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.DFS().toList();
+    List<TreeNode<WordListsData>> childrenDFS = widget.parent!.dfs().toList();
 
     return DragTarget<TreeNode<WordListsData>>(
       hitTestBehavior: HitTestBehavior.opaque,
@@ -111,62 +114,62 @@ class _WordListsState extends State<WordLists> {
       },
       builder: (context, candidateData, rejectedData) {
         return Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           color: itemDraggingOverThis ? g_Dakanji_green.withOpacity(0.5) : null,
           child: Stack(
             children: [
               Column(
                 children: [
-                  // header with tools 
-                  Container(
-                    child: DragTarget<TreeNode<WordListsData>>(
-                      hitTestBehavior: HitTestBehavior.opaque,
-                      onWillAccept: (data) {
-                        // start animation to the top of the list d
-                        if(scrollController.offset > 60)
-                          scrollController.animateTo(0,
-                            duration: Duration(milliseconds: scrollController.offset.round()*5),
-                            curve: Curves.linear
-                          );
-                        return false;
-                      },
-                      onLeave: (data) {
-                        // cancel animation
-                        scrollController.position.hold(() { });
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        return Row(
-                          children: [
-                            Expanded(child: SizedBox()),
-                            // add new list button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.wordList);
-                                },
-                                icon: Icon(Icons.format_list_bulleted_add)
-                              ),
-                            ), 
-                            // add new folder button
-                            Focus(
-                              focusNode: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
-                                : null,
-                              child: IconButton(
-                                onPressed: () {
-                                  addNewWordListNode(WordListNodeType.folder);
-                                },
-                                icon: Icon(Icons.create_new_folder)
-                              ),
-                            ), 
-                          ],
+                  // header with tools
+                  DragTarget<TreeNode<WordListsData>>(
+                    hitTestBehavior: HitTestBehavior.opaque,
+                    onWillAccept: (data) {
+                      // start animation to the top of the list d
+                      if(scrollController.offset > 60) {
+                        scrollController.animateTo(0,
+                          duration: Duration(milliseconds: scrollController.offset.round()*5),
+                          curve: Curves.linear
                         );
                       }
-                    ),
+                      return false;
+                    },
+                    onLeave: (data) {
+                      // cancel animation
+                      scrollController.position.hold(() { });
+                    },
+                    builder: (context, candidateData, rejectedData) {
+                      return Row(
+                        children: [
+                          const Expanded(child: SizedBox()),
+                          // add new list button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.wordList);
+                              },
+                              icon: const Icon(Icons.format_list_bulleted_add)
+                            ),
+                          ), 
+                          // add new folder button
+                          Focus(
+                            focusNode: widget.includeTutorial
+                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![4]
+                              : null,
+                            child: IconButton(
+                              onPressed: () {
+                                addNewWordListNode(WordListNodeType.folder);
+                              },
+                              icon: const Icon(Icons.create_new_folder)
+                            ),
+                          ), 
+                        ],
+                      );
+                    }
                   ),
+                  
                   // the word lists / folders
                   Expanded(
                     child: ListView(
@@ -240,8 +243,9 @@ class _WordListsState extends State<WordLists> {
                                 onWillAccept: (TreeNode<WordListsData>? data) {
 
                                   // do no allow self drags
-                                  if(data == null || i == childrenDFS.indexOf(data)-1)
+                                  if(data == null || i == childrenDFS.indexOf(data)-1) {
                                     return false;
+                                  }
 
                                   draggingOverDividerIndex = i; 
                                   return true;
@@ -292,9 +296,9 @@ class _WordListsState extends State<WordLists> {
                   // confirm selection button if word lists are opened in selection mode
                   if(widget.onSelectionConfirmed != null)
                     ...[
-                      SizedBox(height: 16),
-                      Divider(),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 16),
+                      const Divider(),
+                      const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                         child: SizedBox(
@@ -302,15 +306,15 @@ class _WordListsState extends State<WordLists> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                               ),
                             ),
                             onPressed: (){
                               List<TreeNode<WordListsData>> selection =
-                                widget.parent!.DFS().where(
+                                widget.parent!.dfs().where(
                                   (node) => node.value.isChecked
                                 ).toList();
                               widget.onSelectionConfirmed!(selection);
@@ -321,7 +325,7 @@ class _WordListsState extends State<WordLists> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                     ]
                 ],
               ),
@@ -343,7 +347,7 @@ class _WordListsState extends State<WordLists> {
                       scrollController.position.hold(() { });
                     },
                     builder: (context, candidateData, rejectedData) {
-                      return Container(
+                      return SizedBox(
                         height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
                         width: MediaQuery.of(context).size.width,
                         //color: Colors.amber

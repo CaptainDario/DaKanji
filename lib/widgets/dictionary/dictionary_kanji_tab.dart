@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/dictionary/kanjidic2.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
 import 'package:da_kanji_mobile/application/radicals/radicals.dart';
-
-
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
 
 class DictionaryKanjiTab extends StatefulWidget {
   /// The entry for which examples should be shown
@@ -73,11 +74,11 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
       return Container();
     }
     if(kanjiDic2s.isEmpty){
-      return Center(
+      return const Center(
         child: Icon(Icons.search_off)
       );
     }
-    else
+    else {
       return SingleChildScrollView(
         child: Column(
           children: () {
@@ -90,5 +91,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
           } ()
         ),
       );
+    }
   }
 }

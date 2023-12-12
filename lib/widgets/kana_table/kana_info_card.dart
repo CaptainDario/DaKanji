@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-
-
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 
 class KanaInfoCard extends StatefulWidget {
 
@@ -37,7 +38,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   /// The svg of the dakuten
   String? yoonSVG;
   /// The mnemonic of the kana
-  String? mnemonic = null;
+  String? mnemonic;
 
 
   @override
@@ -89,6 +90,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
       .findFirstSync()!.svg;
       yoonSVG = modifyKanjiVGSvg(
         yoonSVG!,
+        // ignore: use_build_context_synchronously
         strokeColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black
@@ -112,7 +114,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
             children: [
               Text(
                 convertToRomaji(widget.kana),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 )
@@ -164,11 +166,11 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       children: [
                         MarkdownBody(
                           styleSheet: MarkdownStyleSheet(
-                            p: TextStyle(
+                            p: const TextStyle(
                               fontSize: 20,
                             ),
                             // bold text
-                            strong: TextStyle(
+                            strong: const TextStyle(
                               fontSize: 20,
                               decoration: TextDecoration.underline,
                             )

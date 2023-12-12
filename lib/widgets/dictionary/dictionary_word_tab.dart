@@ -1,31 +1,35 @@
+// Dart imports:
 import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
+import 'package:get_it/get_it.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab_kanji.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-
-
+import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {
 
@@ -57,9 +61,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
+    LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     // TODO v word lists - reenable
     //LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
-    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr()
+    //LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
   /// Gesture recognizers for the webview to be scrollable
@@ -109,7 +114,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   }
 
   void initDataAsync() async {
-    audioFilesDir = Directory(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios"));
+    audioFilesDir = g_DakanjiPathManager.audiosDirectory;
   }
 
   @override
@@ -121,11 +126,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.entry == null)
+    if(widget.entry == null) {
       return Container();
+    }
 
-    if(partOfSpeechStyle == null)
-      partOfSpeechStyle = TextStyle(fontSize: 12, color: Theme.of(context).hintColor);
+    partOfSpeechStyle ??= TextStyle(fontSize: 12, color: Theme.of(context).hintColor);
 
     return Align(
       alignment: Alignment.topCenter,
@@ -153,7 +158,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           ...[
                             Text(
                               widget.entry!.jlptLevel!.join(", "),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12
                               ),
@@ -176,19 +181,18 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             children: [
                               AspectRatio(
                                 aspectRatio: 1,
-                                child: InAppWebView(
-                                  gestureRecognizers: 
-                                    Set()..add(
+                                child: WebViewWidget(
+                                  controller: WebViewController()
+                                    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                                    ..loadRequest(Uri.parse("$g_GoogleImgSearchUrl$readingOrKanji")),
+                                    gestureRecognizers: {
                                       Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                                    ),
-                                  initialUrlRequest: URLRequest(
-                                    url: WebUri("$g_GoogleImgSearchUrl${readingOrKanji}")
-                                  )
+                                    },
                                 )
                               )
                             ],
                           ),
-                        if(conjugationPos != null && !conjugationPos!.isEmpty)
+                        if(conjugationPos != null && conjugationPos!.isNotEmpty)
                           ConjugationExpansionTile(
                             word: readingOrKanji!,
                             pos: conjugationPos!,
@@ -203,8 +207,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           splashRadius: 25,
                           icon: const Icon(Icons.play_arrow),
                           onPressed: () async {
-                            if(!audioFilesDir.existsSync())
+                            if(!audioFilesDir.existsSync()) {
                               downloadAudio();
+                            }
 
                             player.open(Media('file:///${audioFilesDir.path}/${widget.entry!.audio}.mp3'));
                             player.play();
@@ -222,33 +227,37 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           String url = "";
                           // Wiki
                           if(selection == menuItems[0]) {
-                            url = Uri.encodeFull("$g_WikipediaJpUrl${readingOrKanji}");
+                            url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
                           }
                           else if(selection == menuItems[1]) {
                             url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
                           }
                           else if(selection == menuItems[2]) {
-                            url = Uri.encodeFull("$g_WiktionaryUrl${readingOrKanji}");
+                            url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
                           }
                           else if(selection == menuItems[3]) {
-                            url = Uri.encodeFull("$g_Massif${readingOrKanji}");
+                            url = Uri.encodeFull("$g_Massif$readingOrKanji");
                           }
                           else if(selection == menuItems[4]) {
-                            url = Uri.encodeFull("$g_forvo${readingOrKanji}");
+                            url = Uri.encodeFull("$g_forvo$readingOrKanji");
+                          }
+                          else if(selection == menuItems[5]){
+                            await Share.share("${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}");
                           }
                           // add to word list
-                          else if(selection == menuItems[5]) {
-                            await AddToWordListDialog(context, widget).show();
+                          else if(selection == menuItems[6]) {
+                            await addToWordListDialog(context, widget).show();
                           }
-                          else if(selection == menuItems[6]){
-                            await AnkiDialog(context).show();
+                          else if(selection == menuItems[7]){
+                            await ankiDialog(context).show();
                           }
 
-                          if(url != "")
+                          if(url != "") {
                             launchUrlString(
                               url,
                               mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
                             );
+                          }
                         },
                         itemBuilder: (context) => List.generate(
                           menuItems.length,
@@ -278,7 +287,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       dismissable: true,
       btnOkOnPress: () async {
         downloadAssetFromGithubRelease(
-          File(p.join((await getApplicationDocumentsDirectory()).path, "DaKanji", "audios")),
+          File(g_DakanjiPathManager.audiosDirectory.path),
           g_GithubApiDependenciesRelase,
         ).then((value) {
           Navigator.of(context).pop();
@@ -290,16 +299,16 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
           customHeader: Image.asset("assets/images/dakanji/icon.png"),
           dialogType: DialogType.noHeader,
           body: StreamBuilder(
-            stream: g_downloadFromGHStream.stream,
+            stream: g_initAppInfoStream.stream,
             builder: (context, snapshot) {
-              return Container(
+              return SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DaKanjiLoadingIndicator(),
-                      SizedBox(height: 8,),
+                      const DaKanjiLoadingIndicator(),
+                      const SizedBox(height: 8,),
                       Text(
                         snapshot.data ?? ""
                       ),

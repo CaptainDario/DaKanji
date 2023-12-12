@@ -1,11 +1,13 @@
+// Dart imports:
 import 'dart:math';
 
+// Package imports:
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
-
-
 
 /// Checks for the available backends and uses the best available backend.
 /// For this a valid `input`, `output` and function `runInterpreter` (defines
@@ -94,35 +96,35 @@ Future<Interpreter> initInterpreterFromBackend(
   String assetPath
   ) async
 {
-  if(inferenceBackend == InferenceBackend.CPU){
+  if(inferenceBackend == InferenceBackend.cpu){
     return _cpuInterpreter(assetPath, 1);
   }
-  else if(inferenceBackend.name.startsWith("CPU")){
+  else if(inferenceBackend.name.startsWith(InferenceBackend.cpu.name)){
     return _cpuInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
-  else if(inferenceBackend == InferenceBackend.XNNPack){
+  else if(inferenceBackend == InferenceBackend.xnnPack){
     return _xnnPackInterpreter(assetPath, 1);
   }
-  else if(inferenceBackend.name.startsWith("XNNPack")){
+  else if(inferenceBackend.name.startsWith(InferenceBackend.xnnPack.name)){
     return await _xnnPackInterpreter(assetPath, int.parse(inferenceBackend.name.split("_")[1]));
   }
-  else if(inferenceBackend == InferenceBackend.GPU){
+  else if(inferenceBackend == InferenceBackend.gpu){
     return await _gpuInterpreter(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.NNApi){
+  else if(inferenceBackend == InferenceBackend.nnapi){
     return await _nnapiInterpreter(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.Metal){
+  else if(inferenceBackend == InferenceBackend.metal){
     return await _metalInterpreterIOS(assetPath);
   }
-  else if(inferenceBackend == InferenceBackend.CoreML2){
-    return await _coreMLInterpreterIOS(assetPath, CoreMLVersion: 2);
+  else if(inferenceBackend == InferenceBackend.coreMl_2){
+    return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
   }
-  else if(inferenceBackend == InferenceBackend.CoreML3){
-    return await _coreMLInterpreterIOS(assetPath, CoreMLVersion: 3);
+  else if(inferenceBackend == InferenceBackend.coreMl_3){
+    return await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
   }
   else{
-    throw Exception("Unknown inference backend");
+    throw Exception("Unknown inference backend $inferenceBackend.");
   }
 }
 
@@ -143,27 +145,31 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // NNAPI delegate
-  if(!exclude.contains(InferenceBackend.NNApi)){
+  if(!exclude.contains(InferenceBackend.nnapi)){
     try{
       Interpreter interpreter = await _nnapiInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.NNApi, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.nnapi, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -173,10 +179,12 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
         );
       }
     }
-    catch (e) {}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -186,7 +194,9 @@ Future<Map<InferenceBackend, double>> _testInterpreterAndroid(
         );
       }
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
 
   return inferenceBackend;
@@ -208,37 +218,43 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // CoreML 3 delegate
-  if(!exclude.contains(InferenceBackend.CoreML3)){
+  if(!exclude.contains(InferenceBackend.coreMl_3)){
     try{
-      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, CoreMLVersion: 3);
+      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CoreML3, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.coreMl_3, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // CoreML 2 delegate
-  if(!exclude.contains(InferenceBackend.CoreML2)){
+  if(!exclude.contains(InferenceBackend.coreMl_2)){
     try{
-      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, CoreMLVersion: 2);
+      Interpreter interpreter = await _coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.CoreML2, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.coreMl_2, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // Metal delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _metalInterpreterIOS(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.Metal, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.metal, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -248,10 +264,12 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
         );
       }
     }
-    catch (e) {}
+    catch (e) {
+      Sentry.captureException(e);
+    }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -261,7 +279,9 @@ Future<Map<InferenceBackend, double>> _testInterpreterIOS(
         );
       }
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
 
   return inferenceBackend;
@@ -283,17 +303,19 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -303,10 +325,12 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
         );
       }
     }
-    catch (e) {}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -316,7 +340,9 @@ Future<Map<InferenceBackend, double>> _testInterpreterWindows(
         );
       }
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
 
   return inferenceBackend;
@@ -337,17 +363,19 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -357,10 +385,12 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
         );
       }
     }
-    catch (e) {}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -370,7 +400,9 @@ Future<Map<InferenceBackend, double>> _testInterpreterLinux(
         );
       }
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
 
   return inferenceBackend;
@@ -391,17 +423,19 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
   Map<InferenceBackend, double> inferenceBackend = {};
 
   // GPU delegate
-  if(!exclude.contains(InferenceBackend.GPU)){
+  if(!exclude.contains(InferenceBackend.gpu)){
     try {
       Interpreter interpreter = await _gpuInterpreter(assetPath);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.GPU, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
       );
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // XNNPack delegate
-  if(!exclude.contains(InferenceBackend.XNNPack)){
+  if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String xnnBack = "XNNPack_$i";
@@ -411,10 +445,12 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
         );
       }
     }
-    catch (e) {}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
   // CPU delegate
-  if(!exclude.contains(InferenceBackend.CPU)){
+  if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
         String cpuBack = "CPU_$i";
@@ -424,7 +460,9 @@ Future<Map<InferenceBackend, double>> _testInterpreterMac(
         );
       }
     }
-    catch (e){}
+    catch (e){
+      Sentry.captureException(e);
+    }
   }
 
   return inferenceBackend;
@@ -479,7 +517,7 @@ Future<Interpreter> _metalInterpreterIOS(String assetPath) async {
 Future<Interpreter> _coreMLInterpreterIOS(
   String assetPath,
   {
-    int CoreMLVersion = 1
+    int coreMLVersion = 1
   }
   ) async 
 {
@@ -487,7 +525,7 @@ Future<Interpreter> _coreMLInterpreterIOS(
   var interpreterOptions = InterpreterOptions()..addDelegate(
     CoreMlDelegate(
       options: CoreMlDelegateOptions(
-        coremlVersion: CoreMLVersion,
+        coremlVersion: coreMLVersion,
       )
     )
   );

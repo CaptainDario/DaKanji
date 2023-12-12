@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-
-
 
 class ResponsiveHeaderTile extends StatelessWidget {
   const ResponsiveHeaderTile(
@@ -38,10 +38,10 @@ class ResponsiveHeaderTile extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                this.icon,
+                icon,
                 size: tileHeight*0.3,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(

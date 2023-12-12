@@ -1,24 +1,25 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg_util.dart';
 import 'package:da_kanji_mobile/application/radicals/radicals.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/application/dictionary/kanjiVG_util.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_group_widget.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/linked_kanji_text.dart';
 
 /// Card to show a kanji and all important attribtues of it. This includes
 /// a tree to show the different groups.
@@ -57,7 +58,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   /// the menu elements of the more-popup-menu
   List<String> menuItems = ["Kanji Map", "Japanese Graph"];
   /// The textstyle used for the headers
-  TextStyle headerStyle = TextStyle(color: Colors.grey);
+  TextStyle headerStyle = const TextStyle(color: Colors.grey);
   /// Kanji groups Regex, extracts all tags that are kanji part tags
   RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke(Numbers|Paths)).*?>');
 
@@ -103,8 +104,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
       if(widget.targetLanguages.any(
         (l) => l.contains(widget.kanjidic2entry.meanings[i].language!)
       )) {
-        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language))
+        if(!meanings.containsKey(widget.kanjidic2entry.meanings[i].language)) {
           meanings[widget.kanjidic2entry.meanings[i].language!] = [];
+        }
 
         meanings[widget.kanjidic2entry.meanings[i].language]!.add(
           widget.kanjidic2entry.meanings[i].meaning!
@@ -131,6 +133,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       children: [
                         // Kanji preview
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           // on tap copy to clipboard and show snakbar
                           onTap: () {
                             Clipboard.setData(
@@ -146,129 +149,90 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               )
                             );
                           },
-                          child: Container(
-                            child: SizedBox(
-                              width: constrains.maxWidth * 0.5,
-                              height: constrains.maxWidth * 0.5,
-                              child: kanjiVGs.isNotEmpty
-                                ? KanjiVGWidget(
-                                  kanjiVGs.first.svg,
-                                  constrains.maxWidth * 0.5,
-                                  constrains.maxWidth * 0.5,
-                                  colorize: true,
-                                )
-                                : Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-                                  ),
-                                  child: FittedBox(
-                                    child: Text(
-                                      widget.kanjidic2entry.character,
-                                    ),
+                          child: SizedBox(
+                            width: constrains.maxWidth * 0.5,
+                            height: constrains.maxWidth * 0.5,
+                            child: kanjiVGs.isNotEmpty
+                              ? KanjiVGWidget(
+                                kanjiVGs.first.svg,
+                                constrains.maxWidth * 0.5,
+                                constrains.maxWidth * 0.5,
+                                GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
+                                GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
+                                colorize: true,
+                              )
+                              : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                ),
+                                child: FittedBox(
+                                  child: Text(
+                                    widget.kanjidic2entry.character,
                                   ),
                                 ),
-                            ),
-                          )
+                              ),
+                          ),
                         ),
                         
                         const SizedBox(width: 8,),
                         
                         Expanded(
-                          child: LayoutGrid(
-                            columnSizes: [auto, 1.fr],
-                            columnGap: 0.1,
-                            rowSizes: List.generate(11, (index) => auto),
-                            children: [
-                              if(kanjiVGs.isNotEmpty)
-                                ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle,),
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        for (String radical in radicals)
-                                          ...[
-                                            WidgetSpan(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Clipboard.setData(ClipboardData(text: radical));
-                                                  ScaffoldMessenger.of(context).clearSnackBars();
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} ${radical}"
-                                                      )
-                                                    )
-                                                  );
-                                                },
-                                                onDoubleTap: () async {
-                                                  var data = (await Clipboard.getData("text/plain"));
-                                                  String text = data == null ? "" : data.text!;
-                                                  Clipboard.setData(ClipboardData(text: text+radical));
-                                                  ScaffoldMessenger.of(context).clearSnackBars();
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} ${text}${radical}"
-                                                      )
-                                                    )
-                                                  );
-                                                },
-                                                child: Text(radical),
-                                              )
-                                            ),
-                                            if(radical != radicals.last)
-                                              TextSpan(
-                                                text: ","
-                                              )
-                                          ]
-                                      ]
-                                    )
-                                  )
-                                ],
-
-                              SizedBox(height: 20,).withGridPlacement(columnSpan: 2),
-
-                              Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
-
-                              if(widget.kanjidic2entry.frequency != -1)
-                                ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
-                                  Text("${widget.kanjidic2entry.frequency}"),
-                                ],
-
-                              if(widget.kanjidic2entry.grade != -1)
-                                ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle), 
-                                  Text("${widget.kanjidic2entry.grade}"),
-                                ],
-
-                              if(widget.kanjidic2entry.jlptNew != -1)
-                                ...[
-                                  Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),
-                                  Text("N${widget.kanjidic2entry.jlptNew}"),
-                                ],
-                              if(widget.kanjidic2entry.kanken != -1)
-                                ...[
-                                  Text("漢検: ", style: headerStyle),
-                                  Text("${widget.kanjidic2entry.kanken}"),
-                                ],
-                              if(widget.kanjidic2entry.wanikani != -1)
-                                ...[
-                                  Text("Wanikani: ", style: headerStyle),
-                                  Text(widget.kanjidic2entry.wanikani.toString()),
-                                ],
-                              if(widget.kanjidic2entry.klc != -1)
-                                ...[
-                                  Text("KLC: ", style: headerStyle),
-                                  Text(widget.kanjidic2entry.klc.toString()),
-                                ],
-                              if(widget.kanjidic2entry.rtkNew != -1)
-                                ...[
-                                  Text("RTK: ", style: headerStyle),
-                                  Text(widget.kanjidic2entry.rtkNew.toString()),
-                                ],
-                              
-                            ],
+                          child: Center(
+                            child: LayoutGrid(
+                              columnSizes: [auto, 1.fr],
+                              columnGap: 0.1,
+                              rowSizes: List.generate(2 + [
+                                widget.kanjidic2entry.frequency != -1,
+                                widget.kanjidic2entry.grade != -1,
+                                widget.kanjidic2entry.jlptNew != -1,
+                                widget.kanjidic2entry.kanken != -1,
+                                widget.kanjidic2entry.wanikani != -1,
+                                widget.kanjidic2entry.klc != -1,
+                                widget.kanjidic2entry.rtkNew != -1
+                              ].where((e) => e).length*2, (index) => auto),
+                              children: [
+                          
+                                Text("${LocaleKeys.DictionaryScreen_kanji_strokes.tr()}: ", style: headerStyle), Text("${widget.kanjidic2entry.strokeCount}"),
+                          
+                                if(widget.kanjidic2entry.frequency != -1)
+                                  ...[
+                                    Text("${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ", style: headerStyle),
+                                    Text("${widget.kanjidic2entry.frequency}"),
+                                  ],
+                                if(widget.kanjidic2entry.grade != -1)
+                                  ...[
+                                    Text("${LocaleKeys.DictionaryScreen_kanji_grade.tr()}: ", style: headerStyle), 
+                                    Text("${widget.kanjidic2entry.grade}"),
+                                  ],
+                                if(widget.kanjidic2entry.jlptNew != -1)
+                                  ...[
+                                    Text("${LocaleKeys.DictionaryScreen_kanji_jlpt.tr()}: ", style: headerStyle),
+                                    Text("N${widget.kanjidic2entry.jlptNew}"),
+                                  ],
+                                if(widget.kanjidic2entry.kanken != -1)
+                                  ...[
+                                    Text("漢検: ", style: headerStyle),
+                                    Text("${widget.kanjidic2entry.kanken}"),
+                                  ],
+                                if(widget.kanjidic2entry.wanikani != -1)
+                                  ...[
+                                    Text("Wanikani: ", style: headerStyle),
+                                    Text(widget.kanjidic2entry.wanikani.toString()),
+                                  ],
+                                if(widget.kanjidic2entry.klc != -1)
+                                  ...[
+                                    Text("KLC: ", style: headerStyle),
+                                    Text(widget.kanjidic2entry.klc.toString()),
+                                  ],
+                                if(widget.kanjidic2entry.rtkNew != -1)
+                                  ...[
+                                    Text("RTK: ", style: headerStyle),
+                                    Text(widget.kanjidic2entry.rtkNew.toString()),
+                                  ],
+                                
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -279,7 +243,14 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                     // On / Kun readings
                     LayoutGrid(
                       columnSizes: [auto, 1.fr],
-                      rowSizes: List.generate(10, (index) => auto),
+                      rowSizes: List.generate(4 +
+                        [
+                          widget.kanjidic2entry.antonyms != null,
+                          widget.kanjidic2entry.synonyms != null,
+                          widget.kanjidic2entry.lookalikes != null,
+                          radicals.isNotEmpty
+                        ].where((e) => e).length * 2,
+                        (index) => auto),
                       children: [
                         Text("${LocaleKeys.DictionaryScreen_kanji_on_reading.tr()}: ", style: headerStyle),
                         SelectableText(onReadings.join(",  ")),
@@ -301,6 +272,54 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             Text("${LocaleKeys.DictionaryScreen_kanji_lookalikes.tr()}: ", style: headerStyle),
                             LinkedKanjiText(widget.kanjidic2entry.lookalikes!)
                           ],
+                        if(radicals.isNotEmpty)
+                          ...[
+                            Text("${LocaleKeys.DictionaryScreen_kanji_radicals.tr()}: ", style: headerStyle,),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  for (String radical in radicals)
+                                    ...[
+                                      WidgetSpan(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Clipboard.setData(ClipboardData(text: radical));
+                                            ScaffoldMessenger.of(context).clearSnackBars();
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical"
+                                                )
+                                              )
+                                            );
+                                          },
+                                          onDoubleTap: () async {
+                                            var data = (await Clipboard.getData("text/plain"));
+                                            String text = data == null ? "" : data.text!;
+                                            Clipboard.setData(ClipboardData(text: text+radical));
+                                            // ignore: use_build_context_synchronously
+                                            ScaffoldMessenger.of(context).clearSnackBars();
+                                            // ignore: use_build_context_synchronously
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "${LocaleKeys.DictionaryScreen_kanji_apended.tr()} $text$radical"
+                                                )
+                                              )
+                                            );
+                                          },
+                                          child: Text(radical),
+                                        )
+                                      ),
+                                      if(radical != radicals.last)
+                                        const TextSpan(
+                                          text: ", "
+                                        )
+                                    ]
+                                ]
+                              )
+                            )
+                          ],
                       ],
                     ),
 
@@ -318,7 +337,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[e.key]!
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                           Flexible(
                             child: Text(
                               e.value.toString().replaceAll("[", "").replaceAll("]", "")
@@ -354,6 +373,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   alternative.svg,
                                   constrains.maxWidth * 0.4,
                                   constrains.maxWidth * 0.4,
+                                  GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                  GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
+                                  GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                   colorize: true,
                                 ),
                               ),

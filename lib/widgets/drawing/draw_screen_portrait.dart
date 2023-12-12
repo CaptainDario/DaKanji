@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// The DrawScreen in portrait mode 
 class DrawScreenPortrait extends StatelessWidget {

@@ -1,19 +1,22 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:tuple/tuple.dart';
-
-
 
 /// `LayouGrid` structured to show a list of meanings with a count
 class MeaningsGrid extends StatefulWidget {
@@ -103,7 +106,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
     int hide = widget.meanings.meanings.length > 5 && !showAllMeanings ? 1 : 0;
     
     return AnimatedSize(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       alignment: Alignment.topCenter,
       child: LayoutGrid(
         gridFit: GridFit.loose,
@@ -121,7 +124,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 alignment: Alignment.topRight,
                 child: Text(
                   "${(j+1).toString()}. ",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey
                   )
                 ),
@@ -141,7 +144,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   if(widget.meanings.xref != null && widget.meanings.xref![j] != null)
                     RichText(
                       text: TextSpan(
-                        text: LocaleKeys.DictionaryScreen_word_see_also.tr() + " ",
+                        text: "${LocaleKeys.DictionaryScreen_word_see_also.tr()} ",
                         style: informationStyle,
                         children: [
                           for (int i = 0; i < relatedEntries[j]!.length; i++)
@@ -158,11 +161,11 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                       int id = int.parse(widget.meanings.xref![j]!.attributes[i]!);
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
-                                        "/dictionary",
+                                        "/${Screens.dictionary.name}",
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dictInitialEntryId: id
                                         )
                                       );
                                     },
@@ -174,7 +177,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   if(widget.meanings.antonyms != null && widget.meanings.antonyms![j] != null)
                     RichText(
                       text: TextSpan(
-                        text: LocaleKeys.DictionaryScreen_word_antonyms.tr() + " ",
+                        text: "${LocaleKeys.DictionaryScreen_word_antonyms.tr()} ",
                         style: informationStyle,
                         children: [
                           for (int i = 0; i < antonymEntries[j]!.length; i++)
@@ -195,7 +198,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
-                                          initialEntryId: id
+                                          dictInitialEntryId: id
                                         )
                                       );
                                     },
@@ -206,43 +209,37 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   // kanji targets: １つ星
                   if(widget.meanings.senseKanjiTarget != null && widget.meanings.senseKanjiTarget![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
-                      widget.meanings.senseKanjiTarget![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_restricted_to.tr()} ${widget.meanings.senseKanjiTarget![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // reading targets: 空車
                   if(widget.meanings.senseReadingTarget != null && widget.meanings.senseReadingTarget![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_restricted_to.tr() + " " +
-                      widget.meanings.senseReadingTarget![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_restricted_to.tr()} ${widget.meanings.senseReadingTarget![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // field of usage: 一尉
                   if(widget.meanings.field != null && widget.meanings.field![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
-                      widget.meanings.field![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.meanings.field![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // source language of gairaigo: 金平糖
                   if(widget.meanings.source != null && widget.meanings.source![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_source_language.tr() + " " +
-                      widget.meanings.source![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_source_language.tr()} ${widget.meanings.source![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // dialect where this word is used: 賢い
                   if(widget.meanings.dialect != null && widget.meanings.dialect![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_field.tr() + " " +
-                      widget.meanings.dialect![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.meanings.dialect![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // additional information for about this sense: 表す
                   if(widget.meanings.senseInfo != null && widget.meanings.senseInfo![j] != null)
                     Text(
-                      LocaleKeys.DictionaryScreen_word_info.tr() + " " +
-                      widget.meanings.senseInfo![j]!.attributes.join(","),
+                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
                   // Part of Speech: 食べる
@@ -256,7 +253,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
             );
           }
           // show more button
-          if(hide == 1)
+          if(hide == 1) {
             ret.add(
               InkWell(
                 onTap: () {
@@ -266,15 +263,14 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 },
                 child: Row(
                   children: [
-                    Container(
-                      child: Icon(Icons.expand_more)
-                    ),
-                    SizedBox(width: 10,),
+                    const Icon(Icons.expand_more),
+                    const SizedBox(width: 10,),
                     Text(LocaleKeys.DictionaryScreen_word_meanings_more.tr())
                   ],
                 )
               ).withGridPlacement(columnSpan: 2)
             );
+          }
           
           return ret;
         } ()

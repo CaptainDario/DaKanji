@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
 
@@ -46,7 +49,7 @@ List<WordListNodeType> get wordListUserTypes => [
 
 enum WordListsDefaults{
   searchHistory,
-  JLPTN5, JLPTN4, JLPTN3, JLPTN2, JLPTN1,
+  jlptN5, jlptN4, jlptN3, jlptN2, jlptN1,
 }
 
 /// The tree of word lists and folders that the user has created
@@ -121,7 +124,7 @@ class WordLists {
       root.addChildren(wL.userCreatedLists);
 
       // add save listeners to all nodes
-      for (var node in root.BFS()) {
+      for (var node in root.bfs()) {
         node.value.addListener(() {
           save();
         });

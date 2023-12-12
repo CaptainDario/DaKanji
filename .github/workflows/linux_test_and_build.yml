@@ -89,21 +89,21 @@ jobs:
         run: |
           sudo apt-get install flatpak flatpak-builder
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y flathub org.gnome.Sdk//44 org.gnome.Platform//44
+          flatpak install -y flathub org.freedesktop.Sdk//22.08 org.freedesktop.Platform//22.08
           
           flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
           flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
           flatpak build-bundle repo com.DaAppLab.DaKanji.flatpak com.DaAppLab.DaKanji
 
-          mv com.DaAppLab.DaKanji.flatpak ../com.DaAppLab.DaKanji.flatpak
+          mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: com.DaAppLab.DaKanji.flatpak
-          path: com.DaAppLab.DaKanji.flatpak
+          name: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
+          path: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Clean after flatpak
         run: |
-          rm com.DaAppLab.DaKanji.flatpak
+          rm DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           rm -rf flatpak/repo
           rm -rf flatpak/build-dir
 

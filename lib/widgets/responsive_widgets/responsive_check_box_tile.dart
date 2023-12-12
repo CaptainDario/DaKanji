@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-
-
 
 class ResponsiveCheckBoxTile extends StatefulWidget {
   const ResponsiveCheckBoxTile(
@@ -55,7 +55,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
         onTap: () {
           setState(() {
             checked = !checked;
-            if(widget.onTileTapped != null) widget.onTileTapped!(checked);
+            widget.onTileTapped?.call(checked);
           });
         },
         child: SizedBox(
@@ -96,7 +96,9 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
               ),
               Checkbox(
                 value: widget.value,
-                fillColor: MaterialStateProperty.all(Theme.of(context).highlightColor),
+                fillColor: widget.onTileTapped == null
+                  ? null
+                  : MaterialStateProperty.all(Theme.of(context).highlightColor),
                 onChanged: (value){
                   setState(() {
                     if(value != null) {

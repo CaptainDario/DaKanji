@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// Bundles different elapsed times
 class InferenceStats with ChangeNotifier {
@@ -16,15 +15,17 @@ class InferenceStats with ChangeNotifier {
 
   /// The complete time used inside of the isolate (pre/postprocessing + inference)
   int? get totalIsolateTime {
-    if(preProcessingTime == null || inferenceTime == null || postProcessingTime == null)
+    if(preProcessingTime == null || inferenceTime == null || postProcessingTime == null) {
       return null;
+    }
 
     return preProcessingTime! + inferenceTime! + postProcessingTime!;
   }
 
   int? get communicationOverhead {
-    if(totalIsolateTime == null || totalTime == null)
+    if(totalIsolateTime == null || totalTime == null) {
       return null;
+    }
 
     return totalTime! - totalIsolateTime!;
   }

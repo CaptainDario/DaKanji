@@ -6,4 +6,4 @@ Icon=com.DaAppLab.DaKanji
 Terminal=false
 Type=Application
 Categories=Education;Languages;
-MimeType=x-scheme-handler/dakanji;
+MimeType=x-scheme-handler/dakanji.app;

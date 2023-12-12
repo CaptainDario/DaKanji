@@ -1,23 +1,25 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart' show Platform;
-import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/widgets/downloads/download_app_dialogue.dart';
-import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
+import 'package:da_kanji_mobile/widgets/downloads/download_app_dialogue.dart';
 
 /// Convenience classes to handle long and short presses for the 
 /// predictions of the drawing screens.
@@ -50,7 +52,7 @@ void copy(BuildContext context, String char){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 1),
-        content: Text("copied " + char + " to clipboard"),
+        content: Text("copied $char to clipboard"),
       )
     );
   }
@@ -83,7 +85,7 @@ void openDictionary(BuildContext context, String char) async {
           );
         } else if(GetIt.I<DrawScreenState>().drawScreenLayout == DrawScreenLayout.landscapeWithWebview){
             
-          //print("webview is side by side");
+          //debugPrint("webview is side by side");
         }
       }
     }
@@ -91,8 +93,8 @@ void openDictionary(BuildContext context, String char) async {
     else if(GetIt.I<Settings>().drawing.selectedDictionary ==
       GetIt.I<Settings>().drawing.inbuiltDictId){
       Navigator.pushNamedAndRemoveUntil(
-        context, "/dictionary", (route) => false,
-        arguments: NavigationArguments(false, initialDictSearch: char)
+        context, "/${Screens.dictionary.name}", (route) => false,
+        arguments: NavigationArguments(false, dictInitialSearch: char)
       );
     }
     // handle dictionary opening on ANDROID
@@ -110,6 +112,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else{
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(
               context,
               "No translator installed", 
@@ -138,6 +141,7 @@ void openDictionary(BuildContext context, String char) async {
           }
         }
         catch (e){
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "aedict"
@@ -165,6 +169,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else {
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "akebi"
@@ -190,6 +195,7 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else{
+            // ignore: use_build_context_synchronously
             showDownloadDialogue(context,
               LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
                 "DICTIONARY" : "takoboto"
@@ -207,12 +213,13 @@ void openDictionary(BuildContext context, String char) async {
       // dictionary shirabe (iOS)
       if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[0]){
-        print("iOS shirabe");
-        final url = Uri.encodeFull("shirabelookup://search?w=" + char);
+        debugPrint("iOS shirabe");
+        final url = Uri.encodeFull("shirabelookup://search?w=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Shirabe Jisho"
@@ -225,12 +232,13 @@ void openDictionary(BuildContext context, String char) async {
       // imiwa?
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[1]){
-        print("iOS imiwa?");
-        final url = Uri.encodeFull("imiwa://dictionary?search=" + char);
+        debugPrint("iOS imiwa?");
+        final url = Uri.encodeFull("imiwa://dictionary?search=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context,
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Imiwa?"
@@ -243,12 +251,13 @@ void openDictionary(BuildContext context, String char) async {
       // Japanese
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[2]){
-        print("iOS Japanese");
-        final url = Uri.encodeFull("japanese://search/word/" + char);
+        debugPrint("iOS Japanese");
+        final url = Uri.encodeFull("japanese://search/word/$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(url);
         } else {
-          print("cannot launch " + url);
+          debugPrint("cannot launch $url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Japanese"
@@ -261,14 +270,15 @@ void openDictionary(BuildContext context, String char) async {
       // midori
       else if(GetIt.I<Settings>().drawing.selectedDictionary ==
         GetIt.I<Settings>().drawing.iosDictionaries[3]){
-        print("iOS midori");
-        final url = Uri.encodeFull("midori://search?text=" + char);
+        debugPrint("iOS midori");
+        final url = Uri.encodeFull("midori://search?text=$char");
         if(await canLaunchUrlString(url)) {
           launchUrlString(
             url,
           );
         } else {
-          print("cannot launch" + url);
+          debugPrint("cannot launch$url");
+          // ignore: use_build_context_synchronously
           showDownloadDialogue(context, 
             LocaleKeys.DrawScreen_not_installed.tr(namedArgs: {
               "DICTIONARY" : "Midori"
@@ -280,7 +290,7 @@ void openDictionary(BuildContext context, String char) async {
       }
     }
     else if(Platform.isWindows){
-      print("There are no app dictionaries for windows available!");
+      debugPrint("There are no app dictionaries for windows available!");
     }
     
   }
@@ -311,7 +321,7 @@ String openWithSelectedDictionary(String kanji) {
   if(url != ""){
     // check that the URL starts with protocol, otherwise launch() fails
     if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-      url = "https://" + url;
+      url = "https://$url";
     }
 
     // replace the placeholder with the actual character

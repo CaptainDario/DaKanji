@@ -1,13 +1,16 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-
-
 
 /// This screen opens the given [url]
 /// and shows [char] fullscreen while loading.
@@ -16,14 +19,15 @@ class WebviewScreen extends StatefulWidget {
   const WebviewScreen({Key? key}) : super(key: key);
 
   @override
-  _WebviewScreenState createState() => _WebviewScreenState();
+  State<WebviewScreen> createState() => _WebviewScreenState();
 }
 
 class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  bool loadWebview = false;
+  WebViewController webViewController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted);
   /// should the loading screen be shown (hides webview)
   bool showLoading = false;
   /// the screen's width 
@@ -85,9 +89,12 @@ class _WebviewScreenState extends State<WebviewScreen>
     void handler(status) {
       if (status == AnimationStatus.completed) {
         route!.animation!.removeStatusListener(handler);
-        setState(() {
-          loadWebview = true;
-        });
+        webViewController.loadRequest(Uri.parse(
+            openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+          )).then((value) => 
+            _controller.forward(from: 0.0)
+          );
+        setState(() {});
       }
     }
     route?.animation?.addStatusListener(handler);
@@ -120,7 +127,10 @@ class _WebviewScreenState extends State<WebviewScreen>
                     (_rotationAnimation.value - 1) * (pi/2))
                   ),
                 alignment: Alignment.centerLeft,
-                child: InAppWebView(
+                child: WebViewWidget(
+                  controller: webViewController,
+                )
+                /*InAppWebView(
                   initialUrlRequest: URLRequest(
                     url: WebUri(
                       openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
@@ -129,7 +139,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                   onLoadStop: (controller, uri) {
                     _controller.forward(from: 0.0);
                   }
-                )
+                )*/
               )
             ),
             
@@ -147,9 +157,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                   )),
                 alignment: Alignment.centerRight,
                 child: Hero(
-                  tag: "webviewHero_" 
-                    + (GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : "")
-                    + GetIt.I<DrawScreenState>().drawingLookup.chars,
+                  tag: "webviewHero_${GetIt.I<DrawScreenState>().drawingLookup.buffer ? "b_" : ""}${GetIt.I<DrawScreenState>().drawingLookup.chars}",
                   child: Container(
                     color: Theme.of(context).scaffoldBackgroundColor,
                     child: Center(

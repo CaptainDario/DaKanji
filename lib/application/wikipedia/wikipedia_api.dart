@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:http/http.dart';
-
-
 
 /// Queries the wikipedia API and returns the definition of the `topic`.
 /// Returns the summary of the topic if it exists, otherwise an empty string.
@@ -16,7 +19,7 @@ Future<String> getWikipediaDefinition(String topic, String locale) async {
     response = await get(Uri.parse(url));
   }
   catch (e) {
-    print(e);
+    debugPrint(e.toString());
     return "";
   }
 

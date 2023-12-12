@@ -1,5 +1,6 @@
-import 'package:isar/isar.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:isar/isar.dart';
 
 part 'search_history.g.dart';
 

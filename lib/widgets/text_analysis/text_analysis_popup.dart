@@ -1,16 +1,20 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
+import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
 
 /// A popup used for showing dictionary entries and translations. Given a
 /// text.
@@ -51,9 +55,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
   /// controller for the webview
-  InAppWebViewController? webController;
+  WebViewController? webViewController;
   /// controller for the tabbar
   late TabController popupTabController;
+  /// The last word that has been lookeup in the webview with deepl
+  String lastWebViewLookup = "";
 
 
   @override
@@ -61,24 +67,38 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     super.initState();
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
-    if(g_webViewSupported)
+    if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported){
+      tabNames.add(LocaleKeys.DojgScreen_title.tr());
+    }
+    if(g_webViewSupported){
       tabNames.add("Deepl");
+      webViewController = WebViewController()
+        ..setUserAgent(g_mobileUserAgentArg)
+        ..setJavaScriptMode(JavaScriptMode.unrestricted);
+    }
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
+    popupTabController.addListener(() {
+      updateWebview();
+    });
     widget.onInitialized?.call(popupTabController);
   }
 
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if(webController != null && oldWidget.text != widget.text)
-        await webController!.loadUrl(
-          urlRequest: URLRequest(
-            url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
-          )
-        );
+      updateWebview();
     });
     super.didUpdateWidget(oldWidget);
+  }
+
+  void updateWebview() async {
+    if(webViewController != null && lastWebViewLookup != widget.text) {
+      await webViewController!.loadRequest(
+        Uri.parse("$g_deepLUrl${widget.text}") 
+      );
+      lastWebViewLookup = widget.text;
+    }
   }
 
   @override
@@ -115,14 +135,9 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                       labelColor: Theme.of(context).highlightColor,
                       unselectedLabelColor: Colors.grey,
                       indicatorColor: Theme.of(context).highlightColor,
-                      onTap: (tabNo){
-                        /*if(tabNames[tabNo] != "Deepl"){
-                          webController = null;
-                        }*/
-                      },
                       tabs: List.generate(tabNames.length, (index) =>
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             tabNames[index],
                           ),
@@ -142,28 +157,25 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           isExpanded: true,
                           allowDeconjugation: widget.allowDeconjugation,
                         ),
+                        if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
+                            child: DoJG(
+                              false,
+                              false,
+                              initialSearch: widget.text,
+                              includeVolumeTags: false,
+                              key: Key(widget.text),
+                            ),
+                          ),
                         if(g_webViewSupported)
                           Card(
-                            child: InAppWebView(
-                              gestureRecognizers: 
-                                Set()..add(
-                                  Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                                ),
-                              initialUrlRequest: (
-                                URLRequest(
-                                  url: WebUri("$g_deepLUrl${widget.text}")  
-                                )
-                              ),
-                              onWebViewCreated: (controller) {
-                                webController = controller;
-
-                                webController!.loadUrl(
-                                  urlRequest: URLRequest(
-                                    url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
-                                  )
-                                );
-                              },
-                            ),
+                            child: WebViewWidget(
+                              controller: webViewController!,
+                              gestureRecognizers: {
+                                Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                              }
+                            )
                           )
                       ]
                     ),

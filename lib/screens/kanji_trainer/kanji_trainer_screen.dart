@@ -1,10 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kanji_trainer/kanji_drawing.dart';
-
-
 
 /// The screen for all kanji related functionalities
 class KanjiTrainerScreen extends StatefulWidget {
@@ -33,9 +33,9 @@ class _KanjiTrainerScreenState extends State<KanjiTrainerScreen> {
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
-      currentScreen: Screens.kanji_trainer,
+      currentScreen: Screens.kanjiTrainer,
       drawerClosed: !widget.openedByDrawer,
-      child: KanjiDrawingWidget(
+      child: const KanjiDrawingWidget(
     
       ),
     );

@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import "package:database_builder/database_builder.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import "package:database_builder/database_builder.dart";
 import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/iso/iso_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-
-
 
 /// A card that shows an example sentence
 class ExampleSentenceCard extends StatefulWidget {
@@ -102,6 +103,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                           ...[  
                             for (int i = 0; i < widget.matchSpans.length; i++)
                               ...[
+                                // before the word of th
                                 if(widget.matchSpans[i].item1 != 0)
                                   TextSpan(
                                     text: widget.sentences.sentence.substring(
@@ -109,18 +111,20 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                                       widget.matchSpans[i].item1,
                                     ),
                                   ),
+                                // the dict entry in bold
                                 TextSpan(
                                   text: widget.sentences.sentence.substring(
                                     widget.matchSpans[i].item1,
                                     widget.matchSpans[i].item2,
                                   ),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: g_japaneseFontFamily,
                                     fontWeight: FontWeight.bold
                                   )
                                 )
                               ],
-                            if(widget.matchSpans.last.item2 != widget.sentences.sentence)
+                            // after the dict entry
+                            if(widget.matchSpans.last.item2 != widget.sentences.sentence.length)
                               TextSpan(
                                 text: widget.sentences.sentence.substring(
                                   widget.matchSpans.last.item2,
@@ -135,7 +139,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                     )
                 )
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               ...translations.map((e) => 
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -149,7 +153,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                         ]!
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     SelectableText(e.sentence!)
                   ],
                 ),

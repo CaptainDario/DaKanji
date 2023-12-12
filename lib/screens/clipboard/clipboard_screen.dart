@@ -1,23 +1,26 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:clipboard_watcher/clipboard_watcher.dart';
 
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
-import 'package:da_kanji_mobile/globals.dart';
+// Project imports:
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
-
-
 
 /// Screen that listens to clipboard changes and displays them in a
 /// [TextAnalysisPopup]
@@ -43,9 +46,9 @@ class ClipboardScreen extends StatefulWidget {
 class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListener, WidgetsBindingObserver {
 
   /// Current state of the OS clipboard
-  ClipboardData currentClipboard = ClipboardData(text: "");
+  ClipboardData currentClipboard = const ClipboardData(text: "");
   /// Timer that refreshes the UI every 1s (android only)
-  late Timer refreshClipboardAndroid;
+  Timer? refreshClipboardTimer;
   /// Is the app currently set to be always on top
   bool isAlwaysOnTop = false;
   /// has the screen been initialized
@@ -68,15 +71,18 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     // android / iOS do not allow for continous clipboard reading
     //   -> periodically read clipboard till there is new value
     if(Platform.isAndroid || Platform.isIOS){
-      refreshClipboardAndroid = Timer.periodic(Duration(milliseconds: 500), (timer) async { 
+      refreshClipboardTimer = Timer.periodic(const 
+        Duration(milliseconds: 500), (timer) async { 
 
-        String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+          String data = (await Clipboard.getData('text/plain'))?.text ?? "";
 
-        if(data != "" && data != currentClipboard)
-          setState(() {
-            currentClipboard = ClipboardData(text: data);
+          if(data != "" && data != currentClipboard.text){
+            setState(() {
+              currentClipboard = ClipboardData(text: data);
+            });
           }
-      ); });
+        }
+      );
     }
     // on other platforms always listen to clipboard
     else{
@@ -89,20 +95,22 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
 
       // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialClipboard) {
-        showTutorial = true;
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
-        );
+      if(widget.includeTutorial){
+        final OnboardingState? onboarding = Onboarding.of(context);
+        if (onboarding != null && 
+          GetIt.I<UserData>().showTutorialClipboard) {
+          showTutorial = true;
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().clipboardScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!
+          );
+        }
       }
 
       // get current always on top state
-      if(g_desktopPlatform)
+      if(g_desktopPlatform) {
         isAlwaysOnTop = await WindowManager.instance.isAlwaysOnTop();
-
+      }
     });
     
     super.initState();
@@ -111,8 +119,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
 
   @override
   void dispose() {
-    if(Platform.isAndroid){
-      refreshClipboardAndroid.cancel();
+    if(refreshClipboardTimer != null){
+      refreshClipboardTimer!.cancel();
     }
     else{
       clipboardWatcher.removeListener(this);
@@ -121,15 +129,16 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
     }
 
     // reset the state of the always on top option
-    if(g_desktopPlatform)
+    if(g_desktopPlatform) {
       WindowManager.instance.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+    }
 
     super.dispose();
   }
 
   @override
   void onClipboardChanged() async {
-    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? ClipboardData(text: "");
+    currentClipboard = await Clipboard.getData(Clipboard.kTextPlain) ?? const ClipboardData(text: "");
     setState(() { });
   }
   
@@ -152,6 +161,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         children: [
           TextAnalysisPopup(
             text: currentClipboard.text!,
+            allowDeconjugation: GetIt.I<Settings>().clipboard.searchDeconjugate,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -181,8 +191,8 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         await windowManager.setAlwaysOnTop(isAlwaysOnTop);
 
       if(isAlwaysOnTop){
-        await windowManager.setSize(Size(300, 300));
-        await windowManager.setMinimumSize(Size(300, 300));
+        await windowManager.setSize(const Size(300, 300));
+        await windowManager.setMinimumSize(const Size(300, 300));
         await windowManager.setAsFrameless();
       }
       else {

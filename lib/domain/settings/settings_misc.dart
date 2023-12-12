@@ -1,9 +1,16 @@
+// Dart imports:
+import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 part 'settings_misc.g.dart';
 
@@ -37,15 +44,21 @@ class SettingsMisc with ChangeNotifier {
     LocaleKeys.DrawScreen_title,
     LocaleKeys.DictionaryScreen_title,
     LocaleKeys.TextScreen_title,
+    LocaleKeys.DojgScreen_title,
+    LocaleKeys.ClipboardScreen_title
   ];
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<Screens> startupScreens = [
     Screens.drawing,
     Screens.dictionary,
     Screens.text,
+    Screens.dojg,
+    Screens.clipboard,
   ];
 
+  /// The default for the startup screen
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_selectedStartupScreen = 2;
   /// string denoting the screen that should be loaded at app start
   @JsonKey(defaultValue: d_selectedStartupScreen)
@@ -61,6 +74,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `windowWidth`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_windowWidth = 480;
   /// width of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -69,6 +83,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `windowHeight`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_windowHeight = 720;
   /// height of the current window
   @JsonKey(defaultValue: d_windowWidth)
@@ -77,6 +92,7 @@ class SettingsMisc with ChangeNotifier {
 
   /// The default value for `selectedTheme` 
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const String d_selectedTheme = LocaleKeys.General_system;
   /// The theme which the application will use.
   /// System will match the settings of the system.
@@ -117,20 +133,44 @@ class SettingsMisc with ChangeNotifier {
   }
 
   /// Order of the items in the drawer
-  @JsonKey(defaultValue: const [])
-  List<int> _drawerItemOrder = [];
-  /// Order of the items in the drawer
-  List<int> get drawerItemOrder => _drawerItemOrder;
-  /// Order of the items in the drawer
-  set drawerItemOrder(List<int> newOrder){
-    _drawerItemOrder = newOrder;
-    //notifyListeners();
+  @JsonKey(defaultValue: [])
+  List<int> drawerItemOrder = [];
+
+
+  /// All valid values for `sharingScheme`
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  List<String> sharingSchemes = [g_AppLinkHttps, g_AppLinkDaKanji];
+  /// The default value for `sharingScheme`
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  // ignore: constant_identifier_names
+  static const String d_sharingScheme = g_AppLinkHttps;
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platforms excepet linux
+  @JsonKey(defaultValue: d_sharingScheme)
+  String _sharingScheme = d_sharingScheme;
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platforms excepet linux
+  String get sharingScheme => _sharingScheme;
+  /// The currently selected sharing scheme, defaults to `https://` on all
+  /// platforms excepet linux
+  set sharingScheme(String newSharingScheme){
+    if(!sharingSchemes.contains(newSharingScheme)){
+      throw Exception("$newSharingScheme is not a valid scheme, use one of $sharingSchemes");
+    }
+
+    _sharingScheme = newSharingScheme;
+    notifyListeners();
   }
+  
 
 
   SettingsMisc (){
     selectedTheme = LocaleKeys.General_system;
     selectedStartupScreen = 1;
+
+    if(Platform.isLinux){
+      sharingScheme = sharingSchemes[1];
+    }
   }
 
   ThemeMode? selectedThemeMode() {

@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// A button that is used to open a manual page
 class ManualButton extends StatelessWidget {
@@ -31,7 +30,7 @@ class ManualButton extends StatelessWidget {
       child: Card(
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
-          onTap: this.onPressed,
+          onTap: onPressed,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,10 +39,10 @@ class ManualButton extends StatelessWidget {
                   icon,
                   size: 100,
                 ),
-                SizedBox(height: 2,),
+                const SizedBox(height: 2,),
                 Text(
                   text,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16
                   ),
                 ),

@@ -1,19 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 
+// Package imports:
+import 'package:get_it/get_it.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tuple/tuple.dart';
-
-import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
-import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
-import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
-import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
 import 'package:universal_io/io.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
+import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_data.dart';
+import 'package:da_kanji_mobile/domain/drawing/drawing_isolate.dart';
+import 'package:da_kanji_mobile/domain/tf_lite/inference_stats.dart';
+import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 
 /// The tf lite interpreter to recognize the hand drawn kanji characters.
 /// 
@@ -49,7 +50,7 @@ class DrawingInterpreter with ChangeNotifier{
   }
 
   /// Message that it printed when the instance accessed but was not initialized
-  String _notInitializedMessage =
+  final String _notInitializedMessage =
     "You are trying to use the interpreter before it was initialized!\n"
     "Execute init() first!";
 
@@ -63,7 +64,7 @@ class DrawingInterpreter with ChangeNotifier{
   {
 
     if(wasInitialized){
-      print("${this.name} already initialized. Skipping init.");
+      debugPrint("$name already initialized. Skipping init.");
       return;
     }
     
@@ -93,19 +94,21 @@ class DrawingInterpreter with ChangeNotifier{
   /// available on this platform.
   Future<InferenceBackend> getBackend() async {
 
-    InferenceBackend iB;
+    InferenceBackend iB = InferenceBackend.cpu_1;
 
     // check if the backend was already tested -> return it if true
     if(GetIt.I<UserData>().drawingBackend != null) {
       iB = GetIt.I<UserData>().drawingBackend!;
     }
-    // Otherwise, find the best available backend and load the model
+    // Otherwise, on single core return CPU_1, otherwise use some cores
     else {
-      // on single core return CPU_1
-      if(Platform.numberOfProcessors == 1)
-        iB = getCPUFromString("CPU_1");
-      else
-        iB = getCPUFromString("CPU_${Platform.numberOfProcessors ~/ 2}");
+      if(Platform.numberOfProcessors == 2) {
+        iB = InferenceBackend.cpu_2;
+      } if(Platform.numberOfProcessors == 3) {
+        iB = InferenceBackend.cpu_3;
+      } if(Platform.numberOfProcessors > 3) {
+        iB = InferenceBackend.cpu_4;
+      } 
     }
 
     return iB;
@@ -138,10 +141,10 @@ class DrawingInterpreter with ChangeNotifier{
 
       // store the best backend to disk
       iB = tests.first.key;
-      print("Inference timings for Drawing: $tests");
+      debugPrint("Inference timings for Drawing: $tests");
     }
     
-    print("Using: ${iB}");
+    debugPrint("Using: $iB");
     return iB;
   }
 
@@ -177,7 +180,7 @@ class DrawingInterpreter with ChangeNotifier{
   /// Frees all used resources
   void free() {
     if(!wasInitialized){
-     print(_notInitializedMessage);
+     debugPrint(_notInitializedMessage);
       return;
     }
 

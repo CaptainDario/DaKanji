@@ -1,11 +1,10 @@
 
 
+// Package imports:
 import 'package:collection/collection.dart';
-import 'package:tuple/tuple.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
-
-
+import 'package:tuple/tuple.dart';
 
 /// Sorts a list of Jmdict entries given a query text. The order is determined
 /// by those sorting criteria:
@@ -37,8 +36,9 @@ List<List<JMdict>> sortJmdictList(
       Tuple3 ranked = rankMatches([entry.kanjiIndexes], queryText);
       
       // READING matched
-      if(ranked.item1 == -1)
+      if(ranked.item1 == -1) {
         ranked = rankMatches([entry.hiraganas], queryKana ?? queryText);
+      }
       
       // MEANING matched
       if(ranked.item1 == -1){
@@ -134,10 +134,10 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
   );
 
   combined.sort(
-    (_a, _b) {
+    (a, b) {
       // sort by index of entry match
-      if(_a.item2 != _b.item2){
-        return _a.item2.compareTo(_b.item2);
+      if(a.item2 != b.item2){
+        return a.item2.compareTo(b.item2);
       }
       else{
         // sort by difference in length
@@ -146,7 +146,7 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
         //}
         // sort by frequency
         //else {
-          return -_a.item1.frequency.compareTo(_b.item1.frequency);
+          return -a.item1.frequency.compareTo(b.item1.frequency);
         //}
       }
     }
@@ -171,10 +171,11 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
   bool containsWildcard = query.contains(RegExp(r"\?|\*"));
 
   QueryBuilder<JMdict, JMdict, QFilterCondition> q;
-  if(!containsWildcard)
+  if(!containsWildcard) {
     q = normalQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);
-  else
-    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);    
+  } else {
+    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);
+  }    
 
   return q
     // apply filters

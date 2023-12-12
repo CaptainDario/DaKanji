@@ -1,11 +1,52 @@
 
 # DaKanji - changelog
 
+## v3.2.0+74 - 文法 (4.12.2023)
+
+New Features:
+
+- Deep Links:
+  - Directly open dakanji with dakanji:// or https://dakanji.app/app/
+  - Share dictionary and DoJG entries
+  - See the manual for more info
+- Dictionary
+  - Animated Kanji stroke order diagrams
+- Text
+  - Selection buttons
+  - Copy button
+  - Paste button
+  - Automatic DoJG lookup
+  - Added settings
+- Brand new website https://dakanji.app
+- Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
+
+- By popular request:
+  - flatpak support
+
+Improvements:
+
+- Radical ui layout on narrow screens
+- Improved data unpacking: UI does not freeze and progress message is shown
+- Warn the user when downgrading versions
+- Radical search speed improved
+- Onboarding UI and performance
+- Various UI and performance improvements
+
+Fixed:
+
+- #64 Examples sometimes repeating
+- #62 Pitch accent still bugged
+- #67 Clipboard screen: search not closable
+
+-------------------------------------------------------------------------
+
 ## v3.1.1+60 - 辞書開発 (18.9.2023)
 
 Hotfixes:
 
 - Drawing not working on android devices
+
+-------------------------------------------------------------------------
 
 ## v3.1.0+58 - 辞書開発 (13.9.2023)
 
@@ -92,6 +133,8 @@ Fixed:
 
 - Selecting an inference backend (iOS, Android)
 
+-------------------------------------------------------------------------
+
 ## v 2.0.1 - 隈なく (24.04.2022)
 
 new Features:
@@ -169,11 +212,15 @@ Fixed:
 
 - double tap to clear canvas
 
+-------------------------------------------------------------------------
+
 ## v 1.2.1 - アニメ (20.05.2021)
 
 Fixed:
 
 - deleting strokes sometimes disabled drawing
+
+-------------------------------------------------------------------------
 
 ## v 1.2.0 - アニメ (18.05.2021)
 
@@ -235,11 +282,15 @@ Fixed:
 
 - a localized link to the play store
 
+-------------------------------------------------------------------------
+
 ## v 1.0.3 (16.03.2021)
 
 Fixed:
 
 - opening web dictionaries not working on most devices
+
+-------------------------------------------------------------------------
 
 ## v 1.0.2 (13.03.2021)
 
@@ -247,12 +298,16 @@ Fixed:
 
 - minor fixes to make app release ready
 
+-------------------------------------------------------------------------
+
 ## v 1.0.1 (11.03.2021)
 
 changes:
 
 - use improved AI from DaKanjiRecognizer v1.1
 - better image processing before feeding images to CNN
+
+-------------------------------------------------------------------------
 
 ## v 1.0.0 - 初め (23.02.2021)
 

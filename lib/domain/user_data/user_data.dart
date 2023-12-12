@@ -1,10 +1,17 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/domain/releases/version.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 part 'user_data.g.dart';
@@ -34,6 +41,10 @@ class UserData{
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool newVersionUsed = false;
 
+  /// Does the user use am older version than before
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool olderVersionUsed = false;
+
   /// Should new dictionary be downloaded / copied from the assets folder
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool getNewDict = false;
@@ -60,6 +71,10 @@ class UserData{
   /// should the tutorial of the text screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialText = true;
+
+  /// should the tutorial of the dictionary screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialDojg = true;
 
   /// should the tutorial of the clipboard screen be shown
   @JsonKey(defaultValue: true)
@@ -89,6 +104,14 @@ class UserData{
   @JsonKey(defaultValue: false)
   bool showChangelog = false;
 
+  /// Has the dictionary of japanese grammar anki deck (w/o media) been imported
+  @JsonKey(defaultValue: false)
+  bool dojgImported = false;
+
+  /// Has the dictionary of japanese grammar anki deck (w/ media) been imported
+  @JsonKey(defaultValue: false)
+  bool dojgWithMediaImported = false;
+
   /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)
   InferenceBackend? drawingBackend;
@@ -108,14 +131,13 @@ class UserData{
 
     appOpenedTimes++;
 
-    print("The app was opened for the ${appOpenedTimes.toString()} time");
+    debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
 
     // a different version than last time is being used (test with version = 0.0.0)
-    print("used: $versionUsed now: $g_Version");
-    if(versionUsed == null) 
-      versionUsed = Version(0, 0, 0);
+    debugPrint("used: $versionUsed now: $g_Version");
+    versionUsed ??= Version(0, 0, 0);
     if(versionUsed! < g_Version && appOpenedTimes > 1){
-      newVersionUsed = true;print("New version installed");
+      newVersionUsed = true;debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
       
@@ -140,6 +162,9 @@ class UserData{
         getNewRadicals = true;
       }
     }
+    if(versionUsed! > g_Version){
+
+    }
     versionUsed = g_Version;
 
     // this is the first start of the app
@@ -150,7 +175,7 @@ class UserData{
 
     // should a rate popup be shown
     if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
-     print("show rate dialogue");
+     debugPrint("show rate dialogue");
       showRateDialog = true;
     }
 
@@ -185,7 +210,8 @@ class UserData{
         return UserData();
       }
     }
-    on Exception {
+    catch (e) {
+      Sentry.captureException(e);
       return UserData();
     }
   }

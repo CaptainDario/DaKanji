@@ -1,23 +1,26 @@
+// Dart imports:
 import 'dart:math';
 import 'dart:ui';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
-
-
+import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
 
 class KanaTableScreen extends StatefulWidget {
   
@@ -90,7 +93,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250)
+      duration: const Duration(milliseconds: 250)
     );
 
     super.initState();
@@ -98,16 +101,18 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
 
-      // init tutorial
-      final OnboardingState? onboarding = Onboarding.of(context);
-      
-      if (onboarding != null && widget.includeTutorial && 
-        GetIt.I<UserData>().showTutorialKanaTable) {
-        onboarding.showWithSteps(
-          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![0],
-          GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!
-        );
-        onboarding.controller.addListener(() => tutorialToggleSpeedDial(onboarding));
+      if(widget.includeTutorial){
+        // init tutorial
+        final OnboardingState? onboarding = Onboarding.of(context);
+        
+        if (onboarding != null && widget.includeTutorial && 
+          GetIt.I<UserData>().showTutorialKanaTable) {
+          onboarding.showWithSteps(
+            GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!
+          );
+          onboarding.controller.addListener(() => tutorialToggleSpeedDial(onboarding));
+        }
       }
     });
   }
@@ -139,10 +144,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
       isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
       showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
       showSpecial     ? "special_on.svg"  : "special_off.svg", 
-    ].map((e) => "assets/icons/kana/" + e).toList();
+    ].map((e) => "assets/icons/kana/$e").toList();
 
     return DaKanjiDrawer(
-      currentScreen: Screens.kana_table,
+      currentScreen: Screens.kanaTable,
       drawerClosed: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -156,7 +161,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               icon: Icons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
-              iconTheme: IconThemeData(color: Colors.white),
+              iconTheme: const IconThemeData(color: Colors.white),
               backgroundColor: g_Dakanji_green,
               activeBackgroundColor: g_Dakanji_red,
               spacing: 10,
@@ -237,7 +242,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         setState(() {
                           _controller.reverse(from: 1).then(
                             (value) {
-                              Future.delayed(Duration(milliseconds: 50), () {
+                              Future.delayed(const Duration(milliseconds: 50), () {
                                 setState(() {
                                   currentKana = null;
                                 });
@@ -295,11 +300,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
     // portrait
     if(constraints.maxWidth < constraints.maxHeight){
-      this._setPortraiKanaTable(constraints);
+      _setPortraiKanaTable(constraints);
     }
     // landscape
     else {
-      this._setLandscapeKanaTable(constraints); 
+      _setLandscapeKanaTable(constraints); 
     }
   }
 
@@ -316,10 +321,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     // combinations (normal)
     if(constraints.maxWidth > 800){
       List<List<String>> yoon = isHiragana ? hiraYoon : kataYoon;
-      if(constraints.maxHeight > 1000)
+      if(constraints.maxHeight > 1000) {
         yoon += isHiragana
           ? hiraYoonDakuten + hiraYoonHandakuten
           : kataYoonDakuten + kataYoonHandakuten;
+      }
 
       for (int i = 0; i < yoon.length; i++) {
         kanaTable[i].addAll(yoon[i].where((e) => e != ""));

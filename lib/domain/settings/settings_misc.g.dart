@@ -13,8 +13,11 @@ SettingsMisc _$SettingsMiscFromJson(Map<String, dynamic> json) => SettingsMisc()
   ..selectedTheme = json['selectedTheme'] as String
   ..alwaysOnTop = json['alwaysOnTop'] as bool
   ..windowOpacity = (json['windowOpacity'] as num).toDouble()
-  ..drawerItemOrder =
-      (json['drawerItemOrder'] as List<dynamic>).map((e) => e as int).toList();
+  ..drawerItemOrder = (json['drawerItemOrder'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList() ??
+      []
+  ..sharingScheme = json['sharingScheme'] as String;
 
 Map<String, dynamic> _$SettingsMiscToJson(SettingsMisc instance) =>
     <String, dynamic>{
@@ -25,4 +28,5 @@ Map<String, dynamic> _$SettingsMiscToJson(SettingsMisc instance) =>
       'alwaysOnTop': instance.alwaysOnTop,
       'windowOpacity': instance.windowOpacity,
       'drawerItemOrder': instance.drawerItemOrder,
+      'sharingScheme': instance.sharingScheme,
     };

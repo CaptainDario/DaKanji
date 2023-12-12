@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 part 'settings_advanced.g.dart';
@@ -16,6 +18,7 @@ class SettingsAdvanced with ChangeNotifier {
 
   /// The default value for `useThanosSnap`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_useThanosSnap = false;
   /// use a thanos like snap effect to dissolve the drawing from the screen
   @JsonKey(defaultValue: d_useThanosSnap)
@@ -28,7 +31,9 @@ class SettingsAdvanced with ChangeNotifier {
     notifyListeners();
   }
 
+  /// the default for `noOfSearchIsolates`
   @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const int d_noOfSearchIsolates = 2;
   /// The number of isolates to use for searching in the database
   @JsonKey(defaultValue: d_noOfSearchIsolates)

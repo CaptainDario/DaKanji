@@ -1,17 +1,18 @@
+// Flutter imports:
 import "package:flutter/material.dart";
 
-import 'package:tuple/tuple.dart';
+// Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:tuple/tuple.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait_with_webview.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape_with_webview.dart';
-
-
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
+import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait_with_webview.dart';
 
 // Widget which builds the DrawScreen matching the current screen orientation
 class DrawScreenResponsiveLayout extends StatelessWidget {
@@ -23,7 +24,7 @@ class DrawScreenResponsiveLayout extends StatelessWidget {
   final Widget clearButton;
   final double canvasSize;
   final DrawScreenLayout layout;
-  final InAppWebView? webView;
+  final WebViewWidget? webView;
 
   const DrawScreenResponsiveLayout(
     this.drawingCanvas,

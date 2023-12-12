@@ -1,20 +1,24 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:archive/archive_io.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
-import 'package:archive/archive_io.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:universal_io/io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:path/path.dart' as p;
+import 'package:tuple/tuple.dart';
+import 'package:universal_io/io.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
-import 'package:da_kanji_mobile/globals.dart';
-
-
 
 /// Tries to copy `asset` from assets and if that fails,
 /// downloads it from `url` (github). `path` is the destination folder inside of
@@ -26,13 +30,15 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   BuildContext context, bool askToDownload) async
 {
   // Search and create db file destination folder if not exist
-  final documentsDirectory = await path_provider.getApplicationDocumentsDirectory();
 
   // if the file already exists delete it
-  final file = File(p.joinAll([documentsDirectory.path, "DaKanji", ...asset.path.split("/")]));
+  final file = File(p.joinAll([
+      g_DakanjiPathManager.dakanjiDocumentsDirectory.path,
+      ...asset.path.split("/")
+    ]));
   if (file.existsSync()) {
     file.deleteSync();
-    print("Deleted ${asset.uri.pathSegments.last}");
+    debugPrint("Deleted ${asset.uri.pathSegments.last}");
   }
   // otherwise create the folder structure
   else{
@@ -40,14 +46,16 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   }
 
   try {
-    await copyFromAssets(asset.path, file.parent);
+    await copyFromAssets(asset, file.parent);
   }
   catch (e){
-    if(askToDownload)
+    if(askToDownload) {
+      // ignore: use_build_context_synchronously
       await downloadPopup(
         context: context,
         btnOkOnPress: () {}
       ).show();
+    }
 
     while(true){
       try{
@@ -55,6 +63,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         break;
       }
       catch (e){
+        // ignore: use_build_context_synchronously
         await AwesomeDialog(
           context: context,
           headerAnimationLoop: false,
@@ -64,7 +73,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
           dialogType: DialogType.noHeader,
           btnOkOnPress: (){}
         ).show();
-        print("Download failed, retrying...");
+        debugPrint("Download failed, retrying...");
       }
     }
   }
@@ -74,15 +83,30 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 /// and unzips it, if it does not exist already
 /// 
 /// Caution: throws exception if the asset does not exist
-Future<void> copyFromAssets(String assetPath,  Directory dest) async {
+Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
 
-  assetPath = assetPath.split(".").first + ".zip";
-  print(assetPath);
+  String assetPathString = "${assetPath.path.split(".").first}.zip";
+  debugPrint(assetPathString);
 
   // Get the zipped file from assets
-  ByteData data = await rootBundle.load(assetPath);
+  ByteData data = await rootBundle.load(assetPathString);
   final archive = ZipDecoder().decodeBytes(data.buffer.asInt8List());
-  extractArchiveToDisk(archive, dest.path);
+  g_initAppInfoStream.add(
+    "Unpacking: ${p.withoutExtension(assetPath.uri.pathSegments.lastWhere((e) => e!=""))}");
+
+  await compute(
+    extractAssetArchiveToDisk,
+    Tuple2(archive, dest.path),
+    debugLabel: "Extraction isolate: ${dest.uri}"
+  );
+
+}
+
+/// Wrapper for `extractArchiveToDisk` to run it in an isolate
+void extractAssetArchiveToDisk(Tuple2 params){
+
+  extractArchiveToDisk(params.item1, params.item2);
+
 }
 
 /// Downloads the given `assetName` from the GitHub (`url`), uses the release
@@ -93,13 +117,13 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   Dio dio = Dio(); String downloadUrl = "";
   Response response = await dio.get(url);
   String extension = destination.uri.pathSegments.last.split(".").length > 1
-    ? "." + destination.uri.pathSegments.last.split(".").last
+    ? ".${destination.uri.pathSegments.last.split(".").last}"
     : "";
 
   // iterate over the releases
   for (var release in response.data){
     // if the version number matches the current version
-    if(release["tag_name"] == "v" + g_Version.versionString){
+    if(release["tag_name"] == "v${g_Version.versionString}"){
       // iterate over the assets in this release
       for (var element in release["assets"]) {
         if((element["name"] as String).startsWith(destination.uri.pathSegments.last.replaceAll(extension, ""))) {
@@ -113,24 +137,24 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   // download the asset
   String fileName = destination.uri.pathSegments.last;
   await Dio().download(
-    downloadUrl, destination.path + ".zip",
+    downloadUrl, "${destination.path}.zip",
     onReceiveProgress: (received, total) {
       if (total != -1) {
         String progress =
-          "${fileName.split(".")[0]}: ${(received / total * 100).toStringAsFixed(0) + "%"}";
-        g_downloadFromGHStream.add(progress);
+          "${fileName.split(".")[0]}: ${"${(received / total * 100).toStringAsFixed(0)}%"}";
+        g_initAppInfoStream.add(progress);
       }
     }
   );
-  print("Downloaded ${fileName} to ${destination.path}");
+  debugPrint("Downloaded $fileName to ${destination.path}");
 
   // unzip the asset
   await extractFileToDisk(
-    destination.path + ".zip",
+    "${destination.path}.zip",
     destination.parent.path
   );
-  print("Extracted $destination");
+  debugPrint("Extracted $destination");
   
   // delete the zip file
-  File(destination.path + ".zip").deleteSync();
+  File("${destination.path}.zip").deleteSync();
 }

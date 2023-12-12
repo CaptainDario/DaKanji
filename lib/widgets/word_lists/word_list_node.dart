@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -9,23 +14,21 @@ import 'package:isar/isar.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Project imports:
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-
-
 
 enum  PopupMenuButtonItems {
-  Rename,
-  Delete,
-  SendToAnki,
-  ToPdf
+  rename,
+  delete,
+  sendToAnki,
+  toPdf
 }
 
 class WordListNode extends StatefulWidget {
@@ -73,7 +76,7 @@ class WordListNode extends StatefulWidget {
 
 class _WordListNodeState extends State<WordListNode> {
   /// The text controller for the name editing text field
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   /// is the name of the folder currently being edited
   bool nameEditing = false;
   /// Focus node for the name editing text field
@@ -126,8 +129,10 @@ class _WordListNodeState extends State<WordListNode> {
             if(data == null ||
               data == widget.node || // ... in itself
               wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
-              widget.node.getPath().contains(data)) // ... in a child
+              widget.node.getPath().contains(data)) {
+              // ... in a child
               return false;
+            }
     
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
@@ -188,7 +193,7 @@ class _WordListNodeState extends State<WordListNode> {
                 onTap: () {
                   if(widget.onTap != null){
                     widget.onTap!(widget.node);
-                  };
+                  }
                 },
                 child: Row(
                   children: [
@@ -207,11 +212,11 @@ class _WordListNodeState extends State<WordListNode> {
                           widget.onFolderPressed?.call(widget.node);
                         },
                       )
-                      : Container(
+                      : const SizedBox(
                         width: 48,
                         child: Icon(Icons.list)
                       ),
-                    SizedBox(width: 8.0,),
+                    const SizedBox(width: 8.0,),
                     Expanded(
                       child: TextField(
                         autofocus: true,
@@ -245,7 +250,7 @@ class _WordListNodeState extends State<WordListNode> {
     
                           setState(() {
                             widget.node.value.isChecked = value;
-                            widget.node.DFS().forEach((element) {
+                            widget.node.dfs().forEach((element) {
                               element.value.isChecked = value;
                             });
                           });
@@ -253,19 +258,19 @@ class _WordListNodeState extends State<WordListNode> {
                           widget.onSelectedToggled!.call(widget.node);
                         }
                       ),
-                    if(!wordListDefaultTypes.contains(widget.node.value.type.name.contains("Default")))
+                    if(!wordListDefaultTypes.contains(widget.node.value.type))
                       PopupMenuButton<PopupMenuButtonItems>(
                         onSelected: (PopupMenuButtonItems value) {
                           switch(value){
-                            case PopupMenuButtonItems.Rename:
+                            case PopupMenuButtonItems.rename:
                               renameButtonPressed();
                               break;
-                            case PopupMenuButtonItems.Delete:
+                            case PopupMenuButtonItems.delete:
                               deleteButtonPressed();
                               break;
-                            case PopupMenuButtonItems.SendToAnki:
+                            case PopupMenuButtonItems.sendToAnki:
                               break;
-                            case PopupMenuButtonItems.ToPdf:
+                            case PopupMenuButtonItems.toPdf:
                               toPDFPressed();
                               break;
                           }
@@ -273,28 +278,28 @@ class _WordListNodeState extends State<WordListNode> {
                         itemBuilder: (context) => [
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.Rename,
+                              value: PopupMenuButtonItems.rename,
                               child: Text(
                                 LocaleKeys.WordListsScreen_rename.tr(),
                               )
                             ),
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.Delete,
+                              value: PopupMenuButtonItems.delete,
                               child: Text(
                                 LocaleKeys.WordListsScreen_delete.tr(),
                               )
                             ),
                           if(wordListListypes.contains(widget.node.value.type))
                             ...[
-                              PopupMenuItem(
-                                value: PopupMenuButtonItems.SendToAnki,
+                              const PopupMenuItem(
+                                value: PopupMenuButtonItems.sendToAnki,
                                 child: Text(
                                   "Send to anki"
                                 )
                               ),
-                              PopupMenuItem(
-                                value: PopupMenuButtonItems.ToPdf,
+                              const PopupMenuItem(
+                                value: PopupMenuButtonItems.toPdf,
                                 child: Text(
                                   "To PDF"
                                 )
@@ -350,6 +355,7 @@ class _WordListNodeState extends State<WordListNode> {
 
     pw.Document pdf = await pdfPortrait();
 
+    // ignore: use_build_context_synchronously
     await AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,
@@ -361,11 +367,11 @@ class _WordListNodeState extends State<WordListNode> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: PdfPreview(
-                loadingWidget: DaKanjiLoadingIndicator(),
+                loadingWidget: const DaKanjiLoadingIndicator(),
                 actions: [
                   // to portrait
                   IconButton(
-                    icon: Icon(Icons.description),
+                    icon: const Icon(Icons.description),
                     onPressed: () async {
                       pdf = await pdfPortrait();
                       setState(() {});
@@ -375,7 +381,7 @@ class _WordListNodeState extends State<WordListNode> {
                   IconButton(
                     icon: Transform.rotate(
                       angle: 90 * pi / 180,
-                      child: Icon(Icons.description)
+                      child: const Icon(Icons.description)
                     ),
                     onPressed: () async {
                       pdf = await pdfLandscape();
@@ -384,13 +390,13 @@ class _WordListNodeState extends State<WordListNode> {
                   ),
                   IconButton(
                     onPressed: () {}, 
-                    icon: Icon(Icons.more_vert)
+                    icon: const Icon(Icons.more_vert)
                   )
                 ],
                 canChangeOrientation: false,
                 canChangePageFormat: false,
                 
-                pdfFileName: widget.node.value.name + ".pdf",
+                pdfFileName: "${widget.node.value.name}.pdf",
                 build: (format) {
                   return pdf.save();
                 }
@@ -464,7 +470,7 @@ class _WordListNodeState extends State<WordListNode> {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         orientation: pw.PageOrientation.portrait,
-        margin: pw.EdgeInsets.all(16),
+        margin: const pw.EdgeInsets.all(16),
         footer: (context) {
           return pdfFooter(context, dakanjiLogo);
         },
@@ -527,8 +533,8 @@ class _WordListNodeState extends State<WordListNode> {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            '${widget.node.value.name}',
-            style: pw.TextStyle(
+            widget.node.value.name,
+            style: const pw.TextStyle(
               color: PdfColors.grey,
               fontSize: 10,
             ),
@@ -542,7 +548,7 @@ class _WordListNodeState extends State<WordListNode> {
           ),
           pw.Text(
             'Page: ${context.pageNumber} of ${context.pagesCount}',
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               color: PdfColors.grey,
               fontSize: 10,
             ),
@@ -573,7 +579,7 @@ class _WordListNodeState extends State<WordListNode> {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4.landscape,
         orientation: pw.PageOrientation.landscape,
-        margin: pw.EdgeInsets.all(32),
+        margin: const pw.EdgeInsets.all(32),
         footer: (context) {
           return pdfFooter(context, dakanjiLogo);
         },

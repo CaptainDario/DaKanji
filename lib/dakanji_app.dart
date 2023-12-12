@@ -1,37 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
+// Project imports:
+import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/data/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/data/theme/light_theme.dart';
 import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
-import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
-import 'package:da_kanji_mobile/screens/test/test_screen.dart';
-import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/screens/about/about_screen.dart';
-import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/routing.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-
-
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
@@ -39,7 +24,7 @@ class DaKanjiApp extends StatefulWidget {
   const DaKanjiApp({Key? key}) : super(key: key);
 
   @override
-  _DaKanjiAppState createState() => _DaKanjiAppState();
+  State<DaKanjiApp> createState() => _DaKanjiAppState();
 }
 
 class _DaKanjiAppState extends State<DaKanjiApp> {
@@ -59,7 +44,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       locale: context.locale,
       navigatorKey: g_NavigatorKey,
       navigatorObservers: [
-        SentryNavigatorObserver()
+        SentryNavigatorObserver(),
       ],
       
       onGenerateRoute: (settings) {
@@ -73,44 +58,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
                   globalOnboarding: true,
                   autoSizeTexts: true,
                   steps: GetIt.I<Tutorials>().getSteps(),
-                  onChanged: (int index) async {
-                    print("Tutorial step: $index");
-                    if(index == GetIt.I<Tutorials>().drawScreenTutorial.indexes!.last){
-                      print("DrawScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialDrawing = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().dictionaryScreenTutorial.indexes!.last){
-                      print("DictionaryScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialDictionary = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
-                      print("TextScreen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialText = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().clipboardScreenTutorial.indexes!.last){
-                      print("Clipboard screen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialClipboard = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
-                      print("Kanji table screen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialKanjiTable = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
-                      print("Kana table screen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialKanaTable = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                    else if(index == GetIt.I<Tutorials>().wordListsScreenTutorial.indexes!.last){
-                      print("Word lists screen tutorial done, saving...");
-                      GetIt.I<UserData>().showTutorialWordLists = false;
-                      await GetIt.I<UserData>().save();
-                    }
-                  },
+                  onChanged: onTutorialStep,
                   child: screen,
                 );
             },
@@ -120,61 +68,14 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
           );
 
         // check type and extract arguments
-        NavigationArguments args;
+        NavigationArguments args = NavigationArguments(false);
 
         if((settings.arguments is NavigationArguments)){
           args = settings.arguments as NavigationArguments;
         }
-        else{
-          args = NavigationArguments(false);
-        }
 
-        switch(settings.name){
-          case "/home":
-            return switchScreen(const HomeScreen());
-          case "/onboarding":
-            return switchScreen(const OnBoardingScreen());
-          case "/drawing":
-            return switchScreen(DrawScreen(
-              args.navigatedByDrawer, args.drawSearchPrefix,
-              args.drawSearchPostfix, true, true
-            ));
-          case "/dictionary":
-            return switchScreen(DictionaryScreen(
-              args.navigatedByDrawer, true, args.initialDictSearch,
-              initialEntryId: args.initialEntryId,
-            ));
-          case "/text":
-            return switchScreen(TextScreen(
-              args.navigatedByDrawer, true, 
-              initialText: args.initialText,
-            ));
-          case "/clipboard":
-            return switchScreen(ClipboardScreen(args.navigatedByDrawer, true));
-          case "/kanji_trainer":
-            return switchScreen(KanjiTrainerScreen(args.navigatedByDrawer, true));
-          case "/kanji_table":
-            return switchScreen(KanjiTableScreen(args.navigatedByDrawer, true));
-          case "/kana_table":
-            return switchScreen(KanaTableScreen(args.navigatedByDrawer, true));
-          case "/kana_trainer":
-            return switchScreen(KanaTrainerScreen(args.navigatedByDrawer));
-          case "/kuzushiji":
-            return switchScreen(KuzushijiScreen(args.navigatedByDrawer, true));
-          case "/word_lists":
-            return switchScreen(WordListsScreen(args.navigatedByDrawer, true));
-          case "/settings":
-            return switchScreen(SettingsScreen(args.navigatedByDrawer));
-          case "/about":
-            return switchScreen(AboutScreen(args.navigatedByDrawer));
-          case "/changelog":
-            return switchScreen(const ChangelogScreen());
-          case "/manual":
-            return switchScreen(ManualScreen(args.navigatedByDrawer));
-          case "/testScreen":
-            return switchScreen(TestScreen());
-        }
-        throw UnsupportedError("Unknown route: ${settings.name}");
+        return switchScreen(getWidgetFromScreen(settings.name, args));
+        
       },
 
       title: g_AppTitle,

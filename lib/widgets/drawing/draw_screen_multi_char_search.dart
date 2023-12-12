@@ -1,15 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
 import 'package:da_kanji_mobile/widgets/drawing/kanji_buffer_widget.dart';
-
-
+import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 
 class DrawScreenMultiCharSearch extends StatelessWidget {
   const DrawScreenMultiCharSearch(
@@ -49,9 +50,9 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
           );
           if (includeHeroes) {
             tpmWidget = Hero(
-              tag: "webviewHero_b_" + (kanjiBuffer.kanjiBuffer == "" 
+              tag: "webviewHero_b_${kanjiBuffer.kanjiBuffer == "" 
                 ? "Buffer" 
-                : kanjiBuffer.kanjiBuffer),
+                : kanjiBuffer.kanjiBuffer}",
               child: tpmWidget
             );
           }

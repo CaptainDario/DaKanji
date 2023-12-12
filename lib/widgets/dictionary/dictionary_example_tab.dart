@@ -1,22 +1,25 @@
+// Dart imports:
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:mecab_dart/mecab_dart.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:tuple/tuple.dart';
 
-import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+// Project imports:
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-
-
 
 class DictionaryExampleTab extends StatefulWidget {
 
@@ -39,7 +42,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   /// A list of all example sentences that contain the given entry
   List<ExampleSentence> examples = [];
   /// The future that searches for examples in an isolate
-  Future<List<ExampleSentence>>? examplesSearch = null;
+  Future<List<ExampleSentence>>? examplesSearch;
   /// A spans (start, end) that matched the current dict entry
   List<List<Tuple2<int, int>>> matchSpans = [];
 
@@ -92,15 +95,16 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.entry == null)
+    if(widget.entry == null) {
       return Container();
+    }
 
     return FutureBuilder(
       future: examplesSearch,
       builder: (context, snapshot) {
         // Is data loading
         if(!snapshot.hasData){
-          return Center(
+          return const Center(
             child: DaKanjiLoadingIndicator()
           );
         }
@@ -108,7 +112,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           // if a result was selected, but there are no examples for it,
           // show no results icon
           if(examples.isEmpty && widget.entry != null){
-            return Center(
+            return const Center(
               child: Icon(Icons.search_off)
             );
           }
@@ -121,7 +125,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           return ListView.builder(
             itemCount: examples.length,
             itemBuilder: (context, no) {
-              if(examples.length == 10 && no == 9)
+              if(examples.length == 10 && no == 9) {
                 return TextButton(
                   onPressed: (){
                     initExamples(limit: -1);
@@ -129,6 +133,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
                   },
                   child: Text(LocaleKeys.DictionaryScreen_examples_more.tr())
                 );
+              }
 
               return ExampleSentenceCard(
                 examples[no],
@@ -148,7 +153,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
     List<List<Tuple2<int, int>>> matchSpans = [];
 
-    for (var e = 0; e < this.examples.length; e++) {
+    for (var e = 0; e < examples.length; e++) {
       matchSpans.add([]);
 
       // parse example sentence and kanjis of this entry with mecab
@@ -162,7 +167,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
           // does the kanji of the entry match
           int match = example.indexOf(item);
           while(match != -1) {
-            matchSpans.last.add(Tuple2(match, match+item.length));
+            if(!matchSpans.last.contains(Tuple2(match, match+item.length))){
+              matchSpans.last.add(Tuple2(match, match+item.length));
+            }
             match = example.indexOf(item, min(match+1, example.length));
           }
         }
@@ -175,8 +182,9 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
           // get the current span and check if a highlight has already been added for it
           Tuple2<int, int> currentSpan = Tuple2(lengthToCurrentWord, lengthToCurrentWord+parsedExample[i].surface.length);
-          if(matchSpans.last.contains(currentSpan))
+          if(matchSpans.last.contains(currentSpan)) {
             continue;
+          }
 
           if(widget.entry!.kanjis.contains(parsedExample[i].features[6])){
             matchSpans.last.add(currentSpan);
@@ -245,14 +253,16 @@ List<ExampleSentence> searchExamples(Tuple7 query){
       .findAllSync();
   }
 
-  // sort translations by avaiablity of preferred languages
+  // sort translations by availability of preferred languages
   examples.sort((a, b) {
     int aScore = 0, bScore = 0, cnt = 0;
     for (String lang in selectedLangs) {
-      if(a.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang))
+      if(a.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang)) {
         aScore += selectedLangs.length - cnt;
-      if(b.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang))
+      }
+      if(b.translations.any((trans) => isoToiso639_1[trans.language]!.name == lang)) {
         bScore += selectedLangs.length - cnt;
+      }
     
       cnt++;
     }

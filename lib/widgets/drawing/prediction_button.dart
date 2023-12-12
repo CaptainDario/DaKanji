@@ -1,13 +1,14 @@
-import 'package:da_kanji_mobile/globals.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:get_it/get_it.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
 import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
-
-
+import 'package:da_kanji_mobile/globals.dart';
 
 /// A button which shows the given [char].
 /// 
@@ -25,7 +26,7 @@ class PredictionButton extends StatefulWidget {
   {Key? key}) : super(key : key);
   
   @override
-  _PredictionButtonState createState() => _PredictionButtonState();
+  State<PredictionButton> createState() => _PredictionButtonState();
 }
 
 class _PredictionButtonState extends State<PredictionButton>
@@ -115,13 +116,13 @@ class _PredictionButtonState extends State<PredictionButton>
   }
 
   void longPressed(){
-    print("longPressed");
+    debugPrint("longPressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char, longPress: true);
     handlePress(context);
   }
 
   void pressed(){
-    print("pressed");
+    debugPrint("pressed");
     GetIt.I<DrawScreenState>().drawingLookup.setChar(widget.char);
     handlePress(context);
   }

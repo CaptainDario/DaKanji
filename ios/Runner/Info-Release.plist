@@ -22,6 +22,15 @@
 		<string>es</string>
 		<string>pl</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>To process audio files DaKanji needs access to your files.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To process your foto / video files DaKanji needs access to your files.</string>
 	<key>CFBundleName</key>
 	<string>DaKanji</string>
 	<key>CFBundlePackageType</key>

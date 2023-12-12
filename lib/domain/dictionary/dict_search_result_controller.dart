@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
-
 
 /// class to bundle data for manipulating / navigating the search results
 class DictSearchResultController {
@@ -17,8 +17,9 @@ class DictSearchResultController {
   }
   /// Index of the current focus, index based on `searchResultsFocusses`
   set currentFocusIndex (int newIndex) {
-    if(newIndex > searchResultsFocusses.length || newIndex < 0)
+    if(newIndex > searchResultsFocusses.length || newIndex < 0) {
       return;
+    }
 
     _currentFocusIndex = newIndex;
   }
@@ -57,15 +58,15 @@ class DictSearchResultController {
     currentFocusIndex = index;
     
     // only (scroll and) focus if this is not the last element
-    if(currentFocusIndex < this.searchResultsFocusses.length-1){
+    if(currentFocusIndex < searchResultsFocusses.length-1){
       FocusManager.instance.primaryFocus?.unfocus();
 
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(0, currentlyVisible.length-1).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex+1,
-          alignment: currentFocusIndex < this.searchResultsFocusses.length-2 ? 1.0 : 0.8
+          alignment: currentFocusIndex < searchResultsFocusses.length-2 ? 1.0 : 0.8
         );
       }
       // set the focus to this element
@@ -82,13 +83,14 @@ class DictSearchResultController {
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(1, currentlyVisible.length).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex-1,
           alignment: 0
         );
       }
-      if(currentFocusIndex != 0)
+      if(currentFocusIndex != 0) {
         searchResultsFocusses[--currentFocusIndex].requestFocus();
+      }
     }
   }
 
@@ -96,15 +98,15 @@ class DictSearchResultController {
   void nextFocus() async {
     
     // only (scroll and) focus if this is not the last element
-    if(currentFocusIndex < this.searchResultsFocusses.length-1){
+    if(currentFocusIndex < searchResultsFocusses.length-1){
       FocusManager.instance.primaryFocus?.unfocus();
 
       // if this element is not in the view scroll to it
       if(!currentlyVisible.sublist(0, currentlyVisible.length-2).contains(currentFocusIndex)){
         await resultListItemScrollController.scrollTo(
-          duration: Duration(milliseconds: 70),
+          duration: const Duration(milliseconds: 70),
           index: currentFocusIndex+2,
-          alignment: currentFocusIndex < this.searchResultsFocusses.length-2 ? 1.0 : 0.8
+          alignment: currentFocusIndex < searchResultsFocusses.length-2 ? 1.0 : 0.8
         );
       }
       // set the focus to this element

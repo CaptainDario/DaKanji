@@ -16,9 +16,8 @@ import platform
 
 def main():
     # delete old localization files
-    for f in os.listdir("assets/translations/"):
-        if(f != "localizations.json"):
-            os.remove(f"assets/translations/{f}")
+    for f in os.listdir("assets/translations/languages/"):
+        os.remove(f"assets/translations/languages/{f}")
     if(os.path.exists("lib/CodegenLoader.dart")):
         os.remove("lib/CodegenLoader.dart")
     if(os.path.exists("lib/locales_keys.dart")):
@@ -40,21 +39,20 @@ def main():
                 if(category not in localization):
                     localization[category] = {}
                 for category_entry, localizations in category_children.items():
-                    if(code in localizations and category_entry != ""):
+                    if(code in localizations.keys() and category_entry != ""):
                         localization[category][category_entry] = localizations[code]
                     else:
                         localization[category][category_entry] = ""
             
             js = json.dumps(localization, indent=2, sort_keys=True)
-            with open(f"assets/translations/{code}.json", "w+", encoding="utf8") as f:
+            with open(f"assets/translations/languages/{code}.json", "w+", encoding="utf8") as f:
                 f.write(js)
 
 
     # run the dart commands to generate the dart localizations files
-    shared_args = ["flutter", "pub", "run", "easy_localization:generate", "-S", "assets/translations/", "-O", "./lib", "-o",]
+    shared_args = ["flutter", "pub", "run", "easy_localization:generate", "-S", "assets/translations/languages/", "-O", "./lib", "-o",]
     subprocess.call([*shared_args, "locales_keys.dart", "-f", "keys"], shell= True if platform.system() == "Windows" else False)
     subprocess.call([*shared_args, "CodegenLoader.dart", "-f", "json"], shell= True if platform.system() == "Windows" else False)
-
 
     # remove empty translations
     path = os.path.join(os.getcwd(), "lib")

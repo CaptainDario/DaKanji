@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
-
 
 /// Simple helper widget which allows to wrap many focus-widgets
 /// around the given widget and set the focusNode attribute to the elements

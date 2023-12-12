@@ -1,14 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/data/iso/iso_table.dart';
 import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/meanings_grid.dart';
-
-
 
 class WordMeanings extends StatefulWidget {
   
@@ -59,7 +60,7 @@ class _WordMeaningsState extends State<WordMeanings> {
           
           
           // language flag
-          if(meanings.isNotEmpty)
+          if(meanings.isNotEmpty) {
             ret.add(
               Row(
                 children: [
@@ -70,15 +71,16 @@ class _WordMeaningsState extends State<WordMeanings> {
                       GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[lang]!
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Text(
                     isoToLanguage[isoToiso639_1[lang]]!
                   )
                 ],
               ),
             );
+          }
           // add the meanings
-          if(meanings.isNotEmpty)
+          if(meanings.isNotEmpty) {
             ret.add(
               Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, 8.0, 8.0, 8.0),
@@ -93,6 +95,7 @@ class _WordMeaningsState extends State<WordMeanings> {
                 ),
               )
             );
+          }
 
           return ret;
         }).expand((element) => element).toList(),

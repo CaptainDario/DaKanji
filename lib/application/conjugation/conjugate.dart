@@ -4,14 +4,15 @@
 /// The basic approach is as described in the README of jconj and the NOTE in
 /// this folder
 
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
 
-import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
-import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+// Project imports:
 import 'package:da_kanji_mobile/application/conjugation/conjo.dart';
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/data/conjugation/conj.dart';
+import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
 import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
-
-
 
 /// Convenience function to get all conjugations that match the given arguments.
 /// The returned list can contain multiple entries if `onum == null`. 
@@ -20,7 +21,7 @@ import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
 /// meaning of `Conjo` attributes meanings
 List<Conjo> conjosFromArgs(
   Pos pos, Conj conj, bool neg, bool fml,
-  {int? onum = null}  )
+  {int? onum}  )
 {
   return conjos.where((element) => 
     element.pos == pos &&
@@ -65,13 +66,13 @@ void main(){
 
   String verb = "来る";
   Pos pos = posDescriptionToPosEnum["Kuru verb - special class"]!;
-  Conj conj = Conj.Passive;
+  Conj conj = Conj.passive;
   bool neg = false;
   bool fml = true;
   
-  List<Conjo> _conjos = conjosFromArgs(pos, conj, neg, fml);
+  List<Conjo> conjos = conjosFromArgs(pos, conj, neg, fml);
 
 
-  String conjugation = conjugate(verb, _conjos.first);
-  print(conjugation);
+  String conjugation = conjugate(verb, conjos.first);
+  debugPrint(conjugation);
 }

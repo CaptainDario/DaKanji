@@ -1,13 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/helper/reviews.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
 import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/application/helper/reviews.dart';
-
 
 /// Shows a rate popup which lets the user rate the app on the platform specific
 /// app store.
@@ -43,7 +46,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.pushNamedAndRemoveUntil(
-                      context, "/home", (Route<dynamic> route) => false
+                      context, "/${Screens.home.name}", (Route<dynamic> route) => false
                     );
                   },
                   child: Text(LocaleKeys.General_close.tr())
@@ -66,7 +69,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                       GetIt.I<UserData>().doNotShowRateAgain = true;
                       GetIt.I<UserData>().save();
                       Navigator.pushNamedAndRemoveUntil(
-                        context, "/home", (Route<dynamic> route) => false
+                        context, "/${Screens.home.name}", (Route<dynamic> route) => false
                       );
                     },
                     child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())

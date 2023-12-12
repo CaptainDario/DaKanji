@@ -1,6 +1,7 @@
+/// Ways to sort tha kanji table
 enum KanjiSorting{
-  STROKES_ASC, STROKES_DSC,
-  FREQ_ASC, FREQ_DSC,
-  RTK_ASC, RTK_DSC,
-  KLC_ASC, KLC_DSC
+  strokesAsc, strokesDsc,
+  freqAsc, freqDsc,
+  rtkAsc, rtkDsc,
+  klcAsc, klcDsc
 }

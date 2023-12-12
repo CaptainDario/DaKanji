@@ -1,32 +1,36 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:another_flushbar/flushbar.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:isar/isar.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
+import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
+import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
+import 'package:da_kanji_mobile/domain/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-
-
 
 /// The search widget for the dictionary.
 /// 
@@ -102,6 +106,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// should the filter popup be openend when `reopenPopupTimer` finishes
   bool reshowFilterPopup = false;
 
+  Flushbar? deconjugationFlushbar;
+
   
   @override
   void initState() {
@@ -109,12 +115,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     searchBarAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     );
-    searchBarAnimation = new Tween(
+    searchBarAnimation = Tween(
       begin: 0.0,
       end: 1.0,
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: searchBarAnimationController,
       curve: Curves.easeIn
     ));
@@ -137,11 +143,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
-      reopenPopupTimer = Timer(Duration(seconds: 1), () {
-        if(reshowRadicalPopup)
+      reopenPopupTimer = Timer(const Duration(seconds: 1), () {
+        if(reshowRadicalPopup) {
           showRadicalPopup();
-        if(reshowFilterPopup)
+        }
+        if(reshowFilterPopup) {
           showFilterPopup();
+        }
 
         reshowFilterPopup = false; reshowRadicalPopup = false;
       });
@@ -168,8 +176,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         initialSearch = widget.initialSearch;
         await updateSearchResults(initialSearch, widget.allowDeconjugation);
       }
-      if(mounted)
+      if(mounted) {
         setState(() {});
+      }
     });
   }
 
@@ -189,14 +198,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             dictSearchResultController.resetCurrentFocusIndex();
             searchTextFieldFocusNode.requestFocus();
           }
-          else
+          else {
             dictSearchResultController.previousFocus();
+          }
         },
         const SingleActivator(LogicalKeyboardKey.arrowDown) : () async {
-          if(dictSearchResultController.currentFocusIndex == -1)
+          if(dictSearchResultController.currentFocusIndex == -1) {
             dictSearchResultController.setFocus(0);
-          else
+          } else {
             dictSearchResultController.nextFocus();
+          }
         }
       },
       child: MultiFocus(
@@ -235,12 +246,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           FocusManager.instance.primaryFocus?.unfocus();
                   
                           setState(() {
-                            searchBarExpanded = !searchBarExpanded;
                   
-                            if(searchBarExpanded)
+                            if(!searchBarExpanded) {
+                              searchBarExpanded = true;
                               searchBarAnimationController.forward();
+                            }
                             else{
-                              searchBarAnimationController.reverse();
+                              searchBarAnimationController.reverse().then((value) {
+                                setState(() {
+                                  searchBarExpanded = false;
+                                });
+                              });
                             }
                           });
                         },
@@ -250,12 +266,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     Expanded(
                       child: TextField(
                         focusNode: searchTextFieldFocusNode,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none
                         ),
                         controller: searchInputController,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16
                         ),
                         onTap: () {
@@ -277,7 +293,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
                         onTap: onClipboardButtonPressed,
-                        child: Container(
+                        child: SizedBox(
                           width: 30,
                           height: 30,
                           child: Icon(
@@ -303,14 +319,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               GetIt.I<Settings>().drawing.inbuiltDictId;
                             Navigator.pushNamedAndRemoveUntil(
                               widget.context, 
-                              "/drawing",
+                              "/${Screens.drawing.name}",
                               (route) => true,
                               arguments: NavigationArguments(
                                 false, drawSearchPrefix: searchInputController.text
                               )
                             );
                           },
-                          child: Container(
+                          child: const SizedBox(
                             width: 30,
                             height: 30,
                             child: Icon(Icons.brush)
@@ -323,7 +339,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
                         onTap: showFilterPopup,
-                        child: Container(
+                        child: const SizedBox(
                           height: 30,
                           width: 30,
                           child: Icon(
@@ -342,13 +358,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         child: Container(
                           height: 30,
                           width: 30,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Transform.translate(
-                              offset: Offset(0, -2),
-                              child: Text(
+                              offset: const Offset(0, -2),
+                              child: const Text(
                                 "部",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -359,7 +375,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         )
                       ),
                     ),
-                    SizedBox(width: 4,)
+                    const SizedBox(width: 4,)
                   ],
                 ),
               ),
@@ -367,7 +383,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 AnimatedBuilder(
                   animation: searchBarAnimation,
                   builder: (context, child) {
-                    return Container(
+                    return SizedBox(
                       height: (widget.expandedHeight - searchBarInputHeight)
                         * searchBarAnimation.value,
                       child: child,
@@ -502,8 +518,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // collapse the search bar
     if(widget.canCollapse){
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        searchBarExpanded = false;
-        searchBarAnimationController.reverse(from: 1.0);
+        
+        searchBarAnimationController.reverse(from: 1.0).then((value) {
+          setState(() {
+            searchBarExpanded = false;
+          });
+        });
       }); 
     }
 
@@ -551,44 +571,53 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       )
     {
       deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(text));
-      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text))
+      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text)) {
         deconjugated = k.toRomaji(deconjugated);
+      }
     }
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(deconjugated != "" && deconjugated != text){
-      ScaffoldMessenger.of(widget.context).clearSnackBars();
-      ScaffoldMessenger.of(widget.context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
-                  overflow: TextOverflow.ellipsis
+      deconjugationFlushbar?.dismiss();
+      deconjugationFlushbar = Flushbar(
+        backgroundColor: Colors.white,
+        messageText: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black
                 ),
               ),
-              SizedBox(width: 20,),
-              Expanded(
-                child: InkWell(
-                  onTap: () async {
-                    await updateSearchResults(text, false);
-                  },
-                  child: Text(
-                    "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Theme.of(widget.context).highlightColor
-                    ),                
-                  ),
+            ),
+            const SizedBox(width: 20,),
+            Expanded(
+              child: InkWell(
+                onTap: () async {
+                  await updateSearchResults(text, false);
+                },
+                child: Text(
+                  "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(widget.context).highlightColor
+                  ),                
                 ),
-              )
-            ],
-          )
-        )
-      );
+              ),
+            )
+          ],
+        ),
+        flushbarPosition: FlushbarPosition.TOP,
+        isDismissible: true,
+        duration: const Duration(milliseconds: 4000),
+      )..show(context).then((value) {
+        deconjugationFlushbar = null;
+        return value;
+      });
     }
     else{
       deconjugated = text;

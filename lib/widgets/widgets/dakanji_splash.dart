@@ -1,9 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
-
-
 
 class DaKanjiSplash extends StatelessWidget {
 
@@ -27,13 +27,13 @@ class DaKanjiSplash extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: '',
                   style: TextStyle(
                     color: g_Dakanji_red,
                     fontFamily: "theater"
                   ),
-                  children: const <TextSpan>[
+                  children: <TextSpan>[
                     TextSpan(
                       text: 'D', 
                       style: TextStyle(fontSize: 80,),
@@ -57,12 +57,12 @@ class DaKanjiSplash extends StatelessWidget {
               const DaKanjiLoadingIndicator(),
               if(text != null)
                 ...[
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                   Text(
                     text!,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey
                     ),
                   ),
                 ]

@@ -1,14 +1,18 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 void openStoreListing(){
   if(Platform.isAndroid) {
@@ -39,7 +43,7 @@ Future<List<String>> updateAvailable() async {
   try {
     response = await Dio().get(g_GithubReleasesApi);
   } on DioError catch (e) {
-    print("Could not check for new version $e");
+    debugPrint("Could not check for new version $e");
     return [];
   }
   List<Version> versions = (List<String?>.from(
@@ -64,12 +68,13 @@ Future<List<String>> updateAvailable() async {
     }
   }
 
-  if (newVersions.length != 0){
+  if (newVersions.isNotEmpty){
     if(ret.isEmpty){
-      if(newVersions.length == 1)
+      if(newVersions.length == 1) {
         ret.add("${LocaleKeys.HomeScreen_new_version_available_text.tr()} ");
-      else
+      } else {
         ret.add("${LocaleKeys.HomeScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ");
+      }
       ret[0] += "${LocaleKeys.HomeScreen_new_version_comparison.tr()}\n\n\n\n"
         .replaceAll("{NEW_VERSION_NUMBER}", versions.first.toString())
         .replaceAll("{VERSION_NUMBER}", g_Version.toString());

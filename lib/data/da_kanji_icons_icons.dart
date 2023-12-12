@@ -13,6 +13,8 @@
 ///
 /// 
 ///
+
+// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 class DaKanjiIcons {
@@ -21,6 +23,7 @@ class DaKanjiIcons {
   static const _kFontFam = 'DaKanjiIcons';
   static const String? _kFontPkg = null;
 
+  static const IconData dojg = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData kanji_table = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData anki = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData kana_trainer = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);

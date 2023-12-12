@@ -1,12 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
 import 'search_result_card.dart';
-
-
 
 /// List that shows the search results of `DictSearch`
 class SearchResultList extends StatefulWidget {
@@ -105,12 +106,12 @@ class _SearchResultListState extends State<SearchResultList> {
             : DismissDirection.none,
           background: Container(
             color: Colors.red,
-            child: Padding(
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(left: 20),
+            child: const Padding(
               padding: EdgeInsets.only(right: 20),
               child: Icon(Icons.delete)
             ),
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(left: 20),
           ),
           onDismissed: (DismissDirection direction) {
             widget.onDismissed?.call(direction, widget.searchResults[i], i);

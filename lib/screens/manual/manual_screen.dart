@@ -1,9 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+// Project imports:
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/data/manual/manual_data.dart';
 import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
-import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
+
+// Project imports:
 
 
 /// The screen to show the manual of DaKanji
@@ -21,23 +26,10 @@ class ManualScreen extends StatefulWidget {
 class _ManualScreenState extends State<ManualScreen>
   with TickerProviderStateMixin{
 
-  /// the text that is shown on the ManualButtons
-  List<String> buttonTexts = [
-    //"Drawing",
-    "Dictionary", 
-    //"Text",
-    //"Anki"
-  ];
-  /// the icons that are shown on the ManualButtons
-  List<IconData> buttonIcons = [
-    //Icons.brush,
-    Icons.book,
-    //Icons.text_snippet,
-    
-    //DaKanjiIcons.anki
-  ];
   /// The size of the manual buttons
   double manualButtonSize = 200;
+  /// All manual types
+  ManualData manualData = ManualData();
   
 
   @override
@@ -47,15 +39,7 @@ class _ManualScreenState extends State<ManualScreen>
 
   @override
   Widget build(BuildContext context) {
-
-    List<Widget> manualTexts = [
-      ManualDictionary(),
-      //ManualTextScreen(),
-      //ManualAnki()
-    ];
-
     
-
     return DaKanjiDrawer(
       currentScreen: Screens.manual,
       drawerClosed: !widget.openedByDrawer,
@@ -63,41 +47,18 @@ class _ManualScreenState extends State<ManualScreen>
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.topCenter,
-          child: Wrap(
-            runSpacing: 8,
-            spacing: 8,
-            children: List.generate(buttonIcons.length, (index) => 
-              ManualButton(
-                size: manualButtonSize,
-                icon: buttonIcons[index],
-                text: buttonTexts[index],
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (BuildContext context) {
-                      return Scaffold(
-                        appBar: AppBar(
-                          leading: IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          title: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(buttonTexts[index])
-                          ),
-                        ),
-                        body: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              manualTexts[index]
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                  ));
-                },
-              )
+          child: SingleChildScrollView(
+            child: Wrap(
+              runSpacing: 8,
+              spacing: 8,
+              children: List.generate(manualData.manualTypes.length, (index) => 
+                ManualButton(
+                  size: manualButtonSize,
+                  icon: manualData.manualIcons[index],
+                  text: manualData.manualTitles[index],
+                  onPressed: () => pushManual(context, manualData.manualTypes[index]),
+                )
+              ),
             ),
           ),
         ),

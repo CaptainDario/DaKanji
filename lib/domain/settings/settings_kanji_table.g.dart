@@ -10,11 +10,11 @@ SettingsKanjiTable _$SettingsKanjiTableFromJson(Map<String, dynamic> json) =>
     SettingsKanjiTable()
       ..kanjiCategory =
           $enumDecodeNullable(_$KanjiCategoryEnumMap, json['kanjiCategory']) ??
-              KanjiCategory.JLPT
+              KanjiCategory.jlpt
       ..kanjiCategoryLevel = json['kanjiCategoryLevel'] as String? ?? '5'
       ..kanjiSorting =
           $enumDecodeNullable(_$KanjiSortingEnumMap, json['kanjiSorting']) ??
-              KanjiSorting.STROKES_ASC;
+              KanjiSorting.strokesAsc;
 
 Map<String, dynamic> _$SettingsKanjiTableToJson(SettingsKanjiTable instance) =>
     <String, dynamic>{
@@ -24,22 +24,22 @@ Map<String, dynamic> _$SettingsKanjiTableToJson(SettingsKanjiTable instance) =>
     };
 
 const _$KanjiCategoryEnumMap = {
-  KanjiCategory.JLPT: 'JLPT',
-  KanjiCategory.RTK: 'RTK',
-  KanjiCategory.SCHOOL: 'SCHOOL',
-  KanjiCategory.FREQ: 'FREQ',
-  KanjiCategory.KLC: 'KLC',
-  KanjiCategory.KENTEI: 'KENTEI',
-  KanjiCategory.WANIKANI: 'WANIKANI',
+  KanjiCategory.jlpt: 'jlpt',
+  KanjiCategory.rtk: 'rtk',
+  KanjiCategory.school: 'school',
+  KanjiCategory.freq: 'freq',
+  KanjiCategory.klc: 'klc',
+  KanjiCategory.kentei: 'kentei',
+  KanjiCategory.wanikani: 'wanikani',
 };
 
 const _$KanjiSortingEnumMap = {
-  KanjiSorting.STROKES_ASC: 'STROKES_ASC',
-  KanjiSorting.STROKES_DSC: 'STROKES_DSC',
-  KanjiSorting.FREQ_ASC: 'FREQ_ASC',
-  KanjiSorting.FREQ_DSC: 'FREQ_DSC',
-  KanjiSorting.RTK_ASC: 'RTK_ASC',
-  KanjiSorting.RTK_DSC: 'RTK_DSC',
-  KanjiSorting.KLC_ASC: 'KLC_ASC',
-  KanjiSorting.KLC_DSC: 'KLC_DSC',
+  KanjiSorting.strokesAsc: 'strokesAsc',
+  KanjiSorting.strokesDsc: 'strokesDsc',
+  KanjiSorting.freqAsc: 'freqAsc',
+  KanjiSorting.freqDsc: 'freqDsc',
+  KanjiSorting.rtkAsc: 'rtkAsc',
+  KanjiSorting.rtkDsc: 'rtkDsc',
+  KanjiSorting.klcAsc: 'klcAsc',
+  KanjiSorting.klcDsc: 'klcDsc',
 };

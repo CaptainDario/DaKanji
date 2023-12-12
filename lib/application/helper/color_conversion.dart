@@ -1,5 +1,5 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-
 
 /// Creates a `MaterialColor` from the given `color`
 MaterialColor createMaterialColor(Color color) {

@@ -1,8 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
-
-
 
 /// A widget that shows `TextAnalysisPopup` over its `children`.
 class TextAnalysisStack extends StatefulWidget {
@@ -108,6 +108,7 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
                   scale: widget.poupAnimationController,
                   child: TextAnalysisPopup(
                     text: widget.textToAnalyze,
+                    allowDeconjugation: widget.allowDeconjugation,
                     onInitialized: (controller) {
                       widget.onPopupInitialized?.call(controller);
                     },

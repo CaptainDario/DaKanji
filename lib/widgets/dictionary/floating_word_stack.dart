@@ -1,17 +1,19 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:math';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:database_builder/database_builder.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/domain/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/domain/dictionary/floating_word.dart';
-
-
-
 
 /// Widget that shows downwards floating words that can be tapped and scrolled
 class FloatingWordStack extends StatefulWidget {
@@ -81,7 +83,9 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   @override
   void initState() {
 
-    init();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      init();
+    });
     super.initState();
   }
 
@@ -93,6 +97,9 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   }
 
   void init() async {
+
+    if(MediaQuery.sizeOf(context) == widgetSize) return;
+    widgetSize = MediaQuery.sizeOf(context);
 
     for (FloatingWord entry in floatingWords) {
       entry.animationController.dispose();
@@ -109,6 +116,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       setState(() {});
 
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        if(!mounted) return;
         initEntries();
         setState(() {});
       });
@@ -151,10 +159,10 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
         double parallax = (rand.nextDouble()*0.5)+0.5;
         AnimationController controller = AnimationController(
           duration: Duration(
-            seconds: (((entryToBttomSeconds/(noEntriesY*2))
+            milliseconds: (((entryToBttomSeconds/(noEntriesY*2))
               * ((noEntriesY*2)-y+1))
               + (2*entryToBttomSeconds*(1-parallax))
-            ).floor()
+            ).floor() * 2000
           ),
           vsync: this,
         );
@@ -214,80 +222,74 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
     // if no level selection is made or the widget should be hidden return `widget.bottom`
     if(widget.levels.isEmpty || widget.hide){
-      if(widget.bottom != null)
+      if(widget.bottom != null) {
         return widget.bottom!;
-      else
-        return SizedBox();
+      } else {
+        return const SizedBox();
+      }
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
+    return GestureDetector(
+      onPanUpdate: (update) {
+        for (var entry in floatingWords) {
+          if(widgetSize == null) return;
 
-        widgetSize = Size(constraints.maxWidth, constraints.maxHeight);
+          if(update.delta.dy > 0) {
+            entry.animationController.value += 0.005 * entry.parallax;
+          } else {
+            entry.animationController.value -= 0.005 * entry.parallax;
+          }
 
-        return GestureDetector(
-          onPanUpdate: (update) {
-            for (var entry in floatingWords) {
-              if(widgetSize == null) return;
+          entry.animationController.forward();
+        }
+      },
+      child: Stack(
+        children: [
+          if(widget.bottom != null) widget.bottom!,
 
-              if(update.delta.dy > 0)
-                entry.animationController.value += 0.005 * entry.parallax;
-              else {
-                entry.animationController.value -= 0.005 * entry.parallax;
-              }
-
-              entry.animationController.forward();
-            }
-          },
-          child: Stack(
-            children: [
-              if(widget.bottom != null) widget.bottom!,
-
-              // add empty container so that the gesturedetector works on the whole stack
-              Positioned.fill(
-                child: Container(
-                  color: Colors.transparent,
-                )
-              ),
-              
-              for (FloatingWord entry in floatingWords)
-                AnimatedBuilder(
-                  animation: entry.animation,
-                  builder: (context, child) {
-        
-                    return Positioned(
-                      left: entry.position.dx,
-                      // interpolate the current position between the start position
-                      // and the height of the available space
-                      // *1.02 is important so there is no visible overlap as the cleanup
-                      // is not run every frame
-                      top: entry.position.dy +
-                        ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
-                          (entry.animationController.value),
-                      child: GestureDetector(
-                        onTap: () {
-                          widget.onTap?.call(entry);
-                        },
-                        child: Text(
-                          entry.entryVerticalString,
-                          style: TextStyle(
-                            fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
-                            height: entryTextStyleHeight,
-                            fontFamily: g_japaneseFontFamily,
-                            color: (Theme.of(context).brightness == Brightness.light
-                              ? Colors.black
-                              : Colors.white
-                            ).withOpacity(entry.parallax)
-                          ),
-                        ),
-                      )
-                    );
-                  }
-                )
-            ],
+          // add empty container so that the gesturedetector works on the whole stack
+          Positioned.fill(
+            child: Container(
+              color: Colors.transparent,
+            )
           ),
-        );
-      }
+          
+          for (FloatingWord entry in floatingWords)
+            AnimatedBuilder(
+              animation: entry.animation,
+              builder: (context, child) {
+    
+                return Positioned(
+                  left: entry.position.dx,
+                  // interpolate the current position between the start position
+                  // and the height of the available space
+                  // *1.02 is important so there is no visible overlap as the cleanup
+                  // is not run every frame
+                  top: entry.position.dy +
+                    ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
+                      (entry.animationController.value),
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.onTap?.call(entry);
+                    },
+                    child: Text(
+                      entry.entryVerticalString,
+                      style: TextStyle(
+                        fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
+                        height: entryTextStyleHeight,
+                        fontFamily: g_japaneseFontFamily,
+                        color: (Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white
+                        ).withOpacity(entry.parallax)
+                      ),
+                    ),
+                  )
+                );
+              }
+            )
+        ],
+      ),
     );
   }
 }

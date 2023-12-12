@@ -77,7 +77,7 @@ jobs:
         uses: actions/download-artifact@v3
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
         with:
-          name: com.DaAppLab.DaKanji.flatpak
+          name: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           path: artifacts
       - name: upload flatpak to GH release
         if: ${{github.event.inputs.upload_to_gh == 'true'}}
@@ -85,7 +85,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ls -la artifacts
-          gh release upload gh_action artifacts/com.DaAppLab.DaKanji.flatpak --clobber
+          gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}.flatpak --clobber
 
       # get snap artifact and upload it to GH release and snap store
       - name: get build artifacts for snap

@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 /// Conditionally wrap a subtree with a parent widget without breaking the code tree.
@@ -46,6 +47,6 @@ class ConditionalParentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return condition ? this.conditionalBuilder(this.child) : this.child;
+    return condition ? conditionalBuilder(child) : child;
   }
 }

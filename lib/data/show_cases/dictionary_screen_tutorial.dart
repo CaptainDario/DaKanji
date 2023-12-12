@@ -1,10 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
-
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorial.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/data/show_cases/tutorial.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 class DictionaryScreenTutorial extends Tutorial {
 

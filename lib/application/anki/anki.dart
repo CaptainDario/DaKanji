@@ -1,13 +1,17 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:http/http.dart' as http;
 
+// Project imports:
 import 'package:da_kanji_mobile/domain/anki/anki_note.dart';
 
-
-
-Uri anki_connect_url = Uri.http("localhost:8765");
+Uri ankiConnectUrl = Uri.http("localhost:8765");
 
 /// Addes the given note to Anki
 /// 
@@ -16,15 +20,17 @@ Future<bool> addNote(AnkiNote note) async {
 
   // checl that anki is running
   if(!await checkAnkiAvailable()){
-    print("Anki not running");
+    debugPrint("Anki not running");
   }
   // assure that the DaKanji card type is present
-  if(!(await daKanjiModelExists()))
+  if(!(await daKanjiModelExists())) {
     await addDaKanjiModel();
+  }
 
   // if the given deck does not exist, create it
-  if(!(await getDeckNames()).contains(note.deckName))
+  if(!(await getDeckNames()).contains(note.deckName)) {
     await addDeck(note.deckName);
+  }
 
 
   // Add the note to Anki platform dependent
@@ -70,7 +76,7 @@ void _addNoteDesktop(AnkiNote note) async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 }
 
 /// Platform specific (desktop via anki connect) implementation of `add_note`
@@ -116,13 +122,14 @@ Future<bool> _daKanjiModelExistsDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
   Map rMap = jsonDecode(r.body);
 
-  if(rMap.containsKey("result"))
+  if(rMap.containsKey("result")) {
     return rMap["result"].contains("DaKanji");
-  else
+  } else {
     return false;
+  }
 
 }
 
@@ -196,7 +203,7 @@ Future<void> _addDaKanjiModelDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
   
   return;
 }
@@ -248,7 +255,7 @@ Future<void> _addDeckDesktop(String deckName) async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 
 }
 
@@ -291,7 +298,7 @@ Future<List<String>> _getDeckNamesDesktop() async {
   };
   String bodyString = jsonEncode(body);
 
-  http.Response r = await http.post(anki_connect_url, body: bodyString);
+  http.Response r = await http.post(ankiConnectUrl, body: bodyString);
 
   return List<String>.from(jsonDecode(r.body)["result"]);
 }
@@ -328,40 +335,40 @@ Future<bool> checkAnkiAvailable(){
 /// Platform specific (desktop via anki connect) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkiConnectAvailable() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   try {
-    var response = await http.get(anki_connect_url);
+    var response = await http.get(ankiConnectUrl);
     if(response.statusCode == 200){
-      _isRunning = true;
+      isRunning = true;
     }
   }
   catch(e){
     // Anki is not running
-    print(e);
+    debugPrint(e.toString());
   }
 
-  return _isRunning;
+  return isRunning;
 }
 
 /// Platform specific (android via ankidroid) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkidroidAvailable() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   // TODO v word lists implement android
   throw Exception("Not implemented");
 
-  return _isRunning;
+  return isRunning;
 }
 
 /// Platform specific (iOS via anki mobile) implementation of
 /// `check_anki_available`
 Future<bool> _checkAnkiMobileRunning() async {
-  bool _isRunning = false;
+  bool isRunning = false;
 
   // TODO v word lists implement iOS
   throw Exception("Not implemented");
 
-  return _isRunning;
+  return isRunning;
 }

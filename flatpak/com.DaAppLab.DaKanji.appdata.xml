@@ -7,8 +7,8 @@
   <id>com.DaAppLab.DaKanji</id>
   <name>DaKanji</name>
   <summary>You are learning Japanese? Then you need to give "DaKanji" a try!</summary>
-  <developer_name></developer_name>
-  <url type="homepage">https://dakanji.dev/</url>
+  <developer_name>DaAppLab</developer_name>
+  <url type="homepage">https://dakanji.app/</url>
   <metadata_license>PolyForm Strict License 1.0.0</metadata_license>
   <project_license>PolyForm Strict License 1.0.0</project_license>
   <supports>
@@ -38,6 +38,6 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="3.2.0" date="2022-02-25" />
+    <release version="3.2.0" date="2023-11-25"/>
   </releases>
 </component>

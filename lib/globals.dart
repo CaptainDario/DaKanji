@@ -1,15 +1,19 @@
 library my_prj.globals;
 
-import 'package:da_kanji_mobile/domain/releases/version.dart';
-import 'package:da_kanji_mobile/init.dart';
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
 
-
-
+// Project imports:
+import 'package:da_kanji_mobile/application/helper/path_manager.dart';
+import 'package:da_kanji_mobile/domain/releases/version.dart';
+import 'package:da_kanji_mobile/init.dart';
 
 /// A logs of the currently running app so that they can be attached when
 /// using the provide feedback widget
@@ -18,13 +22,19 @@ String g_appLogs = "";
 /// the title of the app
 const String g_AppTitle = "DaKanji";
 
-/// deep link pattern
-const String g_AppLink = r"dakanji://dakanji/";
+/// deep link pattern (https://)
+const String g_AppLinkHttps   = r"https://dakanji.app/app/";
+/// deep link pattern (dakanji://)
+const String g_AppLinkDaKanji = r"dakanji://";
 
 /// The green tone that dakanji uses
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
 /// The red tone that dakanji uses
 const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
+/// The grey tone that dakanji uses
+const Color g_Dakanji_grey =  Color.fromARGB(255, 33, 33, 33);
+/// The blue tone that dakanji uses
+const Color g_Dakanji_blue =  Color.fromARGB(255, 9, 28, 42);
 
 /// The font for Japanese text
 const String g_japaneseFontFamily = "NotoSansJP";
@@ -39,7 +49,7 @@ var g_initApp = init();
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app
-StreamController<String> g_downloadFromGHStream = StreamController<String>.broadcast();
+StreamController<String> g_initAppInfoStream = StreamController<String>.broadcast();
 
 /// the complete version number of this app: version + build number
 Version g_Version = Version(0, 0, 0);
@@ -69,7 +79,7 @@ List<Version> g_NewExamples = [
 ];
 /// all versions that implemented new radiclas data (ISAR DB)
 List<Version> g_NewRadicals = [
-  Version(3, 1, 0)
+  Version(3, 1, 0), Version(3, 2, 0, build: 67)
 ];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
@@ -79,20 +89,23 @@ final bool g_webViewSupported =
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 /// browser user agent to fake a mobile device on desktop
-String mobileUserAgentArg = '--user-agent="Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"';
+String g_mobileUserAgentArg = 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.66 Mobile Safari/537.36';
 
 
 /// The minimum size of the desktop window in normal mode
-const Size g_minDesktopWindowSize = const Size(480, 720);
+const Size g_minDesktopWindowSize = Size(480, 720);
 
+// PATHS
+/// manager of frequently used paths
+late PathManager g_DakanjiPathManager;
 
 //about page
 /// link to the github repo
 const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 /// link to the github repos issues
-const g_GithubIssues = g_GithubRepoUrl + "/issues/new";
+const g_GithubIssues = "$g_GithubRepoUrl/issues/new";
 /// link to the github repos release page
-const g_GithubReleasesPage = g_GithubRepoUrl + "/releases";
+const g_GithubReleasesPage = "$g_GithubRepoUrl/releases";
 ///
 const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
@@ -104,7 +117,7 @@ const g_DiscordInvite = "https://discord.com/invite/gdqaux3r4P";
 /// the base url to ANY app on the PlayStore
 const g_PlaystoreBaseUrl = "https://play.google.com/store/apps/details?id=";
 /// the url to the PlayStore page of Dakanji 
-const g_PlaystorePage = g_PlaystoreBaseUrl + "com.DaAppLab.DaKanjiRecognizer";
+const g_PlaystorePage = "${g_PlaystoreBaseUrl}com.DaAppLab.DaKanjiRecognizer";
 /// the base intent to open the playstore's android app
 const g_PlaystoreBaseIntent =  "market://details?id=";
 /// the url to DaAppLab's playstore page
@@ -115,14 +128,14 @@ const g_AppStoreBaseUrl = "itms-apps://itunes.apple.com/app/";
 /// DaKanji's ID on the AppStore
 const g_AppStoreId = "1593741764";
 /// link to DaKanji's appstore page
-const g_AppStorePage = "https://apps.apple.com/de/app/DaKanji/id" + g_AppStoreId;
+const g_AppStorePage = "https://apps.apple.com/de/app/DaKanji/id$g_AppStoreId";
 ///the url to developer's AppStore page
 const g_DaAppLabAppStorepage = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
 /// DaKanji's ID on the MicrosoftStore
 const g_MicrosoftStoreId = "9n08051t2xtv";
 /// the url to the MicrosoftStore page of Dakanji 
-const g_MicrosoftStorePage = "https://www.microsoft.com/p/dakanji/" + g_MicrosoftStoreId;
+const g_MicrosoftStorePage = "https://www.microsoft.com/p/dakanji/$g_MicrosoftStoreId";
 /// uri to open DaAppLab's page in the Microsoft store 
 const g_MicrosoftStoreDaAppLabPage = "ms-windows-store://publisher/?name=DaAppLab";
 
@@ -169,7 +182,7 @@ const g_forvo = "https://forvo.com/word/";
 /// URL to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 /// url to look up a word in deepL 
-const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en/";
+const g_deepLUrl = "https://www.deepl.com/translator#jp/en/";
 /// url to open a kanji in thekanjimap.com
 const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com

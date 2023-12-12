@@ -1,16 +1,21 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+// Project imports:
 import 'package:da_kanji_mobile/domain/settings/settings_advanced.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_misc.dart';
-import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/domain/settings/settings_anki.dart';
-
-
+import 'package:da_kanji_mobile/domain/settings/settings_clipboard.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_dictionary.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_drawing.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_kanji_table.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_misc.dart';
+import 'package:da_kanji_mobile/domain/settings/settings_text.dart';
 
 /// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {
@@ -23,10 +28,14 @@ class Settings with ChangeNotifier {
   late SettingsAdvanced _advanced;
   /// All settings related to the dictionary part of the app
   late SettingsDictionary _dictionary;
+  /// All settings related to the text part of the app
+  late SettingsText _text;
   /// All settings related to the anki integration
   late SettingsAnki _anki;
-  /// All settings related to the 
+  /// All settings related to the kanji table screen
   late SettingsKanjiTable _kanjiTable;
+  /// All settings realted to the clipboard screen
+  late SettingsClipboard _clipboard;
 
 
   Settings(){
@@ -34,8 +43,10 @@ class Settings with ChangeNotifier {
     _misc       = SettingsMisc(); 
     _advanced   = SettingsAdvanced();
     _dictionary = SettingsDictionary();
+    _text       = SettingsText();
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
+    _clipboard  = SettingsClipboard();
   }
 
 
@@ -55,12 +66,20 @@ class Settings with ChangeNotifier {
     return _dictionary;
   }
 
+  SettingsText get text {
+    return _text;
+  }
+
   SettingsAnki get anki {
     return _anki;
   }
 
   SettingsKanjiTable get kanjiTable {
     return _kanjiTable;
+  }
+
+  SettingsClipboard get clipboard{
+    return _clipboard;
   }
 
   /// Saves all settings to the SharedPreferences.
@@ -73,8 +92,10 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsMisc', json.encode(misc.toJson()));
     prefs.setString('settingsAdvanced', json.encode(advanced.toJson()));
     prefs.setString('settingsDictionary', json.encode(dictionary.toJson()));
+    prefs.setString('settingsText', json.encode(text.toJson()));
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
+    prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
   }
 
   /// Load all saved settings from SharedPreferences.
@@ -125,6 +146,17 @@ class Settings with ChangeNotifier {
     }
     _dictionary.addListener(() => notifyListeners());
 
+    // TEXT SETTINGS
+    try{
+      String tmp = prefs.getString('settingsText') ?? "";
+      if(tmp != "") {_text = SettingsText.fromJson(json.decode(tmp));}
+      else {_text = SettingsText();}
+    }
+    catch (e) {
+      _text = SettingsText();
+    }
+    _text.addListener(() => notifyListeners());
+
     // ANKI SETTINGS
     try{
       String tmp = prefs.getString('settingsAnki') ?? "";
@@ -146,6 +178,17 @@ class Settings with ChangeNotifier {
       _kanjiTable = SettingsKanjiTable();
     }
     _kanjiTable.addListener(() => notifyListeners());
+
+    // CLIPBOARD SETTINGS
+    try{
+      String tmp = prefs.getString('settingsClipboard') ?? "";
+      if(tmp != "") {_clipboard = SettingsClipboard.fromJson(json.decode(tmp));}
+      else {_clipboard = SettingsClipboard();}
+    }
+    catch (e) {
+      _clipboard = SettingsClipboard();
+    }
+    _clipboard.addListener(() => notifyListeners());
   }
 }
 
