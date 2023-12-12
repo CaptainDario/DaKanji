@@ -327,7 +327,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                     child: Opacity(
                       opacity: _moveDrawer.value,
                       child: Container(
-                        color: Colors.grey[900]!.withAlpha(150),
+                        color: Colors.black.withAlpha(150),
                         width: _screenWidth,
                         height: _screenHeight,
                       ),
