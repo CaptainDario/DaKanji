@@ -1,13 +1,18 @@
 // Flutter imports:
 import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:async/async.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_kanji_tab.dart';
+import 'package:da_kanji_mobile/widgets/kanji_map/kanji_map_painter.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
@@ -47,22 +52,31 @@ class KanjiMap extends StatefulWidget {
 class _KanjiMapState extends State<KanjiMap> {
 
 
-  ///
-  List<String> kanjis = ['口' , '食', '飲', '走'];
-  ///
-  List<Offset> kanjiPositions = const [Offset(0, 0), Offset(1, 0), Offset(0, 1), Offset(1, 1)];
+  /// the kanji characters that should be shown in this map
+  List<String> kanjis = const [];
+  /// the cooridnates of `kanjis`
+  List<List<double>> coors = const [];
+
+  double leftLimit = double.infinity;
+
+  double rightLimit = double.negativeInfinity;
+
+  double bottomLimit = double.infinity;
+
+  double topLimit = double.negativeInfinity;
+
   /// the currently selected kanji
   String? currentSelection;
-
+  /// time till the search bar is shown again after it was hidden
   int millisecondsToShowSearch = 1000;
-
+  /// timer that is used to show the search bar again after a certain time
   late RestartableTimer showSearchTimer = RestartableTimer(
     Duration(milliseconds: millisecondsToShowSearch),
     () => setState(() {showSearch=true;})
   );
-
+  /// is the search currently being shown
   bool showSearch = true;
-
+  
   /// the height of the draggable sheet
   double sheetDraggerHeight = 32;
   /// the minimum value to which the sheet can be dragged
@@ -85,12 +99,35 @@ class _KanjiMapState extends State<KanjiMap> {
      
     super.initState();
 
+    loadMapData().then((e) => setState((){}));
+
     showTutorialCallback();
   }
 
   @override
   void didUpdateWidget(covariant KanjiMap oldWidget) {
     super.didUpdateWidget(oldWidget);
+  }
+
+  /// Loads the kanji map data from the assets
+  Future loadMapData() async {
+    String kanjiJsonString = await rootBundle.loadString("assets/tflite_models/kanji_map/latent_labels.json");
+    kanjis = List<String>.from(jsonDecode(kanjiJsonString));//.sublist(0, 1000);
+  
+    String coorJsonString = await rootBundle.loadString("assets/tflite_models/kanji_map/latent_coors_low.json");
+    coors = List<List<double>>.from(jsonDecode(coorJsonString)
+      .map((e) => List<double>.from(e))
+      .toList());//.sublist(0, 1000);
+
+    for (var i = 0; i < coors.length; i++) {
+      for (var j = 0; j < coors[i].length; j++) {
+        leftLimit   = min(leftLimit, coors[i][j]);
+        rightLimit  = max(rightLimit, coors[i][j]);
+        topLimit    = max(topLimit, coors[i][j]);
+        bottomLimit = min(bottomLimit, coors[i][j]);
+      }
+    }
+    print("Loaded");
   }
 
   void showTutorialCallback() {
@@ -113,6 +150,10 @@ class _KanjiMapState extends State<KanjiMap> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(leftLimit == double.infinity) return const SizedBox();
+
+
     return LayoutBuilder(
       builder: (context, constraints) {
         
@@ -122,7 +163,8 @@ class _KanjiMapState extends State<KanjiMap> {
           children: [
             // kanji map
             InteractiveViewer(
-              minScale: 0.1,
+              minScale: 0.01,
+              maxScale: 100000,
               boundaryMargin: const EdgeInsets.all(100),
               onInteractionStart: (details) {
                 showSearchTimer.cancel();
@@ -135,49 +177,31 @@ class _KanjiMapState extends State<KanjiMap> {
               onInteractionEnd: (details) {
                 showSearchTimer.reset();
               },
-              child: Stack(
-                children: [
-                  for (int i = 0; i < kanjis.length; i++)
-                    Positioned(
-                      left: 100*kanjiPositions[i].dx,
-                      top: 100*kanjiPositions[i].dy,
-                      width: 48,
-                      height: 48,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).brightness == Brightness.light
-                              ? Colors.black
-                              : Colors.white
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(500)),
-                        ),
-                        child: InkWell(
-                          borderRadius: const BorderRadius.all(Radius.circular(500)),
-                          onTap: (){
-                            setState(() {
-                              currentSelection = kanjis[i];
-                              sheetPosition = maxSheetPosition;
-                            });
-                          },
-                          child: Center(
-                            child: Text(kanjis[i])
-                          ),
-                        ),
-                      ),
+              child: Container(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                color: Colors.green,
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    isComplex: true,
+                    painter: KanjiMapPainter(
+                      kanjis: kanjis,
+                      coors: coors,
+                      leftLimit: leftLimit,
+                      topLimit: topLimit,
+                      rightLimit: rightLimit,
+                      bottomLimit: bottomLimit
                     ),
-                ],
-              ),
+                  ),
+                ),
+              )
             ),
 
             // search bar
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
               width: constraints.maxWidth-16,
-              bottom:
-                (currentSelection == null ? 0 : sheetDraggerHeight) +
-                (showSearch ? 0 : -100)
-                + 16,
+              top: (showSearch ? 0 : -100) + 16,
               height: 32,
               left: 8,
               child: Row(
@@ -189,8 +213,31 @@ class _KanjiMapState extends State<KanjiMap> {
                   ),
                   Expanded(
                     child: TextField(
+                      
                     )
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                    child: Icon(Icons.copy),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                    child: Icon(Icons.brush,),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                    child: Center(
+                      child: Transform.translate(
+                        offset: const Offset(0, -2),
+                        child: const Text(
+                          "部",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               )
             ),
