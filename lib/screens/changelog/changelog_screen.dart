@@ -26,10 +26,7 @@ class ChangelogScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("$g_AppTitle - ${LocaleKeys.ChangelogScreen_title.tr()}"),
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          return true;
-        },
+      body: PopScope(
         child: Center(
           child: Column(
               children: [

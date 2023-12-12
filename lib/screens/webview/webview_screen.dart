@@ -103,14 +103,14 @@ class _WebviewScreenState extends State<WebviewScreen>
       appBar: AppBar(title: Text(GetIt.I<DrawScreenState>().drawingLookup.chars)),
       body: 
       
-      WillPopScope(
+      PopScope(
         // when leaving this screen hide the webview  
-        onWillPop: () {
+        onPopInvoked: (popped) {
           setState(() {
             showLoading = false;
             _controller.reverse();
           });
-          return Future.delayed(const Duration(milliseconds: 500), () => true);
+          //return Future.delayed(const Duration(milliseconds: 500), () => true);
         },
         child: Stack(
           children: [
