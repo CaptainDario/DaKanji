@@ -150,6 +150,9 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![2]
               : null,
             child: SpeedDial(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               icon: Icons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
@@ -161,6 +164,9 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               children: [
                 for (int i = 0; i < 5; i++)
                   SpeedDialChild(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: Focus(
                       focusNode: widget.includeTutorial
                         ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![3+i]
