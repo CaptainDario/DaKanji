@@ -217,24 +217,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.dictionary.translationLanguageCodes.length,
                             (index) {
                               String lang = settings.dictionary.translationLanguageCodes[index];
-                              return GestureDetector(
-                                onTap: () async {
+                              return FilterChip(
+                                onSelected: (selected) async{
                                   // do not allow removing the last dictionary
                                   if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
                                     settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     return;
                                   }
-
+                                                            
                                   // when disabling english dictionary tell user
                                   // that significant part of the dict is only in english
                                   if(lang == iso639_1.en.name &&
                                     settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     await disableEnglishDictPopup(context).show();
                                   }
-
+                                                            
                                   // ignore: use_build_context_synchronously
                                   loadingPopup(context).show();
-
+                                                            
                                   await GetIt.I<DictionarySearch>().kill();
                                   if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
                                     settings.dictionary.selectedTranslationLanguages = 
@@ -247,33 +247,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   }
                                   await settings.save();
                                   await GetIt.I<DictionarySearch>().init();
-
+                                                            
                                   // ignore: use_build_context_synchronously
                                   Navigator.of(context).pop();
-
+                                                            
                                   setState(() {});
                                 },
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.grab,
-                                  child: Chip(
-                                    backgroundColor: settings.dictionary.selectedTranslationLanguages.contains(lang)
-                                      ? Theme.of(context).highlightColor
-                                      : null,
-                                    label: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                          height: 10,
-                                          child: SvgPicture.asset(
-                                            settings.dictionary.translationLanguagesToSvgPath[lang]!
-                                          )
-                                        ),
-                                        Text("   $lang"),
-                                      ],
-                                    )
-                                  ),
-                                ),
+                                selected: settings.dictionary.selectedTranslationLanguages.contains(lang),
+                                
+                                label: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                      height: 10,
+                                      child: SvgPicture.asset(
+                                        settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                      )
+                                    ),
+                                    const SizedBox(width: 8,),
+                                    Text(lang,),
+                                  ],
+                                )
                               );
                             }
                           ),
@@ -421,19 +417,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               (index) {
                                 String level = SettingsDictionary.d_fallingWordsLevels[index];
                                 return GestureDetector(
-                                  onTap: () async {
-                                    if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
-                                      settings.dictionary.selectedFallingWordsLevels.remove(level);
-                                    } else {
-                                      settings.dictionary.selectedFallingWordsLevels.add(level);
-                                    }
-                                    await settings.save();
-                                    setState(() {});
-                                  },
-                                  child: Chip(
-                                    backgroundColor: settings.dictionary.selectedFallingWordsLevels.contains(level)
-                                      ? Theme.of(context).highlightColor
-                                      : null,
+                                  child: FilterChip(
+                                    selected: settings.dictionary.selectedFallingWordsLevels.contains(level),
+                                    onSelected: (selected) async {
+                                      if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
+                                        settings.dictionary.selectedFallingWordsLevels.remove(level);
+                                      } else {
+                                        settings.dictionary.selectedFallingWordsLevels.add(level);
+                                      }
+                                      await settings.save();
+                                      setState(() {});
+                                    },
                                     label: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
