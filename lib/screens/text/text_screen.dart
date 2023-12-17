@@ -102,6 +102,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String inputText = "";
   /// the controller to manipulate the CustomSelectableText
   late CustomSelectableTextController customSelectableTextController;
+  /// scroll controller for the text analysis buttons
+  final ScrollController _analysisOptionsScrollController = ScrollController();
 
   
   @override
@@ -309,9 +311,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: FadingSingleChildScrollView(
-                                  fadePercentage: 0.2,
+                                child: Scrollbar(
+                                  controller: _analysisOptionsScrollController,
                                   child: SingleChildScrollView(
+                                    controller: _analysisOptionsScrollController,
                                     scrollDirection: Axis.horizontal,
                                     child: Wrap(
                                       runAlignment: WrapAlignment.end,
