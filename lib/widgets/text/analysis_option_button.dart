@@ -53,7 +53,10 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
+      shape: CircleBorder(),
       child: InkWell(
+        radius: 8,
+        customBorder: const CircleBorder(),
         onTap: widget.onPressed,
         onLongPress: widget.onLongPressed,
         child: IgnorePointer(
