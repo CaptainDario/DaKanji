@@ -392,7 +392,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // Floating words selection
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                         child: Align(
                           alignment: Alignment.centerLeft, 
                           child: AutoSizeText(
