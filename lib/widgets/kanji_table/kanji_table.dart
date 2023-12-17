@@ -228,99 +228,108 @@ class _KanjiTableState extends State<KanjiTable> {
           floating: true,
           title: Row(
             children: [
-              // category ie: JLPT, RTK, etc
-              Focus(
-                focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![2]
-                  : null,
-                child: DropdownButton(
-                  value: categorySelection,
-                  items: categoryDropDowns,
-                  style: TextStyle(
-                    color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                    // category ie: JLPT, RTK, etc
+                    Focus(
+                      focusNode: widget.includeTutorial
+                        ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![2]
+                        : null,
+                      child: DropdownButton(
+                        value: categorySelection,
+                        items: categoryDropDowns,
+                        style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black
+                        ),
+                        onChanged: (value) async {
+                          setState(() {
+                            categorySelection = value;
+                            changedCategories = true;
+                            updateKanjisAndCategories();
+                            initDropDowns();
+                          });
+                          await saveCurrentConfig();
+                        },
+                        selectedItemBuilder: (context) {
+                          return KanjiCategory.values.map<Widget>((KanjiCategory item) {
+                            return Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                kanjiCategoryToString[item]!,
+                                style: const TextStyle(color: Colors.white,),
+                              ),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    ),
+                    // actual level from the category ie.: JLPT 1, 2, 3, 4, 5, ...
+                    Focus(
+                      focusNode: widget.includeTutorial
+                        ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![3]
+                        : null,
+                      child: DropdownButton(
+                        value: categoryLevelSelection,
+                        items: categoryLevelDropDowns,
+                        onChanged: (value) async {
+                          setState(() {
+                            categoryLevelSelection = value;
+                            updateKanjisAndCategories();
+                          });
+                          await saveCurrentConfig();
+                        },
+                        selectedItemBuilder: (context) {
+                          return categoryLevels.map<Widget>((String item) {
+                            return Container(
+                              alignment: Alignment.centerLeft,
+                              constraints: const BoxConstraints(minWidth: 50),
+                              child: Text(
+                                item,
+                                style: const TextStyle(color: Colors.white,),
+                              ),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    ),
+                    // the way of sorting the shown kanji
+                    Focus(
+                    focusNode: widget.includeTutorial
+                      ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![4]
+                      : null,
+                    child: DropdownButton(
+                      value: sortingSelection,
+                      items: sortingDropDowns,
+                      onChanged: (value) async {
+                        setState(() {
+                          sortingSelection = value;
+                          updateKanjisAndCategories();
+                        });
+                        await saveCurrentConfig();
+                      },
+                      selectedItemBuilder: (context) {
+                        return KanjiSorting.values.map<Widget>((KanjiSorting item) {
+                          return Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              kanjiSortingToString[item]!,
+                              style: const TextStyle(color: Colors.white,),
+                            ),
+                          );
+                        }).toList();
+                      },
+                    ),
                   ),
-                  onChanged: (value) async {
-                    setState(() {
-                      categorySelection = value;
-                      changedCategories = true;
-                      updateKanjisAndCategories();
-                      initDropDowns();
-                    });
-                    await saveCurrentConfig();
-                  },
-                  selectedItemBuilder: (context) {
-                    return KanjiCategory.values.map<Widget>((KanjiCategory item) {
-                      return Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          kanjiCategoryToString[item]!,
-                          style: const TextStyle(color: Colors.white,),
-                        ),
-                      );
-                    }).toList();
-                  },
+                    ]
+                  ),
                 ),
               ),
-              // actual level from the category ie.: JLPT 1, 2, 3, 4, 5, ...
-              Focus(
-                focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![3]
-                  : null,
-                child: DropdownButton(
-                  value: categoryLevelSelection,
-                  items: categoryLevelDropDowns,
-                  onChanged: (value) async {
-                    setState(() {
-                      categoryLevelSelection = value;
-                      updateKanjisAndCategories();
-                    });
-                    await saveCurrentConfig();
-                  },
-                  selectedItemBuilder: (context) {
-                    return categoryLevels.map<Widget>((String item) {
-                      return Container(
-                        alignment: Alignment.centerLeft,
-                        constraints: const BoxConstraints(minWidth: 50),
-                        child: Text(
-                          item,
-                          style: const TextStyle(color: Colors.white,),
-                        ),
-                      );
-                    }).toList();
-                  },
-                ),
-              ),
-              // the way of sorting the shown kanji
-              Focus(
-                focusNode: widget.includeTutorial
-                  ? GetIt.I<Tutorials>().kanjiTableScreenTutorial.focusNodes![4]
-                  : null,
-                child: DropdownButton(
-                  value: sortingSelection,
-                  items: sortingDropDowns,
-                  onChanged: (value) async {
-                    setState(() {
-                      sortingSelection = value;
-                      updateKanjisAndCategories();
-                    });
-                    await saveCurrentConfig();
-                  },
-                  selectedItemBuilder: (context) {
-                    return KanjiSorting.values.map<Widget>((KanjiSorting item) {
-                      return Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          kanjiSortingToString[item]!,
-                          style: const TextStyle(color: Colors.white,),
-                        ),
-                      );
-                    }).toList();
-                  },
-                ),
-              ),
-              const Spacer(),
+              const SizedBox(width: 8,),
               // Amount of kanji in the current selection
               Focus(
                 focusNode: widget.includeTutorial
