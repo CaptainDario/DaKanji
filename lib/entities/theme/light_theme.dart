@@ -8,11 +8,13 @@ final ThemeData lightTheme = ThemeData(
   
   brightness: Brightness.light,
   colorSchemeSeed: g_Dakanji_green,
+  //colorSchemeSeed: Colors.brown,
 
   //primarySwatch: createMaterialColor(g_Dakanji_green),
 
   appBarTheme: const AppBarTheme(
     color: g_Dakanji_green,
+    //color: Colors.brown.shade600,
     surfaceTintColor: Colors.transparent,
     scrolledUnderElevation: 0,
     foregroundColor: Colors.white
