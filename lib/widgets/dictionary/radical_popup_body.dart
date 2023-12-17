@@ -220,7 +220,8 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                         updateKanjiWithRadicalSelection();
                                       }
                                       : null,
-                                      child: Center(
+                                      child: Align(
+                                        alignment: Alignment.center,
                                         child: Text(
                                           krad.value[index],
                                           style: TextStyle(
