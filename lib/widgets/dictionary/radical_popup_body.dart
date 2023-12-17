@@ -115,6 +115,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                         child: ScaleAnimation(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(0),
                               elevation: 0,
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
