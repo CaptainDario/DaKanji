@@ -385,10 +385,10 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
       // if there are no kanjis, hide the kanji preview
       if(newKanjisThatUseAllRadicals.isEmpty){
         animateKanjiOut = true;
+        kanjisThatUseAllRadicals = const [];
       }
       else{
-        kanjisThatUseAllRadicals = 
-          newKanjisThatUseAllRadicals;
+        kanjisThatUseAllRadicals = newKanjisThatUseAllRadicals;
       }
     });
   }
