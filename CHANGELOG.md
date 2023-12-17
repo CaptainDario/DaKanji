@@ -10,6 +10,10 @@ New Features:
   - Mnemonics for the main kana
   - Sounds for all available kana
 
+Fixed:
+
+- Various UI fixes
+
 -------------------------------------------------------------------------
 
 ## v3.2.0+74 - 文法 (4.12.2023)
