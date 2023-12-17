@@ -314,49 +314,52 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
               Flexible(
                 flex: 1,
                 child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // maximize button
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            kanjiIsFullscreen = !kanjiIsFullscreen;
-                          });
-                        },
-                        icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
-                      ),
-                      // paste button
-                      IconButton(
-                        icon: const Icon(Icons.paste),
-                        onPressed: () async {
-                          // get radicals in clipboard
-                          String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
-                          List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
-                          List<String> bufferRadicals = buffer.split("")
-                            .where((b) => availableRadicals.contains(b)).toList();
-                          
-                          if(bufferRadicals.isEmpty){
-                            return;
-                          }
-
-                          // set new selection
-                          selectedRadicals = bufferRadicals;
-                          updateKanjiWithRadicalSelection();
-                        },
-                      ),
-                      // icons clear
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            animateKanjiOut = true;
-                            possibleRadicals.clear();
-                            selectedRadicals.clear();
-                          });
-                        },
-                        icon: const Icon(Icons.clear)
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // maximize button
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              kanjiIsFullscreen = !kanjiIsFullscreen;
+                            });
+                          },
+                          icon: Icon(kanjiIsFullscreen ? Icons.fullscreen : Icons.fullscreen_exit)
+                        ),
+                        // paste button
+                        IconButton(
+                          icon: const Icon(Icons.paste),
+                          onPressed: () async {
+                            // get radicals in clipboard
+                            String buffer = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? "";
+                            List<String> availableRadicals = radk.getRadicalsString(widget.radkIsar);
+                            List<String> bufferRadicals = buffer.split("")
+                              .where((b) => availableRadicals.contains(b)).toList();
+                            
+                            if(bufferRadicals.isEmpty){
+                              return;
+                            }
+                    
+                            // set new selection
+                            selectedRadicals = bufferRadicals;
+                            updateKanjiWithRadicalSelection();
+                          },
+                        ),
+                        // icons clear
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              animateKanjiOut = true;
+                              possibleRadicals.clear();
+                              selectedRadicals.clear();
+                            });
+                          },
+                          icon: const Icon(Icons.clear)
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ),
