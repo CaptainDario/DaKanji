@@ -274,6 +274,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     child: SizedBox(),
                   )
                 ),
+              // ok button
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
