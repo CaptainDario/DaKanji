@@ -100,3 +100,7 @@ flatpak/DaKanji.tar.xz
 flatpak/DaKanji.tar.gz
 flatpak/bundle.zip
 com.DaAppLab.DaKanji.flatpak
+
+# keys
+dakanji.env
+lib/env/env.g.dart
