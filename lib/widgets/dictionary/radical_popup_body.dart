@@ -104,8 +104,8 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: noKanjiButtons,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8
+                      //crossAxisSpacing: 8,
+                      //mainAxisSpacing: 8
                     ),
                     itemCount: kanjisThatUseAllRadicals.length,
                     itemBuilder: (context, index) {
@@ -113,25 +113,23 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                         position: index,
                         columnCount: noKanjiButtons,
                         child: ScaleAnimation(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(0),
-                              elevation: 0,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8),
+                          child: Card(
+                            child: InkWell(
+                              onTap: () {
+                                widget.searchController.text += kanjisThatUseAllRadicals[index];
+                              },
+                              borderRadius: BorderRadius.circular(8),
+                              child: Center(
+                                child: Text(
+                                  kanjisThatUseAllRadicals[index],
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontFamily: g_japaneseFontFamily,
+                                    color: Theme.of(context).brightness == Brightness.dark ?
+                                      Colors.white
+                                      : Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            onPressed: () {
-                              widget.searchController.text += kanjisThatUseAllRadicals[index];
-                            },
-                            child: Text(
-                              kanjisThatUseAllRadicals[index],
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontFamily: g_japaneseFontFamily,
-                                color: Colors.white,
                               ),
                             ),
                           ),
