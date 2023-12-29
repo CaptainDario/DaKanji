@@ -78,29 +78,24 @@ class _DojgImportState extends State<DojgImport> {
     if (importing) return;
 
     importing = true;
-
-    // let user pick a file
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any);
     
     // ignore: use_build_context_synchronously
     dojgImportLoadingDialog(context).show();
 
-    if(result != null){
-      if(await importDoJGDeck()){
-        GetIt.I<UserData>().dojgImported = (checkDojgImported());
-        GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
-        await GetIt.I<UserData>().save();
+    if(await importDoJGDeck()){
+      GetIt.I<UserData>().dojgImported = (checkDojgImported());
+      GetIt.I<UserData>().dojgWithMediaImported = (checkDojgWithMediaImported());
+      await GetIt.I<UserData>().save();
 
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pop(context);
-        // ignore: use_build_context_synchronously
-        await dojgImportSucceededDialog(context).show();
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop(context);
+      // ignore: use_build_context_synchronously
+      await dojgImportSucceededDialog(context).show();
 
-        // ignore: use_build_context_synchronously
-        restartApp(context);
-      }
+      // ignore: use_build_context_synchronously
+      restartApp(context);
     }
+
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop(context);
     // ignore: use_build_context_synchronously
