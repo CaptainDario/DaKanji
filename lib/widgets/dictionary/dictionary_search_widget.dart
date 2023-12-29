@@ -215,7 +215,19 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
           GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
         ],
-        child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark 
+                ? Colors.grey.shade800
+                : Colors.grey.shade300
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: Theme.of(context).brightness == Brightness.dark
+              ? Theme.of(context).scaffoldBackgroundColor
+              : Colors.white,
+          ),
+          //color: Theme.of(context).cardColor,
           child: Column(
             children: [
               // the search bar
@@ -223,7 +235,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 decoration: BoxDecoration(
                   border: BorderDirectional(
                     bottom: BorderSide(
-                      color: searchBarExpanded ? Colors.grey : Colors.transparent,
+                      color: searchBarExpanded
+                        ? Theme.of(context).brightness == Brightness.dark 
+                          ? Colors.grey.shade800
+                          : Colors.grey.shade300 
+                        : Colors.transparent,
                       style: BorderStyle.solid
                     )
                   )
