@@ -13,6 +13,8 @@ New Features:
 Fixed:
 
 - Various UI fixes
+- Text screen selection buttons when no text is selected / available
+- DoJG asking twice to import
 
 -------------------------------------------------------------------------
 
