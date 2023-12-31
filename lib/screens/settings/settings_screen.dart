@@ -192,103 +192,94 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Icons.book,
                         autoSizeGroup: g_SettingsAutoSizeGroup
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        child: Align(
-                          alignment: Alignment.centerLeft, 
-                          child: AutoSizeText(
-                            LocaleKeys.SettingsScreen_dict_languages.tr(),
-                            group: g_SettingsAutoSizeGroup,
-                          )
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ReorderableWrap(
-                          spacing: 8.0,
-                          runSpacing: 4.0,
-                          needsLongPressDraggable: false,
-                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          alignment: WrapAlignment.start,
-                          
-                          runAlignment: WrapAlignment.start,
-                          children: List.generate(
-                            settings.dictionary.translationLanguageCodes.length,
-                            (index) {
-                              String lang = settings.dictionary.translationLanguageCodes[index];
-                              return FilterChip(
-                                onSelected: (selected) async{
-                                  // do not allow removing the last dictionary
-                                  if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-                                    return;
-                                  }
-                                                            
-                                  // when disabling english dictionary tell user
-                                  // that significant part of the dict is only in english
-                                  if(lang == iso639_1.en.name &&
-                                    settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-                                    await disableEnglishDictPopup(context).show();
-                                  }
-                                                            
-                                  // ignore: use_build_context_synchronously
-                                  loadingPopup(context).show();
-                                                            
-                                  await GetIt.I<DictionarySearch>().kill();
-                                  if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-                                    settings.dictionary.selectedTranslationLanguages = 
-                                      settings.dictionary.translationLanguageCodes.where((element) => 
-                                        [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
-                                      ).toList();
-                                  }
-                                  else {
-                                    settings.dictionary.selectedTranslationLanguages.remove(lang);
-                                  }
-                                  await settings.save();
-                                  await GetIt.I<DictionarySearch>().init();
-                                                            
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.of(context).pop();
-                                                            
-                                  setState(() {});
-                                },
-                                selected: settings.dictionary.selectedTranslationLanguages.contains(lang),
-                                
-                                label: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                      height: 10,
-                                      child: SvgPicture.asset(
-                                        settings.dictionary.translationLanguagesToSvgPath[lang]!
-                                      )
-                                    ),
-                                    const SizedBox(width: 8,),
-                                    Text(lang,),
-                                  ],
+                      // Language selection
+                      ResponsiveFilterChips(
+                        chipWidget: (int index) {
+                          String lang = settings.dictionary.translationLanguageCodes[index];
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 10,
+                                height: 10,
+                                child: SvgPicture.asset(
+                                  settings.dictionary.translationLanguagesToSvgPath[lang]!
                                 )
-                              );
-                            }
-                          ),
-                          onReorder: (int oldIndex, int newIndex) {
-                            setState(() {
-                              // update order of list with languages
-                              String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
-                              settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
-                      
-                              // update list of selected languages
-                              settings.dictionary.selectedTranslationLanguages =
-                                settings.dictionary.translationLanguageCodes.where((e) => 
-                                  settings.dictionary.selectedTranslationLanguages.contains(e)
-                                ).toList();
-                                
-                              settings.save();
-                            });
+                              ),
+                              const SizedBox(width: 8,),
+                              Text(lang,),
+                            ],
+                          );
+                        },
+                        selected: (int index) {
+                          String lang = settings.dictionary.translationLanguageCodes[index];
+                          return settings.dictionary.selectedTranslationLanguages.contains(lang);
+                        },
+                        numChips: settings.dictionary.translationLanguageCodes.length,
+                        description: LocaleKeys.SettingsScreen_dict_languages.tr(),
+                        onFilterChipTap: (selected, index) async {
+
+                          String lang = settings.dictionary.translationLanguageCodes[index];
+
+                          // do not allow removing the last dictionary
+                          if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
+                            settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                            return;
                           }
-                        ),
+                                                    
+                          // when disabling english dictionary tell user
+                          // that significant part of the dict is only in english
+                          if(lang == iso639_1.en.name &&
+                            settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                            await disableEnglishDictPopup(context).show();
+                          }
+                                                    
+                          // ignore: use_build_context_synchronously
+                          loadingPopup(context).show();
+                                                    
+                          await GetIt.I<DictionarySearch>().kill();
+                          if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
+                            settings.dictionary.selectedTranslationLanguages = 
+                              settings.dictionary.translationLanguageCodes.where((element) => 
+                                [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
+                              ).toList();
+                          }
+                          else {
+                            settings.dictionary.selectedTranslationLanguages.remove(lang);
+                          }
+                          // reset anki languages
+                          settings.anki.includedLanguages =
+                            List.filled(settings.dictionary.selectedTranslationLanguages.length, true);
+
+                          // save and reload
+                          await settings.save();
+                          await GetIt.I<DictionarySearch>().init();
+                                                    
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context).pop();
+                                                    
+                          setState(() {});
+                        },
+                        onReorder: (int oldIndex, int newIndex) {
+                          setState(() {
+                            // update order of list with languages
+                            String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
+                            settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
+                    
+                            // update list of selected languages
+                            settings.dictionary.selectedTranslationLanguages =
+                              settings.dictionary.translationLanguageCodes.where((e) => 
+                                settings.dictionary.selectedTranslationLanguages.contains(e)
+                              ).toList();
+
+                            // reset anki languages
+                            settings.anki.includedLanguages =
+                              List.filled(settings.dictionary.selectedTranslationLanguages.length, true);
+                              
+                            settings.save();
+                          });
+                        }
                       ),
                       // show word frequency in search results / dictionary
                       ResponsiveCheckBoxTile(
@@ -391,55 +382,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
                       // Floating words selection
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                        child: Align(
-                          alignment: Alignment.centerLeft, 
-                          child: AutoSizeText(
-                            LocaleKeys.SettingsScreen_dict_matrix_word_levels.tr(),
-                            group: g_SettingsAutoSizeGroup,
-                          )
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                          child: Wrap(
-                            spacing: 8.0,
-                            runSpacing: 4.0,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            alignment: WrapAlignment.start,
-                            
-                            runAlignment: WrapAlignment.start,
-                            children: List.generate(
-                              SettingsDictionary.d_fallingWordsLevels.length,
-                              (index) {
-                                String level = SettingsDictionary.d_fallingWordsLevels[index];
-                                return GestureDetector(
-                                  child: FilterChip(
-                                    selected: settings.dictionary.selectedFallingWordsLevels.contains(level),
-                                    onSelected: (selected) async {
-                                      if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
-                                        settings.dictionary.selectedFallingWordsLevels.remove(level);
-                                      } else {
-                                        settings.dictionary.selectedFallingWordsLevels.add(level);
-                                      }
-                                      await settings.save();
-                                      setState(() {});
-                                    },
-                                    label: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(level),
-                                      ],
-                                    )
-                                  ),
-                                );
-                              }
-                            ),
-                          ),
-                        ),
+                      ResponsiveFilterChips(
+                        chipWidget: (index) {
+                          String level = SettingsDictionary.d_fallingWordsLevels[index];
+                          return Text(level);
+                        },
+                        selected: (int index) {
+                          String level = SettingsDictionary.d_fallingWordsLevels[index];
+                          return settings.dictionary.selectedFallingWordsLevels.contains(level);
+                        },
+                        numChips: SettingsDictionary.d_fallingWordsLevels.length,
+                        description: LocaleKeys.SettingsScreen_dict_matrix_word_levels.tr(),
+                        onFilterChipTap: (selected, index) async {
+                          String level = SettingsDictionary.d_fallingWordsLevels[index];
+                          if(settings.dictionary.selectedFallingWordsLevels.contains(level)) {
+                            settings.dictionary.selectedFallingWordsLevels.remove(level);
+                          } else {
+                            settings.dictionary.selectedFallingWordsLevels.add(level);
+                          }
+                          await settings.save();
+                          setState(() {});
+                        },
                       ),
 
                       // play animation when opening kanji tab
