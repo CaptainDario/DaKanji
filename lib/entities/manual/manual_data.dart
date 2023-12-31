@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/widgets/manual/manual_anki.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -33,7 +35,9 @@ class ManualData {
       //"Drawing",
       LocaleKeys.DictionaryScreen_title.tr(),
       LocaleKeys.TextScreen_title.tr(),
-      //LocaleKeys.ManualScreen_anki_title.tr(),
+      // TODO v3.4
+      if(kDebugMode)
+      LocaleKeys.ManualScreen_anki_title.tr(),
       LocaleKeys.DojgScreen_title.tr(),
       LocaleKeys.KanaTableScreen_title.tr(),
       LocaleKeys.ManualScreen_deep_links_title.tr()
@@ -43,7 +47,9 @@ class ManualData {
       //Icons.brush,
       Icons.book,
       Icons.text_snippet,
-      //DaKanjiIcons.anki,
+      // TODO v3.4
+      if(kDebugMode)
+      DaKanjiIcons.anki,
       DaKanjiIcons.dojg,
       DaKanjiIcons.kana_table,
       Icons.link
@@ -52,7 +58,9 @@ class ManualData {
     manualPages = [
       const ManualDictionary(),
       const ManualTextScreen(),
-      //ManualAnki(),
+      // TODO v3.4
+      if(kDebugMode)
+      const ManualAnki(),
       const ManualDojgPage(),
       const ManualKanaTablePage(),
       const ManualDeepLinks(),
@@ -62,6 +70,9 @@ class ManualData {
       ManualTypes.dictionary,
       ManualTypes.text,
       ManualTypes.dojg,
+      // TODO v3.4
+      if(kDebugMode)
+      ManualTypes.anki,
       ManualTypes.kanaTable,
       ManualTypes.deepLinks,
     ];
