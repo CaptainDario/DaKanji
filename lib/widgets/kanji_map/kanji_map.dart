@@ -207,21 +207,21 @@ class _KanjiMapState extends State<KanjiMap> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                     child: Icon(Icons.search),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: TextField(
                       
                     )
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                     child: Icon(Icons.copy),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                     child: Icon(Icons.brush,),
                   ),
                   Padding(
