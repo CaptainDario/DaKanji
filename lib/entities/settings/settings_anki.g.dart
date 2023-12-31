@@ -8,7 +8,9 @@ part of 'settings_anki.dart';
 
 SettingsAnki _$SettingsAnkiFromJson(Map<String, dynamic> json) => SettingsAnki()
   ..defaultDeck = json['defaultDeck'] as String
-  ..noLangsToInclude = json['noLangsToInclude'] as int
+  ..includedLanguages = (json['includedLanguages'] as List<dynamic>)
+      .map((e) => e as bool)
+      .toList()
   ..noTranslations = json['noTranslations'] as int
   ..includeGoogleImage = json['includeGoogleImage'] as bool
   ..includeAudio = json['includeAudio'] as bool
@@ -17,7 +19,7 @@ SettingsAnki _$SettingsAnkiFromJson(Map<String, dynamic> json) => SettingsAnki()
 Map<String, dynamic> _$SettingsAnkiToJson(SettingsAnki instance) =>
     <String, dynamic>{
       'defaultDeck': instance.defaultDeck,
-      'noLangsToInclude': instance.noLangsToInclude,
+      'includedLanguages': instance.includedLanguages,
       'noTranslations': instance.noTranslations,
       'includeGoogleImage': instance.includeGoogleImage,
       'includeAudio': instance.includeAudio,

@@ -29,18 +29,18 @@ class SettingsAnki with ChangeNotifier {
     notifyListeners();
   }
 
-  /// The default value for `noLangsToInclude`
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  // ignore: constant_identifier_names
-  static const int d_noLangsToInclude = 1;
   /// When creating a new note, how many langs should be included
-  @JsonKey(defaultValue: d_noLangsToInclude)
-  int _noLangsToInclude = d_noLangsToInclude;
+  @JsonKey(defaultValue: [true])
+  List<bool> _includedLanguages = [true];
   /// When creating a new note, how many langs should be included
-  int get noLangsToInclude => _noLangsToInclude;
+  List<bool> get includedLanguages => _includedLanguages;
   /// When creating a new note, how many langs should be included
-  set noLangsToInclude(int value) {
-    _noLangsToInclude = value;
+  set includedLanguages(List<bool> value) {
+    _includedLanguages = value;
+    notifyListeners();
+  }
+  void setIncludeLanguagesItem(bool value, int index){
+    _includedLanguages[index] = value;
     notifyListeners();
   }
 

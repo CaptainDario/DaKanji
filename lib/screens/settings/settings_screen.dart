@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,6 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:reorderables/reorderables.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:window_manager/window_manager.dart';
@@ -41,7 +42,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_til
 import 'package:da_kanji_mobile/widgets/settings/custom_url_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
-import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+
 
 /// The "settings"-screen.
 /// 
@@ -685,10 +686,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         autoSizeGroup: g_SettingsAutoSizeGroup,
                       ),
-                      // move down between enreegon and region anki header
-                      const Divider(),
 
                       // #endregion
+
+                      const Divider(),
 
                       // #region - word lists header TODO: v word lists - enable
                       if(kDebugMode)
@@ -716,96 +717,113 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // #endregion        
 
                       // #region - Anki header : TODO - v word lists - enable anki settings
-                      /*
-                      ResponsiveHeaderTile(
-                        LocaleKeys.SettingsScreen_anki_title.tr(),
-                        DaKanjiIcons.anki,
-                        autoSizeGroup: g_SettingsAutoSizeGroup
-                      ),
-                      // the default deck to add cards to
-                      ResponsiveDropDownTile(
-                        text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
-                        value: ankiDecks[0],
-                        items: ankiDecks,
-                        autoSizeGroup: g_SettingsAutoSizeGroup,
-                      ),
-                      // how many langauges should be included
-                      ResponsiveSliderTile(
-                        text: LocaleKeys.SettingsScreen_anki_default_no_langs.tr(),
-                        value: settings.anki.noLangsToInclude.toDouble(),
-                        min: 0,
-                        max: settings.dictionary.translationLanguageCodes.length.toDouble()-1.0,
-                        divisions: settings.dictionary.translationLanguageCodes.length-1,
-                        autoSizeGroup: g_SettingsAutoSizeGroup,
-                        onSliderMoved: (value) {
-                          setState(() {
-                            settings.anki.noLangsToInclude = value.toInt();
+                      if(kDebugMode)
+                      ...[
+                        ResponsiveHeaderTile(
+                          LocaleKeys.SettingsScreen_anki_title.tr(),
+                          DaKanjiIcons.anki,
+                          autoSizeGroup: g_SettingsAutoSizeGroup
+                        ),
+                        // the default deck to add cards to
+                        // TODO
+                        // the default note type
+                        // TODO
+                        // how many langauges should be included
+                        ResponsiveFilterChips(
+                          chipWidget: (int index) {
+                            String lang = settings.dictionary.selectedTranslationLanguages[index];
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                  height: 10,
+                                  child: SvgPicture.asset(
+                                    settings.dictionary.translationLanguagesToSvgPath[lang]!
+                                  )
+                                ),
+                                const SizedBox(width: 8,),
+                                Text(lang,),
+                              ],
+                            );
+                          },
+                          selected: (index) {
+                            return settings.anki.includedLanguages[index];
+                          },
+                          numChips: settings.dictionary.selectedTranslationLanguages.length,
+                          onFilterChipTap: (selected, index) {
+                            // do not allow disabling all lanugages
+                            if(settings.anki.includedLanguages.where((e) => e).length == 1 &&
+                              settings.anki.includedLanguages[index] == true){
+                              return;
+                            }
+
+                            settings.anki.setIncludeLanguagesItem(selected, index);
                             settings.save();
-                          });
-                        },
-                      ),
-                      // how many different lines from entries should be included
-                      ResponsiveSliderTile(
-                        text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
-                        value: settings.anki.noTranslations.toDouble(),
-                        min: 0,
-                        max: 5,
-                        divisions: 5,
-                        autoSizeGroup: g_SettingsAutoSizeGroup,
-                        onSliderMoved: (value) {
-                          setState(() {
-                            settings.anki.noTranslations = value.toInt();
-                            settings.save();
-                          });
-                        },
-                      ),
-                      // include google image (disabled for now)
-                      if(false)
-                        // ignore: dead_code
-                        ResponsiveCheckBoxTile(
-                          text: "Include google image",
-                          value: settings.anki.includeGoogleImage,
-                          onTileTapped: (value) {
+                          },
+                        ),
+                        // how many different lines from entries should be included
+                        ResponsiveSliderTile(
+                          text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
+                          value: settings.anki.noTranslations.toDouble(),
+                          min: 0,
+                          max: 5,
+                          divisions: 5,
+                          autoSizeGroup: g_SettingsAutoSizeGroup,
+                          onChanged: (value) {
                             setState(() {
-                              settings.anki.includeGoogleImage = value;
+                              settings.anki.noTranslations = value.toInt();
                               settings.save();
                             });
                           },
-                          autoSizeGroup: g_SettingsAutoSizeGroup,
                         ),
-                      // include audio (disabled for now)
-                      if(false)
-                        // ignore: dead_code
-                        ResponsiveCheckBoxTile(
-                          text: "Include audio",
-                          value: settings.anki.includeAudio,
-                          onTileTapped: (value) {
-                            setState(() {
-                              settings.anki.includeAudio = value;
-                              settings.save();
-                            });
-                          },
-                          autoSizeGroup: g_SettingsAutoSizeGroup,
-                        ),
-                      // include screenshot (disabled for now)
-                      if(false)
-                        // ignore: dead_code
-                        ResponsiveCheckBoxTile(
-                          text: "Include screenshot",
-                          value: settings.anki.includeScreenshot,
-                          onTileTapped: (value) {
-                            setState(() {
-                              settings.anki.includeScreenshot = value;
-                              settings.save();
-                            });
-                          },
-                          autoSizeGroup: g_SettingsAutoSizeGroup,
-                        ),
-                      
+                        // include google image (disabled for now)
+                        if(false)
+                          // ignore: dead_code
+                          ResponsiveCheckBoxTile(
+                            text: "Include google image",
+                            value: settings.anki.includeGoogleImage,
+                            onTileTapped: (value) {
+                              setState(() {
+                                settings.anki.includeGoogleImage = value;
+                                settings.save();
+                              });
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                        // include audio (disabled for now)
+                        if(false)
+                          // ignore: dead_code
+                          ResponsiveCheckBoxTile(
+                            text: "Include audio",
+                            value: settings.anki.includeAudio,
+                            onTileTapped: (value) {
+                              setState(() {
+                                settings.anki.includeAudio = value;
+                                settings.save();
+                              });
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                        // include screenshot (disabled for now)
+                        if(false)
+                          // ignore: dead_code
+                          ResponsiveCheckBoxTile(
+                            text: "Include screenshot",
+                            value: settings.anki.includeScreenshot,
+                            onTileTapped: (value) {
+                              setState(() {
+                                settings.anki.includeScreenshot = value;
+                                settings.save();
+                              });
+                            },
+                            autoSizeGroup: g_SettingsAutoSizeGroup,
+                          ),
+                      ],
                       // #endregion
 
                       const Divider(),
-                      */
 
                       // #region - Clipboard header
 
