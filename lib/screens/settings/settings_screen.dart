@@ -763,13 +763,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             settings.save();
                           },
                         ),
-                        // how many different lines from entries should be included
+                        // how many different translations from entries should be included
                         ResponsiveSliderTile(
                           text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
                           value: settings.anki.noTranslations.toDouble(),
-                          min: 0,
-                          max: 5,
-                          divisions: 5,
+                          min: 1,
+                          max: 50,
+                          divisions: 50,
+                          showLabelAsInt: true,
                           autoSizeGroup: g_SettingsAutoSizeGroup,
                           onChanged: (value) {
                             setState(() {
