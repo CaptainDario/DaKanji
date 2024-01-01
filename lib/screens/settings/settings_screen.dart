@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:flutter/foundation.dart';
@@ -725,10 +726,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           autoSizeGroup: g_SettingsAutoSizeGroup
                         ),
                         // the default deck to add cards to
-                        // TODO
-                        // the default note type
-                        // TODO
-                        // how many langauges should be included
+                        ResponsiveDropDownTile(
+                          text: "Deck to add to",
+                          value: settings.anki.defaultDeck,
+                          items: settings.anki.availableDecks.contains(settings.anki.defaultDeck) ||
+                            settings.anki.defaultDeck == ""
+                            ? settings.anki.availableDecks
+                            : [...settings.anki.availableDecks, settings.anki.defaultDeck],
+                          onChanged: (value) async {
+                            if(value == null) return;
+
+                            setState(() {
+                              settings.anki.defaultDeck = value;
+                            });
+
+                            await settings.save();
+                          },
+                          leadingButtonIcon: Icons.replay_outlined,
+                          leadingButtonPressed: () async {
+                            if(!await checkAnkiAvailableAndShowSnackbar(context)) return;
+
+                            List<String> deckNames = await getDeckNames();
+                            
+                            setState(() {
+                              settings.anki.defaultDeck   = deckNames[0];
+                              settings.anki.availableDecks = deckNames;
+                            });
+                          },
+                        ),
+                        // which langauges should be included
                         ResponsiveFilterChips(
                           chipWidget: (int index) {
                             String lang = settings.dictionary.selectedTranslationLanguages[index];

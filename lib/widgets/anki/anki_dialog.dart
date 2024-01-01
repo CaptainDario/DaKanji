@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
-AwesomeDialog ankiDialog(BuildContext context) {
+AwesomeDialog ankiDialog(BuildContext context, Jm) {
 
   return AwesomeDialog(
     context: context,
