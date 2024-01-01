@@ -8,6 +8,9 @@ import 'package:easy_localization/easy_localization.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 
+
+
+/// A widget that shows a responsive drop down menu
 class ResponsiveDropDownTile extends StatefulWidget {
   const ResponsiveDropDownTile(
     {
@@ -15,6 +18,9 @@ class ResponsiveDropDownTile extends StatefulWidget {
       required this.value,
       required this.items,
       this.translateItemTexts  = false,
+      this.leadingButtonIcon,
+      this.leadingButtonPressed,
+      this.onTap,
       this.onChanged,
       this.autoSizeGroup,
       Key? key
@@ -29,6 +35,12 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final List<String> items;
   /// should the items be translate using easzlocalization
   final bool translateItemTexts;
+  /// Icon of the leading button
+  final IconData? leadingButtonIcon;
+  /// Callback that is executed when the user taps on the leading button
+  final Function()? leadingButtonPressed;
+  /// callback which will be executed eveytime when the selection changed
+  final Function ()? onTap;
   /// callback which will be executed eveytime when the selection changed
   final Function (String? value)? onChanged;
   /// The autoSizeGroup for this Tile
@@ -60,6 +72,13 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
           width: width,
           child: Row(
             children: [
+              if(widget.leadingButtonIcon != null)
+                IconButton(
+                  onPressed: () {
+                    widget.leadingButtonPressed?.call();
+                  },
+                  icon: Icon(widget.leadingButtonIcon!)
+                ),
               Expanded(
                 child: Container(
                   height: (tileHeight*0.75).clamp(0, 30),
@@ -93,8 +112,11 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                     ),
                   );
                 }).toList(),
+                onTap: () {
+                  widget.onTap?.call();
+                },
                 onChanged: (String? newValue) {
-                  if(widget.onChanged != null) widget.onChanged!(newValue);
+                  widget.onChanged?.call(newValue);
                 },
               ),
             ]
