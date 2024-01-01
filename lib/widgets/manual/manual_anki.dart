@@ -85,25 +85,7 @@ class ManualAnki extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  if(await checkAnkiAvailable()) {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
-                        ),
-                      ),
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          LocaleKeys.ManualScreen_anki_test_connection_fail.tr(),
-                        ),
-                      ),
-                    );
-                  }
+                  checkAnkiAvailableAndShowSnackbar(context);
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

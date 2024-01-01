@@ -2,20 +2,25 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+
+
 
 /// Addes the given note to Anki
 /// 
 /// Note: if the deck or model does not exist, it will be created
 Future<bool> addNote(AnkiNote note) async {
 
-  // checl that anki is running
+  // check that anki is running
   if(!await checkAnkiAvailable()){
     debugPrint("Anki not running");
   }
@@ -142,5 +147,35 @@ Future<bool> checkAnkiAvailable(){
   else {
     throw Exception("Unsupported platform");
   }
+}
+
+/// Checks if Anki is available on the current platform and show a snackbar
+/// accoringly
+Future<bool> checkAnkiAvailableAndShowSnackbar(BuildContext context) async {
+
+  bool ankiAvailable = await checkAnkiAvailable();
+
+  if(ankiAvailable) {
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
+        ),
+      ),
+    );
+  }
+  else {
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          LocaleKeys.ManualScreen_anki_test_connection_fail.tr(),
+        ),
+      ),
+    );
+  }
+
+  return ankiAvailable;
 }
 
