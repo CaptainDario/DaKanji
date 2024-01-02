@@ -63,20 +63,22 @@ class SettingsAnki with ChangeNotifier {
     notifyListeners();
   }
 
-  /// The default value for `defaultDeck`
+  /// The default value for `desktopAnkiUri`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
   static const String d_desktopAnkiURL = "localhost:8765";
-  /// When creating a new note, the deck to add the card to by default
+  /// The URL to connect to anki desktop
   @JsonKey(defaultValue: d_desktopAnkiURL)
   String _desktopAnkiURL = d_desktopAnkiURL;
-  /// When creating a new note, the deck to add the card to by default
+  /// The URL to connect to anki desktop
   String get desktopAnkiURL => _desktopAnkiURL;
-  /// When creating a new note, the deck to add the card to by default
+  /// The URL to connect to anki desktop
   set desktopAnkiURL(String value) {
     _desktopAnkiURL = value;
     notifyListeners();
   }
+  /// The URL to connect to anki desktop
+  Uri get desktopAnkiUri => Uri.http(Uri.encodeFull(_desktopAnkiURL));
 
   /// The default value for `includeGoogleImage`
   @JsonKey(includeFromJson: false, includeToJson: false)

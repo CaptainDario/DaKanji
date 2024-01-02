@@ -2,6 +2,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -15,167 +17,196 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 
 
-/// Addes the given note to Anki
-/// 
-/// Note: if the deck or model does not exist, it will be created
-Future<bool> addNote(AnkiNote note) async {
+/// Class to handle anki communication
+class Anki {
 
-  // check that anki is running
-  if(!await checkAnkiAvailable()){
-    debugPrint("Anki not running");
-  }
-  // assure that the DaKanji card type is present
-  if(!(await daKanjiModelExists())) {
-    await addDaKanjiModel();
-  }
-
-  // if the given deck does not exist, create it
-  if(!(await getDeckNames()).contains(note.deckName)) {
-    await addDeck(note.deckName);
-  }
+  /// User settings for anki
+  SettingsAnki settingsAnki;
+  /// Communication with anki desktop
+  AnkiDesktop? ankiDesktop;
+  /// Communication with anki android
+  AnkiAndroid? ankiAndroid;
+  /// Communication with anki ios
+  AnkiiOS? ankiiOS;
 
 
-  // Add the note to Anki platform dependent
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    addNoteDesktop(note);
-  }
-  else if(Platform.isIOS) {
-    addNoteIos(note);
-  }
-  else if(Platform.isAndroid) {
-    addNoteAndroid(note);
-  }
-  else {
-    throw Exception("Unsupported platform");
-  }
-
-  return true;
-}
-
-/// Checks if the DaKanji card type is present in Anki
-Future<bool> daKanjiModelExists(){
-
-  // Add the card type to Anki platform dependent
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    return daKanjiModelExistsDesktop();
-  }
-  else if(Platform.isIOS) {
-    return daKanjiModelExistsIOS();
-  }
-  else if(Platform.isAndroid) {
-    return daKanjiModelExistsAndroid();
-  }
-  else {
-    throw Exception("Unsupported platform");
+  Anki(
+    this.settingsAnki
+  ){
+    if(Platform.isLinux || Platform.isLinux || Platform.isMacOS){
+      ankiDesktop = AnkiDesktop(settingsAnki);
+    }
+    else if(Platform.isAndroid){
+      ankiAndroid = AnkiAndroid(settingsAnki);
+    }
+    else if(Platform.isIOS){
+      ankiiOS = AnkiiOS(settingsAnki);
+    }
   }
 
+  /// Addes the given note to Anki
+  /// 
+  /// Note: if the deck or model does not exist, it will be created
+  Future<bool> addNote(AnkiNote note) async {
 
-}
+    // check that anki is running
+    if(!await checkAnkiAvailable()){
+      debugPrint("Anki not running");
+    }
+    // assure that the DaKanji card type is present
+    if(!(await daKanjiModelExists())) {
+      await addDaKanjiModel();
+    }
 
-/// Adds the DaKanji card type to Anki, if it is not present, otherwise
-/// adds it
-Future<void> addDaKanjiModel() async {
-  // assure anki is reachable
-  if(!await checkAnkiConnectAvailable()){
-    return;
-  }
-
-  // Add the card type to Anki platform dependent
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    addDaKanjiModelDesktop();
-  }
-  else if(Platform.isIOS) {
-    addDaKanjiModelIOS();
-  }
-  else if(Platform.isAndroid) {
-    addDaKanjiModelAndroid();
-  }
-  else {
-    throw Exception("Unsupported platform");
-  }
-
-}
+    // if the given deck does not exist, create it
+    if(!(await getDeckNames()).contains(note.deckName)) {
+      await addDeck(note.deckName);
+    }
 
 
-/// Adds a deck to Anki if not present
-Future<void> addDeck(String deckName){
-  
-  // Add the card type to Anki platform dependent
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    return addDeckDesktop(deckName);
-  }
-  else if(Platform.isIOS) {
-    return addDeckIOS(deckName);
-  }
-  else if(Platform.isAndroid) {
-    return addDeckAndroid(deckName);
-  }
-  else {
-    throw Exception("Unsupported platform");
-  }
-  
-}
+    // Add the note to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      ankiDesktop!.addNoteDesktop(note);
+    }
+    else if(Platform.isIOS) {
+      ankiiOS!.addNoteIos(note);
+    }
+    else if(Platform.isAndroid) {
+      ankiAndroid!.addNoteAndroid(note);
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
 
-/// Returns a list of all deck names available in anki
-Future<List<String>> getDeckNames() async {
-  // Add the card type to Anki platform dependent
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    return getDeckNamesDesktop();
+    return true;
   }
-  else if(Platform.isIOS) {
-    return getDeckNamesIOS();
-  }
-  else if(Platform.isAndroid) {
-    return getDeckNamesAndroid();
-  }
-  else {
-    throw Exception("Unsupported platform");
-  }
-}
 
-/// Checks if Anki is available on the current platform
-Future<bool> checkAnkiAvailable(){
-  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-    return checkAnkiConnectAvailable();
-  }
-  else if(Platform.isIOS) {
-    return checkAnkidroidAvailable();
-  }
-  else if(Platform.isAndroid) {
-    return checkAnkiMobileRunning();
-  }
-  else {
-    throw Exception("Unsupported platform");
-  }
-}
+  /// Checks if the DaKanji card type is present in Anki
+  Future<bool> daKanjiModelExists(){
 
-/// Checks if Anki is available on the current platform and show a snackbar
-/// accoringly
-Future<bool> checkAnkiAvailableAndShowSnackbar(BuildContext context) async {
+    // Add the card type to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      return ankiDesktop!.daKanjiModelExistsDesktop();
+    }
+    else if(Platform.isIOS) {
+      return ankiiOS!.daKanjiModelExistsIOS();
+    }
+    else if(Platform.isAndroid) {
+      return ankiAndroid!.daKanjiModelExistsAndroid();
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
 
-  bool ankiAvailable = await checkAnkiAvailable();
 
-  if(ankiAvailable) {
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
+  }
+
+  /// Adds the DaKanji card type to Anki, if it is not present, otherwise
+  /// adds it
+  Future<void> addDaKanjiModel() async {
+    // assure anki is reachable
+    if(!await checkAnkiAvailable()){
+      return;
+    }
+
+    // Add the card type to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      ankiDesktop!.addDaKanjiModelDesktop();
+    }
+    else if(Platform.isIOS) {
+      ankiiOS!.addDaKanjiModelIOS();
+    }
+    else if(Platform.isAndroid) {
+      ankiAndroid!.addDaKanjiModelAndroid();
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
+
+  }
+
+
+  /// Adds a deck to Anki if not present
+  Future<void> addDeck(String deckName){
+    
+    // Add the card type to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      return ankiDesktop!.addDeckDesktop(deckName);
+    }
+    else if(Platform.isIOS) {
+      return ankiiOS!.addDeckIOS(deckName);
+    }
+    else if(Platform.isAndroid) {
+      return ankiAndroid!.addDeckAndroid(deckName);
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
+    
+  }
+
+  /// Returns a list of all deck names available in anki
+  Future<List<String>> getDeckNames() async {
+    // Add the card type to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      return ankiDesktop!.getDeckNamesDesktop();
+    }
+    else if(Platform.isIOS) {
+      return ankiiOS!.getDeckNamesIOS();
+    }
+    else if(Platform.isAndroid) {
+      return ankiAndroid!.getDeckNamesAndroid();
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
+  }
+
+  /// Checks if Anki is available on the current platform
+  Future<bool> checkAnkiAvailable(){
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      return ankiDesktop!.checkAnkiConnectAvailable();
+    }
+    else if(Platform.isIOS) {
+      return ankiiOS!.checkAnkiMobileRunning();
+    }
+    else if(Platform.isAndroid) {
+      return ankiAndroid!.checkAnkidroidAvailable();
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
+  }
+
+  /// Checks if Anki is available on the current platform and show a snackbar
+  /// accoringly
+  Future<bool> checkAnkiAvailableAndShowSnackbar(
+    BuildContext context, {String? successMessage, String? failureMessage}) async {
+
+    bool ankiAvailable = await checkAnkiAvailable();
+
+    if(ankiAvailable) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            successMessage ?? LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
+          ),
         ),
-      ),
-    );
-  }
-  else {
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          LocaleKeys.ManualScreen_anki_test_connection_fail.tr(),
+      );
+    }
+    else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            (failureMessage ?? LocaleKeys.ManualScreen_anki_test_connection_fail.tr()),
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    return ankiAvailable;
   }
 
-  return ankiAvailable;
 }
-

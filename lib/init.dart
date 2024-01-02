@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,6 +117,8 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
+
+  GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
 }
 
 /// Loads all services from disk that DO depend on data in the documents
