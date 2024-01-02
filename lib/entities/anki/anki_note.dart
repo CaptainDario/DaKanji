@@ -22,7 +22,7 @@ class AnkiNote{
   /// A google Image of the entry
   String googleImage = "";
   /// An audio of the entry
-  String auido = "";
+  String audio = "";
   /// If watching a series / playing a game a screenshot
   String encounteredImage = "";
 
@@ -32,14 +32,14 @@ class AnkiNote{
     "Japanese"         : kanji.mapIndexed((index, value) => "$index. $value").join("<br>"),
     "Kana"             : kana.mapIndexed((index, value) => "$index. $value").join("<br>"),
     "GoogleImage"      : googleImage,
-    "Audio"            : auido,
+    "Audio"            : audio,
     "EncounteredImage" : encounteredImage
   };
 
 
   /// Creates a new note with the given values
   AnkiNote(this.deckName, this.translations, this.kanji,
-    this.googleImage, this.auido, this.encounteredImage);
+    this.googleImage, this.audio, this.encounteredImage);
 
   /// Creates a new note with testing values
   AnkiNote.testNote() :
@@ -51,7 +51,7 @@ class AnkiNote{
     kana = ["くる", "りんご"],
     
     googleImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    auido = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    audio = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
     encounteredImage = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
 
 }
