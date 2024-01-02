@@ -17,14 +17,14 @@ class SettingsAnki with ChangeNotifier {
   /// The default value for `defaultDeck`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const String d_defaultDeck = "";
+  static const String? d_defaultDeck = null;
   /// When creating a new note, the deck to add the card to by default
   @JsonKey(defaultValue: d_defaultDeck)
-  String _defaultDeck = d_defaultDeck;
+  String? _defaultDeck = d_defaultDeck;
   /// When creating a new note, the deck to add the card to by default
-  String get defaultDeck => _defaultDeck;
+  String? get defaultDeck => _defaultDeck;
   /// When creating a new note, the deck to add the card to by default
-  set defaultDeck(String value) {
+  set defaultDeck(String? value) {
     _defaultDeck = value;
     notifyListeners();
   }

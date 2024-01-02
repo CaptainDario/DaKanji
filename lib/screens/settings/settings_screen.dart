@@ -727,12 +727,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         // the default deck to add cards to
                         ResponsiveDropDownTile(
-                          text: "Deck to add to",
+                          text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
                           value: settings.anki.defaultDeck,
                           items: settings.anki.availableDecks.contains(settings.anki.defaultDeck) ||
-                            settings.anki.defaultDeck == ""
+                            settings.anki.defaultDeck == null
                             ? settings.anki.availableDecks
-                            : [...settings.anki.availableDecks, settings.anki.defaultDeck],
+                            : [...settings.anki.availableDecks, settings.anki.defaultDeck!],
                           onChanged: (value) async {
                             if(value == null) return;
 

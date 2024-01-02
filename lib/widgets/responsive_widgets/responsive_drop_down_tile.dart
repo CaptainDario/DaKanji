@@ -30,7 +30,7 @@ class ResponsiveDropDownTile extends StatefulWidget {
   /// the description of this settings
   final String text;
   /// the selected value
-  final String value;
+  final String? value;
   /// the text which should be shown in the dropdown
   final List<String> items;
   /// should the items be translate using easzlocalization
