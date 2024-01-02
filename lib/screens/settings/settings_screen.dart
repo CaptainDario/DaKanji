@@ -744,13 +744,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           leadingButtonIcon: Icons.replay_outlined,
                           leadingButtonPressed: () async {
-                            bool ankiAvailable = await checkAnkiAvailableAndShowSnackbar(
+                            bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailableAndShowSnackbar(
                               context,
                               successMessage: LocaleKeys.SettingsScreen_anki_get_decks_success.tr(),
                               failureMessage:  LocaleKeys.SettingsScreen_anki_get_decks_fail.tr());
                             if(!ankiAvailable) return;
 
-                            List<String> deckNames = await getDeckNames();
+                            List<String> deckNames = await GetIt.I<Anki>().getDeckNames();
                             
                             setState(() {
                               settings.anki.defaultDeck   = deckNames[0];
