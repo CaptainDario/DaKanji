@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +20,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 import 'package:da_kanji_mobile/entities/changelog.dart';

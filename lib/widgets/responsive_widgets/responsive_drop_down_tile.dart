@@ -8,8 +8,6 @@ import 'package:easy_localization/easy_localization.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 
-
-
 /// A widget that shows a responsive drop down menu
 class ResponsiveDropDownTile extends StatefulWidget {
   const ResponsiveDropDownTile(

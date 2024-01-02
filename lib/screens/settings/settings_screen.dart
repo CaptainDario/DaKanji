@@ -2,9 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/anki/anki.dart';
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
-import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +19,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
@@ -36,6 +34,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
@@ -43,7 +42,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_til
 import 'package:da_kanji_mobile/widgets/settings/custom_url_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
-
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
 /// The "settings"-screen.
 /// 

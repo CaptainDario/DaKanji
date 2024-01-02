@@ -1,27 +1,28 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:async/async.dart';
-import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_kanji_tab.dart';
-import 'package:da_kanji_mobile/widgets/kanji_map/kanji_map_painter.dart';
-import 'package:database_builder/database_builder.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:async/async.dart';
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_kanji_tab.dart';
+import 'package:da_kanji_mobile/widgets/kanji_map/kanji_map_painter.dart';
 
 class KanjiMap extends StatefulWidget {
 

@@ -2,8 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/anki/anki.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -11,8 +9,7 @@ import 'package:http/http.dart' as http;
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
-
-
+import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 
 /// Class to communicate with anki desktop
 class AnkiDesktop {

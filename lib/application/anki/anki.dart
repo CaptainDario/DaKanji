@@ -2,20 +2,18 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 /// Class to handle anki communication
 class Anki {
