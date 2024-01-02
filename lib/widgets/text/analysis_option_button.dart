@@ -53,7 +53,7 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
       child: InkWell(
         radius: 8,
         customBorder: const CircleBorder(),
