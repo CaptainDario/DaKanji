@@ -29,12 +29,16 @@ class SettingsAnki with ChangeNotifier {
     notifyListeners();
   }
 
-  /// When creating a new note, how many langs should be included
+  /// All decks currently in anki
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<String> availableDecks = [];
+
+  /// When creating a new note, which languages should be included
   @JsonKey(defaultValue: [true])
   List<bool> _includedLanguages = [true];
-  /// When creating a new note, how many langs should be included
+  /// When creating a new note, which languages should be included
   List<bool> get includedLanguages => _includedLanguages;
-  /// When creating a new note, how many langs should be included
+  /// When creating a new note, which languages should be included
   set includedLanguages(List<bool> value) {
     _includedLanguages = value;
     notifyListeners();
@@ -56,6 +60,21 @@ class SettingsAnki with ChangeNotifier {
   /// When creating a new note, how many translations should be included
   set noTranslations(int value) {
     _noTranslations = value;
+    notifyListeners();
+  }
+
+  /// The default value for `defaultDeck`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const String d_desktopAnkiURL = "localhost:8765";
+  /// When creating a new note, the deck to add the card to by default
+  @JsonKey(defaultValue: d_desktopAnkiURL)
+  String _desktopAnkiURL = d_desktopAnkiURL;
+  /// When creating a new note, the deck to add the card to by default
+  String get desktopAnkiURL => _desktopAnkiURL;
+  /// When creating a new note, the deck to add the card to by default
+  set desktopAnkiURL(String value) {
+    _desktopAnkiURL = value;
     notifyListeners();
   }
 

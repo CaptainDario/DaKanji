@@ -744,7 +744,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           leadingButtonIcon: Icons.replay_outlined,
                           leadingButtonPressed: () async {
-                            if(!await checkAnkiAvailableAndShowSnackbar(context)) return;
+                            bool ankiAvailable = await checkAnkiAvailableAndShowSnackbar(
+                              context,
+                              successMessage: LocaleKeys.SettingsScreen_anki_get_decks_success.tr(),
+                              failureMessage:  LocaleKeys.SettingsScreen_anki_get_decks_fail.tr());
+                            if(!ankiAvailable) return;
 
                             List<String> deckNames = await getDeckNames();
                             
@@ -756,6 +760,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         // which langauges should be included
                         ResponsiveFilterChips(
+                          description: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
                           chipWidget: (int index) {
                             String lang = settings.dictionary.selectedTranslationLanguages[index];
                             return Row(
@@ -805,11 +810,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             });
                           },
                         ),
+                        if(Platform.isMacOS || Platform.isLinux || Platform.isWindows)
+                          ResponsiveInputFieldTile(
+                            enabled: true,
+                            text: settings.anki.desktopAnkiURL,
+                            hintText: LocaleKeys.SettingsScreen_anki_desktop_url.tr(),
+                            onChanged: (value) {
+                              settings.anki.desktopAnkiURL = value;
+                              settings.save();
+                            },
+                          ),
                         // include google image (disabled for now)
                         if(false)
                           // ignore: dead_code
                           ResponsiveCheckBoxTile(
-                            text: "Include google image",
+                            text: LocaleKeys.SettingsScreen_anki_include_google_image.tr(),
                             value: settings.anki.includeGoogleImage,
                             onTileTapped: (value) {
                               setState(() {
@@ -823,7 +838,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         if(false)
                           // ignore: dead_code
                           ResponsiveCheckBoxTile(
-                            text: "Include audio",
+                            text: LocaleKeys.SettingsScreen_anki_include_audio.tr(),
                             value: settings.anki.includeAudio,
                             onTileTapped: (value) {
                               setState(() {
@@ -837,7 +852,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         if(false)
                           // ignore: dead_code
                           ResponsiveCheckBoxTile(
-                            text: "Include screenshot",
+                            text: LocaleKeys.SettingsScreen_anki_include_screenshot.tr(),
                             value: settings.anki.includeScreenshot,
                             onTileTapped: (value) {
                               setState(() {
