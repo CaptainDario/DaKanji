@@ -36,6 +36,7 @@ class ResponsiveHeaderTile extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return ExpansionTile(
+      childrenPadding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       title: Container(
         height: tileHeight,
         width: screenWidth,
