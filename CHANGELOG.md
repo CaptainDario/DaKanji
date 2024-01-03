@@ -10,6 +10,10 @@ New Features:
   - Mnemonics for the main kana
   - Sounds for all available kana
 
+Improvements:
+
+- Better organized settings
+
 Fixed:
 
 - Various UI fixes
