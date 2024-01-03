@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -33,7 +34,7 @@ class AnkiDesktop {
       "params": {
         "note": {
           "deckName": note.deckName,
-          "modelName": note.cardType,
+          "modelName": note.noteType,
           "fields": note.fields,
           "options": {
             "allowDuplicate": false,
@@ -52,6 +53,13 @@ class AnkiDesktop {
     http.Response r = await http.post(
       settingsAnki.desktopAnkiUri,
       body: bodyString);
+
+    return;
+  }
+
+  /// Platform specific (desktop via anki connect) implementation of `add_notes`
+  void addNotesDesktop(List<AnkiNote> notes){
+    // TODO
   }
 
   /// platform specific (desktop via anki connect) implementation of
@@ -84,17 +92,15 @@ class AnkiDesktop {
       "action": "createModel",
       "version": 6,
       "params": {
-        "modelName": "DaKanji",
-        "inOrderFields": [
-          "Translations", "Japanese", "Kana",
-          "GoogleImage", "Audio", "EncounteredImage",
-        ],
+        "modelName": ankiDataCardModelName,
+        "inOrderFields": ankiDataFields,
+        "css" : ankiDataStyling,
         "isCloze": false,
         "cardTemplates": [
           {
-            "Name": "DaKanji card",
-            "Front": "Front html {{Translations}}",
-            "Back": "Back html  {{Japanese}} {{GoogleImage}} {{Audio}} {{EncounteredImage}}"
+            "Name" : ankiDataCardTypeName,
+            "Front": ankiDataFrontTemplate,
+            "Back" : ankiDataBackTemplate
           }
         ]
       }
@@ -102,7 +108,7 @@ class AnkiDesktop {
     String bodyString = jsonEncode(body);
 
     http.Response r = await http.post(settingsAnki.desktopAnkiUri, body: bodyString);
-    
+    print(r.body);
     return;
   }
 

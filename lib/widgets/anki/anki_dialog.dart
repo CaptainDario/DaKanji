@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,16 +20,20 @@ AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
     context: context,
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
-    btnOkOnPress: () {
-      AnkiNote note = AnkiNote(
+    btnOkOnPress: () async {
+      AnkiNote note = AnkiNote.fromJMDict(
         GetIt.I<Settings>().anki.defaultDeck!,
-        ["test", "test"],
-        entry.kanjis,
-        "",
-        "",
-        ""
+        entry,
+        langsToInclude: GetIt.I<Settings>().anki.includedLanguages.mapIndexed(
+          (index, element) => element 
+            ? isoToiso639_2B[
+                GetIt.I<Settings>().dictionary.translationLanguageCodes[index]
+              ]!.name
+            : null
+        ).whereNotNull().toList(),
+        translationsPerLang: GetIt.I<Settings>().anki.noTranslations
       );
-      GetIt.I<Anki>().addNote(note);
+      await GetIt.I<Anki>().addNote(note);
     },
     btnCancelColor: g_Dakanji_red,
     btnCancelOnPress: () {
