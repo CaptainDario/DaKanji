@@ -13,6 +13,7 @@ New Features:
 Improvements:
 
 - Better organized settings
+- Some fresh paint with Material 3 and Flutter 3.16
 
 Fixed:
 
