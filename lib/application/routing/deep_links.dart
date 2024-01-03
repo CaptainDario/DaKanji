@@ -25,7 +25,7 @@ final AppLinks _appLinks = AppLinks();
 /// start with "dakanji://" or "https://dakanji.app/app/"
 Future<void> initDeepLinksStream() async {
 
-  /// Subscribe to all events when app is started.
+  // Subscribe to all events when app is started.
   // (Use allStringLinkStream to get it as [String])
   _appLinks.allUriLinkStream.listen((uri) {
     if(uri.toString().startsWith(g_AppLinkDaKanji) || 
