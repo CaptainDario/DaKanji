@@ -82,6 +82,8 @@ class _MiscSettingsState extends State<MiscSettings> {
           onChanged: (newValue) {
             if(newValue != null){
               context.setLocale(Locale(newValue));
+              widget.settings.misc.selectedLocale = newValue;
+              widget.settings.save();
             }
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

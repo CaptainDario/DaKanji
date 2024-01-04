@@ -74,6 +74,20 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The currently selected locale
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const String d_selectedLocale = "en";
+  /// The currently selected locale
+  @JsonKey(defaultValue: d_selectedTheme)
+  String _selectedLocale = d_selectedLocale;
+  /// The currently selected locale
+  String get selectedLocale => _selectedLocale;
+  /// The currently selected locale
+  set selectedLocale(String locale) {
+    _selectedLocale = locale;
+    notifyListeners();
+  }
 
   /// The default value for `windowWidth`
   @JsonKey(includeFromJson: false, includeToJson: false)
