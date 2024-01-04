@@ -20,6 +20,7 @@ import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 
 /// The "home"-screen
 /// 
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       headerAnimationLoop: false,
       dialogType: DialogType.noHeader,
       btnOkColor: g_Dakanji_green,
-      btnOkText: "Download",
+      btnOkText: LocaleKeys.General_download.tr(),
       btnOkOnPress: () {
         openStoreListing();
       },
