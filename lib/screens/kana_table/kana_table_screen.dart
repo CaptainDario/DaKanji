@@ -292,11 +292,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
                     onTap: (String kana) async {
+                      await kanaSoundPlayer.open(
+                        Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
+                        play: false
+                      );
                       if(GetIt.I<Settings>().kanaTable.playAudio){
-                        await kanaSoundPlayer.open(
-                          Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
-                          play: false
-                        );
                         kanaSoundPlayer.play();
                       }
                       setState(() {
@@ -348,8 +348,8 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                       showAnimatedKana: _controller.isCompleted,
                       playKanaAnimationWhenOpened: _controller.isCompleted &&
                         GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
-                      onPlayPressed: () {
-                        kanaSoundPlayer.play();
+                      onPlayPressed: () async {
+                        await kanaSoundPlayer.play();
                       },
                     ),
                     builder: (context, child) {
