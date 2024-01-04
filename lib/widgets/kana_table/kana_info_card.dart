@@ -165,8 +165,8 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                                 !(widget.kana.length > 1 && yoonSVG != null) // do not animate if there is a yoon
                                 ? KanjiVGWidget(
                                     kanaSvg,
-                                    MediaQuery.of(context).size.height * 0.1,
-                                    MediaQuery.of(context).size.height * 0.1,
+                                    MediaQuery.of(context).size.height * 0.2,
+                                    MediaQuery.of(context).size.height * 0.2,
                                     widget.playKanaAnimationWhenOpened,
                                     GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
                                     GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
@@ -187,8 +187,8 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                             child: Center(
                               child: SvgPicture.string(
                                 mnemonicSvg!,
-                                height: MediaQuery.of(context).size.height * 0.2,
-                                width: MediaQuery.of(context).size.height * 0.2,
+                                height: MediaQuery.of(context).size.height * 0.15,
+                                width: MediaQuery.of(context).size.height * 0.15,
                               )
                             )
                           ),
