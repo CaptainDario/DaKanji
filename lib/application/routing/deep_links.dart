@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:app_links/app_links.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -18,7 +17,6 @@ import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
-final AppLinks _appLinks = AppLinks();
 
 
 /// Initialize the deep link stream, i.e. dakanji listening to the links that
@@ -26,8 +24,7 @@ final AppLinks _appLinks = AppLinks();
 Future<void> initDeepLinksStream() async {
 
   // Subscribe to all events when app is started.
-  // (Use allStringLinkStream to get it as [String])
-  _appLinks.allUriLinkStream.listen((uri) {
+  g_AppLinks.allUriLinkStream.listen((uri) {
     if(uri.toString().startsWith(g_AppLinkDaKanji) || 
       uri.toString().startsWith(g_AppLinkHttps)){
       handleDeepLink(uri.toString());
@@ -206,6 +203,8 @@ void handleDeepLinkDict(Map<String, String> linkArgs){
   NavigationArguments? navArgs = NavigationArguments(
     false
   );
+
+  print(linkArgs);
 
   /// search by id
   if(linkArgs.containsKey("id")){

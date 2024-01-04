@@ -82,11 +82,19 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     else {
-      // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(context, 
-        "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
-        (route) => false
-      );
+      // if there is a deep link at app start handle it
+      String? deepLink = await g_AppLinks.getInitialAppLinkString();
+      if(deepLink != null){
+        handleDeepLink(deepLink);
+      }
+      // otherwise load the default screen
+      else{
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamedAndRemoveUntil(context, 
+          "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
+          (route) => false
+        );
+      }
     }
   }
 

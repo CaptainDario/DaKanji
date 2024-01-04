@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
+import 'package:app_links/app_links.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/files/path_manager.dart';
@@ -26,6 +27,8 @@ const String g_AppTitle = "DaKanji";
 const String g_AppLinkHttps   = r"https://dakanji.app/app/";
 /// deep link pattern (dakanji://)
 const String g_AppLinkDaKanji = r"dakanji://";
+/// Instance to catch incoming deep links
+late final AppLinks g_AppLinks;
 
 /// The green tone that dakanji uses
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
