@@ -234,7 +234,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 },
                 child: Center(
                   child: Text(
-                    "${LocaleKeys.General_next.tr()} ➤",
+                    "${LocaleKeys.General_next.tr()} →",
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
