@@ -73,8 +73,9 @@ List<Version> g_OnboardingNewPages = [
 ];
 /// all versions that implemented new dictionary versions (ISAR DB)
 List<Version> g_NewDictionary = [
-  Version(3, 0, 0, build: 47), Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52),
-  Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56)
+  Version(3, 0, 0, build: 47), 
+  Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52), Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56), 
+  Version(3, 3, 0, build: 76)
 ];
 /// all versions that implemented new examples versions (ISAR DB)
 List<Version> g_NewExamples = [
@@ -82,7 +83,9 @@ List<Version> g_NewExamples = [
 ];
 /// all versions that implemented new radiclas data (ISAR DB)
 List<Version> g_NewRadicals = [
-  Version(3, 1, 0), Version(3, 2, 0, build: 67)
+  Version(3, 1, 0),
+  Version(3, 2, 0, build: 67),
+  Version(3, 3, 0, build: 76)
 ];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
