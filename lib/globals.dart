@@ -79,7 +79,8 @@ List<Version> g_NewDictionary = [
 ];
 /// all versions that implemented new examples versions (ISAR DB)
 List<Version> g_NewExamples = [
-  Version(3, 0, 0, build: 47)
+  Version(3, 0, 0, build: 47),
+  Version(3, 3, 0, build: 76)
 ];
 /// all versions that implemented new radiclas data (ISAR DB)
 List<Version> g_NewRadicals = [
