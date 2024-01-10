@@ -29,6 +29,8 @@ const String g_AppLinkHttps   = r"https://dakanji.app/app/";
 const String g_AppLinkDaKanji = r"dakanji://";
 /// Instance to catch incoming deep links
 late final AppLinks g_AppLinks;
+/// Has the initial deep link been handled
+bool g_initialDeepLinkHandled = false;
 
 /// The green tone that dakanji uses
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
