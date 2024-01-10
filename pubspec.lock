@@ -52,12 +52,11 @@ packages:
   app_links:
     dependency: "direct main"
     description:
-      path: "."
-      ref: c64ce17
-      resolved-ref: c64ce174586267dbab1185ef9acb19b7c49fc7bd
-      url: "https://github.com/LucasXu0/app_links"
-    source: git
-    version: "3.4.3"
+      name: app_links
+      sha256: "4e392b5eba997df356ca6021f28431ce1cfeb16758699553a94b13add874a3bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.0"
   archive:
     dependency: "direct main"
     description:
@@ -1634,11 +1633,12 @@ packages:
   tflite_flutter:
     dependency: "direct main"
     description:
-      name: tflite_flutter
-      sha256: ffb8651fdb116ab0131d6dc47ff73883e0f634ad1ab12bb2852eef1bbeab4a6a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.4"
+      path: "."
+      ref: HEAD
+      resolved-ref: c3a2f0580ec7cd6ef39aa0966443b048b76f5360
+      url: "https://github.com/CaptainDario/flutter-tflite"
+    source: git
+    version: "0.10.3"
   time:
     dependency: transitive
     description:

@@ -77,7 +77,9 @@ dependencies:
   media_kit_video: 1.2.4                        # For video rendering.
   media_kit_libs_video: 1.0.4                   # Native video dependencies.
   flutter_widget_from_html_core: 0.14.9
-  tflite_flutter: 0.10.4
+  tflite_flutter: #0.10.4
+    git:
+      url: https://github.com/CaptainDario/flutter-tflite
   envied: 0.5.2
   envied_generator: 0.5.2
   async: 2.11.0
@@ -131,10 +133,6 @@ dependencies:
   flutter_native_splash: 2.3.0   # android, iOS, web
 
 dependency_overrides:
-  app_links:
-    git:
-      url: https://github.com/LucasXu0/app_links
-      ref: c64ce17
   url_protocol:
     git:
       url: https://github.com/LucasXu0/flutter_url_protocol.git
