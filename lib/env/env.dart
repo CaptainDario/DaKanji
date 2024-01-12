@@ -11,7 +11,8 @@ part 'env.g.dart';
 
 @Envied(path: 'dakanji.env', obfuscate: true, allowOptionalFields: true)
 abstract class Env {
-    @EnviedField(varName: 'SENTRY_DSN', defaultValue: "")
+
+    @EnviedField(varName: 'SENTRY_DSN', defaultValue: "", obfuscate: true)
     static String? SENTRY_DSN = _Env.SENTRY_DSN;
 
     @EnviedField(varName: 'APP_KEY', defaultValue: "", obfuscate: true)
