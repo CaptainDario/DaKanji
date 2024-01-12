@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.3.0+76
+version: 3.3.0+77
 
 environment:
   sdk: ">=3.0.0"
@@ -27,7 +27,6 @@ dependencies:
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
-  platform: 3.1.2
   shared_preferences: 2.0.13
   url_launcher: 6.1.2
   flutter_phoenix: 1.0.0
@@ -44,7 +43,6 @@ dependencies:
   flutter_svg: 2.0.8
   onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
-  keybinder: 1.0.1
   feedback: 2.6.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
@@ -53,7 +51,6 @@ dependencies:
   archive: 3.4.8
   device_info_plus: 9.0.3
   share_plus: 7.1.0
-  cross_file: 0.3.3+4
   file_picker: 5.3.3
   sqlite3: 2.1.0
   sqlite3_flutter_libs: 0.5.15
@@ -62,7 +59,6 @@ dependencies:
   sentry_flutter: 7.13.2
   feedback_sentry: 2.4.0
   sentry: any
-  animations: 2.0.7
   dio: 5.0.1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
@@ -92,6 +88,7 @@ dependencies:
   flutter_riverpod: 2.4.0
   riverpod_annotation: 2.1.5
   another_flushbar: 1.12.30
+  aptabase_flutter: 0.1.1
 
   kana_kit:
     git:
@@ -123,10 +120,7 @@ dependencies:
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
   window_manager: 0.3.4           # desktop
-  flutter_appavailability:        # android, iOS
-    git:
-      url: https://github.com/CaptainDario/DaKanji-Dependencies
-      path: flutter_appavailability
+  #lutter_appavailability:        # android, iOS
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
@@ -156,7 +150,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  custom_lint: 
+  custom_lint:
   riverpod_generator: ^2.3.2
   riverpod_lint: ^2.1.0
   msix: 3.16.6
@@ -164,7 +158,7 @@ dev_dependencies:
   import_sorter: ^4.6.0
   json_serializable: 6.7.0
   build_runner: 2.4.4
-  dependency_validator: 3.2.2
+  dependency_validator: 3.2.3
   isar_generator: any # included in dakanji dictionary
   
 flutter_icons:

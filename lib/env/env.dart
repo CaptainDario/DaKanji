@@ -13,4 +13,7 @@ part 'env.g.dart';
 abstract class Env {
     @EnviedField(varName: 'SENTRY_DSN', defaultValue: "")
     static String? SENTRY_DSN = _Env.SENTRY_DSN;
+
+    @EnviedField(varName: 'APP_KEY', defaultValue: "", obfuscate: true)
+    static String? APP_KEY = _Env.APP_KEY;
 }

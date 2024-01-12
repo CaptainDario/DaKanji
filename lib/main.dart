@@ -14,6 +14,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:app_links/app_links.dart';
+import 'package:aptabase_flutter/aptabase_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -22,6 +23,7 @@ import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/init.dart';
 
 Future<void> main() async {
 
@@ -30,8 +32,10 @@ Future<void> main() async {
   g_AppLinks = AppLinks();
   MediaKit.ensureInitialized();
 
+  await Aptabase.init(kReleaseMode ? Env.APP_KEY ?? "" : "");
+
   // delete settings
-  //await clearPreferences();
+  await clearPreferences();
 
   await SentryFlutter.init(
     (options) {

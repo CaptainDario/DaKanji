@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  animations:
-    dependency: "direct main"
-    description:
-      name: animations
-      sha256: fe8a6bdca435f718bb1dc8a11661b2c22504c6da40ef934cee8327ed77934164
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.7"
   another_flushbar:
     dependency: "direct main"
     description:
@@ -57,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0"
+  aptabase_flutter:
+    dependency: "direct main"
+    description:
+      name: aptabase_flutter
+      sha256: "902374859f9121a1f3fcc97cfe374ce8673b83f604511abe0c80b8f738a8b7ae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   archive:
     dependency: "direct main"
     description:
@@ -282,7 +282,7 @@ packages:
     source: hosted
     version: "3.1.1"
   cross_file:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cross_file
       sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
@@ -374,10 +374,10 @@ packages:
     dependency: "direct dev"
     description:
       name: dependency_validator
-      sha256: "08349175533ed0bd06eb9b6043cde66c45b2bfc7ebc222a7542cdb1324f1bf03"
+      sha256: f727a5627aa405965fab4aef4f468e50a9b632ba0737fd2f98c932fec6d712b9
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.3"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -503,15 +503,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_appavailability:
-    dependency: "direct main"
-    description:
-      path: flutter_appavailability
-      ref: HEAD
-      resolved-ref: f860246251bad0d56b7b6e28f9b37e5ccc5c7d20
-      url: "https://github.com/CaptainDario/DaKanji-Dependencies"
-    source: git
-    version: "0.0.22"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -847,14 +838,6 @@ packages:
       url: "https://github.com/CaptainDario/kana_kit"
     source: git
     version: "2.0.0"
-  keybinder:
-    dependency: "direct main"
-    description:
-      name: keybinder
-      sha256: "36e138796c42632db814ec98dacb44fca90d166d11df75ef035296c2ec2f04e3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   linked_scroll_controller:
     dependency: "direct main"
     description:
@@ -880,14 +863,6 @@ packages:
       url: "https://github.com/CaptainDario/DaKanji-Dependencies"
     source: git
     version: "2.1.1"
-  list_utilities:
-    dependency: transitive
-    description:
-      name: list_utilities
-      sha256: "2c9d341c8d59c4256ab092c2b6a4fb0df8e59cd47e0c9914a38433257d946c9b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   logging:
     dependency: transitive
     description:
@@ -1061,10 +1036,10 @@ packages:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: "88bc797f44a94814f2213db1c9bd5badebafdfb8290ca9f78d4b9ee2a3db4d79"
+      sha256: "7e76fad405b3e4016cd39d08f455a4eb5199723cf594cd1b8916d47140d93017"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.1"
+    version: "4.2.0"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1154,7 +1129,7 @@ packages:
     source: hosted
     version: "5.4.0"
   platform:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: platform
       sha256: ae68c7bfcd7383af3629daafb32fb4e8681c7154428da4febcff06200585f102
