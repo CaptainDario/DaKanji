@@ -104,10 +104,3 @@ com.DaAppLab.DaKanji.flatpak
 # keys
 dakanji.env
 lib/env/env.g.dart
-
-# firebase
-android/app/google-services.json
-ios/firebase_app_id_file.json
-ios/Runner/GoogleService-Info.plist
-macos/firebase_app_id_file.json
-macos/Runner/GoogleService-Info.plist

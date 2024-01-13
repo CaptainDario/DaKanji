@@ -18,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
-import 'package:ambilytics/ambilytics.dart' as ambilytics;
 import 'package:media_kit/media_kit.dart';
 
 // Project imports:
@@ -46,7 +45,6 @@ import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/firebase_options.dart';
 import 'package:da_kanji_mobile/env/env.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
@@ -72,37 +70,14 @@ Future<bool> init() async {
   // media kit
   MediaKit.ensureInitialized();
   
-  // firebase
+  // aptabase
   if(!kDebugMode){
-    await initFirebase();
+    
   }
 
   //await optimizeTFLiteBackendsForModels();
   return true;
 }
-
-/// Initilizes firebase
-Future<void> initFirebase() async {
-
-  String measurementId = "";
-  String apiSecret = "";
-
-  if(Platform.isLinux){
-    measurementId = Env.FIREBASE_ANALYTICS_LIN_MEASURMENT_ID ?? "";
-    apiSecret     = Env.FIREBASE_ANALYTICS_LIN_STREAM_ID ?? "";
-  }
-  else if(Platform.isWindows){
-    measurementId = Env.FIREBASE_ANALYTICS_WIN_MEASURMENT_ID ?? "";
-    apiSecret     = Env.FIREBASE_ANALYTICS_WIN_STREAM_ID ?? "";
-  }
-
-  await ambilytics.initAnalytics(
-    measurementId: measurementId,
-    apiSecret: apiSecret,
-    firebaseOptions: DefaultFirebaseOptions.currentPlatform);
-
-}
-
 
 /// Convenience function to clear the SharedPreferences
 Future<void> clearPreferences() async {
