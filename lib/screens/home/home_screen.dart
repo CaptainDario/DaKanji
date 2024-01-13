@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -60,10 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await initDocumentsServices(context);
 
-    // track first installs
-    if(GetIt.I<UserData>().appOpenedTimes <= 1){
-      Aptabase.instance.trackEvent("New/Re install");
-    }
     // check if an update is available
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){

@@ -14,7 +14,6 @@ import 'package:media_kit/media_kit.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:app_links/app_links.dart';
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -31,8 +30,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   g_AppLinks = AppLinks();
   MediaKit.ensureInitialized();
-
-  await Aptabase.init(kReleaseMode ? Env.APP_KEY ?? "" : "");
 
   // delete settings
   await clearPreferences();
