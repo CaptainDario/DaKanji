@@ -22,6 +22,7 @@ import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+// ignore: unused_import
 import 'package:da_kanji_mobile/init.dart';
 
 Future<void> main() async {
@@ -32,7 +33,7 @@ Future<void> main() async {
   MediaKit.ensureInitialized();
 
   // delete settings
-  await clearPreferences();
+  //if(kDebugMode) await clearPreferences();
 
   await SentryFlutter.init(
     (options) {
