@@ -43,7 +43,7 @@ dependencies:
   flutter_svg: 2.0.8
   onboarding_overlay : 3.1.0
   auto_size_text: 3.0.0
-  feedback: 2.6.0
+  feedback: 3.0.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.3.0
@@ -57,7 +57,7 @@ dependencies:
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
   sentry_flutter: 7.13.2
-  feedback_sentry: 2.4.0
+  feedback_sentry: 3.0.0
   sentry: any
   dio: 5.0.1
   flutter_speed_dial: 7.0.0

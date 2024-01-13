@@ -462,18 +462,18 @@ packages:
     dependency: "direct main"
     description:
       name: feedback
-      sha256: a3a18af1d490b1e172cc354f1270760d14d2d0d5bb65e2d3710565de88507f33
+      sha256: "3cb138a56a3f3914dd38471479c351ce6df377abb29c5ebe4042be5481fee271"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "3.0.0"
   feedback_sentry:
     dependency: "direct main"
     description:
       name: feedback_sentry
-      sha256: "41b9a995355bd4bf3342cff8ba4b489680bf86d8d3740f12159de79194c0f3cc"
+      sha256: "22a901f05ed773b04b604edcdbf67b36f0a9ac12747f3d68f33aea159465f841"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "3.0.0"
   ffi:
     dependency: transitive
     description:
