@@ -57,6 +57,7 @@ Future<bool> init() async {
   // init window Manager
   if(g_desktopPlatform) {
     await windowManager.ensureInitialized();
+    desktopWindowSetup();
   }
 
   g_DakanjiPathManager = PathManager();
