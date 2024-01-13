@@ -37,7 +37,7 @@ class ManualButton extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  size: 100,
+                  size: size*0.4,
                 ),
                 const SizedBox(height: 2,),
                 Text(
