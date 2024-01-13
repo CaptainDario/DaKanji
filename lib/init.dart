@@ -54,16 +54,17 @@ Future<bool> init() async {
 
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
-  // init window Manager
-  if(g_desktopPlatform) {
-    await windowManager.ensureInitialized();
-    desktopWindowSetup();
-  }
 
   g_DakanjiPathManager = PathManager();
   await g_DakanjiPathManager.init();
 
   await initServices();
+
+  // init window Manager
+  if(g_desktopPlatform) {
+    await windowManager.ensureInitialized();
+    desktopWindowSetup();
+  }
 
   // deep links
   await initDeepLinksStream();
