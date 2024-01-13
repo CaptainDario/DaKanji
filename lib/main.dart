@@ -10,10 +10,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
-import 'package:app_links/app_links.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -27,10 +25,8 @@ import 'package:da_kanji_mobile/init.dart';
 
 Future<void> main() async {
 
-  // initialize the app
+  // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
-  g_AppLinks = AppLinks();
-  MediaKit.ensureInitialized();
 
   // delete settings
   //if(kDebugMode) await clearPreferences();

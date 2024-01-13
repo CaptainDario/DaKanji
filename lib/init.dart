@@ -19,6 +19,7 @@ import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 import 'package:ambilytics/ambilytics.dart' as ambilytics;
+import 'package:media_kit/media_kit.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
@@ -64,9 +65,10 @@ Future<bool> init() async {
   await initServices();
 
   // deep links
-  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows) {
-    await initDeepLinksStream();
-  }
+  await initDeepLinksStream();
+
+  // media kit
+  MediaKit.ensureInitialized();
   
   if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
     desktopWindowSetup();

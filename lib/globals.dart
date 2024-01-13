@@ -28,7 +28,7 @@ const String g_AppLinkHttps   = r"https://dakanji.app/app/";
 /// deep link pattern (dakanji://)
 const String g_AppLinkDaKanji = r"dakanji://";
 /// Instance to catch incoming deep links
-late final AppLinks g_AppLinks;
+final AppLinks g_AppLinks = AppLinks();
 /// Has the initial deep link been handled
 bool g_initialDeepLinkHandled = false;
 
