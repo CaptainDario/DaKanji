@@ -70,9 +70,8 @@ Future<bool> init() async {
   // media kit
   MediaKit.ensureInitialized();
   
-  if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
-    desktopWindowSetup();
-  }
+  // firebase
+  await initFirebase();
 
   //await optimizeTFLiteBackendsForModels();
   return true;
