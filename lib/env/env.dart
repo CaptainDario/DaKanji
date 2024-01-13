@@ -16,5 +16,5 @@ abstract class Env {
     static String? SENTRY_DSN = _Env.SENTRY_DSN;
 
     @EnviedField(varName: 'APTABASE_APP_KEY', defaultValue: "", obfuscate: true)
-    static String? APP_KEY = _Env.APTABASE_APP_KEY;
+    static String? APTABASE_APP_KEY = _Env.APTABASE_APP_KEY;
 }

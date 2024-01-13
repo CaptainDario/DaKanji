@@ -8,6 +8,7 @@ part of 'user_data.dart';
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
+  ..newInstall = json['newInstall'] as bool? ?? true
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed =
       json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
@@ -33,6 +34,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
+      'newInstall': instance.newInstall,
       'doNotShowRateAgain': instance.doNotShowRateAgain,
       'versionUsed': instance.versionUsed,
       'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),

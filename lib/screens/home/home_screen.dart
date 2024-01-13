@@ -61,8 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
     await initDocumentsServices(context);
 
     // track first installs
-    if(GetIt.I<UserData>().appOpenedTimes <= 1){
-      Aptabase.instance.trackEvent("New/Re install");
+    if(GetIt.I<UserData>().newInstall){
+      await Aptabase.instance.trackEvent(
+        "New/Re install",
+        {"Installation Method": g_InstallationMethod});
+      GetIt.I<UserData>().newInstall = false;
+      GetIt.I<UserData>().save();
     }
     // check if an update is available
     if(GetIt.I<UserData>().userRefusedUpdate == null ||

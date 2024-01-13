@@ -19,7 +19,7 @@ import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 import 'package:media_kit/media_kit.dart';
-
+import 'package:aptabase_flutter/aptabase_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
@@ -46,6 +46,7 @@ import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/env/env.dart';
 
 
 
@@ -71,12 +72,12 @@ Future<bool> init() async {
 
   // media kit
   MediaKit.ensureInitialized();
-  
-  // aptabase
-  if(!kDebugMode){
-    
-  }
 
+  // Aptabase
+  if(kDebugMode) {
+    await Aptabase.init(Env.APTABASE_APP_KEY ?? "");
+  }
+  
   //await optimizeTFLiteBackendsForModels();
   return true;
 }
@@ -108,7 +109,6 @@ Future<void> initServices() async {
   WordLists wL = WordLists();
   wL.load();
   GetIt.I.registerSingleton<WordLists>(wL);
-
 
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();

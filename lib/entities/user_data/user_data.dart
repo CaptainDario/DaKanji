@@ -29,6 +29,10 @@ class UserData{
   @JsonKey(defaultValue: 0)
   int appOpenedTimes = 0;
 
+  /// Is this a new install?
+  @JsonKey(defaultValue: true)
+  bool newInstall = true;
+
   /// Did the user already chose to not see the rate dialogue again
   @JsonKey(defaultValue: false)
   bool doNotShowRateAgain = false;

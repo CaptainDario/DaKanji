@@ -16,12 +16,12 @@ import 'package:da_kanji_mobile/entities/files/path_manager.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
 
-/// A logs of the currently running app so that they can be attached when
-/// using the provide feedback widget
-String g_appLogs = "";
+
 
 /// the title of the app
 const String g_AppTitle = "DaKanji";
+/// the way the app was installed, eg.: Snap, Flatpak, exe, AppStore, etc...
+const String g_InstallationMethod = "";
 
 /// deep link pattern (https://)
 const String g_AppLinkHttps   = r"https://dakanji.app/app/";
