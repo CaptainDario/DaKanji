@@ -88,8 +88,7 @@ dependencies:
   flutter_riverpod: 2.4.0
   riverpod_annotation: 2.1.5
   another_flushbar: 1.12.30
-  ambilytics: 1.0.4
-  firebase_core: 2.24.2
+  aptabase_flutter: 0.1.1
 
   kana_kit:
     git:
