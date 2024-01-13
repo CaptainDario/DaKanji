@@ -73,7 +73,9 @@ Future<bool> init() async {
   MediaKit.ensureInitialized();
   
   // firebase
-  await initFirebase();
+  if(!kDebugMode){
+    await initFirebase();
+  }
 
   //await optimizeTFLiteBackendsForModels();
   return true;
