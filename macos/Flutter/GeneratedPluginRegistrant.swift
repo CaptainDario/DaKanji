@@ -21,7 +21,7 @@ import screen_brightness_macos
 import screen_retriever
 import sentry_flutter
 import share_plus
-import shared_preferences_foundation
+import shared_preferences_macos
 import sqlite3_flutter_libs
 import url_launcher_macos
 import wakelock_plus

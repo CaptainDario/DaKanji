@@ -20,6 +20,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 import 'package:media_kit/media_kit.dart';
 
+
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/application/assets/assets.dart';
@@ -45,7 +46,8 @@ import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/env/env.dart';
+
+
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
