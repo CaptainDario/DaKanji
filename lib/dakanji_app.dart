@@ -17,6 +17,7 @@ import 'package:da_kanji_mobile/entities/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/entities/theme/light_theme.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:ambilytics/ambilytics.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
@@ -45,6 +46,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> {
       navigatorKey: g_NavigatorKey,
       navigatorObservers: [
         SentryNavigatorObserver(),
+        AmbilyticsObserver()
       ],
       
       onGenerateRoute: (settings) {
