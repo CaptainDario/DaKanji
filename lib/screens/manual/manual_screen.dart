@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -50,8 +52,13 @@ class _ManualScreenState extends State<ManualScreen>
           child: LayoutBuilder(
             builder: (context, constraints) {
 
-              if(constraints.maxHeight*0.75 > constraints.maxWidth){
-                manualButtonSize = (constraints.maxWidth-16)/3;
+              // 
+              if(constraints.maxHeight > constraints.maxWidth){
+                manualButtonSize = min((constraints.maxWidth-24)/2, 200);
+                print("height > w");
+              }
+              else{
+                manualButtonSize = min((constraints.maxWidth-24)/4, 200);
               }
 
               return SingleChildScrollView(
