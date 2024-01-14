@@ -38,6 +38,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Setup DaKanji env.dart
+        run: |
+          echo SENTRY_DSN=${{ secrets.APTABASE_APP_KEY }}\n >> dakanji.env
+          echo APTABASE_APP_KEY=${{ secrets.APTABASE_APP_KEY }}\n >> dakanji.env
+          flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: Setup Java to compile Android project
         uses: actions/setup-java@v2
         with:
