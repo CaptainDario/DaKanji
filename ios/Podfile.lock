@@ -67,9 +67,9 @@ PODS:
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - SDWebImage (5.18.7):
-    - SDWebImage/Core (= 5.18.7)
-  - SDWebImage/Core (5.18.7)
+  - SDWebImage (5.18.10):
+    - SDWebImage/Core (= 5.18.10)
+  - SDWebImage/Core (5.18.10)
   - Sentry/HybridSDK (8.15.2):
     - SentryPrivate (= 8.15.2)
   - sentry_flutter (0.0.1):
@@ -96,6 +96,8 @@ PODS:
     - sqlite3/fts5
     - sqlite3/perf-threadsafe
     - sqlite3/rtree
+  - store_checker (0.0.1):
+    - Flutter
   - SwiftyGif (5.4.4)
   - TensorFlowLiteC (2.12.0):
     - TensorFlowLiteC/Core (= 2.12.0)
@@ -151,6 +153,7 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqlite3_flutter_libs (from `.symlinks/plugins/sqlite3_flutter_libs/ios`)
+  - store_checker (from `.symlinks/plugins/store_checker/ios`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - volume_controller (from `.symlinks/plugins/volume_controller/ios`)
@@ -214,6 +217,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqlite3_flutter_libs:
     :path: ".symlinks/plugins/sqlite3_flutter_libs/ios"
+  store_checker:
+    :path: ".symlinks/plugins/store_checker/ios"
   tflite_flutter:
     :path: ".symlinks/plugins/tflite_flutter/ios"
   url_launcher_ios:
@@ -246,7 +251,7 @@ SPEC CHECKSUMS:
   printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   rive_common: 8a159d68033a8b073e5853acc50f03aa486a2888
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  SDWebImage: f9258c58221ed854cfa0e2b80ee4033710b1c6d3
+  SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   Sentry: 6f5742b4c47c17c9adcf265f6f328cf4a0ed1923
   sentry_flutter: 2c309a1d4b45e59d02cfa15795705687f1e2081b
   SentryPrivate: b2f7996f37781080f04a946eb4e377ff63c64195
@@ -254,6 +259,7 @@ SPEC CHECKSUMS:
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqlite3: fd89671d969f3e73efe503ce203e28b016b58f68
   sqlite3_flutter_libs: 04ba0d14a04335a2fbf9a331e8664f401fbccdd5
+  store_checker: 359c5051d9ec30ff0a8fa39eb5ec9df021bb745d
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793
