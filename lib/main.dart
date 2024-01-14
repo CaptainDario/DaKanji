@@ -19,7 +19,6 @@ import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
 // ignore: unused_import
