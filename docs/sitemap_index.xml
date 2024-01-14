@@ -6,7 +6,7 @@
 	</sitemap>
 	<sitemap>
 		<loc>/page-sitemap.xml</loc>
-		<lastmod>2023-11-26T22:52:54+00:00</lastmod>
+		<lastmod>2024-01-13T17:48:33+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>/category-sitemap.xml</loc>
@@ -21,5 +21,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-01-13 11:36:27 by W3 Total Cache
+Served from: dakanji.local @ 2024-01-14 18:30:49 by W3 Total Cache
 -->

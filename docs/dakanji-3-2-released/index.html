@@ -139,13 +139,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 <meta name="generator" content="Performance Lab 2.6.0; modules: images/dominant-color-images, images/webp-support, images/webp-uploads">
 <meta name="generator" content="Elementor 3.15.3; features: e_optimized_assets_loading, e_optimized_css_loading; settings: css_print_method-external, google_font-enabled, font_display-swap">
 <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3G665PS2KF"></script>
-<script>window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3G665PS2KF');</script><script>// if the users tries to open the app but does not have it installed
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_i75Xnv78UEajFYgEL7xc49z53ZG5wma0selMfLq5YzN',{api_host:'https://eu.posthog.com'})
+</script><script>// if the users tries to open the app but does not have it installed
 	if (window.location.pathname.toLowerCase().startsWith("/app")) {
 		console.log("Redirecting from /app path as dakanji does not seem to be installed to:  " + window.location.pathname)
 	  	let path = window.location.pathname; // get the path url
@@ -1045,12 +1042,22 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 			</div>
 <!-- #perspective -->
 	
-	<div class="gdpr-privacy-preferences">
+	
+<div class="gdpr-consent-bar bottom">
+	<div class="gdpr-consent-bar-box">
+		<div class="gdpr-consent-bar-text">Our website uses cookies from third party services to improve your browsing experience. Read more about this and how you can control cookies by clicking "Privacy Preferences".</div>
+		<div class="gdpr-consent-bar-buttons">
+			<button type="button" class="btn-gdpr-preferences-open">Privacy Preferences</button>
+			<button type="button" class="btn-gdpr-agreement">I Agree</button>
+		</div>
+	</div>
+</div>
+<div class="gdpr-privacy-preferences">
 	<div class="gdpr-privacy-preferences-box">
 		<button class="btn-gdpr-privacy-preferences-close" type="button">Close</button>
 		<form method="post" action="http://dakanji.local/wp-admin/admin-post.php">
 			<input type="hidden" name="action" value="thegem_gdpr_update_privacy_preferences">
-			<input type="hidden" id="update-privacy-preferences-nonce" name="update-privacy-preferences-nonce" value="9b696ad36e"><input type="hidden" name="_wp_http_referer" value="/dakanji-3-2-released/?simply_static_page=20689">			<div class="gdpr-privacy-preferences-header">
+			<input type="hidden" id="update-privacy-preferences-nonce" name="update-privacy-preferences-nonce" value="9b696ad36e"><input type="hidden" name="_wp_http_referer" value="/dakanji-3-2-released/?simply_static_page=21236">			<div class="gdpr-privacy-preferences-header">
 				<div class="gdpr-privacy-preferences-title">Privacy Preferences</div>
 			</div>
 			<div class="gdpr-privacy-preferences-body">
@@ -1126,6 +1133,6 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-01-13 11:36:30 by W3 Total Cache
+Served from: dakanji.local @ 2024-01-14 18:30:54 by W3 Total Cache
 -->
 </html>
