@@ -14,9 +14,6 @@ class PlatformDependentVariables {
   /// the link to the daapplab developer account
   late final String daapplabStorePage;
 
-  /// the way the app was installed, eg.: Snap, Flatpak, exe, AppStore, etc...
-  late final String installationMethod = "";
-
 
   PlatformDependentVariables(){
 
@@ -47,3 +44,4 @@ class PlatformDependentVariables {
   }
 
 }
+

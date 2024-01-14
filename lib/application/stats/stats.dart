@@ -4,10 +4,9 @@
 import 'dart:async';
 
 import 'package:aptabase_flutter/aptabase_flutter.dart';
-import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:get_it/get_it.dart';
+import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage
@@ -55,8 +54,9 @@ class Stats{
 
   /// Updates all usage statistics in the `this.UserData`
   Future updateStats() async {
-
-    await updateDailyUsage();
+    
+    if(!userData.monthlyActiveUserTracked) await updateMonthlyUsage();
+    if(!userData.dailyActiveUserTracked) await updateDailyUsage();
     
   }
 
@@ -77,7 +77,7 @@ class Stats{
       await Aptabase.instance.trackEvent(
         "Monthly active user",
         {
-          "Installation Method" : GetIt.I<PlatformDependentVariables>().installationMethod,
+          "Installation Method" : await findInstallationMethod(),
           "Build number" : g_Version.build
         }
       );
@@ -97,7 +97,7 @@ class Stats{
       await Aptabase.instance.trackEvent(
         "Daily active user",
         {
-          "Installation Method" : GetIt.I<PlatformDependentVariables>().installationMethod,
+          "Installation Method" : await findInstallationMethod(),
           "Build number" : g_Version.build
         }
       );

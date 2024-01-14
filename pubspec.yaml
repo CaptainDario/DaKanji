@@ -90,6 +90,7 @@ dependencies:
   riverpod_annotation: 2.1.5
   another_flushbar: 1.12.30
   aptabase_flutter: 0.1.1
+  store_checker: 1.4.0
 
   kana_kit:
     git:
