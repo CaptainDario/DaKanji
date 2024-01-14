@@ -52,8 +52,9 @@ dependencies:
   device_info_plus: 9.0.3
   share_plus: 7.1.0
   file_picker: 5.3.3
-  sqlite3: 2.1.0
+  sqlite3: 2.2.0
   sqlite3_flutter_libs: 0.5.15
+  drift: 2.14.1
   json_annotation: 4.8.1
   flutter_spinkit: 5.1.0
   sentry_flutter: 7.13.2
@@ -157,9 +158,10 @@ dev_dependencies:
   flutter_lints: ^2.0.3
   import_sorter: ^4.6.0
   json_serializable: 6.7.0
-  build_runner: 2.4.4
+  build_runner: 2.4.7
   dependency_validator: 3.2.3
   isar_generator: any # included in dakanji dictionary
+  drift_dev: 2.14.0
   
 flutter_icons:
   android: "launcher_icon"
