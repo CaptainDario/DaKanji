@@ -46,7 +46,7 @@ import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/env/env.dart';
+import 'package:da_kanji_mobile/env.dart';
 
 
 
