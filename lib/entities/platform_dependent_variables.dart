@@ -9,44 +9,40 @@ import 'package:da_kanji_mobile/globals.dart';
 class PlatformDependentVariables {
 
   /// the link to DaKanji in the app store
-  late String _appStoreLink;
+  late final String appStoreLink;
+
   /// the link to the daapplab developer account
-  late String _daapplabStorePage;
+  late final String daapplabStorePage;
 
-  get appStoreLink{
-    return _appStoreLink;
-  }
+  /// the way the app was installed, eg.: Snap, Flatpak, exe, AppStore, etc...
+  late final String installationMethod = "";
 
-  get daapplabStorePage{
-    return _daapplabStorePage;
-  }
 
   PlatformDependentVariables(){
-    _appStoreLink = ""; 
 
     if(Platform.isAndroid){
-      _appStoreLink = g_PlaystorePage;
-      _daapplabStorePage = g_DaAppLabPlaystorePage;
+      appStoreLink = g_PlaystorePage;
+      daapplabStorePage = g_DaAppLabPlaystorePage;
     }
     else if(Platform.isIOS){
-      _appStoreLink = g_AppStorePage;
-      _daapplabStorePage = g_DaAppLabAppStorepage;
+      appStoreLink = g_AppStorePage;
+      daapplabStorePage = g_DaAppLabAppStorepage;
     }
     else if(Platform.isWindows){
-      _appStoreLink = g_MicrosoftStorePage;
-      _daapplabStorePage = g_MicrosoftStoreDaAppLabPage;
+      appStoreLink = g_MicrosoftStorePage;
+      daapplabStorePage = g_MicrosoftStoreDaAppLabPage;
     }    
     else if(Platform.isLinux){
-      _appStoreLink = g_SnapStorePage;
-      _daapplabStorePage = g_SnapStoreDaAppLabPage;
+      appStoreLink = g_SnapStorePage;
+      daapplabStorePage = g_SnapStoreDaAppLabPage;
     }
     else if(Platform.isMacOS){
-      _appStoreLink = g_AppStorePage;
-      _daapplabStorePage = g_DaAppLabAppStorepage;
+      appStoreLink = g_AppStorePage;
+      daapplabStorePage = g_DaAppLabAppStorepage;
     }
     else{
-      _appStoreLink = "None";
-      _daapplabStorePage = "None";
+      appStoreLink = "None";
+      daapplabStorePage = "None";
     }
   }
 

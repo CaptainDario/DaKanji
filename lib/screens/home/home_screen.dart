@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:aptabase_flutter/aptabase_flutter.dart';
+import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(GetIt.I<UserData>().newInstall){
       await Aptabase.instance.trackEvent(
         "New/Re install",
-        {"Installation Method": g_InstallationMethod});
+        {"Installation Method": GetIt.I<PlatformDependentVariables>().installationMethod});
       GetIt.I<UserData>().newInstall = false;
       GetIt.I<UserData>().save();
     }

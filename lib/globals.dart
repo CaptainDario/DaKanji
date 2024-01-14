@@ -20,8 +20,6 @@ import 'package:da_kanji_mobile/init.dart';
 
 /// the title of the app
 const String g_AppTitle = "DaKanji";
-/// the way the app was installed, eg.: Snap, Flatpak, exe, AppStore, etc...
-const String g_InstallationMethod = "";
 
 /// deep link pattern (https://)
 const String g_AppLinkHttps   = r"https://dakanji.app/app/";
