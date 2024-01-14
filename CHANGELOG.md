@@ -41,7 +41,7 @@ New Features:
   - Paste button
   - Automatic DoJG lookup
   - Added settings
-- Brand new website https://dakanji.app
+- Brand new website [dakanji.app](https://dakanji.app)
 - Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
 
 - By popular request:
