@@ -103,4 +103,4 @@ com.DaAppLab.DaKanji.flatpak
 
 # keys
 dakanji.env
-lib/env/env.g.dart
+**/env.g.dart
