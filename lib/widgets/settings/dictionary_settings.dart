@@ -1,7 +1,17 @@
 // Dart imports:
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 // Project imports:
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
@@ -16,17 +26,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_til
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
-// Flutter imports:
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
-
 
 class DictionarySettings extends StatefulWidget {
 

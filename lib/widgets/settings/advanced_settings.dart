@@ -24,8 +24,6 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_butto
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
 
-
-
 class AdvancedSettings extends StatefulWidget {
     
   /// DaKanji settings object

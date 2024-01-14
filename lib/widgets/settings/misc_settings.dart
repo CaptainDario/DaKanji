@@ -1,6 +1,6 @@
 // Flutter imports:
 
-import 'package:da_kanji_mobile/widgets/settings/advanced_settings.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,8 +17,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
-
-
+import 'package:da_kanji_mobile/widgets/settings/advanced_settings.dart';
 
 class MiscSettings extends StatefulWidget {
     

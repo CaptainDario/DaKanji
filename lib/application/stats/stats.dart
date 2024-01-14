@@ -1,9 +1,13 @@
 
 
 
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:aptabase_flutter/aptabase_flutter.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';

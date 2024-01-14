@@ -1,9 +1,8 @@
 // Flutter imports:
-import 'package:aptabase_flutter/aptabase_flutter.dart';
-import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aptabase_flutter/aptabase_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -11,18 +10,19 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/stores.dart';
+import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 
 /// The "home"-screen
 /// 

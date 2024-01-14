@@ -2,30 +2,30 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/stats/stats.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:aptabase_flutter/aptabase_flutter.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/application/assets/assets.dart';
 import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/application/stats/stats.dart';
 import 'package:da_kanji_mobile/entities/changelog.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
@@ -46,10 +46,8 @@ import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/env.dart';
-
-
+import 'package:da_kanji_mobile/globals.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {

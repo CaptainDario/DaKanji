@@ -1,10 +1,13 @@
-// Package imports:
+// Dart imports:
 import 'dart:math';
 
+// Package imports:
 import 'package:collection/collection.dart';
+import 'package:database_builder/database_builder.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
-import 'package:database_builder/database_builder.dart';
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{

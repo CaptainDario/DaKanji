@@ -15,8 +15,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 
-
-
 class KanjiTableSettings extends StatefulWidget {
     
   /// DaKanji settings object

@@ -7,16 +7,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:app_links/app_links.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
-import 'package:app_links/app_links.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/files/path_manager.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
-
-
 
 /// the title of the app
 const String g_AppTitle = "DaKanji";

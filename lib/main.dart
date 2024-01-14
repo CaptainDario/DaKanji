@@ -13,16 +13,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 
-
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-// ignore: unused_import
 import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+
+// ignore: unused_import
 
 Future<void> main() async {
 

@@ -1,6 +1,6 @@
+// Package imports:
 import 'package:store_checker/store_checker.dart';
 import 'package:universal_io/io.dart';
-
 
 /// Tries to find the way this application has been installed
 Future<String> findInstallationMethod() async {

@@ -20,8 +20,6 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_til
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 
-
-
 class AnkiSettings extends StatefulWidget {
     
   /// DaKanji settings object
