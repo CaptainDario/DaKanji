@@ -120,7 +120,7 @@ dependencies:
 
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
-  window_manager: 0.3.4           # desktop
+  window_manager: 0.3.7           # desktop
   #lutter_appavailability:        # android, iOS
 
   # utility 

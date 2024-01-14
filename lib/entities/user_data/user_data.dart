@@ -33,6 +33,25 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool newInstall = true;
 
+  /// The seconds the app was used today
+  @JsonKey(defaultValue: 0)
+  int todayUsageSeconds = 0;
+  /// Has today already been counted as daily / monthly active
+  @JsonKey(defaultValue: false)
+  bool dailyActiveUserTracked = false;
+  /// How many days this app was used this month
+  @JsonKey(defaultValue: 0)
+  int monthsUsageDays = 0;
+  /// Has today been counted towards the monthly goal
+  @JsonKey(defaultValue: false)
+  bool dailyForMonthlyTracked = false;
+  /// Has this month been counted as monthly active
+  @JsonKey(defaultValue: false)
+  bool monthlyActiveUserTracked = false;
+  /// Last day used
+  @JsonKey()
+  DateTime lastDayUsed = DateTime.now();
+
   /// Did the user already chose to not see the rate dialogue again
   @JsonKey(defaultValue: false)
   bool doNotShowRateAgain = false;
@@ -207,21 +226,48 @@ class UserData{
   /// Load all saved settings from SharedPreferences and returns a new `UserData`
   /// instance.
   Future<UserData> load() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
+    UserData uD;
+
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       String tmp = prefs.getString('userData') ?? "";
       if(tmp != "") {
-        return UserData.fromJson(json.decode(tmp));
+        uD = UserData.fromJson(json.decode(tmp));
       }
       else {
-        return UserData();
+        uD = UserData();
       }
     }
     catch (e) {
       Sentry.captureException(e);
-      return UserData();
+      uD = UserData();
     }
+
+    resetUsageIfNewDay();
+
+    return uD;
+  }
+
+  /// Resets monthly/daily usage if applicable
+  void resetUsageIfNewDay(){
+
+    DateTime now = DateTime.now();
+
+    // It is not the same month as last time used
+    if(!(now.year == lastDayUsed.year && now.month == lastDayUsed.month)){
+      monthsUsageDays = 0;
+      monthlyActiveUserTracked = false;
+    }
+    // It is not the same day as last time used
+    if(!(now.year == lastDayUsed.year &&
+      now.month == lastDayUsed.month &&
+      now.day == lastDayUsed.day)){
+      todayUsageSeconds = 0;
+      dailyActiveUserTracked = false;
+      dailyForMonthlyTracked = false;
+    }
+
   }
 
   /// Instantiates a new instance from a json map

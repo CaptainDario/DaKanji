@@ -65,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if(GetIt.I<UserData>().newInstall){
       await Aptabase.instance.trackEvent(
         "New/Re install",
-        {"Installation Method": GetIt.I<PlatformDependentVariables>().installationMethod});
+        {
+          "Installation Method" : GetIt.I<PlatformDependentVariables>().installationMethod,
+          "Build number" : g_Version.build
+        });
       GetIt.I<UserData>().newInstall = false;
       GetIt.I<UserData>().save();
     }

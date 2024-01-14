@@ -9,6 +9,13 @@ part of 'user_data.dart';
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
   ..newInstall = json['newInstall'] as bool? ?? true
+  ..todayUsageSeconds = json['todayUsageSeconds'] as int? ?? 0
+  ..dailyActiveUserTracked = json['dailyActiveUserTracked'] as bool? ?? false
+  ..monthsUsageDays = json['monthsUsageDays'] as int? ?? 0
+  ..dailyForMonthlyTracked = json['dailyForMonthlyTracked'] as bool? ?? false
+  ..monthlyActiveUserTracked =
+      json['monthlyActiveUserTracked'] as bool? ?? false
+  ..lastDayUsed = DateTime.parse(json['lastDayUsed'] as String)
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
   ..versionUsed =
       json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
@@ -35,6 +42,12 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
       'newInstall': instance.newInstall,
+      'todayUsageSeconds': instance.todayUsageSeconds,
+      'dailyActiveUserTracked': instance.dailyActiveUserTracked,
+      'monthsUsageDays': instance.monthsUsageDays,
+      'dailyForMonthlyTracked': instance.dailyForMonthlyTracked,
+      'monthlyActiveUserTracked': instance.monthlyActiveUserTracked,
+      'lastDayUsed': instance.lastDayUsed.toIso8601String(),
       'doNotShowRateAgain': instance.doNotShowRateAgain,
       'versionUsed': instance.versionUsed,
       'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),

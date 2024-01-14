@@ -128,7 +128,8 @@ Future<void> initServices() async {
 
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
 
-  GetIt.I.registerSingleton<Stats>(Stats());
+  GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
+
 }
 
 /// Loads all services from disk that DO depend on data in the documents

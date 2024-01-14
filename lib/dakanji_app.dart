@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/stats/stats.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +19,7 @@ import 'package:da_kanji_mobile/entities/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/entities/theme/light_theme.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:window_manager/window_manager.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
@@ -27,11 +30,37 @@ class DaKanjiApp extends StatefulWidget {
   State<DaKanjiApp> createState() => _DaKanjiAppState();
 }
 
-class _DaKanjiAppState extends State<DaKanjiApp> {
+class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, WindowListener{
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    
+    // app active again
+    if(state == AppLifecycleState.resumed){
+      GetIt.I<Stats>().appActive = true;
+    }
+    // app inactive
+    else {
+      GetIt.I<Stats>().appActive = false;
+      GetIt.I<UserData>().save();
+    }
+    
+    super.didChangeAppLifecycleState(state);
+  }
+
+  /// This is only applicable to desktop application
+  @override
+  void onWindowClose() {
+
+    super.onWindowClose();
+    windowManager.destroy();
+    
   }
   
   @override
