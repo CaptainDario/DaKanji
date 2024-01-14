@@ -73,9 +73,8 @@ Future<bool> init() async {
   MediaKit.ensureInitialized();
 
   // Aptabase
-  if(kDebugMode) {
-    await Aptabase.init(Env.APTABASE_APP_KEY ?? "");
-  }
+  await Aptabase.init(Env.APTABASE_APP_KEY ?? "");
+  
   
   //await optimizeTFLiteBackendsForModels();
   return true;
