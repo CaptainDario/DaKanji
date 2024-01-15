@@ -28,9 +28,8 @@ Future<void> main() async {
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
 
-  // delete settings
+  // delete settings for debugging
   //if(kDebugMode) await clearPreferences();
-
 
   await SentryFlutter.init(
     (options) {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,12 @@ String posthogServiceURL = 'https://eu.posthog.com/capture/';
 Map<String, String> posthogHeader = {"Content-Type": "application/json"};
 /// The identifier in the sharedpreferences to store the posthog events
 String prefsPosthogCacheName = "cachedPosthogEvents";
+/// The api key for posthog, depending on release or dev mode
+String postHogApiKey = (kDebugMode
+  ? "" //Env.POSTHOG_API_KEY_DEV
+  : Env.POSTHOG_API_KEY_REL
+) ?? "";
+
 
 
 /// Logs an even by its name with the default properties
@@ -23,7 +30,7 @@ Future<bool> logDefaultEvent(String eventName) async {
   bool success;
 
   final body = {
-    "api_key": "phc_dIGlCR8Gwl9KsqHMJQ6Cu533vjYZEklTIdncgLQZkGp",//Env.POSTHOG_API_KEY,
+    "api_key": postHogApiKey,
     "event": eventName,
     "properties" : await defaultProperties(),
     "timestamp": (DateTime.now().toUtc()).toIso8601String(),
