@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/analytics/post.dart';
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

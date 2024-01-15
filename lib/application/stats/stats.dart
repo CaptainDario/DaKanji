@@ -8,7 +8,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart'; 
-import 'package:da_kanji_mobile/repositories/analytics/post.dart';
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage
@@ -61,6 +61,7 @@ class Stats{
   Future saveStats() async {
 
     await userData.save();
+    await retryCachedEvents();
 
   }
 
@@ -71,8 +72,6 @@ class Stats{
     
     if(!userData.dailyActiveUserTracked) await updateDailyUsage();
     if(!userData.monthlyActiveUserTracked) await updateMonthlyUsage();
-
-    print("${userData.dailyActiveUserTracked} ${userData.todayUsageSeconds}");
     
   }
 
@@ -83,6 +82,7 @@ class Stats{
     // user was active today -> count one day to monthly active
     if(userData.todayUsageSeconds >= dailyActiveSecondsThreshold &&
       !userData.dailyForMonthlyTracked){
+        
       userData.monthsUsageDays += 1;
       userData.dailyForMonthlyTracked = true;
       await userData.save();
