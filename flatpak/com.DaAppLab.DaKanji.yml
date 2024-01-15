@@ -111,7 +111,6 @@ modules:
     sources:
     - type: git
       url: https://git.ffmpeg.org/ffmpeg.git
-      branch: release/6.0
       commit: 3d5edb89e75fe3ab3a6757208ef121fa2b0f54c7
 # -----------------------------------------------------------------------------------
 
