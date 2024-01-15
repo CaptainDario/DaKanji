@@ -29,7 +29,9 @@
 
 CHANGELOG
 
-Which release do I need?
+<details>
+  <summary>Which release do I need?</summary>
+  
 It is recommended to use the store of your platform to install DaKanji, however, all release names end in the platform they are made for:
 * Android: `.apk`
   * if you are not sure which architecture your device uses, use the file ending in `fat.apk`
@@ -44,3 +46,5 @@ It is recommended to use the store of your platform to install DaKanji, however,
 
 Notes:
 * the builds `.app`, `linux.zip`, `exe.zip` do **not** automatically register deep linking.
+
+</details>
