@@ -8,7 +8,6 @@ part of 'user_data.dart';
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..appOpenedTimes = json['appOpenedTimes'] as int? ?? 0
-  ..newInstall = json['newInstall'] as bool? ?? true
   ..todayUsageSeconds = json['todayUsageSeconds'] as int? ?? 0
   ..dailyActiveUserTracked = json['dailyActiveUserTracked'] as bool? ?? false
   ..monthsUsageDays = json['monthsUsageDays'] as int? ?? 0
@@ -41,7 +40,6 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'appOpenedTimes': instance.appOpenedTimes,
-      'newInstall': instance.newInstall,
       'todayUsageSeconds': instance.todayUsageSeconds,
       'dailyActiveUserTracked': instance.dailyActiveUserTracked,
       'monthsUsageDays': instance.monthsUsageDays,

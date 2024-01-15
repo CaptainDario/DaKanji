@@ -115,7 +115,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_user_data.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            UserData uD = UserData()..newInstall = false;
+            UserData uD = UserData()..appOpenedTimes = 2;
             await uD.save();
             // ignore: use_build_context_synchronously
             await restartApp(context);

@@ -29,10 +29,6 @@ class UserData{
   @JsonKey(defaultValue: 0)
   int appOpenedTimes = 0;
 
-  /// Is this a new install?
-  @JsonKey(defaultValue: true)
-  bool newInstall = true;
-
   /// The seconds the app was used today
   @JsonKey(defaultValue: 0)
   int todayUsageSeconds = 0;
@@ -267,6 +263,8 @@ class UserData{
       dailyActiveUserTracked = false;
       dailyForMonthlyTracked = false;
     }
+
+    lastDayUsed = now;
 
   }
 
