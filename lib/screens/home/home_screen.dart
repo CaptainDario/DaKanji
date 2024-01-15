@@ -1,8 +1,8 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/repositories/analytics/post.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -17,7 +17,6 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
@@ -62,14 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await initDocumentsServices(context);
 
     // track first installs
-    if(GetIt.I<UserData>().newInstall){
-      await Aptabase.instance.trackEvent(
-        "New/Re install",
-        {
-          "Installation Method" : await findInstallationMethod(),
-          "Build number" : g_Version.build
-        });
-      GetIt.I<UserData>().newInstall = false;
+    if(GetIt.I<UserData>().appOpenedTimes <= 1){
+      logDefaultEvent("New/Re install");
       GetIt.I<UserData>().save();
     }
     // check if an update is available
@@ -114,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  /// Opens a popup that informs the user that an update is available
   Future<void> showUpdatePopup(List<String> changelog) async {
     // show a popup with the changelog of the new version
     await AwesomeDialog(

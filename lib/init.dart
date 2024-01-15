@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -46,7 +45,6 @@ import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
@@ -70,11 +68,7 @@ Future<bool> init() async {
   await initDeepLinksStream();
 
   // media kit
-  MediaKit.ensureInitialized();
-
-  // Aptabase
-  await Aptabase.init(Env.APTABASE_APP_KEY ?? "");
-  
+  MediaKit.ensureInitialized();  
   
   //await optimizeTFLiteBackendsForModels();
   return true;

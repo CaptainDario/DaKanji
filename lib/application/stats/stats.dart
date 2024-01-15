@@ -5,12 +5,10 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:aptabase_flutter/aptabase_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart'; 
+import 'package:da_kanji_mobile/repositories/analytics/post.dart';
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage
@@ -42,6 +40,7 @@ class Stats{
 
   /// Initializes an instance
   void init(){
+    // update the stats every second
     updateStatsTimer = Timer.periodic(
       Duration(seconds: updateStatsTimerInterval), (timer) async {
         if(appActive){
@@ -49,18 +48,31 @@ class Stats{
         }
       }
     );
+    // save the stats peridocially
     saveStatsTimer = Timer.periodic(
       Duration(seconds: saveStatsTimerInterval), (timer) async {
-        await userData.save();
+        await saveStats();
       }
     );
   }
 
+  /// Saves the current stats and checks if a new day started and some stats 
+  /// need to be reset
+  Future saveStats() async {
+
+    await userData.save();
+
+  }
+
   /// Updates all usage statistics in the `this.UserData`
   Future updateStats() async {
+
+    userData.resetUsageIfNewDay();
     
-    if(!userData.monthlyActiveUserTracked) await updateMonthlyUsage();
     if(!userData.dailyActiveUserTracked) await updateDailyUsage();
+    if(!userData.monthlyActiveUserTracked) await updateMonthlyUsage();
+
+    print("${userData.dailyActiveUserTracked} ${userData.todayUsageSeconds}");
     
   }
 
@@ -78,13 +90,8 @@ class Stats{
     // user has been active this month
     if(userData.monthsUsageDays >= monthlyActiveDaysThreshold &&
       !userData.monthlyActiveUserTracked){
-      await Aptabase.instance.trackEvent(
-        "Monthly active user",
-        {
-          "Installation Method" : await findInstallationMethod(),
-          "Build number" : g_Version.build
-        }
-      );
+
+      await logDefaultEvent("Monthly active user");
       userData.monthlyActiveUserTracked = true;
       userData.save();
     }
@@ -98,14 +105,8 @@ class Stats{
     // user has been active today
     if(userData.todayUsageSeconds >= dailyActiveSecondsThreshold &&
       !userData.dailyActiveUserTracked){
-      await Aptabase.instance.trackEvent(
-        "Daily active user",
-        {
-          "Installation Method" : await findInstallationMethod(),
-          "Build number" : g_Version.build
-        }
-      );
-      await updateMonthlyUsage();
+
+      await logDefaultEvent("Daily active user");
       userData.dailyActiveUserTracked = true;
       userData.save();
     }
