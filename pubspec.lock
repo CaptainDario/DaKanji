@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0"
-  aptabase_flutter:
-    dependency: "direct main"
-    description:
-      name: aptabase_flutter
-      sha256: "902374859f9121a1f3fcc97cfe374ce8673b83f604511abe0c80b8f738a8b7ae"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   archive:
     dependency: "direct main"
     description:
@@ -406,10 +398,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "3709d74615bba5e443eb141f6a7f4bcc4788f8fae6f743edadfb79c2a8e6287e"
+      sha256: "797e1e341c3dd2f69f2dad42564a6feff3bfb87187d05abb93b9609e6f1645c3"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.1"
+    version: "5.4.0"
   drift:
     dependency: "direct main"
     description:
