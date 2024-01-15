@@ -31,6 +31,7 @@ Future<void> main() async {
   // delete settings
   //if(kDebugMode) await clearPreferences();
 
+
   await SentryFlutter.init(
     (options) {
       options.dsn = kReleaseMode ? Env.SENTRY_DSN : "";
