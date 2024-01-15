@@ -87,7 +87,7 @@ jobs:
         shell: powershell
         run: >
           Compress-Archive
-          -Path build/windows/runner/Release/*
+          -Path build/windows/x64/runner/Release/*
           -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
         uses: actions/upload-artifact@v3
