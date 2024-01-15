@@ -71,7 +71,7 @@ jobs:
       - name: Setup DaKanji env.dart
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          APTABASE_APP_KEY: ${{ secrets.APTABASE_APP_KEY }} 
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
         run: |
           python3 ./.github/workflows/create_dakanji_env.py
           flutter pub run build_runner build --delete-conflicting-outputs
