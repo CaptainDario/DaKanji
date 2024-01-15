@@ -124,7 +124,7 @@ Future<String> _findInstallationMethodiOS() async {
 /// Tries to find the way this application has been installed
 Future<String> _findInstallationMethodMac(){
 
-  return Future.sync(() => "Mac");
+  return Future.sync(() => "Unkown");
 
 }
 
