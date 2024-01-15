@@ -113,7 +113,7 @@ jobs:
           -c ./keys/dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
       - name: rename non store msix
-        working-directory: build\windows\runner\Release\
+        working-directory: build\windows\x64\runner\Release\
         shell: powershell
         run: >	
           Rename-Item
@@ -123,7 +123,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
-          path: build\windows\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+          path: build\windows\x64\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
 
       # build MSIX for MS Store and upload
       - name: build and sign non-store MSIX
@@ -133,4 +133,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
+          path: build\windows\x64\runner\Release\da_kanji_mobile.msix
