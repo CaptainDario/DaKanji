@@ -100,6 +100,7 @@ class Stats{
   /// Updates the daily usage
   /// Saves to disk and sends an event if user is now a daily active one
   Future updateDailyUsage() async {
+    
     userData.todayUsageSeconds += updateStatsTimerInterval;
 
     // user has been active today

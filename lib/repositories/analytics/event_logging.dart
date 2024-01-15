@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
 import 'package:flutter/foundation.dart';
@@ -23,43 +22,39 @@ Future<bool> logDefaultEvent(String eventName) async {
 
   bool success;
 
-  Map properties = await defaultProperties(eventName);
-    final completeProps = properties..addAll({
-    "distinct_id": "Anonym_${randomId()}",
-  });
+  final body = {
+    "api_key": "phc_dIGlCR8Gwl9KsqHMJQ6Cu533vjYZEklTIdncgLQZkGp",//Env.POSTHOG_API_KEY,
+    "event": eventName,
+    "properties" : await defaultProperties(),
+    "timestamp": (DateTime.now().toUtc()).toIso8601String(),
+  };
 
-  final body = jsonEncode({
-      "api_key": Env.POSTHOG_API_KEY,
-      "event": eventName,
-      "properties" : completeProps,
-      "timestamp": DateTime.now().toIso8601String(),
-    });
-
-  success = await logEvent(posthogServiceURL, jsonEncode(posthogHeader), body);
+  success = await logEvent(posthogServiceURL, posthogHeader, body);
 
   return success;
 
 }
 
 /// Logs a given event by its name and properties
-Future<bool> logEvent(String url, String header, String body) async {
+Future<bool> logEvent(String url, Map<String, String> header, Map body) async {
 
   bool success;
 
-  success = await _logEventPosthogREST(url, header, body);
+  success = await _logEventPosthogREST(url, header, jsonEncode(body));
 
   return success;
 
 }
 
 /// Returns a properties map configured with all the default properties
-Future<Map> defaultProperties(String eventName) async {
+Future<Map> defaultProperties() async {
 
   return {
     "Installation method" : await findInstallationMethod(),
     "Platform" : Platform.operatingSystem,
     "Version" : g_Version.fullVersionString,
     "Debug" : kDebugMode,
+    "distinct_id": "Anonym_${randomId()}"
   };
 
 }
@@ -77,24 +72,25 @@ String randomId(){
 }
 
 /// Uses the Posthog REST API backend for logging an event
-Future<bool> _logEventPosthogREST(String url, String header, String body) async {
+Future<bool> _logEventPosthogREST(String url, Map<String, String> header, String body) async {
   
   bool success = false;
 
   try{
-    Map response = jsonDecode((await http.post(
+    http.Response response = (await http.post(
       Uri.parse(posthogServiceURL),
-      headers: posthogHeader,
+      headers: header,
       body: body
-    )).body);
+    ));
+    Map jsonBody = jsonDecode(response.body);
 
-    if(response["status"] == 1){
+    if(jsonBody["status"] == 1){
       success = true;
     }
   }
   // cache the request when it was not successful to send it later
   catch (e) {
-    await cacheEvent(body);
+    //await cacheEvent(body);
   }
 
   return success;
@@ -127,7 +123,7 @@ Future<void> retryCachedEvents() async {
   // try to resend all events
   for (int i = 0; i < cachedEvents.length; i++) {
     bool success = await logEvent(
-      posthogServiceURL, jsonEncode(posthogHeader), cachedEvents[i]);
+      posthogServiceURL, posthogHeader, jsonDecode(cachedEvents[i]));
 
     if(!success){
       return;
