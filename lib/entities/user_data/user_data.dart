@@ -46,7 +46,7 @@ class UserData{
   bool monthlyActiveUserTracked = false;
   /// Last day used
   @JsonKey()
-  DateTime lastDayUsed = DateTime.now();
+  DateTime lastDayUsed = DateTime.now().toUtc();
 
   /// Did the user already chose to not see the rate dialogue again
   @JsonKey(defaultValue: false)
@@ -248,7 +248,7 @@ class UserData{
   /// Resets monthly/daily usage if applicable
   void resetUsageIfNewDay(){
 
-    DateTime now = DateTime.now();
+    DateTime now = DateTime.now().toUtc();
 
     // It is not the same month as last time used
     if(!(now.year == lastDayUsed.year && now.month == lastDayUsed.month)){

@@ -524,7 +524,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     var isar = GetIt.I<Isars>().searchHistory;
     await isar.writeTxn(() async {
       await isar.searchHistorys.put(SearchHistory()
-        ..dateSearched = DateTime.now()
+        ..dateSearched = DateTime.now().toUtc()
         ..dictEntryId  = entry.id
         ..schema       = DatabaseType.JMDict
       );

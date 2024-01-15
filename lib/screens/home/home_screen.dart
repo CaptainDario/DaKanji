@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       btnCancelColor: g_Dakanji_red,
       btnCancelOnPress: () async {},
       onDismissCallback: (dismisstype) async {
-        GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
+        GetIt.I<UserData>().userRefusedUpdate = DateTime.now().toUtc();
         await GetIt.I<UserData>().save();
       },
       body: SizedBox(
