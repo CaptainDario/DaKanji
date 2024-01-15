@@ -1,7 +1,7 @@
 app-id: com.DaAppLab.DaKanji
 runtime: org.freedesktop.Platform
 runtime-version: '22.08'
-sdk: org.gnome.Sdk
+sdk: org.freedesktop.Sdk
 command: DaKanji
 finish-args:
   - --share=ipc
