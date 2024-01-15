@@ -62,7 +62,7 @@ Future<Map> defaultProperties() async {
 /// Returns a randomly genrated id
 String randomId(){
 
-  final n = DateTime.now();
+  final n = DateTime.now().toUtc();
 
   String r = "${n.year}${n.month}${n.day}${n.second}${n.millisecond}${n.microsecond}";
   r += "${Random().nextInt(0x7fffffff)}";
@@ -90,7 +90,7 @@ Future<bool> _logEventPosthogREST(String url, Map<String, String> header, String
   }
   // cache the request when it was not successful to send it later
   catch (e) {
-    //await cacheEvent(body);
+    await cacheEvent(body);
   }
 
   return success;
