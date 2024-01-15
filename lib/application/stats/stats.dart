@@ -19,7 +19,7 @@ class Stats{
   /// has this instance been initialized
   bool initialized = false;
   /// The seconds a user needs to use the app a day to count as daily active
-  int dailyActiveSecondsThreshold = 10;
+  int dailyActiveSecondsThreshold = 60;
   /// The days a user needs to be a daily active user to count as monthly active
   int monthlyActiveDaysThreshold = 7;
   /// Is the app currently active?
