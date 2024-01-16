@@ -171,10 +171,6 @@
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "",
-    "title": ""
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
@@ -210,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Trener Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie mapy kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
@@ -243,7 +244,7 @@
     "deep_links_text": "G\u0142\u0119bokie linki to spos\u00f3b na bezpo\u015brednie linkowanie do tre\u015bci w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystaj\u0105c z tej funkcji, mo\u017cesz na przyk\u0142ad otworzy\u0107 wyszukiwanie s\u0142ownika po dotkni\u0119ciu tego linku dakanji://dictionary?search=\u98df\u3079\u308b. Wszystkie obs\u0142ugiwane linki mo\u017cna znale\u017a\u0107 na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Przyk\u0142ady",
-    "dict_kanji_animation_text": "DaKanji mo\u017ce wy\u015bwietla\u0107 animowane diagramy kolejno\u015bci uderze\u0144 wi\u0119kszo\u015bci do\u0142\u0105czonych kanji. Animacje te mo\u017cna kontrolowa\u0107 na r\u00f3\u017cne sposoby.\nPodw\u00f3jne stukni\u0119cie ma r\u00f3\u017cne skutki w zale\u017cno\u015bci od bie\u017c\u0105cego stanu animacji. Je\u015bli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, gdy animacja jest aktualnie wstrzymana, b\u0119dzie kontynuowa\u0107 jej odtwarzanie. Wreszcie, je\u015bli animacja zosta\u0142a zako\u0144czona, dwukrotne dotkni\u0119cie spowoduje ponowne uruchomienie animacji od pocz\u0105tku.\nPrzesuwaj\u0105c palcem po kanji mo\u017cna kontrolowa\u0107 post\u0119p animacji. Przesuni\u0119cie w lewo spowoduje przewini\u0119cie animacji do ty\u0142u, a przesuni\u0119cie w prawo spowoduje jej przyspieszenie.",
+    "dict_kanji_animation_text": "DaKanji mo\u017ce wy\u015bwietla\u0107 animowane diagramy kolejno\u015bci uderze\u0144 wi\u0119kszo\u015bci do\u0142\u0105czonych Kanji / Kana. Animacjami tymi mo\u017cna sterowa\u0107 na r\u00f3\u017cne sposoby.\nPodw\u00f3jne stukni\u0119cie ma r\u00f3\u017cne skutki w zale\u017cno\u015bci od bie\u017c\u0105cego stanu animacji. Je\u015bli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, je\u015bli animacja jest aktualnie wstrzymana, b\u0119dzie ona kontynuowana. Wreszcie, je\u015bli animacja zosta\u0142a zako\u0144czona, dwukrotne dotkni\u0119cie spowoduje ponowne uruchomienie animacji od pocz\u0105tku.\nPrzesuwaj\u0105c palcem po kanji mo\u017cna kontrolowa\u0107 post\u0119p animacji. Przesuni\u0119cie w lewo spowoduje przewini\u0119cie animacji do ty\u0142u, a przesuni\u0119cie w prawo spowoduje jej przyspieszenie.",
     "dict_kanji_animation_title": "Animacje",
     "dict_kanji_copy_radicals_text": "Mo\u017cesz skopiowa\u0107 radyka\u0142 do schowka, dotykaj\u0105c go. Dwukrotne stukni\u0119cie spowoduje do\u0142\u0105czenie radykalnego elementu do ju\u017c istniej\u0105cej zawarto\u015bci schowka.",
     "dict_kanji_copy_radicals_title": "Kopiowanie rodnik\u00f3w",
@@ -285,7 +286,9 @@
     "Onboarding_2_text": "Z \"DaKanji\" mo\u017cesz szybko wyszuka\u0107 s\u0142owa u\u017cywaj\u0105c wbudowanego s\u0142ownika lub u\u017cyj skr\u00f3tu do s\u0142ownika Internetowego.",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "U\u017cyj narz\u0119dzi analizy tekstu DaKanji, aby doda\u0107 furigan\u0119, spacje i inne, lub przet\u0142umacz ca\u0142e zdanie.",
-    "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?"
+    "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?",
+    "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, kt\u00f3re pozwalaj\u0105 na efektywn\u0105 nauk\u0119.",
+    "Onboarding_4_title": "Nauka kanji i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plik\u00f3w s\u0142ownika",
@@ -303,9 +306,15 @@
     "advanced_settings_reset_settings": "Resetowanie ustawie\u0144",
     "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
-    "anki_default_deck": "Pok\u0142ad domy\u015blny",
-    "anki_default_no_langs": "Liczba j\u0119zyk\u00f3w w notatkach",
+    "anki_default_deck": "Pok\u0142ad do dodania do",
     "anki_default_no_translations": "Liczba t\u0142umacze\u0144 na notach",
+    "anki_desktop_url": "Adres URL do po\u0142\u0105czenia z anki",
+    "anki_get_decks_fail": "Nie jeste\u015b po\u0142\u0105czony z Anki, nie mo\u017cesz zaktualizowa\u0107 talii! \ud83d\ude22",
+    "anki_get_decks_success": "Zaktualizowane pok\u0142ady! \ud83c\udf89",
+    "anki_include_audio": "Do\u0142\u0105cz d\u017awi\u0119k s\u0142ownictwa do notatek",
+    "anki_include_google_image": "Do\u0142\u0105cz obraz Google do notatek",
+    "anki_include_screenshot": "Do\u0142\u0105cz zrzut ekranu",
+    "anki_languages_to_include": "J\u0119zyki do uwzgl\u0119dnienia w notatkach",
     "anki_title": "Anki",
     "custom_url_explanation": "Aplikacja podmieni symbol zast\u0119pczy predykowanym znakiem. Symbolem zast\u0119pczym jest: {kanjiPlaceholder}\n\nPrzyk\u0142ad:\nPredykowany znak to '\u53e3'  i chcemy otworzy\u0107 go na 'jisho.org'. Najpierw musimy posiada\u0107 adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/\u53e3'. Nast\u0119pnie symbol zast\u0119pczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Przekszta\u0142cenie danych wej\u015bciowych na posta\u0107 bezokolicznikow\u0105",
@@ -331,6 +340,8 @@
     "draw_invert_short_long_press": "Odwr\u00f3\u0107 d\u0142ugie/kr\u00f3tkie klikni\u0119cie",
     "draw_long_press_opens": "Wyb\u00f3r s\u0142ownika",
     "draw_title": "Obraz",
+    "kana_table_play_audio": "Odtwarzanie d\u017awi\u0119ku po stukni\u0119ciu w Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatyczne uruchamianie animacji Kana",
     "misc_default_screen": "Ekran pocz\u0105tkowy przy uruchamianiu aplikacji",
     "misc_language": "j\u0119zyk (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Zapisz bie\u017c\u0105cy rozmiar okna",
@@ -385,6 +396,7 @@
     "create_pdf": "Utw\u00f3rz PDF",
     "defaults": "ustawienia domy\u015blne",
     "delete": "Usu\u0144",
+    "drag_to_scroll": "Przeci\u0105gnij tutaj, aby przewin\u0105\u0107",
     "new_folder": "Nowy folder",
     "new_list": "Nowy wykaz",
     "no_entries": "Brak wpis\u00f3w w tej li\u015bcie s\u0142\u00f3w",

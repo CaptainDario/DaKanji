@@ -7,17 +7,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:app_links/app_links.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/path_manager.dart';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
+import 'package:da_kanji_mobile/entities/files/path_manager.dart';
+import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
-
-/// A logs of the currently running app so that they can be attached when
-/// using the provide feedback widget
-String g_appLogs = "";
 
 /// the title of the app
 const String g_AppTitle = "DaKanji";
@@ -26,6 +23,10 @@ const String g_AppTitle = "DaKanji";
 const String g_AppLinkHttps   = r"https://dakanji.app/app/";
 /// deep link pattern (dakanji://)
 const String g_AppLinkDaKanji = r"dakanji://";
+/// Instance to catch incoming deep links
+final AppLinks g_AppLinks = AppLinks();
+/// Has the initial deep link been handled
+bool g_initialDeepLinkHandled = false;
 
 /// The green tone that dakanji uses
 const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
@@ -66,20 +67,24 @@ List<Version> g_DrawingScreenNewFeatures = [
 ];
 /// all versions which implemented new pages for the OnBoarding
 List<Version> g_OnboardingNewPages = [
-  Version(0, 0, 0), Version(2, 0, 0), Version(3, 0, 0)
+  Version(0, 0, 0), Version(2, 0, 0), Version(3, 0, 0), Version(3, 3, 0)
 ];
 /// all versions that implemented new dictionary versions (ISAR DB)
 List<Version> g_NewDictionary = [
-  Version(3, 0, 0, build: 47), Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52),
-  Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56)
+  Version(3, 0, 0, build: 47), 
+  Version(3, 1, 0, build: 51), Version(3, 1, 0, build: 52), Version(3, 1, 0, build: 53), Version(3, 1, 0, build: 56), 
+  Version(3, 3, 0, build: 76)
 ];
 /// all versions that implemented new examples versions (ISAR DB)
 List<Version> g_NewExamples = [
-  Version(3, 0, 0, build: 47)
+  Version(3, 0, 0, build: 47),
+  Version(3, 3, 0, build: 76)
 ];
 /// all versions that implemented new radiclas data (ISAR DB)
 List<Version> g_NewRadicals = [
-  Version(3, 1, 0), Version(3, 2, 0, build: 67)
+  Version(3, 1, 0),
+  Version(3, 2, 0, build: 67),
+  Version(3, 3, 0, build: 76)
 ];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];

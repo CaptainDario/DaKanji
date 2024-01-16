@@ -16,16 +16,16 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dict_search_result_controller.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
+import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
+import 'package:da_kanji_mobile/entities/dictionary/dict_search_result_controller.dart';
+import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
@@ -215,7 +215,19 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
           GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
         ],
-        child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark 
+                ? Colors.grey.shade800
+                : Colors.grey.shade300
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: Theme.of(context).brightness == Brightness.dark
+              ? Theme.of(context).scaffoldBackgroundColor
+              : Colors.white,
+          ),
+          //color: Theme.of(context).cardColor,
           child: Column(
             children: [
               // the search bar
@@ -223,7 +235,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 decoration: BoxDecoration(
                   border: BorderDirectional(
                     bottom: BorderSide(
-                      color: searchBarExpanded ? Colors.grey : Colors.transparent,
+                      color: searchBarExpanded
+                        ? Theme.of(context).brightness == Brightness.dark 
+                          ? Colors.grey.shade800
+                          : Colors.grey.shade300 
+                        : Colors.transparent,
                       style: BorderStyle.solid
                     )
                   )
@@ -508,7 +524,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     var isar = GetIt.I<Isars>().searchHistory;
     await isar.writeTxn(() async {
       await isar.searchHistorys.put(SearchHistory()
-        ..dateSearched = DateTime.now()
+        ..dateSearched = DateTime.now().toUtc()
         ..dictEntryId  = entry.id
         ..schema       = DatabaseType.JMDict
       );

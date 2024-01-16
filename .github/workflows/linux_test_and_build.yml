@@ -63,6 +63,13 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
         
       - name: install build packages
         run: |
@@ -75,7 +82,7 @@ jobs:
       # build portable linux
       - name: build linux executable
         run: |
-          flutter build linux --release
+          flutter build linux --release -v
           zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
@@ -89,7 +96,7 @@ jobs:
         run: |
           sudo apt-get install flatpak flatpak-builder
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y flathub org.freedesktop.Sdk//22.08 org.freedesktop.Platform//22.08
+          flatpak install -y flathub org.gnome.Sdk//45 org.gnome.Platform//45
           
           flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
           flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml

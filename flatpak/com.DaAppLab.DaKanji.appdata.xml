@@ -9,6 +9,8 @@
   <summary>You are learning Japanese? Then you need to give "DaKanji" a try!</summary>
   <developer_name>DaAppLab</developer_name>
   <url type="homepage">https://dakanji.app/</url>
+  <url type="bugtracker">https://github.com/CaptainDario/DaKanji/issues</url>
+  <url type="help">https://discord.gg/gdqaux3r4P</url>
   <metadata_license>PolyForm Strict License 1.0.0</metadata_license>
   <project_license>PolyForm Strict License 1.0.0</project_license>
   <supports>
@@ -17,7 +19,7 @@
     <control>touch</control>
   </supports>
   <description>
-    <p>DaKanji DaKanji</p>
+    <p>You are learning Japanese? Then you need to give "DaKanji" a try!</p>
   </description>
   <launchable type="desktop-id">com.DaAppLab.DaKanji.desktop</launchable>
   <screenshots>
@@ -38,6 +40,7 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="3.2.0" date="2023-11-25"/>
+    <release version="3.3.1" date="2024-01-14" />
+    <release version="3.2.0" date="2023-12-8" />
   </releases>
 </component>

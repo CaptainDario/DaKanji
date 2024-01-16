@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/conjugation/conjugate.dart';
-import 'package:da_kanji_mobile/data/conjugation/conj.dart';
-import 'package:da_kanji_mobile/data/conjugation/conjos.dart';
-import 'package:da_kanji_mobile/data/conjugation/conjugation_descriptions.dart';
-import 'package:da_kanji_mobile/data/conjugation/kwpos.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/conjugate.dart';
+import 'package:da_kanji_mobile/entities/conjugation/conj.dart';
+import 'package:da_kanji_mobile/entities/conjugation/conjos.dart';
+import 'package:da_kanji_mobile/entities/conjugation/conjugation_descriptions.dart';
+import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
 

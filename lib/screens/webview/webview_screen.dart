@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 
 /// This screen opens the given [url]
 /// and shows [char] fullscreen while loading.
@@ -103,14 +103,14 @@ class _WebviewScreenState extends State<WebviewScreen>
       appBar: AppBar(title: Text(GetIt.I<DrawScreenState>().drawingLookup.chars)),
       body: 
       
-      WillPopScope(
+      PopScope(
         // when leaving this screen hide the webview  
-        onWillPop: () {
+        onPopInvoked: (popped) {
           setState(() {
             showLoading = false;
             _controller.reverse();
           });
-          return Future.delayed(const Duration(milliseconds: 500), () => true);
+          //return Future.delayed(const Duration(milliseconds: 500), () => true);
         },
         child: Stack(
           children: [

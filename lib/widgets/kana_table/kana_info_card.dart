@@ -11,16 +11,35 @@ import 'package:isar/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 
+/// Widget that shows information about a given kana. This information is
+/// * romaji
+/// * stroke order diagram
+/// * mnemonic image
+/// * mnemonic text
+/// Additionally, a sound of the kana is played.
 class KanaInfoCard extends StatefulWidget {
 
   /// current kana
   final String kana;
+  /// Should the kana be animated
+  final bool showAnimatedKana;
+
+  final bool playKanaAnimationWhenOpened;
+  /// Callback that is executed when the user presses the play button
+  final Function()? onPlayPressed;
+
 
   const KanaInfoCard(
     this.kana,
     {
+      this.showAnimatedKana = true,
+      this.playKanaAnimationWhenOpened = false,
+      this.onPlayPressed,
       super.key
     }
   );
@@ -49,7 +68,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
 
   @override
   void didUpdateWidget(covariant KanaInfoCard oldWidget) {
-    init();
+    if(oldWidget.kana != widget.kana) init(); 
     super.didUpdateWidget(oldWidget);
   }
 
@@ -106,86 +125,119 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
   @override
   Widget build(BuildContext context) {
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            children: [
-              Text(
-                convertToRomaji(widget.kana),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // kana
-                    Expanded(
-                      child: Center(
-                        child: SvgPicture.string(
-                          kanaSvg,
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                      )
-                    ),
-                    // mnemonic (if there is one)
-                    if(widget.kana.length < 2 && mnemonicSvg != null)
-                      Expanded(
-                        child: Center(
-                          child: SvgPicture.string(
-                            mnemonicSvg!,
-                            height: MediaQuery.of(context).size.height * 0.2,
-                          )
-                        )
-                      ),
-                    // yoon if there are two kana
-                    if(widget.kana.length > 1 && yoonSVG != null)
-                      Expanded(
-                        child: Transform.translate(
-                          offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
-                          child: Center(
-                            child: SvgPicture.string(
-                              yoonSVG!,
-                              height: MediaQuery.of(context).size.height * 0.15,
-                            )
-                          ),
-                        )
-                      )
-                  ],
-                ),
-              ),
-              if(mnemonic != null)
-                Expanded(
-                  child: Center(
-                    child: Wrap(
-                      clipBehavior: Clip.hardEdge,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if(constraints.maxWidth > 100)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MarkdownBody(
-                          styleSheet: MarkdownStyleSheet(
-                            p: const TextStyle(
-                              fontSize: 20,
+                        Text(
+                          convertToRomaji(widget.kana),
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )
+                        ),
+                        IconButton(
+                          onPressed: widget.onPlayPressed,
+                          icon: const Icon(Icons.play_arrow)
+                        )
+                      ],
+                    ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // kana
+                        Expanded(
+                          child: Center(
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 100),
+                              child: widget.showAnimatedKana && // should show animation
+                                !(widget.kana.length > 1 && yoonSVG != null) // do not animate if there is a yoon
+                                ? KanjiVGWidget(
+                                    kanaSvg,
+                                    constraints.maxWidth*0.4,
+                                    constraints.maxWidth*0.4,
+                                    widget.playKanaAnimationWhenOpened,
+                                    GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
+                                    GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
+                                    borderAround: false,
+                                    key: Key(widget.showAnimatedKana.toString()),
+                                  )
+                                : SvgPicture.string(
+                                  kanaSvg,
+                                  height: constraints.maxWidth*0.4,
+                                  width:  constraints.maxWidth*0.4,
+                                ),
                             ),
-                            // bold text
-                            strong: const TextStyle(
-                              fontSize: 20,
-                              decoration: TextDecoration.underline,
+                          )
+                        ),
+                        // mnemonic (if there is one)
+                        if(widget.kana.length < 2 && mnemonicSvg != null)
+                          Expanded(
+                            child: Center(
+                              child: SvgPicture.string(
+                                mnemonicSvg!,
+                                height: constraints.maxWidth * 0.35,
+                                width:  constraints.maxWidth * 0.35,
+                              )
                             )
                           ),
-                          data: mnemonic!,
-                          softLineBreak: true,
-                        ),
+                        // yoon if there are two kana
+                        if(widget.kana.length > 1 && yoonSVG != null)
+                          Expanded(
+                            child: Transform.translate(
+                              offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                              child: Center(
+                                child: SvgPicture.string(
+                                  yoonSVG!,
+                                  height: MediaQuery.of(context).size.height * 0.15,
+                                )
+                              ),
+                            )
+                          )
                       ],
                     ),
                   ),
-                ),
-            ],
+                  if(mnemonic != null)
+                    Expanded(
+                      child: Center(
+                        child: Wrap(
+                          clipBehavior: Clip.hardEdge,
+                          children: [
+                            MarkdownBody(
+                              styleSheet: MarkdownStyleSheet(
+                                p: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                                // bold text
+                                strong: const TextStyle(
+                                  fontSize: 20,
+                                  decoration: TextDecoration.underline,
+                                )
+                              ),
+                              data: mnemonic!,
+                              softLineBreak: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           )
-        ),
-      )
+        );
+      }
     );
   }
 

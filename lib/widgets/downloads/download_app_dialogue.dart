@@ -22,7 +22,7 @@ void showDownloadDialogue(
       children: [
         Text(
           title, 
-          textScaleFactor: 2,
+          textScaler: const TextScaler.linear(2),
           textAlign: TextAlign.center,
         ),
         Center( 

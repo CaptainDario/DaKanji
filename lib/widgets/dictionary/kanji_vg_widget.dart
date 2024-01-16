@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
@@ -31,6 +32,8 @@ class KanjiVGWidget extends StatefulWidget {
   final double strokesPerSecond;
   /// When user stops swiping should the animation automatically continue
   final bool resumeAnimationAfterStopSwipe;
+  ///Should a border be drawn around the kanjiVG entry
+  final bool borderAround;
 
 
   const KanjiVGWidget(
@@ -41,6 +44,7 @@ class KanjiVGWidget extends StatefulWidget {
     this.strokesPerSecond,
     this.resumeAnimationAfterStopSwipe,
     {
+      this.borderAround = true,
       this.colorize = false,
       Key? key
     }
@@ -83,6 +87,12 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
       vsync: this
     );
     colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+  }
+
+  @override
+  void dispose() {
+    switchAnimation.dispose();
+    super.dispose();
   }
 
   @override
@@ -131,11 +141,13 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         }
       },
       child: Container(
-        height: widget.height,
-        width: widget.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
-        ),
+        height: min(widget.height, widget.width),
+        width: min(widget.height, widget.width),
+        decoration: widget.borderAround
+          ? BoxDecoration(
+            border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+          )
+          : null,
         child: AnimatedBuilder(
           animation: switchAnimation,
           child: SvgPicture.string(
@@ -145,14 +157,18 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
             return Stack(
               children: [
                 // finished colorized svg
-                Positioned.fill(
+                Positioned(
+                  height: min(widget.height, widget.width),
+                  width: min(widget.height, widget.width),
                   child: Opacity(
                     opacity: switchAnimation.value,
                     child: child
                   ),
                 ),
                 // drawing animation
-                Positioned.fill(
+                Positioned(
+                  height: min(widget.height, widget.width),
+                  width: min(widget.height, widget.width),
                   child: Opacity(
                     opacity: 1 - switchAnimation.value,
                     child: AnimatedKanji(

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 class DojgEntryCard extends StatelessWidget {
@@ -39,7 +39,7 @@ class DojgEntryCard extends StatelessWidget {
                   children: [
                     Text(
                       dojgEntry.grammaticalConcept,
-                      textScaleFactor: 1.5,
+                      textScaler: const TextScaler.linear(1.5),
                       style: const TextStyle(
                         fontFamily: g_japaneseFontFamily
                       ),
@@ -62,7 +62,7 @@ class DojgEntryCard extends StatelessWidget {
           top: 4,
           child: SelectableText(
             dojgEntry.volumeTag + dojgEntry.page.toString(),
-            textScaleFactor: 1.25,
+            textScaler: const TextScaler.linear(1.25),
             maxLines: 1,
           ),
         ),

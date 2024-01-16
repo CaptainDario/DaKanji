@@ -8,12 +8,13 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/navigation_arguments.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 
@@ -50,7 +51,7 @@ class _WordListScreenState extends State<WordListScreen> {
     }
 
     // search history (assure it is a default list and not a user created one)
-    if(widget.node.value.name == WordListsDefaults.searchHistory.name &&
+    if(widget.node.value.name == DefaultNames.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
 
       List<int> searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
@@ -62,10 +63,10 @@ class _WordListScreenState extends State<WordListScreen> {
         searchHistoryIds
       );
     }
-    else if(widget.node.value.name.contains('JLPT') &&
+    else if(widget.node.value.name.contains('jlpt') &&
       wordListDefaultTypes.contains(widget.node.value.type)){
       List<int> jlptIds = GetIt.I<Isars>().dictionary.jmdict.filter()
-        .jlptLevelElementContains(widget.node.value.name.replaceAll("JLPT", ""))
+        .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
         .sortByFrequencyDesc()
         .idProperty()
         .findAllSync().toSet().toList();  

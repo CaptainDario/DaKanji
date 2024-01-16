@@ -67,6 +67,13 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
         
       # Test the application
       - uses: futureware-tech/simulator-action@v1

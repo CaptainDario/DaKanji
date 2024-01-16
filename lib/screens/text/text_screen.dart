@@ -14,19 +14,18 @@ import 'package:mecab_dart/mecab_dart.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/part_of_speech.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/application/text/pos.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/widgets/widgets/fading_single_child_scroll_view.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 
 /// The "draw"-screen.
@@ -102,6 +101,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String inputText = "";
   /// the controller to manipulate the CustomSelectableText
   late CustomSelectableTextController customSelectableTextController;
+  /// scroll controller for the text analysis buttons
+  final ScrollController _analysisOptionsScrollController = ScrollController();
 
   
   @override
@@ -309,9 +310,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: FadingSingleChildScrollView(
-                                  fadePercentage: 0.2,
+                                child: Scrollbar(
+                                  controller: _analysisOptionsScrollController,
                                   child: SingleChildScrollView(
+                                    controller: _analysisOptionsScrollController,
                                     scrollDirection: Axis.horizontal,
                                     child: Wrap(
                                       runAlignment: WrapAlignment.end,

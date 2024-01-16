@@ -7,8 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/meanings_grid.dart';
 
 class WordMeanings extends StatefulWidget {

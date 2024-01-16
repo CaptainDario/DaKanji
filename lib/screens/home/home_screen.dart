@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,13 +9,15 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/releases/releases.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/application/helper/stores.dart';
+import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
@@ -57,6 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await initDocumentsServices(context);
 
+    // track first installs
+    if(GetIt.I<UserData>().appOpenedTimes <= 1){
+      logDefaultEvent("New/Re install");
+      GetIt.I<UserData>().save();
+    }
+    // check if an update is available
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
       List<String> updates = await updateAvailable();
@@ -81,14 +90,24 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     else {
-      // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(context, 
-        "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
-        (route) => false
-      );
+      // if there is a deep link at app start handle it
+      String? deepLink = await g_AppLinks.getInitialAppLinkString();
+      if(deepLink != null && !g_initialDeepLinkHandled){
+        g_initialDeepLinkHandled = true;
+        handleDeepLink(deepLink);
+      }
+      // otherwise load the default screen
+      else{
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamedAndRemoveUntil(context, 
+          "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
+          (route) => false
+        );
+      }
     }
   }
 
+  /// Opens a popup that informs the user that an update is available
   Future<void> showUpdatePopup(List<String> changelog) async {
     // show a popup with the changelog of the new version
     await AwesomeDialog(
@@ -96,14 +115,14 @@ class _HomeScreenState extends State<HomeScreen> {
       headerAnimationLoop: false,
       dialogType: DialogType.noHeader,
       btnOkColor: g_Dakanji_green,
-      btnOkText: "Download",
+      btnOkText: LocaleKeys.General_download.tr(),
       btnOkOnPress: () {
         openStoreListing();
       },
       btnCancelColor: g_Dakanji_red,
       btnCancelOnPress: () async {},
       onDismissCallback: (dismisstype) async {
-        GetIt.I<UserData>().userRefusedUpdate = DateTime.now();
+        GetIt.I<UserData>().userRefusedUpdate = DateTime.now().toUtc();
         await GetIt.I<UserData>().save();
       },
       body: SizedBox(

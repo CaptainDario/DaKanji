@@ -165,9 +165,6 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
-  static const GrammarScreen_import_dojg = 'GrammarScreen.import_dojg';
-  static const GrammarScreen_title = 'GrammarScreen.title';
-  static const GrammarScreen = 'GrammarScreen';
   static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
   static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
   static const HomeScreen_complete_log = 'HomeScreen.complete_log';
@@ -199,6 +196,10 @@ abstract class  LocaleKeys {
   static const KanaTableScreen = 'KanaTableScreen';
   static const KanaTrainerScreen_title = 'KanaTrainerScreen.title';
   static const KanaTrainerScreen = 'KanaTrainerScreen';
+  static const KanjiMapScreen_title = 'KanjiMapScreen.title';
+  static const KanjiMapScreen_tutorial_begin_text = 'KanjiMapScreen.tutorial_begin_text';
+  static const KanjiMapScreen_tutorial_begin_title = 'KanjiMapScreen.tutorial_begin_title';
+  static const KanjiMapScreen = 'KanjiMapScreen';
   static const KanjiTableScreen_title = 'KanjiTableScreen.title';
   static const KanjiTableScreen_tutorial_begin_text = 'KanjiTableScreen.tutorial_begin_text';
   static const KanjiTableScreen_tutorial_begin_title = 'KanjiTableScreen.tutorial_begin_title';
@@ -270,6 +271,8 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_2_title = 'OnBoarding.Onboarding_2_title';
   static const OnBoarding_Onboarding_3_text = 'OnBoarding.Onboarding_3_text';
   static const OnBoarding_Onboarding_3_title = 'OnBoarding.Onboarding_3_title';
+  static const OnBoarding_Onboarding_4_text = 'OnBoarding.Onboarding_4_text';
+  static const OnBoarding_Onboarding_4_title = 'OnBoarding.Onboarding_4_title';
   static const OnBoarding = 'OnBoarding';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
@@ -287,8 +290,14 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_snap = 'SettingsScreen.advanced_settings_snap';
   static const SettingsScreen_advanced_settings_title = 'SettingsScreen.advanced_settings_title';
   static const SettingsScreen_anki_default_deck = 'SettingsScreen.anki_default_deck';
-  static const SettingsScreen_anki_default_no_langs = 'SettingsScreen.anki_default_no_langs';
   static const SettingsScreen_anki_default_no_translations = 'SettingsScreen.anki_default_no_translations';
+  static const SettingsScreen_anki_desktop_url = 'SettingsScreen.anki_desktop_url';
+  static const SettingsScreen_anki_get_decks_fail = 'SettingsScreen.anki_get_decks_fail';
+  static const SettingsScreen_anki_get_decks_success = 'SettingsScreen.anki_get_decks_success';
+  static const SettingsScreen_anki_include_audio = 'SettingsScreen.anki_include_audio';
+  static const SettingsScreen_anki_include_google_image = 'SettingsScreen.anki_include_google_image';
+  static const SettingsScreen_anki_include_screenshot = 'SettingsScreen.anki_include_screenshot';
+  static const SettingsScreen_anki_languages_to_include = 'SettingsScreen.anki_languages_to_include';
   static const SettingsScreen_anki_title = 'SettingsScreen.anki_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_dict_deconjugate = 'SettingsScreen.dict_deconjugate';
@@ -314,6 +323,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_draw_invert_short_long_press = 'SettingsScreen.draw_invert_short_long_press';
   static const SettingsScreen_draw_long_press_opens = 'SettingsScreen.draw_long_press_opens';
   static const SettingsScreen_draw_title = 'SettingsScreen.draw_title';
+  static const SettingsScreen_kana_table_play_audio = 'SettingsScreen.kana_table_play_audio';
+  static const SettingsScreen_kana_table_play_kana_animation_when_opened = 'SettingsScreen.kana_table_play_kana_animation_when_opened';
   static const SettingsScreen_misc_default_screen = 'SettingsScreen.misc_default_screen';
   static const SettingsScreen_misc_language = 'SettingsScreen.misc_language';
   static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
@@ -365,6 +376,7 @@ abstract class  LocaleKeys {
   static const WordListsScreen_create_pdf = 'WordListsScreen.create_pdf';
   static const WordListsScreen_defaults = 'WordListsScreen.defaults';
   static const WordListsScreen_delete = 'WordListsScreen.delete';
+  static const WordListsScreen_drag_to_scroll = 'WordListsScreen.drag_to_scroll';
   static const WordListsScreen_new_folder = 'WordListsScreen.new_folder';
   static const WordListsScreen_new_list = 'WordListsScreen.new_list';
   static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';

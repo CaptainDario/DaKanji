@@ -8,7 +8,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/bitmap.dart';
+import 'package:da_kanji_mobile/entities/bitmap.dart';
 
 class CanvasSnappable extends StatefulWidget {
   /// Widget to be snapped

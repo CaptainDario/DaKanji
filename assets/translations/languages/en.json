@@ -171,10 +171,6 @@
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
@@ -210,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
   },
+  "KanjiMapScreen": {
+    "title": "Kanji Map",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji map screen!"
+  },
   "KanjiTableScreen": {
     "title": "Kanji Table",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -243,7 +244,7 @@
     "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=\u98df\u3079\u308b. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Examples",
-    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included kanji. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similar when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left, will rewind the animation, while swiping right will advance the animation.",
+    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included Kanji / Kana. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similarly, when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left will rewind the animation while swiping right will advance the animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
     "dict_kanji_copy_radicals_title": "Copying radicals",
@@ -285,7 +286,9 @@
     "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
-    "Onboarding_3_title": "Do not know how to read a sentence?"
+    "Onboarding_3_title": "Do not know how to read a sentence?",
+    "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+    "Onboarding_4_title": "Study Kanji and Kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -303,9 +306,15 @@
     "advanced_settings_reset_settings": "Reset settings",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
-    "anki_default_deck": "Default deck",
-    "anki_default_no_langs": "Number of languages on notes",
+    "anki_default_deck": "Deck to add to",
     "anki_default_no_translations": "Number of translations on notes",
+    "anki_desktop_url": "URL to connect to anki",
+    "anki_get_decks_fail": "You are not connected to Anki, could not update decks! \ud83d\ude22",
+    "anki_get_decks_success": "Updated decks! \ud83c\udf89",
+    "anki_include_audio": "Include vocab audio on notes",
+    "anki_include_google_image": "Include google image on notes",
+    "anki_include_screenshot": "Include screenshot",
+    "anki_languages_to_include": "Languages to include on notes",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convert inputs to base form",
@@ -331,6 +340,8 @@
     "draw_invert_short_long_press": "Invert long/short press",
     "draw_long_press_opens": "Dictionary selection",
     "draw_title": "Drawing",
+    "kana_table_play_audio": "Play audio when tapping on Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatically start Kana animation",
     "misc_default_screen": "Initial screen when starting the app",
     "misc_language": "language",
     "misc_settings_window_size": "Save current window size",
@@ -383,8 +394,9 @@
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
-    "defaults": "defaults",
+    "defaults": "Defaults",
     "delete": "Delete",
+    "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",
     "no_entries": "No entries in this word list",

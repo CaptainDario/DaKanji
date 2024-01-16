@@ -158,7 +158,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   child: Text(
                     widget.headerText,
                     textAlign: TextAlign.center,
-                    textScaleFactor: 1.5,
+                    textScaler: const TextScaler.linear(1.5),
                     style: const TextStyle(
                       color: Colors.white
                     ),
@@ -168,7 +168,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 Text(
                   widget.text,
                   textAlign: TextAlign.center,
-                  textScaleFactor: 1,
+                  textScaler: const TextScaler.linear(1),
                   style: const TextStyle(
                     color: Colors.white
                   ),
@@ -176,66 +176,70 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ],
             )
           ),
+          // skip
           Positioned(
-            bottom: 5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-              children: () {
-                List<Widget> widgets = [];
-
-                widgets.add(OutlinedButton(
-                  style: ButtonStyle(
-                    shadowColor:  MaterialStateProperty.all(Colors.white),
-                    foregroundColor: MaterialStateProperty.all(const Color.fromARGB(150, 255, 255, 255)),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                    ),
-                  ),
-                  onPressed: (){
-                    widget.liquidController.animateToPage(page: widget.totalPages);
-                  }, 
-                  child:Text(LocaleKeys.General_skip.tr())
-                ));
-
-                widgets.add(const SizedBox(width: 50));
-
-                for (int i = 0; i < widget.totalPages; i++) {
-                  widgets.add(
-                    Container(
-                      width: indicatorSize,
-                      height: indicatorSize,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: widget.nr-1 == i ? Colors.white : Colors.black,
-                      ),
-                    )
-                  );
-                  if(i+1 < widget.totalPages) {
-                    widgets.add(SizedBox(width: indicatorSize,));
-                  }
-                }
-                
-                widgets.add(const SizedBox(width: 50));
-              
-                widgets.add(OutlinedButton(
-                  style: ButtonStyle(
-                    shadowColor:  MaterialStateProperty.all(Colors.white),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(color: Color.fromARGB(0, 255, 255, 255))
-                    ),
-                  ),
-                  onPressed: (){
-                    widget.liquidController.animateToPage(
-                      page: widget.liquidController.currentPage + 1
-                    );
-                  }, 
-                  child: Text("${LocaleKeys.General_next.tr()} →")
-                ));
-                return widgets;
-              } ()
+            bottom: 8,
+            left: 24,
+            child: SizedBox(
+              height: 36,
+              child: InkWell(
+                onTap: (){
+                  widget.liquidController.animateToPage(page: widget.totalPages);
+                }, 
+                child: Center(
+                  child: Text(
+                    LocaleKeys.General_skip.tr(),
+                    style: const TextStyle(color: Colors.white),
+                  )
+                )
+              ),
             ),
+          ),
+          Positioned(
+            // padding + half button size - half indicatr
+            bottom: 8 + 36/2 - indicatorSize/2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ...[
+                  for (int i = 0; i < widget.totalPages; i++)
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        0, 0, i+1 < widget.totalPages ? indicatorSize : 0, 0
+                      ),
+                      child: Container(
+                        width: indicatorSize,
+                        height: indicatorSize,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: widget.nr-1 == i ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                ],
+              ]
+            ),
+          ),
+          //next
+          Positioned(
+            bottom: 8,
+            right: 24,
+            child: SizedBox(
+              height: 36,
+              child: GestureDetector(
+                onTap: (){
+                  widget.liquidController.animateToPage(
+                    page: widget.liquidController.currentPage + 1
+                  );
+                },
+                child: Center(
+                  child: Text(
+                    "${LocaleKeys.General_next.tr()} →",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            )
           )
         ],
       )

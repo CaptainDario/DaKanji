@@ -11,12 +11,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/application/helper/feedback.dart';
-import 'package:da_kanji_mobile/data/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
+import 'package:da_kanji_mobile/entities/drawer/drawer_listener.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer_element.dart';
@@ -69,89 +69,94 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   /// function to open/close the drawer (invoked when DrawerListener changed)
   late void Function() _handleDrawer; 
 
-
+  /// all entries that are in the drawer
   List<DrawerEntry> drawerEntries = [
     DrawerEntry(
-      Icons.brush, LocaleKeys.DrawScreen_title.tr(),
+      Icons.brush, LocaleKeys.DrawScreen_title,
       "/${Screens.drawing.name}", Screens.drawing,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.book, LocaleKeys.DictionaryScreen_title.tr(),
+      Icons.book, LocaleKeys.DictionaryScreen_title,
       "/${Screens.dictionary.name}", Screens.dictionary,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.text_snippet, LocaleKeys.TextScreen_title.tr(),
+      Icons.text_snippet, LocaleKeys.TextScreen_title,
       "/${Screens.text.name}", Screens.text,
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title.tr(),
+      DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title,
       "/${Screens.dojg.name}", Screens.dojg,
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title.tr(),
+      DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title,
       "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,
       true, null),
     if(kDebugMode)
-    DrawerEntry(
-      DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title.tr(),
-      "/${Screens.kanjiTrainer.name}", Screens.kanjiTrainer,
-      null, null,
-      kDebugMode, null),
-    if(kDebugMode)
-    DrawerEntry(
-      DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title.tr(),
-      "/${Screens.kanaTable.name}", Screens.kanaTable,
-      null, null,
-      kDebugMode, null),
-    if(kDebugMode)
-    DrawerEntry(
-      DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title.tr(),
-      "/${Screens.kanaTrainer.name}", Screens.kanaTrainer,
-      null, null,
-      kDebugMode, null),
+      DrawerEntry(
+        DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title,
+        "/${Screens.kanjiTrainer.name}", Screens.kanjiTrainer,
+        null, null,
+        kDebugMode, null),
     if(kDebugMode)
       DrawerEntry(
-        Icons.list_outlined, LocaleKeys.WordListsScreen_title.tr(),
+        Icons.map, LocaleKeys.KanjiMapScreen_title,
+        "/${Screens.kanjiMap.name}", Screens.kanjiMap,
+        null, null,
+        kDebugMode, null),
+    DrawerEntry(
+      DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title,
+      "/${Screens.kanaTable.name}", Screens.kanaTable,
+      null, null,
+      true, null),
+    if(kDebugMode)
+      DrawerEntry(
+        DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title,
+        "/${Screens.kanaTrainer.name}", Screens.kanaTrainer,
+        null, null,
+        kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        Icons.list_outlined, LocaleKeys.WordListsScreen_title,
         "/${Screens.wordLists.name}", Screens.wordLists,
         null, const Alignment(0, -0.1),
       kDebugMode, null),
     DrawerEntry(
-      Icons.copy_rounded, LocaleKeys.ClipboardScreen_title.tr(),
+      Icons.copy_rounded, LocaleKeys.ClipboardScreen_title,
       "/${Screens.clipboard.name}", Screens.clipboard,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.settings_applications, LocaleKeys.SettingsScreen_title.tr(),
+      Icons.settings_applications, LocaleKeys.SettingsScreen_title,
       "/${Screens.settings.name}", Screens.settings,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.info, LocaleKeys.AboutScreen_title.tr(),
+      Icons.info, LocaleKeys.AboutScreen_title,
       "/${Screens.about.name}", Screens.about,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.help, LocaleKeys.ManualScreen_title.tr(),
+      Icons.help, LocaleKeys.ManualScreen_title,
       "/${Screens.manual.name}", Screens.manual,
       null, null,
       true, null),
-    DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title.tr(), null, null,
+    DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title, null, null,
       null, null,
       true, sendFeedback),
     if(kDebugMode)
       DrawerEntry(
-        Icons.visibility_sharp, LocaleKeys.ImmersionScreen_title.tr(),
+        Icons.visibility_sharp, LocaleKeys.ImmersionScreen_title,
         "/${Screens.immersion.name}", Screens.immersion,
         null, null,
         kDebugMode, null),
     if(kDebugMode)
       DrawerEntry(
-        const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title.tr(),
+        const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title,
         "/${Screens.kuzushiji.name}", Screens.kuzushiji,
         0.7, const Alignment(-1000, 0),
         kDebugMode, null),
@@ -161,9 +166,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   
   @override
   void initState() {
-    // remove debug only items
-    //drawerEntries.removeWhere((e) => !e.include);
-
+    
     super.initState();
     _drawerController = AnimationController(
       duration: const Duration(milliseconds: 250),
@@ -322,7 +325,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                     child: Opacity(
                       opacity: _moveDrawer.value,
                       child: Container(
-                        color: Colors.grey[900]!.withAlpha(150),
+                        color: Colors.black.withAlpha(150),
                         width: _screenWidth,
                         height: _screenHeight,
                       ),
@@ -410,7 +413,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                     if(drawerEntries[i].include)
                                       DrawerElement(
                                         leading: drawerEntries[i].icon,
-                                        title: drawerEntries[i].title,
+                                        title: drawerEntries[i].title.tr(),
                                         route: drawerEntries[i].route,
                                         selected: widget.currentScreen == drawerEntries[i].screen,
                                         leadingSize: drawerEntries[i].iconSize ?? 0.5,

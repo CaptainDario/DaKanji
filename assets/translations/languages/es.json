@@ -171,10 +171,6 @@
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "",
-    "title": ""
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificaci\u00f3n ser\u00eda genial y ayudar\u00eda mucho al proyecto!",
@@ -210,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla del mapa kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -243,7 +244,7 @@
     "deep_links_text": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicaci\u00f3n. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta funci\u00f3n puedes, por ejemplo, abrir la b\u00fasqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=\u98df\u3079\u308b](dakanji://diccionario?buscar=\u98df\u3079\u308b). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Ejemplos",
-    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayor\u00eda de los kanji incluidos. Estas animaciones pueden controlarse de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animaci\u00f3n. Si la animaci\u00f3n se est\u00e1 reproduciendo, la pausar\u00e1. Del mismo modo, si la animaci\u00f3n est\u00e1 en pausa, continuar\u00e1 reproduci\u00e9ndose. Por \u00faltimo, si la animaci\u00f3n ha terminado, el doble toque reiniciar\u00e1 la animaci\u00f3n desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animaci\u00f3n. Si deslizas el dedo hacia la izquierda, la animaci\u00f3n se rebobinar\u00e1, mientras que si deslizas el dedo hacia la derecha, la animaci\u00f3n avanzar\u00e1.",
+    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayor\u00eda de los Kanji / Kana incluidos. Estas animaciones se pueden controlar de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animaci\u00f3n. Si la animaci\u00f3n se est\u00e1 reproduciendo, la pausar\u00e1. Del mismo modo, si la animaci\u00f3n est\u00e1 en pausa, continuar\u00e1 reproduci\u00e9ndose. Por \u00faltimo, si la animaci\u00f3n ha terminado, el doble toque reiniciar\u00e1 la animaci\u00f3n desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animaci\u00f3n. Deslizar a la izquierda rebobinar\u00e1 la animaci\u00f3n mientras que deslizar a la derecha la har\u00e1 avanzar.",
     "dict_kanji_animation_title": "Animaciones",
     "dict_kanji_copy_radicals_text": "Puede copiar un radical en el portapapeles pulsando sobre \u00e9l. Un doble toque a\u00f1adir\u00e1 el radical al contenido ya existente en el portapapeles.",
     "dict_kanji_copy_radicals_title": "Copiar radicales",
@@ -285,7 +286,9 @@
     "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras r\u00e1pidamente utilizando el diccionario incorporado o en Internet.",
     "Onboarding_2_title": "Busca caracteres y palabras",
     "Onboarding_3_text": "Utiliza las herramientas de an\u00e1lisis de texto de DaKanji para a\u00f1adir furiganas, espacios y mucho m\u00e1s, o traduce la frase entera.",
-    "Onboarding_3_title": "\u00bfNo sabe leer una frase?"
+    "Onboarding_3_title": "\u00bfNo sabe leer una frase?",
+    "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+    "Onboarding_4_title": "Estudiar kanji y kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
@@ -303,9 +306,15 @@
     "advanced_settings_reset_settings": "Restablecer ajustes",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
-    "anki_default_deck": "Cubierta por defecto",
-    "anki_default_no_langs": "N\u00famero de lenguas en los billetes",
+    "anki_default_deck": "Cubierta para a\u00f1adir a",
     "anki_default_no_translations": "N\u00famero de traducciones en los billetes",
+    "anki_desktop_url": "URL para conectarse a anki",
+    "anki_get_decks_fail": "No est\u00e1s conectado a Anki, \u00a1no se han podido actualizar los mazos! \ud83d\ude22",
+    "anki_get_decks_success": "\u00a1Barajas actualizadas! \ud83c\udf89",
+    "anki_include_audio": "Incluir audio de vocabulario en las notas",
+    "anki_include_google_image": "Incluir una imagen de Google en las notas",
+    "anki_include_screenshot": "Incluir captura de pantalla",
+    "anki_languages_to_include": "Lenguas que deben incluirse en las notas",
     "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma b\u00e1sica",
@@ -331,6 +340,8 @@
     "draw_invert_short_long_press": "Invertir pulsaci\u00f3n larga/breve",
     "draw_long_press_opens": "Selecci\u00f3n de diccionarios",
     "draw_title": "Dibujar",
+    "kana_table_play_audio": "Reproducir audio al pulsar sobre Kana",
+    "kana_table_play_kana_animation_when_opened": "Iniciar autom\u00e1ticamente la animaci\u00f3n Kana",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicaci\u00f3n",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Guardar el tama\u00f1o actual de la ventana",
@@ -385,6 +396,7 @@
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "drag_to_scroll": "Arrastre aqu\u00ed para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",
     "no_entries": "No hay entradas en esta lista de palabras",

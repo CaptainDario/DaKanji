@@ -98,7 +98,7 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
                 value: widget.value,
                 fillColor: widget.onTileTapped == null
                   ? null
-                  : MaterialStateProperty.all(Theme.of(context).highlightColor),
+                  : null,
                 onChanged: (value){
                   setState(() {
                     if(value != null) {

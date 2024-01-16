@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_clear_button.dart';
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_drawing_canvas.dart';
@@ -74,14 +74,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
     GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;
 
-    GetIt.I<DrawScreenState>().drawingLookup.addListener(() {
-      if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-        webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
-          GetIt.I<DrawScreenState>().drawingLookup.chars
-        )));
-        //setState(() {});
-      }
-    });
+    GetIt.I<DrawScreenState>().drawingLookup.addListener(reloadWebViewUrl);
 
     // initialize the drawing interpreter if it has not been already
     if(!GetIt.I.isRegistered<DrawingInterpreter>()){
@@ -116,9 +109,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
         },
       );
     }
-
-    GetIt.I<DrawScreenState>().drawingLookup.dispose();
-
+    
     // clear the canvas when leaving the screen
     GetIt.I<DrawScreenState>().strokes.deleteAllStrokes();
 
@@ -196,7 +187,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
   void reloadWebViewUrl(){
     if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-      setState(() {});
+      webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
+        GetIt.I<DrawScreenState>().drawingLookup.chars
+      )));
     }
   }
 }

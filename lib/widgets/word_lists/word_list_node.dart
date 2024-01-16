@@ -1,30 +1,24 @@
-// Dart imports:
-import 'dart:math';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
+import 'package:da_kanji_mobile/application/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
-enum  PopupMenuButtonItems {
+/// All actions a user can do when clicking the 
+enum  WordListNodePopupMenuButtonItems {
   rename,
   delete,
   sendToAnki,
@@ -42,6 +36,10 @@ class WordListNode extends StatefulWidget {
   /// Callback that is executed when the user taps on this tile, provides the
   /// `TreeNode` as a parameter
   final void Function(TreeNode<WordListsData> node)? onTap;
+  /// Callback that is executed when the user starts dragging this tile
+  final void Function()? onDragEnd;
+  /// Callback that is executed when the user ends dragging this tile
+  final void Function()? onDragStarted;
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
   final void Function(TreeNode<WordListsData> destinationNode, TreeNode thisNode)? onDragAccept;
@@ -62,6 +60,8 @@ class WordListNode extends StatefulWidget {
     {
       this.editTextOnCreate = false,
       this.onTap,
+      this.onDragStarted,
+      this.onDragEnd,
       this.onDragAccept,
       this.onDeletePressed,
       this.onFolderPressed,
@@ -98,7 +98,13 @@ class _WordListNodeState extends State<WordListNode> {
   }
 
   void init(){
-    _controller.text = widget.node.value.name;
+    if(!wordListDefaultTypes.contains(widget.node.value.type)){
+      _controller.text = widget.node.value.name;
+    }
+    // transate default types
+    else {
+      _controller.text = wordListsDefaultsStringToTranslation(widget.node.value.name);
+    }
 
     if(widget.editTextOnCreate) nameEditing = true;
   }
@@ -121,16 +127,20 @@ class _WordListNodeState extends State<WordListNode> {
             child: widget
           )
         ),
+        onDragStarted: () {
+          widget.onDragStarted?.call();
+        },
+        onDragEnd: (details) {
+          widget.onDragEnd?.call();
+        },
         onDraggableCanceled: (velocity, offset) => setState(() => {}),
         // make tile droppable
         child: DragTarget<TreeNode>(
           onWillAccept: (data) {
             // do not allow dropping ...
             if(data == null ||
-              data == widget.node || // ... in itself
-              wordListDefaultTypes.contains(widget.node.value.type) || // .. in a non-user-entry
-              widget.node.getPath().contains(data)) {
-              // ... in a child
+              wordListDefaultTypes.contains(widget.node.value.type) // .. in a non-user-entry
+            ) {
               return false;
             }
     
@@ -143,6 +153,12 @@ class _WordListNodeState extends State<WordListNode> {
             setState(() {itemDraggingOverThis = false;});
           },
           onAccept: (TreeNode data) {
+
+            // dragging the tile in itself should do nothing
+            if(data == widget.node){
+              itemDraggingOverThis = false;
+              return;
+            }
     
             var d = data as TreeNode<WordListsData>;
     
@@ -162,11 +178,10 @@ class _WordListNodeState extends State<WordListNode> {
                 widget.node.value.type == WordListNodeType.wordList){
                 // add a new folder
                 TreeNode<WordListsData> newFolder = TreeNode<WordListsData>(
-                  WordListsData(
-                    "New Folder", WordListNodeType.folder, [], true
-                  )
+                  WordListsData("New Folder", WordListNodeType.folder, [], true)
                 );
-                widget.node.parent!.addChild(newFolder);
+                int idx = widget.node.parent!.children.indexOf(widget.node);
+                widget.node.parent!.insertChild(newFolder, idx);
     
                 // add this and the drag target to the new folder and remove them from their old parents
                 d.parent!.removeChild(d);
@@ -177,8 +192,6 @@ class _WordListNodeState extends State<WordListNode> {
                 _controller.text = widget.node.value.name;
                 itemDraggingOverThis = false;
               }
-    
-              
             });
     
             widget.onDragAccept?.call(data, widget.node);
@@ -203,6 +216,7 @@ class _WordListNodeState extends State<WordListNode> {
                           ? Icons.arrow_drop_down
                           : Icons.arrow_right
                         ),
+                        // icon button callback
                         onPressed: () {
                           if(widget.node.level < 1) return;
     
@@ -236,7 +250,9 @@ class _WordListNodeState extends State<WordListNode> {
                           renamingComplete();
                         },
                         onTapOutside: (event) {
-                          renamingComplete();
+                          if(nameEditing){
+                            renamingComplete();
+                          }
                         },
                       ),
                     ),
@@ -259,18 +275,18 @@ class _WordListNodeState extends State<WordListNode> {
                         }
                       ),
                     if(!wordListDefaultTypes.contains(widget.node.value.type))
-                      PopupMenuButton<PopupMenuButtonItems>(
-                        onSelected: (PopupMenuButtonItems value) {
+                      PopupMenuButton<WordListNodePopupMenuButtonItems>(
+                        onSelected: (WordListNodePopupMenuButtonItems value) {
                           switch(value){
-                            case PopupMenuButtonItems.rename:
+                            case WordListNodePopupMenuButtonItems.rename:
                               renameButtonPressed();
                               break;
-                            case PopupMenuButtonItems.delete:
+                            case WordListNodePopupMenuButtonItems.delete:
                               deleteButtonPressed();
                               break;
-                            case PopupMenuButtonItems.sendToAnki:
+                            case WordListNodePopupMenuButtonItems.sendToAnki:
                               break;
-                            case PopupMenuButtonItems.toPdf:
+                            case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();
                               break;
                           }
@@ -278,30 +294,30 @@ class _WordListNodeState extends State<WordListNode> {
                         itemBuilder: (context) => [
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.rename,
+                              value: WordListNodePopupMenuButtonItems.rename,
                               child: Text(
                                 LocaleKeys.WordListsScreen_rename.tr(),
                               )
                             ),
                           if(!wordListDefaultTypes.contains(widget.node.value.type))
                             PopupMenuItem(
-                              value: PopupMenuButtonItems.delete,
+                              value: WordListNodePopupMenuButtonItems.delete,
                               child: Text(
                                 LocaleKeys.WordListsScreen_delete.tr(),
                               )
                             ),
                           if(wordListListypes.contains(widget.node.value.type))
                             ...[
-                              const PopupMenuItem(
-                                value: PopupMenuButtonItems.sendToAnki,
+                              PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.sendToAnki,
                                 child: Text(
-                                  "Send to anki"
+                                  LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
-                              const PopupMenuItem(
-                                value: PopupMenuButtonItems.toPdf,
+                              PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toPdf,
                                 child: Text(
-                                  "To PDF"
+                                  LocaleKeys.WordListsScreen_create_pdf.tr()
                                 )
                               ),
                             ]
@@ -353,7 +369,7 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
-    pw.Document pdf = await pdfPortrait();
+    pw.Document pdf = await pdfPortrait(widget.node.value);
 
     // ignore: use_build_context_synchronously
     await AwesomeDialog(
@@ -373,18 +389,7 @@ class _WordListNodeState extends State<WordListNode> {
                   IconButton(
                     icon: const Icon(Icons.description),
                     onPressed: () async {
-                      pdf = await pdfPortrait();
-                      setState(() {});
-                    },
-                  ),
-                  // to landscape
-                  IconButton(
-                    icon: Transform.rotate(
-                      angle: 90 * pi / 180,
-                      child: const Icon(Icons.description)
-                    ),
-                    onPressed: () async {
-                      pdf = await pdfLandscape();
+                      pdf = await pdfPortrait(widget.node.value);
                       setState(() {});
                     },
                   ),
@@ -409,227 +414,5 @@ class _WordListNodeState extends State<WordListNode> {
     ).show();
   }
 
-  /// Get all `JMDict` entries from the database that are in this word list
-  /// Remove all translations that are not in `langsToInclude` and sort the
-  /// translations matching `langsToInclude`. Lastly retruns the list of entries
-  Future<List<JMdict>> wordListEntries(List<String> langsToInclude) async {
-
-    List<JMdict> entries = await GetIt.I<Isars>().dictionary.jmdict
-    // get all entries
-    .where()
-      .anyOf(widget.node.value.wordIds, (q, element) => q.idEqualTo(element))
-    .filter()
-      // only include them in the list if they have a translation in a selected language
-      .anyOf(langsToInclude, (q, l) => 
-        q.meaningsElement((m) => 
-          m.languageEqualTo(l)
-        )
-      )
-    .findAll();
-
-    for (JMdict entry in entries) {
-      // remove all translations that are not in `langsToInclude` and create a 
-      entry.meanings = entry.meanings.where(
-        (element) => langsToInclude.contains(element.language)
-      ).toList();
-      // sort the translations matching `langsToInclude`
-      entry.meanings.sort((a, b) =>
-        langsToInclude.indexOf(a.language!).compareTo(langsToInclude.indexOf(b.language!))
-      );
-      // only include the first `maxTranslations` translations
-      entry.meanings = entry.meanings.sublist(0, min(3, entry.meanings.length));
-    }
-
-    return entries;
-
-  }
-
-  /// Export this word list as a PDF file
-  Future<pw.Document> pdfPortrait() async {
-    
-    // Create document
-    final pw.Document pdf = pw.Document();
-    // load Japanese font
-    final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
-    final notoStyle = pw.TextStyle(
-      font: ttf,
-      fontSize: 12
-    );
-    // load the dakanji logo
-    final dakanjiLogo = await rootBundle.load("assets/images/dakanji/icon.png");
-
-    // find all elements from the word list in the database
-    List<String> langsToInclude = ["rus", "eng", "ger"];
-    int maxTranslations = 3;
-    bool includeKana = true;
-    bool maxOneLine = true;
-    List<JMdict> entries = await wordListEntries(langsToInclude);
-
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        orientation: pw.PageOrientation.portrait,
-        margin: const pw.EdgeInsets.all(16),
-        footer: (context) {
-          return pdfFooter(context, dakanjiLogo);
-        },
-        build: (pw.Context context) {
-          return [
-            for (JMdict entry in entries)
-              ...[
-                pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    // translations
-                    pw.Expanded(
-                      child: pw.Table(
-                        children: [
-                          for (LanguageMeanings language in entry.meanings)
-                            pw.TableRow(
-                              children: [
-                                pw.Text(
-                                  language.language ?? "None",
-                                  style: notoStyle,
-                                  maxLines: maxOneLine ? 1 : null
-                                ),
-                                pw.Text(
-                                  language.meanings.join(", "),
-                                  style: notoStyle,
-                                  maxLines: 1
-                                ),
-                              ]
-                            )
-                        ]
-                      )
-                    ),
-                    // japanese
-                    pw.Expanded(
-                      child: pw.Text(
-                        (entry.kanjis + entry.readings).join("、"),
-                        style: notoStyle
-                      )
-                    )
-                  ]
-                ),
-                pw.Divider(),
-              ]
-          ];
-        }
-      )
-    );
-
-    return pdf;
-
-  }
-
-  /// create the footer for the portrait pdf document
-  pw.Widget pdfFooter(pw.Context context, ByteData dakanjiLogo) {
-
-    return pw.Container(
-      alignment: pw.Alignment.centerRight,
-      margin: const pw.EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
-      child: pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        children: [
-          pw.Text(
-            widget.node.value.name,
-            style: const pw.TextStyle(
-              color: PdfColors.grey,
-              fontSize: 10,
-            ),
-          ),
-          pw.Image(
-            pw.MemoryImage(
-              dakanjiLogo.buffer.asUint8List()
-            ),
-            height: 25,
-            width: 25
-          ),
-          pw.Text(
-            'Page: ${context.pageNumber} of ${context.pagesCount}',
-            style: const pw.TextStyle(
-              color: PdfColors.grey,
-              fontSize: 10,
-            ),
-          ),
-        ]
-      )
-    );
-
-  }
-
-  /// Export this word list as a PDF file in landscape mode
-  Future<pw.Document> pdfLandscape() async {
-
-    // Create document
-    final pw.Document pdf = pw.Document();
-    // load Japanese font
-    final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
-    final notoStyle = pw.TextStyle(
-      font: ttf,
-      fontSize: 12
-    );
-    // load the dakanji logo
-    final dakanjiLogo = await rootBundle.load("assets/images/dakanji/icon.png");
-    // find all elements from the word list in the database
-    List<JMdict> entries = await wordListEntries(["rus", "eng", "ger"]);
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4.landscape,
-        orientation: pw.PageOrientation.landscape,
-        margin: const pw.EdgeInsets.all(32),
-        footer: (context) {
-          return pdfFooter(context, dakanjiLogo);
-        },
-        build: (pw.Context context) {
-          return [
-            for (JMdict entry in entries)
-              ...[
-                pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    // translations
-                    pw.Expanded(
-                      child: pw.Table(
-                        children: [
-                          for (LanguageMeanings language in entry.meanings)
-                            pw.TableRow(
-                              children: [
-                                pw.Text(
-                                  language.language ?? "None",
-                                  style: notoStyle,
-                                  maxLines: 1
-                                ),
-                                pw.Text(
-                                  language.meanings.join(", "),
-                                  style: notoStyle,
-                                  maxLines: 1
-                                )
-                              ]
-                            )
-                        ]
-                      )
-                    ),
-                    // japanese
-                    pw.Expanded(
-                      child: pw.Text(
-                        entry.kanjis.join("、"),
-                        style: notoStyle
-                      )
-                    )
-                  ]
-                ),
-                pw.Divider(),
-              ]
-          ];
-        }
-      )
-    );
-
-    return pdf;
-
-  }
 
 }

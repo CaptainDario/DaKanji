@@ -1,5 +1,33 @@
 # DaKanji Beta - changelog
 
+## v3.3.0+77b3 - 仮名 (13.01.2024)
+
+- Removed unused dependencies
+- Responsive manual buttons
+- Initial deep link is only read once
+
+## v3.3.0+76b2 - 仮名 (09.01.2024)
+
+Beta 2 - Changes
+
+- Use new dictionary files
+  - Decreased examples size by 50%
+    - Updated settings UI
+  - Some fresh paint with Material 3 and Flutter 3.16
+  - Fixed
+    - Various UI fixes
+    - Text screen selection buttons when no text is selected / available
+    - DoJG asking twice to import
+
+## v3.3.0+75b1 - 仮名 (26.11.2023)
+
+New Features:
+
+- Kana chart
+  - Includes all common (and not-so-common) kana
+  - Mnemonics for the main kana
+  - Sounds for all available kana
+
 ## v3.2.0+71b12 - 文法 (19.11.2023)
 
 - No separator between pitch accent patterns

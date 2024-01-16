@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
@@ -20,28 +22,30 @@ import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/application/assets/assets.dart';
-import 'package:da_kanji_mobile/application/helper/deep_links.dart';
-import 'package:da_kanji_mobile/application/helper/path_manager.dart';
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/changelog.dart';
-import 'package:da_kanji_mobile/domain/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/domain/drawer/drawer_listener.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/domain/drawing/drawing_lookup.dart';
-import 'package:da_kanji_mobile/domain/drawing/kanji_buffer.dart';
-import 'package:da_kanji_mobile/domain/drawing/strokes.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
-import 'package:da_kanji_mobile/domain/platform_dependent_variables.dart';
-import 'package:da_kanji_mobile/domain/releases/version.dart';
-import 'package:da_kanji_mobile/domain/search_history/search_history.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/application/stats/stats.dart';
+import 'package:da_kanji_mobile/entities/changelog.dart';
+import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/drawer/drawer_listener.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/entities/drawing/drawing_lookup.dart';
+import 'package:da_kanji_mobile/entities/drawing/kanji_buffer.dart';
+import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
+import 'package:da_kanji_mobile/entities/files/path_manager.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/entities/releases/version.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
@@ -49,29 +53,29 @@ Future<bool> init() async {
 
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
-  // init window Manager
-  if(g_desktopPlatform) {
-    await windowManager.ensureInitialized();
-  }
 
   g_DakanjiPathManager = PathManager();
   await g_DakanjiPathManager.init();
 
   await initServices();
 
-  // deep links
-  if(Platform.isIOS || Platform.isAndroid || Platform.isMacOS || Platform.isWindows) {
-    await initDeepLinksStream();
-  }
-  
-  if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+  // init window Manager
+  if(g_desktopPlatform) {
+    await windowManager.ensureInitialized();
     desktopWindowSetup();
   }
 
-  //await optimizeTFLiteBackendsForModels();
+  // deep links
+  await initDeepLinksStream();
+
+  // media kit
+  MediaKit.ensureInitialized();  
+
+  // try to send cached events
+  await retryCachedEvents();
+
   return true;
 }
-
 
 /// Convenience function to clear the SharedPreferences
 Future<void> clearPreferences() async {
@@ -101,7 +105,6 @@ Future<void> initServices() async {
   wL.load();
   GetIt.I.registerSingleton<WordLists>(wL);
 
-
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();
@@ -116,6 +119,11 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<KanaKit>(const KanaKit());
 
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
+
+  GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
+
+  GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
+
 }
 
 /// Loads all services from disk that DO depend on data in the documents

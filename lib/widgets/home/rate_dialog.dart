@@ -1,3 +1,5 @@
+
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -8,8 +10,8 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/reviews.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Shows a rate popup which lets the user rate the app on the platform specific

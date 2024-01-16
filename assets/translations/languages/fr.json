@@ -171,10 +171,6 @@
     "system": "syst\u00e8me",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "",
-    "title": ""
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas \u00e0 nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une \u00e9valuation serait g\u00e9niale et cela aiderait beaucoup ce projet !",
@@ -210,6 +206,11 @@
   "KanaTrainerScreen": {
     "title": "Formateur Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Carte de Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran de la carte des kanji !"
+  },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
@@ -243,7 +244,7 @@
     "deep_links_text": "Les liens profonds sont un moyen d'acc\u00e9der directement au contenu d'une application. DaKanji propose deux sch\u00e9mas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalit\u00e9, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=\u98df\u3079\u308b. Pour tous les liens support\u00e9s, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Exemples",
-    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes anim\u00e9s de l'ordre des traits de la plupart des kanji inclus. Ces animations peuvent \u00eatre contr\u00f4l\u00e9es de diff\u00e9rentes mani\u00e8res.\nLe double tapotement a des r\u00e9sultats diff\u00e9rents en fonction de l'\u00e9tat actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De m\u00eame, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est termin\u00e9e, le double tapotement red\u00e9marre l'animation depuis le d\u00e9but.\nEn glissant sur le kanji, la progression de l'animation peut \u00eatre contr\u00f4l\u00e9e. Un glissement vers la gauche rembobine l'animation, tandis qu'un glissement vers la droite la fait avancer.",
+    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes anim\u00e9s de l'ordre des traits de la plupart des Kanji / Kana inclus. Ces animations peuvent \u00eatre contr\u00f4l\u00e9es de diff\u00e9rentes mani\u00e8res.\nLe double tapotement a des r\u00e9sultats diff\u00e9rents en fonction de l'\u00e9tat actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De m\u00eame, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est termin\u00e9e, le double tapotement red\u00e9marre l'animation depuis le d\u00e9but.\nIl est possible de contr\u00f4ler la progression de l'animation en balayant le kanji. Un glissement vers la gauche permet de rembobiner l'animation, tandis qu'un glissement vers la droite permet d'avancer l'animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers d\u00e9j\u00e0 existant.",
     "dict_kanji_copy_radicals_title": "Copier des radicaux",
@@ -285,7 +286,9 @@
     "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire int\u00e9gr\u00e9 ou sur Internet.",
     "Onboarding_2_title": "Recherche de caract\u00e8res et de mots",
     "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase enti\u00e8re.",
-    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
+    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?",
+    "Onboarding_4_text": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les \u00e9tudier efficacement.",
+    "Onboarding_4_title": "\u00c9tudier les kanji et les kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "R\u00e9initialiser les fichiers du dictionnaire",
@@ -303,9 +306,15 @@
     "advanced_settings_reset_settings": "R\u00e9initialiser les param\u00e8tres",
     "advanced_settings_snap": "Je suis in\u00e9vitable...",
     "advanced_settings_title": "Param\u00e8tres avanc\u00e9s",
-    "anki_default_deck": "Pont par d\u00e9faut",
-    "anki_default_no_langs": "Nombre de langues sur les notes",
+    "anki_default_deck": "Terrasse \u00e0 ajouter",
     "anki_default_no_translations": "Nombre de traductions sur les notes",
+    "anki_desktop_url": "URL pour se connecter \u00e0 anki",
+    "anki_get_decks_fail": "Vous n'\u00eates pas connect\u00e9 \u00e0 Anki, vous n'avez pas pu mettre \u00e0 jour les jeux ! \ud83d\ude22",
+    "anki_get_decks_success": "Mise \u00e0 jour des ponts ! \ud83c\udf89",
+    "anki_include_audio": "Inclure le vocabulaire audio dans les notes",
+    "anki_include_google_image": "Inclure l'image de Google dans les notes",
+    "anki_include_screenshot": "Inclure une capture d'\u00e9cran",
+    "anki_languages_to_include": "Langues \u00e0 inclure dans les notes",
     "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caract\u00e8re de remplacement dans l'URL par le caract\u00e8re pr\u00e9dit. Ce caract\u00e8re de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caract\u00e8re pr\u00e9dit est : '\u53e3' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web \u00e0 rechercher. Dans ce cas : 'https://jisho.org/search/\u53e3'. Maintenant, seul le caract\u00e8re dans l'URL doit \u00eatre remplac\u00e9 par le caract\u00e8re de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertir les entr\u00e9es en forme de base",
@@ -331,6 +340,8 @@
     "draw_invert_short_long_press": "Inverser la presse long/short",
     "draw_long_press_opens": "S\u00e9lection de dictionnaires",
     "draw_title": "Dessin",
+    "kana_table_play_audio": "Jouer le son lorsque l'on tape sur le Kana",
+    "kana_table_play_kana_animation_when_opened": "Lancer automatiquement l'animation des Kana",
     "misc_default_screen": "\u00c9cran initial au d\u00e9marrage de l'application",
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",
@@ -385,6 +396,7 @@
     "create_pdf": "Cr\u00e9er un PDF",
     "defaults": "D\u00e9fauts",
     "delete": "Supprimer",
+    "drag_to_scroll": "Glisser ici pour faire d\u00e9filer",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",
     "no_entries": "Aucune entr\u00e9e dans cette liste de mots",

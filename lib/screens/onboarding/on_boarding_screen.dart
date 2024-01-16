@@ -11,8 +11,8 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
@@ -39,8 +39,25 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen>
   with TickerProviderStateMixin {
 
+  // --- NEEDS TO BE UPDATED FOR NEW PAGES -------------------------------------
   /// total number of onboarding pages (excluding the final drawing screen)
-  int totalPages = 3;  
+  int totalPages = 4;
+  /// background colors for the pages
+  List<Color> pageColors = [
+      g_Dakanji_red,
+      g_Dakanji_grey,
+      g_Dakanji_green,
+      g_Dakanji_blue
+    ];
+  /// The texts that should be shown on each onboarding page
+  List onboardingPageTexts = [
+    LocaleKeys.OnBoarding_Onboarding_1_title.tr(), LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
+    LocaleKeys.OnBoarding_Onboarding_2_title.tr(), LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
+    LocaleKeys.OnBoarding_Onboarding_3_title.tr(), LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
+    LocaleKeys.OnBoarding_Onboarding_4_title.tr(), LocaleKeys.OnBoarding_Onboarding_4_text.tr(),
+  ];
+  //----------------------------------------------------------------------------
+
   /// the size of the blob to indicate that the page can be turned by swiping
   double blobSize = 75.0;
   /// the height of the buttons to advance the onboaridng
@@ -59,13 +76,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   );
   /// animation for the movemnet of the liquid swipe dragger
   late final Animation scaleAnimation;
-  /// background colors for the pages
-  List<Color> pageColors = [
-      g_Dakanji_red,
-      g_Dakanji_grey,
-      g_Dakanji_green,
-      g_Dakanji_blue
-    ];
   /// Svg vector data preloaded to prevent stuttering
   List<ui.Image> svgImages = [];
   /// Is the user currently dragging the liquid swipe onboarding
@@ -177,36 +187,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               }
             },
             pages: [
-              OnBoardingPage(
-                1,
-                svgImages[0], svgImages[1],
-                totalPages,
-                pageColors[0],
-                LocaleKeys.OnBoarding_Onboarding_1_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_1_text.tr(),
-                liquidController,
-                _swipeController
-              ),
-              OnBoardingPage(
-                2,
-                svgImages[2], svgImages[3],
-                totalPages,
-                pageColors[1],
-                LocaleKeys.OnBoarding_Onboarding_2_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_2_text.tr(),
-                liquidController,
-                _swipeController
-              ),
-              OnBoardingPage(
-                3,
-                svgImages[4], svgImages[5],
-                totalPages,
-                pageColors[2],
-                LocaleKeys.OnBoarding_Onboarding_3_title.tr(),
-                LocaleKeys.OnBoarding_Onboarding_3_text.tr(),
-                liquidController,
-                _swipeController
-              ),
+              for (int i = 0; i < totalPages; i++)
+                OnBoardingPage(
+                  i+1,
+                  svgImages[(i*2)], svgImages[i*2+1],
+                  totalPages,
+                  pageColors[i],
+                  onboardingPageTexts[(i*2)], onboardingPageTexts[(i*2)+1],
+                  liquidController,
+                  _swipeController
+                ),
               const DictionaryScreen(false, false, ""),
             ],
           );

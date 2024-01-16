@@ -68,6 +68,13 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       # TESTS
       - name: Run integration tests
@@ -80,7 +87,7 @@ jobs:
         shell: powershell
         run: >
           Compress-Archive
-          -Path build/windows/runner/Release/*
+          -Path build/windows/x64/runner/Release/*
           -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
         uses: actions/upload-artifact@v3
@@ -106,7 +113,7 @@ jobs:
           -c ./keys/dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
       - name: rename non store msix
-        working-directory: build\windows\runner\Release\
+        working-directory: build\windows\x64\runner\Release\
         shell: powershell
         run: >	
           Rename-Item
@@ -116,7 +123,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
-          path: build\windows\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
+          path: build\windows\x64\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
 
       # build MSIX for MS Store and upload
       - name: build and sign non-store MSIX
@@ -126,4 +133,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
-          path: build\windows\runner\Release\da_kanji_mobile.msix
+          path: build\windows\x64\runner\Release\da_kanji_mobile.msix

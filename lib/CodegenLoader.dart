@@ -151,8 +151,6 @@ class CodegenLoader extends AssetLoader{
     "system": "系统",
     "web": "网络"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "不要再问了",
     "RatePopup_text": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
@@ -188,6 +186,11 @@ class CodegenLoader extends AssetLoader{
   "KanaTrainerScreen": {
     "title": "卡纳培训师"
   },
+  "KanjiMapScreen": {
+    "title": "汉字地图",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到汉字地图屏幕！"
+  },
   "KanjiTableScreen": {
     "title": "汉字表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
@@ -221,7 +224,7 @@ class CodegenLoader extends AssetLoader{
     "deep_links_text": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 http(s)://dakanji.app/app。使用此功能，您可以在点击此链接dakanji://dictionary?search=食べる时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "实例",
-    "dict_kanji_animation_text": "DaKanji 可以显示大多数汉字的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，如果动画处于暂停状态，则会继续播放动画。最后，如果动画已经结束，双击将从头开始重新播放动画。\n通过轻扫汉字可以控制动画进度。向左轻扫会使动画倒退，而向右轻扫则会使动画前进。",
+    "dict_kanji_animation_text": "DaKanji 可以显示大多数汉字/假名的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，当动画处于暂停状态时，它将继续播放动画。最后，如果动画已经结束，双击将从头开始重启动画。\n通过轻扫汉字可以控制动画进度。向左轻扫可使动画倒退，向右轻扫可使动画前进。",
     "dict_kanji_animation_title": "动画",
     "dict_kanji_copy_radicals_text": "点击一个部首，就可以将其复制到剪贴板。双击则会将该部首添加到已有的剪贴板内容中。",
     "dict_kanji_copy_radicals_title": "复制自由基",
@@ -263,7 +266,9 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_2_text": "有了 \"大汉字\"，你可以使用内置的字典或在互联网上快速查询单词。",
     "Onboarding_2_title": "查询字符和单词",
     "Onboarding_3_text": "使用DaKanji的文本分析工具来添加假名、空格等，或翻译整个句子。",
-    "Onboarding_3_title": "不知道如何读懂一个句子？"
+    "Onboarding_3_title": "不知道如何读懂一个句子？",
+    "Onboarding_4_text": "DaKanji 有汉字和假名表，可让您高效地学习汉字和假名。",
+    "Onboarding_4_title": "学习汉字和假名"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "重置字典文件",
@@ -281,9 +286,15 @@ class CodegenLoader extends AssetLoader{
     "advanced_settings_reset_settings": "重置设置",
     "advanced_settings_snap": "我是不可避免的...",
     "advanced_settings_title": "高级设置",
-    "anki_default_deck": "默认甲板",
-    "anki_default_no_langs": "笔记上的语言数量",
+    "anki_default_deck": "添加到甲板",
     "anki_default_no_translations": "笔记上的翻译数量",
+    "anki_desktop_url": "连接到 anki 的 URL",
+    "anki_get_decks_fail": "您没有连接到 Anki，因此无法更新卡组！😢",
+    "anki_get_decks_success": "更新的甲板！🎉",
+    "anki_include_audio": "在笔记中加入词汇音频",
+    "anki_include_google_image": "在笔记中包含 google 图像",
+    "anki_include_screenshot": "包括屏幕截图",
+    "anki_languages_to_include": "笔记应包含的语言",
     "anki_title": "Anki",
     "custom_url_explanation": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
     "dict_deconjugate": "将输入转换为基本形式",
@@ -309,6 +320,8 @@ class CodegenLoader extends AssetLoader{
     "draw_invert_short_long_press": "倒置长/短按",
     "draw_long_press_opens": "词典选择",
     "draw_title": "绘图",
+    "kana_table_play_audio": "点击假名时播放音频",
+    "kana_table_play_kana_animation_when_opened": "自动启动假名动画",
     "misc_default_screen": "启动应用程序时的初始屏幕",
     "misc_language": "语言 (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "保存当前窗口尺寸",
@@ -349,6 +362,7 @@ class CodegenLoader extends AssetLoader{
     "create_pdf": "创建PDF",
     "defaults": "违约",
     "delete": "删除",
+    "drag_to_scroll": "拖动此处滚动",
     "new_folder": "新文件夹",
     "new_list": "新名单",
     "no_entries": "该词表中没有条目",
@@ -525,8 +539,6 @@ static const Map<String,dynamic> ja = {
     "system": "システム",
     "web": "ウェブ"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
@@ -562,6 +574,11 @@ static const Map<String,dynamic> ja = {
   "KanaTrainerScreen": {
     "title": "カナ・トレーナー"
   },
+  "KanjiMapScreen": {
+    "title": "漢字マップ",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "漢字マップ画面へようこそ！"
+  },
   "KanjiTableScreen": {
     "title": "漢字表",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
@@ -595,7 +612,7 @@ static const Map<String,dynamic> ja = {
     "deep_links_text": "Deep links は、アプリ内のコンテンツに直接リンクする方法です。Dakanjiではdakanji://とhttp(s)://dakanji.app/app. 例えば、dakanji://dictionary?search=食べるというリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "例",
-    "dict_kanji_animation_text": "大漢字は、収録されているほとんどの漢字の筆順図をアニメーションで表示することができます。これらのアニメーションは、さまざまな方法でコントロールすることができます。\nダブルタップは、アニメーションの現在の状態によって結果が異なります。アニメーションが再生中の場合、一時停止します。アニメーションが一時停止している場合も同様に、アニメーションを再生し続けます。最後に、アニメーションが終了している場合、ダブルタップするとアニメーションが最初から再開されます。\n漢字をスワイプすると、アニメーションの進行をコントロールできます。左にスワイプするとアニメーションが巻き戻り、右にスワイプするとアニメーションが進みます。",
+    "dict_kanji_animation_text": "Dakanjiは、収録されているほとんどの漢字・かなの筆順をアニメーションで表示することができ、様々な方法でそれらをコントロールすることが可能です。\nダブルタップは現在のアニメーションの状態によって結果が異なります。アニメーションが再生中の場合は一時停止、一時停止中の場合は再生します。最後に、アニメーションが終了している場合は最初から表示します。\nまたスワイプによってアニメーションの進行をコントロールでき、左にスワイプするとアニメーションが巻き戻り、右にスワイプすると進みます。",
     "dict_kanji_animation_title": "アニメーション",
     "dict_kanji_copy_radicals_text": "部首をタップするとクリップボードにコピーできます。ダブルタップすると、すでにあるクリップボードの内容にその部首が追加されます。",
     "dict_kanji_copy_radicals_title": "部首のコピー",
@@ -608,14 +625,14 @@ static const Map<String,dynamic> ja = {
     "dict_search_history_delete_text": "左にスワイプして検索履歴を削除できます",
     "dict_search_history_delete_title": "削除",
     "dict_search_history_title": "検索履歴",
-    "dict_search_results_navigate_text": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
-    "dict_search_results_navigate_title": "ナビゲート",
+    "dict_search_results_navigate_text": "キーボードの上下方向キーで検索結果を選択できます。その単語の辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押してください。",
+    "dict_search_results_navigate_title": "検索結果の選択",
     "dict_search_results_title": "検索結果",
     "dict_text_examples_analyze_text": "辞書の例文は、ダブルタップしてテキスト画面で開くことができます。",
     "dict_text_examples_analyze_title": "テキスト画面で例を開く",
     "dict_title": "辞書",
-    "dojg_entry_title": "DoJGエントリー",
-    "dojg_image_full_screen_text": "一部のDoJGエントリーには画像が添付されています（これはメディアを含むAnkiデッキをインポートした場合に限ります）。これらの画像はダブルタップするとフルスクリーンで見ることができます。",
+    "dojg_entry_title": "DoJGの項目",
+    "dojg_image_full_screen_text": "一部のDoJGエントリーには画像が添付されています（メディアを含むAnkiデッキをインポートした場合に限る）。これらの画像はダブルタップするとフルスクリーンで見ることができます。",
     "dojg_image_full_screen_title": "フルスクリーン画像",
     "dojg_import_text": "日本語文法辞典(DoJG)は、日本語文法に関する書籍のシリーズです。Dakanjiは、[Ankiデッキ(ここからダウンロードできます)](https://dojgdeck.neocities.org/)をインポートして、内容を検索することができます。  \nDakanjiには、画像付きと画像なしの2つのバージョンがあります。ダウンロードした後、DoJGの画面で.apkgファイルを選択してインポートしてください。",
     "dojg_import_title": "DoJGの設定方法",
@@ -637,7 +654,9 @@ static const Map<String,dynamic> ja = {
     "Onboarding_2_text": "オンライン上やDakanji内の辞書を使って、素早く言葉を調べることができます",
     "Onboarding_2_title": "漢字や単語を調べる",
     "Onboarding_3_text": "テキスト分析ツールを使って、文章にふりがなやスペースなどを追加したり、文章全体を翻訳することができます",
-    "Onboarding_3_title": "文章の読み方がわからない？"
+    "Onboarding_3_title": "文章の読み方がわからない？",
+    "Onboarding_4_text": "大漢字には漢字表と仮名表があり、効率よく学習することができます。",
+    "Onboarding_4_title": "漢字と仮名を学ぶ"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルのリセット",
@@ -655,9 +674,15 @@ static const Map<String,dynamic> ja = {
     "advanced_settings_reset_settings": "設定のリセット",
     "advanced_settings_snap": "私は絶対なのだ・・・",
     "advanced_settings_title": "詳細設定",
-    "anki_default_deck": "デフォルトのデッキ",
-    "anki_default_no_langs": "ノートの言語数",
+    "anki_default_deck": "デッキの追加",
     "anki_default_no_translations": "ノートの翻訳数",
+    "anki_desktop_url": "ankiに接続するためのURL",
+    "anki_get_decks_fail": "Ankiに接続されていないため、デッキを更新できませんでした！😢",
+    "anki_get_decks_success": "更新されたデッキ🎉",
+    "anki_include_audio": "ノートにボキャブラリーの音声を入れる",
+    "anki_include_google_image": "メモにグーグルの画像を含める",
+    "anki_include_screenshot": "スクリーンショットを含む",
+    "anki_languages_to_include": "ノートに記載する言語",
     "anki_title": "Anki",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
     "dict_deconjugate": "入力内容を基本形に変換する",
@@ -683,6 +708,8 @@ static const Map<String,dynamic> ja = {
     "draw_invert_short_long_press": "長押しとタップを反転する",
     "draw_long_press_opens": "辞書の選択",
     "draw_title": "漢字を探す",
+    "kana_table_play_audio": "かなをタップすると音声が再生される",
+    "kana_table_play_kana_animation_when_opened": "かなアニメーションを自動的に開始",
     "misc_default_screen": "アプリ起動時の初期画面",
     "misc_language": "言語 (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "現在のウィンドウサイズを保存",
@@ -737,6 +764,7 @@ static const Map<String,dynamic> ja = {
     "create_pdf": "PDFを作成する",
     "defaults": "デフォルト",
     "delete": "削除",
+    "drag_to_scroll": "ここをドラッグしてスクロール",
     "new_folder": "新規フォルダ",
     "new_list": "新規リスト",
     "no_entries": "まだ単語がありません",
@@ -929,8 +957,6 @@ static const Map<String,dynamic> de = {
     "system": "System",
     "web": "Web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
@@ -965,6 +991,11 @@ static const Map<String,dynamic> de = {
   },
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
+  },
+  "KanjiMapScreen": {
+    "title": "Kanji-Karte",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit der Kanji-Karte!"
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
@@ -1041,7 +1072,9 @@ static const Map<String,dynamic> de = {
     "Onboarding_2_text": "Mit DaKanji kannst du schnell Wörter in Web- und App-Wörterbüchern nachschlagen",
     "Onboarding_2_title": "Schlage Zeichen und Wörter nach",
     "Onboarding_3_text": "Verwende die Textanalysetools von DaKanji, um Furigana, Leerzeichen und mehr hinzuzufügen oder den ganzen Satz zu übersetzen.",
-    "Onboarding_3_title": "Du weißt nicht wie man einen Satz liest?"
+    "Onboarding_3_title": "Du weißt nicht wie man einen Satz liest?",
+    "Onboarding_4_text": "DaKanji verfügt über Kanji- und Kana-Tabellen, damit Sie sie effizient lernen können.",
+    "Onboarding_4_title": "Kanji und Kana lernen"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Wörterbuchdateien zurücksetzen",
@@ -1059,9 +1092,15 @@ static const Map<String,dynamic> de = {
     "advanced_settings_reset_settings": "Einstellungen zurücksetzen",
     "advanced_settings_snap": "Ich bin unvermeidbar...",
     "advanced_settings_title": "Erweiterte Einstellungen",
-    "anki_default_deck": "Standard deck",
-    "anki_default_no_langs": "Anzahl an Sprachen auf Karten",
+    "anki_default_deck": "Deck zu dem Hinzugefügt wird",
     "anki_default_no_translations": "Anzahl von Übersetungen auf Karten",
+    "anki_desktop_url": "URL zur Verbindung mit anki",
+    "anki_get_decks_fail": "Du bist nicht mit Anki verbunden, die Decks konnten nicht aktualisiert werden! 😢",
+    "anki_get_decks_success": "Decks aktualisiert! 🎉",
+    "anki_include_audio": "Audio-Vokabeln in die Notizen einfügen",
+    "anki_include_google_image": "Google-Bild in Notizen einfügen",
+    "anki_include_screenshot": "Bildschirmfoto einfügen",
+    "anki_languages_to_include": "Sprachen auf den Notes",
     "anki_title": "Anki",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Konvertierung der Eingaben in die Basisform",
@@ -1087,6 +1126,8 @@ static const Map<String,dynamic> de = {
     "draw_invert_short_long_press": "Invertiere kurzes und langes drücken",
     "draw_long_press_opens": "Wörterbuch Auswahl",
     "draw_title": "Zeichnen",
+    "kana_table_play_audio": "Audio abspielen, wenn Sie auf Kana tippen",
+    "kana_table_play_kana_animation_when_opened": "Automatischer Start der Kana-Animation",
     "misc_default_screen": "Startbildschirm beim öffnen der App",
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Speicher die momentanige Fenster größe",
@@ -1141,6 +1182,7 @@ static const Map<String,dynamic> de = {
     "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "Löschen",
+    "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",
     "no_entries": "Keine Einträge in dieser Liste",
@@ -1295,8 +1337,6 @@ static const Map<String,dynamic> ru = {
     "system": "система",
     "web": "веб-сайт"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
     "RatePopup_text": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
@@ -1330,7 +1370,12 @@ static const Map<String,dynamic> ru = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "Инструктор Кана"
+    "title": "Тренер Кана"
+  },
+  "KanjiMapScreen": {
+    "title": "Карта Кандзи",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран карты кандзи!"
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
@@ -1365,7 +1410,7 @@ static const Map<String,dynamic> ru = {
     "deep_links_text": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и http(s)://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку dakanji://dictionary?search=食べる. Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Примеры",
-    "dict_kanji_animation_text": "DaKanji может показывать анимированные диаграммы порядка начертания большинства кандзи. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация приостановлена, она продолжит воспроизведение. Наконец, если анимация закончилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Свайп влево перематывает анимацию назад, а свайп вправо - вперед.",
+    "dict_kanji_animation_text": "DaKanji может показывать анимированные диаграммы порядка следования штрихов для большинства кандзи/кана. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация в данный момент приостановлена, она продолжит воспроизведение. Наконец, если анимация завершилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Пролистывание влево приводит к перемотке анимации назад, а пролистывание вправо - к ее продвижению вперед.",
     "dict_kanji_animation_title": "Анимация",
     "dict_kanji_copy_radicals_text": "Радикал можно скопировать в буфер обмена, коснувшись его. Двойное нажатие добавит радикал к уже имеющемуся содержимому буфера обмена.",
     "dict_kanji_copy_radicals_title": "Копирование радикалов",
@@ -1407,7 +1452,9 @@ static const Map<String,dynamic> ru = {
     "Onboarding_2_text": "С помощью \"DaKanji\" вы можете быстро искать слова по встроенному словарю или в Интернете.",
     "Onboarding_2_title": "Поиск символов и слов",
     "Onboarding_3_text": "Используйте инструменты анализа текста DaKanji для добавления фуриганы, пробелов и прочего или переведите предложение целиком.",
-    "Onboarding_3_title": "Не умеете читать предложения?"
+    "Onboarding_3_title": "Не умеете читать предложения?",
+    "Onboarding_4_text": "DaKanji содержит таблицы кандзи и кана, позволяющие эффективно их изучать.",
+    "Onboarding_4_title": "Изучение кандзи и каны"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Сброс файлов словарей",
@@ -1425,9 +1472,15 @@ static const Map<String,dynamic> ru = {
     "advanced_settings_reset_settings": "Сброс настроек",
     "advanced_settings_snap": "Я неизбежен...",
     "advanced_settings_title": "Дополнительные настройки",
-    "anki_default_deck": "Колода по умолчанию",
-    "anki_default_no_langs": "Количество языков на банкнотах",
+    "anki_default_deck": "Палуба, к которой можно добавить",
     "anki_default_no_translations": "Количество переводов по векселям",
+    "anki_desktop_url": "URL-адрес для подключения к anki",
+    "anki_get_decks_fail": "Вы не подключены к Anki, не удалось обновить колоды! 😢",
+    "anki_get_decks_success": "Обновленные колоды! 🎉",
+    "anki_include_audio": "Включите аудиозапись словаря в заметки",
+    "anki_include_google_image": "Включите изображение google в заметки",
+    "anki_include_screenshot": "Включите скриншот",
+    "anki_languages_to_include": "Языки для включения в заметки",
     "anki_title": "Anki",
     "custom_url_explanation": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Преобразование входных данных в базовую форму",
@@ -1453,6 +1506,8 @@ static const Map<String,dynamic> ru = {
     "draw_invert_short_long_press": "Инвертировать длинный/короткий пресс",
     "draw_long_press_opens": "Выбор словаря",
     "draw_title": "Рисование",
+    "kana_table_play_audio": "Воспроизведение звука при нажатии на кану",
+    "kana_table_play_kana_animation_when_opened": "Автоматический запуск анимации каны",
     "misc_default_screen": "Начальный экран при запуске приложения",
     "misc_language": "язык (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Сохранить текущий размер окна",
@@ -1493,6 +1548,7 @@ static const Map<String,dynamic> ru = {
     "create_pdf": "Создать PDF",
     "defaults": "по умолчанию",
     "delete": "Удалить",
+    "drag_to_scroll": "Перетащите сюда для прокрутки",
     "new_folder": "Новая папка",
     "new_list": "Новый список",
     "no_entries": "Нет записей в этом списке слов",
@@ -1682,8 +1738,6 @@ static const Map<String,dynamic> pl = {
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!",
@@ -1719,6 +1773,11 @@ static const Map<String,dynamic> pl = {
   "KanaTrainerScreen": {
     "title": "Trener Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie mapy kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
@@ -1752,7 +1811,7 @@ static const Map<String,dynamic> pl = {
     "deep_links_text": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Przykłady",
-    "dict_kanji_animation_text": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych kanji. Animacje te można kontrolować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, gdy animacja jest aktualnie wstrzymana, będzie kontynuować jej odtwarzanie. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie.",
+    "dict_kanji_animation_text": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych Kanji / Kana. Animacjami tymi można sterować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, jeśli animacja jest aktualnie wstrzymana, będzie ona kontynuowana. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie.",
     "dict_kanji_animation_title": "Animacje",
     "dict_kanji_copy_radicals_text": "Możesz skopiować radykał do schowka, dotykając go. Dwukrotne stuknięcie spowoduje dołączenie radykalnego elementu do już istniejącej zawartości schowka.",
     "dict_kanji_copy_radicals_title": "Kopiowanie rodników",
@@ -1794,7 +1853,9 @@ static const Map<String,dynamic> pl = {
     "Onboarding_2_text": "Z \"DaKanji\" możesz szybko wyszukać słowa używając wbudowanego słownika lub użyj skrótu do słownika Internetowego.",
     "Onboarding_2_title": "Podejrzyj znaki i wyrazy",
     "Onboarding_3_text": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie.",
-    "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?"
+    "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?",
+    "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, które pozwalają na efektywną naukę.",
+    "Onboarding_4_title": "Nauka kanji i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plików słownika",
@@ -1812,9 +1873,15 @@ static const Map<String,dynamic> pl = {
     "advanced_settings_reset_settings": "Resetowanie ustawień",
     "advanced_settings_snap": "Jestem nieunikniony...",
     "advanced_settings_title": "Ustawienia zaawansowane",
-    "anki_default_deck": "Pokład domyślny",
-    "anki_default_no_langs": "Liczba języków w notatkach",
+    "anki_default_deck": "Pokład do dodania do",
     "anki_default_no_translations": "Liczba tłumaczeń na notach",
+    "anki_desktop_url": "Adres URL do połączenia z anki",
+    "anki_get_decks_fail": "Nie jesteś połączony z Anki, nie możesz zaktualizować talii! 😢",
+    "anki_get_decks_success": "Zaktualizowane pokłady! 🎉",
+    "anki_include_audio": "Dołącz dźwięk słownictwa do notatek",
+    "anki_include_google_image": "Dołącz obraz Google do notatek",
+    "anki_include_screenshot": "Dołącz zrzut ekranu",
+    "anki_languages_to_include": "Języki do uwzględnienia w notatkach",
     "anki_title": "Anki",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Przekształcenie danych wejściowych na postać bezokolicznikową",
@@ -1840,6 +1907,8 @@ static const Map<String,dynamic> pl = {
     "draw_invert_short_long_press": "Odwróć długie/krótkie kliknięcie",
     "draw_long_press_opens": "Wybór słownika",
     "draw_title": "Obraz",
+    "kana_table_play_audio": "Odtwarzanie dźwięku po stuknięciu w Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatyczne uruchamianie animacji Kana",
     "misc_default_screen": "Ekran początkowy przy uruchamianiu aplikacji",
     "misc_language": "język (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Zapisz bieżący rozmiar okna",
@@ -1894,6 +1963,7 @@ static const Map<String,dynamic> pl = {
     "create_pdf": "Utwórz PDF",
     "defaults": "ustawienia domyślne",
     "delete": "Usuń",
+    "drag_to_scroll": "Przeciągnij tutaj, aby przewinąć",
     "new_folder": "Nowy folder",
     "new_list": "Nowy wykaz",
     "no_entries": "Brak wpisów w tej liście słów",
@@ -2086,10 +2156,6 @@ static const Map<String,dynamic> en = {
     "system": "system",
     "web": "web"
   },
-  "GrammarScreen": {
-    "import_dojg": "Tap to import the DoJG deck",
-    "title": "Grammar"
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
@@ -2125,6 +2191,11 @@ static const Map<String,dynamic> en = {
   "KanaTrainerScreen": {
     "title": "Kana Trainer"
   },
+  "KanjiMapScreen": {
+    "title": "Kanji Map",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the kanji map screen!"
+  },
   "KanjiTableScreen": {
     "title": "Kanji Table",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -2158,7 +2229,7 @@ static const Map<String,dynamic> en = {
     "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=食べる. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Examples",
-    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included kanji. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similar when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left, will rewind the animation, while swiping right will advance the animation.",
+    "dict_kanji_animation_text": "DaKanji can show animated stroke order diagrams of most of the included Kanji / Kana. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similarly, when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left will rewind the animation while swiping right will advance the animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "You can copy a radical to the clipboard by tapping on it. A double tap will append the radical to the already existing clipboard content.",
     "dict_kanji_copy_radicals_title": "Copying radicals",
@@ -2200,7 +2271,9 @@ static const Map<String,dynamic> en = {
     "Onboarding_2_text": "With \"DaKanji\" you can quickly lookup words using the built-in dictionary or check them on the internet.",
     "Onboarding_2_title": "Lookup characters and words",
     "Onboarding_3_text": "Use DaKanji's text analysis tools to add furigana, spaces and more, or translate the whole sentence.",
-    "Onboarding_3_title": "Do not know how to read a sentence?"
+    "Onboarding_3_title": "Do not know how to read a sentence?",
+    "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+    "Onboarding_4_title": "Study Kanji and Kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -2218,9 +2291,15 @@ static const Map<String,dynamic> en = {
     "advanced_settings_reset_settings": "Reset settings",
     "advanced_settings_snap": "I am inevitable...",
     "advanced_settings_title": "Advanced settings",
-    "anki_default_deck": "Default deck",
-    "anki_default_no_langs": "Number of languages on notes",
+    "anki_default_deck": "Deck to add to",
     "anki_default_no_translations": "Number of translations on notes",
+    "anki_desktop_url": "URL to connect to anki",
+    "anki_get_decks_fail": "You are not connected to Anki, could not update decks! 😢",
+    "anki_get_decks_success": "Updated decks! 🎉",
+    "anki_include_audio": "Include vocab audio on notes",
+    "anki_include_google_image": "Include google image on notes",
+    "anki_include_screenshot": "Include screenshot",
+    "anki_languages_to_include": "Languages to include on notes",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convert inputs to base form",
@@ -2246,6 +2325,8 @@ static const Map<String,dynamic> en = {
     "draw_invert_short_long_press": "Invert long/short press",
     "draw_long_press_opens": "Dictionary selection",
     "draw_title": "Drawing",
+    "kana_table_play_audio": "Play audio when tapping on Kana",
+    "kana_table_play_kana_animation_when_opened": "Automatically start Kana animation",
     "misc_default_screen": "Initial screen when starting the app",
     "misc_language": "language",
     "misc_settings_window_size": "Save current window size",
@@ -2298,8 +2379,9 @@ static const Map<String,dynamic> en = {
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
-    "defaults": "defaults",
+    "defaults": "Defaults",
     "delete": "Delete",
+    "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",
     "no_entries": "No entries in this word list",
@@ -2454,8 +2536,6 @@ static const Map<String,dynamic> it = {
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
@@ -2491,6 +2571,11 @@ static const Map<String,dynamic> it = {
   "KanaTrainerScreen": {
     "title": "Allenatore Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mappa Kanji",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata della mappa kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -2524,7 +2609,7 @@ static const Map<String,dynamic> it = {
     "deep_links_text": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e http(s)://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Esempi",
-    "dict_kanji_animation_text": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei kanji inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte, si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji è possibile controllare l'avanzamento dell'animazione. Scorrendo a sinistra si riavvolge l'animazione, mentre scorrendo a destra si avanza.",
+    "dict_kanji_animation_text": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei Kanji / Kana inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji si può controllare l'avanzamento dell'animazione. Passando il dito a sinistra si riavvolge l'animazione, mentre passando il dito a destra la si fa avanzare.",
     "dict_kanji_animation_title": "Animazioni",
     "dict_kanji_copy_radicals_text": "È possibile copiare un radicale negli appunti toccandolo. Un doppio tocco aggiungerà il radicale al contenuto degli appunti già esistente.",
     "dict_kanji_copy_radicals_title": "Copiare i radicali",
@@ -2566,7 +2651,9 @@ static const Map<String,dynamic> it = {
     "Onboarding_2_text": "Con \"DaKanji\" è possibile cercare rapidamente le parole utilizzando il dizionario incorporato o su Internet.",
     "Onboarding_2_title": "Ricerca di caratteri e parole",
     "Onboarding_3_text": "Utilizzate gli strumenti di analisi del testo di DaKanji per aggiungere furigana, spazi e altro o per tradurre l'intera frase.",
-    "Onboarding_3_title": "Non sapete leggere una frase?"
+    "Onboarding_3_title": "Non sapete leggere una frase?",
+    "Onboarding_4_text": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
+    "Onboarding_4_title": "Studiare i kanji e i kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reimpostare i file del dizionario",
@@ -2584,9 +2671,15 @@ static const Map<String,dynamic> it = {
     "advanced_settings_reset_settings": "Ripristino delle impostazioni",
     "advanced_settings_snap": "Sono inevitabile...",
     "advanced_settings_title": "Impostazioni avanzate",
-    "anki_default_deck": "Mazzo predefinito",
-    "anki_default_no_langs": "Numero di lingue sulle note",
+    "anki_default_deck": "Ponte da aggiungere a",
     "anki_default_no_translations": "Numero di traduzioni sulle note",
+    "anki_desktop_url": "URL per connettersi ad anki",
+    "anki_get_decks_fail": "Non sei connesso ad Anki, non è stato possibile aggiornare i mazzi! 😢",
+    "anki_get_decks_success": "Mazzi aggiornati! 🎉",
+    "anki_include_audio": "Includere l'audio del vocabolario negli appunti",
+    "anki_include_google_image": "Includere l'immagine di Google nelle note",
+    "anki_include_screenshot": "Includere una schermata",
+    "anki_languages_to_include": "Lingue da includere nelle note",
     "anki_title": "Anki",
     "custom_url_explanation": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertire gli input in forma base",
@@ -2612,6 +2705,8 @@ static const Map<String,dynamic> it = {
     "draw_invert_short_long_press": "Invertire la pressione lunga/corta",
     "draw_long_press_opens": "Selezione del dizionario",
     "draw_title": "Disegno",
+    "kana_table_play_audio": "Riproduzione dell'audio quando si tocca il Kana",
+    "kana_table_play_kana_animation_when_opened": "Avvio automatico dell'animazione Kana",
     "misc_default_screen": "Schermata iniziale all'avvio dell'applicazione",
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Salva la dimensione attuale della finestra",
@@ -2652,6 +2747,7 @@ static const Map<String,dynamic> it = {
     "create_pdf": "Creare PDF",
     "defaults": "valori predefiniti",
     "delete": "Cancellare",
+    "drag_to_scroll": "Trascinare qui per scorrere",
     "new_folder": "Nuova cartella",
     "new_list": "Nuovo elenco",
     "no_entries": "Nessuna voce in questo elenco di parole",
@@ -2806,8 +2902,6 @@ static const Map<String,dynamic> fr = {
     "system": "système",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
@@ -2843,6 +2937,11 @@ static const Map<String,dynamic> fr = {
   "KanaTrainerScreen": {
     "title": "Formateur Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Carte de Kanji",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran de la carte des kanji !"
+  },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -2876,7 +2975,7 @@ static const Map<String,dynamic> fr = {
     "deep_links_text": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=食べる. Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Exemples",
-    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des kanji inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nEn glissant sur le kanji, la progression de l'animation peut être contrôlée. Un glissement vers la gauche rembobine l'animation, tandis qu'un glissement vers la droite la fait avancer.",
+    "dict_kanji_animation_text": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des Kanji / Kana inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nIl est possible de contrôler la progression de l'animation en balayant le kanji. Un glissement vers la gauche permet de rembobiner l'animation, tandis qu'un glissement vers la droite permet d'avancer l'animation.",
     "dict_kanji_animation_title": "Animations",
     "dict_kanji_copy_radicals_text": "Vous pouvez copier un radical dans le presse-papiers en tapant dessus. Un double tapotement ajoutera le radical au contenu du presse-papiers déjà existant.",
     "dict_kanji_copy_radicals_title": "Copier des radicaux",
@@ -2918,7 +3017,9 @@ static const Map<String,dynamic> fr = {
     "Onboarding_2_text": "Avec \"DaKanji\", vous pouvez rapidement rechercher des mots en utilisant le dictionnaire intégré ou sur Internet.",
     "Onboarding_2_title": "Recherche de caractères et de mots",
     "Onboarding_3_text": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
-    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?"
+    "Onboarding_3_title": "Vous ne savez pas comment lire une phrase ?",
+    "Onboarding_4_text": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les étudier efficacement.",
+    "Onboarding_4_title": "Étudier les kanji et les kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Réinitialiser les fichiers du dictionnaire",
@@ -2936,9 +3037,15 @@ static const Map<String,dynamic> fr = {
     "advanced_settings_reset_settings": "Réinitialiser les paramètres",
     "advanced_settings_snap": "Je suis inévitable...",
     "advanced_settings_title": "Paramètres avancés",
-    "anki_default_deck": "Pont par défaut",
-    "anki_default_no_langs": "Nombre de langues sur les notes",
+    "anki_default_deck": "Terrasse à ajouter",
     "anki_default_no_translations": "Nombre de traductions sur les notes",
+    "anki_desktop_url": "URL pour se connecter à anki",
+    "anki_get_decks_fail": "Vous n'êtes pas connecté à Anki, vous n'avez pas pu mettre à jour les jeux ! 😢",
+    "anki_get_decks_success": "Mise à jour des ponts ! 🎉",
+    "anki_include_audio": "Inclure le vocabulaire audio dans les notes",
+    "anki_include_google_image": "Inclure l'image de Google dans les notes",
+    "anki_include_screenshot": "Inclure une capture d'écran",
+    "anki_languages_to_include": "Langues à inclure dans les notes",
     "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_deconjugate": "Convertir les entrées en forme de base",
@@ -2964,6 +3071,8 @@ static const Map<String,dynamic> fr = {
     "draw_invert_short_long_press": "Inverser la presse long/short",
     "draw_long_press_opens": "Sélection de dictionnaires",
     "draw_title": "Dessin",
+    "kana_table_play_audio": "Jouer le son lorsque l'on tape sur le Kana",
+    "kana_table_play_kana_animation_when_opened": "Lancer automatiquement l'animation des Kana",
     "misc_default_screen": "Écran initial au démarrage de l'application",
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fenêtre",
@@ -3004,6 +3113,7 @@ static const Map<String,dynamic> fr = {
     "create_pdf": "Créer un PDF",
     "defaults": "Défauts",
     "delete": "Supprimer",
+    "drag_to_scroll": "Glisser ici pour faire défiler",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",
     "no_entries": "Aucune entrée dans cette liste de mots",
@@ -3158,8 +3268,6 @@ static const Map<String,dynamic> es = {
     "system": "sistema",
     "web": "web"
   },
-  "GrammarScreen": {
-  },
   "HomeScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
@@ -3195,6 +3303,11 @@ static const Map<String,dynamic> es = {
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"
   },
+  "KanjiMapScreen": {
+    "title": "Mapa Kanji",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla del mapa kanji!"
+  },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -3228,7 +3341,7 @@ static const Map<String,dynamic> es = {
     "deep_links_text": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
     "deep_links_title": "Deep Links",
     "dict_examples_title": "Ejemplos",
-    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los kanji incluidos. Estas animaciones pueden controlarse de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Si deslizas el dedo hacia la izquierda, la animación se rebobinará, mientras que si deslizas el dedo hacia la derecha, la animación avanzará.",
+    "dict_kanji_animation_text": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los Kanji / Kana incluidos. Estas animaciones se pueden controlar de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Deslizar a la izquierda rebobinará la animación mientras que deslizar a la derecha la hará avanzar.",
     "dict_kanji_animation_title": "Animaciones",
     "dict_kanji_copy_radicals_text": "Puede copiar un radical en el portapapeles pulsando sobre él. Un doble toque añadirá el radical al contenido ya existente en el portapapeles.",
     "dict_kanji_copy_radicals_title": "Copiar radicales",
@@ -3270,7 +3383,9 @@ static const Map<String,dynamic> es = {
     "Onboarding_2_text": "Con \"DaKanji\" puedes buscar palabras rápidamente utilizando el diccionario incorporado o en Internet.",
     "Onboarding_2_title": "Busca caracteres y palabras",
     "Onboarding_3_text": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
-    "Onboarding_3_title": "¿No sabe leer una frase?"
+    "Onboarding_3_title": "¿No sabe leer una frase?",
+    "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+    "Onboarding_4_title": "Estudiar kanji y kana"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
@@ -3288,9 +3403,15 @@ static const Map<String,dynamic> es = {
     "advanced_settings_reset_settings": "Restablecer ajustes",
     "advanced_settings_snap": "Soy inevitable...",
     "advanced_settings_title": "Ajustes avanzados",
-    "anki_default_deck": "Cubierta por defecto",
-    "anki_default_no_langs": "Número de lenguas en los billetes",
+    "anki_default_deck": "Cubierta para añadir a",
     "anki_default_no_translations": "Número de traducciones en los billetes",
+    "anki_desktop_url": "URL para conectarse a anki",
+    "anki_get_decks_fail": "No estás conectado a Anki, ¡no se han podido actualizar los mazos! 😢",
+    "anki_get_decks_success": "¡Barajas actualizadas! 🎉",
+    "anki_include_audio": "Incluir audio de vocabulario en las notas",
+    "anki_include_google_image": "Incluir una imagen de Google en las notas",
+    "anki_include_screenshot": "Incluir captura de pantalla",
+    "anki_languages_to_include": "Lenguas que deben incluirse en las notas",
     "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_deconjugate": "Convertir entradas en forma básica",
@@ -3316,6 +3437,8 @@ static const Map<String,dynamic> es = {
     "draw_invert_short_long_press": "Invertir pulsación larga/breve",
     "draw_long_press_opens": "Selección de diccionarios",
     "draw_title": "Dibujar",
+    "kana_table_play_audio": "Reproducir audio al pulsar sobre Kana",
+    "kana_table_play_kana_animation_when_opened": "Iniciar automáticamente la animación Kana",
     "misc_default_screen": "Pantalla inicial al iniciar la aplicación",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Guardar el tamaño actual de la ventana",
@@ -3356,6 +3479,7 @@ static const Map<String,dynamic> es = {
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "drag_to_scroll": "Arrastre aquí para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",
     "no_entries": "No hay entradas en esta lista de palabras",

@@ -1,7 +1,7 @@
 app-id: com.DaAppLab.DaKanji
-runtime: org.freedesktop.Platform
-runtime-version: '22.08'
-sdk: org.freedesktop.Sdk
+runtime: org.gnome.Platform
+runtime-version: '45'
+sdk: org.gnome.Sdk
 command: DaKanji
 finish-args:
   - --socket=fallback-x11
@@ -110,8 +110,7 @@ modules:
     sources:
     - type: git
       url: https://git.ffmpeg.org/ffmpeg.git
-      #branch: release/6.0
-      commit: c5039e158d20e85d4d8a2dee3160533d627b839a
+      commit: 3d5edb89e75fe3ab3a6757208ef121fa2b0f54c7
 # -----------------------------------------------------------------------------------
 
 - name: DaKanji

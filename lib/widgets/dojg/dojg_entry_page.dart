@@ -16,9 +16,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_key_sentence_table.dart';
@@ -197,7 +197,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                 ...[
                   Text(
                     LocaleKeys.DojgScreen_dojg_formation.tr(),
-                    textScaleFactor: 1.25,
+                    textScaler: const TextScaler.linear(1.25),
                   ),
                   HtmlWidget(
                     widget.dojgEntry.formation!,
@@ -219,7 +219,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                   const SizedBox(height: 10,),
                   Text(
                     LocaleKeys.DojgScreen_dojg_key_sentences.tr(),
-                    textScaleFactor: 1.5
+                    textScaler: const TextScaler.linear(1.5),
                   ),
                   const SizedBox(height: 5,),
                   DojgSentenceTable(
@@ -235,7 +235,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                   const SizedBox(height: 10,),
                   Text(
                     LocaleKeys.DojgScreen_dojg_examples.tr(),
-                    textScaleFactor: 1.5,
+                    textScaler: const TextScaler.linear(1.5),
                   ),
                   const SizedBox(height: 5,),
                   DojgSentenceTable(
@@ -253,7 +253,7 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                 ExpansionTile(
                   title: Text(
                     LocaleKeys.DojgScreen_dojg_image.tr(),
-                    textScaleFactor: 1.5,
+                    textScaler: const TextScaler.linear(1.5),
                   ),
                   children: [
                     GestureDetector(

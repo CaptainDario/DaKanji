@@ -52,8 +52,11 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).cardColor,
+      color: Colors.transparent,
+      shape: const CircleBorder(),
       child: InkWell(
+        radius: 8,
+        customBorder: const CircleBorder(),
         onTap: widget.onPressed,
         onLongPress: widget.onLongPressed,
         child: IgnorePointer(

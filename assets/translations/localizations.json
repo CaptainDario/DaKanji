@@ -1785,11 +1785,46 @@
       "pl": "Liczba ta wskazuje, ile kanji jest aktualnie wyświetlanych."
     }
   },
+  "KanjiMapScreen": {
+    "title": {
+      "en": "Kanji Map",
+      "de": "Kanji-Karte",
+      "ru": "Карта Кандзи",
+      "ja": "漢字マップ",
+      "zh": "汉字地图",
+      "it": "Mappa Kanji",
+      "fr": "Carte de Kanji",
+      "es": "Mapa Kanji",
+      "pl": "Mapa Kanji"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the kanji map screen!",
+      "de": "Willkommen auf dem Bildschirm mit der Kanji-Karte!",
+      "ru": "Добро пожаловать на экран карты кандзи!",
+      "ja": "漢字マップ画面へようこそ！",
+      "zh": "欢迎来到汉字地图屏幕！",
+      "it": "Benvenuti nella schermata della mappa kanji!",
+      "fr": "Bienvenue sur l'écran de la carte des kanji !",
+      "es": "¡Bienvenido a la pantalla del mapa kanji!",
+      "pl": "Witamy na ekranie mapy kanji!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    }
+  },
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
       "de": "Kana Trainer",
-      "ru": "Инструктор Кана",
+      "ru": "Тренер Кана",
       "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
@@ -2227,6 +2262,28 @@
       "fr": "Utilisez les outils d'analyse de texte de DaKanji pour ajouter des furigana, des espaces et autres ou pour traduire la phrase entière.",
       "es": "Utiliza las herramientas de análisis de texto de DaKanji para añadir furiganas, espacios y mucho más, o traduce la frase entera.",
       "pl": "Użyj narzędzi analizy tekstu DaKanji, aby dodać furiganę, spacje i inne, lub przetłumacz całe zdanie."
+    },
+    "Onboarding_4_title": {
+      "en": "Study Kanji and Kana",
+      "de": "Kanji und Kana lernen",
+      "ru": "Изучение кандзи и каны",
+      "ja": "漢字と仮名を学ぶ",
+      "zh": "学习汉字和假名",
+      "it": "Studiare i kanji e i kana",
+      "fr": "Étudier les kanji et les kana",
+      "es": "Estudiar kanji y kana",
+      "pl": "Nauka kanji i kana"
+    },
+    "Onboarding_4_text": {
+      "en": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
+      "de": "DaKanji verfügt über Kanji- und Kana-Tabellen, damit Sie sie effizient lernen können.",
+      "ru": "DaKanji содержит таблицы кандзи и кана, позволяющие эффективно их изучать.",
+      "ja": "大漢字には漢字表と仮名表があり、効率よく学習することができます。",
+      "zh": "DaKanji 有汉字和假名表，可让您高效地学习汉字和假名。",
+      "it": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
+      "fr": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les étudier efficacement.",
+      "es": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
+      "pl": "DaKanji zawiera tabele Kanji i Kana, które pozwalają na efektywną naukę."
     }
   },
   "SettingsScreen": {
@@ -2550,26 +2607,48 @@
       "pl": "Anki"
     },
     "anki_default_deck": {
-      "en": "Default deck",
-      "de": "Standard deck",
-      "ru": "Колода по умолчанию",
-      "ja": "デフォルトのデッキ",
-      "zh": "默认甲板",
-      "it": "Mazzo predefinito",
-      "fr": "Pont par défaut",
-      "es": "Cubierta por defecto",
-      "pl": "Pokład domyślny"
+      "en": "Deck to add to",
+      "de": "Deck zu dem Hinzugefügt wird",
+      "ru": "Палуба, к которой можно добавить",
+      "ja": "デッキの追加",
+      "zh": "添加到甲板",
+      "it": "Ponte da aggiungere a",
+      "fr": "Terrasse à ajouter",
+      "es": "Cubierta para añadir a",
+      "pl": "Pokład do dodania do"
     },
-    "anki_default_no_langs": {
-      "en": "Number of languages on notes",
-      "de": "Anzahl an Sprachen auf Karten",
-      "ru": "Количество языков на банкнотах",
-      "ja": "ノートの言語数",
-      "zh": "笔记上的语言数量",
-      "it": "Numero di lingue sulle note",
-      "fr": "Nombre de langues sur les notes",
-      "es": "Número de lenguas en los billetes",
-      "pl": "Liczba języków w notatkach"
+    "anki_get_decks_success": {
+      "en": "Updated decks! 🎉",
+      "de": "Decks aktualisiert! 🎉",
+      "ru": "Обновленные колоды! 🎉",
+      "ja": "更新されたデッキ🎉",
+      "zh": "更新的甲板！🎉",
+      "it": "Mazzi aggiornati! 🎉",
+      "fr": "Mise à jour des ponts ! 🎉",
+      "es": "¡Barajas actualizadas! 🎉",
+      "pl": "Zaktualizowane pokłady! 🎉"
+    },
+    "anki_get_decks_fail": {
+      "en": "You are not connected to Anki, could not update decks! 😢",
+      "de": "Du bist nicht mit Anki verbunden, die Decks konnten nicht aktualisiert werden! 😢",
+      "ru": "Вы не подключены к Anki, не удалось обновить колоды! 😢",
+      "ja": "Ankiに接続されていないため、デッキを更新できませんでした！😢",
+      "zh": "您没有连接到 Anki，因此无法更新卡组！😢",
+      "it": "Non sei connesso ad Anki, non è stato possibile aggiornare i mazzi! 😢",
+      "fr": "Vous n'êtes pas connecté à Anki, vous n'avez pas pu mettre à jour les jeux ! 😢",
+      "es": "No estás conectado a Anki, ¡no se han podido actualizar los mazos! 😢",
+      "pl": "Nie jesteś połączony z Anki, nie możesz zaktualizować talii! 😢"
+    },
+    "anki_languages_to_include": {
+      "en": "Languages to include on notes",
+      "de": "Sprachen auf den Notes",
+      "ru": "Языки для включения в заметки",
+      "ja": "ノートに記載する言語",
+      "zh": "笔记应包含的语言",
+      "it": "Lingue da includere nelle note",
+      "fr": "Langues à inclure dans les notes",
+      "es": "Lenguas que deben incluirse en las notas",
+      "pl": "Języki do uwzględnienia w notatkach"
     },
     "anki_default_no_translations": {
       "en": "Number of translations on notes",
@@ -2581,6 +2660,50 @@
       "fr": "Nombre de traductions sur les notes",
       "es": "Número de traducciones en los billetes",
       "pl": "Liczba tłumaczeń na notach"
+    },
+    "anki_desktop_url": {
+      "en": "URL to connect to anki",
+      "de": "URL zur Verbindung mit anki",
+      "ru": "URL-адрес для подключения к anki",
+      "ja": "ankiに接続するためのURL",
+      "zh": "连接到 anki 的 URL",
+      "it": "URL per connettersi ad anki",
+      "fr": "URL pour se connecter à anki",
+      "es": "URL para conectarse a anki",
+      "pl": "Adres URL do połączenia z anki"
+    },
+    "anki_include_google_image": {
+      "en": "Include google image on notes",
+      "de": "Google-Bild in Notizen einfügen",
+      "ru": "Включите изображение google в заметки",
+      "ja": "メモにグーグルの画像を含める",
+      "zh": "在笔记中包含 google 图像",
+      "it": "Includere l'immagine di Google nelle note",
+      "fr": "Inclure l'image de Google dans les notes",
+      "es": "Incluir una imagen de Google en las notas",
+      "pl": "Dołącz obraz Google do notatek"
+    },
+    "anki_include_audio": {
+      "en": "Include vocab audio on notes",
+      "de": "Audio-Vokabeln in die Notizen einfügen",
+      "ru": "Включите аудиозапись словаря в заметки",
+      "ja": "ノートにボキャブラリーの音声を入れる",
+      "zh": "在笔记中加入词汇音频",
+      "it": "Includere l'audio del vocabolario negli appunti",
+      "fr": "Inclure le vocabulaire audio dans les notes",
+      "es": "Incluir audio de vocabulario en las notas",
+      "pl": "Dołącz dźwięk słownictwa do notatek"
+    },
+    "anki_include_screenshot": {
+      "en": "Include screenshot",
+      "de": "Bildschirmfoto einfügen",
+      "ru": "Включите скриншот",
+      "ja": "スクリーンショットを含む",
+      "zh": "包括屏幕截图",
+      "it": "Includere una schermata",
+      "fr": "Inclure une capture d'écran",
+      "es": "Incluir captura de pantalla",
+      "pl": "Dołącz zrzut ekranu"
     },
     "dojg_imported": {
       "en": "DoJG imported",
@@ -2603,6 +2726,28 @@
       "fr": "DoJG avec les médias importés",
       "es": "DoJG con medios de comunicación importados",
       "pl": "DoJG z zaimportowanymi mediami"
+    },
+    "kana_table_play_audio": {
+      "en": "Play audio when tapping on Kana",
+      "de": "Audio abspielen, wenn Sie auf Kana tippen",
+      "ru": "Воспроизведение звука при нажатии на кану",
+      "ja": "かなをタップすると音声が再生される",
+      "zh": "点击假名时播放音频",
+      "it": "Riproduzione dell'audio quando si tocca il Kana",
+      "fr": "Jouer le son lorsque l'on tape sur le Kana",
+      "es": "Reproducir audio al pulsar sobre Kana",
+      "pl": "Odtwarzanie dźwięku po stuknięciu w Kana"
+    },
+    "kana_table_play_kana_animation_when_opened": {
+      "en": "Automatically start Kana animation",
+      "de": "Automatischer Start der Kana-Animation",
+      "ru": "Автоматический запуск анимации каны",
+      "ja": "かなアニメーションを自動的に開始",
+      "zh": "自动启动假名动画",
+      "it": "Avvio automatico dell'animazione Kana",
+      "fr": "Lancer automatiquement l'animation des Kana",
+      "es": "Iniciar automáticamente la animación Kana",
+      "pl": "Automatyczne uruchamianie animacji Kana"
     },
     "misc_title": {
       "en": "Miscellaneous",
@@ -2847,14 +2992,6 @@
       "pl": "Usuwanie plików DoJG"
     }
   },
-  "GrammarScreen": {
-    "title": {
-      "en": "Grammar"
-    },
-    "import_dojg": {
-      "en": "Tap to import the DoJG deck"
-    }
-  },
   "WebviewScreen": {
     "loading": {
       "en": "Searching",
@@ -3060,7 +3197,7 @@
       "en": "Navigate",
       "de": "Navigieren",
       "ru": "Перейдите по ссылке",
-      "ja": "ナビゲート",
+      "ja": "検索結果の選択",
       "zh": "导航",
       "it": "Navigare",
       "fr": "Naviguer",
@@ -3071,7 +3208,7 @@
       "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
       "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
       "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
-      "ja": "検索結果は、上下の矢印キーで移動できます。辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押します。",
+      "ja": "キーボードの上下方向キーで検索結果を選択できます。その単語の辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押してください。",
       "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
       "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
       "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
@@ -3178,15 +3315,15 @@
       "pl": "Animacje"
     },
     "dict_kanji_animation_text": {
-      "en": "DaKanji can show animated stroke order diagrams of most of the included kanji. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similar when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left, will rewind the animation, while swiping right will advance the animation.",
+      "en": "DaKanji can show animated stroke order diagrams of most of the included Kanji / Kana. These animations can be controlled in different ways. \nDouble tapping, has different results depending on the current state of the animation. If the animation is currently playing, it will pause it. Similarly, when the animation is currently paused, it will continue playing the animation. Lastly, if the animation has finished, double tapping will restart the animation from the beginning.\nBy Swiping on the kanji the animation progress can be controlled. Swiping left will rewind the animation while swiping right will advance the animation.",
       "de": "DaKanji kann für die meisten der enthaltenen Kanji animierte Strichfolge-Diagramme anzeigen. Diese Animationen können auf verschiedene Weise gesteuert werden.\nDoppeltes Antippen hat je nach dem aktuellen Zustand der Animation unterschiedliche Ergebnisse. Wenn die Animation gerade abgespielt wird, wird sie angehalten. Wenn die Animation angehalten ist, wird sie weiter abgespielt. Passend wird die Animation wenn sie beendet ist, durch doppeltes Antippen wieder von vorne gestartet.\nDurch Swipen über ein Kanji kann der Fortschritt dessen Animation gesteuert werden. Wenn Sie nach links wischen, wird die Animation zurückgespult, während nach rechts wischen, die Animation vorspult.",
-      "ru": "DaKanji может показывать анимированные диаграммы порядка начертания большинства кандзи. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация приостановлена, она продолжит воспроизведение. Наконец, если анимация закончилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Свайп влево перематывает анимацию назад, а свайп вправо - вперед.",
-      "ja": "大漢字は、収録されているほとんどの漢字の筆順図をアニメーションで表示することができます。これらのアニメーションは、さまざまな方法でコントロールすることができます。\nダブルタップは、アニメーションの現在の状態によって結果が異なります。アニメーションが再生中の場合、一時停止します。アニメーションが一時停止している場合も同様に、アニメーションを再生し続けます。最後に、アニメーションが終了している場合、ダブルタップするとアニメーションが最初から再開されます。\n漢字をスワイプすると、アニメーションの進行をコントロールできます。左にスワイプするとアニメーションが巻き戻り、右にスワイプするとアニメーションが進みます。",
-      "zh": "DaKanji 可以显示大多数汉字的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，如果动画处于暂停状态，则会继续播放动画。最后，如果动画已经结束，双击将从头开始重新播放动画。\n通过轻扫汉字可以控制动画进度。向左轻扫会使动画倒退，而向右轻扫则会使动画前进。",
-      "it": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei kanji inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte, si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji è possibile controllare l'avanzamento dell'animazione. Scorrendo a sinistra si riavvolge l'animazione, mentre scorrendo a destra si avanza.",
-      "fr": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des kanji inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nEn glissant sur le kanji, la progression de l'animation peut être contrôlée. Un glissement vers la gauche rembobine l'animation, tandis qu'un glissement vers la droite la fait avancer.",
-      "es": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los kanji incluidos. Estas animaciones pueden controlarse de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Si deslizas el dedo hacia la izquierda, la animación se rebobinará, mientras que si deslizas el dedo hacia la derecha, la animación avanzará.",
-      "pl": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych kanji. Animacje te można kontrolować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, gdy animacja jest aktualnie wstrzymana, będzie kontynuować jej odtwarzanie. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie."
+      "ru": "DaKanji может показывать анимированные диаграммы порядка следования штрихов для большинства кандзи/кана. Этими анимациями можно управлять различными способами.\nДвойное нажатие приводит к различным результатам в зависимости от текущего состояния анимации. Если анимация воспроизводится в данный момент, это приведет к ее приостановке. Аналогично, если анимация в данный момент приостановлена, она продолжит воспроизведение. Наконец, если анимация завершилась, двойное нажатие перезапустит ее с самого начала.\nПроводя пальцем по кандзи, можно управлять ходом анимации. Пролистывание влево приводит к перемотке анимации назад, а пролистывание вправо - к ее продвижению вперед.",
+      "ja": "Dakanjiは、収録されているほとんどの漢字・かなの筆順をアニメーションで表示することができ、様々な方法でそれらをコントロールすることが可能です。\nダブルタップは現在のアニメーションの状態によって結果が異なります。アニメーションが再生中の場合は一時停止、一時停止中の場合は再生します。最後に、アニメーションが終了している場合は最初から表示します。\nまたスワイプによってアニメーションの進行をコントロールでき、左にスワイプするとアニメーションが巻き戻り、右にスワイプすると進みます。",
+      "zh": "DaKanji 可以显示大多数汉字/假名的笔顺动画图。这些动画可以不同的方式控制。\n双击会根据动画的当前状态产生不同的结果。如果动画正在播放，则会暂停。同样，当动画处于暂停状态时，它将继续播放动画。最后，如果动画已经结束，双击将从头开始重启动画。\n通过轻扫汉字可以控制动画进度。向左轻扫可使动画倒退，向右轻扫可使动画前进。",
+      "it": "DaKanji può mostrare diagrammi animati dell'ordine dei tratti della maggior parte dei Kanji / Kana inclusi. Queste animazioni possono essere controllate in diversi modi.\nToccando due volte si ottengono risultati diversi a seconda dello stato attuale dell'animazione. Se l'animazione è in corso di riproduzione, viene messa in pausa. Allo stesso modo, se l'animazione è in pausa, continuerà a essere riprodotta. Infine, se l'animazione è terminata, il doppio tocco la farà ripartire dall'inizio.\nPassando il dito sul kanji si può controllare l'avanzamento dell'animazione. Passando il dito a sinistra si riavvolge l'animazione, mentre passando il dito a destra la si fa avanzare.",
+      "fr": "DaKanji peut afficher des diagrammes animés de l'ordre des traits de la plupart des Kanji / Kana inclus. Ces animations peuvent être contrôlées de différentes manières.\nLe double tapotement a des résultats différents en fonction de l'état actuel de l'animation. Si l'animation est en cours de lecture, elle sera mise en pause. De même, lorsque l'animation est en cours de pause, la lecture se poursuit. Enfin, si l'animation est terminée, le double tapotement redémarre l'animation depuis le début.\nIl est possible de contrôler la progression de l'animation en balayant le kanji. Un glissement vers la gauche permet de rembobiner l'animation, tandis qu'un glissement vers la droite permet d'avancer l'animation.",
+      "es": "DaKanji puede mostrar diagramas animados del orden de los trazos de la mayoría de los Kanji / Kana incluidos. Estas animaciones se pueden controlar de diferentes maneras.\nPulsando dos veces, se obtienen diferentes resultados dependiendo del estado actual de la animación. Si la animación se está reproduciendo, la pausará. Del mismo modo, si la animación está en pausa, continuará reproduciéndose. Por último, si la animación ha terminado, el doble toque reiniciará la animación desde el principio.\nDeslizando el dedo sobre el kanji se puede controlar el progreso de la animación. Deslizar a la izquierda rebobinará la animación mientras que deslizar a la derecha la hará avanzar.",
+      "pl": "DaKanji może wyświetlać animowane diagramy kolejności uderzeń większości dołączonych Kanji / Kana. Animacjami tymi można sterować na różne sposoby.\nPodwójne stuknięcie ma różne skutki w zależności od bieżącego stanu animacji. Jeśli animacja jest aktualnie odtwarzana, zostanie wstrzymana. Podobnie, jeśli animacja jest aktualnie wstrzymana, będzie ona kontynuowana. Wreszcie, jeśli animacja została zakończona, dwukrotne dotknięcie spowoduje ponowne uruchomienie animacji od początku.\nPrzesuwając palcem po kanji można kontrolować postęp animacji. Przesunięcie w lewo spowoduje przewinięcie animacji do tyłu, a przesunięcie w prawo spowoduje jej przyspieszenie."
     },
     "dict_examples_title": {
       "en": "Examples",
@@ -3353,28 +3490,6 @@
       "es": "Este botón le permite cambiar la selección de texto actual. Si lo pulsa, seleccionará el siguiente token (palabra). Si lo mantiene pulsado, seleccionará el siguiente carácter.",
       "pl": "Ten przycisk umożliwia zmianę bieżącego zaznaczenia tekstu. Jego naciśnięcie spowoduje zaznaczenie następnego tokenu (słowa). Długie naciśnięcie spowoduje zaznaczenie następnego znaku."
     },
-    "deep_links_title": {
-      "en": "Deep Links",
-      "de": "Deep Links",
-      "ru": "Deep Links",
-      "ja": "Deep Links",
-      "zh": "Deep Links",
-      "it": "Deep Links",
-      "fr": "Deep Links",
-      "es": "Deep Links",
-      "pl": "Deep Links"
-    },
-    "deep_links_text": {
-      "en": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=食べる. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "de": "Deep Links sind eine Möglichkeit, Inhalte in einer App direkt zu verlinken. DaKanji bietet dafür zwei Schemata: dakanji:// und http(s)://dakanji.app/app. Mit dieser Funktion können Sie zum Beispiel die Wörterbuchsuche öffnen, wenn Sie auf diesen Link tippen dakanji://dictionary?search=食べる. Für alle unterstützten Links siehe [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "ru": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и http(s)://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку dakanji://dictionary?search=食べる. Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "ja": "Deep links は、アプリ内のコンテンツに直接リンクする方法です。Dakanjiではdakanji://とhttp(s)://dakanji.app/app. 例えば、dakanji://dictionary?search=食べるというリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
-      "zh": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 http(s)://dakanji.app/app。使用此功能，您可以在点击此链接dakanji://dictionary?search=食べる时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "it": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e http(s)://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
-      "fr": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=食べる. Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "es": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
-      "pl": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links)."
-    },
     "dojg_title": {
       "en": "DoJG",
       "de": "DoJG",
@@ -3412,7 +3527,7 @@
       "en": "DoJG entry",
       "de": "DoJG-Eintrag",
       "ru": "Вступление в DoJG",
-      "ja": "DoJGエントリー",
+      "ja": "DoJGの項目",
       "zh": "DoJG 条目",
       "it": "Voce DoJG",
       "fr": "Entrée du DoJG",
@@ -3434,12 +3549,34 @@
       "en": "Some DoJG entries have an image attached (this is only true when you imported the Anki deck that includes media). Those images can be viewed in full screen by double tapping on them.",
       "de": "Einige DoJG-Einträge sind mit einem Bild versehen (dies ist nur der Fall, wenn Sie ein Anki-Deck mit Medien importiert haben). Diese Bilder können im Vollbildmodus angezeigt werden, indem Sie doppelt auf sie tippen.",
       "ru": "К некоторым записям DoJG прилагается изображение (это справедливо только в том случае, если вы импортировали колоду Anki, содержащую медиафайлы). Эти изображения можно просмотреть в полноэкранном режиме, дважды нажав на них.",
-      "ja": "一部のDoJGエントリーには画像が添付されています（これはメディアを含むAnkiデッキをインポートした場合に限ります）。これらの画像はダブルタップするとフルスクリーンで見ることができます。",
+      "ja": "一部のDoJGエントリーには画像が添付されています（メディアを含むAnkiデッキをインポートした場合に限る）。これらの画像はダブルタップするとフルスクリーンで見ることができます。",
       "zh": "有些 DoJG 词条附有图片（只有在导入包含媒体的 Anki 卡组时才会出现这种情况）。双击这些图片可以全屏查看。",
       "it": "Alcune voci del DoJG hanno un'immagine allegata (questo vale solo se si è importato il mazzo Anki che include i media). Queste immagini possono essere visualizzate a schermo intero toccandole due volte.",
       "fr": "Certaines entrées du DoJG sont accompagnées d'une image (ce n'est le cas que si vous avez importé le jeu Anki qui comprend des médias). Ces images peuvent être affichées en plein écran en double-cliquant dessus.",
       "es": "Algunas entradas de DoJG tienen una imagen adjunta (esto sólo ocurre cuando has importado el mazo Anki que incluye medios). Esas imágenes se pueden ver a pantalla completa pulsando dos veces sobre ellas.",
       "pl": "Niektóre wpisy DoJG mają dołączony obraz (dotyczy to tylko zaimportowanej talii Anki zawierającej multimedia). Obrazy te można wyświetlić na pełnym ekranie, dotykając ich dwukrotnie."
+    },
+    "deep_links_title": {
+      "en": "Deep Links",
+      "de": "Deep Links",
+      "ru": "Deep Links",
+      "ja": "Deep Links",
+      "zh": "Deep Links",
+      "it": "Deep Links",
+      "fr": "Deep Links",
+      "es": "Deep Links",
+      "pl": "Deep Links"
+    },
+    "deep_links_text": {
+      "en": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=食べる. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "de": "Deep Links sind eine Möglichkeit, Inhalte in einer App direkt zu verlinken. DaKanji bietet dafür zwei Schemata: dakanji:// und http(s)://dakanji.app/app. Mit dieser Funktion können Sie zum Beispiel die Wörterbuchsuche öffnen, wenn Sie auf diesen Link tippen dakanji://dictionary?search=食べる. Für alle unterstützten Links siehe [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "ru": "Глубокие ссылки - это способ прямой ссылки на содержимое приложения. DaKanji предоставляет для этого две схемы dakanji:// и http(s)://dakanji.app/app. Используя эту возможность, можно, например, открыть поиск по словарю при нажатии на эту ссылку dakanji://dictionary?search=食べる. Все поддерживаемые ссылки см. в разделе [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "ja": "Deep links は、アプリ内のコンテンツに直接リンクする方法です。Dakanjiではdakanji://とhttp(s)://dakanji.app/app. 例えば、dakanji://dictionary?search=食べるというリンクをタップすると、辞書検索を開くことができます。すべてのリンクについては[dakanji.app/deep-links](https://dakanji.app/deep-links)をご覧ください。",
+      "zh": "深度链接是直接链接到应用程序中内容的一种方式。DaKanji 为此提供了两种方案 dakanji:// 和 http(s)://dakanji.app/app。使用此功能，您可以在点击此链接dakanji://dictionary?search=食べる时打开字典搜索。所有支持的链接见 [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "it": "I collegamenti profondi sono un modo per collegarsi direttamente ai contenuti di un'applicazione. DaKanji fornisce due schemi per questo tipo di link dakanji:// e http(s)://dakanji.app/app. Utilizzando questa funzione è possibile, ad esempio, aprire la ricerca del dizionario toccando questo link [dakanji://dictionary?search=食べる] (dakanji://dictionary?search=食べる). Per tutti i collegamenti supportati, vedere [dakanji.app/deep-links](https://dakanji.app/deep-links).",
+      "fr": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=食べる. Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "es": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
+      "pl": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links)."
     }
   },
   "ImmersionScreen": {
@@ -3502,6 +3639,72 @@
       "es": "Listas de palabras",
       "pl": "Listy słowne"
     },
+    "tutorial_begin_title": {
+      "en": "Welcome to the word lists screen!",
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "ru": "Добро пожаловать на экран списков слов!",
+      "ja": "単語リスト画面へようこそ！",
+      "zh": "欢迎来到单词列表屏幕！",
+      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "fr": "Bienvenue dans l'écran des listes de mots !",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "pl": "Witamy na ekranie list słów!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "tutorial_folder": {
+      "en": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
+      "de": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
+      "ru": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
+      "ja": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
+      "zh": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
+      "it": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
+      "fr": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
+      "es": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
+      "pl": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp."
+    },
+    "tutorial_list": {
+      "en": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats.",
+      "de": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen.",
+      "ru": "Это список слов. Нажав на него, можно увидеть его содержимое.",
+      "ja": "これは単語リストです。タップすると内容を見ることができます。",
+      "zh": "这是一个单词表。点击即可查看其内容。",
+      "it": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto.",
+      "fr": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu.",
+      "es": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido.",
+      "pl": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
+    },
+    "tutorial_create_folder": {
+      "en": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
+      "de": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
+      "ru": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
+      "ja": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
+      "zh": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
+      "it": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
+      "fr": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
+      "es": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
+      "pl": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je."
+    },
+    "tutorial_create_list": {
+      "en": "Using this button you can create a new wordlist.",
+      "de": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
+      "ru": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
+      "ja": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
+      "zh": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
+      "it": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
+      "fr": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
+      "es": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
+      "pl": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów."
+    },
     "no_entries": {
       "en": "No entries in this word list",
       "de": "Keine Einträge in dieser Liste",
@@ -3547,7 +3750,7 @@
       "pl": "Nowy folder"
     },
     "defaults": {
-      "en": "defaults",
+      "en": "Defaults",
       "de": "Standard",
       "ru": "по умолчанию",
       "ja": "デフォルト",
@@ -3656,71 +3859,16 @@
       "es": "Crear PDF",
       "pl": "Utwórz PDF"
     },
-    "tutorial_begin_title": {
-      "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
-      "ru": "Добро пожаловать на экран списков слов!",
-      "ja": "単語リスト画面へようこそ！",
-      "zh": "欢迎来到单词列表屏幕！",
-      "it": "Benvenuti nella schermata degli elenchi di parole!",
-      "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
-      "pl": "Witamy na ekranie list słów!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    },
-    "tutorial_folder": {
-      "en": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
-      "de": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
-      "ru": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
-      "ja": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
-      "zh": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
-      "it": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
-      "fr": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
-      "es": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
-      "pl": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp."
-    },
-    "tutorial_list": {
-      "en": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats.",
-      "de": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, können Sie ihren Inhalt sehen.",
-      "ru": "Это список слов. Нажав на него, можно увидеть его содержимое.",
-      "ja": "これは単語リストです。タップすると内容を見ることができます。",
-      "zh": "这是一个单词表。点击即可查看其内容。",
-      "it": "Questo è un elenco di parole. Toccandola si può vedere il suo contenuto.",
-      "fr": "Ceci est une liste de mots. En tapant dessus, vous pouvez voir son contenu.",
-      "es": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido.",
-      "pl": "To jest lista słów. Dotknięcie jej powoduje wyświetlenie jej zawartości."
-    },
-    "tutorial_create_folder": {
-      "en": "You can create a new wordlist-folder by either pressing this button or dragging a word list on another one.\nYou can also rearrange your folders and lists by dragging them.",
-      "de": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
-      "ru": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
-      "ja": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
-      "zh": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
-      "it": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
-      "fr": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
-      "es": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
-      "pl": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je."
-    },
-    "tutorial_create_list": {
-      "en": "Using this button you can create a new wordlist.",
-      "de": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
-      "ru": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
-      "ja": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
-      "zh": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
-      "it": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
-      "fr": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
-      "es": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
-      "pl": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów."
+    "drag_to_scroll": {
+      "en": "Drag here to scroll",
+      "de": "Ziehen hier, um zu scrollen",
+      "ru": "Перетащите сюда для прокрутки",
+      "ja": "ここをドラッグしてスクロール",
+      "zh": "拖动此处滚动",
+      "it": "Trascinare qui per scorrere",
+      "fr": "Glisser ici pour faire défiler",
+      "es": "Arrastre aquí para desplazarse",
+      "pl": "Przeciągnij tutaj, aby przewinąć"
     }
   }
 }

@@ -1,6 +1,54 @@
 
 # DaKanji - changelog
 
+## v3.3.1 - 仮名 (14.12.2023)
+
+New Features:
+
+- Kana chart
+  - Includes all common (and not-so-common) kana
+  - Mnemonics for the main kana
+  - Sounds for all available kana
+
+Improvements:
+
+- Better organized settings
+- Some fresh paint with Material 3 and Flutter 3.16
+- New dictionary data
+  - Examples 50% smaller
+
+Fixed:
+
+- Various UI fixes
+- Text screen selection buttons when no text is selected / available
+- DoJG asking twice to import
+
+-------------------------------------------------------------------------
+
+## v3.3.0 - 仮名 (14.12.2023)
+
+New Features:
+
+- Kana chart
+  - Includes all common (and not-so-common) kana
+  - Mnemonics for the main kana
+  - Sounds for all available kana
+
+Improvements:
+
+- Better organized settings
+- Some fresh paint with Material 3 and Flutter 3.16
+- New dictionary data
+  - Examples 50% smaller
+
+Fixed:
+
+- Various UI fixes
+- Text screen selection buttons when no text is selected / available
+- DoJG asking twice to import
+
+-------------------------------------------------------------------------
+
 ## v3.2.0+74 - 文法 (4.12.2023)
 
 New Features:
@@ -17,7 +65,7 @@ New Features:
   - Paste button
   - Automatic DoJG lookup
   - Added settings
-- Brand new website https://dakanji.app
+- Brand new website [dakanji.app](https://dakanji.app)
 - Import Dictionary of Japanese Grammar (DoJG) anki deck to effortlessly look up grammar
 
 - By popular request:
@@ -83,7 +131,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 3.0.0 - 辞書 (4.6.2023)
+## v3.0.0 - 辞書 (4.6.2023)
 
 New Features:
 
@@ -116,7 +164,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 2.1.0 - 仕上げ (19.7.2022)
+## v2.1.0 - 仕上げ (19.7.2022)
 
 new Features:
 
@@ -135,7 +183,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 2.0.1 - 隈なく (24.04.2022)
+## v2.0.1 - 隈なく (24.04.2022)
 
 new Features:
 
@@ -156,7 +204,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.4.0 - 現地化 (09.11.2021)
+## v1.4.0 - 現地化 (09.11.2021)
 
 new Features:
 
@@ -184,7 +232,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.3.0 - 漢字検定 (25.06.2021)
+## v1.3.0 - 漢字検定 (25.06.2021)
 
 new Features:
 
@@ -206,7 +254,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.2.2 - アニメ (21.05.2021)
+## v1.2.2 - アニメ (21.05.2021)
 
 Fixed:
 
@@ -214,7 +262,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v 1.2.1 - アニメ (20.05.2021)
+## v1.2.1 - アニメ (20.05.2021)
 
 Fixed:
 
@@ -247,7 +295,7 @@ Changes:
 
 -------------------------------------------------------------------------
 
-## v 1.1.0 - 熟語 (06.04.2021)
+## v1.1.0 - 熟語 (06.04.2021)
 
 New Features:
 
@@ -276,7 +324,7 @@ Fixes:
 
 -------------------------------------------------------------------------
 
-## v 1.0.4 (17.03.2021)
+## v1.0.4 (17.03.2021)
 
 Fixed:
 

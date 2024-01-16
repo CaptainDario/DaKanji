@@ -9,8 +9,8 @@ import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/changelog.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/changelog.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 
@@ -86,7 +86,7 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                       child: Center(
                         child: Text(
                           "🎉 ${LocaleKeys.HomeScreen_whats_new.tr()} 🎉",
-                          textScaleFactor: 2,
+                          textScaler: const TextScaler.linear(2),
                         ),
                       ),
                     ),

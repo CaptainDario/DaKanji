@@ -32,10 +32,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
       appBar: AppBar(
         title: Text("$g_AppTitle - ${LocaleKeys.AboutScreen_credits.tr()}"),
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          return true;
-        },
+      body: PopScope(
         child: Center(
           child: Column(
             children: [

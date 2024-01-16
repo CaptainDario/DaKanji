@@ -10,31 +10,31 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
-import 'package:da_kanji_mobile/feedback_localization.dart';
+import 'package:da_kanji_mobile/entities/feedback_localization.dart';
+import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
+// ignore: unused_import
+
 Future<void> main() async {
 
-  // initialize the app
+  // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
-  MediaKit.ensureInitialized();
 
-  // delete settings
-  //await clearPreferences();
+  // delete settings for debugging
+  //if(kDebugMode) await clearPreferences();
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kReleaseMode
-        ? 'https://5d7af59794f44bb2a457adc5d86ab890@o4504719855648768.ingest.sentry.io/4504719856762880'
-        : "";
+      options.dsn = kReleaseMode ? Env.SENTRY_DSN : "";
+      options.sendDefaultPii = false;
     },
     appRunner: () => runApp(
       ProviderScope(

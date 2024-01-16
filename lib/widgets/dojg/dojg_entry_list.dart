@@ -8,10 +8,10 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dojg/dojg_search_provider.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/domain/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
@@ -254,7 +254,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                               for (int i = 0; i < 3; i++)
                                 Text(
                                   volumeTags[i],
-                                  textScaleFactor: 1.25,
+                                  textScaler: const TextScaler.linear(1.25),
                                 )
                             ],
                           ),
@@ -276,7 +276,7 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                 currentEntries[i+1].grammaticalConcept[0]) {
                 return Text(
                   " ${currentEntries[i+1].grammaticalConcept[0]}",
-                  textScaleFactor: 1.5,
+                  textScaler: const TextScaler.linear(1.5),
                 );
               } else {
                 return const SizedBox();

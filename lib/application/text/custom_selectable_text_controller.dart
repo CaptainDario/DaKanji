@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/japanese_text_processing.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 
 /// Controller for the `CustomSelectableText`-widget to control the widget from
 /// outside itself.
@@ -60,6 +60,14 @@ class CustomSelectableTextController {
   /// If `nextChar == true` selects the next character instead
   void selectNext({bool nextChar = false}){
 
+    // assure that there are words when selecting text
+    if(words.isEmpty) return;
+    if(currentSelection.isCollapsed){
+      currentSelection = TextSelection(baseOffset: 0, extentOffset: words.first.length);
+      updateSelectionGraphics();
+      return;
+    }
+
     int cnt = 0;
     for (int i = 0; i < words.length; i++){
 
@@ -103,6 +111,14 @@ class CustomSelectableTextController {
   /// Moves the current selection to the previous token
   /// If `previousChar == true` selects the previous character instead
   void selectPrevious({bool previousChar = false}){
+
+    // assure that there are words when selecting text
+    if(words.isEmpty) return;
+    if(currentSelection.isCollapsed){
+      currentSelection = TextSelection(baseOffset: 0, extentOffset: words.first.length);
+      updateSelectionGraphics();
+      return;
+    }
 
     int cnt = currentCharCount;
     for (int i = words.length-1; i >= 0; i--){
@@ -148,7 +164,12 @@ class CustomSelectableTextController {
   /// If `shrinkBy == 0` removes the last token from the selection
   void shrinkSelectionRight(int shrinkBy){
 
-    assert (shrinkBy >= 0);
+    // assure that there are words and that the selection is valid
+    if(words.isEmpty) return;
+    if(currentSelection.isCollapsed) {
+      selectPrevious();
+      return;
+    }
 
     // shrink selection by fixed amount
     if(shrinkBy > 0 && currentSelection.extentOffset - currentSelection.baseOffset > 1){
@@ -191,7 +212,12 @@ class CustomSelectableTextController {
   /// If `shrinkBy == 0` extends by one token
   void growSelectionRight({int growBy = 0}){
 
-    assert (growBy >= 0);
+    // assure that there are words and that the selection is valid
+    if(words.isEmpty) return;
+    if(currentSelection.isCollapsed) {
+      selectNext();
+      return;
+    }
 
     // assure there is a token to select
     if(currentSelection.extentOffset == words.join("").length) return;

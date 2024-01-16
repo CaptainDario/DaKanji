@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/data/manual/manual_data.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_data.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_button.dart';
 
@@ -27,7 +29,7 @@ class _ManualScreenState extends State<ManualScreen>
   with TickerProviderStateMixin{
 
   /// The size of the manual buttons
-  double manualButtonSize = 200;
+  double manualButtonSize = 100;
   /// All manual types
   ManualData manualData = ManualData();
   
@@ -39,7 +41,7 @@ class _ManualScreenState extends State<ManualScreen>
 
   @override
   Widget build(BuildContext context) {
-    
+
     return DaKanjiDrawer(
       currentScreen: Screens.manual,
       drawerClosed: !widget.openedByDrawer,
@@ -47,19 +49,33 @@ class _ManualScreenState extends State<ManualScreen>
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: Wrap(
-              runSpacing: 8,
-              spacing: 8,
-              children: List.generate(manualData.manualTypes.length, (index) => 
-                ManualButton(
-                  size: manualButtonSize,
-                  icon: manualData.manualIcons[index],
-                  text: manualData.manualTitles[index],
-                  onPressed: () => pushManual(context, manualData.manualTypes[index]),
-                )
-              ),
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+
+              // 
+              if(constraints.maxHeight > constraints.maxWidth){
+                manualButtonSize = min((constraints.maxWidth-24)/2, 200);
+                print("height > w");
+              }
+              else{
+                manualButtonSize = min((constraints.maxWidth-24)/4, 200);
+              }
+
+              return SingleChildScrollView(
+                child: Wrap(
+                  runSpacing: 8,
+                  spacing: 8,
+                  children: List.generate(manualData.manualTypes.length, (index) => 
+                    ManualButton(
+                      size: manualButtonSize,
+                      icon: manualData.manualIcons[index],
+                      text: manualData.manualTitles[index],
+                      onPressed: () => pushManual(context, manualData.manualTypes[index]),
+                    )
+                  ),
+                ),
+              );
+            }
           ),
         ),
       )

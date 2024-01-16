@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:math';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -12,11 +11,11 @@ import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/tree/tree_node.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
-import 'package:da_kanji_mobile/domain/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
@@ -60,10 +59,15 @@ class _WordListsState extends State<WordLists> {
   TreeNode<WordListsData>? addedNewNode;
   /// Is currently an word lists node dragged over list
   bool itemDraggingOverThis = false;
+  /// Is a WordListNode currently being dragged
+  bool draggingWordListNode = false;
   /// The index of the divider that is currently being dragged over
   int? draggingOverDividerIndex;
   /// The controller for the list view
   ScrollController scrollController = ScrollController();
+  /// Global key for the listview, because without a key it resets the scroll
+  /// position after each setState
+  final _scrollKey = GlobalKey();
 
 
   @override
@@ -86,6 +90,12 @@ class _WordListsState extends State<WordLists> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     List<TreeNode<WordListsData>> childrenDFS = widget.parent!.dfs().toList();
@@ -93,11 +103,12 @@ class _WordListsState extends State<WordLists> {
     return DragTarget<TreeNode<WordListsData>>(
       hitTestBehavior: HitTestBehavior.opaque,
       onWillAccept: (data) {
-
-        if(widget.parent!.children.contains(data)) return false;
-
+    
         // mark this widget as accepting the element
-        setState(() {itemDraggingOverThis = true;});
+        setState(() {
+          itemDraggingOverThis = true;  
+        });
+        
         return true;
       },
       onLeave: (data) {
@@ -173,6 +184,7 @@ class _WordListsState extends State<WordLists> {
                   // the word lists / folders
                   Expanded(
                     child: ListView(
+                      key: _scrollKey,
                       controller: scrollController,
                       children: [
                         for (int i = 0; i < childrenDFS.length; i++)
@@ -187,10 +199,17 @@ class _WordListsState extends State<WordLists> {
                                   : null,
                                 child: WordListNode(
                                   // if the tutorial should be shown, open the default lists
-                                  i == 0 && widget.includeTutorial
+                                  i == 0 && widget.includeTutorial &&
+                                    GetIt.I<UserData>().showTutorialWordLists
                                     ? (childrenDFS[i]..value.isExpanded=true)
                                     : childrenDFS[i],
                                   i,
+                                  onDragStarted: (){
+                                    setState(() => draggingWordListNode = true);
+                                  },
+                                  onDragEnd: (){
+                                    setState(() => draggingWordListNode = false);
+                                  },
                                   onTap: (TreeNode<WordListsData> node) {
                                     // if the node is a word list, navigate to the word list screen
                                     if(wordListListypes.contains(node.value.type)){
@@ -203,7 +222,7 @@ class _WordListsState extends State<WordLists> {
                                         ),
                                       );
                                     }
-                                    // if the node is a folder, toggle the expanded state
+                                    // if the node is a folder, toggle the expanded state (whole tile callback)
                                     else if(wordListFolderTypes.contains(node.value.type)) {
                                       setState(() {
                                         node.value.isExpanded = !node.value.isExpanded;
@@ -231,35 +250,35 @@ class _WordListsState extends State<WordLists> {
                               
                               // if this is not the last element in the list and
                               // the next visible node is not a default node
-                              if(i < childrenDFS.length - 1 &&
+                              if(i < childrenDFS.length-1 &&
                                 wordListUserTypes.contains(
                                   childrenDFS.sublist(i+1).firstWhereOrNull(
                                     (e) => e.parent!.value.isExpanded
                                   )?.value.type
                                 )
                               )
-                              // add a divider in which lists can be dragged (eaier reorder)
+                              // add a divider in which lists can be dragged (easier reorder)
                               DragTarget<TreeNode<WordListsData>>(
                                 onWillAccept: (TreeNode<WordListsData>? data) {
-
+    
                                   // do no allow self drags
-                                  if(data == null || i == childrenDFS.indexOf(data)-1) {
-                                    return false;
-                                  }
-
-                                  draggingOverDividerIndex = i; 
+                                  if(data == null) return false;
+    
+                                  draggingOverDividerIndex = i;
                                   return true;
                                 },
                                 onAccept: (data) {
 
-                                  TreeNode<WordListsData> thisNode =
-                                    childrenDFS[i+1];
+                                  // do nothing on self drag
+                                  if(i == childrenDFS.indexOf(data)-1) return;
+    
+                                  TreeNode<WordListsData> thisNode = childrenDFS[i+1];
                                   if(thisNode.parent!.value.type == WordListNodeType.folderDefault) {
                                     thisNode = childrenDFS.firstWhere((n) => 
                                       wordListUserTypes.contains(n.value.type)
                                     );
                                   }
-
+    
                                   setState(() {
                                     data.parent!.removeChild(data);
                                     thisNode.parent!.insertChild(
@@ -270,9 +289,7 @@ class _WordListsState extends State<WordLists> {
                                   draggingOverDividerIndex = null;
                                 },
                                 onLeave: (node) {
-                                  setState(() {
-                                    draggingOverDividerIndex = null;
-                                  });
+                                  draggingOverDividerIndex = null;
                                 },
                                 builder: (context, candidateData, rejectedData) {
                                   return Padding(
@@ -288,7 +305,11 @@ class _WordListsState extends State<WordLists> {
                                   );
                                 }
                               )
-                            ]
+                            ],
+                        // if the list is scrollable add a gap
+                        const SizedBox(
+                          height: 48,
+                        )
                       ],
                     ),
                   ),
@@ -329,7 +350,10 @@ class _WordListsState extends State<WordLists> {
                     ]
                 ],
               ),
-              if(scrollController.hasClients)
+              // the list is scrollable and
+              // the scroll position is not at the end
+              if(draggingWordListNode &&
+                !(scrollController.positions.first.pixels == scrollController.positions.first.maxScrollExtent))
                 Positioned(
                   bottom: 0,
                   child: DragTarget<TreeNode<WordListsData>>(
@@ -337,20 +361,29 @@ class _WordListsState extends State<WordLists> {
                       scrollController.animateTo(
                         scrollController.position.maxScrollExtent,
                         duration: Duration(milliseconds: 
-                          ((scrollController.position.maxScrollExtent - scrollController.offset) * 5).toInt()
+                          max(1, ((scrollController.position.maxScrollExtent - scrollController.offset) * 5).toInt())
                         ),
-                        curve: Curves.easeOut
-                      );
+                        curve: Curves.linear
+                      ).then((value) => setState((){}));
                       return false;
                     },
                     onLeave: (data) {
                       scrollController.position.hold(() { });
                     },
                     builder: (context, candidateData, rejectedData) {
+                      if(!draggingWordListNode) return const SizedBox();
+    
                       return SizedBox(
-                        height: min(48, scrollController.position.maxScrollExtent - scrollController.offset),
+                        height: 48,
                         width: MediaQuery.of(context).size.width,
-                        //color: Colors.amber
+                        //color: Theme.of(context).canvasColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(LocaleKeys.WordListsScreen_drag_to_scroll.tr()),
+                            const Icon(Icons.arrow_downward),
+                          ],
+                        ),
                       );
                     }
                   ),
@@ -376,24 +409,5 @@ class _WordListsState extends State<WordLists> {
       addedNewNode = null;
     });
 
-  }
-
-  Widget proxyDecorator(
-    Widget child, int index, Animation<double> animation) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (BuildContext context, Widget? child) {
-        final double animValue = Curves.easeInOut.transform(animation.value);
-        final double elevation = lerpDouble(0, 6, animValue)!;
-        return Center(
-          child: Material(
-            elevation: elevation,
-            shadowColor: Colors.grey,
-            child: child,
-          ),
-        );
-      },
-      child: child,
-    );
   }
 }

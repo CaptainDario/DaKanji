@@ -7,16 +7,17 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
-import 'package:da_kanji_mobile/data/screens.dart';
-import 'package:da_kanji_mobile/data/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/domain/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/kana/kana.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
@@ -47,24 +48,22 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// Is the speed dial open
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   /// The functions to be called when the menu items are pressed
-  late List<Function> menuFunctions;  
-  /// The menu items to be displayed in the speed dial
-  late List<String> menuItems;
+  late List<Function> menuFunctions;
 
   /// The table of kana selected from the user before applying responsivess-modifications
   List<List<String>> baseKanaTable = hiragana;
   /// The table of kana to be displayed
   List<List<String>> kanaTable = hiragana;
   /// Are currently hiragana being shown
-  bool isHiragana = true;
+  bool isHiragana = GetIt.I<Settings>().kanaTable.isHiragana;
   /// Are romaji being shown
-  bool showRomaji = true;
+  bool showRomaji = GetIt.I<Settings>().kanaTable.showRomaji;
   /// Are dakuten being shown
-  bool showDaku = false;
+  bool showDaku = GetIt.I<Settings>().kanaTable.showDaku;
   /// Are yoon being shown
-  bool showYoon = false;
+  bool showYoon = GetIt.I<Settings>().kanaTable.showYoon;
   /// Are special yoon being shown
-  bool showSpecial = false;
+  bool showSpecial = GetIt.I<Settings>().kanaTable.showSpecial;
 
   /// The currently selected kana
   String? currentKana;
@@ -131,20 +130,13 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   void dispose() {
     _controller.dispose();
     kanaSoundPlayer.dispose();
+    updateSettings();
     super.dispose();
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-    menuItems = [
-      showDaku        ? "dakuten_on.svg"  : "dakuten_off.svg",
-      showYoon        ? "yoon_on.svg"     : "yoon_off.svg",
-      isHiragana      ? "switch_hira.svg" : "switch_kata.svg",
-      showRomaji      ? "romaji_on.svg"   : "romaji_off.svg",
-      showSpecial     ? "special_on.svg"  : "special_off.svg", 
-    ].map((e) => "assets/icons/kana/$e").toList();
 
     return DaKanjiDrawer(
       currentScreen: Screens.kanaTable,
@@ -158,6 +150,9 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![2]
               : null,
             child: SpeedDial(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               icon: Icons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
@@ -165,18 +160,96 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               backgroundColor: g_Dakanji_green,
               activeBackgroundColor: g_Dakanji_red,
               spacing: 10,
-              
+              onClose: () => updateSettings(),
               children: [
-                for (int i = 0; i < menuItems.length; i++)
+                for (int i = 0; i < 5; i++)
                   SpeedDialChild(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: Focus(
                       focusNode: widget.includeTutorial
                         ? GetIt.I<Tutorials>().kanaTableScreenTutorial.focusNodes![3+i]
                         : null,
-                      child: SvgPicture.asset(
-                        menuItems[i],
-                        width: 35,
-                        height: 35,
+                      child: SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              // show kana with dakuten
+                              if(i == 0)
+                                const FittedBox(
+                                  child: Text(
+                                    "だ",
+                                    style: TextStyle(fontSize: 1000, color: Colors.white),
+                                  )
+                                ),
+                              // show kana with small kana
+                              if(i == 1)
+                                const FittedBox(
+                                  child: Text(
+                                    "きゅ",
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200, color: Colors.white),
+                                  )
+                                ),
+                              // hiragana / katakana toggle
+                              if(i == 2)
+                                FittedBox(
+                                  child: Text(
+                                    isHiragana ? "ア" : "あ",
+                                    style: const TextStyle(fontSize: 1000, color: Colors.white),
+                                  )
+                                ),
+                              // romaji
+                              if(i == 3)
+                              ...[
+                                  const Positioned(
+                                    height: 30,
+                                    width: 30,
+                                    top: -4,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "あ",
+                                        style: TextStyle(fontSize: 1000, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    bottom: -4,
+                                    height: 18,
+                                    width: 18,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "a",
+                                        style: TextStyle(fontSize: 1000, color: Colors.white)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              // rare kana
+                              if(i == 4)
+                                const FittedBox(
+                                  child: Text(
+                                    "ファ",
+                                    style: TextStyle(fontSize: 1000, letterSpacing: -200, color: Colors.white),
+                                  )
+                                ),
+                              
+                              if(showDaku   && i == 0 || showYoon    && i == 1 ||
+                                showRomaji && i == 3 || showSpecial && i == 4 )
+                                Transform.rotate(
+                                  angle: 45,
+                                  child: Container(
+                                    width: 3, height: 40, color: Colors.white,
+                                  )
+                                )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     backgroundColor: g_Dakanji_green,
@@ -218,18 +291,21 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     height: constraints.maxHeight-actionButtonHeigt,
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
-                    onTap: (String kana) {
-                      kanaSoundPlayer.open(
+                    onTap: (String kana) async {
+                      await kanaSoundPlayer.open(
                         Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
-                        play: true
+                        play: false
                       );
+                      if(GetIt.I<Settings>().kanaTable.playAudio){
+                        kanaSoundPlayer.play();
+                      }
                       setState(() {
                         currentKana = kana;
                         currentKanaX = constraints.maxWidth /
                           gridColumnCount * getKanaX(kana) + cellWidth/2;
                         currentKanaY = (constraints.maxHeight-actionButtonHeigt) /
                           gridRowCount * getKanaY(kana) + cellHeight/2;
-                        _controller.forward(from: 0);
+                        _controller.forward(from: 0).then((value) => setState((){}));
                       });
                     },
                   ),
@@ -251,16 +327,31 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                           });
                         });
                       },
-                      child: Container(
-                        color: Colors.black.withOpacity(0.5),
+                      child: AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Container(
+                            color: Colors.black.withOpacity(
+                              lerpDouble(0, 0.5, _controller.value) ?? 0
+                            )
+                          );
+                        }
                       ),
-                    )
+                    ),
                   ),
                 // popup
                 if(currentKana != null)
                   AnimatedBuilder(
                     animation: _controller,
-                    child: KanaInfoCard(currentKana!),
+                    child: KanaInfoCard(
+                      currentKana!,
+                      showAnimatedKana: _controller.isCompleted,
+                      playKanaAnimationWhenOpened: _controller.isCompleted &&
+                        GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
+                      onPlayPressed: () async {
+                        await kanaSoundPlayer.play();
+                      },
+                    ),
                     builder: (context, child) {
                       return Positioned(
                         left: lerpDouble(currentKanaX,
@@ -287,6 +378,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
       ),
     );
   }
+
 
   /// based on the screen size, returns the current kana table
   void setResponsiveKanaTable(BoxConstraints constraints){
@@ -499,5 +591,16 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
     } else {
       showRomaji = true;
     }
+  }
+
+  /// Update the values in the settings with the values currently set by the
+  /// user
+  void updateSettings(){
+    GetIt.I<Settings>().kanaTable.isHiragana = isHiragana;
+    GetIt.I<Settings>().kanaTable.showRomaji = showRomaji;
+    GetIt.I<Settings>().kanaTable.showDaku = showDaku;
+    GetIt.I<Settings>().kanaTable.showYoon = showYoon;
+    GetIt.I<Settings>().kanaTable.showSpecial = showSpecial;
+    GetIt.I<Settings>().save();
   }
 }

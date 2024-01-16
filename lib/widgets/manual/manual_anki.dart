@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
@@ -85,25 +86,7 @@ class ManualAnki extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  if(await checkAnkiAvailable()) {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
-                        ),
-                      ),
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          LocaleKeys.ManualScreen_anki_test_connection_fail.tr(),
-                        ),
-                      ),
-                    );
-                  }
+                  GetIt.I<Anki>().checkAnkiAvailableAndShowSnackbar(context);
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

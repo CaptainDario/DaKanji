@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/handle_predictions.dart';
-import 'package:da_kanji_mobile/domain/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
+import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// A button which shows the given [char].
@@ -83,6 +83,7 @@ class _PredictionButtonState extends State<PredictionButton>
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
           ),
           // handle a short press
           onPressed: pressed,
@@ -92,9 +93,10 @@ class _PredictionButtonState extends State<PredictionButton>
             child: Text(
               widget.char,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 600,
-                fontFamily: g_japaneseFontFamily
+                fontFamily: g_japaneseFontFamily,
+                color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
               ),
             )
           )

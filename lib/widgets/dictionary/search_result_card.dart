@@ -7,8 +7,8 @@ import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/data/iso/iso_table.dart';
-import 'package:da_kanji_mobile/domain/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {

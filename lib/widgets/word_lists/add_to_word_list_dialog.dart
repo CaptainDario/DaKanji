@@ -6,10 +6,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/domain/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;
 
+/// [AwesomeDialog] to add a word to a wordlist
 AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget){
   return AwesomeDialog(
     context: context,
