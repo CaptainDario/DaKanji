@@ -1,6 +1,6 @@
 app-id: com.DaAppLab.DaKanji
 runtime: org.gnome.Platform
-runtime-version: '42'
+runtime-version: '45'
 sdk: org.gnome.Sdk
 command: DaKanji
 finish-args:
