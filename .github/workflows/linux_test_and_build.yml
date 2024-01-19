@@ -66,7 +66,7 @@ jobs:
       - name: Setup DaKanji env.dart
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_ }} 
         run: |
           python3 ./.github/workflows/create_dakanji_env.py
           flutter pub run build_runner build --delete-conflicting-outputs
@@ -115,19 +115,19 @@ jobs:
           rm -rf flatpak/build-dir
 
       # build SNAP
-      - name: prepare snap building
-        run: |
-          python3 ./.github/workflows/building.py update_snapcraft_yaml
-          flutter clean
-          flutter pub get
-      - name: Install Snapcraft and build snap
-        uses: snapcore/action-build@v1
-        id: snapcraft
-      - name: Rename snap
-        run: |
-          mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}.snap
-      - name: Upload snap as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}.snap
-          path: DaKanji_${{env.DAKANJI_VERSION}}.snap
+      # - name: prepare snap building
+      #   run: |
+      #     python3 ./.github/workflows/building.py update_snapcraft_yaml
+      #     flutter clean
+      #     flutter pub get
+      # - name: Install Snapcraft and build snap
+      #   uses: snapcore/action-build@v1
+      #   id: snapcraft
+      # - name: Rename snap
+      #   run: |
+      #     mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}.snap
+      # - name: Upload snap as artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: DaKanji_${{env.DAKANJI_VERSION}}.snap
+      #     path: DaKanji_${{env.DAKANJI_VERSION}}.snap
