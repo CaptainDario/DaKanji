@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +30,6 @@ Future<void> main() async {
 
   // delete settings for debugging
   //if(kDebugMode) await clearPreferences();
-
-  await logDefaultEvent("Dev");
 
   await SentryFlutter.init(
     (options) {
