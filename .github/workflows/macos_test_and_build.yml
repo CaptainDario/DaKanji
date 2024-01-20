@@ -72,7 +72,7 @@ jobs:
       - name: Setup DaKanji env.dart
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
           POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
         run: |
           python3 ./.github/workflows/create_dakanji_env.py
