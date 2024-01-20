@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
+import 'package:da_kanji_mobile/repositories/releases/os_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,6 +60,7 @@ Future<Map> defaultProperties() async {
   return {
     "Installation method" : await findInstallationMethod(),
     "Platform" : Platform.operatingSystem,
+    "Platform version" : await getVersion(),
     "Version" : g_Version.fullVersionString,
     "Debug" : kDebugMode,
     "distinct_id": "Anonym_${randomId()}"
