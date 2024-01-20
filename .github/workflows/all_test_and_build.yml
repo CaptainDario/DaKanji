@@ -25,24 +25,43 @@ jobs:
       KEY_PROPERTIES_STORE_PASSWORD: ${{ secrets.KEY_PROPERTIES_STORE_PASSWORD }}
       KEY_PROPERTIES_KEY_ALIAS: ${{ secrets.KEY_PROPERTIES_KEY_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+      POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+      POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
 
   #ios-test-and-build:
   #  needs:
   #    - cache_assets
   #  uses: ./.github/workflows/ios_test_and_build.yml
+  #secrets:
+  #    SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+  #    POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+  #    POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
 
   linux-test-and-build:
     needs:
       - cache_assets
     uses: ./.github/workflows/linux_test_and_build.yml
+    secrets:
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+      POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+      POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
   #macos-test-and-build:
   #  needs:
   #    - cache_assets
   #  uses: ./.github/workflows/macos_test_and_build.yml
+  #  secrets:
+  #    SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
+  #    SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
+  #    POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+  #    POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
   windows-test-and-build:
     needs:
       - cache_assets
+    uses: ./.github/workflows/windows_test_and_build.yml
     secrets:
       SELF_SIGN_MSIX_PFX: ${{secrets.SELF_SIGN_MSIX_PFX}}
       SELF_SIGN_MSIX_PWD: ${{secrets.SELF_SIGN_MSIX_PWD}}
-    uses: ./.github/workflows/windows_test_and_build.yml
+      POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+      POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+    
