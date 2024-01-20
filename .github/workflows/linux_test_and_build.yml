@@ -10,7 +10,13 @@ on:
   
   # allows that other workflows can run this one
   workflow_call:
-    #secrets:
+    secrets:
+      SENTRY_DSN:
+        required: true
+      POSTHOG_API_KEY_DEV:
+        required: true
+      POSTHOG_API_KEY_REL:
+        required: true
 
 #env:
 

@@ -19,6 +19,12 @@ on:
         required: true
       KEYSTORE_BASE64: 
         required: true
+      SENTRY_DSN:
+        required: true
+      POSTHOG_API_KEY_DEV:
+        required: true
+      POSTHOG_API_KEY_REL:
+        required: true
 
 
 env:
