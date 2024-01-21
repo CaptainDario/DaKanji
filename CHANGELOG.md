@@ -1,6 +1,19 @@
 
 # DaKanji - changelog
 
+## v3.4.0 - 仮名 (0.3.2023)
+
+New Features:
+
+- Dictionary
+  - Share images of word entries
+
+Improvements:
+
+Fixed:
+
+-------------------------------------------------------------------------
+
 ## v3.3.3 - 仮名 (21.12.2023)
 
 New Features:
