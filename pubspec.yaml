@@ -89,7 +89,7 @@ dependencies:
   flutter_riverpod: 2.4.0
   riverpod_annotation: 2.1.5
   another_flushbar: 1.12.30
-  store_checker: 1.4.0
+  screenshot: 2.1.0
 
   kana_kit:
     git:
@@ -110,6 +110,7 @@ dependencies:
   webview_flutter_wkwebview: any
   in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
+  store_checker: 1.4.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
   isar: any # included in dakanji dictionary
