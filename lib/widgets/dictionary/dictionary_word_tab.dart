@@ -62,11 +62,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   List<String> menuItems = [
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
-    // TODO v word lists - reenable
-    if(kDebugMode)
     LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
-    // TODO v word lists - reenable
-    if(kDebugMode)
     LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 

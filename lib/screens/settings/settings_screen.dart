@@ -92,12 +92,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if(kDebugMode)
                         KanjiMapSettings(settings),
                       KanaTableSettings(settings),
-                      // TODO: v word lists - enable
-                      if(kDebugMode)
-                        WordListSettings(settings),     
-                      // TODO - v word lists - enable anki settings
-                      if(kDebugMode)
-                        AnkiSettings(settings),
+                      WordListSettings(settings),     
+                      AnkiSettings(settings),
                       ClipboardSettings(settings),
                       MiscSettings(settings),
                     ],

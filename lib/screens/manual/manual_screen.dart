@@ -55,7 +55,6 @@ class _ManualScreenState extends State<ManualScreen>
               // 
               if(constraints.maxHeight > constraints.maxWidth){
                 manualButtonSize = min((constraints.maxWidth-24)/2, 200);
-                print("height > w");
               }
               else{
                 manualButtonSize = min((constraints.maxWidth-24)/4, 200);
