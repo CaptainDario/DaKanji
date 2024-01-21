@@ -16,9 +16,57 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
+
+
+
+/// Download the audio files from the github release matching this version
+  void downloadAudio(BuildContext context){
+
+    downloadPopup(
+      context: context,
+      dismissable: true,
+      btnOkOnPress: () async {
+        downloadAssetFromGithubRelease(
+          File(g_DakanjiPathManager.audiosDirectory.path),
+          g_GithubApiDependenciesRelase,
+        ).then((value) {
+          Navigator.of(context).pop();
+        });
+        AwesomeDialog(
+          context: context,
+          headerAnimationLoop: false,
+          dismissOnTouchOutside: false,
+          customHeader: Image.asset("assets/images/dakanji/icon.png"),
+          dialogType: DialogType.noHeader,
+          body: StreamBuilder(
+            stream: g_initAppInfoStream.stream,
+            builder: (context, snapshot) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height / 4,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const DaKanjiLoadingIndicator(),
+                      const SizedBox(height: 8,),
+                      Text(
+                        snapshot.data ?? ""
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          )
+        ).show();
+      }
+    ).show();
+
+  }
 
 /// Tries to copy `asset` from assets and if that fails,
 /// downloads it from `url` (github). `path` is the destination folder inside of
