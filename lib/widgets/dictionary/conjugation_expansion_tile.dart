@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/dictionary/conjugation_column.dart';
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,18 +17,32 @@ import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {
-  const ConjugationExpansionTile(
-    {
-      required this.word,
-      required this.pos,
-      super.key
-    }
-  );
+
 
   /// The verb of which the conjugation are shown in this widget
   final String word;
   /// The part of speech of this verb that should be used for conjugating
   final List<Pos> pos;
+  /// Should the conjugations be wrapped in a [ExpansionTile] and then be
+  /// navigatable using a tabbar
+  final bool isExpandable;
+  /// Only of use when `isExpandable==false`, decides which conjugation pattern
+  /// to show, for example ます系、辞書系
+  final List<int> conjugationSets;
+  /// Callback that is triggered when the user changes the expansion state
+  /// of the conjugation table
+  final Function(bool state)? onExpansionChanged;
+
+  const ConjugationExpansionTile(
+    {
+      required this.word,
+      required this.pos,
+      this.isExpandable = true,
+      this.conjugationSets = const [0],
+      this.onExpansionChanged,
+      super.key
+    }
+  );
 
   @override
   State<ConjugationExpansionTile> createState() => _ConjugationExpansionTileState();
@@ -70,52 +86,66 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
 
     return conjugationTitles.isEmpty
       ? Container()
-      : ExpansionTile(
-        textColor: Theme.of(context).highlightColor,
-        childrenPadding: const EdgeInsets.all(16),
-        title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
-        children: [
-          TabBar(
-            labelColor: Theme.of(context).highlightColor,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Theme.of(context).highlightColor,
-            controller: tabController,
-            tabs: tabTitles.map((e) => 
-              Text(e)
-            ).toList()
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: TabBarView(
+      : widget.isExpandable
+        ? ExpansionTile(
+          textColor: Theme.of(context).highlightColor,
+          childrenPadding: const EdgeInsets.all(16),
+          title: Text(LocaleKeys.DictionaryScreen_word_conjugation.tr()),
+          onExpansionChanged: (value) {
+            widget.onExpansionChanged?.call(value);
+          },
+          children: [
+            TabBar(
+              labelColor: Theme.of(context).highlightColor,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Theme.of(context).highlightColor,
               controller: tabController,
-              children: List.generate(tabTitles.length, (i) =>
-                SingleChildScrollView(
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    children: List.generate(_conjos[(i/2).floor()].length, (j) => 
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: VerbConjugationEntry(
-                          title: conjugationTitles[(i/2).floor()][j],
-                          explanation: conjugationExplanations[(i/2).floor()][j],
-                          conjugationType: i.isEven
-                            ? ConjugationType.plain
-                            : ConjugationType.polite,
-                          plainFormPositive: _conjos[(i/2).floor()][j][0],
-                          plainFormNegative: _conjos[(i/2).floor()][j][1],
-                          politeFormPositive: _conjos[(i/2).floor()][j][2], 
-                          politeFormNegative: _conjos[(i/2).floor()][j][3]
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ).toList(),
+              tabs: tabTitles.map((e) => 
+                Text(e)
+              ).toList()
             ),
-          )
-        ]
-      );
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: TabBarView(
+                controller: tabController,
+                children: List.generate(tabTitles.length, (i) =>
+                  SingleChildScrollView(
+                    clipBehavior: Clip.antiAlias,
+                    child: ConjugationColumn(
+                      conjugationTitles: conjugationTitles,
+                      conjugationExplanations: conjugationExplanations,
+                      conjos: _conjos,
+                      conjugationSets: [i]
+                    )
+                  )
+                ).toList(),
+              ),
+            )
+          ]
+        )
+        : Column(
+          children: [
+            const Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  LocaleKeys.DictionaryScreen_word_conjugation.tr(),
+                  style: const TextStyle(fontSize: 18),
+                ),
+              )
+            ),
+            ConjugationColumn(
+              conjugationTitles: conjugationTitles,
+              conjugationExplanations: conjugationExplanations,
+              conjos: _conjos,
+              conjugationSets: List.generate(tabTitles.length, (i) => i)
+            ),
+          ],
+        );
   }
+
 
   /// Conjugates the current word and stores the results in the class members
   void initConjugations(){
