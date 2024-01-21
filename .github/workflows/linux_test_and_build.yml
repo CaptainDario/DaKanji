@@ -10,7 +10,13 @@ on:
   
   # allows that other workflows can run this one
   workflow_call:
-    #secrets:
+    secrets:
+      SENTRY_DSN:
+        required: true
+      POSTHOG_API_KEY_DEV:
+        required: true
+      POSTHOG_API_KEY_REL:
+        required: true
 
 #env:
 
@@ -66,7 +72,8 @@ jobs:
       - name: Setup DaKanji env.dart
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
         run: |
           python3 ./.github/workflows/create_dakanji_env.py
           flutter pub run build_runner build --delete-conflicting-outputs
