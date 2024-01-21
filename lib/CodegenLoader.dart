@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -88,6 +86,7 @@ class CodegenLoader extends AssetLoader{
     "word_tab_menu_add_to_list": "添加到列表",
     "word_tab_menu_send_to_anki": "发送到 Anki",
     "word_tab_menu_share": "分享",
+    "word_tab_menu_share_as_image": "分享（图片）",
     "word_wikipedia": "维基百科"
   },
   "DojgScreen": {
@@ -476,6 +475,7 @@ static const Map<String,dynamic> ja = {
     "word_tab_menu_add_to_list": "リストに追加",
     "word_tab_menu_send_to_anki": "Ankiに送信",
     "word_tab_menu_share": "シェア",
+    "word_tab_menu_share_as_image": "シェア（イメージ）",
     "word_wikipedia": "ウィキペディア"
   },
   "DojgScreen": {
@@ -893,6 +893,7 @@ static const Map<String,dynamic> de = {
     "word_tab_menu_add_to_list": "Zu Liste hinzufügen",
     "word_tab_menu_send_to_anki": "An Anki senden",
     "word_tab_menu_share": "Teilen",
+    "word_tab_menu_share_as_image": "Teilen (Bild)",
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
@@ -1274,6 +1275,7 @@ static const Map<String,dynamic> ru = {
     "word_tab_menu_add_to_list": "Добавить в список",
     "word_tab_menu_send_to_anki": "Отправить в Anki",
     "word_tab_menu_share": "Поделиться",
+    "word_tab_menu_share_as_image": "Поделиться (изображение)",
     "word_wikipedia": "Википедия"
   },
   "DojgScreen": {
@@ -1675,6 +1677,7 @@ static const Map<String,dynamic> pl = {
     "word_tab_menu_add_to_list": "Dodaj do listy",
     "word_tab_menu_send_to_anki": "Wyślij do Anki",
     "word_tab_menu_share": "Udział",
+    "word_tab_menu_share_as_image": "Udostępnij (obraz)",
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
@@ -2092,6 +2095,7 @@ static const Map<String,dynamic> en = {
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_send_to_anki": "Send to Anki",
     "word_tab_menu_share": "Share",
+    "word_tab_menu_share_as_image": "Share (image)",
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
@@ -2473,6 +2477,7 @@ static const Map<String,dynamic> it = {
     "word_tab_menu_add_to_list": "Aggiungi all'elenco",
     "word_tab_menu_send_to_anki": "Inviare ad Anki",
     "word_tab_menu_share": "Condividi",
+    "word_tab_menu_share_as_image": "Condividi (immagine)",
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {
@@ -2839,6 +2844,7 @@ static const Map<String,dynamic> fr = {
     "word_tab_menu_add_to_list": "Ajouter à la liste",
     "word_tab_menu_send_to_anki": "Envoyer à Anki",
     "word_tab_menu_share": "Partager",
+    "word_tab_menu_share_as_image": "Partager (image)",
     "word_wikipedia": "Wikipedia (en anglais)"
   },
   "DojgScreen": {
@@ -3205,6 +3211,7 @@ static const Map<String,dynamic> es = {
     "word_tab_menu_add_to_list": "Añadir a la lista",
     "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_tab_menu_share": "Compartir",
+    "word_tab_menu_share_as_image": "Compartir (imagen)",
     "word_wikipedia": "Wikipedia"
   },
   "DojgScreen": {

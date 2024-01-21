@@ -237,6 +237,17 @@
       "es": "Compartir",
       "pl": "Udział"
     },
+    "word_tab_menu_share_as_image": {
+      "en": "Share (image)",
+      "de": "Teilen (Bild)",
+      "ru": "Поделиться (изображение)",
+      "ja": "シェア（イメージ）",
+      "zh": "分享（图片）",
+      "it": "Condividi (immagine)",
+      "fr": "Partager (image)",
+      "es": "Compartir (imagen)",
+      "pl": "Udostępnij (obraz)"
+    },
     "word_tab_menu_add_to_list": {
       "en": "Add to list",
       "de": "Zu Liste hinzufügen",
