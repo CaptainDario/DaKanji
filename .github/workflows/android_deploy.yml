@@ -94,9 +94,6 @@ jobs:
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk --clobber
           gh release upload gh_action artifacts/DaKanji_${{env.DAKANJI_VERSION}}_fat.apk --clobber
  
-      # TODO upload flatpak to GH release
-
-
       # get appbundle artifact and upload it to GH release and play store
       - name: get build artifacts for appbundle
         uses: actions/download-artifact@v3
