@@ -1,6 +1,30 @@
 
 # DaKanji - changelog
 
+## v3.3.3 - 仮名 (21.12.2023)
+
+New Features:
+
+- Kana chart
+  - Includes all common (and not-so-common) kana
+  - Mnemonics for the main kana
+  - Sounds for all available kana
+
+Improvements:
+
+- Better organized settings
+- Some fresh paint with Material 3 and Flutter 3.16
+- New dictionary data
+  - Examples 50% smaller
+
+Fixed:
+
+- Various UI fixes
+- Text screen selection buttons when no text is selected / available
+- DoJG asking twice to import
+
+-------------------------------------------------------------------------
+
 ## v3.3.2 - 仮名 (19.12.2023)
 
 New Features:
