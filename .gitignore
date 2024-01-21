@@ -72,6 +72,7 @@ assets/ipadic.zip
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
 ./plugins/kagome_dart/*
+macos/libtensorflowlite_c-mac.dylib
 
 # ignore all keys in keys folder
 keys/DaKanjiRecognizer.jks
