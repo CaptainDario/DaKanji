@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -147,7 +150,8 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
                     child: WebViewWidget(
                       controller: WebViewController()
                         ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                        ..loadRequest(Uri.parse("$g_GoogleImgSearchUrl$readingOrKanji")),
+                        ..loadRequest(Uri.parse(
+                          "$g_GoogleImgSearchUrl${GetIt.I<Settings>().dictionary.googleImageSearchQuery.replaceAll(SettingsDictionary.d_googleImageSearchQuery, readingOrKanji ?? "")}")),
                         gestureRecognizers: {
                           Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
                         },
