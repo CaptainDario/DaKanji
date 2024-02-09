@@ -68,6 +68,7 @@ class _DrawingSettingsState extends State<DrawingSettings> {
             },
             onLeadingIconPressed: () => infoPopup(
               context,
+              LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
               LocaleKeys.SettingsScreen_custom_url_explanation.tr(
                 namedArgs: {'kanjiPlaceholder' : SettingsDrawing.kanjiPlaceholder}
               )  
