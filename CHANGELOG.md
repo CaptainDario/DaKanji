@@ -7,6 +7,7 @@ New Features:
 
 - Dictionary
   - Share images of word entries
+  - Image search query customizable
 
 Improvements:
 
