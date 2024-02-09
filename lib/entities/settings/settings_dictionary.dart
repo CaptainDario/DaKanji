@@ -105,6 +105,14 @@ class SettingsDictionary with ChangeNotifier {
   @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
   bool resumeAnimationAfterStopSwipe = d_resumeAnimationAfterStopSwipe;
 
+  /// Query to use in google image search
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const String d_googleImageSearchQuery = "%X%";
+  /// Query to use in google image search
+  @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
+  String googleImageSearchQuery = d_googleImageSearchQuery;
+
 
   SettingsDictionary();
 

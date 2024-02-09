@@ -1,6 +1,7 @@
 // Dart imports:
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -27,6 +28,9 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_butto
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
+
+
 
 class DictionarySettings extends StatefulWidget {
 
@@ -308,6 +312,24 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             });
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+
+        // custom google image search
+        ResponsiveInputFieldTile(
+          enabled: true,
+          leadingIcon: Icons.info_outline,
+          text: widget.settings.dictionary.googleImageSearchQuery,
+          hintText: "Google image search query",
+          onLeadingIconPressed: () => infoPopup(
+              context,
+              LocaleKeys.SettingsScreen_custom_url_explanation.tr()  
+            ),
+          onChanged: (value) {
+            setState(() {
+              widget.settings.dictionary.googleImageSearchQuery = value;
+              widget.settings.save();
+            });
+          },
         ),
 
         // reshow tutorial
