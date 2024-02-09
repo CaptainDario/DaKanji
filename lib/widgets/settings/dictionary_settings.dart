@@ -322,6 +322,7 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           hintText: "Google image search query",
           onLeadingIconPressed: () => infoPopup(
               context,
+              LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
               LocaleKeys.SettingsScreen_custom_url_explanation.tr()  
             ),
           onChanged: (value) {

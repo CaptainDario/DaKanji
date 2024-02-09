@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:easy_localization/easy_localization.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 
-void showCustomURLPopup(BuildContext context){
+
+/// Shows a info dialog using the given `explanationText`
+void infoPopup(BuildContext context, String explanationTitle, String explanationText){
   AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
@@ -17,7 +15,7 @@ void showCustomURLPopup(BuildContext context){
     body: Column(
       children: [
         Text(
-          LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
+          explanationTitle,
           //textScaleFactor: 2,
           maxLines: 1,
           style: const TextStyle(
@@ -28,12 +26,7 @@ void showCustomURLPopup(BuildContext context){
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Text(
-                LocaleKeys.SettingsScreen_custom_url_explanation.tr(
-                  namedArgs: {'kanjiPlaceholder' : 
-                    SettingsDrawing.kanjiPlaceholder}
-                )
-              ),
+              Text(explanationText),
             ]
           )
         ),
