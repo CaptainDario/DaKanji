@@ -32,7 +32,7 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
       ..resumeAnimationAfterStopSwipe =
           json['resumeAnimationAfterStopSwipe'] as bool? ?? false
       ..googleImageSearchQuery =
-          json['googleImageSearchQuery'] as String? ?? false;
+          json['googleImageSearchQuery'] as String? ?? '%X%';
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{

@@ -110,7 +110,7 @@ class SettingsDictionary with ChangeNotifier {
   // ignore: constant_identifier_names
   static const String d_googleImageSearchQuery = "%X%";
   /// Query to use in google image search
-  @JsonKey(defaultValue: d_resumeAnimationAfterStopSwipe)
+  @JsonKey(defaultValue: d_googleImageSearchQuery)
   String googleImageSearchQuery = d_googleImageSearchQuery;
 
 
