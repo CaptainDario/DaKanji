@@ -301,6 +301,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_anki_languages_to_include = 'SettingsScreen.anki_languages_to_include';
   static const SettingsScreen_anki_title = 'SettingsScreen.anki_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
+  static const SettingsScreen_dict_custom_query_format_body = 'SettingsScreen.dict_custom_query_format_body';
+  static const SettingsScreen_dict_custom_query_format_title = 'SettingsScreen.dict_custom_query_format_title';
   static const SettingsScreen_dict_deconjugate = 'SettingsScreen.dict_deconjugate';
   static const SettingsScreen_dict_deconjugate_body = 'SettingsScreen.dict_deconjugate_body';
   static const SettingsScreen_dict_disable_english_info = 'SettingsScreen.dict_disable_english_info';

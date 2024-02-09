@@ -318,6 +318,8 @@
     "anki_languages_to_include": "Languages to include on notes",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
+    "dict_custom_query_format_body": "The app will replace a placeholder in the image query with the current entry. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe current word is: '\u53e3' and if you want to search for images with the query '\u53e3\u610f\u5473', then you need to enter in this field '{kanjiPlaceholder}\u610f\u5473'",
+    "dict_custom_query_format_title": "Custom image query format",
     "dict_deconjugate": "Convert inputs to base form",
     "dict_deconjugate_body": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, \u98df\u3079\u307e\u3059\u3001\u98df\u3079\u3089\u308c\u308b\u3001\u98df\u3079\u306a\u3044 all are converted into \u98df\u3079\u308b.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
     "dict_disable_english_info": "A significant part of the dictionary is only available in English. Disabling it will hide all of those entries.",

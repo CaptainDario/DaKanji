@@ -319,11 +319,13 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           enabled: true,
           leadingIcon: Icons.info_outline,
           text: widget.settings.dictionary.googleImageSearchQuery,
-          hintText: "Google image search query",
+          hintText: LocaleKeys.SettingsScreen_dict_custom_query_format_title.tr(),
           onLeadingIconPressed: () => infoPopup(
               context,
-              LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
-              LocaleKeys.SettingsScreen_custom_url_explanation.tr()  
+              LocaleKeys.SettingsScreen_dict_custom_query_format_title.tr(),
+              LocaleKeys.SettingsScreen_dict_custom_query_format_body.tr(
+                namedArgs: {'kanjiPlaceholder' : SettingsDictionary.d_googleImageSearchQuery}
+              )  
             ),
           onChanged: (value) {
             setState(() {

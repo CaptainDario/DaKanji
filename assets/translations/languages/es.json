@@ -318,6 +318,8 @@
     "anki_languages_to_include": "Lenguas que deben incluirse en las notas",
     "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
+    "dict_custom_query_format_body": "La aplicaci\u00f3n sustituir\u00e1 un marcador de posici\u00f3n en la consulta de imagen por la entrada actual. Este marcador de posici\u00f3n es: {kanjiPlaceholder}\n\nEjemplo:\nLa palabra actual es: '\u53e3' y si quieres buscar im\u00e1genes con la consulta '\u53e3\u610f\u5473', entonces tienes que introducir en este campo '{kanjiPlaceholder}\u610f\u5473'",
+    "dict_custom_query_format_title": "Formato personalizado de consulta de im\u00e1genes",
     "dict_deconjugate": "Convertir entradas en forma b\u00e1sica",
     "dict_deconjugate_body": "Esta opci\u00f3n activa la \"desconjugaci\u00f3n\" de verbos, adjetivos y c\u00f3pulas. Cuando est\u00e1 activada, DaKanji intenta convertir el t\u00e9rmino buscado en su forma base. Por ejemplo, \u98df\u3079\u307e\u3059\u3001\u98df\u3079\u3089\u308c\u308b\u3001\u98df\u3079\u306a\u3044 se convierte en \u98df\u3079\u308b.\nPara los alumnos de nivel intermedio, la recomendaci\u00f3n es desactivar este ajuste.",
     "dict_disable_english_info": "Una parte importante del diccionario s\u00f3lo est\u00e1 disponible en ingl\u00e9s. Si lo desactiva, se ocultar\u00e1n todas esas entradas.",

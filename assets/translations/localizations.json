@@ -2584,6 +2584,28 @@
       "es": "Reanudar la animación después de deslizar el dedo",
       "pl": "Wznowienie animacji po przesunięciu"
     },
+    "dict_custom_query_format_title": {
+      "en": "Custom image query format",
+      "de": "Benutzerdefiniertes Bildabfrageformat",
+      "ru": "Пользовательский формат запроса изображения",
+      "ja": "カスタム画像クエリーフォーマット",
+      "zh": "自定义图像查询格式",
+      "it": "Formato di interrogazione delle immagini personalizzato",
+      "fr": "Format de requête d'image personnalisé",
+      "es": "Formato personalizado de consulta de imágenes",
+      "pl": "Niestandardowy format zapytania o obraz"
+    },
+    "dict_custom_query_format_body": {
+      "en": "The app will replace a placeholder in the image query with the current entry. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe current word is: '口' and if you want to search for images with the query '口意味', then you need to enter in this field '{kanjiPlaceholder}意味'",
+      "de": "Die App ersetzt einen Platzhalter in der Bildabfrage durch den aktuellen Eintrag. Dieser Platzhalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas aktuelle Wort ist: '口' und wenn Sie nach Bildern mit der Abfrage '口意味' suchen möchten, dann müssen Sie in dieses Feld '{kanjiPlaceholder}意味' eingeben.",
+      "ru": "Приложение заменит в запросе изображения на текущую запись. Это местоположение: {kanjiPlaceholder}\n\nПример:\nТекущее слово: '口', и если вы хотите найти изображения с запросом '口意味', то вам нужно ввести в это поле '{kanjiPlaceholder}意味'.",
+      "ja": "このアプリは画像クエリのプレースホルダを現在のエントリに置き換えます。このプレースホルダは、{kanjiPlaceholder}です。\n\n例\n現在の単語は'口'であり、クエリ'口意味'で画像を検索したい場合は、このフィールドに'{kanjiPlaceholder}意味'と入力する必要があります。",
+      "zh": "应用程序将用当前条目替换图片查询中的占位符。该占位符为：{kanjiPlaceholder}（汉字占位符\n\n例如\n当前单词是：\"口\"，如果您想以 \"口意味 \"搜索图片，则需要在此字段中输入\"{kanjiPlaceholder}意味\"。",
+      "it": "L'applicazione sostituisce un segnaposto nella query dell'immagine con la voce corrente. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nLa parola corrente è: '口' e se si desidera cercare immagini con la query '口意味', è necessario inserire in questo campo '{kanjiPlaceholder}意味'.",
+      "fr": "L'application remplacera un espace réservé dans la requête d'image par l'entrée actuelle. Cet espace réservé est : {kanjiPlaceholder}\n\nExemple :\nLe mot courant est : '口' et si vous voulez rechercher des images avec la requête '口意味', vous devez entrer dans ce champ '{kanjiPlaceholder}意味'",
+      "es": "La aplicación sustituirá un marcador de posición en la consulta de imagen por la entrada actual. Este marcador de posición es: {kanjiPlaceholder}\n\nEjemplo:\nLa palabra actual es: '口' y si quieres buscar imágenes con la consulta '口意味', entonces tienes que introducir en este campo '{kanjiPlaceholder}意味'",
+      "pl": "Aplikacja zastąpi symbol zastępczy w zapytaniu o obraz bieżącym wpisem. Ten symbol zastępczy to: {kanjiPlaceholder}\n\nPrzykład:\nBieżące słowo to: \"口\", a jeśli chcesz wyszukać obrazy z zapytaniem \"口意味\", musisz wpisać w tym polu \"{kanjiPlaceholder}意味\"."
+    },
     "text_show_selection_buttons": {
       "en": "Show text selection buttons",
       "de": "Buttons zur Textauswahl anzeigen",
