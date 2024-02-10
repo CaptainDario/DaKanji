@@ -4,11 +4,13 @@
 // Dart imports:
 import 'dart:async';
 
+// Project imports:
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
+
 // Package imports:
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart'; 
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage

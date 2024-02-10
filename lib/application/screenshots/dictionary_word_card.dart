@@ -1,15 +1,13 @@
 // Dart imports:
 import 'dart:io';
 
-// Flutter imports:
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card_screenshot.dart';
-import 'package:database_builder/database_builder.dart';
-
 // Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card_screenshot.dart';
 
 /// Takes a screeshot of a [DictionaryWordCard] dispalying `entry` and stores
 /// this screenshot as a png image with the name `fileName` in the tmp-directory

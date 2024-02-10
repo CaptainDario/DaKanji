@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -16,7 +17,6 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
 
 class DrawingSettings extends StatefulWidget {

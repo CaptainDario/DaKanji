@@ -1,19 +1,17 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tuple/tuple.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:tuple/tuple.dart';
-
-
 
 /// Popup that asks the user if he wants to optimize the backends for the
 /// tflite models and tells that it will take some time.
