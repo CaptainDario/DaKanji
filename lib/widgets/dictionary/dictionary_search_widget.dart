@@ -338,7 +338,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               "/${Screens.drawing.name}",
                               (route) => true,
                               arguments: NavigationArguments(
-                                false, drawSearchPrefix: searchInputController.text
+                                false,
+                                drawSearchPrefix:  searchInputController.text.substring(
+                                  0, searchInputController.selection.baseOffset
+                                ),
+                                drawSearchPostfix: searchInputController.text.substring(
+                                  searchInputController.selection.baseOffset
+                                )
                               )
                             );
                           },

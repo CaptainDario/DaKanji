@@ -219,6 +219,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                         TextSpan(
                           children: [
                             TextSpan(
+                              text: GetIt.I<DrawScreenState>().drawingLookup.charPrefix
+                            ),
+                            TextSpan(
                               text: noChars > 0 ?
                                 GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.substring(
                                   0, noChars-1
@@ -231,6 +234,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                               style: TextStyle(
                                 fontSize: _scaleInNewCharAnimation.value * 100
                               )
+                            ),
+                            TextSpan(
+                              text: GetIt.I<DrawScreenState>().drawingLookup.charPostfix
                             ),
                           ],
                         ),
