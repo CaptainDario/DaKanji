@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ import 'package:mecab_dart/mecab_dart.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
@@ -266,19 +269,27 @@ void desktopWindowSetup() {
 /// This is done by loading the model and running a dummy input through it.
 /// The results are stored in UserData, so that this function does only need to
 /// be called only once.
-Future<void> optimizeTFLiteBackendsForModels() async {
+Future<List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>>> optimizeTFLiteBackendsForModels() async {
+
+  List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>> allTestResults = [];
 
   debugPrint("Optimizing TFLite backends for models...");
 
   // find the best backend for the drawing ml
   DrawingInterpreter d = DrawingInterpreter();
   await d.init();
-  GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
+  final results = await d.getBestBackend();
+  GetIt.I<UserData>().drawingBackend = results.item1;
+  allTestResults.add(Tuple2(LocaleKeys.DrawScreen_title.tr(), results.item2));
   d.free();
+
+  // other
 
   debugPrint("Finished optimizing TFLite backends for models...");
   
   await GetIt.I<UserData>().save();
+
+  return allTestResults;
 
 }
 
