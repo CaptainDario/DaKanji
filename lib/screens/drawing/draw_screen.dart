@@ -71,6 +71,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();
+
     GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
     GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;
 
