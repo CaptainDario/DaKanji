@@ -95,7 +95,7 @@ AwesomeDialog resultsDialog(BuildContext context, List<Tuple2<String, List<MapEn
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Results", style: const TextStyle(fontSize: 18)),
+              Text(LocaleKeys.SettingsScreen_advanced_settings_optimize_results.tr(), style: const TextStyle(fontSize: 18)),
               const SizedBox(height: 16,),
               SizedBox(
                 width: constraints.maxWidth-26,
@@ -111,8 +111,8 @@ AwesomeDialog resultsDialog(BuildContext context, List<Tuple2<String, List<MapEn
                           
                           DataTable(
                             columns: [
-                              DataColumn(label: Text("Backend")),
-                              DataColumn(label: Text("Latency (ms)"))
+                              DataColumn(label: Text(LocaleKeys.SettingsScreen_advanced_settings_optimize_backend.tr())),
+                              DataColumn(label: Text(LocaleKeys.SettingsScreen_advanced_settings_optimize_latency.tr()))
                             ],
                             rows: [
                               for (final backendResult in result.item2.sublist(1))

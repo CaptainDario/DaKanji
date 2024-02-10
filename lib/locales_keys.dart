@@ -282,9 +282,12 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
   static const SettingsScreen_advanced_settings_number_search_procs_body = 'SettingsScreen.advanced_settings_number_search_procs_body';
+  static const SettingsScreen_advanced_settings_optimize_backend = 'SettingsScreen.advanced_settings_optimize_backend';
   static const SettingsScreen_advanced_settings_optimize_cancel = 'SettingsScreen.advanced_settings_optimize_cancel';
+  static const SettingsScreen_advanced_settings_optimize_latency = 'SettingsScreen.advanced_settings_optimize_latency';
   static const SettingsScreen_advanced_settings_optimize_nn = 'SettingsScreen.advanced_settings_optimize_nn';
   static const SettingsScreen_advanced_settings_optimize_ok = 'SettingsScreen.advanced_settings_optimize_ok';
+  static const SettingsScreen_advanced_settings_optimize_results = 'SettingsScreen.advanced_settings_optimize_results';
   static const SettingsScreen_advanced_settings_optimizing = 'SettingsScreen.advanced_settings_optimizing';
   static const SettingsScreen_advanced_settings_optimze_warning = 'SettingsScreen.advanced_settings_optimze_warning';
   static const SettingsScreen_advanced_settings_reset_settings = 'SettingsScreen.advanced_settings_reset_settings';
