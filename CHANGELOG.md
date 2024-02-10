@@ -8,10 +8,23 @@ New Features:
 - Dictionary
   - Share images of word entries
   - Image search query customizable
+  - Characters from drawing are now added at the cursors position
 
 Improvements:
 
+- Settings
+  - Misc
+    - Advanced
+      - Optimize neural networks UI
+
 Fixed:
+
+- Drawing
+  - #73 Kanji search bar is not cleared
+- Settings
+  - Misc
+    - Advanced
+      - Optimize neural networks
 
 -------------------------------------------------------------------------
 
