@@ -53,7 +53,7 @@ Future<Map<InferenceBackend, double>> testInterpreterAndroid(
   if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
+        String xnnBack = "xnnPack_$i";
         Interpreter interpreter = await xnnPackInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
@@ -68,7 +68,7 @@ Future<Map<InferenceBackend, double>> testInterpreterAndroid(
   if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
+        String cpuBack = "cpu_$i";
         Interpreter interpreter = await cpuInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
@@ -138,7 +138,7 @@ Future<Map<InferenceBackend, double>> testInterpreterIOS(
   if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
+        String xnnBack = "xnnPack_$i";
         Interpreter interpreter = await xnnPackInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
@@ -153,7 +153,7 @@ Future<Map<InferenceBackend, double>> testInterpreterIOS(
   if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
+        String cpuBack = "cpu_$i";
         Interpreter interpreter = await cpuInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
@@ -199,7 +199,7 @@ Future<Map<InferenceBackend, double>> testInterpreterWindows(
   if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
+        String xnnBack = "xnnPack_$i";
         Interpreter interpreter = await xnnPackInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
@@ -214,7 +214,7 @@ Future<Map<InferenceBackend, double>> testInterpreterWindows(
   if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
+        String cpuBack = "cpu_$i";
         Interpreter interpreter = await cpuInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
@@ -259,7 +259,7 @@ Future<Map<InferenceBackend, double>> testInterpreterLinux(
   if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
+        String xnnBack = "xnnPack_$i";
         Interpreter interpreter = await xnnPackInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
@@ -274,7 +274,7 @@ Future<Map<InferenceBackend, double>> testInterpreterLinux(
   if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
+        String cpuBack = "cpu_$i";
         Interpreter interpreter = await cpuInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]
@@ -319,7 +319,7 @@ Future<Map<InferenceBackend, double>> testInterpreterMac(
   if(!exclude.contains(InferenceBackend.xnnPack)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String xnnBack = "XNNPack_$i";
+        String xnnBack = "xnnPack_$i";
         Interpreter interpreter = await xnnPackInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getXNNPackFromString(xnnBack), iterations, runInterpreter)]
@@ -334,7 +334,7 @@ Future<Map<InferenceBackend, double>> testInterpreterMac(
   if(!exclude.contains(InferenceBackend.cpu)){
     try{
       for (var i = 1; i <= min(Platform.numberOfProcessors, 32); i++) {
-        String cpuBack = "CPU_$i";
+        String cpuBack = "cpu_$i";
         Interpreter interpreter = await cpuInterpreter(assetPath, i);
         inferenceBackend.addEntries(
           [testBackend(interpreter, getCPUFromString(cpuBack), iterations, runInterpreter)]

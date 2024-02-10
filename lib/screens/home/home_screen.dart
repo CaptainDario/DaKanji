@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +16,7 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;

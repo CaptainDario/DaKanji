@@ -11,16 +11,14 @@ import 'package:get_it/get_it.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
-import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab_kanji.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/word_meanings.dart';
-
-
 
 class DictionaryWordCard extends StatefulWidget {
 

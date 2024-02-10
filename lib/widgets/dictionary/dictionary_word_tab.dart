@@ -2,8 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/screenshots/dictionary_word_card.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +18,13 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
+import 'package:da_kanji_mobile/application/screenshots/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {

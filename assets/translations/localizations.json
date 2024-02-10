@@ -2947,6 +2947,39 @@
       "es": "Ok",
       "pl": "Ok"
     },
+    "advanced_settings_optimize_results": {
+      "en": "Optimization results",
+      "de": "Optimierungsergebnisse",
+      "ru": "Результаты оптимизации",
+      "ja": "最適化結果",
+      "zh": "优化结果",
+      "it": "Risultati dell'ottimizzazione",
+      "fr": "Résultats de l'optimisation",
+      "es": "Resultados de la optimización",
+      "pl": "Wyniki optymalizacji"
+    },
+    "advanced_settings_optimize_backend": {
+      "en": "Backend",
+      "de": "Backend",
+      "ru": "Бэкэнд",
+      "ja": "バックエンド",
+      "zh": "后台",
+      "it": "Backend",
+      "fr": "Backend",
+      "es": "Backend",
+      "pl": "Backend"
+    },
+    "advanced_settings_optimize_latency": {
+      "en": "Latency (ms)",
+      "de": "Latenzzeit (ms)",
+      "ru": "Задержка (мс)",
+      "ja": "待ち時間 (ms)",
+      "zh": "延迟（毫秒）",
+      "it": "Latenza (ms)",
+      "fr": "Temps de latence (ms)",
+      "es": "Latencia (ms)",
+      "pl": "Opóźnienie (ms)"
+    },
     "advanced_settings_number_search_procs": {
       "en": "Number of search processes  (@:SettingsScreen.requires_restart)",
       "de": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
