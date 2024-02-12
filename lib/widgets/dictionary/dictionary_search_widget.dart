@@ -339,12 +339,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               (route) => true,
                               arguments: NavigationArguments(
                                 false,
-                                drawSearchPrefix:  searchInputController.text.substring(
-                                  0, searchInputController.selection.baseOffset
-                                ),
-                                drawSearchPostfix: searchInputController.text.substring(
-                                  searchInputController.selection.baseOffset
-                                )
+                                drawSearchPrefix: searchInputController.text.isNotEmpty
+                                  ? searchInputController.text.substring(
+                                    0, searchInputController.selection.baseOffset
+                                  )
+                                  : "",
+                                drawSearchPostfix: searchInputController.text.isNotEmpty
+                                  ? searchInputController.text.substring(
+                                    searchInputController.selection.baseOffset
+                                  )
+                                  : ""
                               )
                             );
                           },
