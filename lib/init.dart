@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -126,6 +127,10 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
 
   GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
+
+  GetIt.I.registerSingleton<WordListsSQLDatabase>(WordListsSQLDatabase(
+    g_DakanjiPathManager.wordListsSqlFile
+  ));
 
 }
 
