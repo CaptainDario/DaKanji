@@ -11,7 +11,7 @@ import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 
-part 'word_lists.g.dart';
+part 'word_lists_tree.g.dart';
 
 
 
@@ -20,7 +20,7 @@ part 'word_lists.g.dart';
 /// To update the toJson code run
 /// `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable(explicitToJson: true)
-class WordLists {
+class WordListsTree {
 
   /// The root node of the word lists
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,7 +38,7 @@ class WordLists {
   List<TreeNode<WordListsData>> userCreatedLists = [];
 
 
-  WordLists(){
+  WordListsTree(){
     
     /// add the defaults folder / lists
     root.addChild(defaults);
@@ -85,7 +85,7 @@ class WordLists {
     // load values from shared preferences
     String tmp = prefs.getString('wordLists') ?? "";
     if(tmp != ""){
-      WordLists wL = WordLists.fromJson(jsonDecode(tmp));
+      WordListsTree wL = WordListsTree.fromJson(jsonDecode(tmp));
       root.addChildren(wL.userCreatedLists);
 
       // add save listeners to all nodes
@@ -102,13 +102,13 @@ class WordLists {
   }
   
   /// Instantiates a new instance from a json map
-  factory WordLists.fromJson(Map<String, dynamic> json) 
-    => _$WordListsFromJson(json);
+  factory WordListsTree.fromJson(Map<String, dynamic> json) 
+    => _$WordListsTreeFromJson(json);
 
   /// Create a JSON map from this object
   Map<String, dynamic> toJson() {
 
-    Map<String, dynamic> jsonMap = _$WordListsToJson(this);
+    Map<String, dynamic> jsonMap = _$WordListsTreeToJson(this);
 
     return jsonMap;
   }
