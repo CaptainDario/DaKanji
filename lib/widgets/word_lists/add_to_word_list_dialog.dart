@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,7 +24,8 @@ AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget
       width: MediaQuery.of(context).size.width * 0.8,
       child: word_lists_ui.WordLists(
         false,
-        GetIt.I<WordListsTree>().root,
+        // TODO remap
+        GetIt.I<WordListsSQLDatabase>(),
         showDefaults: false,
         onSelectionConfirmed: (selection) {
           

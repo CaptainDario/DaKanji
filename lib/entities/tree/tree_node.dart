@@ -33,9 +33,14 @@ class TreeNode<T> with ChangeNotifier{
   /// the value of this node
   @TreeNodeConverter()
   T value;
+
   /// The id of this node, used for deserializing this object
   @JsonKey(includeFromJson: true, includeToJson: true)
   int _id = 0;
+  /// The id of this node, used for deserializing this object
+  int get id {
+    return _id;
+  }
 
   /// a list containing all children of this TreeNode
   @TreeNodeConverter()

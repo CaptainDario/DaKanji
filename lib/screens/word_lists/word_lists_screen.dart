@@ -2,6 +2,7 @@
 
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -45,14 +46,14 @@ class WordListsScreen extends StatefulWidget {
 
 class _WordListsScreenState extends State<WordListsScreen> {
 
-  /// the root of this word lists
-  late TreeNode<WordListsData> parent;
+  /// The word lists database
+  late WordListsSQLDatabase wordLists;
 
 
   @override
   void initState() {
   
-    parent = widget.parent ?? GetIt.I<WordListsTree>().root;
+    wordLists = GetIt.I<WordListsSQLDatabase>();
 
     super.initState();
   }
@@ -65,7 +66,7 @@ class _WordListsScreenState extends State<WordListsScreen> {
       drawerClosed: !widget.openedByDrawer,
       child: word_lists.WordLists(
         widget.includeTutorial,
-        parent,
+        wordLists,
         onSelectionConfirmed: widget.onSelectionConfirmed,
       ),
     );

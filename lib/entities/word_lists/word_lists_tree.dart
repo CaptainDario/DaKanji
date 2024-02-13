@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,7 +42,44 @@ class WordListsTree {
 
   WordListsTree(){
     
-    /// add the defaults folder / lists
+    addDefaultsToRoot();
+
+    // always save when the lists tree changes
+    //root.addListener(() async {
+    //  await save();
+    //});
+  }
+
+  /// Constructs a wordlist tree from a SQL WordList database
+  WordListsTree.fromWordListsSQL(List<WordListsSQLData> sqlList){
+
+    addDefaultsToRoot();
+
+    // get all tree nodes from sql
+    List<TreeNode<WordListsData>> nodes = sqlList.map((e) => 
+      treeNodeWordListFromSQLData(e)).toList();
+
+    for (var node in nodes) {
+      root.addChild(node);
+    }
+
+  }
+  
+  /// Parses a [WordListsSQLData] into a [TreeNode<WordListsData>] and returns
+  /// it
+  TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListsSQLData data){
+
+    return TreeNode(
+      WordListsData(
+        data.name, data.type, data.dictIDs, data.isExpanded
+      ),
+    );
+
+  }
+
+  /// Adds the defaults folder / lists
+  void addDefaultsToRoot(){
+
     root.addChild(defaults);
     for (var element in DefaultNames.values) {
       if(element == DefaultNames.defaults) continue;
@@ -52,12 +91,9 @@ class WordListsTree {
       );
     }
 
-    // always save when the lists tree changes
-    root.addListener(() async {
-      await save();
-    });
   }
 
+  /*
   /// Saves the word lists to shared preferences
   Future<void> save() async {
     // obtain shared preferences
@@ -100,6 +136,7 @@ class WordListsTree {
 
     return loaded;
   }
+  */
   
   /// Instantiates a new instance from a json map
   factory WordListsTree.fromJson(Map<String, dynamic> json) 

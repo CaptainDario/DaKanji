@@ -105,10 +105,6 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
 
-  WordListsTree wL = WordListsTree();
-  wL.load();
-  GetIt.I.registerSingleton<WordListsTree>(wL);
-
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();

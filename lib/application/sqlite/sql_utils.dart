@@ -1,4 +1,5 @@
 // These imports are necessary to open the sqlite3 database
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:drift/native.dart';
@@ -29,4 +30,19 @@ LazyDatabase openSqlite(File databaseFile) {
 
     return NativeDatabase.createInBackground(databaseFile);
   });
+}
+
+// stores preferences as strings
+class ListIntConverter extends TypeConverter<List<int>, String> {
+  const ListIntConverter();
+
+  @override
+  List<int> fromSql(String fromDb) {
+    return List<int>.from(jsonDecode(fromDb));
+  }
+
+  @override
+  String toSql(List<int> value) {
+    return jsonEncode(value);
+  }
 }
