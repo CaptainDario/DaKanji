@@ -3,7 +3,6 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +11,7 @@ import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:tuple/tuple.dart';
 
 part 'word_lists_tree.g.dart';
 
@@ -28,12 +28,8 @@ class WordListsTree {
   @JsonKey(includeFromJson: false, includeToJson: false)
   late TreeNode<WordListsData> root = TreeNode<WordListsData>(
       WordListsData("", WordListNodeType.root, [], true),
-    );
-
-  /// the node that contains the default word lists
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  TreeNode<WordListsData> defaults = TreeNode<WordListsData>(
-      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
+      id: 0,
+      automaticallyUpdateIDs: false
     );
 
   @JsonKey(includeFromJson: true, includeToJson: true)
@@ -53,15 +49,36 @@ class WordListsTree {
   /// Constructs a wordlist tree from a SQL WordList database
   WordListsTree.fromWordListsSQL(List<WordListsSQLData> sqlList){
 
+    root.automaticallyUpdateIDs = false;
+
     addDefaultsToRoot();
 
-    // get all tree nodes from sql
-    List<TreeNode<WordListsData>> nodes = sqlList.map((e) => 
-      treeNodeWordListFromSQLData(e)).toList();
-
-    for (var node in nodes) {
-      root.addChild(node);
+    // Parse the data from SQL to a list
+    // format: {own_id : (parent id, [children ids], parsed node)}
+    Map<int, Tuple3<int, List<int>, TreeNode<WordListsData>>> nodes = {};
+    for (var data in sqlList) {
+      nodes[data.id] = Tuple3(
+        data.parentID, data.childrenIDs, treeNodeWordListFromSQLData(data));
     }
+
+    // iterate over the items and build the tree recursevily
+    for (Tuple3<int, List<int>, TreeNode<WordListsData>> value in nodes.values) {
+
+      int parentID = value.item1;
+      List<int> childIDs = value.item2;
+      TreeNode<WordListsData> node = value.item3;
+
+      // add top level lists
+      if(parentID == 0) {
+        root.addChild(node);
+      }
+      // add children
+      for (int childID in childIDs) {
+        node.addChild(nodes[childID]!.item3);
+      }
+
+    }
+    root.updateLevel();
 
   }
   
@@ -73,12 +90,18 @@ class WordListsTree {
       WordListsData(
         data.name, data.type, data.dictIDs, data.isExpanded
       ),
+      id: data.id,
+      automaticallyUpdateIDs: false,
     );
 
   }
 
   /// Adds the defaults folder / lists
   void addDefaultsToRoot(){
+
+    TreeNode<WordListsData> defaults = TreeNode<WordListsData>(
+      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
+    );
 
     root.addChild(defaults);
     for (var element in DefaultNames.values) {
@@ -93,7 +116,6 @@ class WordListsTree {
 
   }
 
-  /*
   /// Saves the word lists to shared preferences
   Future<void> save() async {
     // obtain shared preferences
@@ -136,7 +158,6 @@ class WordListsTree {
 
     return loaded;
   }
-  */
   
   /// Instantiates a new instance from a json map
   factory WordListsTree.fromJson(Map<String, dynamic> json) 

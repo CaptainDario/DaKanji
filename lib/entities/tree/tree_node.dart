@@ -27,20 +27,26 @@ enum TreeTraversalMode{
 /// A node in a tree structure, emits a notification when it's structure changes
 /// If `T` is a `ChangeNotifier` it will also send notifications when one of it's
 /// values is modified
+/// 
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable(explicitToJson: true)
-class TreeNode<T> with ChangeNotifier{
+class TreeNode<T> extends ValueNotifier<T> {
 
   /// the value of this node
   @TreeNodeConverter()
+  @override
   T value;
 
   /// The id of this node, used for deserializing this object
   @JsonKey(includeFromJson: true, includeToJson: true)
-  int _id = 0;
-  /// The id of this node, used for deserializing this object
-  int get id {
-    return _id;
-  }
+  int id = 0;
+
+  /// Should the IDs of this tree automatically be updated
+  /// This is useful if this tree should be serialized to JSON
+  /// BUT it can cause problems
+  /// Set it to false to manually handle IDs in this tree
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  bool automaticallyUpdateIDs;
 
   /// a list containing all children of this TreeNode
   @TreeNodeConverter()
@@ -55,7 +61,7 @@ class TreeNode<T> with ChangeNotifier{
   /// A unique ID in the tree, used for deserializing this objetc, null means
   /// this is the root
   @JsonKey(includeFromJson: true, includeToJson: true)
-  int? _parentID;
+  int? parentID;
 
   /// the level of this node in the tree, 0 means it is the root
   @JsonKey(includeFromJson: true, includeToJson: true)
@@ -74,15 +80,18 @@ class TreeNode<T> with ChangeNotifier{
   TreeNode(
     this.value,
     {
+      this.id=0,
+      this.automaticallyUpdateIDs = false,
       List<TreeNode<T>> children = const [],
     }
-  ){
+  ) : super(value) {
 
     if(children.isNotEmpty) {
       this._children = children;
     } else {
       this._children = [];
     }
+
   }
 
 
@@ -94,7 +103,8 @@ class TreeNode<T> with ChangeNotifier{
     }
 
     _children.add(newNode);
-    newNode.parent = this;
+    newNode.parent   = this;
+    newNode.parentID = this.id;
     
     // update the tree
     updateLevel();
@@ -108,6 +118,7 @@ class TreeNode<T> with ChangeNotifier{
     _children.addAll(newNodes);
     for (final newNode in newNodes) {
       newNode.parent = this;
+      newNode.parentID = this.id;
 
       // if the added data is a change notifier, add `this` as a listener
       if(newNode.value is ChangeNotifier) {
@@ -127,6 +138,7 @@ class TreeNode<T> with ChangeNotifier{
 
     _children.insert(index, newNode);
     newNode.parent = this;
+    newNode.parentID = this.id;
 
     // if the added data is a change notifier, add `this` as a listener
     if(newNode.value is ChangeNotifier) {
@@ -144,6 +156,7 @@ class TreeNode<T> with ChangeNotifier{
   TreeNode<T> removeChild (TreeNode<T> node) {
     _children.remove(node);
     node.parent = null;
+    node.parentID = null;
     node.updateID();
     // if the removed data is a change notifier, remove listener
     if(node.value is ChangeNotifier) {
@@ -173,6 +186,7 @@ class TreeNode<T> with ChangeNotifier{
           (node.value as ChangeNotifier).removeListener(notifyListeners);
         }
         node.parent = null;
+        node.parentID = null;
         node.updateLevel();
         node.updateID();
       }
@@ -195,6 +209,7 @@ class TreeNode<T> with ChangeNotifier{
         (node.value as ChangeNotifier).removeListener(notifyListeners);
       }
       node.parent = null;
+      node.parentID = null;
       node.updateLevel();
       node.updateID();
     }
@@ -215,16 +230,18 @@ class TreeNode<T> with ChangeNotifier{
   /// Update the id of all nodes in this tree
   void updateID () {
 
+    if(!automaticallyUpdateIDs) return;
+
     TreeNode<T> root = getRoot();
 
     int cnt = 0;
     for (final n in root.bfs()) {
-      n._id = cnt;
+      n.id = cnt;
 
       if(n.parent != null) {
-        n._parentID = n.parent!._id;
+        n.parentID = n.parent!.id;
       } else {
-        n._parentID = null;
+        n.parentID = null;
       }
 
       cnt++;
@@ -301,7 +318,7 @@ class TreeNode<T> with ChangeNotifier{
     var iter = _iterDict[mode]!;
 
     for (var node in iter) {
-      if(node._id == id){
+      if(node.id == id){
         return node;
       }
     }
@@ -368,9 +385,9 @@ class TreeNode<T> with ChangeNotifier{
     TreeNode<T> root = _$TreeNodeFromJson<T>(json);
     
     for (final node in root.bfs()){
-      if(node._parentID == null) continue;
+      if(node.parentID == null) continue;
 
-      node.parent = root.findByID(node._parentID!);
+      node.parent = root.findByID(node.parentID!);
     }
 
     return root;

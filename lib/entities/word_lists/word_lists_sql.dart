@@ -20,7 +20,7 @@ class WordListsSQL extends Table {
   /// The name of this wordlist entry
   TextColumn get name => text()();
   /// The parent's ID
-  IntColumn get parentID => integer().nullable()();
+  IntColumn get parentID => integer()();
   /// All children IDs
   TextColumn get childrenIDs => text().map(const ListIntConverter())();
   /// The type of this entry
@@ -49,18 +49,75 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  // returns the generated id
-  Future<int> addEntry(TreeNode<WordListsData> entry) {
+  /// Instantiates a [WordListsSQLCompanion] from a [TreeNode<WordListsData>]
+  WordListsSQLCompanion companionFromTreeNode(TreeNode<WordListsData> entry, bool useID){
 
-    final sqlEntry = WordListsSQLCompanion(
-        name: Value("New ${entry.value.type.name}"),
-        parentID: Value(entry.id),
+    return WordListsSQLCompanion(
+        id: useID ? Value(entry.id) : const Value.absent(),
+        name: Value(entry.value.name),
+        parentID: Value(entry.parent == null ? 0 : entry.parent!.id),
         childrenIDs: Value(entry.children.map((e) => e.id).toList()),
-        dictIDs: Value(entry.value.wordIds),
         type: Value(entry.value.type),
+        dictIDs: Value(entry.value.wordIds),
+        isExpanded: Value(entry.value.isExpanded),
+        isChecked: Value(entry.value.isChecked)
       );
 
-    return into(wordListsSQL).insert(sqlEntry);
+  }
+
+  // returns the generated id
+  Future<int> addEntry(TreeNode<WordListsData> entry) async {
+
+    final sqlEntry = companionFromTreeNode(entry, false);
+
+    int i = await into(wordListsSQL).insert(sqlEntry);
+
+    List items = ( await (select(wordListsSQL)).get());
+    for (var i in items){
+      //print(i);
+    }
+
+    return i;
+  }
+
+  /// deletes all entries given by `entries`
+  Future deleteEntries(List<TreeNode<WordListsData>> entries) {
+
+    return (delete(wordListsSQL)
+      ..where((tbl) => tbl.id.isIn(entries.map((e) => e.id))))
+      .go();
+
+  }
+
+  /// Updates the SQL using the given entry.
+  /// The entry must exist in the database
+  /// Returns the amount of rows that have been affected by this operation.
+  Future<int> updateEntry(TreeNode<WordListsData> entry) {
+
+    final sqlEntry = companionFromTreeNode(entry, true);
+
+    return (update(wordListsSQL)
+      ..where((tbl) => tbl.id.equals(entry.id)))
+      .write(sqlEntry);
+
+  }
+
+  /// Updates the SQL using the given entries.
+  /// The entries must exist in the database
+  /// Returns a list of amount of rows that have been affected by this operation.
+  Future<List<int>> updateEntries(List<TreeNode<WordListsData>> entries) async {
+
+    List<int> updated = [];
+
+    for(var entry in entries){
+      var sqlEntry = companionFromTreeNode(entry, true);
+
+      updated.add(await (update(wordListsSQL)
+        ..where((tbl) => tbl.id.equals(entry.id)))
+        .write(sqlEntry));
+    }
+
+    return updated;
   }
 
   @override
