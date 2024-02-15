@@ -23,12 +23,6 @@ class $WordListsSQLTable extends WordListsSQL
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _parentIDMeta =
-      const VerificationMeta('parentID');
-  @override
-  late final GeneratedColumn<int> parentID = GeneratedColumn<int>(
-      'parent_i_d', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _childrenIDsMeta =
       const VerificationMeta('childrenIDs');
   @override
@@ -71,7 +65,7 @@ class $WordListsSQLTable extends WordListsSQL
       clientDefault: () => false);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, parentID, childrenIDs, type, dictIDs, isExpanded, isChecked];
+      [id, name, childrenIDs, type, dictIDs, isExpanded, isChecked];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -90,12 +84,6 @@ class $WordListsSQLTable extends WordListsSQL
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
-    }
-    if (data.containsKey('parent_i_d')) {
-      context.handle(_parentIDMeta,
-          parentID.isAcceptableOrUnknown(data['parent_i_d']!, _parentIDMeta));
-    } else if (isInserting) {
-      context.missing(_parentIDMeta);
     }
     context.handle(_childrenIDsMeta, const VerificationResult.success());
     context.handle(_typeMeta, const VerificationResult.success());
@@ -123,8 +111,6 @@ class $WordListsSQLTable extends WordListsSQL
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      parentID: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}parent_i_d'])!,
       childrenIDs: $WordListsSQLTable.$converterchildrenIDs.fromSql(
           attachedDatabase.typeMapping.read(
               DriftSqlType.string, data['${effectivePrefix}children_i_ds'])!),
@@ -162,9 +148,6 @@ class WordListsSQLData extends DataClass
   /// The name of this wordlist entry
   final String name;
 
-  /// The parent's ID
-  final int parentID;
-
   /// All children IDs
   final List<int> childrenIDs;
 
@@ -182,7 +165,6 @@ class WordListsSQLData extends DataClass
   const WordListsSQLData(
       {required this.id,
       required this.name,
-      required this.parentID,
       required this.childrenIDs,
       required this.type,
       required this.dictIDs,
@@ -193,7 +175,6 @@ class WordListsSQLData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    map['parent_i_d'] = Variable<int>(parentID);
     {
       final converter = $WordListsSQLTable.$converterchildrenIDs;
       map['children_i_ds'] = Variable<String>(converter.toSql(childrenIDs));
@@ -215,7 +196,6 @@ class WordListsSQLData extends DataClass
     return WordListsSQLCompanion(
       id: Value(id),
       name: Value(name),
-      parentID: Value(parentID),
       childrenIDs: Value(childrenIDs),
       type: Value(type),
       dictIDs: Value(dictIDs),
@@ -230,7 +210,6 @@ class WordListsSQLData extends DataClass
     return WordListsSQLData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      parentID: serializer.fromJson<int>(json['parentID']),
       childrenIDs: serializer.fromJson<List<int>>(json['childrenIDs']),
       type: $WordListsSQLTable.$convertertype
           .fromJson(serializer.fromJson<int>(json['type'])),
@@ -245,7 +224,6 @@ class WordListsSQLData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'parentID': serializer.toJson<int>(parentID),
       'childrenIDs': serializer.toJson<List<int>>(childrenIDs),
       'type': serializer
           .toJson<int>($WordListsSQLTable.$convertertype.toJson(type)),
@@ -258,7 +236,6 @@ class WordListsSQLData extends DataClass
   WordListsSQLData copyWith(
           {int? id,
           String? name,
-          int? parentID,
           List<int>? childrenIDs,
           WordListNodeType? type,
           List<int>? dictIDs,
@@ -267,7 +244,6 @@ class WordListsSQLData extends DataClass
       WordListsSQLData(
         id: id ?? this.id,
         name: name ?? this.name,
-        parentID: parentID ?? this.parentID,
         childrenIDs: childrenIDs ?? this.childrenIDs,
         type: type ?? this.type,
         dictIDs: dictIDs ?? this.dictIDs,
@@ -279,7 +255,6 @@ class WordListsSQLData extends DataClass
     return (StringBuffer('WordListsSQLData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('parentID: $parentID, ')
           ..write('childrenIDs: $childrenIDs, ')
           ..write('type: $type, ')
           ..write('dictIDs: $dictIDs, ')
@@ -290,15 +265,14 @@ class WordListsSQLData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, name, parentID, childrenIDs, type, dictIDs, isExpanded, isChecked);
+  int get hashCode =>
+      Object.hash(id, name, childrenIDs, type, dictIDs, isExpanded, isChecked);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is WordListsSQLData &&
           other.id == this.id &&
           other.name == this.name &&
-          other.parentID == this.parentID &&
           other.childrenIDs == this.childrenIDs &&
           other.type == this.type &&
           other.dictIDs == this.dictIDs &&
@@ -309,7 +283,6 @@ class WordListsSQLData extends DataClass
 class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   final Value<int> id;
   final Value<String> name;
-  final Value<int> parentID;
   final Value<List<int>> childrenIDs;
   final Value<WordListNodeType> type;
   final Value<List<int>> dictIDs;
@@ -318,7 +291,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   const WordListsSQLCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
-    this.parentID = const Value.absent(),
     this.childrenIDs = const Value.absent(),
     this.type = const Value.absent(),
     this.dictIDs = const Value.absent(),
@@ -328,21 +300,18 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   WordListsSQLCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required int parentID,
     required List<int> childrenIDs,
     required WordListNodeType type,
     required List<int> dictIDs,
     this.isExpanded = const Value.absent(),
     this.isChecked = const Value.absent(),
   })  : name = Value(name),
-        parentID = Value(parentID),
         childrenIDs = Value(childrenIDs),
         type = Value(type),
         dictIDs = Value(dictIDs);
   static Insertable<WordListsSQLData> custom({
     Expression<int>? id,
     Expression<String>? name,
-    Expression<int>? parentID,
     Expression<String>? childrenIDs,
     Expression<int>? type,
     Expression<String>? dictIDs,
@@ -352,7 +321,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
-      if (parentID != null) 'parent_i_d': parentID,
       if (childrenIDs != null) 'children_i_ds': childrenIDs,
       if (type != null) 'type': type,
       if (dictIDs != null) 'dict_i_ds': dictIDs,
@@ -364,7 +332,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   WordListsSQLCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<int>? parentID,
       Value<List<int>>? childrenIDs,
       Value<WordListNodeType>? type,
       Value<List<int>>? dictIDs,
@@ -373,7 +340,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     return WordListsSQLCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
-      parentID: parentID ?? this.parentID,
       childrenIDs: childrenIDs ?? this.childrenIDs,
       type: type ?? this.type,
       dictIDs: dictIDs ?? this.dictIDs,
@@ -390,9 +356,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
-    }
-    if (parentID.present) {
-      map['parent_i_d'] = Variable<int>(parentID.value);
     }
     if (childrenIDs.present) {
       final converter = $WordListsSQLTable.$converterchildrenIDs;
@@ -424,7 +387,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     return (StringBuffer('WordListsSQLCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('parentID: $parentID, ')
           ..write('childrenIDs: $childrenIDs, ')
           ..write('type: $type, ')
           ..write('dictIDs: $dictIDs, ')

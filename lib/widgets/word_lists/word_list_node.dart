@@ -22,6 +22,7 @@ enum  WordListNodePopupMenuButtonItems {
   rename,
   delete,
   sendToAnki,
+  toImages,
   toPdf
 }
 
@@ -178,10 +179,9 @@ class _WordListNodeState extends State<WordListNode> {
             // list draged on list
             else if(data.value.type == WordListNodeType.wordList &&
               widget.node.value.type == WordListNodeType.wordList){
-              // add a new folder
+              // add a new folder to the parent of this
               newFolder = TreeNode<WordListsData>(
-                WordListsData("New Folder", WordListNodeType.folder, [], true)
-              );
+                WordListsData("New Folder", WordListNodeType.folder, [], true),);
               int idx = widget.node.parent!.children.indexOf(widget.node);
               widget.node.parent!.insertChild(newFolder, idx);
   
@@ -194,7 +194,6 @@ class _WordListNodeState extends State<WordListNode> {
               _controller.text = widget.node.value.name;
               itemDraggingOverThis = false;
             }
-            setState(() {});
     
             widget.onDragAccept?.call(data, widget.node, newFolder);
           },
@@ -286,6 +285,8 @@ class _WordListNodeState extends State<WordListNode> {
                               deleteButtonPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.sendToAnki:
+                              break;
+                            case WordListNodePopupMenuButtonItems.toImages:
                               break;
                             case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();

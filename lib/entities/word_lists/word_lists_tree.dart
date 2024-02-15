@@ -1,10 +1,6 @@
-// Dart imports:
-import 'dart:convert';
-
 // Package imports:
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
@@ -13,72 +9,62 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:tuple/tuple.dart';
 
-part 'word_lists_tree.g.dart';
 
 
 
 /// The tree of word lists and folders that the user has created
 ///
 /// To update the toJson code run
-/// `flutter pub run build_runner build --delete-conflicting-outputs`
-@JsonSerializable(explicitToJson: true)
 class WordListsTree {
 
   /// The root node of the word lists
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  late TreeNode<WordListsData> root = TreeNode<WordListsData>(
-      WordListsData("", WordListNodeType.root, [], true),
-      id: 0,
-      automaticallyUpdateIDs: false
-    );
+  late TreeNode<WordListsData> root;
 
   @JsonKey(includeFromJson: true, includeToJson: true)
   List<TreeNode<WordListsData>> userCreatedLists = [];
 
 
-  WordListsTree(){
-    
-    addDefaultsToRoot();
-
-    // always save when the lists tree changes
-    //root.addListener(() async {
-    //  await save();
-    //});
-  }
+  /// Initializes an empty word lists tree
+  WordListsTree();
 
   /// Constructs a wordlist tree from a SQL WordList database
   WordListsTree.fromWordListsSQL(List<WordListsSQLData> sqlList){
 
-    root.automaticallyUpdateIDs = false;
-
+    // previously there have not been any word lists -> add just the root
+    if(sqlList.isEmpty){
+      throw Exception("No root in SQL!");
+    }
+    // otherwise load the root from the DB
+    else{
+      root = treeNodeWordListFromSQLData(
+        sqlList.where((n) => n.type == WordListNodeType.root).first);
+    }
+    
     addDefaultsToRoot();
 
     // Parse the data from SQL to a list
     // format: {own_id : (parent id, [children ids], parsed node)}
-    Map<int, Tuple3<int, List<int>, TreeNode<WordListsData>>> nodes = {};
+    Map<int, Tuple2<List<int>, TreeNode<WordListsData>>> nodes = {};
     for (var data in sqlList) {
-      nodes[data.id] = Tuple3(
-        data.parentID, data.childrenIDs, treeNodeWordListFromSQLData(data));
+      nodes[data.id] = Tuple2(data.childrenIDs, treeNodeWordListFromSQLData(data));
     }
 
     // iterate over the items and build the tree recursevily
-    for (Tuple3<int, List<int>, TreeNode<WordListsData>> value in nodes.values) {
+    for (Tuple2<List<int>, TreeNode<WordListsData>> value in nodes.values) {
 
-      int parentID = value.item1;
-      List<int> childIDs = value.item2;
-      TreeNode<WordListsData> node = value.item3;
+      List<int> childIDs = value.item1;
+      TreeNode<WordListsData> node = value.item2;
 
-      // add top level lists
-      if(parentID == 0) {
-        root.addChild(node);
+      for(int childID in childIDs){
+        node.addChild(nodes[childID]!.item2);
       }
-      // add children
-      for (int childID in childIDs) {
-        node.addChild(nodes[childID]!.item3);
-      }
-
     }
-    root.updateLevel();
+
+    // add nodes to the root
+    for (var node in nodes.values.where((n) => 
+        n.item2.parent == null && n.item2.value.type != WordListNodeType.root)) {
+      root.addChild(node.item2);
+    }
 
   }
   
@@ -91,7 +77,6 @@ class WordListsTree {
         data.name, data.type, data.dictIDs, data.isExpanded
       ),
       id: data.id,
-      automaticallyUpdateIDs: false,
     );
 
   }
@@ -115,59 +100,5 @@ class WordListsTree {
     }
 
   }
-
-  /// Saves the word lists to shared preferences
-  Future<void> save() async {
-    // obtain shared preferences
-    final prefs = await SharedPreferences.getInstance();
-
-    // get the user created lists
-    userCreatedLists = root.children.where(
-      (element) => wordListUserTypes.contains(element.value.type)
-    ).toList();
-
-    // set value in shared preferences
-    String encoded = jsonEncode(toJson());
-    await prefs.setString('wordLists', encoded);
-  }
-
-  /// Loads the word lists from shared preferences.
-  /// Returns `true` if loading was successful, `false` otherwise.
-  Future<bool> load() async {
-
-    bool loaded = false;
-
-    // obtain shared preferences
-    final prefs = await SharedPreferences.getInstance();
-
-    // load values from shared preferences
-    String tmp = prefs.getString('wordLists') ?? "";
-    if(tmp != ""){
-      WordListsTree wL = WordListsTree.fromJson(jsonDecode(tmp));
-      root.addChildren(wL.userCreatedLists);
-
-      // add save listeners to all nodes
-      for (var node in root.bfs()) {
-        node.value.addListener(() {
-          save();
-        });
-      }
-
-      loaded = true;
-    }
-
-    return loaded;
-  }
   
-  /// Instantiates a new instance from a json map
-  factory WordListsTree.fromJson(Map<String, dynamic> json) 
-    => _$WordListsTreeFromJson(json);
-
-  /// Create a JSON map from this object
-  Map<String, dynamic> toJson() {
-
-    Map<String, dynamic> jsonMap = _$WordListsTreeToJson(this);
-
-    return jsonMap;
-  }
 }

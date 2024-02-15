@@ -112,8 +112,12 @@ class _WordListsState extends State<WordLists> {
         
         if(snapshot.data == null) {
           return const SizedBox();
-        } if(snapshot.connectionState == ConnectionState.active){
+        }
+        if(snapshot.connectionState == ConnectionState.active){
           print("Reloaded");
+          for (var d in snapshot.data!) {
+            print(d);
+          }
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
         }
@@ -134,7 +138,7 @@ class _WordListsState extends State<WordLists> {
             itemDraggingOverThis = false;
             data.parent!.removeChild(data);
             currentRoot.addChild(data);
-            widget.wordLists.updateEntry(data);
+            widget.wordLists.updateNode(data);
           },
           builder: (context, candidateData, rejectedData) {
             return Container(
@@ -236,28 +240,34 @@ class _WordListsState extends State<WordLists> {
                                         // if the node is a folder, toggle the expanded state (whole tile callback)
                                         else if(wordListFolderTypes.contains(node.value.type)) {
                                           node.value.isExpanded = !node.value.isExpanded;
-                                          widget.wordLists.updateEntry(node);
+                                          widget.wordLists.updateNode(node);
                                         }
                                       },
                                       onRenameFinished: (node) {
-                                        widget.wordLists.updateEntry(node);
+                                        widget.wordLists.updateNode(node);
                                       },
                                       onDragAccept: (destinationNode, node, folder) async {
                                         if(folder != null) {
-                                          int folderId = await widget.wordLists.addEntry(folder);
-                                          destinationNode.parent!.id = folderId;
-                                          node.parent!.id = folderId;
+                                          await widget.wordLists.addFolderWithNodes(
+                                            folder,
+                                            [destinationNode, node,
+                                            destinationNode.parent, node.parent]);
                                         }
-                                        widget.wordLists.updateEntries([destinationNode, node]);
+                                        else{
+                                          await widget.wordLists.updateNodes(
+                                            [destinationNode, destinationNode.parent!,
+                                            node, node.parent!]
+                                          );
+                                        }
                                       },
                                       onDeletePressed: (TreeNode<WordListsData> node) {
                                         final parent = node.parent!;
                                         parent.removeChild(node);
-                                        widget.wordLists.updateEntry(parent);
+                                        widget.wordLists.updateNode(parent);
                                         widget.wordLists.deleteEntries([node]);
                                       },
                                       onFolderPressed: (node) {
-                                        widget.wordLists.updateEntry(node);
+                                        widget.wordLists.updateNode(node);
                                       },
                                       onSelectedToggled: widget.onSelectionConfirmed == null
                                         ? null
@@ -301,7 +311,7 @@ class _WordListsState extends State<WordLists> {
                                       data.parent!.removeChild(data);
                                       node.parent!.insertChild(data, node.parent!.children.indexOf(node));
 
-                                      widget.wordLists.updateEntries(
+                                      widget.wordLists.updateNodes(
                                         [data.parent!, data, node.parent!, node]);
 
                                       draggingOverDividerIndex = null;
@@ -425,7 +435,7 @@ class _WordListsState extends State<WordLists> {
       WordListsData("New ${nodeType.name}", nodeType, [], true));
     currentRoot.addChild(addedNewNode!);
 
-    widget.wordLists.addEntry(addedNewNode!);
+    widget.wordLists.addNode(addedNewNode!);
 
   }
 }

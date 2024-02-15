@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:drift/drift.dart';
@@ -19,8 +20,6 @@ class WordListsSQL extends Table {
   IntColumn get id => integer().autoIncrement()();
   /// The name of this wordlist entry
   TextColumn get name => text()();
-  /// The parent's ID
-  IntColumn get parentID => integer()();
   /// All children IDs
   TextColumn get childrenIDs => text().map(const ListIntConverter())();
   /// The type of this entry
@@ -55,7 +54,6 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
     return WordListsSQLCompanion(
         id: useID ? Value(entry.id) : const Value.absent(),
         name: Value(entry.value.name),
-        parentID: Value(entry.parent == null ? 0 : entry.parent!.id),
         childrenIDs: Value(entry.children.map((e) => e.id).toList()),
         type: Value(entry.value.type),
         dictIDs: Value(entry.value.wordIds),
@@ -65,17 +63,13 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  // returns the generated id
-  Future<int> addEntry(TreeNode<WordListsData> entry) async {
+  /// Adds the given `node` to the database
+  /// returns the generated id
+  Future<int> addNode(TreeNode<WordListsData> node) async {
 
-    final sqlEntry = companionFromTreeNode(entry, false);
+    final sqlEntry = companionFromTreeNode(node, false);
 
     int i = await into(wordListsSQL).insert(sqlEntry);
-
-    List items = ( await (select(wordListsSQL)).get());
-    for (var i in items){
-      //print(i);
-    }
 
     return i;
   }
@@ -92,7 +86,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// Updates the SQL using the given entry.
   /// The entry must exist in the database
   /// Returns the amount of rows that have been affected by this operation.
-  Future<int> updateEntry(TreeNode<WordListsData> entry) {
+  Future<int> updateNode(TreeNode<WordListsData> entry) {
 
     final sqlEntry = companionFromTreeNode(entry, true);
 
@@ -102,22 +96,44 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
+  /// Adds `folder` as a new folder to the database and adds all `subNodes` as
+  /// children to `folder`
+  Future addFolderWithNodes(TreeNode<WordListsData> folder,
+    List<TreeNode<WordListsData>?> subNodes) async {
+
+    return transaction(() async {
+      // first, add the folder and await its ID
+      int folderId = await into(wordListsSQL)
+        .insert(companionFromTreeNode(folder, false));
+      folder.id = folderId;
+
+      // update the remaining affected nodes
+      await batch((batch) {
+        for (var node in (subNodes..add(folder.parent)).whereNotNull()){
+          var sqlNode = companionFromTreeNode(node, true);
+          batch.update(
+            wordListsSQL, sqlNode,
+            where: (table) => table.id.equals(node.id),
+          );
+        }
+      });
+    });
+
+  }
+
   /// Updates the SQL using the given entries.
-  /// The entries must exist in the database
-  /// Returns a list of amount of rows that have been affected by this operation.
-  Future<List<int>> updateEntries(List<TreeNode<WordListsData>> entries) async {
+  Future<void> updateNodes(List<TreeNode<WordListsData>?> entries) async {
 
-    List<int> updated = [];
+    await batch((batch) {
+      for (var node in entries.whereNotNull()){
+        var sqlNode = companionFromTreeNode(node, true);
+        batch.update(
+          wordListsSQL, sqlNode,
+          where: (table) => table.id.equals(node.id),
+        );
+      }
+    });
 
-    for(var entry in entries){
-      var sqlEntry = companionFromTreeNode(entry, true);
-
-      updated.add(await (update(wordListsSQL)
-        ..where((tbl) => tbl.id.equals(entry.id)))
-        .write(sqlEntry));
-    }
-
-    return updated;
   }
 
   @override

@@ -10,10 +10,6 @@ import 'package:json_annotation/json_annotation.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/tree/tree_node_json_converter.dart';
 
-part 'tree_node.g.dart';
-
-
-
 
 
 /// Enum that defines the traversal mode available for the tree
@@ -28,8 +24,8 @@ enum TreeTraversalMode{
 /// If `T` is a `ChangeNotifier` it will also send notifications when one of it's
 /// values is modified
 /// 
-/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
-@JsonSerializable(explicitToJson: true)
+// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
+//@JsonSerializable(explicitToJson: true)
 class TreeNode<T> extends ValueNotifier<T> {
 
   /// the value of this node
@@ -41,13 +37,6 @@ class TreeNode<T> extends ValueNotifier<T> {
   @JsonKey(includeFromJson: true, includeToJson: true)
   int id = 0;
 
-  /// Should the IDs of this tree automatically be updated
-  /// This is useful if this tree should be serialized to JSON
-  /// BUT it can cause problems
-  /// Set it to false to manually handle IDs in this tree
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  bool automaticallyUpdateIDs;
-
   /// a list containing all children of this TreeNode
   @TreeNodeConverter()
   List<TreeNode<T>> _children = [];
@@ -55,13 +44,9 @@ class TreeNode<T> extends ValueNotifier<T> {
   @TreeNodeConverter()
   List<TreeNode<T>> get children => List.unmodifiable(_children);
 
-  /// the parent TreeNode of this TreeNode, if null this is the root
+  /// the parent TreeNode of this TreeNode, if `null` this is the root
   @JsonKey(includeFromJson: false, includeToJson: false)
   TreeNode<T>? parent;
-  /// A unique ID in the tree, used for deserializing this objetc, null means
-  /// this is the root
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  int? parentID;
 
   /// the level of this node in the tree, 0 means it is the root
   @JsonKey(includeFromJson: true, includeToJson: true)
@@ -81,7 +66,6 @@ class TreeNode<T> extends ValueNotifier<T> {
     this.value,
     {
       this.id=0,
-      this.automaticallyUpdateIDs = false,
       List<TreeNode<T>> children = const [],
     }
   ) : super(value) {
@@ -103,12 +87,10 @@ class TreeNode<T> extends ValueNotifier<T> {
     }
 
     _children.add(newNode);
-    newNode.parent   = this;
-    newNode.parentID = this.id;
+    newNode.parent = this;
     
     // update the tree
     updateLevel();
-    updateID();
 
     notifyListeners();
   }
@@ -118,7 +100,6 @@ class TreeNode<T> extends ValueNotifier<T> {
     _children.addAll(newNodes);
     for (final newNode in newNodes) {
       newNode.parent = this;
-      newNode.parentID = this.id;
 
       // if the added data is a change notifier, add `this` as a listener
       if(newNode.value is ChangeNotifier) {
@@ -128,7 +109,6 @@ class TreeNode<T> extends ValueNotifier<T> {
 
     // update the tree
     updateLevel();
-    updateID();
 
     notifyListeners();
   }
@@ -138,7 +118,6 @@ class TreeNode<T> extends ValueNotifier<T> {
 
     _children.insert(index, newNode);
     newNode.parent = this;
-    newNode.parentID = this.id;
 
     // if the added data is a change notifier, add `this` as a listener
     if(newNode.value is ChangeNotifier) {
@@ -147,7 +126,6 @@ class TreeNode<T> extends ValueNotifier<T> {
 
     // update the tree
     updateLevel();
-    updateID();
 
     notifyListeners();
   }
@@ -156,14 +134,10 @@ class TreeNode<T> extends ValueNotifier<T> {
   TreeNode<T> removeChild (TreeNode<T> node) {
     _children.remove(node);
     node.parent = null;
-    node.parentID = null;
-    node.updateID();
     // if the removed data is a change notifier, remove listener
     if(node.value is ChangeNotifier) {
       (node.value as ChangeNotifier).removeListener(notifyListeners);
     }
-
-    updateID();
 
     notifyListeners();
 
@@ -186,13 +160,10 @@ class TreeNode<T> extends ValueNotifier<T> {
           (node.value as ChangeNotifier).removeListener(notifyListeners);
         }
         node.parent = null;
-        node.parentID = null;
         node.updateLevel();
-        node.updateID();
       }
     }
 
-    updateID();
     notifyListeners();
 
     return removed;
@@ -209,13 +180,10 @@ class TreeNode<T> extends ValueNotifier<T> {
         (node.value as ChangeNotifier).removeListener(notifyListeners);
       }
       node.parent = null;
-      node.parentID = null;
       node.updateLevel();
-      node.updateID();
     }
     _children.clear();
 
-    updateID();
     notifyListeners();
     return tmp;
   }
@@ -224,27 +192,6 @@ class TreeNode<T> extends ValueNotifier<T> {
   void updateLevel () {
     for (final node in dfs()) {
       node._level = node.parent!.level + 1;
-    }
-  }
-
-  /// Update the id of all nodes in this tree
-  void updateID () {
-
-    if(!automaticallyUpdateIDs) return;
-
-    TreeNode<T> root = getRoot();
-
-    int cnt = 0;
-    for (final n in root.bfs()) {
-      n.id = cnt;
-
-      if(n.parent != null) {
-        n.parentID = n.parent!.id;
-      } else {
-        n.parentID = null;
-      }
-
-      cnt++;
     }
   }
 
@@ -380,18 +327,4 @@ class TreeNode<T> extends ValueNotifier<T> {
     return treeList;
   }
 
-  factory TreeNode.fromJson(Map<String,dynamic> json){
-    
-    TreeNode<T> root = _$TreeNodeFromJson<T>(json);
-    
-    for (final node in root.bfs()){
-      if(node.parentID == null) continue;
-
-      node.parent = root.findByID(node.parentID!);
-    }
-
-    return root;
-  }
-
-  Map<String,dynamic> toJson() => _$TreeNodeToJson<T>(this);
 }
