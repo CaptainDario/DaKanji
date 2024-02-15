@@ -20,10 +20,6 @@ class WordListsTree {
   /// The root node of the word lists
   late TreeNode<WordListsData> root;
 
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  List<TreeNode<WordListsData>> userCreatedLists = [];
-
-
   /// Initializes an empty word lists tree
   WordListsTree();
 
@@ -40,8 +36,6 @@ class WordListsTree {
         sqlList.where((n) => n.type == WordListNodeType.root).first);
     }
     
-    addDefaultsToRoot();
-
     // Parse the data from SQL to a list
     // format: {own_id : (parent id, [children ids], parsed node)}
     Map<int, Tuple2<List<int>, TreeNode<WordListsData>>> nodes = {};
@@ -54,6 +48,8 @@ class WordListsTree {
 
       List<int> childIDs = value.item1;
       TreeNode<WordListsData> node = value.item2;
+
+      if(node.value.type == WordListNodeType.root) continue;
 
       for(int childID in childIDs){
         node.addChild(nodes[childID]!.item2);
@@ -81,24 +77,6 @@ class WordListsTree {
 
   }
 
-  /// Adds the defaults folder / lists
-  void addDefaultsToRoot(){
 
-    TreeNode<WordListsData> defaults = TreeNode<WordListsData>(
-      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
-    );
-
-    root.addChild(defaults);
-    for (var element in DefaultNames.values) {
-      if(element == DefaultNames.defaults) continue;
-
-      defaults.addChild(
-        TreeNode<WordListsData>(
-          WordListsData(element.name, WordListNodeType.wordListDefault, [], false),
-        )
-      );
-    }
-
-  }
   
 }

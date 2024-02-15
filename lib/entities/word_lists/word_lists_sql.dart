@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:drift/drift.dart';
 
@@ -46,12 +47,39 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     int count = await wordListsSQL.count().getSingle();
 
+    // when the DB is opened for the first time add a root and the default folders
     if(count == 0){
       await addNode(TreeNode<WordListsData>(
         WordListsData("", WordListNodeType.root, [], true),
-        id: 0,
-      ));
+        id: 0,), true);
+      await addDefaultsToRoot();
     }
+
+  }
+
+  /// Adds the defaults folder / lists
+  Future addDefaultsToRoot() async {
+
+    TreeNode<WordListsData> defaultsFolder = TreeNode<WordListsData>(
+      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
+    );
+
+    transaction(() async {
+      for (var element in DefaultNames.values) {
+        if(element == DefaultNames.defaults) continue;
+
+        TreeNode<WordListsData> defaultNode = TreeNode(
+            WordListsData(element.name, WordListNodeType.wordListDefault, [], false),
+          );
+
+        int id = await into(wordListsSQL).insert(companionFromTreeNode(defaultNode, false));
+        defaultNode.id = id;
+
+        defaultsFolder.addChild(defaultNode);
+      }
+
+      await addNode(defaultsFolder, false);
+    });
 
   }
 
@@ -77,36 +105,35 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  /// Adds the given `node` to the database
+  /// Adds the given `node` to the database, if `useID == true` use the id of
+  /// the given `node`, otherwise SQLite will assign an ID
   /// returns the generated id
-  Future<int> addNode(TreeNode<WordListsData> node) async {
+  Future<int> addNode(TreeNode<WordListsData> node, bool useID) async {
 
-    final sqlEntry = companionFromTreeNode(node, false);
+    final sqlEntry = companionFromTreeNode(node, useID);
 
     int i = await into(wordListsSQL).insert(sqlEntry);
 
     return i;
   }
 
-  /// deletes all entries given by `entries`
-  Future deleteEntries(List<TreeNode<WordListsData>> entries) {
+  /// Updates the SQL using the given entries.
+  /// `useIDs` defines if the ids of the [TreeNode]s should be used or
+  /// a new ID should be generated from SQLite
+  Future<List<int>> addNodes(List<TreeNode<WordListsData>> entries, bool useIDs) async {
 
-    return (delete(wordListsSQL)
-      ..where((tbl) => tbl.id.isIn(entries.map((e) => e.id))))
-      .go();
+    List<int> ids = [];
 
-  }
+    transaction(() async {
+      for (var entry in entries){
+        // first, add the folder and await its ID
+        ids.add(await into(wordListsSQL)
+          .insert(companionFromTreeNode(entry, false))
+        );
+      }
+    });
 
-  /// Updates the SQL using the given entry.
-  /// The entry must exist in the database
-  /// Returns the amount of rows that have been affected by this operation.
-  Future<int> updateNode(TreeNode<WordListsData> entry) {
-
-    final sqlEntry = companionFromTreeNode(entry, true);
-
-    return (update(wordListsSQL)
-      ..where((tbl) => tbl.id.equals(entry.id)))
-      .write(sqlEntry);
+    return ids;
 
   }
 
@@ -132,6 +159,40 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         }
       });
     });
+
+  }
+
+  /// deletes all entries given by `entries`
+  Future deleteEntries(List<TreeNode<WordListsData>> entries) {
+
+    return (delete(wordListsSQL)
+      ..where((tbl) => tbl.id.isIn(entries.map((e) => e.id))))
+      .go();
+
+  }
+
+  /// Deletes the given `entry` and the whole subtree
+  Future deleteEntryAndSubTree(TreeNode<WordListsData> entry) {
+
+    List<int> entries = entry.dfs().map((e) => e.id).toList();
+    entries.add(entry.id);
+
+    return (delete(wordListsSQL)
+      ..where((tbl) => tbl.id.isIn(entries)))
+      .go();
+
+  }
+
+  /// Updates the SQL using the given entry.
+  /// The entry must exist in the database
+  /// Returns the amount of rows that have been affected by this operation.
+  Future<int> updateNode(TreeNode<WordListsData> entry) {
+
+    final sqlEntry = companionFromTreeNode(entry, true);
+
+    return (update(wordListsSQL)
+      ..where((tbl) => tbl.id.equals(entry.id)))
+      .write(sqlEntry);
 
   }
 

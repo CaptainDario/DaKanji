@@ -263,8 +263,9 @@ class _WordListsState extends State<WordLists> {
                                       onDeletePressed: (TreeNode<WordListsData> node) {
                                         final parent = node.parent!;
                                         parent.removeChild(node);
+                                        // TODO function to do this in one transaction
                                         widget.wordLists.updateNode(parent);
-                                        widget.wordLists.deleteEntries([node]);
+                                        widget.wordLists.deleteEntryAndSubTree(node);
                                       },
                                       onFolderPressed: (node) {
                                         widget.wordLists.updateNode(node);
@@ -435,7 +436,7 @@ class _WordListsState extends State<WordLists> {
       WordListsData("New ${nodeType.name}", nodeType, [], true));
     currentRoot.addChild(addedNewNode!);
 
-    widget.wordLists.addNode(addedNewNode!);
+    widget.wordLists.addNode(addedNewNode!, false);
 
   }
 }
