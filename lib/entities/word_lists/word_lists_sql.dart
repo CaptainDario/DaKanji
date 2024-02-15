@@ -40,6 +40,20 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
     File databaseFile
   ) : super(openSqlite(databaseFile));
 
+  /// Initializes this instance by checking if is empty and if so adding a 
+  /// root node
+  Future init () async {
+
+    int count = await wordListsSQL.count().getSingle();
+
+    if(count == 0){
+      await addNode(TreeNode<WordListsData>(
+        WordListsData("", WordListNodeType.root, [], true),
+        id: 0,
+      ));
+    }
+
+  }
 
   /// A stream that emits whenever a value of this database changes
   Stream<List<WordListsSQLData>> watchAllWordlists(){
