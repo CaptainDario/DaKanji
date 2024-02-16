@@ -456,25 +456,20 @@ class _WordListsState extends State<WordLists> {
 
   /// Calculates and returns the top position for the `i`-th word lists node
   double calculateNodeTopPosition(int i){
+
     double top = 0.0;
 
     // if any parent is collapsed
     if(childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)){
       // move this node to the position of the next un-collapsed node
-      top = (48+8.0)*childrenDFS.indexOf(childrenDFS[i].parent!);
+      TreeNode<WordListsData> t = childrenDFS[i].parent!.getPath()
+        .where((n) => !n.value.isExpanded).last;
+      top = (48+8.0)*(findVisibleHigherItems(i).indexOf(t));
     }
     // no parent is collapse, check if any nodes above in the list view are collapsed
-    else if(!childrenDFS.sublist(0, i+1).every((e) => e.value.isExpanded)){
-
-      // for all nodes higher in the list
-      Set<int> collapsedHigheItems = {};
-      for (var childDFS in childrenDFS.sublist(0, i+1)) {
-        List<TreeNode<WordListsData>> childPath = childDFS.getPath();
-        if(childPath.every((e) => e.value.isExpanded)){
-          collapsedHigheItems.add(childDFS.id);
-        }
-      }
-      top = (48+8.0)*collapsedHigheItems.length;
+    else if(!childrenDFS.sublist(0, i).every((e) => e.value.isExpanded)){
+  
+      top = (48+8.0)*findVisibleHigherItems(i).length;
     }
     // nothing applies render node as list
     else{
@@ -482,6 +477,28 @@ class _WordListsState extends State<WordLists> {
     }
 
     return top;
+
+  }
+
+  /// Finds all visible nodes 'above' the `i`-th node in `childrenDFS`
+  /// and returns them
+  List<TreeNode<WordListsData>> findVisibleHigherItems(int i){
+    
+    List<TreeNode<WordListsData>> visibleHigherItems = [];
+
+    for (var childDFS in childrenDFS.sublist(0, i)) {
+
+      List<TreeNode<WordListsData>> childPath = childDFS.getPath();
+      childPath = childPath.sublist(0, childPath.length-1);
+
+      if(childPath.every((e) => e.value.isExpanded)){
+        if(!visibleHigherItems.contains(childDFS)){
+          visibleHigherItems.add(childDFS);
+        }
+      }
+    }
+
+    return visibleHigherItems;
   }
 
   /// Adds a new folder / word list to the tree
