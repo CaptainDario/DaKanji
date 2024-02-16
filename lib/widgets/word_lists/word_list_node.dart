@@ -32,6 +32,8 @@ class WordListNode extends StatefulWidget {
   final TreeNode<WordListsData> node;
   /// The index of this tile in the list
   final int index;
+  /// The duration for the color while hovering to animate
+  final int hoveringAnimationColorDuration;
   /// If the textfield should be enabled and focused when the tile is created
   final bool editTextOnCreate;
   /// Callback that is executed when the user taps on this tile, provides the
@@ -62,6 +64,7 @@ class WordListNode extends StatefulWidget {
     this.node,
     this.index,
     {
+      required this.hoveringAnimationColorDuration,
       this.editTextOnCreate = false,
       this.onTap,
       this.onDragStarted,
@@ -198,8 +201,11 @@ class _WordListNodeState extends State<WordListNode> {
             widget.onDragAccept?.call(data, widget.node, newFolder);
           },
           builder: (context, candidateItems, rejectedItems) {
-            return Container(
-              color: itemDraggingOverThis ? g_Dakanji_green.withOpacity(0.5) : null,
+            return AnimatedContainer(
+              duration: Duration(milliseconds: widget.hoveringAnimationColorDuration),
+              color: itemDraggingOverThis
+                ? g_Dakanji_green.withOpacity(0.5)
+                : Colors.transparent,
               padding: EdgeInsets.fromLTRB(
                 15.0*(widget.node.level-1)+8, 0, 0, 0
               ),
