@@ -434,9 +434,8 @@ class _WordListsState extends State<WordLists> {
 
     addedNewNode = TreeNode(
       WordListsData("New ${nodeType.name}", nodeType, [], true));
-    currentRoot.addChild(addedNewNode!);
 
-    widget.wordLists.addNode(addedNewNode!, false);
+    widget.wordLists.addNodeToRoot(addedNewNode!, currentRoot);
 
   }
 }

@@ -123,23 +123,18 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
     return i;
   }
 
-  /// Updates the SQL using the given entries.
-  /// `useIDs` defines if the ids of the [TreeNode]s should be used or
-  /// a new ID should be generated from SQLite
-  Future<List<int>> addNodes(List<TreeNode<WordListsData>> entries, bool useIDs) async {
-
-    List<int> ids = [];
-
+  /// Adds the given `node` to the given `root` updating the IDs correctly 
+  Future addNodeToRoot(TreeNode<WordListsData> node, TreeNode<WordListsData> root) async {
+    
     transaction(() async {
-      for (var entry in entries){
-        // first, add the folder and await its ID
-        ids.add(await into(wordListsSQL)
-          .insert(companionFromTreeNode(entry, false))
-        );
-      }
-    });
 
-    return ids;
+      int addedNodeID = await _addNode(node, false);
+
+      root.addChild(node..id = addedNodeID);
+
+      await updateNode(root);
+
+    });
 
   }
 
@@ -165,15 +160,6 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         }
       });
     });
-
-  }
-
-  /// deletes all entries given by `entries`
-  Future deleteEntries(List<TreeNode<WordListsData>> entries) {
-
-    return (delete(wordListsSQL)
-      ..where((tbl) => tbl.id.isIn(entries.map((e) => e.id))))
-      .go();
 
   }
 
