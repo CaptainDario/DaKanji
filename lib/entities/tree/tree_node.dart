@@ -208,7 +208,7 @@ class TreeNode<T> extends ValueNotifier<T> {
 
   /// returns a list with all nodes to this node
   /// has the structure: [root, n1, n2, ..., this]
-  List<TreeNode> getPath() {
+  List<TreeNode<T>> getPath() {
     
     List<TreeNode<T>> path = [this];
 

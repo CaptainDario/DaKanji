@@ -34,6 +34,8 @@ class WordListNode extends StatefulWidget {
   final int index;
   /// The duration for the color while hovering to animate
   final int hoveringAnimationColorDuration;
+  /// The duration for the color while hovering to animate
+  final int nodeMovementAnimationDuration;
   /// If the textfield should be enabled and focused when the tile is created
   final bool editTextOnCreate;
   /// Callback that is executed when the user taps on this tile, provides the
@@ -65,6 +67,7 @@ class WordListNode extends StatefulWidget {
     this.index,
     {
       required this.hoveringAnimationColorDuration,
+      required this.nodeMovementAnimationDuration,
       this.editTextOnCreate = false,
       this.onTap,
       this.onDragStarted,
@@ -220,9 +223,10 @@ class _WordListNodeState extends State<WordListNode> {
                     // if this is a folder show open/close button
                     wordListFolderTypes.contains(widget.node.value.type)
                       ? IconButton(
-                        icon: Icon( widget.node.value.isExpanded
-                          ? Icons.arrow_drop_down
-                          : Icons.arrow_right
+                        icon: AnimatedRotation(
+                          turns: widget.node.value.isExpanded ? 2/8 : 0,
+                          duration: Duration(milliseconds: widget.nodeMovementAnimationDuration),
+                          child: const Icon(Icons.arrow_right),
                         ),
                         // open / close callback
                         onPressed: () {

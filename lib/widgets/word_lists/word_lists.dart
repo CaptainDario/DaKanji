@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:ffi';
 import 'dart:math';
 
 // Flutter imports:
@@ -22,6 +23,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
+import 'package:rive/rive.dart';
 
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {
@@ -78,6 +80,9 @@ class _WordListsState extends State<WordLists> {
 
   /// The duration for the color while hovering to animate
   int hoveringAnimationColorDuration = 100;
+  /// The duration of the animation when nodes are moving in the word lists
+  /// screen
+  int nodeMovementAnimationDuration = 250;
 
 
   @override
@@ -116,9 +121,9 @@ class _WordListsState extends State<WordLists> {
           return const SizedBox();
         }
         if(snapshot.connectionState == ConnectionState.active){
-          print("Reloaded");
+          //print("Reloaded");
           for (var d in snapshot.data!) {
-            print(d);
+            //print(d);
           }
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
@@ -210,23 +215,24 @@ class _WordListsState extends State<WordLists> {
                           controller: scrollController,
                           child: SizedBox(
                             height: childrenDFS.length * (48+8.0),
-                            //height: childrenDFS.where((e) => e.parent?.value.isExpanded ?? false).length * (48+8.0),
                             width: MediaQuery.sizeOf(context).width,
                             child: Stack(
                               alignment: Alignment.topCenter,
                               children: [
-                                for (int i = 0; i < childrenDFS.length; i++)
-                                  // Only show if the parent is expanded
-                                  // Only show the default lists/folder if `showDefaults` is true
-                                  //if(!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded))
-                                    AnimatedPositioned(
-                                      duration: const Duration(milliseconds: 2000),
-                                      height: 48+8,
-                                      width: MediaQuery.sizeOf(context).width,
-                                      top: //!childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
-                                        //? 
-                                        (48+8.0)*i,
-                                        //: (48+8.0)*childrenDFS.indexOf(childrenDFS[i].parent!),
+                                for (int i = childrenDFS.length-1; i >= 0; i--)
+                                  AnimatedPositioned(
+                                    duration: Duration(milliseconds: nodeMovementAnimationDuration),
+                                    curve: Curves.decelerate,
+                                    height: 48+8,
+                                    width: MediaQuery.sizeOf(context).width,
+                                    // if any parent is collapsed
+                                    top: calculateNodeTopPosition(i),
+                                    child: AnimatedOpacity(
+                                      duration: Duration(milliseconds: nodeMovementAnimationDuration~/1.5),
+                                      curve: Curves.decelerate,
+                                      opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
+                                        ? 1.0
+                                        : 0.0,
                                       child: Column(
                                         children: [
                                           Focus(
@@ -241,6 +247,7 @@ class _WordListsState extends State<WordLists> {
                                                 : childrenDFS[i],
                                               i,
                                               hoveringAnimationColorDuration: hoveringAnimationColorDuration,
+                                              nodeMovementAnimationDuration: nodeMovementAnimationDuration,
                                               onDragStarted: (){
                                                 draggingWordListNode = true;
                                               },
@@ -329,10 +336,10 @@ class _WordListsState extends State<WordLists> {
                                         
                                                 data.parent!.removeChild(data);
                                                 node.parent!.insertChild(data, node.parent!.children.indexOf(node));
-                                  
+                                                                        
                                                 widget.wordLists.updateNodes(
                                                   [data.parent!, data, node.parent!, node]);
-                                  
+                                                                        
                                                 draggingOverDividerIndex = null;
                                               },
                                               onLeave: (node) {
@@ -354,6 +361,7 @@ class _WordListsState extends State<WordLists> {
                                         ],
                                       ),
                                     ),
+                                  ),
                               ],
                             ),
                           ),
@@ -444,6 +452,36 @@ class _WordListsState extends State<WordLists> {
         );
       }
     );
+  }
+
+  /// Calculates and returns the top position for the `i`-th word lists node
+  double calculateNodeTopPosition(int i){
+    double top = 0.0;
+
+    // if any parent is collapsed
+    if(childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)){
+      // move this node to the position of the next un-collapsed node
+      top = (48+8.0)*childrenDFS.indexOf(childrenDFS[i].parent!);
+    }
+    // no parent is collapse, check if any nodes above in the list view are collapsed
+    else if(!childrenDFS.sublist(0, i+1).every((e) => e.value.isExpanded)){
+
+      // for all nodes higher in the list
+      Set<int> collapsedHigheItems = {};
+      for (var childDFS in childrenDFS.sublist(0, i+1)) {
+        List<TreeNode<WordListsData>> childPath = childDFS.getPath();
+        if(childPath.every((e) => e.value.isExpanded)){
+          collapsedHigheItems.add(childDFS.id);
+        }
+      }
+      top = (48+8.0)*collapsedHigheItems.length;
+    }
+    // nothing applies render node as list
+    else{
+      top = (48+8.0)*i;
+    }
+
+    return top;
   }
 
   /// Adds a new folder / word list to the tree

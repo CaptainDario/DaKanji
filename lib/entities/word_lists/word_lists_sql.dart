@@ -71,7 +71,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         if(element == DefaultNames.defaults) continue;
 
         TreeNode<WordListsData> defaultNode = TreeNode(
-            WordListsData(element.name, WordListNodeType.wordListDefault, [], false),
+            WordListsData(element.name, WordListNodeType.wordListDefault, [], true),
           );
 
         int id = await into(wordListsSQL).insert(companionFromTreeNode(defaultNode, false));
