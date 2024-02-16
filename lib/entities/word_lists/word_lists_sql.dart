@@ -49,22 +49,24 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     // when the DB is opened for the first time add a root and the default folders
     if(count == 0){
-      await addNode(TreeNode<WordListsData>(
+      TreeNode<WordListsData> root = TreeNode<WordListsData>(
         WordListsData("", WordListNodeType.root, [], true),
-        id: 0,), true);
-      await addDefaultsToRoot();
+        id: 0,);
+      await _addNode(root, true);
+      await addDefaultsToRoot(root);
     }
 
   }
 
   /// Adds the defaults folder / lists
-  Future addDefaultsToRoot() async {
+  Future addDefaultsToRoot(TreeNode<WordListsData> root) async {
 
     TreeNode<WordListsData> defaultsFolder = TreeNode<WordListsData>(
-      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], false),
+      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], true),
     );
 
     transaction(() async {
+      // add all default lists to the defaults folder
       for (var element in DefaultNames.values) {
         if(element == DefaultNames.defaults) continue;
 
@@ -78,7 +80,11 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         defaultsFolder.addChild(defaultNode);
       }
 
-      await addNode(defaultsFolder, false);
+      // add the defaults folder to SQLite
+      int defaultsFolderSQLID = await _addNode(defaultsFolder, false);
+      // update the root
+      root.addChild(defaultsFolder..id = defaultsFolderSQLID);
+      await updateNode(root);
     });
 
   }
@@ -108,7 +114,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// Adds the given `node` to the database, if `useID == true` use the id of
   /// the given `node`, otherwise SQLite will assign an ID
   /// returns the generated id
-  Future<int> addNode(TreeNode<WordListsData> node, bool useID) async {
+  Future<int> _addNode(TreeNode<WordListsData> node, bool useID) async {
 
     final sqlEntry = companionFromTreeNode(node, useID);
 
