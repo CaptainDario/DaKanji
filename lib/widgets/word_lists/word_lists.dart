@@ -186,8 +186,8 @@ class _WordListsState extends State<WordLists> {
                                   ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![3]
                                   : null,
                                 child: IconButton(
-                                  onPressed: () {
-                                    addNewWordListNode(WordListNodeType.wordList);
+                                  onPressed: () async {
+                                    await addNewWordListNode(WordListNodeType.wordList);
                                   },
                                   icon: const Icon(Icons.format_list_bulleted_add)
                                 ),
@@ -507,16 +507,18 @@ class _WordListsState extends State<WordLists> {
   }
 
   /// Adds a new folder / word list to the tree
-  void addNewWordListNode(WordListNodeType nodeType){
+  Future<void> addNewWordListNode(WordListNodeType nodeType) async {
 
     addedNewNode = TreeNode(
       WordListsData("New ${nodeType.name}", nodeType, [], true));
 
-    widget.wordLists.addNodeToRoot(addedNewNode!, currentRoot);
+    await widget.wordLists.addNodeToRoot(addedNewNode!, currentRoot);
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Future.delayed(const Duration(milliseconds: 500));
       addedNewNode = null;
     });
 
   }
+
 }
