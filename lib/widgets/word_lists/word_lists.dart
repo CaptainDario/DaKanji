@@ -223,6 +223,7 @@ class _WordListsState extends State<WordLists> {
                               children: [
                                 for (int i = childrenDFS.length-1; i >= 0; i--)
                                   AnimatedPositioned(
+                                    key: Key(childrenDFS[i].id.toString()),
                                     duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                     curve: Curves.decelerate,
                                     height: 48+8,
@@ -230,6 +231,7 @@ class _WordListsState extends State<WordLists> {
                                     // if any parent is collapsed
                                     top: calculateNodeTopPosition(i),
                                     child: AnimatedOpacity(
+                                      key: Key(childrenDFS[i].id.toString()),
                                       duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                       curve: Curves.decelerate,
                                       opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
@@ -478,7 +480,7 @@ class _WordListsState extends State<WordLists> {
     else{
       top = (48+8.0)*i;
     }
-
+    
     return top;
 
   }
