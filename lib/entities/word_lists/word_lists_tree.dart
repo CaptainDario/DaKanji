@@ -26,14 +26,9 @@ class WordListsTree {
   /// Constructs a wordlist tree from a SQL WordList database
   WordListsTree.fromWordListsSQL(List<WordListsSQLData> sqlList){
 
-    // previously there have not been any word lists -> add just the root
+    // assure that the root is in the DB and set it
     if(sqlList.isEmpty){
       throw Exception("No root in SQL!");
-    }
-    // otherwise load the root from the DB
-    else{
-      root = treeNodeWordListFromSQLData(
-        sqlList.where((n) => n.type == WordListNodeType.root).first);
     }
     
     // Parse the data from SQL to a list
@@ -49,18 +44,13 @@ class WordListsTree {
       List<int> childIDs = value.item1;
       TreeNode<WordListsData> node = value.item2;
 
-      if(node.value.type == WordListNodeType.root) continue;
-
       for(int childID in childIDs){
         node.addChild(nodes[childID]!.item2);
       }
     }
 
-    // add nodes to the root
-    for (var node in nodes.values.where((n) => 
-        n.item2.parent == null && n.item2.value.type != WordListNodeType.root)) {
-      root.addChild(node.item2);
-    }
+    // set the root
+    root = nodes[0]!.item2;
 
   }
   

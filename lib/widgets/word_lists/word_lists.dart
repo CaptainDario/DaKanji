@@ -284,7 +284,7 @@ class _WordListsState extends State<WordLists> {
                                                     [destinationNode, node,
                                                     destinationNode.parent, node.parent]);
                                                 }
-                                                else{
+                                                else {
                                                   await widget.wordLists.updateNodes(
                                                     [destinationNode, destinationNode.parent!,
                                                     node, node.parent!]
@@ -359,7 +359,7 @@ class _WordListsState extends State<WordLists> {
                                                   ),
                                                   color: draggingOverDividerIndex == i
                                                     ? g_Dakanji_green.withOpacity(0.5)
-                                                    : Colors.transparent // Colors.pink.withOpacity(0.5),
+                                                    : Colors.transparent
                                                 );
                                               }
                                             )
