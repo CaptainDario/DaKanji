@@ -305,7 +305,7 @@ class _WordListsState extends State<WordLists> {
                                                 ? null
                                                 : (node) => setState(() {}),
                                               key: Key('$i'),
-                                              editTextOnCreate: childrenDFS[i] == addedNewNode ? true : false,
+                                              editTextOnCreate: childrenDFS[i].id == addedNewNode?.id ? true : false,
                                             ),
                                           ),
                                           
@@ -513,6 +513,10 @@ class _WordListsState extends State<WordLists> {
       WordListsData("New ${nodeType.name}", nodeType, [], true));
 
     widget.wordLists.addNodeToRoot(addedNewNode!, currentRoot);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      addedNewNode = null;
+    });
 
   }
 }

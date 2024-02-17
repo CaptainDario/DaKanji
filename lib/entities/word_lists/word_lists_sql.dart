@@ -130,7 +130,8 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       int addedNodeID = await _addNode(node, false);
 
-      root.addChild(node..id = addedNodeID);
+      node.id = addedNodeID;
+      root.addChild(node);
 
       await updateNode(root);
 
