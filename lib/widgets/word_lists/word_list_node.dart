@@ -205,6 +205,7 @@ class _WordListNodeState extends State<WordListNode> {
           },
           builder: (context, candidateItems, rejectedItems) {
             return AnimatedContainer(
+              height: 48,
               duration: Duration(milliseconds: widget.hoveringAnimationColorDuration),
               color: itemDraggingOverThis
                 ? g_Dakanji_green.withOpacity(0.5)
