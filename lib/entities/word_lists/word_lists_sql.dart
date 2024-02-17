@@ -53,7 +53,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         WordListsData("", WordListNodeType.root, [], true),
         id: 0,);
       await _addNode(root, true);
-      await addDefaultsToRoot(root);
+      //await addDefaultsToRoot(root);
     }
 
   }
@@ -152,7 +152,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       // update the remaining affected nodes
       await batch((batch) {
-        for (var node in (subNodes..add(folder.parent)).whereNotNull()){
+        for (var node in (subNodes).whereNotNull()){
           var sqlNode = companionFromTreeNode(node, true);
           batch.update(
             wordListsSQL, sqlNode,

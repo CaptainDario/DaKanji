@@ -50,7 +50,12 @@ class WordListNode extends StatefulWidget {
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
   /// If a new folder is created, provides this as `folder` parameter
-  final void Function(TreeNode<WordListsData> destinationNode, TreeNode<WordListsData> node, TreeNode<WordListsData>? folder)? onDragAccept;
+  /// The list `otherAffected` contains all other nodes that are affected by
+  /// this transformation
+  final void Function(TreeNode<WordListsData> destinationNode,
+                      TreeNode<WordListsData> node,
+                      TreeNode<WordListsData>? folder,
+                      List<TreeNode<WordListsData>> otherAffected)? onDragAccept;
   /// Callback that is executed when the user taps the delete button
   /// on this tile. Provides this `TreeNode` as a parameter
   final void Function(TreeNode<WordListsData> node)? onDeletePressed;
@@ -110,7 +115,7 @@ class _WordListNodeState extends State<WordListNode> {
 
   void init(){
     if(!wordListDefaultTypes.contains(widget.node.value.type)){
-      _controller.text = widget.node.value.name;
+      _controller.text = widget.node.id.toString();//.value.name;
     }
     // transate default types
     else {
@@ -172,6 +177,8 @@ class _WordListNodeState extends State<WordListNode> {
             }
     
             TreeNode<WordListsData>? newFolder;
+            TreeNode<WordListsData>  oldParentData = data.parent!;
+            TreeNode<WordListsData>  oldParentThis = widget.node.parent!;
 
             // list / folder draged on folder
             if((data.value.type == WordListNodeType.folder || 
@@ -201,7 +208,8 @@ class _WordListNodeState extends State<WordListNode> {
               itemDraggingOverThis = false;
             }
     
-            widget.onDragAccept?.call(data, widget.node, newFolder);
+            widget.onDragAccept?.call(data, widget.node, newFolder,
+              [oldParentData, oldParentThis]);
           },
           builder: (context, candidateItems, rejectedItems) {
             return AnimatedContainer(

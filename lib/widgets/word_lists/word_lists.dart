@@ -23,7 +23,9 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
-import 'package:rive/rive.dart';
+
+
+
 
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {
@@ -123,7 +125,7 @@ class _WordListsState extends State<WordLists> {
         if(snapshot.connectionState == ConnectionState.active){
           //print("Reloaded");
           for (var d in snapshot.data!) {
-            //print(d);
+            print(d.id);
           }
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
@@ -223,7 +225,7 @@ class _WordListsState extends State<WordLists> {
                               children: [
                                 for (int i = childrenDFS.length-1; i >= 0; i--)
                                   AnimatedPositioned(
-                                    key: Key(childrenDFS[i].id.toString()),
+                                    key: Key("AnimatedPositioned_${childrenDFS[i].id}"),
                                     duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                     curve: Curves.decelerate,
                                     height: 48+8,
@@ -231,7 +233,7 @@ class _WordListsState extends State<WordLists> {
                                     // if any parent is collapsed
                                     top: calculateNodeTopPosition(i),
                                     child: AnimatedOpacity(
-                                      key: Key(childrenDFS[i].id.toString()),
+                                      key: Key("AnimatedOpacity_${childrenDFS[i].id}"),
                                       duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                       curve: Curves.decelerate,
                                       opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
@@ -277,20 +279,7 @@ class _WordListsState extends State<WordLists> {
                                               onRenameFinished: (node) {
                                                 widget.wordLists.updateNode(node);
                                               },
-                                              onDragAccept: (destinationNode, node, folder) async {
-                                                if(folder != null) {
-                                                  await widget.wordLists.addFolderWithNodes(
-                                                    folder,
-                                                    [destinationNode, node,
-                                                    destinationNode.parent, node.parent]);
-                                                }
-                                                else {
-                                                  await widget.wordLists.updateNodes(
-                                                    [destinationNode, destinationNode.parent!,
-                                                    node, node.parent!]
-                                                  );
-                                                }
-                                              },
+                                              onDragAccept: dragNodeOnNodeAccept,
                                               onDeletePressed: (TreeNode<WordListsData> node) {
                                                 final parent = node.parent!;
                                                 parent.removeChild(node);
@@ -459,6 +448,23 @@ class _WordListsState extends State<WordLists> {
     );
   }
 
+  /// Callback that is triggered when the drag of one node onto another is
+  /// accepted
+  Future dragNodeOnNodeAccept(destinationNode, node, folder, otherAffected) async {
+
+    if(folder != null) {
+      await widget.wordLists.addFolderWithNodes(
+        folder,
+        [destinationNode, node, ...otherAffected]);
+    }
+    else {
+      await widget.wordLists.updateNodes(
+        [destinationNode, node]
+      );
+    }
+
+  }
+
   /// Calculates and returns the top position for the `i`-th word lists node
   double calculateNodeTopPosition(int i){
 
@@ -515,7 +521,7 @@ class _WordListsState extends State<WordLists> {
     await widget.wordLists.addNodeToRoot(addedNewNode!, currentRoot);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 100));
       addedNewNode = null;
     });
 
