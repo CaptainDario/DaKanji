@@ -148,6 +148,7 @@ class _WordListsState extends State<WordLists> {
             widget.wordLists.updateNode(data);
           },
           builder: (context, candidateData, rejectedData) {
+            /// the large background area where nodes can be dropped
             return AnimatedContainer(
               duration: Duration(milliseconds: hoveringAnimationColorDuration)*2,
               constraints: const BoxConstraints.expand(),
@@ -213,8 +214,9 @@ class _WordListsState extends State<WordLists> {
                         child: SingleChildScrollView(
                           key: _scrollKey,
                           controller: scrollController,
-                          child: SizedBox(
-                            height: childrenDFS.length * (48+8.0),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: nodeMovementAnimationDuration),
+                            height: (findVisibleHigherItems(childrenDFS.length).length+1) * (48+8.0),
                             width: MediaQuery.sizeOf(context).width,
                             child: Stack(
                               alignment: Alignment.topCenter,
@@ -228,7 +230,7 @@ class _WordListsState extends State<WordLists> {
                                     // if any parent is collapsed
                                     top: calculateNodeTopPosition(i),
                                     child: AnimatedOpacity(
-                                      duration: Duration(milliseconds: nodeMovementAnimationDuration~/1.5),
+                                      duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                       curve: Curves.decelerate,
                                       opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
                                         ? 1.0
@@ -348,6 +350,7 @@ class _WordListsState extends State<WordLists> {
                                               builder: (context, candidateData, rejectedData) {
                                                 return AnimatedContainer(
                                                   duration: Duration(milliseconds: hoveringAnimationColorDuration),
+                                                  curve: Curves.decelerate,
                                                   height: 8,
                                                   padding: EdgeInsets.fromLTRB(
                                                     15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
