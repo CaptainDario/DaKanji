@@ -53,7 +53,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         WordListsData("", WordListNodeType.root, [], true),
         id: 0,);
       await _addNode(root, true);
-      //await addDefaultsToRoot(root);
+      await addDefaultsToRoot(root);
     }
 
   }
