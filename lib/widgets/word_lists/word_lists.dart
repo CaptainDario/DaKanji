@@ -506,10 +506,6 @@ class _WordListsState extends State<WordLists> {
 
   /// Callback that is attached to `searchTextEditingController`
   void textEditingListener(){
-    
-    //if(searchTextEditingController.text.isEmpty){
-    //  animateListTileIn = List.filled(childrenDFS.length, true, growable: true);
-    //}
 
     setState(() {});
   
@@ -580,7 +576,6 @@ class _WordListsState extends State<WordLists> {
   /// accepted
   Future dragNodeOnNodeAccept(destinationNode, node, folder, otherAffected) async {
 
-    // TODO drag folder on node
     // a new folder has been created
     if(folder != null) {
       // do not animate the folder
@@ -631,7 +626,6 @@ class _WordListsState extends State<WordLists> {
 
   }
 
- 
   /// Finds all visible nodes 'above' the `i`-th node in `childrenDFS`
   /// and returns them
   List<TreeNode<WordListsData>> findVisibleHigherItems(int i){

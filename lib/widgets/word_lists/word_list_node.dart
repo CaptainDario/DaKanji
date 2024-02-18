@@ -183,13 +183,14 @@ class _WordListNodeState extends State<WordListNode> {
             // list / folder draged on folder
             if((data.value.type == WordListNodeType.folder || data.value.type == WordListNodeType.wordList) &&
               widget.node.value.type == WordListNodeType.folder){
+
               data.parent!.removeChild(data);
               widget.node.addChild(data);
               _controller.text = widget.node.value.name;
               itemDraggingOverThis = false;
             }
             // list draged on list
-            else if(data.value.type == WordListNodeType.wordList &&
+            else if((data.value.type == WordListNodeType.wordList || data.value.type == WordListNodeType.folder) &&
               widget.node.value.type == WordListNodeType.wordList){
               // add a new folder to the parent of this
               newFolder = TreeNode<WordListsData>(
