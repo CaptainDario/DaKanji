@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:ffi';
 import 'dart:math';
 
 // Flutter imports:
@@ -86,6 +85,12 @@ class _WordListsState extends State<WordLists> {
   /// The duration of the animation when nodes are moving in the word lists
   /// screen
   int nodeMovementAnimationDuration = 250;
+  /// The delay before the slidin in of the word list nodes starts
+  int slideInAnimationDelay = 250;
+  /// The time between starting the slide in transitions of the word list nodes
+  /// * first node slides in at time `slideInDelay`,
+  /// * seconds node slides in at time `slideInDelay + staggerAnimationInteleaveDuration`
+  int staggerAnimationInteleaveDuration = 75;
 
 
   @override
@@ -104,10 +109,6 @@ class _WordListsState extends State<WordLists> {
           );
         }
       }
-
-      // animate the list tiles in in a staggered way
-
-
     });
 
     super.initState();
@@ -452,10 +453,10 @@ class _WordListsState extends State<WordLists> {
       animateListTileIn = List.filled(childrenDFS.length, false, growable: true);
 
       // after the first frame wait short amount of time ...
-      Future.delayed(const Duration(milliseconds: 250)).then((result) async {
+      Future.delayed(Duration(milliseconds: slideInAnimationDelay)).then((result) async {
         // ... and animate each tile staggered in
         for (int i = 0; i < childrenDFS.length; i++) {
-          await Future.delayed(const Duration(milliseconds: 100));
+          await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
           setState(() => animateListTileIn[i] = true);
         }
       });
@@ -465,13 +466,14 @@ class _WordListsState extends State<WordLists> {
       if(animateListTileIn.length < childrenDFS.length){
 
         // set same length
+        // TODO handle when not adding at the end
         int animateInOldLen = animateListTileIn.length;
         animateListTileIn.addAll(
           List.filled(childrenDFS.length-animateInOldLen, false, growable: true));
 
         // animate new entries staggered in
         for (var i = animateInOldLen; i < animateListTileIn.length; i++) {
-          await Future.delayed(const Duration(milliseconds: 100));
+          await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
           setState(() => animateListTileIn[i] = true);
         }
       }
