@@ -464,11 +464,18 @@ class _WordListsState extends State<WordLists> {
                           ),
                           curve: Curves.linear
                         ).then((value) => setState((){}));
-                        return false;
+
+                        return true;
                       },
                       onLeave: (data) {
                         itemDraggingOverBottom = false;
                         scrollController.position.hold(() { });
+                      },
+                      onAccept: (data) {
+                        final oldParent = data.parent!;
+                        oldParent.removeChild(data);
+                        currentRoot.addChild(data);
+                        widget.wordLists.updateNodes([currentRoot, oldParent]);
                       },
                       builder: (context, candidateData, rejectedData) {
                         if(!draggingWordListNode) return const SizedBox();
