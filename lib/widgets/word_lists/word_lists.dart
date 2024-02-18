@@ -344,13 +344,8 @@ class _WordListsState extends State<WordLists> {
                                           ),
                                         ),
                                         
-                                        // if this is not the last element in the list and
-                                        // the next visible node is not a default node ...
-                                        if(i < childrenDFS.length-1 &&
-                                          wordListUserTypes.contains(
-                                            childrenDFS.sublist(i+1).firstWhereOrNull(
-                                              (e) => e.parent!.value.isExpanded)?.value.type)
-                                        )
+                                        // if the next visible node is not a default node ...
+                                        if(wordListUserTypes.contains(childrenDFS[i].value.type))
                                           // ... add a divider in which lists can be dragged (easier reorder)
                                           DragTarget<TreeNode<WordListsData>>(
                                             onWillAccept: (TreeNode<WordListsData>? data) {
@@ -394,7 +389,7 @@ class _WordListsState extends State<WordLists> {
                                                 curve: Curves.decelerate,
                                                 height: 8,
                                                 padding: EdgeInsets.fromLTRB(
-                                                  15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
+                                                  15.0*(childrenDFS[i].level-1)+8, 0, 0, 0
                                                 ),
                                                 color: draggingOverDividerIndex == i
                                                   ? g_Dakanji_green.withOpacity(0.5)
