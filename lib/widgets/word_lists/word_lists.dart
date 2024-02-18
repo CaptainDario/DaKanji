@@ -109,7 +109,7 @@ class _WordListsState extends State<WordLists> {
     searchInputFocusNode.addListener(() {setState((){});});
 
     // listen to changes in the search filter
-    searchTextEditingController.addListener(() { setState((){});});
+    searchTextEditingController.addListener(textEditingListener);
 
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) async {
@@ -154,7 +154,10 @@ class _WordListsState extends State<WordLists> {
         if(snapshot.connectionState == ConnectionState.active &&
           !draggingWordListNode){
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
-          childrenDFS = currentRoot.dfs().toList();
+          childrenDFS = currentRoot.dfs()
+            // apply filter
+            .where((e) => e.value.name.contains(searchTextEditingController.text))
+            .toList();
           animateListTilesIn();
         }
 
@@ -265,142 +268,141 @@ class _WordListsState extends State<WordLists> {
                             alignment: Alignment.topCenter,
                             children: [
                               for (int i = childrenDFS.length-1; i >= 0; i--)
-                                if(searchTextEditingController.text.isEmpty ||
-                                  childrenDFS[i].value.name.contains(searchTextEditingController.text))
-                                  AnimatedPositioned(
-                                    key: Key("AnimatedPositioned_${childrenDFS[i].id}"),
+                                AnimatedPositioned(
+                                  key: Key("AnimatedPositioned_${childrenDFS[i].id}"),
+                                  duration: Duration(milliseconds: nodeMovementAnimationDuration),
+                                  curve: Curves.decelerate,
+                                  height: 48+8,
+                                  width: MediaQuery.sizeOf(context).width,
+                                  // if any parent is collapsed
+                                  top: calculateNodeTopPosition(i),
+                                  left: animateListTileIn[i] ? 0 : constraints.maxWidth,
+                                  child: AnimatedOpacity(
+                                    key: Key("AnimatedOpacity_${childrenDFS[i].id}"),
                                     duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                     curve: Curves.decelerate,
-                                    height: 48+8,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    // if any parent is collapsed
-                                    top: calculateNodeTopPosition(i),
-                                    left: animateListTileIn[i] ? 0 : constraints.maxWidth,
-                                    child: AnimatedOpacity(
-                                      key: Key("AnimatedOpacity_${childrenDFS[i].id}"),
-                                      duration: Duration(milliseconds: nodeMovementAnimationDuration),
-                                      curve: Curves.decelerate,
-                                      opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)
-                                        ? 1.0
-                                        : 0.0,
-                                      child: Column(
-                                        children: [
-                                          Focus(
-                                            focusNode: widget.includeTutorial && [0, 1].contains(i)
-                                              ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![1+i]
-                                              : null,
-                                            child: WordListNode(
-                                              // if the tutorial should be shown, open the default lists
-                                              i == 0 && widget.includeTutorial &&
-                                                GetIt.I<UserData>().showTutorialWordLists
-                                                ? (childrenDFS[i]..value.isExpanded=true)
-                                                : childrenDFS[i],
-                                              i,
-                                              hoveringAnimationColorDuration: hoveringAnimationColorDuration,
-                                              nodeMovementAnimationDuration: nodeMovementAnimationDuration,
-                                              onDragStarted: (){
-                                                setState(() => draggingWordListNode = true);
-                                              },
-                                              onDragEnd: (){
-                                                setState(() => draggingWordListNode = false);
-                                              },
-                                              onTap: (TreeNode<WordListsData> node) {
-                                                // if the node is a word list, navigate to the word list screen
-                                                if(wordListListypes.contains(node.value.type)){
-                                                  Navigator.push(
-                                                    context, 
-                                                    MaterialPageRoute(builder: (context) => 
-                                                      WordListScreen(node)
-                                                    ),
-                                                  );
-                                                }
-                                                // if the node is a folder, toggle the expanded state (whole tile callback)
-                                                else if(wordListFolderTypes.contains(node.value.type)) {
-                                                  node.value.isExpanded = !node.value.isExpanded;
-                                                  widget.wordLists.updateNode(node);
-                                                }
-                                              },
-                                              onRenameFinished: (node) {
-                                                widget.wordLists.updateNode(node);
-                                              },
-                                              onDragAccept: dragNodeOnNodeAccept,
-                                              onDeletePressed: (TreeNode<WordListsData> node) {
-                                                final parent = node.parent!;
-                                                parent.removeChild(node);
-                                                // TODO function to do this in one transaction
-                                                widget.wordLists.updateNode(parent);
-                                                widget.wordLists.deleteEntryAndSubTree(node);
-                                              },
-                                              onFolderPressed: (node) {
-                                                widget.wordLists.updateNode(node);
-                                              },
-                                              onSelectedToggled: widget.onSelectionConfirmed == null
-                                                ? null
-                                                : (node) => setState(() {}),
-                                              key: Key('$i'),
-                                              editTextOnCreate: childrenDFS[i].id == addedNewNode?.id ? true : false,
-                                            ),
-                                          ),
-                                          
-                                          // if this is not the last element in the list and
-                                          // the next visible node is not a default node ...
-                                          if(i < childrenDFS.length-1 &&
-                                            wordListUserTypes.contains(
-                                              childrenDFS.sublist(i+1).firstWhereOrNull(
-                                                (e) => e.parent!.value.isExpanded)?.value.type)
-                                          )
-                                            // ... add a divider in which lists can be dragged (easier reorder)
-                                            DragTarget<TreeNode<WordListsData>>(
-                                              onWillAccept: (TreeNode<WordListsData>? data) {
-                                        
-                                                // do no allow self drags
-                                                if(data == null) return false;
-                                        
-                                                draggingOverDividerIndex = i;
-                                                return true;
-                                              },
-                                              onAccept: (data) {
-                                        
-                                                // do nothing on self drag
-                                                if(i == childrenDFS.indexOf(data)-1) return;
-                                        
-                                                TreeNode<WordListsData> node = childrenDFS[i+1];
-                                                if(node.parent!.value.type == WordListNodeType.folderDefault) {
-                                                  node = childrenDFS.firstWhere((n) => 
-                                                    wordListUserTypes.contains(n.value.type)
-                                                  );
-                                                }
-                                        
-                                                final oldParent = data.parent!;
-                                                oldParent.removeChild(data);
-                                                node.parent!.insertChild(data, node.parent!.children.indexOf(node));
-                                                                        
-                                                widget.wordLists.updateNodes(
-                                                  [data.parent!, data, node.parent!, node, oldParent]);
-                                                                        
-                                                draggingOverDividerIndex = null;
-                                              },
-                                              onLeave: (node) {
-                                                draggingOverDividerIndex = null;
-                                              },
-                                              builder: (context, candidateData, rejectedData) {
-                                                return AnimatedContainer(
-                                                  duration: Duration(milliseconds: hoveringAnimationColorDuration),
-                                                  curve: Curves.decelerate,
-                                                  height: 8,
-                                                  padding: EdgeInsets.fromLTRB(
-                                                    15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
+                                    opacity: !childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded) ||
+                                      searchMatches(childrenDFS[i].value.name)
+                                      ? 1.0
+                                      : 0.0,
+                                    child: Column(
+                                      children: [
+                                        Focus(
+                                          focusNode: widget.includeTutorial && [0, 1].contains(i)
+                                            ? GetIt.I<Tutorials>().wordListsScreenTutorial.focusNodes![1+i]
+                                            : null,
+                                          child: WordListNode(
+                                            // if the tutorial should be shown, open the default lists
+                                            i == 0 && widget.includeTutorial &&
+                                              GetIt.I<UserData>().showTutorialWordLists
+                                              ? (childrenDFS[i]..value.isExpanded=true)
+                                              : childrenDFS[i],
+                                            i,
+                                            hoveringAnimationColorDuration: hoveringAnimationColorDuration,
+                                            nodeMovementAnimationDuration: nodeMovementAnimationDuration,
+                                            onDragStarted: (){
+                                              setState(() => draggingWordListNode = true);
+                                            },
+                                            onDragEnd: (){
+                                              setState(() => draggingWordListNode = false);
+                                            },
+                                            onTap: (TreeNode<WordListsData> node) {
+                                              // if the node is a word list, navigate to the word list screen
+                                              if(wordListListypes.contains(node.value.type)){
+                                                Navigator.push(
+                                                  context, 
+                                                  MaterialPageRoute(builder: (context) => 
+                                                    WordListScreen(node)
                                                   ),
-                                                  color: draggingOverDividerIndex == i
-                                                    ? g_Dakanji_green.withOpacity(0.5)
-                                                    : Colors.transparent
                                                 );
                                               }
-                                            )
-                                        ],
-                                      ),
+                                              // if the node is a folder, toggle the expanded state (whole tile callback)
+                                              else if(wordListFolderTypes.contains(node.value.type)) {
+                                                node.value.isExpanded = !node.value.isExpanded;
+                                                widget.wordLists.updateNode(node);
+                                              }
+                                            },
+                                            onRenameFinished: (node) {
+                                              widget.wordLists.updateNode(node);
+                                            },
+                                            onDragAccept: dragNodeOnNodeAccept,
+                                            onDeletePressed: (TreeNode<WordListsData> node) {
+                                              final parent = node.parent!;
+                                              parent.removeChild(node);
+                                              // TODO function to do this in one transaction
+                                              widget.wordLists.updateNode(parent);
+                                              widget.wordLists.deleteEntryAndSubTree(node);
+                                            },
+                                            onFolderPressed: (node) {
+                                              widget.wordLists.updateNode(node);
+                                            },
+                                            onSelectedToggled: widget.onSelectionConfirmed == null
+                                              ? null
+                                              : (node) => setState(() {}),
+                                            key: Key('$i'),
+                                            editTextOnCreate: childrenDFS[i].id == addedNewNode?.id ? true : false,
+                                          ),
+                                        ),
+                                        
+                                        // if this is not the last element in the list and
+                                        // the next visible node is not a default node ...
+                                        if(i < childrenDFS.length-1 &&
+                                          wordListUserTypes.contains(
+                                            childrenDFS.sublist(i+1).firstWhereOrNull(
+                                              (e) => e.parent!.value.isExpanded)?.value.type)
+                                        )
+                                          // ... add a divider in which lists can be dragged (easier reorder)
+                                          DragTarget<TreeNode<WordListsData>>(
+                                            onWillAccept: (TreeNode<WordListsData>? data) {
+                                      
+                                              // do no allow self drags
+                                              if(data == null) return false;
+                                      
+                                              draggingOverDividerIndex = i;
+                                              return true;
+                                            },
+                                            onAccept: (data) {
+                                      
+                                              // do nothing on self drag
+                                              if(i == childrenDFS.indexOf(data)-1) return;
+                                      
+                                              TreeNode<WordListsData> node = childrenDFS[i+1];
+                                              if(node.parent!.value.type == WordListNodeType.folderDefault) {
+                                                node = childrenDFS.firstWhere((n) => 
+                                                  wordListUserTypes.contains(n.value.type)
+                                                );
+                                              }
+                                      
+                                              final oldParent = data.parent!;
+                                              oldParent.removeChild(data);
+                                              node.parent!.insertChild(data, node.parent!.children.indexOf(node));
+                                                                      
+                                              widget.wordLists.updateNodes(
+                                                [data.parent!, data, node.parent!, node, oldParent]);
+                                                                      
+                                              draggingOverDividerIndex = null;
+                                            },
+                                            onLeave: (node) {
+                                              draggingOverDividerIndex = null;
+                                            },
+                                            builder: (context, candidateData, rejectedData) {
+                                              return AnimatedContainer(
+                                                duration: Duration(milliseconds: hoveringAnimationColorDuration),
+                                                curve: Curves.decelerate,
+                                                height: 8,
+                                                padding: EdgeInsets.fromLTRB(
+                                                  15.0*(childrenDFS[i+1].level-1)+8, 0, 0, 0
+                                                ),
+                                                color: draggingOverDividerIndex == i
+                                                  ? g_Dakanji_green.withOpacity(0.5)
+                                                  : Colors.transparent
+                                              );
+                                            }
+                                          )
+                                      ],
                                     ),
                                   ),
+                                ),
                               
                             ],
                           ),
@@ -499,6 +501,31 @@ class _WordListsState extends State<WordLists> {
     );
   }
 
+  /// Callback that is attached to `searchTextEditingController`
+  void textEditingListener(){
+    
+    //if(searchTextEditingController.text.isEmpty){
+    //  animateListTileIn = List.filled(childrenDFS.length, true, growable: true);
+    //}
+
+    setState(() {});
+  
+  }
+
+  /// Does the current search term match the given `item`
+  /// 
+  /// Caution: This does not match if the searchbar is empty
+  bool searchMatches(String item){
+
+    if(searchTextEditingController.text.isNotEmpty &&
+      item.contains(searchTextEditingController.text)){
+        return true;
+    }
+
+    return false;
+
+  }
+
   /// Animates all List tiles in, in a staggered fashion
   Future animateListTilesIn() async {
 
@@ -527,7 +554,12 @@ class _WordListsState extends State<WordLists> {
         // animate new entries staggered in
         for (var i = animateInOldLen; i < animateListTileIn.length; i++) {
           await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
-          setState(() => animateListTileIn[i] = true);
+          try {
+            animateListTileIn[i] = true;
+          } catch (e) {
+            return;
+          }
+          setState(() {});
         }
       }
       // if the same amount exists, do nothing ?
@@ -568,38 +600,49 @@ class _WordListsState extends State<WordLists> {
 
     double top = 0.0;
 
-    // if any parent is collapsed
-    if(childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)){
-      // move this node to the position of the next un-collapsed node
-      TreeNode<WordListsData> t = childrenDFS[i].parent!.getPath()
-        .where((n) => !n.value.isExpanded).last;
-      top = (48+8.0)*(findVisibleHigherItems(i).indexOf(t));
-    }
-    // no parent is collapse, check if any nodes above in the list view are collapsed
-    else if(!childrenDFS.sublist(0, i).every((e) => e.value.isExpanded)){
-  
-      top = (48+8.0)*findVisibleHigherItems(i).length;
-    }
-    // nothing applies render node as list
-    else{
+    // check if search filters are set
+    if(searchMatches(childrenDFS[i].value.name)){
       top = (48+8.0)*i;
+    }
+    // if not, calculate positions for whole tree
+    else {
+      // if any parent is collapsed
+      if(childrenDFS[i].parent!.getPath().any((n) => !n.value.isExpanded)){
+        // move this node to the position of the next un-collapsed node
+        TreeNode<WordListsData> t = childrenDFS[i].parent!.getPath()
+          .where((n) => !n.value.isExpanded).last;
+        top = (48+8.0)*(findVisibleHigherItems(i).indexOf(t));
+      }
+      // no parent is collapse, check if any nodes above in the list view are collapsed
+      else if(!childrenDFS.sublist(0, i).every((e) => e.value.isExpanded)){
+    
+        top = (48+8.0)*findVisibleHigherItems(i).length;
+      }
+      // nothing applies render node as list
+      else{
+        top = (48+8.0)*i;
+      }
     }
     
     return top;
 
   }
 
+ 
   /// Finds all visible nodes 'above' the `i`-th node in `childrenDFS`
   /// and returns them
   List<TreeNode<WordListsData>> findVisibleHigherItems(int i){
     
+    // all items that should be visible 'above' this node in the list
     List<TreeNode<WordListsData>> visibleHigherItems = [];
 
     for (var childDFS in childrenDFS.sublist(0, i)) {
 
+      // get the path to this node without this node
       List<TreeNode<WordListsData>> childPath = childDFS.getPath();
       childPath = childPath.sublist(0, childPath.length-1);
 
+      // every child is expanded and this node is not already marked as visible
       if(childPath.every((e) => e.value.isExpanded)){
         if(!visibleHigherItems.contains(childDFS)){
           visibleHigherItems.add(childDFS);
