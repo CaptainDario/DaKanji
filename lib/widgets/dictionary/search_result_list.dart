@@ -92,51 +92,55 @@ class _SearchResultListState extends State<SearchResultList> {
 
   @override
   Widget build(BuildContext context) {
-    return ScrollablePositionedList.builder(
-      itemCount: widget.searchResults.length,
-      itemScrollController: itemScrollController,
-      itemPositionsListener: itemPositionsListener,
-      itemBuilder: ((context, index) {
-        // determine index based on 
-        int i = widget.reversed ? widget.searchResults.length-index-1 : index;
-    
-        return AnimationConfiguration.staggeredList(
-          position: index,
-          child: SlideAnimation(
-            curve: Curves.decelerate,
-            horizontalOffset: 680 ,
-            delay: const Duration(milliseconds: 100),
-            key: Key("${widget.searchResults[i]}$i"),
-            child: Dismissible(
-              key: ValueKey(widget.searchResults[i].id),
-              direction: widget.onDismissed != null
-                ? DismissDirection.endToStart
-                : DismissDirection.none,
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(left: 20),
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Icon(Icons.delete)
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ScrollablePositionedList.builder(
+          itemCount: widget.searchResults.length,
+          itemScrollController: itemScrollController,
+          itemPositionsListener: itemPositionsListener,
+          itemBuilder: ((context, index) {
+            // determine index based on 
+            int i = widget.reversed ? widget.searchResults.length-index-1 : index;
+        
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              child: SlideAnimation(
+                curve: Curves.decelerate,
+                horizontalOffset: constraints.maxWidth,
+                delay: const Duration(milliseconds: 100),
+                key: Key("${widget.searchResults[i]}$i"),
+                child: Dismissible(
+                  key: ValueKey(widget.searchResults[i].id),
+                  direction: widget.onDismissed != null
+                    ? DismissDirection.endToStart
+                    : DismissDirection.none,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(left: 20),
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Icon(Icons.delete)
+                    ),
+                  ),
+                  onDismissed: (DismissDirection direction) {
+                    widget.onDismissed?.call(direction, widget.searchResults[i], i);
+                  },
+                  child: SearchResultCard(
+                    dictEntry: widget.searchResults[i],
+                    resultIndex: i,
+                    showWordFrequency: widget.showWordFrequency,
+                    focusNode: dictSearchResultController.searchResultsFocusses[i],
+                    onPressed: (selection) {
+                      widget.onSearchResultPressed?.call(selection);
+                    } 
+                  ),
                 ),
               ),
-              onDismissed: (DismissDirection direction) {
-                widget.onDismissed?.call(direction, widget.searchResults[i], i);
-              },
-              child: SearchResultCard(
-                dictEntry: widget.searchResults[i],
-                resultIndex: i,
-                showWordFrequency: widget.showWordFrequency,
-                focusNode: dictSearchResultController.searchResultsFocusses[i],
-                onPressed: (selection) {
-                  widget.onSearchResultPressed?.call(selection);
-                } 
-              ),
-            ),
-          ),
+            );
+          })
         );
-      })
+      }
     );
   }
 }
