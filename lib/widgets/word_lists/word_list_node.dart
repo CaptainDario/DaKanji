@@ -181,8 +181,7 @@ class _WordListNodeState extends State<WordListNode> {
             TreeNode<WordListsData>  oldParentThis = widget.node.parent!;
 
             // list / folder draged on folder
-            if((data.value.type == WordListNodeType.folder || 
-              data.value.type == WordListNodeType.wordList) &&
+            if((data.value.type == WordListNodeType.folder || data.value.type == WordListNodeType.wordList) &&
               widget.node.value.type == WordListNodeType.folder){
               data.parent!.removeChild(data);
               widget.node.addChild(data);
