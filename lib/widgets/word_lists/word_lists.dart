@@ -130,10 +130,11 @@ class _WordListsState extends State<WordLists> {
         if(snapshot.data == null) {
           return const SizedBox();
         }
-        if(snapshot.connectionState == ConnectionState.active){
+        if(snapshot.connectionState == ConnectionState.active &&
+          !draggingWordListNode){
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
-          animateListTilesIn();        
+          animateListTilesIn();
         }
 
         return LayoutBuilder(
