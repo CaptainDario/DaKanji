@@ -139,10 +139,10 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  /// Adds `folder` as a new folder to the database and adds all `subNodes` as
-  /// children to `folder`
+  /// Adds `folder` as a new folder to the database and udpates all
+  /// `affectedNodes`
   Future addFolderWithNodes(TreeNode<WordListsData> folder,
-    List<TreeNode<WordListsData>?> subNodes) async {
+    List<TreeNode<WordListsData>?> affectedNodes) async {
 
     return transaction(() async {
       // first, add the folder and await its ID
@@ -152,7 +152,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       // update the remaining affected nodes
       await batch((batch) {
-        for (var node in (subNodes).whereNotNull()){
+        for (var node in (affectedNodes).whereNotNull()){
           var sqlNode = companionFromTreeNode(node, true);
           batch.update(
             wordListsSQL, sqlNode,
