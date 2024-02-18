@@ -259,10 +259,12 @@ class _WordListsState extends State<WordLists> {
                         key: _scrollKey,
                         controller: scrollController,
                         child: AnimatedContainer(
+                          curve: Curves.decelerate,
                           duration: Duration(milliseconds: nodeMovementAnimationDuration),
                           // for each node (48+8)
                           // + 48 at the end so that the scroll indicator has space
-                          height: (findVisibleHigherItems(childrenDFS.length).length) * (48+8.0) + 48,
+                          height: (findVisibleHigherItems(childrenDFS.length).length) * (48+8.0) + 48
+                            + (draggingOverDividerIndex != null ? 30 : 8),
                           width: MediaQuery.sizeOf(context).width,
                           child: Stack(
                             alignment: Alignment.topCenter,
@@ -272,7 +274,7 @@ class _WordListsState extends State<WordLists> {
                                   key: Key("AnimatedPositioned_${childrenDFS[i].id}"),
                                   duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                   curve: Curves.decelerate,
-                                  height: 48+8,
+                                  height: 48+8 + (draggingOverDividerIndex != null ? 30 : 8),
                                   width: MediaQuery.sizeOf(context).width,
                                   // if any parent is collapsed
                                   top: calculateNodeTopPosition(i),
@@ -354,6 +356,7 @@ class _WordListsState extends State<WordLists> {
                                               if(data == null) return false;
                                       
                                               draggingOverDividerIndex = i;
+                                              setState(() {});
                                               return true;
                                             },
                                             onAccept: (data) {
@@ -385,9 +388,9 @@ class _WordListsState extends State<WordLists> {
                                             },
                                             builder: (context, candidateData, rejectedData) {
                                               return AnimatedContainer(
-                                                duration: Duration(milliseconds: hoveringAnimationColorDuration),
+                                                duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                                 curve: Curves.decelerate,
-                                                height: 8,
+                                                height: draggingOverDividerIndex == i ? 30 : 8,
                                                 padding: EdgeInsets.fromLTRB(
                                                   15.0*(childrenDFS[i].level-1)+8, 0, 0, 0
                                                 ),
@@ -449,16 +452,16 @@ class _WordListsState extends State<WordLists> {
                 ),
 
                 // container at the bottom where a node can be dragged to scroll
-                  Positioned(
-                    bottom: 0,
+                Positioned(
+                  bottom: 0,
                   child: AnimatedOpacity(
                     duration: Duration(milliseconds: hoveringAnimationColorDuration),
                     opacity: draggingWordListNode ? 1.0 : 0.0,
                     child: DragTarget<TreeNode<WordListsData>>(
                       onWillAccept: (data) {
-
+                  
                         itemDraggingOverBottom = true;
-
+                  
                         scrollController.animateTo(
                           scrollController.position.maxScrollExtent,
                           duration: Duration(milliseconds: 
@@ -499,7 +502,8 @@ class _WordListsState extends State<WordLists> {
                         );
                       }
                     ),
-                  )
+                  ),
+                )
               ],
             );
           }
@@ -624,6 +628,12 @@ class _WordListsState extends State<WordLists> {
       else{
         top = (48+8.0)*i;
       }
+    }
+
+    // if this node is after the divider over which is currently being dragged,
+    // add additional space
+    if(draggingOverDividerIndex != null && draggingOverDividerIndex! < i){
+      top += 24;
     }
     
     return top;
