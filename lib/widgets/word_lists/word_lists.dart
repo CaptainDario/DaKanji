@@ -364,7 +364,10 @@ class _WordListsState extends State<WordLists> {
                                             onAccept: (data) {
                                       
                                               // do nothing on self drag
-                                              if(i == childrenDFS.indexOf(data)-1) return;
+                                              if(i == childrenDFS.indexOf(data)-1) {
+                                                draggingOverDividerIndex = null;
+                                                return;
+                                              }
                                       
                                               TreeNode<WordListsData> node = childrenDFS[i+1];
                                               if(node.parent!.value.type == WordListNodeType.folderDefault) {
