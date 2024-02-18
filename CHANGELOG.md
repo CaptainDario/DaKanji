@@ -8,7 +8,7 @@ New Features:
 - Dictionary
   - Share images of word entries
   - Image search query customizable
-  - Characters from drawing are now added at the cursors position
+  - Characters from drawing are now added at the cursor's position
 
 - Word Lists
   - Add words to lists
