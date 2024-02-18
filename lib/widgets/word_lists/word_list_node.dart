@@ -115,7 +115,7 @@ class _WordListNodeState extends State<WordListNode> {
 
   void init(){
     if(!wordListDefaultTypes.contains(widget.node.value.type)){
-      _controller.text = widget.node.id.toString();//.value.name;
+      _controller.text = widget.node.value.name;
     }
     // transate default types
     else {
