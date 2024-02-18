@@ -123,10 +123,6 @@ class _WordListsState extends State<WordLists> {
           return const SizedBox();
         }
         if(snapshot.connectionState == ConnectionState.active){
-          //print("Reloaded");
-          for (var d in snapshot.data!) {
-            print(d.id);
-          }
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
         }
@@ -144,10 +140,11 @@ class _WordListsState extends State<WordLists> {
             itemDraggingOverThis = false;
           },
           onAccept: (data) {
+            // TODO udpate moving to the top and bottom
             itemDraggingOverThis = false;
             data.parent!.removeChild(data);
             currentRoot.addChild(data);
-            widget.wordLists.updateNode(data);
+            widget.wordLists.updateNode(currentRoot);
           },
           builder: (context, candidateData, rejectedData) {
             /// the large background area where nodes can be dropped
@@ -165,7 +162,7 @@ class _WordListsState extends State<WordLists> {
                       DragTarget<TreeNode<WordListsData>>(
                         hitTestBehavior: HitTestBehavior.opaque,
                         onWillAccept: (data) {
-                          // start animation to the top of the list d
+                          // start animation to the top of the list
                           if(scrollController.offset > 60) {
                             scrollController.animateTo(0,
                               duration: Duration(milliseconds: scrollController.offset.round()*5),
@@ -327,11 +324,12 @@ class _WordListsState extends State<WordLists> {
                                                   );
                                                 }
                                         
-                                                data.parent!.removeChild(data);
+                                                final oldParent = data.parent!;
+                                                oldParent.removeChild(data);
                                                 node.parent!.insertChild(data, node.parent!.children.indexOf(node));
                                                                         
                                                 widget.wordLists.updateNodes(
-                                                  [data.parent!, data, node.parent!, node]);
+                                                  [data.parent!, data, node.parent!, node, oldParent]);
                                                                         
                                                 draggingOverDividerIndex = null;
                                               },
@@ -427,7 +425,6 @@ class _WordListsState extends State<WordLists> {
                           return SizedBox(
                             height: 48,
                             width: MediaQuery.of(context).size.width,
-                            //color: Theme.of(context).canvasColor,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -459,7 +456,7 @@ class _WordListsState extends State<WordLists> {
     }
     else {
       await widget.wordLists.updateNodes(
-        [destinationNode, node]
+        [destinationNode, node, ...otherAffected]
       );
     }
 
