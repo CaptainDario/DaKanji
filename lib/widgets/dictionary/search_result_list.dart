@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 // Project imports:
@@ -99,31 +100,40 @@ class _SearchResultListState extends State<SearchResultList> {
         // determine index based on 
         int i = widget.reversed ? widget.searchResults.length-index-1 : index;
     
-        return Dismissible(
-          key: ValueKey(widget.searchResults[i].id),
-          direction: widget.onDismissed != null
-            ? DismissDirection.endToStart
-            : DismissDirection.none,
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(left: 20),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(Icons.delete)
+        return AnimationConfiguration.staggeredList(
+          position: index,
+          child: SlideAnimation(
+            curve: Curves.decelerate,
+            horizontalOffset: 680 ,
+            delay: const Duration(milliseconds: 100),
+            key: Key("${widget.searchResults[i]}$i"),
+            child: Dismissible(
+              key: ValueKey(widget.searchResults[i].id),
+              direction: widget.onDismissed != null
+                ? DismissDirection.endToStart
+                : DismissDirection.none,
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.only(left: 20),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(Icons.delete)
+                ),
+              ),
+              onDismissed: (DismissDirection direction) {
+                widget.onDismissed?.call(direction, widget.searchResults[i], i);
+              },
+              child: SearchResultCard(
+                dictEntry: widget.searchResults[i],
+                resultIndex: i,
+                showWordFrequency: widget.showWordFrequency,
+                focusNode: dictSearchResultController.searchResultsFocusses[i],
+                onPressed: (selection) {
+                  widget.onSearchResultPressed?.call(selection);
+                } 
+              ),
             ),
-          ),
-          onDismissed: (DismissDirection direction) {
-            widget.onDismissed?.call(direction, widget.searchResults[i], i);
-          },
-          child: SearchResultCard(
-            dictEntry: widget.searchResults[i],
-            resultIndex: i,
-            showWordFrequency: widget.showWordFrequency,
-            focusNode: dictSearchResultController.searchResultsFocusses[i],
-            onPressed: (selection) {
-              widget.onSearchResultPressed?.call(selection);
-            } 
           ),
         );
       })
