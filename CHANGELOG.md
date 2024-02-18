@@ -10,8 +10,16 @@ New Features:
   - Image search query customizable
   - Characters from drawing are now added at the cursors position
 
+- Word Lists
+  - Add words to lists
+  - Sort lists in folders
+  - Search lists
+  - Lists for JLPT
+
 Improvements:
 
+- Dictionary
+  - Fancy slide in of search results
 - Settings
   - Misc
     - Advanced
