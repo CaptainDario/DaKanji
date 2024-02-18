@@ -450,6 +450,7 @@ class _WordListsState extends State<WordLists> {
   /// Animates all List tiles in, in a staggered fashion
   Future animateListTilesIn() async {
 
+    // if there are no values set for the slide in animation, slide all in
     if(animateListTileIn.isEmpty){
       animateListTileIn = List.filled(childrenDFS.length, false, growable: true);
 
@@ -467,7 +468,6 @@ class _WordListsState extends State<WordLists> {
       if(animateListTileIn.length < childrenDFS.length){
 
         // set same length
-        // TODO handle when not adding at the end
         int animateInOldLen = animateListTileIn.length;
         animateListTileIn.addAll(
           List.filled(childrenDFS.length-animateInOldLen, false, growable: true));
@@ -477,6 +477,10 @@ class _WordListsState extends State<WordLists> {
           await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
           setState(() => animateListTileIn[i] = true);
         }
+      }
+      // if the same amount exists, do nothing ?
+      else if(animateListTileIn.length == childrenDFS.length){
+        
       }
       // a node has been removed
       else if(animateListTileIn.length > childrenDFS.length){
@@ -489,11 +493,15 @@ class _WordListsState extends State<WordLists> {
   /// accepted
   Future dragNodeOnNodeAccept(destinationNode, node, folder, otherAffected) async {
 
+    // a new folder has been created
     if(folder != null) {
+      // do not animate the folder
+      animateListTileIn.add(true);
       await widget.wordLists.addFolderWithNodes(
         folder,
         [destinationNode, node, ...otherAffected]);
     }
+    // a node has been moved without new folder
     else {
       await widget.wordLists.updateNodes(
         [destinationNode, node, ...otherAffected]
