@@ -447,11 +447,13 @@ class _WordListsState extends State<WordLists> {
                       ]
                   ],
                 ),
-                // the list is scrollable and
-                // the scroll position is not at the end
-                if(draggingWordListNode)
+
+                // container at the bottom where a node can be dragged to scroll
                   Positioned(
                     bottom: 0,
+                  child: AnimatedOpacity(
+                    duration: Duration(milliseconds: hoveringAnimationColorDuration),
+                    opacity: draggingWordListNode ? 1.0 : 0.0,
                     child: DragTarget<TreeNode<WordListsData>>(
                       onWillAccept: (data) {
 
