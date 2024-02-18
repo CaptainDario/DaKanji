@@ -23,7 +23,8 @@ enum  WordListNodePopupMenuButtonItems {
   delete,
   sendToAnki,
   toImages,
-  toPdf
+  toPdf,
+  toCSV,
 }
 
 class WordListNode extends StatefulWidget {
@@ -132,7 +133,7 @@ class _WordListNodeState extends State<WordListNode> {
       index: widget.index,
       // make tile draggable
       child: Draggable<TreeNode<WordListsData>>(
-        maxSimultaneousDrags: wordListDefaultTypes.contains(widget.node.value.type)
+        maxSimultaneousDrags: widget.node.value.type == WordListNodeType.wordListDefault
           ? 0
           : 1,
         data: widget.node,
@@ -293,7 +294,6 @@ class _WordListNodeState extends State<WordListNode> {
                           widget.onSelectedToggled!.call(widget.node);
                         }
                       ),
-                    if(!wordListDefaultTypes.contains(widget.node.value.type))
                       PopupMenuButton<WordListNodePopupMenuButtonItems>(
                         onSelected: (WordListNodePopupMenuButtonItems value) {
                           switch(value){
@@ -304,11 +304,16 @@ class _WordListNodeState extends State<WordListNode> {
                               deleteButtonPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.sendToAnki:
+                              print("sendToAnki not implemented");
                               break;
                             case WordListNodePopupMenuButtonItems.toImages:
+                              print("toImages not implemented");
                               break;
                             case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();
+                              break;
+                            case WordListNodePopupMenuButtonItems.toCSV:
+                              print("toCSV not implemented");
                               break;
                           }
                         },
@@ -320,7 +325,7 @@ class _WordListNodeState extends State<WordListNode> {
                                 LocaleKeys.WordListsScreen_rename.tr(),
                               )
                             ),
-                          if(!wordListDefaultTypes.contains(widget.node.value.type))
+                          if(widget.node.value.type != WordListNodeType.wordListDefault)
                             PopupMenuItem(
                               value: WordListNodePopupMenuButtonItems.delete,
                               child: Text(
@@ -335,10 +340,26 @@ class _WordListNodeState extends State<WordListNode> {
                                   LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
+                              const PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toImages,
+                                child: Text(
+                                  // TODO word list to images
+                                  "TO IMAGES"
+                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                )
+                              ),
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toPdf,
                                 child: Text(
                                   LocaleKeys.WordListsScreen_create_pdf.tr()
+                                )
+                              ),
+                              const PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toImages,
+                                child: Text(
+                                  // TODO word list to csv
+                                  "TO CSV"
+                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
                                 )
                               ),
                             ]
