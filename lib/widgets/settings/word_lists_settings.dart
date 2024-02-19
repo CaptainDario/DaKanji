@@ -44,21 +44,12 @@ class _WordListSettingsState extends State<WordListSettings> {
         ResponsiveIconButtonTile(
           text: "Readd defaults folder",
           icon: Icons.undo,
-          onButtonPressed: () async {
-            await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
-          },
+          onButtonPressed: () async => await readdDefaults()
         ),
         ResponsiveIconButtonTile(
           text: "Export word lists database",
           icon: Icons.arrow_upward,
-          onButtonPressed: () async {
-            
-            final exportDir = await FilePicker.platform.getDirectoryPath();
-            if(exportDir != null){
-              g_DakanjiPathManager.wordListsSqlFile.copy(
-                p.join(exportDir, p.basename(g_DakanjiPathManager.wordListsSqlFile.path)));
-            }
-          },
+          onButtonPressed: () async => await exportWordLists(),
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -74,4 +65,22 @@ class _WordListSettingsState extends State<WordListSettings> {
       ],
     );
   }
+
+  /// Readds the defaults folder to the words lists root if it has been removed
+  Future readdDefaults() async {
+    await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
+  }
+
+  /// Exports the current word lists
+  /// Lets the user select a directory and stores the file there 
+  Future exportWordLists() async {
+
+    final exportDir = await FilePicker.platform.getDirectoryPath();
+    if(exportDir != null){
+      g_DakanjiPathManager.wordListsSqlFile.copy(
+        p.join(exportDir, p.basename(g_DakanjiPathManager.wordListsSqlFile.path)));
+    }
+
+  }
+
 }
