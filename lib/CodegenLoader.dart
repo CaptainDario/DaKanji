@@ -133,6 +133,7 @@ class CodegenLoader extends AssetLoader{
   },
   "FeedbackScreen": {
     "draw": "绘制",
+    "feedback_description_email": "如果您希望得到回复，请附上电子邮件。",
     "feedback_description_text": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
     "navigate": "导航",
     "submit": "提交",
@@ -183,7 +184,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
   },
   "KanaTrainerScreen": {
-    "title": "卡纳培训师"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "汉字地图",
@@ -379,7 +380,7 @@ class CodegenLoader extends AssetLoader{
     "send_to_anki": "发送到anki",
     "title": "词表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
     "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
     "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
@@ -527,6 +528,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
+    "feedback_description_email": "返信を希望される方は、Eメールでのご連絡をお願いします。",
     "feedback_description_text": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
     "navigate": "操作",
     "submit": "送信",
@@ -577,7 +579,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_speed_dial_yoon_special": "その他の拗音のオン・オフが切り替わリマス"
   },
   "KanaTrainerScreen": {
-    "title": "カナ・トレーナー"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "漢字マップ",
@@ -787,7 +789,7 @@ static const Map<String,dynamic> ja = {
     "send_to_anki": "ankiに送る",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "単語リスト画面へようこそ！",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
     "tutorial_create_list": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
     "tutorial_folder": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
@@ -951,6 +953,7 @@ static const Map<String,dynamic> de = {
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
+    "feedback_description_email": "Bitte geben Sie eine E-Mail an, wenn Sie eine Antwort wünschen.",
     "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
@@ -1001,7 +1004,7 @@ static const Map<String,dynamic> de = {
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "Kana Trainer"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Kanji-Karte",
@@ -1211,7 +1214,7 @@ static const Map<String,dynamic> de = {
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -1337,6 +1340,7 @@ static const Map<String,dynamic> ru = {
   },
   "FeedbackScreen": {
     "draw": "нарисовать",
+    "feedback_description_email": "Пожалуйста, укажите электронную почту, если хотите получить ответ.",
     "feedback_description_text": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
     "navigate": "перейдите по ссылке",
     "submit": "отправить",
@@ -1387,7 +1391,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "Тренер Кана"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Карта Кандзи",
@@ -1583,7 +1587,7 @@ static const Map<String,dynamic> ru = {
     "send_to_anki": "Отправить в anki",
     "title": "Списки слов",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
     "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
     "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
@@ -1744,6 +1748,7 @@ static const Map<String,dynamic> pl = {
   },
   "FeedbackScreen": {
     "draw": "rysuj",
+    "feedback_description_email": "Prosimy o podanie adresu e-mail w celu uzyskania odpowiedzi.",
     "feedback_description_text": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wyślij",
@@ -1794,7 +1799,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Trener Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -2004,7 +2009,7 @@ static const Map<String,dynamic> pl = {
     "send_to_anki": "Wyślij do anki",
     "title": "Listy słowne",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie list słów!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
     "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
     "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
@@ -2168,7 +2173,8 @@ static const Map<String,dynamic> en = {
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+    "feedback_description_email": "Please, include an email if you want a response.",
+    "feedback_description_text": "What's wrong? Describe your issue below.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -2554,6 +2560,7 @@ static const Map<String,dynamic> it = {
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
+    "feedback_description_email": "Per favore, includete un'e-mail se desiderate una risposta.",
     "feedback_description_text": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
@@ -2604,7 +2611,7 @@ static const Map<String,dynamic> it = {
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Allenatore Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Mappa Kanji",
@@ -2800,7 +2807,7 @@ static const Map<String,dynamic> it = {
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
@@ -2926,6 +2933,7 @@ static const Map<String,dynamic> fr = {
   },
   "FeedbackScreen": {
     "draw": "dessiner",
+    "feedback_description_email": "Veuillez indiquer un courriel si vous souhaitez obtenir une réponse.",
     "feedback_description_text": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
@@ -2976,7 +2984,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Formateur Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Carte de Kanji",
@@ -3172,7 +3180,7 @@ static const Map<String,dynamic> fr = {
     "send_to_anki": "Envoyer à anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
@@ -3298,6 +3306,7 @@ static const Map<String,dynamic> es = {
   },
   "FeedbackScreen": {
     "draw": "dibujar",
+    "feedback_description_email": "Por favor, incluya un correo electrónico si desea una respuesta.",
     "feedback_description_text": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
     "navigate": "navegue por",
     "submit": "enviar",
@@ -3348,7 +3357,7 @@ static const Map<String,dynamic> es = {
     "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Entrenador Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -3544,7 +3553,7 @@ static const Map<String,dynamic> es = {
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

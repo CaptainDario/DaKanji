@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "dessiner",
+    "feedback_description_email": "Veuillez indiquer un courriel si vous souhaitez obtenir une r\u00e9ponse.",
     "feedback_description_text": "Qu'est-ce qui ne va pas ? D\u00e9crivez votre probl\u00e8me ci-dessous. Si vous souhaitez que je donne suite \u00e0 votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
@@ -205,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de d\u00e9sactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Formateur Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Carte de Kanji",
@@ -415,7 +416,7 @@
     "send_to_anki": "Envoyer \u00e0 anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue dans l'\u00e9cran des listes de mots !",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Vous pouvez cr\u00e9er un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez \u00e9galement r\u00e9organiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de cr\u00e9er une nouvelle liste de mots. En utilisant le bouton de menu \u00e0 droite de cette liste, vous pouvez \u00e9galement exporter votre liste dans diff\u00e9rents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit \u00e9galement du dossier de listes de mots par d\u00e9faut. Il contient des listes de mots bas\u00e9es sur le JLPT, votre historique de recherche, etc.",

@@ -150,6 +150,7 @@ abstract class  LocaleKeys {
   static const DrawScreen_tutorial_undo = 'DrawScreen.tutorial_undo';
   static const DrawScreen = 'DrawScreen';
   static const FeedbackScreen_draw = 'FeedbackScreen.draw';
+  static const FeedbackScreen_feedback_description_email = 'FeedbackScreen.feedback_description_email';
   static const FeedbackScreen_feedback_description_text = 'FeedbackScreen.feedback_description_text';
   static const FeedbackScreen_navigate = 'FeedbackScreen.navigate';
   static const FeedbackScreen_submit = 'FeedbackScreen.submit';

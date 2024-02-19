@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
+    "feedback_description_email": "Per favore, includete un'e-mail se desiderate una risposta.",
     "feedback_description_text": "Cosa c'\u00e8 che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
@@ -205,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Allenatore Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Mappa Kanji",
@@ -415,7 +416,7 @@
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "\u00c8 possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. \u00c8 anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante \u00e8 possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, \u00e8 anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa \u00e8 una cartella di elenchi di parole. In essa \u00e8 possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta \u00e8 anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",

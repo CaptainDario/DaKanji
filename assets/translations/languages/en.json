@@ -155,7 +155,8 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+    "feedback_description_email": "Please, include an email if you want a response.",
+    "feedback_description_text": "What's wrong? Describe your issue below.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"

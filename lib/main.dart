@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -55,8 +56,10 @@ Future<void> main() async {
                   saveLocale: true,
                   startLocale: Platform.isLinux ? const Locale("en") : null,
                   child: BetterFeedback(
+                    feedbackBuilder: simpleFeedbackBuilder,
                     theme: FeedbackThemeData(
-                      sheetIsDraggable: true
+                      sheetIsDraggable: true,
+                      dragHandleColor: Colors.grey
                     ),
                     localizationsDelegates: [
                       CustomFeedbackLocalizationsDelegate(),

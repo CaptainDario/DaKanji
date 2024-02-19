@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysuj",
+    "feedback_description_email": "Prosimy o podanie adresu e-mail w celu uzyskania odpowiedzi.",
     "feedback_description_text": "Co jest nie tak? Opisz sw\u00f3j problem poni\u017cej. Je\u015bli chcesz, abym m\u00f3g\u0142 odpowiedzie\u0107 na Twoj\u0105 pro\u015bb\u0119, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wy\u015blij",
@@ -205,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Ten przycisk w\u0142\u0105cza lub wy\u0142\u0105cza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Trener Kana"
+    "title": "#ERROR!"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -415,7 +416,7 @@
     "send_to_anki": "Wy\u015blij do anki",
     "title": "Listy s\u0142owne",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie list s\u0142\u00f3w!",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Mo\u017cesz utworzy\u0107 nowy folder z list\u0105 s\u0142\u00f3w, naciskaj\u0105c ten przycisk lub przeci\u0105gaj\u0105c list\u0119 s\u0142\u00f3w do innego folderu. Mo\u017cesz tak\u017ce zmieni\u0107 kolejno\u015b\u0107 folder\u00f3w i list, przeci\u0105gaj\u0105c je.",
     "tutorial_create_list": "Za pomoc\u0105 tego przycisku mo\u017cna utworzy\u0107 now\u0105 list\u0119 s\u0142\u00f3w. Za pomoc\u0105 przycisku menu po prawej stronie tej listy mo\u017cna r\u00f3wnie\u017c wyeksportowa\u0107 list\u0119 do r\u00f3\u017cnych format\u00f3w.",
     "tutorial_folder": "Jest to folder listy s\u0142\u00f3w. Mo\u017cna w nim przechowywa\u0107 inne foldery lub listy s\u0142\u00f3w.\nJest to r\u00f3wnie\u017c domy\u015blny folder listy s\u0142\u00f3w. Zawiera on niekt\u00f3re listy s\u0142\u00f3w oparte na JLPT, historii wyszukiwania itp.",

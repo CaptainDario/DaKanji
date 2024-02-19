@@ -1403,7 +1403,7 @@
       "pl": "rysuj"
     },
     "feedback_description_text": {
-      "en": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+      "en": "What's wrong? Describe your issue below.",
       "de": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
       "ru": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
       "ja": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
@@ -1412,6 +1412,17 @@
       "fr": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
       "es": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
       "pl": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail."
+    },
+    "feedback_description_email": {
+      "en": "Please, include an email if you want a response.",
+      "de": "Bitte geben Sie eine E-Mail an, wenn Sie eine Antwort wünschen.",
+      "ru": "Пожалуйста, укажите электронную почту, если хотите получить ответ.",
+      "ja": "返信を希望される方は、Eメールでのご連絡をお願いします。",
+      "zh": "如果您希望得到回复，请附上电子邮件。",
+      "it": "Per favore, includete un'e-mail se desiderate una risposta.",
+      "fr": "Veuillez indiquer un courriel si vous souhaitez obtenir une réponse.",
+      "es": "Por favor, incluya un correo electrónico si desea una respuesta.",
+      "pl": "Prosimy o podanie adresu e-mail w celu uzyskania odpowiedzi."
     },
     "navigate": {
       "en": "navigate",
@@ -1834,14 +1845,14 @@
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
-      "de": "Kana Trainer",
-      "ru": "Тренер Кана",
-      "ja": "カナ・トレーナー",
-      "zh": "卡纳培训师",
-      "it": "Allenatore Kana",
-      "fr": "Formateur Kana",
-      "es": "Entrenador Kana",
-      "pl": "Trener Kana"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     }
   },
   "KanaTableScreen": {
@@ -3707,14 +3718,14 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
-      "ru": "Добро пожаловать на экран списков слов!",
-      "ja": "単語リスト画面へようこそ！",
-      "zh": "欢迎来到单词列表屏幕！",
-      "it": "Benvenuti nella schermata degli elenchi di parole!",
-      "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
-      "pl": "Witamy na ekranie list słów!"
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "#ERROR!",
+      "pl": "#ERROR!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
