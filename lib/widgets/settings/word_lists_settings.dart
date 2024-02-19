@@ -2,11 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path/path.dart' as p;
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -43,6 +46,18 @@ class _WordListSettingsState extends State<WordListSettings> {
           icon: Icons.undo,
           onButtonPressed: () async {
             await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
+          },
+        ),
+        ResponsiveIconButtonTile(
+          text: "Export word lists database",
+          icon: Icons.arrow_upward,
+          onButtonPressed: () async {
+            
+            final exportDir = await FilePicker.platform.getDirectoryPath();
+            if(exportDir != null){
+              g_DakanjiPathManager.wordListsSqlFile.copy(
+                p.join(exportDir, p.basename(g_DakanjiPathManager.wordListsSqlFile.path)));
+            }
           },
         ),
         // reshow tutorial
