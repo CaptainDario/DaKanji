@@ -138,6 +138,7 @@ class _WordListNodeState extends State<WordListNode> {
           : 1,
         data: widget.node,
         feedback: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
           child: Opacity(
             opacity: 0.5,
             child: widget
