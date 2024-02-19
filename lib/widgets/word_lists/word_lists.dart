@@ -338,7 +338,7 @@ class _WordListsState extends State<WordLists> {
                                             },
                                             onSelectedToggled: widget.onSelectionConfirmed == null
                                               ? null
-                                              : (node) => setState(() {}),
+                                              : (node) {},
                                             key: Key('$i'),
                                             editTextOnCreate: childrenDFS[i].id == addedNewNode?.id ? true : false,
                                           ),
