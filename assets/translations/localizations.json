@@ -1845,14 +1845,14 @@
   "KanaTrainerScreen": {
     "title": {
       "en": "Kana Trainer",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Kana Trainer",
+      "ru": "Тренер Кана",
+      "ja": "カナ・トレーナー",
+      "zh": "卡纳培训师",
+      "it": "Allenatore Kana",
+      "fr": "Formateur Kana",
+      "es": "Entrenador Kana",
+      "pl": "Trener Kana"
     }
   },
   "KanaTableScreen": {
@@ -2748,6 +2748,83 @@
       "fr": "Inclure une capture d'écran",
       "es": "Incluir captura de pantalla",
       "pl": "Dołącz zrzut ekranu"
+    },
+    "word_lists_readd_defaults": {
+      "en": "Add the default folder",
+      "de": "Hinzufügen des Standardordners",
+      "ru": "Добавьте папку по умолчанию",
+      "ja": "デフォルトフォルダの追加",
+      "zh": "添加默认文件夹",
+      "it": "Aggiungere la cartella predefinita",
+      "fr": "Ajouter le dossier par défaut",
+      "es": "Añadir la carpeta por defecto",
+      "pl": "Dodaj folder domyślny"
+    },
+    "word_lists_export": {
+      "en": "Export word lists database",
+      "de": "Wortlisten-Datenbank exportieren",
+      "ru": "Экспорт базы данных списков слов",
+      "ja": "単語リスト・データベースのエクスポート",
+      "zh": "导出单词表数据库",
+      "it": "Esportazione del database degli elenchi di parole",
+      "fr": "Exporter la base de données des listes de mots",
+      "es": "Exportar base de datos de listas de palabras",
+      "pl": "Eksport bazy danych list słów"
+    },
+    "word_lists_import": {
+      "en": "Import word lists database (@:SettingsScreen.restarts_app)",
+      "de": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
+      "ru": "Импортируйте базу данных списков слов (@:SettingsScreen.restarts_app)",
+      "ja": "単語リストデータベースのインポート (@:SettingsScreen.restarts_app)",
+      "zh": "导入单词列表数据库（@:SettingsScreen.restarts_app）",
+      "it": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
+      "fr": "Importer la base de données des listes de mots (@:SettingsScreen.restarts_app)",
+      "es": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
+      "pl": "Import bazy danych list słów (@:SettingsScreen.restarts_app)"
+    },
+    "word_lists_import_warning": {
+      "en": "Warning",
+      "de": "Warnung",
+      "ru": "Внимание",
+      "ja": "警告",
+      "zh": "警告",
+      "it": "Avvertenze",
+      "fr": "Avertissement",
+      "es": "Advertencia",
+      "pl": "Ostrzeżenie"
+    },
+    "word_lists_import_warning_description": {
+      "en": "This will overwrite all your word lists, are you sure?",
+      "de": "Damit werden alle Ihre Wortlisten überschrieben, sind Sie sicher?",
+      "ru": "Это перепишет все ваши списки слов, вы уверены?",
+      "ja": "これですべての単語リストが上書きされますが、よろしいですか？",
+      "zh": "这会覆盖你所有的单词表，你确定吗？",
+      "it": "Questo sovrascriverà tutti i vostri elenchi di parole, siete sicuri?",
+      "fr": "Cela écrasera toutes vos listes de mots, êtes-vous sûr ?",
+      "es": "Esto sobrescribirá todas tus listas de palabras, ¿estás seguro?",
+      "pl": "Spowoduje to nadpisanie wszystkich list słów, jesteś pewien?"
+    },
+    "word_lists_import_error": {
+      "en": "Error",
+      "de": "Fehler",
+      "ru": "Ошибка",
+      "ja": "エラー",
+      "zh": "错误",
+      "it": "Errore",
+      "fr": "Erreur",
+      "es": "Error",
+      "pl": "Błąd"
+    },
+    "word_lists_import_error_description": {
+      "en": "The provide file is not valid. Please select a valid file and try again.",
+      "de": "Die angegebene Datei ist ungültig. Bitte wählen Sie eine gültige Datei und versuchen Sie es erneut.",
+      "ru": "Указанный файл недействителен. Пожалуйста, выберите правильный файл и повторите попытку.",
+      "ja": "提供されたファイルは有効ではありません。有効なファイルを選択して再試行してください。",
+      "zh": "提供的文件无效。请选择一个有效文件并重试。",
+      "it": "Il file fornito non è valido. Selezionare un file valido e riprovare.",
+      "fr": "Le fichier fourni n'est pas valide. Veuillez sélectionner un fichier valide et réessayer.",
+      "es": "El archivo proporcionado no es válido. Seleccione un archivo válido e inténtelo de nuevo.",
+      "pl": "Podany plik jest nieprawidłowy. Wybierz prawidłowy plik i spróbuj ponownie."
     },
     "dojg_imported": {
       "en": "DoJG imported",
@@ -3718,14 +3795,14 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "#ERROR!",
-      "ru": "#ERROR!",
-      "ja": "#ERROR!",
-      "zh": "#ERROR!",
-      "it": "#ERROR!",
-      "fr": "#ERROR!",
-      "es": "#ERROR!",
-      "pl": "#ERROR!"
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "ru": "Добро пожаловать на экран списков слов!",
+      "ja": "単語リスト画面へようこそ！",
+      "zh": "欢迎来到单词列表屏幕！",
+      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "fr": "Bienvenue dans l'écran des listes de mots !",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",

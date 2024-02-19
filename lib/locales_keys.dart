@@ -345,6 +345,13 @@ abstract class  LocaleKeys {
   static const SettingsScreen_text_open_in_fullscreen = 'SettingsScreen.text_open_in_fullscreen';
   static const SettingsScreen_text_show_selection_buttons = 'SettingsScreen.text_show_selection_buttons';
   static const SettingsScreen_title = 'SettingsScreen.title';
+  static const SettingsScreen_word_lists_export = 'SettingsScreen.word_lists_export';
+  static const SettingsScreen_word_lists_import = 'SettingsScreen.word_lists_import';
+  static const SettingsScreen_word_lists_import_error = 'SettingsScreen.word_lists_import_error';
+  static const SettingsScreen_word_lists_import_error_description = 'SettingsScreen.word_lists_import_error_description';
+  static const SettingsScreen_word_lists_import_warning = 'SettingsScreen.word_lists_import_warning';
+  static const SettingsScreen_word_lists_import_warning_description = 'SettingsScreen.word_lists_import_warning_description';
+  static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
   static const SettingsScreen = 'SettingsScreen';
   static const TextScreen_copy_button_copy = 'TextScreen.copy_button_copy';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';

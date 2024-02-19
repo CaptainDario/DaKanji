@@ -361,7 +361,14 @@
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Open in fullscreen",
     "text_show_selection_buttons": "Show text selection buttons",
-    "title": "Settings"
+    "title": "Settings",
+    "word_lists_export": "Export word lists database",
+    "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
+    "word_lists_import_warning": "Warning",
+    "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_readd_defaults": "Add the default folder"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",

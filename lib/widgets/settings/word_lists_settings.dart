@@ -47,17 +47,17 @@ class _WordListSettingsState extends State<WordListSettings> {
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         ResponsiveIconButtonTile(
-          text: "Readd defaults folder",
+          text: LocaleKeys.SettingsScreen_word_lists_readd_defaults.tr(),
           icon: Icons.undo,
           onButtonPressed: () async => await readdDefaults()
         ),
         ResponsiveIconButtonTile(
-          text: "Export word lists database",
+          text: LocaleKeys.SettingsScreen_word_lists_export.tr(),
           icon: Icons.arrow_upward,
           onButtonPressed: () async => await exportWordLists(),
         ),
         ResponsiveIconButtonTile(
-          text: "Import word lists database",
+          text: LocaleKeys.SettingsScreen_word_lists_import.tr(),
           icon: Icons.arrow_downward,
           onButtonPressed: () async => importWordLists(),
         ),
@@ -101,8 +101,8 @@ class _WordListSettingsState extends State<WordListSettings> {
       dialogType: DialogType.noHeader,
       dismissOnTouchOutside: false,
       dismissOnBackKeyPress: false,
-      title: "Warning",
-      desc: "This will overwrite all your word lists, are you sure?",
+      title: LocaleKeys.SettingsScreen_word_lists_import_warning.tr(),
+      desc: LocaleKeys.SettingsScreen_word_lists_import_warning_description.tr(),
       btnCancelColor: g_Dakanji_red,
       btnCancelOnPress: () {},
       btnOkColor: g_Dakanji_green,
@@ -152,8 +152,8 @@ class _WordListSettingsState extends State<WordListSettings> {
           dialogType: DialogType.noHeader,
           dismissOnTouchOutside: false,
           dismissOnBackKeyPress: false,
-          title: "Error",
-          desc: "The provide file is not valid. Please select a valid file and try again.",
+          title: LocaleKeys.SettingsScreen_word_lists_import_error.tr(),
+          desc: LocaleKeys.SettingsScreen_word_lists_import_error_description.tr(),
           btnOkColor: g_Dakanji_green,
           btnOkOnPress: () {}
         ).show();

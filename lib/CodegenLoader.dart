@@ -184,7 +184,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "卡纳培训师"
   },
   "KanjiMapScreen": {
     "title": "汉字地图",
@@ -339,7 +339,14 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "text_open_in_fullscreen": "全屏打开",
     "text_show_selection_buttons": "显示文本选择按钮",
-    "title": "设置"
+    "title": "设置",
+    "word_lists_export": "导出单词表数据库",
+    "word_lists_import": "导入单词列表数据库（@:SettingsScreen.restarts_app）",
+    "word_lists_import_error": "错误",
+    "word_lists_import_error_description": "提供的文件无效。请选择一个有效文件并重试。",
+    "word_lists_import_warning": "警告",
+    "word_lists_import_warning_description": "这会覆盖你所有的单词表，你确定吗？",
+    "word_lists_readd_defaults": "添加默认文件夹"
   },
   "TextScreen": {
     "copy_button_copy": "已复制：",
@@ -380,7 +387,7 @@ class CodegenLoader extends AssetLoader{
     "send_to_anki": "发送到anki",
     "title": "词表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
     "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
     "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
     "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
@@ -579,7 +586,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_speed_dial_yoon_special": "その他の拗音のオン・オフが切り替わリマス"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "カナ・トレーナー"
   },
   "KanjiMapScreen": {
     "title": "漢字マップ",
@@ -734,7 +741,14 @@ static const Map<String,dynamic> ja = {
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "全画面表示",
     "text_show_selection_buttons": "テキスト選択ボタンを表示",
-    "title": "設定"
+    "title": "設定",
+    "word_lists_export": "単語リスト・データベースのエクスポート",
+    "word_lists_import": "単語リストデータベースのインポート (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "エラー",
+    "word_lists_import_error_description": "提供されたファイルは有効ではありません。有効なファイルを選択して再試行してください。",
+    "word_lists_import_warning": "警告",
+    "word_lists_import_warning_description": "これですべての単語リストが上書きされますが、よろしいですか？",
+    "word_lists_readd_defaults": "デフォルトフォルダの追加"
   },
   "TextScreen": {
     "copy_button_copy": "コピー：",
@@ -789,7 +803,7 @@ static const Map<String,dynamic> ja = {
     "send_to_anki": "ankiに送る",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別のフォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます。",
     "tutorial_create_list": "このボタンを使って、新しい単語リストを作成することができます。このリストの右側にあるメニューボタンを使用すると、異なる形式にリストをエクスポートすることもできます。",
     "tutorial_folder": "これは単語リスト・フォルダです。この中に他の単語リスト・フォルダや単語リストを保存することができます。\nこれはデフォルトの単語リストフォルダでもあります。日本語能力試験やあなたの検索履歴などに基づいた単語リストが入っています。",
@@ -1004,7 +1018,7 @@ static const Map<String,dynamic> de = {
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Kana Trainer"
   },
   "KanjiMapScreen": {
     "title": "Kanji-Karte",
@@ -1159,7 +1173,14 @@ static const Map<String,dynamic> de = {
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Im Vollbildmodus öffnen",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "word_lists_export": "Wortlisten-Datenbank exportieren",
+    "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Fehler",
+    "word_lists_import_error_description": "Die angegebene Datei ist ungültig. Bitte wählen Sie eine gültige Datei und versuchen Sie es erneut.",
+    "word_lists_import_warning": "Warnung",
+    "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten überschrieben, sind Sie sicher?",
+    "word_lists_readd_defaults": "Hinzufügen des Standardordners"
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -1214,7 +1235,7 @@ static const Map<String,dynamic> de = {
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -1391,7 +1412,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Тренер Кана"
   },
   "KanjiMapScreen": {
     "title": "Карта Кандзи",
@@ -1546,7 +1567,14 @@ static const Map<String,dynamic> ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Открыть в полноэкранном режиме",
     "text_show_selection_buttons": "Показать кнопки выделения текста",
-    "title": "Настройки"
+    "title": "Настройки",
+    "word_lists_export": "Экспорт базы данных списков слов",
+    "word_lists_import": "Импортируйте базу данных списков слов (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Ошибка",
+    "word_lists_import_error_description": "Указанный файл недействителен. Пожалуйста, выберите правильный файл и повторите попытку.",
+    "word_lists_import_warning": "Внимание",
+    "word_lists_import_warning_description": "Это перепишет все ваши списки слов, вы уверены?",
+    "word_lists_readd_defaults": "Добавьте папку по умолчанию"
   },
   "TextScreen": {
     "copy_button_copy": "Копирование:",
@@ -1587,7 +1615,7 @@ static const Map<String,dynamic> ru = {
     "send_to_anki": "Отправить в anki",
     "title": "Списки слов",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
     "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
     "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
     "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
@@ -1799,7 +1827,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Trener Kana"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -1954,7 +1982,14 @@ static const Map<String,dynamic> pl = {
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Otwórz na pełnym ekranie",
     "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
-    "title": "Ustawienia"
+    "title": "Ustawienia",
+    "word_lists_export": "Eksport bazy danych list słów",
+    "word_lists_import": "Import bazy danych list słów (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Błąd",
+    "word_lists_import_error_description": "Podany plik jest nieprawidłowy. Wybierz prawidłowy plik i spróbuj ponownie.",
+    "word_lists_import_warning": "Ostrzeżenie",
+    "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list słów, jesteś pewien?",
+    "word_lists_readd_defaults": "Dodaj folder domyślny"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -2009,7 +2044,7 @@ static const Map<String,dynamic> pl = {
     "send_to_anki": "Wyślij do anki",
     "title": "Listy słowne",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Witamy na ekranie list słów!",
     "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
     "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
     "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
@@ -2379,7 +2414,14 @@ static const Map<String,dynamic> en = {
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Open in fullscreen",
     "text_show_selection_buttons": "Show text selection buttons",
-    "title": "Settings"
+    "title": "Settings",
+    "word_lists_export": "Export word lists database",
+    "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
+    "word_lists_import_warning": "Warning",
+    "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_readd_defaults": "Add the default folder"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",
@@ -2611,7 +2653,7 @@ static const Map<String,dynamic> it = {
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Allenatore Kana"
   },
   "KanjiMapScreen": {
     "title": "Mappa Kanji",
@@ -2766,7 +2808,14 @@ static const Map<String,dynamic> it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Aprire a schermo intero",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
-    "title": "Impostazioni"
+    "title": "Impostazioni",
+    "word_lists_export": "Esportazione del database degli elenchi di parole",
+    "word_lists_import": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Errore",
+    "word_lists_import_error_description": "Il file fornito non è valido. Selezionare un file valido e riprovare.",
+    "word_lists_import_warning": "Avvertenze",
+    "word_lists_import_warning_description": "Questo sovrascriverà tutti i vostri elenchi di parole, siete sicuri?",
+    "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -2807,7 +2856,7 @@ static const Map<String,dynamic> it = {
     "send_to_anki": "Invia ad anki",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
     "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
@@ -2984,7 +3033,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiMapScreen": {
     "title": "Carte de Kanji",
@@ -3139,7 +3188,14 @@ static const Map<String,dynamic> fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Ouvrir en plein écran",
     "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
-    "title": "Paramètres"
+    "title": "Paramètres",
+    "word_lists_export": "Exporter la base de données des listes de mots",
+    "word_lists_import": "Importer la base de données des listes de mots (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Erreur",
+    "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez sélectionner un fichier valide et réessayer.",
+    "word_lists_import_warning": "Avertissement",
+    "word_lists_import_warning_description": "Cela écrasera toutes vos listes de mots, êtes-vous sûr ?",
+    "word_lists_readd_defaults": "Ajouter le dossier par défaut"
   },
   "TextScreen": {
     "copy_button_copy": "Copié :",
@@ -3180,7 +3236,7 @@ static const Map<String,dynamic> fr = {
     "send_to_anki": "Envoyer à anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
     "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
@@ -3357,7 +3413,7 @@ static const Map<String,dynamic> es = {
     "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Entrenador Kana"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -3512,7 +3568,14 @@ static const Map<String,dynamic> es = {
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Abrir a pantalla completa",
     "text_show_selection_buttons": "Mostrar botones de selección de texto",
-    "title": "Ajustes"
+    "title": "Ajustes",
+    "word_lists_export": "Exportar base de datos de listas de palabras",
+    "word_lists_import": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "El archivo proporcionado no es válido. Seleccione un archivo válido e inténtelo de nuevo.",
+    "word_lists_import_warning": "Advertencia",
+    "word_lists_import_warning_description": "Esto sobrescribirá todas tus listas de palabras, ¿estás seguro?",
+    "word_lists_readd_defaults": "Añadir la carpeta por defecto"
   },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
@@ -3553,7 +3616,7 @@ static const Map<String,dynamic> es = {
     "send_to_anki": "Enviar a anki",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

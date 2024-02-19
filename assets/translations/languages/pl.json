@@ -206,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Ten przycisk w\u0142\u0105cza lub wy\u0142\u0105cza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Trener Kana"
   },
   "KanjiMapScreen": {
     "title": "Mapa Kanji",
@@ -361,7 +361,14 @@
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Otw\u00f3rz na pe\u0142nym ekranie",
     "text_show_selection_buttons": "Poka\u017c przyciski wyboru tekstu",
-    "title": "Ustawienia"
+    "title": "Ustawienia",
+    "word_lists_export": "Eksport bazy danych list s\u0142\u00f3w",
+    "word_lists_import": "Import bazy danych list s\u0142\u00f3w (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "B\u0142\u0105d",
+    "word_lists_import_error_description": "Podany plik jest nieprawid\u0142owy. Wybierz prawid\u0142owy plik i spr\u00f3buj ponownie.",
+    "word_lists_import_warning": "Ostrze\u017cenie",
+    "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list s\u0142\u00f3w, jeste\u015b pewien?",
+    "word_lists_readd_defaults": "Dodaj folder domy\u015blny"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -416,7 +423,7 @@
     "send_to_anki": "Wy\u015blij do anki",
     "title": "Listy s\u0142owne",
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Witamy na ekranie list s\u0142\u00f3w!",
     "tutorial_create_folder": "Mo\u017cesz utworzy\u0107 nowy folder z list\u0105 s\u0142\u00f3w, naciskaj\u0105c ten przycisk lub przeci\u0105gaj\u0105c list\u0119 s\u0142\u00f3w do innego folderu. Mo\u017cesz tak\u017ce zmieni\u0107 kolejno\u015b\u0107 folder\u00f3w i list, przeci\u0105gaj\u0105c je.",
     "tutorial_create_list": "Za pomoc\u0105 tego przycisku mo\u017cna utworzy\u0107 now\u0105 list\u0119 s\u0142\u00f3w. Za pomoc\u0105 przycisku menu po prawej stronie tej listy mo\u017cna r\u00f3wnie\u017c wyeksportowa\u0107 list\u0119 do r\u00f3\u017cnych format\u00f3w.",
     "tutorial_folder": "Jest to folder listy s\u0142\u00f3w. Mo\u017cna w nim przechowywa\u0107 inne foldery lub listy s\u0142\u00f3w.\nJest to r\u00f3wnie\u017c domy\u015blny folder listy s\u0142\u00f3w. Zawiera on niekt\u00f3re listy s\u0142\u00f3w oparte na JLPT, historii wyszukiwania itp.",

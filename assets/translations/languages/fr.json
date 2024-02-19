@@ -206,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de d\u00e9sactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiMapScreen": {
     "title": "Carte de Kanji",
@@ -361,7 +361,14 @@
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Ouvrir en plein \u00e9cran",
     "text_show_selection_buttons": "Afficher les boutons de s\u00e9lection de texte",
-    "title": "Param\u00e8tres"
+    "title": "Param\u00e8tres",
+    "word_lists_export": "Exporter la base de donn\u00e9es des listes de mots",
+    "word_lists_import": "Importer la base de donn\u00e9es des listes de mots (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Erreur",
+    "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez s\u00e9lectionner un fichier valide et r\u00e9essayer.",
+    "word_lists_import_warning": "Avertissement",
+    "word_lists_import_warning_description": "Cela \u00e9crasera toutes vos listes de mots, \u00eates-vous s\u00fbr ?",
+    "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut"
   },
   "TextScreen": {
     "copy_button_copy": "Copi\u00e9 :",
@@ -416,7 +423,7 @@
     "send_to_anki": "Envoyer \u00e0 anki",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenue dans l'\u00e9cran des listes de mots !",
     "tutorial_create_folder": "Vous pouvez cr\u00e9er un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez \u00e9galement r\u00e9organiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de cr\u00e9er une nouvelle liste de mots. En utilisant le bouton de menu \u00e0 droite de cette liste, vous pouvez \u00e9galement exporter votre liste dans diff\u00e9rents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit \u00e9galement du dossier de listes de mots par d\u00e9faut. Il contient des listes de mots bas\u00e9es sur le JLPT, votre historique de recherche, etc.",

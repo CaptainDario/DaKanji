@@ -206,7 +206,7 @@
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Kana Trainer"
   },
   "KanjiMapScreen": {
     "title": "Kanji-Karte",
@@ -361,7 +361,14 @@
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Im Vollbildmodus \u00f6ffnen",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "word_lists_export": "Wortlisten-Datenbank exportieren",
+    "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Fehler",
+    "word_lists_import_error_description": "Die angegebene Datei ist ung\u00fcltig. Bitte w\u00e4hlen Sie eine g\u00fcltige Datei und versuchen Sie es erneut.",
+    "word_lists_import_warning": "Warnung",
+    "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten \u00fcberschrieben, sind Sie sicher?",
+    "word_lists_readd_defaults": "Hinzuf\u00fcgen des Standardordners"
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -416,7 +423,7 @@
     "send_to_anki": "Zu Anki schicken",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie k\u00f6nnen einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste dr\u00fccken oder eine Wortliste auf einen anderen Ordner ziehen. Sie k\u00f6nnen Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie eine neue Wortliste erstellen. Mit dem Men\u00fc-Button auf der rechten Seite dieser Liste k\u00f6nnen Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie k\u00f6nnen andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enth\u00e4lt einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
