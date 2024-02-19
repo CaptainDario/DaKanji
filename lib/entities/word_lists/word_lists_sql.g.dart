@@ -53,19 +53,9 @@ class $WordListsSQLTable extends WordListsSQL
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("is_expanded" IN (0, 1))'),
       clientDefault: () => false);
-  static const VerificationMeta _isCheckedMeta =
-      const VerificationMeta('isChecked');
-  @override
-  late final GeneratedColumn<bool> isChecked = GeneratedColumn<bool>(
-      'is_checked', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_checked" IN (0, 1))'),
-      clientDefault: () => false);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, childrenIDs, type, dictIDs, isExpanded, isChecked];
+      [id, name, childrenIDs, type, dictIDs, isExpanded];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -94,10 +84,6 @@ class $WordListsSQLTable extends WordListsSQL
           isExpanded.isAcceptableOrUnknown(
               data['is_expanded']!, _isExpandedMeta));
     }
-    if (data.containsKey('is_checked')) {
-      context.handle(_isCheckedMeta,
-          isChecked.isAcceptableOrUnknown(data['is_checked']!, _isCheckedMeta));
-    }
     return context;
   }
 
@@ -122,8 +108,6 @@ class $WordListsSQLTable extends WordListsSQL
           .read(DriftSqlType.string, data['${effectivePrefix}dict_i_ds'])!),
       isExpanded: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_expanded'])!,
-      isChecked: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_checked'])!,
     );
   }
 
@@ -159,17 +143,13 @@ class WordListsSQLData extends DataClass
 
   /// Is this entry currently expanded
   final bool isExpanded;
-
-  /// Is this entry currently checked
-  final bool isChecked;
   const WordListsSQLData(
       {required this.id,
       required this.name,
       required this.childrenIDs,
       required this.type,
       required this.dictIDs,
-      required this.isExpanded,
-      required this.isChecked});
+      required this.isExpanded});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -188,7 +168,6 @@ class WordListsSQLData extends DataClass
       map['dict_i_ds'] = Variable<String>(converter.toSql(dictIDs));
     }
     map['is_expanded'] = Variable<bool>(isExpanded);
-    map['is_checked'] = Variable<bool>(isChecked);
     return map;
   }
 
@@ -200,7 +179,6 @@ class WordListsSQLData extends DataClass
       type: Value(type),
       dictIDs: Value(dictIDs),
       isExpanded: Value(isExpanded),
-      isChecked: Value(isChecked),
     );
   }
 
@@ -215,7 +193,6 @@ class WordListsSQLData extends DataClass
           .fromJson(serializer.fromJson<int>(json['type'])),
       dictIDs: serializer.fromJson<List<int>>(json['dictIDs']),
       isExpanded: serializer.fromJson<bool>(json['isExpanded']),
-      isChecked: serializer.fromJson<bool>(json['isChecked']),
     );
   }
   @override
@@ -229,7 +206,6 @@ class WordListsSQLData extends DataClass
           .toJson<int>($WordListsSQLTable.$convertertype.toJson(type)),
       'dictIDs': serializer.toJson<List<int>>(dictIDs),
       'isExpanded': serializer.toJson<bool>(isExpanded),
-      'isChecked': serializer.toJson<bool>(isChecked),
     };
   }
 
@@ -239,8 +215,7 @@ class WordListsSQLData extends DataClass
           List<int>? childrenIDs,
           WordListNodeType? type,
           List<int>? dictIDs,
-          bool? isExpanded,
-          bool? isChecked}) =>
+          bool? isExpanded}) =>
       WordListsSQLData(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -248,7 +223,6 @@ class WordListsSQLData extends DataClass
         type: type ?? this.type,
         dictIDs: dictIDs ?? this.dictIDs,
         isExpanded: isExpanded ?? this.isExpanded,
-        isChecked: isChecked ?? this.isChecked,
       );
   @override
   String toString() {
@@ -258,15 +232,14 @@ class WordListsSQLData extends DataClass
           ..write('childrenIDs: $childrenIDs, ')
           ..write('type: $type, ')
           ..write('dictIDs: $dictIDs, ')
-          ..write('isExpanded: $isExpanded, ')
-          ..write('isChecked: $isChecked')
+          ..write('isExpanded: $isExpanded')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, name, childrenIDs, type, dictIDs, isExpanded, isChecked);
+      Object.hash(id, name, childrenIDs, type, dictIDs, isExpanded);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -276,8 +249,7 @@ class WordListsSQLData extends DataClass
           other.childrenIDs == this.childrenIDs &&
           other.type == this.type &&
           other.dictIDs == this.dictIDs &&
-          other.isExpanded == this.isExpanded &&
-          other.isChecked == this.isChecked);
+          other.isExpanded == this.isExpanded);
 }
 
 class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
@@ -287,7 +259,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   final Value<WordListNodeType> type;
   final Value<List<int>> dictIDs;
   final Value<bool> isExpanded;
-  final Value<bool> isChecked;
   const WordListsSQLCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -295,7 +266,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     this.type = const Value.absent(),
     this.dictIDs = const Value.absent(),
     this.isExpanded = const Value.absent(),
-    this.isChecked = const Value.absent(),
   });
   WordListsSQLCompanion.insert({
     this.id = const Value.absent(),
@@ -304,7 +274,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     required WordListNodeType type,
     required List<int> dictIDs,
     this.isExpanded = const Value.absent(),
-    this.isChecked = const Value.absent(),
   })  : name = Value(name),
         childrenIDs = Value(childrenIDs),
         type = Value(type),
@@ -316,7 +285,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     Expression<int>? type,
     Expression<String>? dictIDs,
     Expression<bool>? isExpanded,
-    Expression<bool>? isChecked,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -325,7 +293,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
       if (type != null) 'type': type,
       if (dictIDs != null) 'dict_i_ds': dictIDs,
       if (isExpanded != null) 'is_expanded': isExpanded,
-      if (isChecked != null) 'is_checked': isChecked,
     });
   }
 
@@ -335,8 +302,7 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
       Value<List<int>>? childrenIDs,
       Value<WordListNodeType>? type,
       Value<List<int>>? dictIDs,
-      Value<bool>? isExpanded,
-      Value<bool>? isChecked}) {
+      Value<bool>? isExpanded}) {
     return WordListsSQLCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -344,7 +310,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
       type: type ?? this.type,
       dictIDs: dictIDs ?? this.dictIDs,
       isExpanded: isExpanded ?? this.isExpanded,
-      isChecked: isChecked ?? this.isChecked,
     );
   }
 
@@ -376,9 +341,6 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     if (isExpanded.present) {
       map['is_expanded'] = Variable<bool>(isExpanded.value);
     }
-    if (isChecked.present) {
-      map['is_checked'] = Variable<bool>(isChecked.value);
-    }
     return map;
   }
 
@@ -390,8 +352,7 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
           ..write('childrenIDs: $childrenIDs, ')
           ..write('type: $type, ')
           ..write('dictIDs: $dictIDs, ')
-          ..write('isExpanded: $isExpanded, ')
-          ..write('isChecked: $isChecked')
+          ..write('isExpanded: $isExpanded')
           ..write(')'))
         .toString();
   }

@@ -32,8 +32,6 @@ class WordListsSQL extends Table {
   TextColumn get dictIDs => text().map(const ListIntConverter())();
   /// Is this entry currently expanded
   BoolColumn get isExpanded => boolean().clientDefault(() => false)();
-  /// Is this entry currently checked
-  BoolColumn get isChecked => boolean().clientDefault(() => false)();
 
 }
 
@@ -132,7 +130,6 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         type: Value(entry.value.type),
         dictIDs: Value(entry.value.wordIds),
         isExpanded: Value(entry.value.isExpanded),
-        isChecked: Value(entry.value.isChecked)
       );
 
   }
