@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_tree.dart';
 import 'package:drift/drift.dart';
 
 import 'package:da_kanji_mobile/application/sqlite/sql_utils.dart';
@@ -82,10 +82,33 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       // add the defaults folder to SQLite
       int defaultsFolderSQLID = await _addNode(defaultsFolder, false);
+      defaultsFolder.id = defaultsFolderSQLID;
       // update the root
-      root.addChild(defaultsFolder..id = defaultsFolderSQLID);
+      root.addChild(defaultsFolder);
       await updateNode(root);
     });
+
+  }
+
+  /// Readds the defaults folde to the root
+  Future readdDefaultsToRoot() async {
+
+    // check if the defaults folder still exists
+    bool containsDefaults = (
+      await (select(wordListsSQL)
+        ..where((tbl) => tbl.type.equals(WordListNodeType.folderDefault.index)))
+        .get()
+    ).isNotEmpty;
+
+    // if not, readd it
+    if(!containsDefaults){
+      // load word lists from sql
+      final tree = WordListsTree.fromWordListsSQL(
+        (await select(wordListsSQL).get())
+      );
+      // readd the defaults
+      addDefaultsToRoot(tree.root);
+    }
 
   }
 

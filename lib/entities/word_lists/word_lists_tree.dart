@@ -52,7 +52,7 @@ class WordListsTree {
   
   /// Parses a [WordListsSQLData] into a [TreeNode<WordListsData>] and returns
   /// it
-  TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListsSQLData data){
+  static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListsSQLData data){
 
     return TreeNode(
       WordListsData(

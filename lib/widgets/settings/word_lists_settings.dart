@@ -38,6 +38,13 @@ class _WordListSettingsState extends State<WordListSettings> {
       Icons.list,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
+        ResponsiveIconButtonTile(
+          text: "Readd defaults folder",
+          icon: Icons.undo,
+          onButtonPressed: () async {
+            await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
+          },
+        ),
         // reshow tutorial
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
