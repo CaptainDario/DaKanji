@@ -134,6 +134,16 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             await restartApp(context);
           },
         ),
+        // delete search history
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_advanced_settings_delete_word_lists.tr(),
+          icon: Icons.delete_forever,
+          onButtonPressed: () async {
+            g_DakanjiPathManager.wordListsSqlFile.deleteSync();
+            // ignore: use_build_context_synchronously
+            await restartApp(context);
+          },
+        ),
         // Delete dict
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
