@@ -297,6 +297,7 @@
     "advanced_settings_delete_dojg": "Usuwanie plik\u00f3w DoJG",
     "advanced_settings_delete_history": "Usuwanie historii wyszukiwania",
     "advanced_settings_delete_user_data": "Usuwanie danych u\u017cytkownika",
+    "advanced_settings_delete_word_lists": "Usu\u0144 wszystkie listy s\u0142\u00f3w",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba proces\u00f3w wyszukiwania (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoj\u0105 baz\u0119 danych, u\u017cywa wielu proces\u00f3w. Zazwyczaj 2 to dobra warto\u015b\u0107 dla standardowej bazy danych do\u0142\u0105czonej do DaKanji. Jednak je\u017celi do\u015bwiadczasz spowolnienia podczas wyszukiwania w bazie danych, spr\u00f3buj u\u017cy\u0107 wi\u0119cej proces\u00f3w.",

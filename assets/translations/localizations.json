@@ -3112,17 +3112,6 @@
       "es": "Borrar datos de usuario",
       "pl": "Usuwanie danych użytkownika"
     },
-    "advanced_settings_delete_dict": {
-      "en": "Reset dictionary files",
-      "de": "Wörterbuchdateien zurücksetzen",
-      "ru": "Сброс файлов словарей",
-      "ja": "辞書ファイルのリセット",
-      "zh": "重置字典文件",
-      "it": "Reimpostare i file del dizionario",
-      "fr": "Réinitialiser les fichiers du dictionnaire",
-      "es": "Restablecer archivos de diccionario",
-      "pl": "Resetowanie plików słownika"
-    },
     "advanced_settings_delete_history": {
       "en": "Delete search history",
       "de": "Suchverlauf löschen",
@@ -3133,6 +3122,28 @@
       "fr": "Supprimer l'historique des recherches",
       "es": "Eliminar el historial de búsqueda",
       "pl": "Usuwanie historii wyszukiwania"
+    },
+    "advanced_settings_delete_word_lists": {
+      "en": "Delete all word lists",
+      "de": "Alle Wortlisten löschen",
+      "ru": "Удалить все списки слов",
+      "ja": "すべての単語リストを削除する",
+      "zh": "删除所有单词表",
+      "it": "Cancellare tutti gli elenchi di parole",
+      "fr": "Supprimer toutes les listes de mots",
+      "es": "Borrar todas las listas de palabras",
+      "pl": "Usuń wszystkie listy słów"
+    },
+    "advanced_settings_delete_dict": {
+      "en": "Reset dictionary files",
+      "de": "Wörterbuchdateien zurücksetzen",
+      "ru": "Сброс файлов словарей",
+      "ja": "辞書ファイルのリセット",
+      "zh": "重置字典文件",
+      "it": "Reimpostare i file del dizionario",
+      "fr": "Réinitialiser les fichiers du dictionnaire",
+      "es": "Restablecer archivos de diccionario",
+      "pl": "Resetowanie plików słownika"
     },
     "advanced_settings_delete_dojg": {
       "en": "Delete DoJG files",

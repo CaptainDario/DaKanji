@@ -297,6 +297,7 @@
     "advanced_settings_delete_dojg": "Eliminare i file DoJG",
     "advanced_settings_delete_history": "Cancellare la cronologia delle ricerche",
     "advanced_settings_delete_user_data": "Cancellare i dati dell'utente",
+    "advanced_settings_delete_word_lists": "Cancellare tutti gli elenchi di parole",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza pi\u00f9 processi. Di solito, 2 \u00e8 un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare pi\u00f9 processi.",
