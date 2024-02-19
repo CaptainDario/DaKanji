@@ -1,4 +1,8 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,6 +38,7 @@ class WordListSettings extends StatefulWidget {
 }
 
 class _WordListSettingsState extends State<WordListSettings> {
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
@@ -50,6 +55,11 @@ class _WordListSettingsState extends State<WordListSettings> {
           text: "Export word lists database",
           icon: Icons.arrow_upward,
           onButtonPressed: () async => await exportWordLists(),
+        ),
+        ResponsiveIconButtonTile(
+          text: "Import word lists database",
+          icon: Icons.arrow_downward,
+          onButtonPressed: () async => importWordLists(),
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -83,4 +93,73 @@ class _WordListSettingsState extends State<WordListSettings> {
 
   }
 
+  /// Lets the user select a wordlists database file and import it
+  Future importWordLists() async {
+
+    await AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      title: "Warning",
+      desc: "This will overwrite all your word lists, are you sure?",
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () {},
+      btnOkColor: g_Dakanji_green,
+      btnOkOnPress: () async {
+        final files = await FilePicker.platform.pickFiles(
+          lockParentWindow: true,
+          type: FileType.any,
+          allowedExtensions: [".sqlite"]
+        );
+        if(files != null &&
+          files.files.first.path != null && 
+          files.files.first.name.endsWith(".sqlite")){
+
+          File dbFile = File(files.files.first.path!);
+          bool fileSeemsvalid = false;
+
+          // try loading the file to check that it is valid
+          try {
+            await GetIt.I.unregister(
+              instance: GetIt.I<WordListsSQLDatabase>(),
+              disposingFunction: (WordListsSQLDatabase p0) async {
+                await p0.close();
+              },
+            );
+
+            WordListsSQLDatabase db = WordListsSQLDatabase(dbFile);
+            await db.init();
+            fileSeemsvalid = true;
+          } 
+          catch (e) {
+            debugPrint(e.toString());  
+          }
+
+          // overwrite existing database
+          if(fileSeemsvalid){
+            g_DakanjiPathManager.wordListsSqlFile.deleteSync();
+            dbFile.copySync(g_DakanjiPathManager.wordListsSqlFile.path);
+            
+            // ignore: use_build_context_synchronously
+            await restartApp(context);
+          }
+        }
+
+        // ignore: use_build_context_synchronously
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.noHeader,
+          dismissOnTouchOutside: false,
+          dismissOnBackKeyPress: false,
+          title: "Error",
+          desc: "The provide file is not valid. Please select a valid file and try again.",
+          btnOkColor: g_Dakanji_green,
+          btnOkOnPress: () {}
+        ).show();
+      }
+      
+    ).show();
+
+  }
 }

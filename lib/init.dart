@@ -123,10 +123,6 @@ Future<void> initServices() async {
 
   GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
 
-  final wordListsSQL = WordListsSQLDatabase(g_DakanjiPathManager.wordListsSqlFile);
-  await wordListsSQL.init();
-  GetIt.I.registerSingleton<WordListsSQLDatabase>(wordListsSQL);
-
 }
 
 /// Loads all services from disk that DO depend on data in the documents
@@ -171,6 +167,10 @@ Future<void> initDocumentsServices(BuildContext context) async {
         : null
     )
   );
+
+  final wordListsSQL = WordListsSQLDatabase(g_DakanjiPathManager.wordListsSqlFile);
+  await wordListsSQL.init();
+  GetIt.I.registerSingleton<WordListsSQLDatabase>(wordListsSQL);
 
   GetIt.I.registerSingleton<DictionarySearch>(
     DictionarySearch(
