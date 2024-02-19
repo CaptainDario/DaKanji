@@ -22,6 +22,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 
+
+
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {
 
@@ -261,7 +263,7 @@ class _WordListsState extends State<WordLists> {
                           // + 48 at the end so that the scroll indicator has space
                           height: (findVisibleHigherItems(childrenDFS.length).length) * (48+8.0) + 48
                             + (draggingOverDividerIndex != null ? 30 : 8),
-                          width: MediaQuery.sizeOf(context).width,
+                          width: constraints.maxWidth,
                           child: Stack(
                             alignment: Alignment.topCenter,
                             children: [
@@ -271,7 +273,7 @@ class _WordListsState extends State<WordLists> {
                                   duration: Duration(milliseconds: nodeMovementAnimationDuration),
                                   curve: Curves.decelerate,
                                   height: 48+8 + (draggingOverDividerIndex != null ? 30 : 8),
-                                  width: MediaQuery.sizeOf(context).width,
+                                  width: constraints.maxWidth,
                                   // if any parent is collapsed
                                   top: calculateNodeTopPosition(i),
                                   left: animateListTileIn[i] ? 0 : constraints.maxWidth,
