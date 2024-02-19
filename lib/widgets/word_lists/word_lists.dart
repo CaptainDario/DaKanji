@@ -325,6 +325,11 @@ class _WordListsState extends State<WordLists> {
                                             onRenameFinished: (node) {
                                               widget.wordLists.updateNode(node);
                                             },
+                                            onWillDragAccept: (node, other) {
+                                              setState(() {
+                                                draggingOverDividerIndex = null;
+                                              });
+                                            },
                                             onDragAccept: dragNodeOnNodeAccept,
                                             onDeletePressed: (TreeNode<WordListsData> node) {
                                               final parent = node.parent!;

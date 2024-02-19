@@ -49,6 +49,10 @@ class WordListNode extends StatefulWidget {
   /// Callback that is executed when the user finished renaming this tile
   final void Function(TreeNode<WordListsData> node)? onRenameFinished;
   /// Callback that is executed when the user drags this tile over another tile
+  /// and that would accept that item
+  final void Function(TreeNode<WordListsData> node,
+                      TreeNode<WordListsData> other,)? onWillDragAccept;
+  /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
   /// If a new folder is created, provides this as `folder` parameter
   /// The list `otherAffected` contains all other nodes that are affected by
@@ -79,6 +83,7 @@ class WordListNode extends StatefulWidget {
       this.onDragStarted,
       this.onDragEnd,
       this.onRenameFinished,
+      this.onWillDragAccept,
       this.onDragAccept,
       this.onDeletePressed,
       this.onFolderPressed,
@@ -163,6 +168,8 @@ class _WordListNodeState extends State<WordListNode> {
     
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
+
+            widget.onWillDragAccept?.call(widget.node, data);
     
             return true;
           },
