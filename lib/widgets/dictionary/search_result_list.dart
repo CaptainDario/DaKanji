@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -93,7 +95,7 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   Widget build(BuildContext context) {
     return AnimationLimiter(
-      key: Key(widget.searchResults.sublist(0, 10).toString()),
+      key: Key(widget.searchResults.sublist(0, min(widget.searchResults.length, 10)).toString()),
       child: LayoutBuilder(
         builder: (context, constraints) {
           return ScrollablePositionedList.builder(
