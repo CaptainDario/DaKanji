@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +7,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_tree.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;

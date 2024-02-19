@@ -6,8 +6,6 @@ import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
-
-
 /// The tree of word lists and folders that the user has created
 ///
 /// To update the toJson code run

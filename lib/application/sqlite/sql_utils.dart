@@ -1,15 +1,15 @@
 // These imports are necessary to open the sqlite3 database
+
+// Dart imports:
 import 'dart:convert';
 import 'dart:io';
 
+// Package imports:
+import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
-
-import 'package:drift/drift.dart';
-
-
 
 /// opens a SQLite database given by a [File]
 LazyDatabase openSqlite(File databaseFile) {

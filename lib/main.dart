@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +15,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
