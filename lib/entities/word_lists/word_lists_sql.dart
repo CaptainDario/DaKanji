@@ -17,7 +17,8 @@ part 'word_lists_sql.g.dart';
 
 
 
-/// SQLite table for the wordlists
+/// SQLite table for the wordlists (ie.: folders and word list nodes)
+/// NOT the actual word list entries
 class WordListsSQL extends Table {
   
   /// Id of this row
@@ -28,14 +29,25 @@ class WordListsSQL extends Table {
   TextColumn get childrenIDs => text().map(const ListIntConverter())();
   /// The type of this entry
   IntColumn get type => intEnum<WordListNodeType>()();
-  /// All dictionary ids in this list
-  TextColumn get dictIDs => text().map(const ListIntConverter())();
   /// Is this entry currently expanded
   BoolColumn get isExpanded => boolean().clientDefault(() => false)();
 
 }
 
-@DriftDatabase(tables: [WordListsSQL])
+/// Table of the actual dict entries that belong to a word lists in a
+/// [WordListsSQL]
+class WordListsNodeSQL extends Table {
+
+  /// Id of this row
+  IntColumn get id => integer().autoIncrement()();
+  /// The id of the entry in the corresponding [WordListsSQL] 
+  IntColumn get wordListID => integer()();
+  /// The id of this entry in the dictionary
+  IntColumn get dictEntryID => integer()();
+
+}
+
+@DriftDatabase(tables: [WordListsSQL, WordListsNodeSQL])
 class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   WordListsSQLDatabase(
@@ -128,7 +140,6 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         name: Value(entry.value.name),
         childrenIDs: Value(entry.children.map((e) => e.id).toList()),
         type: Value(entry.value.type),
-        dictIDs: Value(entry.value.wordIds),
         isExpanded: Value(entry.value.isExpanded),
       );
 
