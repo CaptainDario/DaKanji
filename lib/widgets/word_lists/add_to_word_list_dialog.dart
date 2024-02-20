@@ -6,9 +6,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+ import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_tree.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;
 
@@ -24,20 +25,27 @@ AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget
       width: MediaQuery.of(context).size.width * 0.8,
       child: word_lists_ui.WordLists(
         false,
-        // TODO remap
         GetIt.I<WordListsSQLDatabase>(),
         showDefaults: false,
         onSelectionConfirmed: (selection) {
           
-          selection.where(
+          // get all nodes that should be updated
+          List<TreeNode<WordListsData>> nodesToAddTo = selection.where(
             (sel) =>
               // assure this node is a word list
               wordListListypes.contains(sel.value.type) &&
               // assure that the word is not already in the list
               !sel.value.wordIds.contains(widget.entry!.id)
-          ).forEach(
-            (sel) => sel.value.wordIds.add(widget.entry!.id)
-          );
+          ).toList();
+
+          // update the tree
+          for (var node in nodesToAddTo) {
+            node.value.wordIds.add(widget.entry!.id); 
+          }
+
+          // save to disk
+          GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
+
           Navigator.of(context, rootNavigator: false).pop();
         },
       ),
