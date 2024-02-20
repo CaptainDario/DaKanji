@@ -68,8 +68,8 @@ class WordListNode extends StatefulWidget {
   /// on this tile. Provides this `TreeNode` as a parameter
   final void Function(TreeNode<WordListsData> node)? onFolderPressed;
   /// Callback that is executed when the user taps the checkbox
-  /// on this tile. Provides this `TreeNode` as a parameter
-  final void Function (TreeNode<WordListsData> node)? onSelectedToggled;
+  /// on this tile. Provides this `TreeNode` as a parameter and the current state
+  final void Function (TreeNode<WordListsData> node, bool value)? onSelectedToggled;
 
 
   const WordListNode(
@@ -289,16 +289,11 @@ class _WordListNodeState extends State<WordListNode> {
                       Checkbox(
                         value: widget.node.value.isChecked,
                         onChanged: (value) {
+
                           if(value == null) return;
-    
-                          setState(() {
-                            widget.node.value.isChecked = value;
-                            widget.node.dfs().forEach((element) {
-                              element.value.isChecked = value;
-                            });
-                          });
-    
-                          widget.onSelectedToggled!.call(widget.node);
+
+                          widget.onSelectedToggled!.call(widget.node, value);
+                          
                         }
                       ),
                       PopupMenuButton<WordListNodePopupMenuButtonItems>(

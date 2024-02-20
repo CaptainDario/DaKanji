@@ -33,7 +33,7 @@ class WordLists extends StatefulWidget {
   final WordListsSQLDatabase wordLists;
   /// should the default word lists be included
   final bool showDefaults;
-  /// Callback when that is triggered when the user presses the ok button
+  /// Callback that is triggered when the user presses the ok button
   /// after selecting word lists / folders. Provides a list with all selected
   /// nodes
   final void Function(List<TreeNode<WordListsData>>)? onSelectionConfirmed;
@@ -81,6 +81,9 @@ class _WordListsState extends State<WordLists> {
   FocusNode searchInputFocusNode = FocusNode();
   /// The [TextEditingController] to handle the search inputs
   TextEditingController searchTextEditingController = TextEditingController();
+
+  /// the current check state of the word list entries
+  List<bool> checkedEntries = [];
 
   /// List of bools that indicate which nodes are currently not being shown
   /// When switching a false to a true the correseponding entry will be animated
@@ -146,9 +149,11 @@ class _WordListsState extends State<WordLists> {
       stream: widget.wordLists.watchAllWordlists(),
       builder: (context, snapshot) {
         
+        // if no data from SQLite was read
         if(snapshot.data == null) {
           return const SizedBox();
         }
+        // new data from SQLite has been read
         if(snapshot.connectionState == ConnectionState.active &&
           !draggingWordListNode){
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
@@ -157,6 +162,17 @@ class _WordListsState extends State<WordLists> {
             .where((e) => e.value.name.contains(searchTextEditingController.text))
             .toList();
           animateListTilesIn();
+        }
+        // if there are checkboxes shown
+        if(widget.onSelectionConfirmed != null){
+          // the amount of checked entries changed -> set all to false
+          if(childrenDFS.length != checkedEntries.length){
+            checkedEntries = List.filled(childrenDFS.length, false);
+          }
+          // update the state of the tree matching the current selection
+          for (var i = 0; i < childrenDFS.length; i++) {
+            childrenDFS[i].value.isChecked = checkedEntries[i];
+          }
         }
 
         return LayoutBuilder(
@@ -343,7 +359,13 @@ class _WordListsState extends State<WordLists> {
                                             },
                                             onSelectedToggled: widget.onSelectionConfirmed == null
                                               ? null
-                                              : (node) {},
+                                              : (node, state) {
+                                                setState(() {
+                                                  for (var n in [...node.dfs(), node]) {
+                                                    checkedEntries[childrenDFS.indexOf(n)] = state;
+                                                  }
+                                                });
+                                            },
                                             key: Key('$i'),
                                             editTextOnCreate: childrenDFS[i].id == addedNewNode?.id ? true : false,
                                           ),
@@ -433,16 +455,7 @@ class _WordListsState extends State<WordLists> {
                                   ),
                                 ),
                               ),
-                              onPressed: (){
-                                // TODO remap
-                                /*
-                                List<TreeNode<WordListsData>> selection =
-                                  widget.parent!.dfs().where(
-                                    (node) => node.value.isChecked
-                                  ).toList();
-                                widget.onSelectionConfirmed!(selection);
-                                */
-                              },
+                              onPressed: onSelectionConfirmPressed,
                               child: Text(
                                 LocaleKeys.WordListsScreen_ok.tr()
                               )
@@ -513,6 +526,16 @@ class _WordListsState extends State<WordLists> {
         );
       }
     );
+  }
+
+  /// When the confirm selection button was pressed
+  void onSelectionConfirmPressed(){
+
+    List<TreeNode<WordListsData>> selection = currentRoot.dfs().where(
+      (node) => node.value.isChecked).toList();
+
+    widget.onSelectionConfirmed!(selection);
+
   }
 
   /// Callback that is attached to `searchTextEditingController`
