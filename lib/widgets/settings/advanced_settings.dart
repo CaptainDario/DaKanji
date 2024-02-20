@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
@@ -139,7 +140,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_word_lists.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            g_DakanjiPathManager.wordListsSqlFile.deleteSync();
+            await GetIt.I<WordListsSQLDatabase>().deleteEverything();
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },

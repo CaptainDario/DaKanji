@@ -227,6 +227,15 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
+  /// Deletes every entry in this database
+  Future<void> deleteEverything() {
+    return transaction(() async {
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+    });
+  }
+
   @override
   int get schemaVersion => 1;
 
