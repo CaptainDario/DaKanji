@@ -32,9 +32,18 @@ class SearchHistorySQLDatabase extends _$SearchHistorySQLDatabase {
   ) : super(openSqlite(databaseFile));
 
  
-
   @override
   int get schemaVersion => 1;
+
+
+  /// Deletes every entry in this database
+  Future<void> deleteEverything() {
+    return transaction(() async {
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+    });
+  }
 
 }
 

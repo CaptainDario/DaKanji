@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -130,7 +131,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
+            await GetIt.I<SearchHistorySQLDatabase>().deleteEverything();
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },
