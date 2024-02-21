@@ -49,12 +49,14 @@ class WordListsTree {
   }
   
   /// Parses a [WordListsSQLData] into a [TreeNode<WordListsData>] and returns
-  /// it
+  /// it.
+  /// 
+  /// Caution: This does NOT load the dict entries of a word list node
   static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListsSQLData data){
 
     return TreeNode(
       WordListsData(
-        data.name, data.type, data.dictIDs, data.isExpanded
+        data.name, data.type, [], data.isExpanded
       ),
       id: data.id,
     );
