@@ -3,12 +3,12 @@
 part of 'word_lists_sql.dart';
 
 // ignore_for_file: type=lint
-class $WordListsSQLTable extends WordListsSQL
-    with TableInfo<$WordListsSQLTable, WordListsSQLData> {
+class $WordListNodesSQLTable extends WordListNodesSQL
+    with TableInfo<$WordListNodesSQLTable, WordListNodesSQLData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WordListsSQLTable(this.attachedDatabase, [this._alias]);
+  $WordListNodesSQLTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -29,13 +29,15 @@ class $WordListsSQLTable extends WordListsSQL
   late final GeneratedColumnWithTypeConverter<List<int>, String> childrenIDs =
       GeneratedColumn<String>('children_i_ds', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<List<int>>($WordListsSQLTable.$converterchildrenIDs);
+          .withConverter<List<int>>(
+              $WordListNodesSQLTable.$converterchildrenIDs);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumnWithTypeConverter<WordListNodeType, int> type =
       GeneratedColumn<int>('type', aliasedName, false,
               type: DriftSqlType.int, requiredDuringInsert: true)
-          .withConverter<WordListNodeType>($WordListsSQLTable.$convertertype);
+          .withConverter<WordListNodeType>(
+              $WordListNodesSQLTable.$convertertype);
   static const VerificationMeta _isExpandedMeta =
       const VerificationMeta('isExpanded');
   @override
@@ -53,9 +55,10 @@ class $WordListsSQLTable extends WordListsSQL
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'word_lists_s_q_l';
+  static const String $name = 'word_list_nodes_s_q_l';
   @override
-  VerificationContext validateIntegrity(Insertable<WordListsSQLData> instance,
+  VerificationContext validateIntegrity(
+      Insertable<WordListNodesSQLData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -82,17 +85,17 @@ class $WordListsSQLTable extends WordListsSQL
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  WordListsSQLData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  WordListNodesSQLData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WordListsSQLData(
+    return WordListNodesSQLData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      childrenIDs: $WordListsSQLTable.$converterchildrenIDs.fromSql(
+      childrenIDs: $WordListNodesSQLTable.$converterchildrenIDs.fromSql(
           attachedDatabase.typeMapping.read(
               DriftSqlType.string, data['${effectivePrefix}children_i_ds'])!),
-      type: $WordListsSQLTable.$convertertype.fromSql(attachedDatabase
+      type: $WordListNodesSQLTable.$convertertype.fromSql(attachedDatabase
           .typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}type'])!),
       isExpanded: attachedDatabase.typeMapping
@@ -101,8 +104,8 @@ class $WordListsSQLTable extends WordListsSQL
   }
 
   @override
-  $WordListsSQLTable createAlias(String alias) {
-    return $WordListsSQLTable(attachedDatabase, alias);
+  $WordListNodesSQLTable createAlias(String alias) {
+    return $WordListNodesSQLTable(attachedDatabase, alias);
   }
 
   static TypeConverter<List<int>, String> $converterchildrenIDs =
@@ -111,8 +114,8 @@ class $WordListsSQLTable extends WordListsSQL
       const EnumIndexConverter<WordListNodeType>(WordListNodeType.values);
 }
 
-class WordListsSQLData extends DataClass
-    implements Insertable<WordListsSQLData> {
+class WordListNodesSQLData extends DataClass
+    implements Insertable<WordListNodesSQLData> {
   /// Id of this row
   final int id;
 
@@ -127,7 +130,7 @@ class WordListsSQLData extends DataClass
 
   /// Is this entry currently expanded
   final bool isExpanded;
-  const WordListsSQLData(
+  const WordListNodesSQLData(
       {required this.id,
       required this.name,
       required this.childrenIDs,
@@ -139,19 +142,19 @@ class WordListsSQLData extends DataClass
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     {
-      final converter = $WordListsSQLTable.$converterchildrenIDs;
+      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
       map['children_i_ds'] = Variable<String>(converter.toSql(childrenIDs));
     }
     {
-      final converter = $WordListsSQLTable.$convertertype;
+      final converter = $WordListNodesSQLTable.$convertertype;
       map['type'] = Variable<int>(converter.toSql(type));
     }
     map['is_expanded'] = Variable<bool>(isExpanded);
     return map;
   }
 
-  WordListsSQLCompanion toCompanion(bool nullToAbsent) {
-    return WordListsSQLCompanion(
+  WordListNodesSQLCompanion toCompanion(bool nullToAbsent) {
+    return WordListNodesSQLCompanion(
       id: Value(id),
       name: Value(name),
       childrenIDs: Value(childrenIDs),
@@ -160,14 +163,14 @@ class WordListsSQLData extends DataClass
     );
   }
 
-  factory WordListsSQLData.fromJson(Map<String, dynamic> json,
+  factory WordListNodesSQLData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WordListsSQLData(
+    return WordListNodesSQLData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       childrenIDs: serializer.fromJson<List<int>>(json['childrenIDs']),
-      type: $WordListsSQLTable.$convertertype
+      type: $WordListNodesSQLTable.$convertertype
           .fromJson(serializer.fromJson<int>(json['type'])),
       isExpanded: serializer.fromJson<bool>(json['isExpanded']),
     );
@@ -180,18 +183,18 @@ class WordListsSQLData extends DataClass
       'name': serializer.toJson<String>(name),
       'childrenIDs': serializer.toJson<List<int>>(childrenIDs),
       'type': serializer
-          .toJson<int>($WordListsSQLTable.$convertertype.toJson(type)),
+          .toJson<int>($WordListNodesSQLTable.$convertertype.toJson(type)),
       'isExpanded': serializer.toJson<bool>(isExpanded),
     };
   }
 
-  WordListsSQLData copyWith(
+  WordListNodesSQLData copyWith(
           {int? id,
           String? name,
           List<int>? childrenIDs,
           WordListNodeType? type,
           bool? isExpanded}) =>
-      WordListsSQLData(
+      WordListNodesSQLData(
         id: id ?? this.id,
         name: name ?? this.name,
         childrenIDs: childrenIDs ?? this.childrenIDs,
@@ -200,7 +203,7 @@ class WordListsSQLData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('WordListsSQLData(')
+    return (StringBuffer('WordListNodesSQLData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('childrenIDs: $childrenIDs, ')
@@ -215,7 +218,7 @@ class WordListsSQLData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WordListsSQLData &&
+      (other is WordListNodesSQLData &&
           other.id == this.id &&
           other.name == this.name &&
           other.childrenIDs == this.childrenIDs &&
@@ -223,20 +226,20 @@ class WordListsSQLData extends DataClass
           other.isExpanded == this.isExpanded);
 }
 
-class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
+class WordListNodesSQLCompanion extends UpdateCompanion<WordListNodesSQLData> {
   final Value<int> id;
   final Value<String> name;
   final Value<List<int>> childrenIDs;
   final Value<WordListNodeType> type;
   final Value<bool> isExpanded;
-  const WordListsSQLCompanion({
+  const WordListNodesSQLCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.childrenIDs = const Value.absent(),
     this.type = const Value.absent(),
     this.isExpanded = const Value.absent(),
   });
-  WordListsSQLCompanion.insert({
+  WordListNodesSQLCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required List<int> childrenIDs,
@@ -245,7 +248,7 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   })  : name = Value(name),
         childrenIDs = Value(childrenIDs),
         type = Value(type);
-  static Insertable<WordListsSQLData> custom({
+  static Insertable<WordListNodesSQLData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? childrenIDs,
@@ -261,13 +264,13 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
     });
   }
 
-  WordListsSQLCompanion copyWith(
+  WordListNodesSQLCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
       Value<List<int>>? childrenIDs,
       Value<WordListNodeType>? type,
       Value<bool>? isExpanded}) {
-    return WordListsSQLCompanion(
+    return WordListNodesSQLCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       childrenIDs: childrenIDs ?? this.childrenIDs,
@@ -286,13 +289,13 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
       map['name'] = Variable<String>(name.value);
     }
     if (childrenIDs.present) {
-      final converter = $WordListsSQLTable.$converterchildrenIDs;
+      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
 
       map['children_i_ds'] =
           Variable<String>(converter.toSql(childrenIDs.value));
     }
     if (type.present) {
-      final converter = $WordListsSQLTable.$convertertype;
+      final converter = $WordListNodesSQLTable.$convertertype;
 
       map['type'] = Variable<int>(converter.toSql(type.value));
     }
@@ -304,7 +307,7 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
 
   @override
   String toString() {
-    return (StringBuffer('WordListsSQLCompanion(')
+    return (StringBuffer('WordListNodesSQLCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('childrenIDs: $childrenIDs, ')
@@ -315,12 +318,12 @@ class WordListsSQLCompanion extends UpdateCompanion<WordListsSQLData> {
   }
 }
 
-class $WordListsNodeSQLTable extends WordListsNodeSQL
-    with TableInfo<$WordListsNodeSQLTable, WordListsNodeSQLData> {
+class $WordListEntriesSQLTable extends WordListEntriesSQL
+    with TableInfo<$WordListEntriesSQLTable, WordListEntriesSQLData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WordListsNodeSQLTable(this.attachedDatabase, [this._alias]);
+  $WordListEntriesSQLTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -348,10 +351,10 @@ class $WordListsNodeSQLTable extends WordListsNodeSQL
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'word_lists_node_s_q_l';
+  static const String $name = 'word_list_entries_s_q_l';
   @override
   VerificationContext validateIntegrity(
-      Insertable<WordListsNodeSQLData> instance,
+      Insertable<WordListEntriesSQLData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -380,9 +383,9 @@ class $WordListsNodeSQLTable extends WordListsNodeSQL
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  WordListsNodeSQLData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  WordListEntriesSQLData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WordListsNodeSQLData(
+    return WordListEntriesSQLData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       wordListID: attachedDatabase.typeMapping
@@ -393,22 +396,22 @@ class $WordListsNodeSQLTable extends WordListsNodeSQL
   }
 
   @override
-  $WordListsNodeSQLTable createAlias(String alias) {
-    return $WordListsNodeSQLTable(attachedDatabase, alias);
+  $WordListEntriesSQLTable createAlias(String alias) {
+    return $WordListEntriesSQLTable(attachedDatabase, alias);
   }
 }
 
-class WordListsNodeSQLData extends DataClass
-    implements Insertable<WordListsNodeSQLData> {
+class WordListEntriesSQLData extends DataClass
+    implements Insertable<WordListEntriesSQLData> {
   /// Id of this row
   final int id;
 
-  /// The id of the entry in the corresponding [WordListsSQL]
+  /// The id of the entry in the corresponding [WordListNodesSQL]
   final int wordListID;
 
   /// The id of this entry in the dictionary
   final int dictEntryID;
-  const WordListsNodeSQLData(
+  const WordListEntriesSQLData(
       {required this.id, required this.wordListID, required this.dictEntryID});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -419,18 +422,18 @@ class WordListsNodeSQLData extends DataClass
     return map;
   }
 
-  WordListsNodeSQLCompanion toCompanion(bool nullToAbsent) {
-    return WordListsNodeSQLCompanion(
+  WordListEntriesSQLCompanion toCompanion(bool nullToAbsent) {
+    return WordListEntriesSQLCompanion(
       id: Value(id),
       wordListID: Value(wordListID),
       dictEntryID: Value(dictEntryID),
     );
   }
 
-  factory WordListsNodeSQLData.fromJson(Map<String, dynamic> json,
+  factory WordListEntriesSQLData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WordListsNodeSQLData(
+    return WordListEntriesSQLData(
       id: serializer.fromJson<int>(json['id']),
       wordListID: serializer.fromJson<int>(json['wordListID']),
       dictEntryID: serializer.fromJson<int>(json['dictEntryID']),
@@ -446,15 +449,16 @@ class WordListsNodeSQLData extends DataClass
     };
   }
 
-  WordListsNodeSQLData copyWith({int? id, int? wordListID, int? dictEntryID}) =>
-      WordListsNodeSQLData(
+  WordListEntriesSQLData copyWith(
+          {int? id, int? wordListID, int? dictEntryID}) =>
+      WordListEntriesSQLData(
         id: id ?? this.id,
         wordListID: wordListID ?? this.wordListID,
         dictEntryID: dictEntryID ?? this.dictEntryID,
       );
   @override
   String toString() {
-    return (StringBuffer('WordListsNodeSQLData(')
+    return (StringBuffer('WordListEntriesSQLData(')
           ..write('id: $id, ')
           ..write('wordListID: $wordListID, ')
           ..write('dictEntryID: $dictEntryID')
@@ -467,28 +471,29 @@ class WordListsNodeSQLData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WordListsNodeSQLData &&
+      (other is WordListEntriesSQLData &&
           other.id == this.id &&
           other.wordListID == this.wordListID &&
           other.dictEntryID == this.dictEntryID);
 }
 
-class WordListsNodeSQLCompanion extends UpdateCompanion<WordListsNodeSQLData> {
+class WordListEntriesSQLCompanion
+    extends UpdateCompanion<WordListEntriesSQLData> {
   final Value<int> id;
   final Value<int> wordListID;
   final Value<int> dictEntryID;
-  const WordListsNodeSQLCompanion({
+  const WordListEntriesSQLCompanion({
     this.id = const Value.absent(),
     this.wordListID = const Value.absent(),
     this.dictEntryID = const Value.absent(),
   });
-  WordListsNodeSQLCompanion.insert({
+  WordListEntriesSQLCompanion.insert({
     this.id = const Value.absent(),
     required int wordListID,
     required int dictEntryID,
   })  : wordListID = Value(wordListID),
         dictEntryID = Value(dictEntryID);
-  static Insertable<WordListsNodeSQLData> custom({
+  static Insertable<WordListEntriesSQLData> custom({
     Expression<int>? id,
     Expression<int>? wordListID,
     Expression<int>? dictEntryID,
@@ -500,9 +505,9 @@ class WordListsNodeSQLCompanion extends UpdateCompanion<WordListsNodeSQLData> {
     });
   }
 
-  WordListsNodeSQLCompanion copyWith(
+  WordListEntriesSQLCompanion copyWith(
       {Value<int>? id, Value<int>? wordListID, Value<int>? dictEntryID}) {
-    return WordListsNodeSQLCompanion(
+    return WordListEntriesSQLCompanion(
       id: id ?? this.id,
       wordListID: wordListID ?? this.wordListID,
       dictEntryID: dictEntryID ?? this.dictEntryID,
@@ -526,7 +531,7 @@ class WordListsNodeSQLCompanion extends UpdateCompanion<WordListsNodeSQLData> {
 
   @override
   String toString() {
-    return (StringBuffer('WordListsNodeSQLCompanion(')
+    return (StringBuffer('WordListEntriesSQLCompanion(')
           ..write('id: $id, ')
           ..write('wordListID: $wordListID, ')
           ..write('dictEntryID: $dictEntryID')
@@ -537,13 +542,14 @@ class WordListsNodeSQLCompanion extends UpdateCompanion<WordListsNodeSQLData> {
 
 abstract class _$WordListsSQLDatabase extends GeneratedDatabase {
   _$WordListsSQLDatabase(QueryExecutor e) : super(e);
-  late final $WordListsSQLTable wordListsSQL = $WordListsSQLTable(this);
-  late final $WordListsNodeSQLTable wordListsNodeSQL =
-      $WordListsNodeSQLTable(this);
+  late final $WordListNodesSQLTable wordListNodesSQL =
+      $WordListNodesSQLTable(this);
+  late final $WordListEntriesSQLTable wordListEntriesSQL =
+      $WordListEntriesSQLTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [wordListsSQL, wordListsNodeSQL];
+      [wordListNodesSQL, wordListEntriesSQL];
 }

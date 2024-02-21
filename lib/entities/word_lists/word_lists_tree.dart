@@ -18,7 +18,7 @@ class WordListsTree {
   WordListsTree();
 
   /// Constructs a wordlist tree from a SQL WordList database
-  WordListsTree.fromWordListsSQL(List<WordListsSQLData> sqlList){
+  WordListsTree.fromWordListsSQL(List<WordListNodesSQLData> sqlList){
 
     // assure that the root is in the DB and set it
     if(sqlList.isEmpty){
@@ -52,7 +52,7 @@ class WordListsTree {
   /// it.
   /// 
   /// Caution: This does NOT load the dict entries of a word list node
-  static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListsSQLData data){
+  static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListNodesSQLData data){
 
     return TreeNode(
       WordListsData(

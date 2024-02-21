@@ -146,7 +146,7 @@ class _WordListsState extends State<WordLists> {
   @override
   Widget build(BuildContext context) {
 
-    return StreamBuilder<List<WordListsSQLData>>(
+    return StreamBuilder<List<WordListNodesSQLData>>(
       stream: widget.wordLists.watchAllWordlists(),
       builder: (context, snapshot) {
         
@@ -332,7 +332,12 @@ class _WordListsState extends State<WordLists> {
                                                 Navigator.push(
                                                   context, 
                                                   MaterialPageRoute(builder: (context) => 
-                                                    WordListScreen(node)
+                                                    WordListScreen(
+                                                      node,
+                                                      onDelete: (JMdict entry) {
+                                                        //widget.wordLists.deleteEntry
+                                                      }
+                                                    )
                                                   ),
                                                 );
                                               }

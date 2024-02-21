@@ -22,11 +22,14 @@ class WordListScreen extends StatefulWidget {
 
   /// the node of this word list
   final TreeNode<WordListsData> node;
+  /// callback that is triggered when the user deletes a node
+  final Function(JMdict entry)? onDelete;
 
 
   const WordListScreen(
     this.node,
     {
+      required this.onDelete,
       super.key
     }
   );
@@ -109,6 +112,8 @@ class _WordListScreenState extends State<WordListScreen> {
               setState(() {
                 widget.node.value.wordIds.remove(entry.id);
               });
+
+              widget.onDelete?.call(entry);
             },
           onSearchResultPressed: (entry){
             Navigator.of(context).pushNamed(
