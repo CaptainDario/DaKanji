@@ -29,7 +29,7 @@ AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget
         showDefaults: false,
         onSelectionConfirmed: (selection) {
           
-          // get all nodes that should be updated
+          // get all nodes to which the selected entry should be added
           List<TreeNode<WordListsData>> nodesToAddTo = selection.where(
             (sel) =>
               // assure this node is a word list
@@ -38,10 +38,10 @@ AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget
               !sel.value.wordIds.contains(widget.entry!.id)
           ).toList();
 
-          // update the tree
-          for (var node in nodesToAddTo) {
-            node.value.wordIds.add(widget.entry!.id); 
-          }
+          // update the lists
+          GetIt.I<WordListsSQLDatabase>().addWordsToLists(
+            nodesToAddTo.map((e) => e.id).toList(),
+            [widget.entry!.id]);
 
           // save to disk
           GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
