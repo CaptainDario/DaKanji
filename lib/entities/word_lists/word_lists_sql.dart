@@ -297,11 +297,11 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// ID
   Future deleteEntriesFromWordList(List<int> entriesIDs, int wordListID) async {
 
-    await batch((batch) {
-
-      //await (batch.deleteAll(wordListEntriesSQL)
-      //  .where)
-
+    await wordListEntriesSQL.deleteWhere((tbl) {
+      return Expression.and([
+        tbl.wordListID.equals(wordListID),
+        tbl.dictEntryID.isIn(entriesIDs)
+      ]);
     });
 
   }

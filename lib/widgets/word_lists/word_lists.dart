@@ -335,7 +335,8 @@ class _WordListsState extends State<WordLists> {
                                                     WordListScreen(
                                                       node,
                                                       onDelete: (JMdict entry) {
-                                                        //widget.wordLists.deleteEntry
+                                                        widget.wordLists.deleteEntriesFromWordList(
+                                                          [entry.id], node.id);
                                                       }
                                                     )
                                                   ),

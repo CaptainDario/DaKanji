@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -43,7 +44,7 @@ class _WordListScreenState extends State<WordListScreen> {
   /// is this a default list
   bool isDefault = false;
   /// all entries of this list
-  late List<JMdict?> entries;
+  late List<JMdict> entries;
 
 
   @override
@@ -64,7 +65,7 @@ class _WordListScreenState extends State<WordListScreen> {
         .findAllSync().toSet().toList();  
       entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
         searchHistoryIds
-      );
+      ).whereNotNull().toList();
     }
     else if(widget.node.value.name.contains('jlpt') &&
       wordListDefaultTypes.contains(widget.node.value.type)){
@@ -75,13 +76,13 @@ class _WordListScreenState extends State<WordListScreen> {
         .findAllSync().toSet().toList();  
       entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
         jlptIds
-      );
+      ).whereNotNull().toList();
     }
     // user list
     else{
       entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-      widget.node.value.wordIds
-    );
+        widget.node.value.wordIds
+      ).whereNotNull().toList();
     }
 
     super.initState();
@@ -111,9 +112,9 @@ class _WordListScreenState extends State<WordListScreen> {
             : (direction, entry, listIndex) {
               setState(() {
                 widget.node.value.wordIds.remove(entry.id);
+                entries.removeWhere((e) => e.id == entry.id);
+                widget.onDelete?.call(entry);
               });
-
-              widget.onDelete?.call(entry);
             },
           onSearchResultPressed: (entry){
             Navigator.of(context).pushNamed(
