@@ -15,8 +15,10 @@ class PathManager {
   late final Directory dakanjiDocumentsDirectory;
   /// The folder in the documents directory in which all dictionary files are stored
   late final Directory dictionaryDirectory;
-  /// The folder in the documents directory in which all wordlist files are stored
+  /// The sqlite file in the documents directory in which all wordlists are stored
   late final File wordListsSqlFile;
+  /// The sqlite file in the documents directory in which the search history is stored
+  late final File searchHistorySqlFile;
   /// The folder in the documents directory that contains the stats sqlite DB
   late final Directory statsDirectory;
   /// The directory where the files of the DoJG are stored
@@ -38,6 +40,8 @@ class PathManager {
     dictionaryDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "assets", "dict"]));
 
     wordListsSqlFile = File(p.joinAll([dakanjiDocumentsDirectory.path, "wordlists.sqlite"]));
+
+    searchHistorySqlFile = File(p.joinAll([dakanjiDocumentsDirectory.path, "searchhistory.sqlite"]));
 
     audiosDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "audios"]));
 

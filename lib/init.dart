@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +42,6 @@ import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
@@ -148,10 +148,6 @@ Future<void> initDocumentsServices(BuildContext context) async {
         [ExampleSentenceSchema], directory: isarPath,
         name: "examples", maxSizeMiB: 512
       ),
-      searchHistory: Isar.getInstance("searchHistory") ?? Isar.openSync(
-        [SearchHistorySchema], directory: isarPath,
-        name: "searchHistory", maxSizeMiB: 512
-      ),
       krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
         name: "krad", maxSizeMiB: 512
@@ -168,9 +164,15 @@ Future<void> initDocumentsServices(BuildContext context) async {
     )
   );
 
+  // word lists SQL
   final wordListsSQL = WordListsSQLDatabase(g_DakanjiPathManager.wordListsSqlFile);
   await wordListsSQL.init();
   GetIt.I.registerSingleton<WordListsSQLDatabase>(wordListsSQL);
+
+  // search history SQL
+  GetIt.I.registerSingleton<SearchHistorySQLDatabase>(
+    SearchHistorySQLDatabase(g_DakanjiPathManager.searchHistorySqlFile)
+  );
 
   GetIt.I.registerSingleton<DictionarySearch>(
     DictionarySearch(
