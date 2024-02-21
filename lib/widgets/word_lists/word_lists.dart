@@ -322,9 +322,12 @@ class _WordListsState extends State<WordLists> {
                                             onDragEnd: (){
                                               setState(() => draggingWordListNode = false);
                                             },
-                                            onTap: (TreeNode<WordListsData> node) {
+                                            onTap: (TreeNode<WordListsData> node) async {
                                               // if the node is a word list, navigate to the word list screen
                                               if(wordListListypes.contains(node.value.type)){
+                                                node.value.wordIds = await widget.wordLists.getIDsOfWordList(node.id);
+
+                                                // ignore:, use_build_context_synchronously 
                                                 Navigator.push(
                                                   context, 
                                                   MaterialPageRoute(builder: (context) => 
@@ -352,7 +355,7 @@ class _WordListsState extends State<WordLists> {
                                               parent.removeChild(node);
                                               // TODO function to do this in one transaction
                                               widget.wordLists.updateNode(parent);
-                                              widget.wordLists.deleteEntryAndSubTree(node);
+                                              widget.wordLists.deleteNodeAndSubTree(node);
                                             },
                                             onFolderPressed: (node) {
                                               widget.wordLists.updateNode(node);
@@ -574,8 +577,8 @@ class _WordListsState extends State<WordLists> {
           // only animate the entry in if it is visible, otherwise just set it to true
           final path = childrenDFS[i].getPath();
           if(!path.sublist(0, path.length-1).any((e) => !e.value.isExpanded)){
-          await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
-          setState(() => animateListTileIn[i] = true);
+            await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
+            setState(() => animateListTileIn[i] = true);
           } else {
             setState(() => animateListTileIn[i] = true);
           }
