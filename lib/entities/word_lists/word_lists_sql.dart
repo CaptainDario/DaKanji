@@ -50,10 +50,15 @@ class WordListsNodeSQL extends Table {
 @DriftDatabase(tables: [WordListsSQL, WordListsNodeSQL])
 class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
+  @override
+  int get schemaVersion => 1;
+
   WordListsSQLDatabase(
     File databaseFile
   ) : super(openSqlite(databaseFile));
 
+
+  // --- START : GENERAL ----------
   /// Initializes this instance by checking if is empty and if so adding a 
   /// root node
   Future init () async {
@@ -68,6 +73,39 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
       await _addNode(root, true);
       await addDefaultsToRoot(root);
     }
+
+  }
+
+  /// Deletes every entry in this database
+  Future<void> deleteEverything() {
+    return transaction(() async {
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+    });
+  }
+  
+  // --- END : GENERAL
+
+
+  // --- START : WordListsSQL
+  /// Instantiates a [WordListsSQLCompanion] from a [TreeNode<WordListsData>]
+  WordListsSQLCompanion companionFromTreeNode(TreeNode<WordListsData> entry, bool useID){
+
+    return WordListsSQLCompanion(
+        id: useID ? Value(entry.id) : const Value.absent(),
+        name: Value(entry.value.name),
+        childrenIDs: Value(entry.children.map((e) => e.id).toList()),
+        type: Value(entry.value.type),
+        isExpanded: Value(entry.value.isExpanded),
+      );
+
+  }
+
+  /// A stream that emits whenever a value of this database changes
+  Stream<List<WordListsSQLData>> watchAllWordlists(){
+
+    return select(wordListsSQL).watch();
 
   }
 
@@ -122,27 +160,6 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
       // readd the defaults
       addDefaultsToRoot(tree.root);
     }
-
-  }
-
-  /// A stream that emits whenever a value of this database changes
-  Stream<List<WordListsSQLData>> watchAllWordlists(){
-
-    return select(wordListsSQL).watch();
-
-  }
-
-  /// Instantiates a [WordListsSQLCompanion] from a [TreeNode<WordListsData>]
-  WordListsSQLCompanion companionFromTreeNode(TreeNode<WordListsData> entry, bool useID){
-
-    return WordListsSQLCompanion(
-        id: useID ? Value(entry.id) : const Value.absent(),
-        name: Value(entry.value.name),
-        childrenIDs: Value(entry.children.map((e) => e.id).toList()),
-        type: Value(entry.value.type),
-        isExpanded: Value(entry.value.isExpanded),
-      );
-
   }
 
   /// Adds the given `node` to the database, if `useID == true` use the id of
@@ -195,39 +212,26 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         }
       });
     });
-
-  }
-
-  /// Deletes the given `entry` and the whole subtree
-  Future deleteEntryAndSubTree(TreeNode<WordListsData> entry) {
-
-    List<int> entries = entry.dfs().map((e) => e.id).toList();
-    entries.add(entry.id);
-
-    return (delete(wordListsSQL)
-      ..where((tbl) => tbl.id.isIn(entries)))
-      .go();
-
   }
 
   /// Updates the SQL using the given entry.
   /// The entry must exist in the database
   /// Returns the amount of rows that have been affected by this operation.
-  Future<int> updateNode(TreeNode<WordListsData> entry) {
+  Future<int> updateNode(TreeNode<WordListsData> node) {
 
-    final sqlEntry = companionFromTreeNode(entry, true);
+    final sqlEntry = companionFromTreeNode(node, true);
 
     return (update(wordListsSQL)
-      ..where((tbl) => tbl.id.equals(entry.id)))
+      ..where((tbl) => tbl.id.equals(node.id)))
       .write(sqlEntry);
 
   }
 
   /// Updates the SQL using the given entries.
-  Future<void> updateNodes(List<TreeNode<WordListsData>?> entries) async {
+  Future<void> updateNodes(List<TreeNode<WordListsData>?> nodes) async {
 
     await batch((batch) {
-      for (var node in entries.whereNotNull()){
+      for (var node in nodes.whereNotNull()){
         var sqlNode = companionFromTreeNode(node, true);
         batch.update(
           wordListsSQL, sqlNode,
@@ -238,17 +242,57 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  /// Deletes every entry in this database
-  Future<void> deleteEverything() {
-    return transaction(() async {
-      for (final table in allTables) {
-        await delete(table).go();
-      }
-    });
+  /// Deletes the given `entry` and the whole subtree
+  Future deleteNodeAndSubTree(TreeNode<WordListsData> node) {
+
+    List<int> entries = node.dfs().map((e) => e.id).toList();
+    entries.add(node.id);
+
+    return (delete(wordListsSQL)
+      ..where((tbl) => tbl.id.isIn(entries)))
+      .go();
+
+  }
+  // --- END : WordLists 
+
+
+  // --- START : WordListsNode
+  /// Returns a list of WordIDs that belong to the word list given by
+  /// `wordListID`
+  Future<List<int>> getIDsOfWordList(int wordListID) async {
+
+    return (await (select(wordListsNodeSQL)
+      ..where((tbl) => tbl.wordListID.equals(wordListID)))
+      .get())
+      .map((p0) => p0.dictEntryID).toList();
+
   }
 
-  @override
-  int get schemaVersion => 1;
+  /// Adds the words given by `wordIDs` to every word list given by `listIDs`
+  Future addWordsToLists(List<int> listIDs, List<int> wordIDs) async {
+
+    await transaction(() async {
+
+      // add to every list ...
+      for (int listID in listIDs ) {
+        await batch((batch) async {
+          // ... all IDs
+          await wordListsNodeSQL.insertAll(
+            [
+              for (int wordID in wordIDs)
+                WordListsNodeSQLCompanion(
+                  wordListID: Value(listID),
+                  dictEntryID: Value(wordID)
+                )
+            ]
+          );
+        });
+      }
+
+    });
+
+  }
+  // --- END : WordListsNode
 
 }
 
