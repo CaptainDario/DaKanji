@@ -259,7 +259,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   // --- START : WordListsNode
   /// Returns a list of WordIDs that belong to the word list given by
   /// `wordListID`
-  Future<List<int>> getIDsOfWordList(int wordListID) async {
+  Future<List<int>> getEntryIDsOfWordList(int wordListID) async {
 
     return (await (select(wordListsNodeSQL)
       ..where((tbl) => tbl.wordListID.equals(wordListID)))
@@ -269,7 +269,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   }
 
   /// Adds the words given by `wordIDs` to every word list given by `listIDs`
-  Future addWordsToLists(List<int> listIDs, List<int> wordIDs) async {
+  Future addEntriesToWordLists(List<int> listIDs, List<int> wordIDs) async {
 
     await transaction(() async {
 

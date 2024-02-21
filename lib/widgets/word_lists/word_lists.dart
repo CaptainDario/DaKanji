@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -325,7 +326,7 @@ class _WordListsState extends State<WordLists> {
                                             onTap: (TreeNode<WordListsData> node) async {
                                               // if the node is a word list, navigate to the word list screen
                                               if(wordListListypes.contains(node.value.type)){
-                                                node.value.wordIds = await widget.wordLists.getIDsOfWordList(node.id);
+                                                node.value.wordIds = await widget.wordLists.getEntryIDsOfWordList(node.id);
 
                                                 // ignore:, use_build_context_synchronously 
                                                 Navigator.push(

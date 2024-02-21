@@ -39,7 +39,7 @@ AwesomeDialog addToWordListDialog(BuildContext context, DictionaryWordTab widget
           ).toList();
 
           // update the lists
-          GetIt.I<WordListsSQLDatabase>().addWordsToLists(
+          GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
             nodesToAddTo.map((e) => e.id).toList(),
             [widget.entry!.id]);
 
