@@ -570,8 +570,16 @@ class _WordListsState extends State<WordLists> {
       Future.delayed(Duration(milliseconds: slideInAnimationDelay)).then((result) async {
         // ... and animate each tile staggered in
         for (int i = 0; i < childrenDFS.length; i++) {
+
+          // only animate the entry in if it is visible, otherwise just set it to true
+          final path = childrenDFS[i].getPath();
+          if(!path.sublist(0, path.length-1).any((e) => !e.value.isExpanded)){
           await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
           setState(() => animateListTileIn[i] = true);
+          } else {
+            setState(() => animateListTileIn[i] = true);
+          }
+          
         }
       });
     }
@@ -586,6 +594,7 @@ class _WordListsState extends State<WordLists> {
 
         // animate new entries staggered in
         for (var i = animateInOldLen; i < animateListTileIn.length; i++) {
+
           await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
           try {
             animateListTileIn[i] = true;
