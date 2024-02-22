@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:math';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -13,7 +10,9 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result_controller.dart';
 import 'search_result_card.dart';
 
-/// List that shows the search results of `DictSearch`
+
+
+/// List that shows the search results of [DictSearch]
 class SearchResultList extends StatefulWidget {
 
   /// The search results that should be shown in the list
@@ -22,6 +21,9 @@ class SearchResultList extends StatefulWidget {
   final bool reversed;
   /// If true the word frequency will be displayed
   final bool showWordFrequency;
+  /// Should the entries of this list always be animated in ie.: with every
+  /// change or only once when it is forst instantiated
+  final bool animateIn;
   /// Function that is called after the search results have been initialized
   /// provides
   /// * [DictSearchResultController] for controlling the search results
@@ -40,6 +42,7 @@ class SearchResultList extends StatefulWidget {
       required this.searchResults,
       this.reversed = false,
       this.showWordFrequency = false,
+      this.animateIn = true,
       this.init,
       this.onSearchResultPressed,
       this.onDismissed,
@@ -61,6 +64,8 @@ class _SearchResultListState extends State<SearchResultList> {
   /// [ItemPositionsListener] to check which search results are currently visible 
   ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 
+  Key slideInAnimationKey = Key(DateTime.now().toIso8601String());
+
 
   @override
   void initState() {
@@ -71,6 +76,9 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   void didUpdateWidget(covariant SearchResultList oldWidget) {
     init();
+    if(oldWidget.searchResults != widget.searchResults && widget.animateIn){
+      slideInAnimationKey = Key(DateTime.now().toIso8601String());
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -96,7 +104,7 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   Widget build(BuildContext context) {
     return AnimationLimiter(
-      key: Key(widget.searchResults.sublist(0, min(widget.searchResults.length, 10)).toString()),
+      key: slideInAnimationKey,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return ScrollablePositionedList.builder(
@@ -113,9 +121,9 @@ class _SearchResultListState extends State<SearchResultList> {
                   curve: Curves.decelerate,
                   horizontalOffset: constraints.maxWidth,
                   delay: const Duration(milliseconds: 100),
-                  key: Key("${widget.searchResults[i]}$i"),
+                  key: Key("${widget.searchResults[i].id}$i"),
                   child: Dismissible(
-                    key: ValueKey(widget.searchResults[i].id),
+                    key: ValueKey(widget.searchResults[i]),
                     direction: widget.onDismissed != null
                       ? DismissDirection.endToStart
                       : DismissDirection.none,
