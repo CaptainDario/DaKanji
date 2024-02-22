@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +13,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,6 @@ import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -90,11 +90,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   FocusNode searchTextFieldFocusNode = FocusNode();
   /// Controller for the search results
   late DictSearchResultController dictSearchResultController;
-  /// A list containing the ids of all searches the user made
-  /// matches the search history Isar collection
-  List<int> searchHistoryIds = [];
-  /// A list containing all searches the user made
-  late List<JMdict?> searchHistory;
   /// Timer to wait during resize event until popup will be opened again
   Timer? reopenPopupTimer;
   /// is the radical popup open
@@ -105,7 +100,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   bool reshowRadicalPopup = false;
   /// should the filter popup be openend when `reopenPopupTimer` finishes
   bool reshowFilterPopup = false;
-
+  /// The flusbar that shows that a word has been deconjugated
   Flushbar? deconjugationFlushbar;
 
   
@@ -125,7 +120,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       curve: Curves.easeIn
     ));
 
-    updateSearchHistoryIds();
     init();
     
   }
@@ -133,7 +127,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   @override
   void didUpdateWidget(covariant DictionarySearchWidget oldWidget) {
 
-    updateSearchHistoryIds();
     init();
 
     if(radicalPopupOpen || filterPopupOpen){
@@ -428,26 +421,36 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           },
                         )
                         // otherwise the search history
-                        : SearchResultList(
-                          searchResults: searchHistory,
-                          showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                          init:(controller) {
-                            dictSearchResultController = controller;
-                          },
-                          onSearchResultPressed: onSearchResultPressed,
-                          onDismissed: (direction, entry, idx) async {
-                            int id = searchHistoryIds.removeAt(
-                              (idx).toInt()
+                        : StreamBuilder<List<SearchHistorySQLData>>(
+                          stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
+                          builder: (context, snapshot) {
+
+                            if(snapshot.data == null) return const SizedBox();
+
+                            List<JMdict> searchHistory = [];
+                            List<int> sqlIDs = [];
+                            if(snapshot.hasData){
+                              final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
+                              searchHistory = GetIt.I<Isars>().dictionary.jmdict
+                                .getAllSync(ids)
+                                .whereNotNull().toList();
+
+                              sqlIDs = snapshot.data!.map((e) => e.id).toList();
+                            }
+
+                            return SearchResultList(
+                              searchResults: searchHistory,
+                              showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                              animateIn: false,
+                              init:(controller) {
+                                dictSearchResultController = controller;
+                              },
+                              onSearchResultPressed: onSearchResultPressed,
+                              onDismissed: (direction, entry, idx) => 
+                                GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
+                                  sqlIDs[idx]
+                                ),
                             );
-                            
-                            await GetIt.I<Isars>().searchHistory.writeTxn(() async {
-                              final success = await GetIt.I<Isars>().searchHistory.searchHistorys
-                                .delete(id);
-                              debugPrint('Deleted search history entry: $success');
-                            });
-                            setState(() {
-                              updateSearchHistoryIds();
-                            });
                           }
                         ),
                     ],
@@ -458,6 +461,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         ),
       ),
     );
+  }
+
+  /// Deletes an entry from the search history when the user swipes (deletes)
+  /// it
+  Future onDismissedHistoryEntry(DismissDirection direction, JMdict entry, int idx) async {
+
+    GetIt.I<SearchHistorySQLDatabase>().deleteEntry(entry.id);
+
   }
 
   /// opens the filter popup and applies the selected filters if necessary
@@ -510,36 +521,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     ).show();
   }
 
-  /// updates the search history
-  void updateSearchHistoryIds(){
-    searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearchedDesc()
-      .idProperty()
-      .findAllSync();
-    List<int> ids = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-      .sortByDateSearchedDesc()
-      .dictEntryIdProperty()
-      .findAllSync();
-    searchHistory = GetIt.I<Isars>().dictionary.jmdict
-      .getAllSync(ids)
-      .toList();
-  }
-
   /// callback that is executed when the user presses on a search result
   void onSearchResultPressed(JMdict entry) async {
     // update search variables
     context.read<DictSearch>().selectedResult = entry;
 
     // store new search in search history
-    var isar = GetIt.I<Isars>().searchHistory;
-    await isar.writeTxn(() async {
-      await isar.searchHistorys.put(SearchHistory()
-        ..dateSearched = DateTime.now().toUtc()
-        ..dictEntryId  = entry.id
-        ..schema       = DatabaseType.JMDict
-      );
-    });
-    searchHistory.add(entry);
+    GetIt.I<SearchHistorySQLDatabase>().addEntry(entry);
 
     // collapse the search bar
     if(widget.canCollapse){

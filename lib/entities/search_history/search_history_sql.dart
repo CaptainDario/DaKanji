@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -35,6 +36,50 @@ class SearchHistorySQLDatabase extends _$SearchHistorySQLDatabase {
   @override
   int get schemaVersion => 1;
 
+
+  /// Adds a [JMdict] `entry` to the search history database
+  Future<int> addEntry(JMdict entry) async {
+
+    return await (into(searchHistorySQL)
+      .insert(
+        SearchHistorySQLCompanion(
+          dateSearched: Value(DateTime.now().toUtc()),
+          dictEntryID: Value(entry.id),
+        )
+      ));
+  }
+
+  /// Returns all dictionary IDs in the search history sorted by date
+  Future<List<int>> getAllSearchHistoryIDs() async {
+
+    List<int> dictIDs = (await ((select(searchHistorySQL)
+      ..orderBy([
+        (row) => OrderingTerm.desc(row.dateSearched)
+      ])
+    ).get()))
+    .map((p0) => p0.dictEntryID).toList();
+
+    return dictIDs;
+  }
+
+    /// Watches all search history entries sorted by date
+  Stream<List<SearchHistorySQLData>> watchAllSearchHistoryIDs() {
+
+    Stream<List<SearchHistorySQLData>> dictIDs = ((select(searchHistorySQL)
+      ..orderBy([
+        (row) => OrderingTerm.desc(row.dateSearched)
+      ])
+    ).watch());
+
+    return dictIDs;
+  }
+
+  /// Deletes an entry given by its ID
+  Future deleteEntry(int id) async {
+
+    await searchHistorySQL.deleteWhere((tbl) => tbl.id.equals(id));
+
+  }
 
   /// Deletes every entry in this database
   Future<void> deleteEverything() {

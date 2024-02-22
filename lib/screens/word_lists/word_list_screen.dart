@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,7 +12,6 @@ import 'package:isar/isar.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
@@ -44,7 +44,7 @@ class _WordListScreenState extends State<WordListScreen> {
   /// is this a default list
   bool isDefault = false;
   /// all entries of this list
-  late List<JMdict> entries;
+  List<JMdict> entries = [];
 
 
   @override
@@ -58,15 +58,14 @@ class _WordListScreenState extends State<WordListScreen> {
     if(widget.node.value.name == DefaultNames.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
 
-      List<int> searchHistoryIds = GetIt.I<Isars>().searchHistory.searchHistorys.where()
-        .anyId()
-        .sortByDateSearchedDesc()
-        .dictEntryIdProperty()
-        .findAllSync().toSet().toList();  
-      entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-        searchHistoryIds
-      ).whereNotNull().toList();
+      GetIt.I<SearchHistorySQLDatabase>().getAllSearchHistoryIDs().then((value) {
+        setState(() {
+          entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(value)
+            .whereNotNull().toList();
+        });
+      });
     }
+    // default list
     else if(widget.node.value.name.contains('jlpt') &&
       wordListDefaultTypes.contains(widget.node.value.type)){
       List<int> jlptIds = GetIt.I<Isars>().dictionary.jmdict.filter()
