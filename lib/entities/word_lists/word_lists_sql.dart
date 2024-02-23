@@ -268,6 +268,15 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
+  /// A stream that emits whenever a value of the given word list changes
+  Stream<List<WordListEntriesSQLData>> watchWordlistEntries(int wordListID){
+
+    return (select(wordListEntriesSQL)
+      ..where((tbl) => tbl.wordListID.equals(wordListID),))
+      .watch();
+
+  }
+
   /// Adds the words given by `wordIDs` to every word list given by `listIDs`
   Future addEntriesToWordLists(List<int> listIDs, List<int> wordIDs) async {
 

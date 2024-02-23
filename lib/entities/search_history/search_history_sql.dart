@@ -62,7 +62,7 @@ class SearchHistorySQLDatabase extends _$SearchHistorySQLDatabase {
     return dictIDs;
   }
 
-    /// Watches all search history entries sorted by date
+  /// Watches all search history entries sorted by date
   Stream<List<SearchHistorySQLData>> watchAllSearchHistoryIDs() {
 
     Stream<List<SearchHistorySQLData>> dictIDs = ((select(searchHistorySQL)
@@ -70,6 +70,20 @@ class SearchHistorySQLDatabase extends _$SearchHistorySQLDatabase {
         (row) => OrderingTerm.desc(row.dateSearched)
       ])
     ).watch());
+
+    return dictIDs;
+  }
+
+  /// Watches all *unique* search history entries sorted by date
+  Stream<List<int?>> watchAllUniqueSearchHistoryIDs() {
+
+    Stream<List<int?>> dictIDs = ((selectOnly(searchHistorySQL, distinct: true)
+      ..addColumns([searchHistorySQL.dictEntryID])
+      ..orderBy([
+        OrderingTerm.desc(searchHistorySQL.dateSearched)
+      ])
+    ).map((p0) => p0.read(searchHistorySQL.dictEntryID))
+    .watch());
 
     return dictIDs;
   }

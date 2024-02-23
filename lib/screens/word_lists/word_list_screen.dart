@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -44,7 +47,7 @@ class _WordListScreenState extends State<WordListScreen> {
   /// is this a default list
   bool isDefault = false;
   /// all entries of this list
-  List<JMdict> entries = [];
+  late Stream<Iterable<JMdict>> entriesStream;
 
 
   @override
@@ -58,30 +61,42 @@ class _WordListScreenState extends State<WordListScreen> {
     if(widget.node.value.name == DefaultNames.searchHistory.name &&
       wordListDefaultTypes.contains(widget.node.value.type)){
 
-      GetIt.I<SearchHistorySQLDatabase>().getAllSearchHistoryIDs().then((value) {
-        setState(() {
-          entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(value)
-            .whereNotNull().toList();
-        });
-      });
+      entriesStream = GetIt.I<SearchHistorySQLDatabase>().watchAllUniqueSearchHistoryIDs()
+        .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
+          e.whereNotNull().toList()).whereNotNull()
+        );
     }
     // default list
     else if(widget.node.value.name.contains('jlpt') &&
       wordListDefaultTypes.contains(widget.node.value.type)){
-      List<int> jlptIds = GetIt.I<Isars>().dictionary.jmdict.filter()
+
+      Query<int> jlptIdsQuery = GetIt.I<Isars>().dictionary.jmdict.filter()
         .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
         .sortByFrequencyDesc()
         .idProperty()
-        .findAllSync().toSet().toList();  
-      entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-        jlptIds
-      ).whereNotNull().toList();
+        .build();
+      
+      entriesStream = jlptIdsQuery.watch(fireImmediately: true)
+        .map((event) => 
+          GetIt.I<Isars>().dictionary.jmdict.getAllSync(event)
+          .whereNotNull()
+        );
+
     }
     // user list
     else{
-      entries = GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-        widget.node.value.wordIds
-      ).whereNotNull().toList();
+
+      // listen to changes of this word list
+      entriesStream = GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(widget.node.id)
+        // on change
+        .map((e) {
+          // lookup all IDs in the ISAR DB
+          return GetIt.I<Isars>().dictionary.jmdict.where()
+            .anyOf(
+              e.map((w) => w.dictEntryID),
+              (q, element) => q.idEqualTo(element)
+            ).findAllSync();
+        });
     }
 
     super.initState();
@@ -100,31 +115,33 @@ class _WordListScreenState extends State<WordListScreen> {
           child: Text(widget.node.value.name)
         ),
       ),
-      body: entries.isEmpty
-        ? Center(
-          child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
-        )
-        : SearchResultList(
-          searchResults: entries,
-          onDismissed: isDefault 
-            ? null
-            : (direction, entry, listIndex) {
-              setState(() {
-                widget.node.value.wordIds.remove(entry.id);
-                entries.removeWhere((e) => e.id == entry.id);
-                widget.onDelete?.call(entry);
-              });
-            },
-          onSearchResultPressed: (entry){
-            Navigator.of(context).pushNamed(
-              '/dictionary',
-              arguments: NavigationArguments(
-                false,
-                dictInitialEntryId: entry.id
-              )
+      body: StreamBuilder<Iterable<JMdict>>(
+        stream: entriesStream,
+        builder: (context, snapshot) {
+
+          if(snapshot.data == null || !snapshot.hasData){
+            return Center(
+              child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
             );
-          },
-        )
+          }
+
+          return SearchResultList(
+            searchResults: snapshot.data!.whereNotNull().toList(),
+            onDismissed: isDefault 
+              ? null
+              : (direction, entry, listIndex) {
+                widget.onDelete?.call(entry);
+              },
+            onSearchResultPressed: (entry){
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => 
+                  WordListViewEntryScreen(entry)
+                )
+              );
+            },
+          );
+        }
+      )
     );
   }
 }

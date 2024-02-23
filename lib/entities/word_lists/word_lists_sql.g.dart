@@ -324,15 +324,6 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $WordListEntriesSQLTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _wordListIDMeta =
       const VerificationMeta('wordListID');
   @override
@@ -346,7 +337,7 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
       'dict_entry_i_d', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, wordListID, dictEntryID];
+  List<GeneratedColumn> get $columns => [wordListID, dictEntryID];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -358,9 +349,6 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
     if (data.containsKey('word_list_i_d')) {
       context.handle(
           _wordListIDMeta,
@@ -381,13 +369,11 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {wordListID, dictEntryID};
   @override
   WordListEntriesSQLData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return WordListEntriesSQLData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       wordListID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}word_list_i_d'])!,
       dictEntryID: attachedDatabase.typeMapping
@@ -403,20 +389,16 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
 
 class WordListEntriesSQLData extends DataClass
     implements Insertable<WordListEntriesSQLData> {
-  /// Id of this row
-  final int id;
-
   /// The id of the entry in the corresponding [WordListNodesSQL]
   final int wordListID;
 
   /// The id of this entry in the dictionary
   final int dictEntryID;
   const WordListEntriesSQLData(
-      {required this.id, required this.wordListID, required this.dictEntryID});
+      {required this.wordListID, required this.dictEntryID});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
     map['word_list_i_d'] = Variable<int>(wordListID);
     map['dict_entry_i_d'] = Variable<int>(dictEntryID);
     return map;
@@ -424,7 +406,6 @@ class WordListEntriesSQLData extends DataClass
 
   WordListEntriesSQLCompanion toCompanion(bool nullToAbsent) {
     return WordListEntriesSQLCompanion(
-      id: Value(id),
       wordListID: Value(wordListID),
       dictEntryID: Value(dictEntryID),
     );
@@ -434,7 +415,6 @@ class WordListEntriesSQLData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return WordListEntriesSQLData(
-      id: serializer.fromJson<int>(json['id']),
       wordListID: serializer.fromJson<int>(json['wordListID']),
       dictEntryID: serializer.fromJson<int>(json['dictEntryID']),
     );
@@ -443,23 +423,19 @@ class WordListEntriesSQLData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
       'wordListID': serializer.toJson<int>(wordListID),
       'dictEntryID': serializer.toJson<int>(dictEntryID),
     };
   }
 
-  WordListEntriesSQLData copyWith(
-          {int? id, int? wordListID, int? dictEntryID}) =>
+  WordListEntriesSQLData copyWith({int? wordListID, int? dictEntryID}) =>
       WordListEntriesSQLData(
-        id: id ?? this.id,
         wordListID: wordListID ?? this.wordListID,
         dictEntryID: dictEntryID ?? this.dictEntryID,
       );
   @override
   String toString() {
     return (StringBuffer('WordListEntriesSQLData(')
-          ..write('id: $id, ')
           ..write('wordListID: $wordListID, ')
           ..write('dictEntryID: $dictEntryID')
           ..write(')'))
@@ -467,64 +443,63 @@ class WordListEntriesSQLData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, wordListID, dictEntryID);
+  int get hashCode => Object.hash(wordListID, dictEntryID);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is WordListEntriesSQLData &&
-          other.id == this.id &&
           other.wordListID == this.wordListID &&
           other.dictEntryID == this.dictEntryID);
 }
 
 class WordListEntriesSQLCompanion
     extends UpdateCompanion<WordListEntriesSQLData> {
-  final Value<int> id;
   final Value<int> wordListID;
   final Value<int> dictEntryID;
+  final Value<int> rowid;
   const WordListEntriesSQLCompanion({
-    this.id = const Value.absent(),
     this.wordListID = const Value.absent(),
     this.dictEntryID = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   WordListEntriesSQLCompanion.insert({
-    this.id = const Value.absent(),
     required int wordListID,
     required int dictEntryID,
+    this.rowid = const Value.absent(),
   })  : wordListID = Value(wordListID),
         dictEntryID = Value(dictEntryID);
   static Insertable<WordListEntriesSQLData> custom({
-    Expression<int>? id,
     Expression<int>? wordListID,
     Expression<int>? dictEntryID,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
       if (wordListID != null) 'word_list_i_d': wordListID,
       if (dictEntryID != null) 'dict_entry_i_d': dictEntryID,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   WordListEntriesSQLCompanion copyWith(
-      {Value<int>? id, Value<int>? wordListID, Value<int>? dictEntryID}) {
+      {Value<int>? wordListID, Value<int>? dictEntryID, Value<int>? rowid}) {
     return WordListEntriesSQLCompanion(
-      id: id ?? this.id,
       wordListID: wordListID ?? this.wordListID,
       dictEntryID: dictEntryID ?? this.dictEntryID,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
     if (wordListID.present) {
       map['word_list_i_d'] = Variable<int>(wordListID.value);
     }
     if (dictEntryID.present) {
       map['dict_entry_i_d'] = Variable<int>(dictEntryID.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
@@ -532,9 +507,9 @@ class WordListEntriesSQLCompanion
   @override
   String toString() {
     return (StringBuffer('WordListEntriesSQLCompanion(')
-          ..write('id: $id, ')
           ..write('wordListID: $wordListID, ')
-          ..write('dictEntryID: $dictEntryID')
+          ..write('dictEntryID: $dictEntryID, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
