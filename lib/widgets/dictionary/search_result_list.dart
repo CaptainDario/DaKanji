@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/dictionary/dict_search_result_controller.dart';
 import 'search_result_card.dart';
 
 /// List that shows the search results of [DictSearch]
@@ -23,10 +21,8 @@ class SearchResultList extends StatefulWidget {
   /// change or only once when it is forst instantiated
   final bool animateIn;
   /// Function that is called after the search results have been initialized
-  /// provides
-  /// * [DictSearchResultController] for controlling the search results
-  /// as argument 
-  final void Function(DictSearchResultController controller)? init;
+  final void Function()? init;
+
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
@@ -54,19 +50,15 @@ class SearchResultList extends StatefulWidget {
 
 class _SearchResultListState extends State<SearchResultList> {
 
-  
-  /// [DictSearchResultController] to focus between the different search results
-  late DictSearchResultController dictSearchResultController;
-  /// [ItemScrollController] controller to scroll to items if they are not visible
-  ItemScrollController itemScrollController = ItemScrollController();
-  /// [ItemPositionsListener] to check which search results are currently visible 
-  ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
-
+  /// Key to either only slide in search results once, or multiple times
   Key slideInAnimationKey = Key(DateTime.now().toIso8601String());
 
+  late final List searchResultsFocusses;
 
   @override
   void initState() {
+    searchResultsFocusses =
+      List.generate(widget.searchResults.length, (index) => FocusNode());
     init();
     super.initState();
   }
@@ -81,16 +73,8 @@ class _SearchResultListState extends State<SearchResultList> {
   }
 
   void init(){
-
-    final searchResultsFocusses =
-      List.generate(widget.searchResults.length, (index) => FocusNode());
-    dictSearchResultController = DictSearchResultController(
-      searchResultsFocusses,
-      itemScrollController,
-      itemPositionsListener
-    );
-
-    widget.init?.call(dictSearchResultController);
+    
+    widget.init?.call();
   }
 
   @override
@@ -105,10 +89,8 @@ class _SearchResultListState extends State<SearchResultList> {
       key: slideInAnimationKey,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return ScrollablePositionedList.builder(
+          return ListView.builder(
             itemCount: widget.searchResults.length,
-            itemScrollController: itemScrollController,
-            itemPositionsListener: itemPositionsListener,
             itemBuilder: ((context, index) {
               // determine index based on 
               int i = widget.reversed ? widget.searchResults.length-index-1 : index;
@@ -139,9 +121,9 @@ class _SearchResultListState extends State<SearchResultList> {
                     },
                     child: SearchResultCard(
                       dictEntry: widget.searchResults[i],
+                      focusNode: searchResultsFocusses[i],
                       resultIndex: i,
                       showWordFrequency: widget.showWordFrequency,
-                      focusNode: dictSearchResultController.searchResultsFocusses[i],
                       onPressed: (selection) {
                         widget.onSearchResultPressed?.call(selection);
                       } 

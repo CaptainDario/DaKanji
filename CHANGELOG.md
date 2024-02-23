@@ -6,7 +6,7 @@
 New Features:
 
 - Dictionary
-  - Share images of word entries
+  - Share images of entry cards
   - Image search query customizable
   - Characters from drawing are now added at the cursor's position
 
@@ -14,7 +14,7 @@ New Features:
   - Add words to lists
   - Sort lists in folders
   - Search lists
-  - Lists for JLPT
+  - Lists for JLPT and search history
 
 Improvements:
 
@@ -27,12 +27,19 @@ Improvements:
 
 Fixed:
 
+- Dictionary
+  - MacOS
+    - When typing in Japanese, writing suggestions could not be selected using keyboard
 - Drawing
   - #73 Kanji search bar is not cleared
 - Settings
   - Misc
     - Advanced
       - Optimize neural networks
+
+Removed:
+
+- Search result navigation with arrow keys
 
 -------------------------------------------------------------------------
 
