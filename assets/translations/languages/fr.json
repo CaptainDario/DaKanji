@@ -411,6 +411,8 @@
     "create_pdf": "Cr\u00e9er un PDF",
     "defaults": "D\u00e9fauts",
     "delete": "Supprimer",
+    "delete_warning": "Avertissement",
+    "delete_warning_desc": "Cette op\u00e9ration supprime d\u00e9finitivement cette liste de mots, ce qui ne peut \u00eatre annul\u00e9.",
     "drag_to_scroll": "Glisser ici pour faire d\u00e9filer",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",

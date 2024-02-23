@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -355,13 +356,7 @@ class _WordListsState extends State<WordLists> {
                                               });
                                             },
                                             onDragAccept: dragNodeOnNodeAccept,
-                                            onDeletePressed: (TreeNode<WordListsData> node) {
-                                              final parent = node.parent!;
-                                              parent.removeChild(node);
-                                              // TODO function to do this in one transaction
-                                              widget.wordLists.updateNode(parent);
-                                              widget.wordLists.deleteNodeAndSubTree(node);
-                                            },
+                                            onDeletePressed: deleteWordListNode,
                                             onFolderPressed: (node) {
                                               widget.wordLists.updateNode(node);
                                             },
@@ -720,6 +715,29 @@ class _WordListsState extends State<WordLists> {
       addedNewNode = null;
     });
 
+  }
+
+  /// Deletes the given `node` from SQL
+  void deleteWordListNode (TreeNode<WordListsData> node) async{
+
+    await AwesomeDialog(
+      context: context,
+      title: LocaleKeys.WordListsScreen_delete_warning.tr(),
+      desc:  LocaleKeys.WordListsScreen_delete_warning_desc.tr(),
+      dialogType: DialogType.noHeader,
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () {},
+      btnOkColor: g_Dakanji_green,
+      btnOkOnPress: () {
+        final parent = node.parent!;
+        parent.removeChild(node);
+        // TODO function to do this in one transaction
+        widget.wordLists.updateNode(parent);
+        widget.wordLists.deleteNodeAndSubTree(node);
+      },
+    ).show();
+
+    
   }
 
 }

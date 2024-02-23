@@ -411,6 +411,8 @@
     "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "L\u00f6schen",
+    "delete_warning": "Warnung",
+    "delete_warning_desc": "Dadurch wird diese Wortliste endg\u00fcltig gel\u00f6scht, das kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
     "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",

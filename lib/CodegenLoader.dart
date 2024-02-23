@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -377,6 +375,8 @@ class CodegenLoader extends AssetLoader{
     "create_pdf": "创建PDF",
     "defaults": "违约",
     "delete": "删除",
+    "delete_warning": "警告",
+    "delete_warning_desc": "这将永久删除该单词表，且无法撤销。",
     "drag_to_scroll": "拖动此处滚动",
     "new_folder": "新文件夹",
     "new_list": "新名单",
@@ -794,6 +794,8 @@ static const Map<String,dynamic> ja = {
     "create_pdf": "PDFを作成する",
     "defaults": "デフォルト",
     "delete": "削除",
+    "delete_warning": "警告",
+    "delete_warning_desc": "元に戻すことはできません。",
     "drag_to_scroll": "ここをドラッグしてスクロール",
     "new_folder": "新規フォルダ",
     "new_list": "新規リスト",
@@ -1227,6 +1229,8 @@ static const Map<String,dynamic> de = {
     "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "Löschen",
+    "delete_warning": "Warnung",
+    "delete_warning_desc": "Dadurch wird diese Wortliste endgültig gelöscht, das kann nicht rückgängig gemacht werden.",
     "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",
@@ -1608,6 +1612,8 @@ static const Map<String,dynamic> ru = {
     "create_pdf": "Создать PDF",
     "defaults": "по умолчанию",
     "delete": "Удалить",
+    "delete_warning": "Внимание",
+    "delete_warning_desc": "Это приведет к окончательному удалению списка слов, и отменить это невозможно.",
     "drag_to_scroll": "Перетащите сюда для прокрутки",
     "new_folder": "Новая папка",
     "new_list": "Новый список",
@@ -2038,6 +2044,8 @@ static const Map<String,dynamic> pl = {
     "create_pdf": "Utwórz PDF",
     "defaults": "ustawienia domyślne",
     "delete": "Usuń",
+    "delete_warning": "Ostrzeżenie",
+    "delete_warning_desc": "Spowoduje to trwałe usunięcie listy słów, czego nie można cofnąć.",
     "drag_to_scroll": "Przeciągnij tutaj, aby przewinąć",
     "new_folder": "Nowy folder",
     "new_list": "Nowy wykaz",
@@ -2471,6 +2479,8 @@ static const Map<String,dynamic> en = {
     "create_pdf": "Create PDF",
     "defaults": "Defaults",
     "delete": "Delete",
+    "delete_warning": "Warning",
+    "delete_warning_desc": "This will permanently delete this word list, this cannot be undone.",
     "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",
@@ -2852,6 +2862,8 @@ static const Map<String,dynamic> it = {
     "create_pdf": "Creare PDF",
     "defaults": "valori predefiniti",
     "delete": "Cancellare",
+    "delete_warning": "Avvertenze",
+    "delete_warning_desc": "Questa operazione cancella definitivamente l'elenco di parole e non può essere annullata.",
     "drag_to_scroll": "Trascinare qui per scorrere",
     "new_folder": "Nuova cartella",
     "new_list": "Nuovo elenco",
@@ -3233,6 +3245,8 @@ static const Map<String,dynamic> fr = {
     "create_pdf": "Créer un PDF",
     "defaults": "Défauts",
     "delete": "Supprimer",
+    "delete_warning": "Avertissement",
+    "delete_warning_desc": "Cette opération supprime définitivement cette liste de mots, ce qui ne peut être annulé.",
     "drag_to_scroll": "Glisser ici pour faire défiler",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",
@@ -3614,6 +3628,8 @@ static const Map<String,dynamic> es = {
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "delete_warning": "Advertencia",
+    "delete_warning_desc": "Esto borrará permanentemente esta lista de palabras, no se puede deshacer.",
     "drag_to_scroll": "Arrastre aquí para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",

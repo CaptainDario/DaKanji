@@ -411,6 +411,8 @@
     "create_pdf": "Create PDF",
     "defaults": "Defaults",
     "delete": "Delete",
+    "delete_warning": "Warning",
+    "delete_warning_desc": "This will permanently delete this word list, this cannot be undone.",
     "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",

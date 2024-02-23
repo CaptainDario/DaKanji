@@ -3969,6 +3969,28 @@
       "es": "Borrar",
       "pl": "Usuń"
     },
+    "delete_warning": {
+      "en": "Warning",
+      "de": "Warnung",
+      "ru": "Внимание",
+      "ja": "警告",
+      "zh": "警告",
+      "it": "Avvertenze",
+      "fr": "Avertissement",
+      "es": "Advertencia",
+      "pl": "Ostrzeżenie"
+    },
+    "delete_warning_desc": {
+      "en": "This will permanently delete this word list, this cannot be undone.",
+      "de": "Dadurch wird diese Wortliste endgültig gelöscht, das kann nicht rückgängig gemacht werden.",
+      "ru": "Это приведет к окончательному удалению списка слов, и отменить это невозможно.",
+      "ja": "元に戻すことはできません。",
+      "zh": "这将永久删除该单词表，且无法撤销。",
+      "it": "Questa operazione cancella definitivamente l'elenco di parole e non può essere annullata.",
+      "fr": "Cette opération supprime définitivement cette liste de mots, ce qui ne peut être annulé.",
+      "es": "Esto borrará permanentemente esta lista de palabras, no se puede deshacer.",
+      "pl": "Spowoduje to trwałe usunięcie listy słów, czego nie można cofnąć."
+    },
     "ok": {
       "en": "ok",
       "de": "ok",

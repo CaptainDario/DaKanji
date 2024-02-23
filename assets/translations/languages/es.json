@@ -411,6 +411,8 @@
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "delete_warning": "Advertencia",
+    "delete_warning_desc": "Esto borrar\u00e1 permanentemente esta lista de palabras, no se puede deshacer.",
     "drag_to_scroll": "Arrastre aqu\u00ed para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",

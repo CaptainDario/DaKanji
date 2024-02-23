@@ -411,6 +411,8 @@
     "create_pdf": "Creare PDF",
     "defaults": "valori predefiniti",
     "delete": "Cancellare",
+    "delete_warning": "Avvertenze",
+    "delete_warning_desc": "Questa operazione cancella definitivamente l'elenco di parole e non pu\u00f2 essere annullata.",
     "drag_to_scroll": "Trascinare qui per scorrere",
     "new_folder": "Nuova cartella",
     "new_list": "Nuovo elenco",
