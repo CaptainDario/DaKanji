@@ -266,6 +266,14 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         ..where((tbl) => tbl.id.isIn(entries)))
         .go();
 
+      // remove all dictionary entries that belonged to a now deleted node
+      await (delete(wordListEntriesSQL)
+        ..where((tbl) => tbl.wordListID.isIn(entries))
+      ).go();
+
+    });
+    
+
   }
   // --- END : WordLists 
 
