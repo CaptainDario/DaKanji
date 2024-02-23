@@ -38,12 +38,13 @@ class WordListNodesSQL extends Table {
 /// [WordListNodesSQL]
 class WordListEntriesSQL extends Table {
 
-  /// Id of this row
-  IntColumn get id => integer().autoIncrement()();
   /// The id of the entry in the corresponding [WordListNodesSQL] 
   IntColumn get wordListID => integer()();
   /// The id of this entry in the dictionary
   IntColumn get dictEntryID => integer()();
+
+  @override
+  Set<Column> get primaryKey => {wordListID, dictEntryID};
 
 }
 
@@ -52,6 +53,10 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  List<String> get getcustomConstraints =>
+    ['FOREIGN KEY (wordListID, dictEntryID) REFERENCES drugs (wordListID, dictEntryID)'];
+
 
   WordListsSQLDatabase(
     File databaseFile
@@ -286,15 +291,14 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
       for (int listID in listIDs ) {
         await batch((batch) async {
           // ... all IDs
-          await wordListEntriesSQL.insertAll(
-            [
-              for (int wordID in wordIDs)
-                WordListEntriesSQLCompanion(
-                  wordListID: Value(listID),
-                  dictEntryID: Value(wordID)
-                )
-            ]
-          );
+          for (int wordID in wordIDs){
+            await wordListEntriesSQL.insertOnConflictUpdate(
+              WordListEntriesSQLCompanion(
+                wordListID: Value(listID),
+                dictEntryID: Value(wordID)
+              )
+            );
+          }
         });
       }
 
