@@ -1,12 +1,8 @@
 // Flutter imports:
-import 'package:collection/collection.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -15,11 +11,15 @@ import 'package:isar/isar.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
+import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 
 class WordListScreen extends StatefulWidget {
