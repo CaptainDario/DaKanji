@@ -729,10 +729,6 @@ class _WordListsState extends State<WordLists> {
       btnCancelOnPress: () {},
       btnOkColor: g_Dakanji_green,
       btnOkOnPress: () {
-        final parent = node.parent!;
-        parent.removeChild(node);
-        // TODO function to do this in one transaction
-        widget.wordLists.updateNode(parent);
         widget.wordLists.deleteNodeAndSubTree(node);
       },
     ).show();

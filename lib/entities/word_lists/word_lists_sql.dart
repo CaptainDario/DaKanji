@@ -248,14 +248,23 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   }
 
   /// Deletes the given `entry` and the whole subtree
-  Future deleteNodeAndSubTree(TreeNode<WordListsData> node) {
+  Future deleteNodeAndSubTree(TreeNode<WordListsData> node) async {
 
-    List<int> entries = node.dfs().map((e) => e.id).toList();
-    entries.add(node.id);
+    // remove node from its parent
+    final parent = node.parent!;
+    parent.removeChild(node);
+    
+    await transaction(() async {
+      // update the parent
+      await updateNode(parent);
 
-    return (delete(wordListNodesSQL)
-      ..where((tbl) => tbl.id.isIn(entries)))
-      .go();
+      // delete all child nodes
+      List<int> entries = node.dfs().map((e) => e.id).toList();
+      entries.add(node.id);
+
+      await (delete(wordListNodesSQL)
+        ..where((tbl) => tbl.id.isIn(entries)))
+        .go();
 
   }
   // --- END : WordLists 
