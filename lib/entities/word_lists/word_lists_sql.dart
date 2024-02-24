@@ -323,9 +323,22 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
  
+  /// Copies all entries from each word list given by the list `fromID` to
+  /// the list `toID`
+  Future copyEntriesFromListsToList(Iterable<int> fromIDs, int toID) async {
+
+    await transaction(() async {
+      for (int fromID in fromIDs) {
+        List<int> wordIDs = await getEntryIDsOfWordList(fromID);
+        await addEntriesToWordLists([toID], wordIDs);
+      }
+    });
+
+  }
+
   /// Deletes the entries given by their IDs, from the word list given by its
   /// ID
-  Future deleteEntriesFromWordList(List<int> entriesIDs, int wordListID) async {
+  Future deleteEntriesFromWordList(Iterable<int> entriesIDs, int wordListID) async {
 
     await wordListEntriesSQL.deleteWhere((tbl) {
       return Expression.and([

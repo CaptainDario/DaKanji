@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/entities/word_list/word_list_action.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_sorting.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -249,9 +250,17 @@ class _WordListScreenState extends State<WordListScreen> {
   }
 
   /// Copies the entries from another list
-  void copyEntriesFromOtherList(){
+  void copyEntriesFromOtherList() async {
 
+    await showWordListSelectionDialog(context, (selection) async {
 
+      await GetIt.I<WordListsSQLDatabase>().copyEntriesFromListsToList(
+        selection.map((e) => e.id),
+        widget.node.id);
+        
+      // ignore: use_build_context_synchronously
+      Navigator.of(context, rootNavigator: false).pop();
+    });
 
   }
 
