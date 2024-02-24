@@ -18,7 +18,10 @@ import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_list
 /// Shows a dialog to the user where word lists can be selected, returns the
 /// selection
 Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext context,
-  Function(List<TreeNode<WordListsData>> selection) onSelectionConfirmed) async {
+  {
+    Function(List<TreeNode<WordListsData>> selection)? onSelectionConfirmed,
+    bool includeDefaults = false
+  }) async {
 
   List<TreeNode<WordListsData>> selection = [];
 
@@ -33,7 +36,7 @@ Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext c
       child: word_lists_ui.WordLists(
         false,
         GetIt.I<WordListsSQLDatabase>(),
-        showDefaults: false,
+        includeDefaults: includeDefaults,
         onSelectionConfirmed: onSelectionConfirmed,
       ),
     )

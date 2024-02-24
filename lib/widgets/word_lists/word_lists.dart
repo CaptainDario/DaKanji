@@ -3,6 +3,7 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,7 +33,7 @@ class WordLists extends StatefulWidget {
   /// the parent of this word lists
   final WordListsSQLDatabase wordLists;
   /// should the default word lists be included
-  final bool showDefaults;
+  final bool includeDefaults;
   /// Callback that is triggered when the user presses the ok button
   /// after selecting word lists / folders. Provides a list with all selected
   /// nodes
@@ -42,7 +43,7 @@ class WordLists extends StatefulWidget {
     this.includeTutorial,
     this.wordLists,
     {
-      this.showDefaults = true,
+      this.includeDefaults = true,
       this.onSelectionConfirmed,
       super.key
     }
@@ -154,8 +155,15 @@ class _WordListsState extends State<WordLists> {
         // new data from SQLite has been read
         if(snapshot.connectionState == ConnectionState.active &&
           !draggingWordListNode){
+
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
           childrenDFS = currentRoot.dfs().toList();
+
+          // Exclude default nodes if set
+          if(!widget.includeDefaults){
+            childrenDFS = childrenDFS.whereNot((e) =>
+              wordListDefaultTypes.contains(e.value.type)).toList();
+          }
           // apply filter
           if(searchTextEditingController.text.isNotEmpty){
               childrenDFS = childrenDFS
