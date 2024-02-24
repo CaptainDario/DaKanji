@@ -53,12 +53,10 @@ class _SearchResultListState extends State<SearchResultList> {
   /// Key to either only slide in search results once, or multiple times
   Key slideInAnimationKey = Key(DateTime.now().toIso8601String());
 
-  late final List searchResultsFocusses;
+  List searchResultsFocusses = [];
 
   @override
   void initState() {
-    searchResultsFocusses =
-      List.generate(widget.searchResults.length, (index) => FocusNode());
     init();
     super.initState();
   }
@@ -73,7 +71,8 @@ class _SearchResultListState extends State<SearchResultList> {
   }
 
   void init(){
-    
+    searchResultsFocusses =
+      List.generate(widget.searchResults.length, (index) => FocusNode());
     widget.init?.call();
   }
 
