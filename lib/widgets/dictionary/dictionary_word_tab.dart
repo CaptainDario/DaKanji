@@ -241,26 +241,28 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// to every selected word list
   Future addToWordList() async {
 
-    await showWordListSelectionDialog(context, (selection) {
-      // get all nodes to which the selected entry should be added
-      List<TreeNode<WordListsData>> nodesToAddTo = selection.where(
-        (sel) =>
-          // assure this node is a word list
-          wordListListypes.contains(sel.value.type) &&
-          // assure that the word is not already in the list
-          !sel.value.wordIds.contains(widget.entry!.id)
-      ).toList();
+    await showWordListSelectionDialog(context,
+      includeDefaults: false,
+      onSelectionConfirmed: (selection) {
+        // get all nodes to which the selected entry should be added
+        List<TreeNode<WordListsData>> nodesToAddTo = selection.where(
+          (sel) =>
+            // assure this node is a word list
+            wordListListypes.contains(sel.value.type) &&
+            // assure that the word is not already in the list
+            !sel.value.wordIds.contains(widget.entry!.id)
+        ).toList();
 
-      // update the lists
-      GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
-        nodesToAddTo.map((e) => e.id).toList(),
-        [widget.entry!.id]);
+        // update the lists
+        GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
+          nodesToAddTo.map((e) => e.id).toList(),
+          [widget.entry!.id]);
 
-      // save to disk
-      GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
+        // save to disk
+        GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
 
-      Navigator.of(context, rootNavigator: false).pop();
-    });
+        Navigator.of(context, rootNavigator: false).pop();
+      });
 
   }
 
