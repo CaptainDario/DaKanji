@@ -578,6 +578,9 @@ class _WordListsState extends State<WordLists> {
           final path = childrenDFS[i].getPath();
           if(!path.sublist(0, path.length-1).any((e) => !e.value.isExpanded)){
             await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
+            // after the delay check that the input of the user has not changed
+            if(animateListTileIn.length < i) return;
+
             setState(() => animateListTileIn[i] = true);
           } else {
             setState(() => animateListTileIn[i] = true);
@@ -599,11 +602,10 @@ class _WordListsState extends State<WordLists> {
         for (var i = animateInOldLen; i < animateListTileIn.length; i++) {
 
           await Future.delayed(Duration(milliseconds: staggerAnimationInteleaveDuration));
-          try {
-            animateListTileIn[i] = true;
-          } catch (e) {
-            return;
-          }
+          // after the delay check that the input of the user has not changed
+          if(animateListTileIn.length < i) return;
+
+          animateListTileIn[i] = true;
           setState(() {});
         }
       }
