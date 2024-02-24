@@ -406,6 +406,13 @@
     "loading": "Buscando",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiar todas las entradas de otras listas",
+    "word_list_sort_date_asc": "Fecha \u2191",
+    "word_list_sort_date_desc": "Fecha \u2193",
+    "word_list_sort_freq_asc": "Frec. \u2191",
+    "word_list_sort_freq_desc": "Frec. \u2193"
+  },
   "WordListsScreen": {
     "add": "a\u00f1ada",
     "create_pdf": "Crear PDF",

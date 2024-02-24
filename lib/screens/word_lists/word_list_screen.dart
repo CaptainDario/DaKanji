@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_list/word_list_action.dart';
+import 'package:da_kanji_mobile/entities/word_list/word_list_sorting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,7 +12,6 @@ import 'package:isar/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
@@ -18,7 +19,6 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 
@@ -49,59 +49,85 @@ class _WordListScreenState extends State<WordListScreen> {
   /// all entries of this list
   late Stream<Iterable<JMdict>> entriesStream;
 
+  /// [FocusNode] of the search field
+  FocusNode searchInputFocusNode = FocusNode();
+  /// The [TextEditingController] to handle the search inputs
+  TextEditingController searchTextEditingController = TextEditingController();
+
+  /// The current sorting order
+  WordListSorting currentSorting = WordListSorting.dateDesc;
+
 
   @override
   void initState() {
 
-    if(wordListDefaultTypes.contains(widget.node.value.type)) {
+    // is this a default list
+    if(widget.node.value.type == WordListNodeType.wordListDefault) {
+
       isDefault = true;
-    }
 
-    // search history (assure it is a default list and not a user created one)
-    if(widget.node.value.name == DefaultNames.searchHistory.name &&
-      wordListDefaultTypes.contains(widget.node.value.type)){
+      // search history (assure it is a default list and not a user created one)
+      if(widget.node.value.name == DefaultNames.searchHistory.name){
 
-      entriesStream = GetIt.I<SearchHistorySQLDatabase>().watchAllUniqueSearchHistoryIDs()
-        .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-          e.whereNotNull().toList()).whereNotNull()
-        );
-    }
-    // default list
-    else if(widget.node.value.name.contains('jlpt') &&
-      wordListDefaultTypes.contains(widget.node.value.type)){
+        entriesStream = searchHistoryStream();
+      }
+      // default list (JLPT)
+      else if(widget.node.value.name.contains('jlpt')){
 
-      Query<int> jlptIdsQuery = GetIt.I<Isars>().dictionary.jmdict.filter()
-        .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
-        .sortByFrequencyDesc()
-        .idProperty()
-        .build();
-      
-      entriesStream = jlptIdsQuery.watch(fireImmediately: true)
-        .map((event) => 
-          GetIt.I<Isars>().dictionary.jmdict.getAllSync(event)
-          .whereNotNull()
-        );
-
-    }
+        entriesStream = jlptListStream();
+      }
+    }    
     // user list
     else{
-
-      // listen to changes of this word list
-      entriesStream = GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(widget.node.id)
-        // on change
-        .map((e) {
-          // lookup all IDs in the ISAR DB
-          return GetIt.I<Isars>().dictionary.jmdict.where()
-            .anyOf(
-              e.map((w) => w.dictEntryID),
-              (q, element) => q.idEqualTo(element)
-            ).findAllSync();
-        });
+      entriesStream = userListStream();
     }
+
+    // apply sorting
+    entriesStream = entriesStream.map((event) =>
+      event.sorted((a, b) => a.frequency.compareTo(b.frequency)));
 
     super.initState();
   }
+
+  Stream<Iterable<JMdict>> searchHistoryStream(){
+    return GetIt.I<SearchHistorySQLDatabase>().watchAllUniqueSearchHistoryIDs()
+        .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
+          e.whereNotNull().toList()).whereNotNull()
+        );
+  }
+
+  /// Returns a stream that yields a list with the elements of a JLPT word list
+  Stream<Iterable<JMdict>> jlptListStream(){
+
+    Query<int> jlptIdsQuery = GetIt.I<Isars>().dictionary.jmdict.filter()
+      .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
+      .sortByFrequencyDesc()
+      .idProperty()
+      .build();
+    
+    return jlptIdsQuery.watch(fireImmediately: true)
+      .map((event) => 
+        GetIt.I<Isars>().dictionary.jmdict.getAllSync(event)
+        .whereNotNull()
+      ); 
+
+  }
  
+  Stream<Iterable<JMdict>> userListStream(){
+
+    // listen to changes of this word list
+    return GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(widget.node.id)
+      // on change
+      .map((e) {
+        return GetIt.I<Isars>().dictionary.jmdict
+          .getAllSync(
+            e.map((e) => e.dictEntryID).toList())
+          .whereNotNull();
+      });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,38 +136,123 @@ class _WordListScreenState extends State<WordListScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(widget.node.value.name)
-        ),
+        title: Text(widget.node.value.name),
       ),
-      body: StreamBuilder<Iterable<JMdict>>(
-        stream: entriesStream,
-        builder: (context, snapshot) {
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              floating: true,
+              pinned: false,
+              snap: true,
+              title: Row(
+                children: [
+                  // search icon
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      searchInputFocusNode.requestFocus();
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(width: 16,),
+                  // text input for searching
+                  Expanded(
+                    child: TextField(
+                      controller: searchTextEditingController,
+                      focusNode: searchInputFocusNode,
+                      decoration: searchInputFocusNode.hasPrimaryFocus
+                        ? const InputDecoration()
+                        : const InputDecoration.collapsed(hintText: "Test"),
+                      onChanged: (value) {
+                        // TODO filter entries
+                      },
+                    )
+                  ),
+                  const SizedBox(width: 16,),
+                  // search list
+                  DropdownButton<WordListSorting>(
+                    onChanged: (value) {
+                      if(value == null) return;
 
-          if(snapshot.data == null || !snapshot.hasData){
-            return Center(
-              child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
+                      setState(() {
+                        currentSorting = value;
+                      });
+                    },
+                    value: currentSorting,
+                    items: List.generate(WordListSorting.values.length, (i) =>
+                      DropdownMenuItem<WordListSorting>(
+                        value: WordListSorting.values[i],
+                        child: Text(wordListSortingTranslations[WordListSorting.values[i]]!()),
+                      )
+                    ),
+                  ),
+                  // actions
+                  if(widget.node.value.type != WordListNodeType.wordListDefault)
+                    // add button
+                    PopupMenuButton<WordListAction>(
+                      icon: const Icon(Icons.add),
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem<WordListAction>(
+                            value: WordListAction.copyFromOther,
+                            child: Text(LocaleKeys.WordListScreen_word_list_copy_other_list.tr()),
+                          )
+                        ];
+                      },
+                      onSelected: (value) {
+                        switch (value) {
+                          case WordListAction.copyFromOther:
+                            copyEntriesFromOtherList();
+                            break;
+                          default:
+                        }
+                      },
+                    ),
+                ]
+              ),
+            )
+          ];
+        },
+        body: StreamBuilder<Iterable<JMdict>>(
+          stream: entriesStream,
+          builder: (context, snapshot) {
+        
+            if(snapshot.data == null || !snapshot.hasData || snapshot.data!.isEmpty){
+              return Center(
+                child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
+              );
+            }
+        
+            return SearchResultList(
+              searchResults: snapshot.data!.whereNotNull().toList(),
+              onDismissed: isDefault 
+                ? null
+                : (direction, entry, listIndex) {
+                  widget.onDelete?.call(entry);
+                },
+              showWordFrequency: true,
+              onSearchResultPressed: (entry){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => 
+                    WordListViewEntryScreen(entry)
+                  )
+                );
+              },
             );
           }
-
-          return SearchResultList(
-            searchResults: snapshot.data!.whereNotNull().toList(),
-            onDismissed: isDefault 
-              ? null
-              : (direction, entry, listIndex) {
-                widget.onDelete?.call(entry);
-              },
-            onSearchResultPressed: (entry){
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => 
-                  WordListViewEntryScreen(entry)
-                )
-              );
-            },
-          );
-        }
+        ),
+        
       )
     );
   }
+
+  /// Copies the entries from another list
+  void copyEntriesFromOtherList(){
+
+
+
+  }
+
 }

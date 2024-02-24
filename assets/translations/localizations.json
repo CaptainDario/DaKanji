@@ -4057,5 +4057,62 @@
       "es": "Arrastre aquí para desplazarse",
       "pl": "Przeciągnij tutaj, aby przewinąć"
     }
+  },
+  "WordListScreen": {
+    "word_list_sort_freq_asc": {
+      "en": "Freq. ↑",
+      "de": "Freq. ↑",
+      "ru": "Фрик. ↑",
+      "ja": "フリーク ↑",
+      "zh": "频率↑",
+      "it": "Freq. ↑",
+      "fr": "Fréq. ↑",
+      "es": "Frec. ↑",
+      "pl": "Freq. ↑"
+    },
+    "word_list_sort_freq_desc": {
+      "en": "Freq. ↓",
+      "de": "Freq. ↓",
+      "ru": "Частота. ↓",
+      "ja": "フリーク ↓",
+      "zh": "频率↓",
+      "it": "Freq. ↓",
+      "fr": "Fréq. ↓",
+      "es": "Frec. ↓",
+      "pl": "Freq. ↓"
+    },
+    "word_list_sort_date_asc": {
+      "en": "Date ↑",
+      "de": "Datum ↑",
+      "ru": "Дата ↑",
+      "ja": "日付 ↑",
+      "zh": "日期 ↑",
+      "it": "Data ↑",
+      "fr": "Date ↑",
+      "es": "Fecha ↑",
+      "pl": "Data ↑"
+    },
+    "word_list_sort_date_desc": {
+      "en": "Date ↓",
+      "de": "Datum ↓",
+      "ru": "Дата ↓",
+      "ja": "日付 ↓",
+      "zh": "日期 ↓",
+      "it": "Data ↓",
+      "fr": "Date ↓",
+      "es": "Fecha ↓",
+      "pl": "Data ↓"
+    },
+    "word_list_copy_other_list": {
+      "en": "Copy all entries from other lists",
+      "de": "Alle Einträge aus anderen Listen kopieren",
+      "ru": "Копирование всех записей из других списков",
+      "ja": "他のリストからすべてのエントリをコピーする",
+      "zh": "复制其他列表中的所有条目",
+      "it": "Copiare tutte le voci da altri elenchi",
+      "fr": "Copier toutes les entrées d'autres listes",
+      "es": "Copiar todas las entradas de otras listas",
+      "pl": "Kopiowanie wszystkich wpisów z innych list"
+    }
   }
 }

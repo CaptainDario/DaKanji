@@ -370,6 +370,13 @@ class CodegenLoader extends AssetLoader{
     "loading": "搜索",
     "title": "网页浏览"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "复制其他列表中的所有条目",
+    "word_list_sort_date_asc": "日期 ↑",
+    "word_list_sort_date_desc": "日期 ↓",
+    "word_list_sort_freq_asc": "频率↑",
+    "word_list_sort_freq_desc": "频率↓"
+  },
   "WordListsScreen": {
     "add": "增加",
     "create_pdf": "创建PDF",
@@ -788,6 +795,13 @@ static const Map<String,dynamic> ja = {
   "WebviewScreen": {
     "loading": "検索中",
     "title": "ウェブビュー"
+  },
+  "WordListScreen": {
+    "word_list_copy_other_list": "他のリストからすべてのエントリをコピーする",
+    "word_list_sort_date_asc": "日付 ↑",
+    "word_list_sort_date_desc": "日付 ↓",
+    "word_list_sort_freq_asc": "フリーク ↑",
+    "word_list_sort_freq_desc": "フリーク ↓"
   },
   "WordListsScreen": {
     "add": "追加",
@@ -1224,6 +1238,13 @@ static const Map<String,dynamic> de = {
     "loading": "Suche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Alle Einträge aus anderen Listen kopieren",
+    "word_list_sort_date_asc": "Datum ↑",
+    "word_list_sort_date_desc": "Datum ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "Hinzufügen",
     "create_pdf": "Konvertiere zu PDF",
@@ -1606,6 +1627,13 @@ static const Map<String,dynamic> ru = {
   "WebviewScreen": {
     "loading": "Поиск",
     "title": "Webview"
+  },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Копирование всех записей из других списков",
+    "word_list_sort_date_asc": "Дата ↑",
+    "word_list_sort_date_desc": "Дата ↓",
+    "word_list_sort_freq_asc": "Фрик. ↑",
+    "word_list_sort_freq_desc": "Частота. ↓"
   },
   "WordListsScreen": {
     "add": "добавить",
@@ -2038,6 +2066,13 @@ static const Map<String,dynamic> pl = {
   "WebviewScreen": {
     "loading": "Ładowanie",
     "title": "Webview"
+  },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Kopiowanie wszystkich wpisów z innych list",
+    "word_list_sort_date_asc": "Data ↑",
+    "word_list_sort_date_desc": "Data ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
   },
   "WordListsScreen": {
     "add": "dodać",
@@ -2474,6 +2509,13 @@ static const Map<String,dynamic> en = {
     "loading": "Searching",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copy all entries from other lists",
+    "word_list_sort_date_asc": "Date ↑",
+    "word_list_sort_date_desc": "Date ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
@@ -2856,6 +2898,13 @@ static const Map<String,dynamic> it = {
   "WebviewScreen": {
     "loading": "Ricerca",
     "title": "Vista sul web"
+  },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiare tutte le voci da altri elenchi",
+    "word_list_sort_date_asc": "Data ↑",
+    "word_list_sort_date_desc": "Data ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
   },
   "WordListsScreen": {
     "add": "aggiungere",
@@ -3240,6 +3289,13 @@ static const Map<String,dynamic> fr = {
     "loading": "Recherche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copier toutes les entrées d'autres listes",
+    "word_list_sort_date_asc": "Date ↑",
+    "word_list_sort_date_desc": "Date ↓",
+    "word_list_sort_freq_asc": "Fréq. ↑",
+    "word_list_sort_freq_desc": "Fréq. ↓"
+  },
   "WordListsScreen": {
     "add": "ajouter",
     "create_pdf": "Créer un PDF",
@@ -3622,6 +3678,13 @@ static const Map<String,dynamic> es = {
   "WebviewScreen": {
     "loading": "Buscando",
     "title": "Webview"
+  },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiar todas las entradas de otras listas",
+    "word_list_sort_date_asc": "Fecha ↑",
+    "word_list_sort_date_desc": "Fecha ↓",
+    "word_list_sort_freq_asc": "Frec. ↑",
+    "word_list_sort_freq_desc": "Frec. ↓"
   },
   "WordListsScreen": {
     "add": "añada",

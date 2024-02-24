@@ -406,6 +406,13 @@
     "loading": "\u641c\u7d22",
     "title": "\u7f51\u9875\u6d4f\u89c8"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "\u590d\u5236\u5176\u4ed6\u5217\u8868\u4e2d\u7684\u6240\u6709\u6761\u76ee",
+    "word_list_sort_date_asc": "\u65e5\u671f \u2191",
+    "word_list_sort_date_desc": "\u65e5\u671f \u2193",
+    "word_list_sort_freq_asc": "\u9891\u7387\u2191",
+    "word_list_sort_freq_desc": "\u9891\u7387\u2193"
+  },
   "WordListsScreen": {
     "add": "\u589e\u52a0",
     "create_pdf": "\u521b\u5efaPDF",

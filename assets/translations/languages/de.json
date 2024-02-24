@@ -406,6 +406,13 @@
     "loading": "Suche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Alle Eintr\u00e4ge aus anderen Listen kopieren",
+    "word_list_sort_date_asc": "Datum \u2191",
+    "word_list_sort_date_desc": "Datum \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "Hinzuf\u00fcgen",
     "create_pdf": "Konvertiere zu PDF",

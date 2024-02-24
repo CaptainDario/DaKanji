@@ -406,6 +406,13 @@
     "loading": "Ricerca",
     "title": "Vista sul web"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiare tutte le voci da altri elenchi",
+    "word_list_sort_date_asc": "Data \u2191",
+    "word_list_sort_date_desc": "Data \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "aggiungere",
     "create_pdf": "Creare PDF",

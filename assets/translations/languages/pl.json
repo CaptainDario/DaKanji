@@ -406,6 +406,13 @@
     "loading": "\u0141adowanie",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Kopiowanie wszystkich wpis\u00f3w z innych list",
+    "word_list_sort_date_asc": "Data \u2191",
+    "word_list_sort_date_desc": "Data \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "doda\u0107",
     "create_pdf": "Utw\u00f3rz PDF",

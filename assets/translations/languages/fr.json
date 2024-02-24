@@ -406,6 +406,13 @@
     "loading": "Recherche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copier toutes les entr\u00e9es d'autres listes",
+    "word_list_sort_date_asc": "Date \u2191",
+    "word_list_sort_date_desc": "Date \u2193",
+    "word_list_sort_freq_asc": "Fr\u00e9q. \u2191",
+    "word_list_sort_freq_desc": "Fr\u00e9q. \u2193"
+  },
   "WordListsScreen": {
     "add": "ajouter",
     "create_pdf": "Cr\u00e9er un PDF",

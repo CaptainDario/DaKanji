@@ -406,6 +406,13 @@
     "loading": "\u041f\u043e\u0438\u0441\u043a",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0432\u0441\u0435\u0445 \u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u0438\u0437 \u0434\u0440\u0443\u0433\u0438\u0445 \u0441\u043f\u0438\u0441\u043a\u043e\u0432",
+    "word_list_sort_date_asc": "\u0414\u0430\u0442\u0430 \u2191",
+    "word_list_sort_date_desc": "\u0414\u0430\u0442\u0430 \u2193",
+    "word_list_sort_freq_asc": "\u0424\u0440\u0438\u043a. \u2191",
+    "word_list_sort_freq_desc": "\u0427\u0430\u0441\u0442\u043e\u0442\u0430. \u2193"
+  },
   "WordListsScreen": {
     "add": "\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c",
     "create_pdf": "\u0421\u043e\u0437\u0434\u0430\u0442\u044c PDF",
