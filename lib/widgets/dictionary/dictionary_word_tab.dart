@@ -2,6 +2,11 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +30,6 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/add_to_word_list_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {
 
@@ -201,7 +205,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // add to word list
                         else if(selection == menuItems[7]) {
-                          await addToWordListDialog(context, widget).show();
+                          await addToWordList();
                         }
                         else if(selection == menuItems[8]){
                           await ankiDialog(context, widget.entry!).show();
@@ -231,6 +235,33 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         ),
       ),
     );
+  }
+
+  /// Function that shows a selection dialog to the user and adds `widget.entry`
+  /// to every selected word list
+  Future addToWordList() async {
+
+    await showWordListSelectionDialog(context, (selection) {
+      // get all nodes to which the selected entry should be added
+      List<TreeNode<WordListsData>> nodesToAddTo = selection.where(
+        (sel) =>
+          // assure this node is a word list
+          wordListListypes.contains(sel.value.type) &&
+          // assure that the word is not already in the list
+          !sel.value.wordIds.contains(widget.entry!.id)
+      ).toList();
+
+      // update the lists
+      GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
+        nodesToAddTo.map((e) => e.id).toList(),
+        [widget.entry!.id]);
+
+      // save to disk
+      GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
+
+      Navigator.of(context, rootNavigator: false).pop();
+    });
+
   }
 
   /// Takes a screenshot of the current word card and opens the share dialog with it
