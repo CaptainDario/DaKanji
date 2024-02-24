@@ -285,14 +285,17 @@ class _WordListScreenState extends State<WordListScreen> {
   /// Copies the entries from another list
   void copyEntriesFromOtherList() async {
 
-    await showWordListSelectionDialog(context, (selection) async {
+    await showWordListSelectionDialog(context,
+    includeDefaults: true,
+    onSelectionConfirmed: (selection) async {
 
       await GetIt.I<WordListsSQLDatabase>().copyEntriesFromListsToList(
         selection.map((e) => e.id),
         widget.node.id);
-        
+
       // ignore: use_build_context_synchronously
       Navigator.of(context, rootNavigator: false).pop();
+
     });
 
   }
