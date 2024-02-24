@@ -157,10 +157,16 @@ class _WordListsState extends State<WordLists> {
         if(snapshot.connectionState == ConnectionState.active &&
           !draggingWordListNode){
           currentRoot = WordListsTree.fromWordListsSQL(snapshot.data!).root;
-          childrenDFS = currentRoot.dfs()
-            // apply filter
-            .where((e) => e.value.name.contains(searchTextEditingController.text))
-            .toList();
+          childrenDFS = currentRoot.dfs().toList();
+          // apply filter
+          if(searchTextEditingController.text.isNotEmpty){
+              childrenDFS = childrenDFS
+                // only search in non defaults
+                .where((e) => !wordListDefaultTypes.contains(e.value.type))
+                // apply filter
+                .where((e) => e.value.name.contains(searchTextEditingController.text))
+                .toList();
+          }
           animateListTilesIn();
         }
         // if there are checkboxes shown
