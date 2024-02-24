@@ -284,8 +284,7 @@ class _WordListNodeState extends State<WordListNode> {
                       ),
                     ),
                     // checkbox for this entry
-                    if(!wordListDefaultTypes.contains(widget.node.value.type) &&
-                      widget.onSelectedToggled != null)
+                    if(widget.onSelectedToggled != null)
                       Checkbox(
                         value: widget.node.value.isChecked,
                         onChanged: (value) {
