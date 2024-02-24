@@ -42,6 +42,8 @@ class WordListEntriesSQL extends Table {
   IntColumn get wordListID => integer()();
   /// The id of this entry in the dictionary
   IntColumn get dictEntryID => integer()();
+  /// The date time when this was added
+  DateTimeColumn get timeAdded => dateTime().withDefault(currentDateAndTime)();
 
   @override
   Set<Column> get primaryKey => {wordListID, dictEntryID};

@@ -336,8 +336,16 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
   late final GeneratedColumn<int> dictEntryID = GeneratedColumn<int>(
       'dict_entry_i_d', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _timeAddedMeta =
+      const VerificationMeta('timeAdded');
   @override
-  List<GeneratedColumn> get $columns => [wordListID, dictEntryID];
+  late final GeneratedColumn<DateTime> timeAdded = GeneratedColumn<DateTime>(
+      'time_added', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns => [wordListID, dictEntryID, timeAdded];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -365,6 +373,10 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
     } else if (isInserting) {
       context.missing(_dictEntryIDMeta);
     }
+    if (data.containsKey('time_added')) {
+      context.handle(_timeAddedMeta,
+          timeAdded.isAcceptableOrUnknown(data['time_added']!, _timeAddedMeta));
+    }
     return context;
   }
 
@@ -378,6 +390,8 @@ class $WordListEntriesSQLTable extends WordListEntriesSQL
           .read(DriftSqlType.int, data['${effectivePrefix}word_list_i_d'])!,
       dictEntryID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}dict_entry_i_d'])!,
+      timeAdded: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}time_added'])!,
     );
   }
 
@@ -394,13 +408,19 @@ class WordListEntriesSQLData extends DataClass
 
   /// The id of this entry in the dictionary
   final int dictEntryID;
+
+  /// The date time when this was added
+  final DateTime timeAdded;
   const WordListEntriesSQLData(
-      {required this.wordListID, required this.dictEntryID});
+      {required this.wordListID,
+      required this.dictEntryID,
+      required this.timeAdded});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['word_list_i_d'] = Variable<int>(wordListID);
     map['dict_entry_i_d'] = Variable<int>(dictEntryID);
+    map['time_added'] = Variable<DateTime>(timeAdded);
     return map;
   }
 
@@ -408,6 +428,7 @@ class WordListEntriesSQLData extends DataClass
     return WordListEntriesSQLCompanion(
       wordListID: Value(wordListID),
       dictEntryID: Value(dictEntryID),
+      timeAdded: Value(timeAdded),
     );
   }
 
@@ -417,6 +438,7 @@ class WordListEntriesSQLData extends DataClass
     return WordListEntriesSQLData(
       wordListID: serializer.fromJson<int>(json['wordListID']),
       dictEntryID: serializer.fromJson<int>(json['dictEntryID']),
+      timeAdded: serializer.fromJson<DateTime>(json['timeAdded']),
     );
   }
   @override
@@ -425,66 +447,80 @@ class WordListEntriesSQLData extends DataClass
     return <String, dynamic>{
       'wordListID': serializer.toJson<int>(wordListID),
       'dictEntryID': serializer.toJson<int>(dictEntryID),
+      'timeAdded': serializer.toJson<DateTime>(timeAdded),
     };
   }
 
-  WordListEntriesSQLData copyWith({int? wordListID, int? dictEntryID}) =>
+  WordListEntriesSQLData copyWith(
+          {int? wordListID, int? dictEntryID, DateTime? timeAdded}) =>
       WordListEntriesSQLData(
         wordListID: wordListID ?? this.wordListID,
         dictEntryID: dictEntryID ?? this.dictEntryID,
+        timeAdded: timeAdded ?? this.timeAdded,
       );
   @override
   String toString() {
     return (StringBuffer('WordListEntriesSQLData(')
           ..write('wordListID: $wordListID, ')
-          ..write('dictEntryID: $dictEntryID')
+          ..write('dictEntryID: $dictEntryID, ')
+          ..write('timeAdded: $timeAdded')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(wordListID, dictEntryID);
+  int get hashCode => Object.hash(wordListID, dictEntryID, timeAdded);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is WordListEntriesSQLData &&
           other.wordListID == this.wordListID &&
-          other.dictEntryID == this.dictEntryID);
+          other.dictEntryID == this.dictEntryID &&
+          other.timeAdded == this.timeAdded);
 }
 
 class WordListEntriesSQLCompanion
     extends UpdateCompanion<WordListEntriesSQLData> {
   final Value<int> wordListID;
   final Value<int> dictEntryID;
+  final Value<DateTime> timeAdded;
   final Value<int> rowid;
   const WordListEntriesSQLCompanion({
     this.wordListID = const Value.absent(),
     this.dictEntryID = const Value.absent(),
+    this.timeAdded = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   WordListEntriesSQLCompanion.insert({
     required int wordListID,
     required int dictEntryID,
+    this.timeAdded = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : wordListID = Value(wordListID),
         dictEntryID = Value(dictEntryID);
   static Insertable<WordListEntriesSQLData> custom({
     Expression<int>? wordListID,
     Expression<int>? dictEntryID,
+    Expression<DateTime>? timeAdded,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (wordListID != null) 'word_list_i_d': wordListID,
       if (dictEntryID != null) 'dict_entry_i_d': dictEntryID,
+      if (timeAdded != null) 'time_added': timeAdded,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   WordListEntriesSQLCompanion copyWith(
-      {Value<int>? wordListID, Value<int>? dictEntryID, Value<int>? rowid}) {
+      {Value<int>? wordListID,
+      Value<int>? dictEntryID,
+      Value<DateTime>? timeAdded,
+      Value<int>? rowid}) {
     return WordListEntriesSQLCompanion(
       wordListID: wordListID ?? this.wordListID,
       dictEntryID: dictEntryID ?? this.dictEntryID,
+      timeAdded: timeAdded ?? this.timeAdded,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -498,6 +534,9 @@ class WordListEntriesSQLCompanion
     if (dictEntryID.present) {
       map['dict_entry_i_d'] = Variable<int>(dictEntryID.value);
     }
+    if (timeAdded.present) {
+      map['time_added'] = Variable<DateTime>(timeAdded.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -509,6 +548,7 @@ class WordListEntriesSQLCompanion
     return (StringBuffer('WordListEntriesSQLCompanion(')
           ..write('wordListID: $wordListID, ')
           ..write('dictEntryID: $dictEntryID, ')
+          ..write('timeAdded: $timeAdded, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
