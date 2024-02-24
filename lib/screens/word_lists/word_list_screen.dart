@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_action.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_sorting.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
@@ -62,6 +64,18 @@ class _WordListScreenState extends State<WordListScreen> {
   @override
   void initState() {
 
+    // init stream when the text controller changes
+    searchTextEditingController.addListener(() => setState((){
+      initStream();
+    }));
+
+    initStream();
+
+    super.initState();
+  }
+
+  void initStream(){
+
     // is this a default list
     if(widget.node.value.type == WordListNodeType.wordListDefault) {
 
@@ -83,18 +97,34 @@ class _WordListScreenState extends State<WordListScreen> {
       entriesStream = userListStream();
     }
 
-    // apply sorting
-    entriesStream = entriesStream.map((event) =>
-      event.sorted((a, b) => a.frequency.compareTo(b.frequency)));
+    String searchTerm = searchTextEditingController.text;
+    entriesStream = entriesStream
+      // apply search term
+      .map((event) => 
+        event.where((element) => 
+          element.kanjis.any((kanji) => kanji.contains(searchTerm)) ||
+          element.readings.any((reading) => reading.contains(searchTerm)) ||
+          element.meanings.any((meaning) =>
+            GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
+              isoToiso639_1[meaning.language]!.name) && 
+            meaning.meanings
+              .any((m) =>
+                m.attributes.any((a) => a?.contains(searchTerm) ?? false)
+          )
+        )
+      ))
+      // apply sorting
+      .map((event) =>
+        event.sorted((b, a) => a.frequency.compareTo(b.frequency)));
 
-    super.initState();
   }
 
   Stream<Iterable<JMdict>> searchHistoryStream(){
     return GetIt.I<SearchHistorySQLDatabase>().watchAllUniqueSearchHistoryIDs()
-        .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-          e.whereNotNull().toList()).whereNotNull()
-        );
+      .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
+        e.whereNotNull().toList())
+        .whereNotNull()
+      );
   }
 
   /// Returns a stream that yields a list with the elements of a JLPT word list
@@ -126,6 +156,12 @@ class _WordListScreenState extends State<WordListScreen> {
           .whereNotNull();
       });
 
+  }
+
+  @override
+  void dispose() {
+    searchTextEditingController.removeListener(() => setState((){}));
+    super.dispose();
   }
 
 
@@ -165,10 +201,7 @@ class _WordListScreenState extends State<WordListScreen> {
                       focusNode: searchInputFocusNode,
                       decoration: searchInputFocusNode.hasPrimaryFocus
                         ? const InputDecoration()
-                        : const InputDecoration.collapsed(hintText: "Test"),
-                      onChanged: (value) {
-                        // TODO filter entries
-                      },
+                        : const InputDecoration.collapsed(hintText: ""),
                     )
                   ),
                   const SizedBox(width: 16,),
