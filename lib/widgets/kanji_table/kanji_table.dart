@@ -64,10 +64,12 @@ class _KanjiTableState extends State<KanjiTable> {
   String categoryLevelSelection = "5";
   /// the available sorting orders
   Map<KanjiSorting, String> kanjiSortingToString = {
-    KanjiSorting.strokesAsc : "Strokes ↑", KanjiSorting.strokesDsc : "Strokes ↓",
-    KanjiSorting.freqAsc    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑"  , KanjiSorting.freqDsc : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
-    KanjiSorting.rtkAsc     : "RTK ↑"    , KanjiSorting.rtkDsc : "RTK ↓",
-    KanjiSorting.klcAsc     : "KLC ↑"    , KanjiSorting.klcDsc : "KLC ↓"
+    KanjiSorting.strokesAsc : "${LocaleKeys.DictionaryScreen_kanji_strokes.tr()} ↑",
+    KanjiSorting.strokesDsc : "${LocaleKeys.DictionaryScreen_kanji_strokes.tr()} ↓",
+    KanjiSorting.freqAsc    : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↑",
+    KanjiSorting.freqDsc : "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()} ↓",
+    KanjiSorting.rtkAsc : "RTK ↑", KanjiSorting.rtkDsc : "RTK ↓",
+    KanjiSorting.klcAsc : "KLC ↑", KanjiSorting.klcDsc : "KLC ↓"
   };
   /// [DropdownMenuItem]s for the sorting selction
   List<DropdownMenuItem> sortingDropDowns = [];
