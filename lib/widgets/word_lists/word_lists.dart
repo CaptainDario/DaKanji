@@ -134,9 +134,7 @@ class _WordListsState extends State<WordLists> {
   @override
   void dispose() {
 
-    searchTextEditingController.removeListener(() {setState((){});});
-
-    searchTextEditingController.removeListener(() { setState(() {});});
+    searchTextEditingController.removeListener(textEditingListener);
 
     scrollController.dispose();
     super.dispose();
