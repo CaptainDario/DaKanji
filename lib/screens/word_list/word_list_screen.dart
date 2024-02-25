@@ -3,6 +3,7 @@ import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_action.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_sorting.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
+import 'package:da_kanji_mobile/screens/word_list/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:tuple/tuple.dart';
 
@@ -72,22 +73,48 @@ class _WordListScreenState extends State<WordListScreen> {
     super.initState();
   }
 
+
+
+  /// Returns the correct stream based on the current parameters
+  Stream<Iterable<Tuple2<DateTime, int>>> getStream(){
+
+    late Stream<Iterable<Tuple2<DateTime, int>>> idStream;
+
+    // is this a default list
+    if(widget.node.value.type == WordListNodeType.wordListDefault) {
+
+      isDefault = true;
+      idStream = const Stream.empty();
+
+    }    
+    // user list
+    else{
+      idStream = userListStream(widget.node.id);
+    }
+
+    return idStream;
+  }
+
   /// Initializes the stream from which the elements of this word list are read
   void initStream(){
 
-    Stream<Iterable<Tuple2<DateTime, int>>> idStream = getStream();
-
     String searchTerm = searchTextEditingController.text;
-    entriesStream = idStream
+    entriesStream = getStream()
       // sort by date time if set
       .map((event) {
-        if(currentSorting == WordListSorting.dateAsc){
-          return event.sorted((a, b) => a.item1.compareTo(b.item1));
-        } else if(currentSorting == WordListSorting.dateDesc){
-          return event.sorted((b, a) => a.item1.compareTo(b.item1));
-        } else {
-          return event;
+
+        if([WordListSorting.dateAsc, WordListSorting.dateDesc].contains(currentSorting)){
+          event = event.sorted((a, b) {
+            if(currentSorting == WordListSorting.dateDesc) (b, a) = (a, b);
+
+            int comp = a.item1.compareTo(b.item1);
+            if(comp == 0) comp = a.item2.compareTo(b.item2);
+
+            return comp;
+          });
         }
+
+        return event;
       })
       // get all entries from the dictionary
       .map((e) {
@@ -110,47 +137,23 @@ class _WordListScreenState extends State<WordListScreen> {
           )
         )
       ))
-      // apply frequency based sorting
+      // sort by frequency if set
       .map((event) {
-        if(currentSorting == WordListSorting.freqAsc){
-          return event.sorted((a, b) => a.frequency.compareTo(b.frequency));
-        } else if(currentSorting == WordListSorting.freqDesc){
-          return event.sorted((b, a) => a.frequency.compareTo(b.frequency));
-        } else {
-          return event;
+
+        if([WordListSorting.freqAsc, WordListSorting.freqDesc].contains(currentSorting)){
+          event = event.sorted((a, b) {
+            if(currentSorting == WordListSorting.dateDesc) (b, a) = (a, b);
+
+            int comp = a.frequency.compareTo(b.frequency);
+            if(comp == 0) comp = a.frequency.compareTo(b.frequency);
+
+            return comp;
+          });
         }
+
+        return event;
       });
 
-  }
-
-  /// Returns the correct stream based on the current parameters
-  Stream<Iterable<Tuple2<DateTime, int>>> getStream(){
-
-    late Stream<Iterable<Tuple2<DateTime, int>>> idStream;
-
-    // is this a default list
-    if(widget.node.value.type == WordListNodeType.wordListDefault) {
-
-      isDefault = true;
-      
-      idStream = const Stream.empty();
-
-    }    
-    // user list
-    else{
-      idStream = userListStream();
-    }
-
-    return idStream;
-  }
- 
-  /// If a user made list is shown, gets the right stream from the DB
-  Stream<Iterable<Tuple2<DateTime, int>>> userListStream(){
-
-    // listen to changes of this word list
-    return GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(widget.node.id)
-      .map((event) => event.map((e) => Tuple2(e.timeAdded, e.dictEntryID)));
-      
   }
 
   @override
@@ -257,10 +260,12 @@ class _WordListScreenState extends State<WordListScreen> {
 
             return SearchResultList(
               searchResults: snapshot.data!.whereNotNull().toList(),
+              alwaysAnimateIn: false,
               onDismissed: isDefault 
                 ? null
                 : (direction, entry, listIndex) {
                   widget.onDelete?.call(entry);
+                  initStream();
                 },
               showWordFrequency: true,
               onSearchResultPressed: (entry){
@@ -281,7 +286,7 @@ class _WordListScreenState extends State<WordListScreen> {
   /// Copies the entries from another list
   void copyEntriesFromOtherList() async {
 
-    await showWordListSelectionDialog(context,
+    await showWordListSelectionDialog(this.context,
     includeDefaults: true,
     onSelectionConfirmed: (selection) async {
 
@@ -290,7 +295,7 @@ class _WordListScreenState extends State<WordListScreen> {
         widget.node.id);
 
       // ignore: use_build_context_synchronously
-      Navigator.of(context, rootNavigator: false).pop();
+      Navigator.of(this.context, rootNavigator: false).pop();
 
     });
 
