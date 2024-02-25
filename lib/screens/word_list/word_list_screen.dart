@@ -286,7 +286,7 @@ class _WordListScreenState extends State<WordListScreen> {
   /// Copies the entries from another list
   void copyEntriesFromOtherList() async {
 
-    await showWordListSelectionDialog(this.context,
+    await showWordListSelectionDialog(context,
     includeDefaults: true,
     onSelectionConfirmed: (selection) async {
 
@@ -295,7 +295,7 @@ class _WordListScreenState extends State<WordListScreen> {
         widget.node.id);
 
       // ignore: use_build_context_synchronously
-      Navigator.of(this.context, rootNavigator: false).pop();
+      Navigator.of(context, rootNavigator: false).pop();
 
     });
 
