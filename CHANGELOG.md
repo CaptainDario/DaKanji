@@ -11,10 +11,9 @@ New Features:
   - Characters from drawing are now added at the cursor's position
 
 - Word Lists
-  - Add words to lists
   - Sort lists in folders
-  - Search lists
-  - Lists for JLPT and search history
+  - Search in lists
+  - Lists for JLPT
 
 Improvements:
 
