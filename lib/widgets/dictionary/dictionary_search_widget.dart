@@ -417,7 +417,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           return SearchResultList(
                             searchResults: searchHistory,
                             showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                            animateIn: false,
+                            alwaysAnimateIn: false,
                             init: () {},
                             onSearchResultPressed: onSearchResultPressed,
                             onDismissed: (direction, entry, idx) => 

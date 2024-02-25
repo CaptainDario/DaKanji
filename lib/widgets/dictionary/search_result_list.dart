@@ -19,7 +19,7 @@ class SearchResultList extends StatefulWidget {
   final bool showWordFrequency;
   /// Should the entries of this list always be animated in ie.: with every
   /// change or only once when it is forst instantiated
-  final bool animateIn;
+  final bool alwaysAnimateIn;
   /// Function that is called after the search results have been initialized
   final void Function()? init;
 
@@ -36,7 +36,7 @@ class SearchResultList extends StatefulWidget {
       required this.searchResults,
       this.reversed = false,
       this.showWordFrequency = false,
-      this.animateIn = true,
+      this.alwaysAnimateIn = true,
       this.init,
       this.onSearchResultPressed,
       this.onDismissed,
@@ -64,7 +64,7 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   void didUpdateWidget(covariant SearchResultList oldWidget) {
     init();
-    if(oldWidget.searchResults != widget.searchResults && widget.animateIn){
+    if(oldWidget.searchResults != widget.searchResults && widget.alwaysAnimateIn){
       slideInAnimationKey = Key(DateTime.now().toIso8601String());
     }
     super.didUpdateWidget(oldWidget);
