@@ -8,7 +8,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 
 /// Exports the given word list as a PDF file
@@ -30,7 +30,7 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
   int maxTranslations = 3;
   bool includeKana = true;
   bool maxOneLine = true;
-  List<JMdict> entries = await wordListEntries(wordList.wordIds, langsToInclude);
+  List<JMdict> entries = await wordListEntriesForPDF(wordList.wordIds, langsToInclude);
 
 
   pdf.addPage(
