@@ -2,12 +2,14 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
@@ -21,6 +23,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class WordListSettings extends StatefulWidget {
     
@@ -47,16 +50,53 @@ class _WordListSettingsState extends State<WordListSettings> {
       Icons.list,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
+        // show word frequency in search results / dictionary
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_dict_show_word_freq.tr(),
+          value: widget.settings.dictionary.showWordFruequency,
+          leadingIcon: Icons.info_outline,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.wordLists.showWordFruequency = value;
+              widget.settings.save();
+            });
+          },
+          onLeadingIconPressed: () async {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.noHeader,
+              btnOkColor: g_Dakanji_green,
+              btnOkOnPress: (){},
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MarkdownBody(
+                    data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
+                    onTapLink: (text, href, title) {
+                      if(href != null) {
+                        launchUrlString(href);
+                      }
+                    },
+                  ),
+                )
+              )
+            ).show();
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+        // readd defaults
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_word_lists_readd_defaults.tr(),
           icon: Icons.undo,
           onButtonPressed: () async => await readdDefaults()
         ),
+        // export word lists
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_word_lists_export.tr(),
           icon: Icons.arrow_upward,
           onButtonPressed: () async => await exportWordLists(),
         ),
+        // import word lists
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_word_lists_import.tr(),
           icon: Icons.arrow_downward,

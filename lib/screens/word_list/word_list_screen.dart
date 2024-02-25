@@ -260,14 +260,14 @@ class _WordListScreenState extends State<WordListScreen> {
 
             return SearchResultList(
               searchResults: snapshot.data!.whereNotNull().toList(),
-              alwaysAnimateIn: false,
+              alwaysAnimateIn: true,
               onDismissed: isDefault 
                 ? null
                 : (direction, entry, listIndex) {
                   widget.onDelete?.call(entry);
                   initStream();
                 },
-              showWordFrequency: true,
+              showWordFrequency: GetIt.I<Settings>().wordLists.showWordFruequency,
               onSearchResultPressed: (entry){
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => 
