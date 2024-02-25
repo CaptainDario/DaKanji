@@ -74,31 +74,30 @@ class _WordListScreenState extends State<WordListScreen> {
     super.initState();
   }
 
+  /// Initializes the stream from which the elements of this word list are read
   void initStream(){
 
-    // is this a default list
-    if(widget.node.value.type == WordListNodeType.wordListDefault) {
-
-      isDefault = true;
-
-      // search history (assure it is a default list and not a user created one)
-      if(widget.node.value.name == DefaultNames.searchHistory.name){
-
-        entriesStream = searchHistoryStream();
-      }
-      // default list (JLPT)
-      else if(widget.node.value.name.contains('jlpt')){
-
-        entriesStream = jlptListStream();
-      }
-    }    
-    // user list
-    else{
-      entriesStream = userListStream();
-    }
+    Stream<Iterable<Tuple2<DateTime, int>>> idStream = getStream();
 
     String searchTerm = searchTextEditingController.text;
-    entriesStream = entriesStream
+    entriesStream = idStream
+      // sort by date time if set
+      .map((event) {
+        if(currentSorting == WordListSorting.dateAsc){
+          return event.sorted((a, b) => a.item1.compareTo(b.item1));
+        } else if(currentSorting == WordListSorting.dateDesc){
+          return event.sorted((b, a) => a.item1.compareTo(b.item1));
+        } else {
+          return event;
+        }
+      })
+      // get all entries from the dictionary
+      .map((e) {
+        return GetIt.I<Isars>().dictionary.jmdict
+          .getAllSync(
+            e.map((e) => e.item2).toList())
+          .whereNotNull();
+      })
       // apply search term
       .map((event) => 
         event.where((element) => 
