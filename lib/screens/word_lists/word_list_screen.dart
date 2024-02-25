@@ -11,19 +11,17 @@ import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
-import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
+import 'package:tuple/tuple.dart';
 
 class WordListScreen extends StatefulWidget {
 
@@ -202,13 +200,14 @@ class _WordListScreenState extends State<WordListScreen> {
                     )
                   ),
                   const SizedBox(width: 16,),
-                  // search list
+                  // sort list
                   DropdownButton<WordListSorting>(
                     onChanged: (value) {
                       if(value == null) return;
 
                       setState(() {
                         currentSorting = value;
+                        initStream();
                       });
                     },
                     value: currentSorting,
@@ -249,13 +248,13 @@ class _WordListScreenState extends State<WordListScreen> {
         body: StreamBuilder<Iterable<JMdict>>(
           stream: entriesStream,
           builder: (context, snapshot) {
-        
+
             if(snapshot.data == null || !snapshot.hasData || snapshot.data!.isEmpty){
               return Center(
                 child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
               );
             }
-        
+
             return SearchResultList(
               searchResults: snapshot.data!.whereNotNull().toList(),
               onDismissed: isDefault 
