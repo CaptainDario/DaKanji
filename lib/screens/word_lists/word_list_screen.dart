@@ -113,49 +113,47 @@ class _WordListScreenState extends State<WordListScreen> {
           )
         )
       ))
-      // apply sorting
-      .map((event) =>
-        event.sorted((b, a) => a.frequency.compareTo(b.frequency)));
+      // apply frequency based sorting
+      .map((event) {
+        if(currentSorting == WordListSorting.freqAsc){
+          return event.sorted((a, b) => a.frequency.compareTo(b.frequency));
+        } else if(currentSorting == WordListSorting.freqDesc){
+          return event.sorted((b, a) => a.frequency.compareTo(b.frequency));
+        } else {
+          return event;
+        }
+      });
 
   }
 
-  Stream<Iterable<JMdict>> searchHistoryStream(){
-    return GetIt.I<SearchHistorySQLDatabase>().watchAllUniqueSearchHistoryIDs()
-      .map((e) => GetIt.I<Isars>().dictionary.jmdict.getAllSync(
-        e.whereNotNull().toList())
-        .whereNotNull()
-      );
-  }
+  /// Returns the correct stream based on the current parameters
+  Stream<Iterable<Tuple2<DateTime, int>>> getStream(){
 
-  /// Returns a stream that yields a list with the elements of a JLPT word list
-  Stream<Iterable<JMdict>> jlptListStream(){
+    late Stream<Iterable<Tuple2<DateTime, int>>> idStream;
 
-    Query<int> jlptIdsQuery = GetIt.I<Isars>().dictionary.jmdict.filter()
-      .jlptLevelElementContains(widget.node.value.name.replaceAll("jlpt", ""))
-      .sortByFrequencyDesc()
-      .idProperty()
-      .build();
-    
-    return jlptIdsQuery.watch(fireImmediately: true)
-      .map((event) => 
-        GetIt.I<Isars>().dictionary.jmdict.getAllSync(event)
-        .whereNotNull()
-      ); 
+    // is this a default list
+    if(widget.node.value.type == WordListNodeType.wordListDefault) {
 
+      isDefault = true;
+      
+      idStream = const Stream.empty();
+
+    }    
+    // user list
+    else{
+      idStream = userListStream();
+    }
+
+    return idStream;
   }
  
-  Stream<Iterable<JMdict>> userListStream(){
+  /// If a user made list is shown, gets the right stream from the DB
+  Stream<Iterable<Tuple2<DateTime, int>>> userListStream(){
 
     // listen to changes of this word list
     return GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(widget.node.id)
-      // on change
-      .map((e) {
-        return GetIt.I<Isars>().dictionary.jmdict
-          .getAllSync(
-            e.map((e) => e.dictEntryID).toList())
-          .whereNotNull();
-      });
-
+      .map((event) => event.map((e) => Tuple2(e.timeAdded, e.dictEntryID)));
+      
   }
 
   @override
