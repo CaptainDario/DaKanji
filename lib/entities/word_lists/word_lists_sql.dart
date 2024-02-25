@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/word_lists/default_word_lists_queries.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -120,22 +121,27 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   Future addDefaultsToRoot(TreeNode<WordListsData> root) async {
 
     TreeNode<WordListsData> defaultsFolder = TreeNode<WordListsData>(
-      WordListsData(DefaultNames.defaults.name, WordListNodeType.folderDefault, [], true),
+      WordListsData("Defaults", WordListNodeType.folder, [], true),
     );
 
     transaction(() async {
       // add all default lists to the defaults folder
       for (var element in DefaultNames.values) {
-        if(element == DefaultNames.defaults) continue;
 
         TreeNode<WordListsData> defaultNode = TreeNode(
-            WordListsData(element.name, WordListNodeType.wordListDefault, [], true),
+            WordListsData(element.name, WordListNodeType.wordList, [], true),
           );
 
-        int id = await into(wordListNodesSQL).insert(companionFromTreeNode(defaultNode, false));
+        int id = await into(wordListNodesSQL).insert(
+          companionFromTreeNode(defaultNode, false));
         defaultNode.id = id;
 
         defaultsFolder.addChild(defaultNode);
+
+        // add the actual entries to this list
+        addEntriesToWordLists(
+          [defaultNode.id],
+          getEntryIDsOfDefaultList(defaultNode.value.name));
       }
 
       // add the defaults folder to SQLite
@@ -151,22 +157,13 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// Readds the defaults folde to the root
   Future readdDefaultsToRoot() async {
 
-    // check if the defaults folder still exists
-    bool containsDefaults = (
-      await (select(wordListNodesSQL)
-        ..where((tbl) => tbl.type.equals(WordListNodeType.folderDefault.index)))
-        .get()
-    ).isNotEmpty;
-
-    // if not, readd it
-    if(!containsDefaults){
-      // load word lists from sql
-      final tree = WordListsTree.fromWordListsSQL(
-        (await select(wordListNodesSQL).get())
-      );
-      // readd the defaults
-      addDefaultsToRoot(tree.root);
-    }
+    // load word lists from sql
+    final tree = WordListsTree.fromWordListsSQL(
+      (await select(wordListNodesSQL).get())
+    );
+    // readd the defaults
+    addDefaultsToRoot(tree.root);
+    
   }
 
   /// Adds the given `node` to the database, if `useID == true` use the id of
@@ -345,8 +342,8 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     await wordListEntriesSQL.deleteWhere((tbl) {
       return Expression.and([
+        tbl.dictEntryID.isIn(entriesIDs),
         tbl.wordListID.equals(wordListID),
-        tbl.dictEntryID.isIn(entriesIDs)
       ]);
     });
 

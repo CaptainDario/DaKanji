@@ -22,7 +22,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_tree.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_list_screen.dart';
+import 'package:da_kanji_mobile/screens/word_list/word_list_screen.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_list_node.dart';
 
 /// A widget that shows the default and user defined word lists as a tree
