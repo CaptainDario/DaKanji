@@ -313,8 +313,9 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
           for (int wordID in wordIDs){
             await wordListEntriesSQL.insertOnConflictUpdate(
               WordListEntriesSQLCompanion(
-                wordListID: Value(listID),
-                dictEntryID: Value(wordID)
+                wordListID : Value(listID),
+                dictEntryID: Value(wordID),
+                timeAdded  : Value(DateTime.now())
               )
             );
           }
