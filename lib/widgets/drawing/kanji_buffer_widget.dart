@@ -296,16 +296,18 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
 
   void doubleTap(){
     // start the delete animation if there are characters in the buffer
-    if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
+    //if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
       _rotationXController.forward(from: 0.0);
 
       //delete the characters after the animation
       Future.delayed(Duration(milliseconds: (_rotationXDuration/4).round()), (){
         setState(() {
-            GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();           
+          GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();
+          GetIt.I<DrawScreenState>().drawingLookup.charPrefix = "";
+          GetIt.I<DrawScreenState>().drawingLookup.charPostfix = "";
         });
       });
-    }
+    //}
   }
 
   void tap(){
