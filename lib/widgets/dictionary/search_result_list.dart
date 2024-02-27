@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/dictionary/search_result_list_controller.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 
 // Project imports:
 import 'search_result_card.dart';
@@ -21,8 +23,9 @@ class SearchResultList extends StatefulWidget {
   /// change or only once when it is forst instantiated
   final bool alwaysAnimateIn;
   /// Function that is called after the search results have been initialized
-  final void Function()? init;
-
+  /// Provides a [SearchResultListController] as parameter that can be used
+  /// to manipulate this list
+  final void Function(SearchResultListController controller)? init;
   /// Callback that is executed when the user pressed on a search result.
   /// Provides the selected entry as a parameter
   final void Function(JMdict selection)? onSearchResultPressed;
@@ -54,9 +57,18 @@ class _SearchResultListState extends State<SearchResultList> {
   Key slideInAnimationKey = Key(DateTime.now().toIso8601String());
   /// List of focus nodes that each corresponds to on search result entry 
   List searchResultsFocusses = [];
+  /// Controller that can be used to hadle this instance
+  late SearchResultListController controller;
+
 
   @override
   void initState() {
+
+    controller = SearchResultListController(
+      runSlideInAnimation: () {
+      },
+    );
+
     init();
     super.initState();
   }
@@ -64,7 +76,8 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   void didUpdateWidget(covariant SearchResultList oldWidget) {
     init();
-    if(oldWidget.searchResults != widget.searchResults && widget.alwaysAnimateIn){
+    if((oldWidget.searchResults != widget.searchResults && widget.alwaysAnimateIn) ||
+      oldWidget.key != widget.key){
       slideInAnimationKey = Key(DateTime.now().toIso8601String());
     }
     super.didUpdateWidget(oldWidget);
@@ -73,7 +86,7 @@ class _SearchResultListState extends State<SearchResultList> {
   void init(){
     searchResultsFocusses =
       List.generate(widget.searchResults.length, (index) => FocusNode());
-    widget.init?.call();
+    widget.init?.call(controller);
   }
 
   @override

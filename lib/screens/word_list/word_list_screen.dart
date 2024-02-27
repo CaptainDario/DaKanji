@@ -55,7 +55,8 @@ class _WordListScreenState extends State<WordListScreen> {
   FocusNode searchInputFocusNode = FocusNode();
   /// The [TextEditingController] to handle the search inputs
   TextEditingController searchTextEditingController = TextEditingController();
-
+  ///
+  bool animate = true;
   /// The current sorting order
   WordListSorting currentSorting = WordListSorting.dateDesc;
 
@@ -63,16 +64,10 @@ class _WordListScreenState extends State<WordListScreen> {
   @override
   void initState() {
 
-    // init stream when the text controller changes
-    searchTextEditingController.addListener(() => setState((){
-      initStream();
-    }));
-
     initStream();
 
     super.initState();
   }
-
 
 
   /// Returns the correct stream based on the current parameters
@@ -142,24 +137,15 @@ class _WordListScreenState extends State<WordListScreen> {
 
         if([WordListSorting.freqAsc, WordListSorting.freqDesc].contains(currentSorting)){
           event = event.sorted((a, b) {
-            if(currentSorting == WordListSorting.dateDesc) (b, a) = (a, b);
+            if(currentSorting == WordListSorting.freqDesc) (b, a) = (a, b);
 
-            int comp = a.frequency.compareTo(b.frequency);
-            if(comp == 0) comp = a.frequency.compareTo(b.frequency);
-
-            return comp;
+            return a.frequency.compareTo(b.frequency);
           });
         }
 
         return event;
       });
 
-  }
-
-  @override
-  void dispose() {
-    searchTextEditingController.removeListener(() => setState((){}));
-    super.dispose();
   }
 
 
@@ -187,6 +173,7 @@ class _WordListScreenState extends State<WordListScreen> {
                   IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () {
+                      animate = false;
                       searchInputFocusNode.requestFocus();
                       setState(() {});
                     },
@@ -200,6 +187,12 @@ class _WordListScreenState extends State<WordListScreen> {
                       decoration: searchInputFocusNode.hasPrimaryFocus
                         ? const InputDecoration()
                         : const InputDecoration.collapsed(hintText: ""),
+                      onChanged: (value) {
+                        setState(() {
+                          animate = true;
+                          initStream();
+                        });
+                      },
                     )
                   ),
                   const SizedBox(width: 16,),
@@ -209,8 +202,10 @@ class _WordListScreenState extends State<WordListScreen> {
                       if(value == null) return;
 
                       setState(() {
+                        animate = true;
                         currentSorting = value;
                         initStream();
+                        animate = true;
                       });
                     },
                     value: currentSorting,
@@ -259,11 +254,14 @@ class _WordListScreenState extends State<WordListScreen> {
             }
 
             return SearchResultList(
+              //key: searchResultListKey,
               searchResults: snapshot.data!.whereNotNull().toList(),
-              alwaysAnimateIn: true,
+              alwaysAnimateIn: animate,
               onDismissed: isDefault 
                 ? null
                 : (direction, entry, listIndex) {
+                  // do NOT reanimate the list tiles in when deleting
+                  animate = false;
                   widget.onDelete?.call(entry);
                   initStream();
                 },

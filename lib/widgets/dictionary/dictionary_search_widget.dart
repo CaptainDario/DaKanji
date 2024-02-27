@@ -312,12 +312,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               false,
                               drawSearchPrefix: searchInputController.text.isNotEmpty
                                 ? searchInputController.text.substring(
-                                  0, searchInputController.selection.baseOffset
+                                  0,
+                                  searchInputController.selection.baseOffset == -1
+                                    ? searchInputController.text.length
+                                    : searchInputController.selection.baseOffset
                                 )
                                 : "",
                               drawSearchPostfix: searchInputController.text.isNotEmpty
                                 ? searchInputController.text.substring(
-                                  searchInputController.selection.baseOffset
+                                  searchInputController.selection.baseOffset == -1
+                                    ? searchInputController.text.length
+                                    : searchInputController.selection.baseOffset
                                 )
                                 : ""
                             )
@@ -394,7 +399,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                         searchResults: widget.context.watch<DictSearch>().searchResults,
                         onSearchResultPressed: onSearchResultPressed,
                         showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                        init: () {},
+                        init: (controller) {},
                       )
                       // otherwise the search history
                       : StreamBuilder<List<SearchHistorySQLData>>(
@@ -418,7 +423,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                             searchResults: searchHistory,
                             showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                             alwaysAnimateIn: false,
-                            init: () {},
+                            init: (controller) {},
                             onSearchResultPressed: onSearchResultPressed,
                             onDismissed: (direction, entry, idx) => 
                               GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
