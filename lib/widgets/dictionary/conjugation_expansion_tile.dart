@@ -12,8 +12,8 @@ import 'package:da_kanji_mobile/entities/conjugation/conjugation_descriptions.da
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_column.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/verb_conjugation_entry.dart';
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
+
+
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {
