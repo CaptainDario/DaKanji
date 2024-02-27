@@ -2,16 +2,14 @@
 import 'dart:math';
 
 // Package imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:tuple/tuple.dart';
-
-
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Get all `JMDict` entries from the database that are in the word list given
 /// by their IDs. Remove all translations that are not in `langsToInclude` and sort

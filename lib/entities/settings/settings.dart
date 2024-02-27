@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,6 +17,7 @@ import 'package:da_kanji_mobile/entities/settings/settings_kana_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_kanji_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_misc.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_text.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 
 /// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {

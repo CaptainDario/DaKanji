@@ -1,5 +1,5 @@
+// Project imports:
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
-
 
 /// Controller class that can be used to trigger events in regards to a
 /// [SearchResultList]

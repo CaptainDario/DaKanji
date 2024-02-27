@@ -8,8 +8,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 /// Exports the given word list as a PDF file
 Future<pw.Document> pdfPortrait(WordListsData wordList) async {

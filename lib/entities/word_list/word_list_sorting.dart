@@ -1,8 +1,8 @@
+// Package imports:
 import 'package:easy_localization/easy_localization.dart';
 
+// Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
-
-
 
 /// The ways of sorting word lists
 enum WordListSorting {
