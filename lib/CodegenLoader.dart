@@ -2,8 +2,10 @@
 
 // ignore_for_file: prefer_single_quotes
 
+// Dart imports:
 import 'dart:ui';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -133,6 +135,7 @@ class CodegenLoader extends AssetLoader{
   },
   "FeedbackScreen": {
     "draw": "绘制",
+    "feedback_description_email": "如果您希望得到回复，请附上电子邮件。",
     "feedback_description_text": "有什么问题？请在下面描述您的问题。如果您希望我跟进您的请求，请附上电子邮件。",
     "navigate": "导航",
     "submit": "提交",
@@ -274,6 +277,7 @@ class CodegenLoader extends AssetLoader{
     "advanced_settings_delete_dojg": "删除 DoJG 文件",
     "advanced_settings_delete_history": "删除搜索历史",
     "advanced_settings_delete_user_data": "删除用户数据",
+    "advanced_settings_delete_word_lists": "删除所有单词表",
     "advanced_settings_draw_backend": "推理后端（需要重新启动）。",
     "advanced_settings_number_search_procs": "搜索进程的数量（@:SettingsScreen.required_restart）。",
     "advanced_settings_number_search_procs_body": "当DaKanji搜索它的数据库时，它会使用多个进程。通常情况下，对于大勘察院所包含的标准数据库来说，2个是一个很好的值。然而，如果你在数据库中搜索时遇到速度减慢的情况，请尝试使用更多进程。",
@@ -338,7 +342,14 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "text_open_in_fullscreen": "全屏打开",
     "text_show_selection_buttons": "显示文本选择按钮",
-    "title": "设置"
+    "title": "设置",
+    "word_lists_export": "导出单词表数据库",
+    "word_lists_import": "导入单词列表数据库（@:SettingsScreen.restarts_app）",
+    "word_lists_import_error": "错误",
+    "word_lists_import_error_description": "提供的文件无效。请选择一个有效文件并重试。",
+    "word_lists_import_warning": "警告",
+    "word_lists_import_warning_description": "这会覆盖你所有的单词表，你确定吗？",
+    "word_lists_readd_defaults": "添加默认文件夹"
   },
   "TextScreen": {
     "copy_button_copy": "已复制：",
@@ -361,11 +372,20 @@ class CodegenLoader extends AssetLoader{
     "loading": "搜索",
     "title": "网页浏览"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "复制其他列表中的所有条目",
+    "word_list_sort_date_asc": "日期 ↑",
+    "word_list_sort_date_desc": "日期 ↓",
+    "word_list_sort_freq_asc": "频率↑",
+    "word_list_sort_freq_desc": "频率↓"
+  },
   "WordListsScreen": {
     "add": "增加",
     "create_pdf": "创建PDF",
     "defaults": "违约",
     "delete": "删除",
+    "delete_warning": "警告",
+    "delete_warning_desc": "这将永久删除该单词表，且无法撤销。",
     "drag_to_scroll": "拖动此处滚动",
     "new_folder": "新文件夹",
     "new_list": "新名单",
@@ -527,6 +547,7 @@ static const Map<String,dynamic> ja = {
   },
   "FeedbackScreen": {
     "draw": "注釈",
+    "feedback_description_email": "返信を希望される方は、Eメールでのご連絡をお願いします。",
     "feedback_description_text": "問題がありますか？以下に問題の詳細をご入力ください。フォローアップをご希望の場合は、Eメールも明記してください。",
     "navigate": "操作",
     "submit": "送信",
@@ -668,6 +689,7 @@ static const Map<String,dynamic> ja = {
     "advanced_settings_delete_dojg": "DoJGファイルの削除",
     "advanced_settings_delete_history": "検索履歴の削除",
     "advanced_settings_delete_user_data": "ユーザーデータの削除",
+    "advanced_settings_delete_word_lists": "すべての単語リストを削除する",
     "advanced_settings_draw_backend": "推論バックエンド（再起動します）",
     "advanced_settings_number_search_procs": "検索プロセス数 (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Dakanjiは、データベースを検索する際、複数のプロセスを使用します。Dakanjiに標準で付属しているデータベースでは、通常2プロセスで十分ですが、データベースで検索したときに動作が重くなるようであれば、プロセス数を増やしてください。",
@@ -732,7 +754,14 @@ static const Map<String,dynamic> ja = {
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "全画面表示",
     "text_show_selection_buttons": "テキスト選択ボタンを表示",
-    "title": "設定"
+    "title": "設定",
+    "word_lists_export": "単語リスト・データベースのエクスポート",
+    "word_lists_import": "単語リストデータベースのインポート (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "エラー",
+    "word_lists_import_error_description": "提供されたファイルは有効ではありません。有効なファイルを選択して再試行してください。",
+    "word_lists_import_warning": "警告",
+    "word_lists_import_warning_description": "これですべての単語リストが上書きされますが、よろしいですか？",
+    "word_lists_readd_defaults": "デフォルトフォルダの追加"
   },
   "TextScreen": {
     "copy_button_copy": "コピー：",
@@ -769,11 +798,20 @@ static const Map<String,dynamic> ja = {
     "loading": "検索中",
     "title": "ウェブビュー"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "他のリストからすべてのエントリをコピーする",
+    "word_list_sort_date_asc": "日付 ↑",
+    "word_list_sort_date_desc": "日付 ↓",
+    "word_list_sort_freq_asc": "フリーク ↑",
+    "word_list_sort_freq_desc": "フリーク ↓"
+  },
   "WordListsScreen": {
     "add": "追加",
     "create_pdf": "PDFを作成する",
     "defaults": "デフォルト",
     "delete": "削除",
+    "delete_warning": "警告",
+    "delete_warning_desc": "元に戻すことはできません。",
     "drag_to_scroll": "ここをドラッグしてスクロール",
     "new_folder": "新規フォルダ",
     "new_list": "新規リスト",
@@ -951,6 +989,7 @@ static const Map<String,dynamic> de = {
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
+    "feedback_description_email": "Bitte geben Sie eine E-Mail an, wenn Sie eine Antwort wünschen.",
     "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie möchten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
@@ -1092,6 +1131,7 @@ static const Map<String,dynamic> de = {
     "advanced_settings_delete_dojg": "DoJG-Dateien löschen",
     "advanced_settings_delete_history": "Suchverlauf löschen",
     "advanced_settings_delete_user_data": "Benutzerdaten löschen",
+    "advanced_settings_delete_word_lists": "Alle Wortlisten löschen",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
@@ -1156,7 +1196,14 @@ static const Map<String,dynamic> de = {
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Im Vollbildmodus öffnen",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "word_lists_export": "Wortlisten-Datenbank exportieren",
+    "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Fehler",
+    "word_lists_import_error_description": "Die angegebene Datei ist ungültig. Bitte wählen Sie eine gültige Datei und versuchen Sie es erneut.",
+    "word_lists_import_warning": "Warnung",
+    "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten überschrieben, sind Sie sicher?",
+    "word_lists_readd_defaults": "Hinzufügen des Standardordners"
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -1193,11 +1240,20 @@ static const Map<String,dynamic> de = {
     "loading": "Suche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Alle Einträge aus anderen Listen kopieren",
+    "word_list_sort_date_asc": "Datum ↑",
+    "word_list_sort_date_desc": "Datum ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "Hinzufügen",
     "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "Löschen",
+    "delete_warning": "Warnung",
+    "delete_warning_desc": "Dadurch wird diese Wortliste endgültig gelöscht, das kann nicht rückgängig gemacht werden.",
     "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",
@@ -1337,6 +1393,7 @@ static const Map<String,dynamic> ru = {
   },
   "FeedbackScreen": {
     "draw": "нарисовать",
+    "feedback_description_email": "Пожалуйста, укажите электронную почту, если хотите получить ответ.",
     "feedback_description_text": "Что не так? Опишите свою проблему ниже. Если вы хотите, чтобы я мог проследить за выполнением вашего запроса, укажите, пожалуйста, адрес электронной почты.",
     "navigate": "перейдите по ссылке",
     "submit": "отправить",
@@ -1478,6 +1535,7 @@ static const Map<String,dynamic> ru = {
     "advanced_settings_delete_dojg": "Удаление файлов DoJG",
     "advanced_settings_delete_history": "Удаление истории поиска",
     "advanced_settings_delete_user_data": "Удаление пользовательских данных",
+    "advanced_settings_delete_word_lists": "Удалить все списки слов",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
     "advanced_settings_number_search_procs": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
@@ -1542,7 +1600,14 @@ static const Map<String,dynamic> ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Открыть в полноэкранном режиме",
     "text_show_selection_buttons": "Показать кнопки выделения текста",
-    "title": "Настройки"
+    "title": "Настройки",
+    "word_lists_export": "Экспорт базы данных списков слов",
+    "word_lists_import": "Импортируйте базу данных списков слов (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Ошибка",
+    "word_lists_import_error_description": "Указанный файл недействителен. Пожалуйста, выберите правильный файл и повторите попытку.",
+    "word_lists_import_warning": "Внимание",
+    "word_lists_import_warning_description": "Это перепишет все ваши списки слов, вы уверены?",
+    "word_lists_readd_defaults": "Добавьте папку по умолчанию"
   },
   "TextScreen": {
     "copy_button_copy": "Копирование:",
@@ -1565,11 +1630,20 @@ static const Map<String,dynamic> ru = {
     "loading": "Поиск",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Копирование всех записей из других списков",
+    "word_list_sort_date_asc": "Дата ↑",
+    "word_list_sort_date_desc": "Дата ↓",
+    "word_list_sort_freq_asc": "Фрик. ↑",
+    "word_list_sort_freq_desc": "Частота. ↓"
+  },
   "WordListsScreen": {
     "add": "добавить",
     "create_pdf": "Создать PDF",
     "defaults": "по умолчанию",
     "delete": "Удалить",
+    "delete_warning": "Внимание",
+    "delete_warning_desc": "Это приведет к окончательному удалению списка слов, и отменить это невозможно.",
     "drag_to_scroll": "Перетащите сюда для прокрутки",
     "new_folder": "Новая папка",
     "new_list": "Новый список",
@@ -1744,6 +1818,7 @@ static const Map<String,dynamic> pl = {
   },
   "FeedbackScreen": {
     "draw": "rysuj",
+    "feedback_description_email": "Prosimy o podanie adresu e-mail w celu uzyskania odpowiedzi.",
     "feedback_description_text": "Co jest nie tak? Opisz swój problem poniżej. Jeśli chcesz, abym mógł odpowiedzieć na Twoją prośbę, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wyślij",
@@ -1885,6 +1960,7 @@ static const Map<String,dynamic> pl = {
     "advanced_settings_delete_dojg": "Usuwanie plików DoJG",
     "advanced_settings_delete_history": "Usuwanie historii wyszukiwania",
     "advanced_settings_delete_user_data": "Usuwanie danych użytkownika",
+    "advanced_settings_delete_word_lists": "Usuń wszystkie listy słów",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba procesów wyszukiwania (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoją bazę danych, używa wielu procesów. Zazwyczaj 2 to dobra wartość dla standardowej bazy danych dołączonej do DaKanji. Jednak jeżeli doświadczasz spowolnienia podczas wyszukiwania w bazie danych, spróbuj użyć więcej procesów.",
@@ -1949,7 +2025,14 @@ static const Map<String,dynamic> pl = {
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Otwórz na pełnym ekranie",
     "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
-    "title": "Ustawienia"
+    "title": "Ustawienia",
+    "word_lists_export": "Eksport bazy danych list słów",
+    "word_lists_import": "Import bazy danych list słów (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Błąd",
+    "word_lists_import_error_description": "Podany plik jest nieprawidłowy. Wybierz prawidłowy plik i spróbuj ponownie.",
+    "word_lists_import_warning": "Ostrzeżenie",
+    "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list słów, jesteś pewien?",
+    "word_lists_readd_defaults": "Dodaj folder domyślny"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -1986,11 +2069,20 @@ static const Map<String,dynamic> pl = {
     "loading": "Ładowanie",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Kopiowanie wszystkich wpisów z innych list",
+    "word_list_sort_date_asc": "Data ↑",
+    "word_list_sort_date_desc": "Data ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "dodać",
     "create_pdf": "Utwórz PDF",
     "defaults": "ustawienia domyślne",
     "delete": "Usuń",
+    "delete_warning": "Ostrzeżenie",
+    "delete_warning_desc": "Spowoduje to trwałe usunięcie listy słów, czego nie można cofnąć.",
     "drag_to_scroll": "Przeciągnij tutaj, aby przewinąć",
     "new_folder": "Nowy folder",
     "new_list": "Nowy wykaz",
@@ -2168,7 +2260,8 @@ static const Map<String,dynamic> en = {
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+    "feedback_description_email": "Please, include an email if you want a response.",
+    "feedback_description_text": "What's wrong? Describe your issue below.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -2309,6 +2402,7 @@ static const Map<String,dynamic> en = {
     "advanced_settings_delete_dojg": "Delete DoJG files",
     "advanced_settings_delete_history": "Delete search history",
     "advanced_settings_delete_user_data": "Delete user data",
+    "advanced_settings_delete_word_lists": "Delete all word lists",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -2373,7 +2467,14 @@ static const Map<String,dynamic> en = {
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Open in fullscreen",
     "text_show_selection_buttons": "Show text selection buttons",
-    "title": "Settings"
+    "title": "Settings",
+    "word_lists_export": "Export word lists database",
+    "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
+    "word_lists_import_warning": "Warning",
+    "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_readd_defaults": "Add the default folder"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",
@@ -2410,11 +2511,20 @@ static const Map<String,dynamic> en = {
     "loading": "Searching",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copy all entries from other lists",
+    "word_list_sort_date_asc": "Date ↑",
+    "word_list_sort_date_desc": "Date ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
     "defaults": "Defaults",
     "delete": "Delete",
+    "delete_warning": "Warning",
+    "delete_warning_desc": "This will permanently delete this word list, this cannot be undone.",
     "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",
@@ -2554,6 +2664,7 @@ static const Map<String,dynamic> it = {
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
+    "feedback_description_email": "Per favore, includete un'e-mail se desiderate una risposta.",
     "feedback_description_text": "Cosa c'è che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
@@ -2695,6 +2806,7 @@ static const Map<String,dynamic> it = {
     "advanced_settings_delete_dojg": "Eliminare i file DoJG",
     "advanced_settings_delete_history": "Cancellare la cronologia delle ricerche",
     "advanced_settings_delete_user_data": "Cancellare i dati dell'utente",
+    "advanced_settings_delete_word_lists": "Cancellare tutti gli elenchi di parole",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza più processi. Di solito, 2 è un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare più processi.",
@@ -2759,7 +2871,14 @@ static const Map<String,dynamic> it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Aprire a schermo intero",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
-    "title": "Impostazioni"
+    "title": "Impostazioni",
+    "word_lists_export": "Esportazione del database degli elenchi di parole",
+    "word_lists_import": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Errore",
+    "word_lists_import_error_description": "Il file fornito non è valido. Selezionare un file valido e riprovare.",
+    "word_lists_import_warning": "Avvertenze",
+    "word_lists_import_warning_description": "Questo sovrascriverà tutti i vostri elenchi di parole, siete sicuri?",
+    "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -2782,11 +2901,20 @@ static const Map<String,dynamic> it = {
     "loading": "Ricerca",
     "title": "Vista sul web"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiare tutte le voci da altri elenchi",
+    "word_list_sort_date_asc": "Data ↑",
+    "word_list_sort_date_desc": "Data ↓",
+    "word_list_sort_freq_asc": "Freq. ↑",
+    "word_list_sort_freq_desc": "Freq. ↓"
+  },
   "WordListsScreen": {
     "add": "aggiungere",
     "create_pdf": "Creare PDF",
     "defaults": "valori predefiniti",
     "delete": "Cancellare",
+    "delete_warning": "Avvertenze",
+    "delete_warning_desc": "Questa operazione cancella definitivamente l'elenco di parole e non può essere annullata.",
     "drag_to_scroll": "Trascinare qui per scorrere",
     "new_folder": "Nuova cartella",
     "new_list": "Nuovo elenco",
@@ -2926,6 +3054,7 @@ static const Map<String,dynamic> fr = {
   },
   "FeedbackScreen": {
     "draw": "dessiner",
+    "feedback_description_email": "Veuillez indiquer un courriel si vous souhaitez obtenir une réponse.",
     "feedback_description_text": "Qu'est-ce qui ne va pas ? Décrivez votre problème ci-dessous. Si vous souhaitez que je donne suite à votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
@@ -3067,6 +3196,7 @@ static const Map<String,dynamic> fr = {
     "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG",
     "advanced_settings_delete_history": "Supprimer l'historique des recherches",
     "advanced_settings_delete_user_data": "Supprimer les données de l'utilisateur",
+    "advanced_settings_delete_word_lists": "Supprimer toutes les listes de mots",
     "advanced_settings_draw_backend": "Backend d'inférence (nécessite un redémarrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de données, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de données standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de données, essayez d'utiliser plus de processus.",
@@ -3131,7 +3261,14 @@ static const Map<String,dynamic> fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Ouvrir en plein écran",
     "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
-    "title": "Paramètres"
+    "title": "Paramètres",
+    "word_lists_export": "Exporter la base de données des listes de mots",
+    "word_lists_import": "Importer la base de données des listes de mots (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Erreur",
+    "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez sélectionner un fichier valide et réessayer.",
+    "word_lists_import_warning": "Avertissement",
+    "word_lists_import_warning_description": "Cela écrasera toutes vos listes de mots, êtes-vous sûr ?",
+    "word_lists_readd_defaults": "Ajouter le dossier par défaut"
   },
   "TextScreen": {
     "copy_button_copy": "Copié :",
@@ -3154,11 +3291,20 @@ static const Map<String,dynamic> fr = {
     "loading": "Recherche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copier toutes les entrées d'autres listes",
+    "word_list_sort_date_asc": "Date ↑",
+    "word_list_sort_date_desc": "Date ↓",
+    "word_list_sort_freq_asc": "Fréq. ↑",
+    "word_list_sort_freq_desc": "Fréq. ↓"
+  },
   "WordListsScreen": {
     "add": "ajouter",
     "create_pdf": "Créer un PDF",
     "defaults": "Défauts",
     "delete": "Supprimer",
+    "delete_warning": "Avertissement",
+    "delete_warning_desc": "Cette opération supprime définitivement cette liste de mots, ce qui ne peut être annulé.",
     "drag_to_scroll": "Glisser ici pour faire défiler",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",
@@ -3298,6 +3444,7 @@ static const Map<String,dynamic> es = {
   },
   "FeedbackScreen": {
     "draw": "dibujar",
+    "feedback_description_email": "Por favor, incluya un correo electrónico si desea una respuesta.",
     "feedback_description_text": "¿Cuál es el problema? Describa su problema a continuación. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electrónico.",
     "navigate": "navegue por",
     "submit": "enviar",
@@ -3439,6 +3586,7 @@ static const Map<String,dynamic> es = {
     "advanced_settings_delete_dojg": "Eliminar archivos DoJG",
     "advanced_settings_delete_history": "Eliminar el historial de búsqueda",
     "advanced_settings_delete_user_data": "Borrar datos de usuario",
+    "advanced_settings_delete_word_lists": "Borrar todas las listas de palabras",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "Número de procesos de búsqueda (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza múltiples procesos. Normalmente, 2 es un buen valor para la base de datos estándar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar más procesos.",
@@ -3503,7 +3651,14 @@ static const Map<String,dynamic> es = {
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Abrir a pantalla completa",
     "text_show_selection_buttons": "Mostrar botones de selección de texto",
-    "title": "Ajustes"
+    "title": "Ajustes",
+    "word_lists_export": "Exportar base de datos de listas de palabras",
+    "word_lists_import": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "El archivo proporcionado no es válido. Seleccione un archivo válido e inténtelo de nuevo.",
+    "word_lists_import_warning": "Advertencia",
+    "word_lists_import_warning_description": "Esto sobrescribirá todas tus listas de palabras, ¿estás seguro?",
+    "word_lists_readd_defaults": "Añadir la carpeta por defecto"
   },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
@@ -3526,11 +3681,20 @@ static const Map<String,dynamic> es = {
     "loading": "Buscando",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiar todas las entradas de otras listas",
+    "word_list_sort_date_asc": "Fecha ↑",
+    "word_list_sort_date_desc": "Fecha ↓",
+    "word_list_sort_freq_asc": "Frec. ↑",
+    "word_list_sort_freq_desc": "Frec. ↓"
+  },
   "WordListsScreen": {
     "add": "añada",
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "delete_warning": "Advertencia",
+    "delete_warning_desc": "Esto borrará permanentemente esta lista de palabras, no se puede deshacer.",
     "drag_to_scroll": "Arrastre aquí para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",

@@ -32,7 +32,7 @@ class Stats{
   final int updateStatsTimerInterval = 1;
   /// Timer that periodially saves the stats to disk
   late Timer saveStatsTimer;
-  /// After how many seconds should the stats be updated (does NOT save)
+  /// After how many seconds should the stats be saved to disk
   final int saveStatsTimerInterval = 60;
 
   /// Before using this `init()` needs to be called
@@ -95,7 +95,7 @@ class Stats{
 
       await logDefaultEvent("Monthly active user");
       userData.monthlyActiveUserTracked = true;
-      userData.save();
+      await userData.save();
     }
   }
 
@@ -111,7 +111,7 @@ class Stats{
 
       await logDefaultEvent("Daily active user");
       userData.dailyActiveUserTracked = true;
-      userData.save();
+      await userData.save();
     }
   }
 

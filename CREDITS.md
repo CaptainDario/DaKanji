@@ -1,10 +1,11 @@
 # Credits
 
 A huge thanks to everybody involved in this project be it testing, bug reporting, development or something else!
+The biggest thanks goes to my mom for always being there for me no matter what. Without your continous support this would never have been possbile.
 
 * development
   * Dictionary
-    * Thank you so much michalpatryk, for creating and populating most of the dictionary database and schema. Without you DaKanji would not be in its current state!
+    * Thank you so much michalpatryk, for creating and populating part of the initial dictionary database and schema. Without you DaKanji would not be in its current state!
     * Data pre-processing:
       * [wordfreq](https://pypi.org/project/wordfreq/)
   * Modified Packages

@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "dessiner",
+    "feedback_description_email": "Veuillez indiquer un courriel si vous souhaitez obtenir une r\u00e9ponse.",
     "feedback_description_text": "Qu'est-ce qui ne va pas ? D\u00e9crivez votre probl\u00e8me ci-dessous. Si vous souhaitez que je donne suite \u00e0 votre demande, veuillez inclure un courriel.",
     "navigate": "naviguer sur",
     "submit": "envoyer",
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG",
     "advanced_settings_delete_history": "Supprimer l'historique des recherches",
     "advanced_settings_delete_user_data": "Supprimer les donn\u00e9es de l'utilisateur",
+    "advanced_settings_delete_word_lists": "Supprimer toutes les listes de mots",
     "advanced_settings_draw_backend": "Backend d'inf\u00e9rence (n\u00e9cessite un red\u00e9marrage)",
     "advanced_settings_number_search_procs": "Nombre de processus de recherche (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Lorsque DaKanji recherche dans sa base de donn\u00e9es, il utilise plusieurs processus. Habituellement, 2 est une bonne valeur pour la base de donn\u00e9es standard fournie avec DaKanji. Cependant, si vous constatez des ralentissements lors des recherches dans la base de donn\u00e9es, essayez d'utiliser plus de processus.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Ouvrir en plein \u00e9cran",
     "text_show_selection_buttons": "Afficher les boutons de s\u00e9lection de texte",
-    "title": "Param\u00e8tres"
+    "title": "Param\u00e8tres",
+    "word_lists_export": "Exporter la base de donn\u00e9es des listes de mots",
+    "word_lists_import": "Importer la base de donn\u00e9es des listes de mots (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Erreur",
+    "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez s\u00e9lectionner un fichier valide et r\u00e9essayer.",
+    "word_lists_import_warning": "Avertissement",
+    "word_lists_import_warning_description": "Cela \u00e9crasera toutes vos listes de mots, \u00eates-vous s\u00fbr ?",
+    "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut"
   },
   "TextScreen": {
     "copy_button_copy": "Copi\u00e9 :",
@@ -397,11 +406,20 @@
     "loading": "Recherche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copier toutes les entr\u00e9es d'autres listes",
+    "word_list_sort_date_asc": "Date \u2191",
+    "word_list_sort_date_desc": "Date \u2193",
+    "word_list_sort_freq_asc": "Fr\u00e9q. \u2191",
+    "word_list_sort_freq_desc": "Fr\u00e9q. \u2193"
+  },
   "WordListsScreen": {
     "add": "ajouter",
     "create_pdf": "Cr\u00e9er un PDF",
     "defaults": "D\u00e9fauts",
     "delete": "Supprimer",
+    "delete_warning": "Avertissement",
+    "delete_warning_desc": "Cette op\u00e9ration supprime d\u00e9finitivement cette liste de mots, ce qui ne peut \u00eatre annul\u00e9.",
     "drag_to_scroll": "Glisser ici pour faire d\u00e9filer",
     "new_folder": "Nouveau dossier",
     "new_list": "Nouvelle liste",

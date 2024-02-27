@@ -17,6 +17,7 @@ import 'package:da_kanji_mobile/entities/settings/settings_kana_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_kanji_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_misc.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_text.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 
 /// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {
@@ -37,6 +38,8 @@ class Settings with ChangeNotifier {
   late SettingsKanjiTable _kanjiTable;
   /// All settings related to the kana table screen
   late SettingsKanaTable _kanaTable;
+  /// All settings related to word lists
+  late SettingsWordLists _wordLists;
   /// All settings realted to the clipboard screen
   late SettingsClipboard _clipboard;
 
@@ -50,6 +53,7 @@ class Settings with ChangeNotifier {
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
     _kanaTable  = SettingsKanaTable();
+    _wordLists  = SettingsWordLists();
     _clipboard  = SettingsClipboard();
   }
 
@@ -86,6 +90,10 @@ class Settings with ChangeNotifier {
     return _kanaTable;
   }
 
+  SettingsWordLists get wordLists {
+    return _wordLists;
+  }
+
   SettingsClipboard get clipboard{
     return _clipboard;
   }
@@ -104,6 +112,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
     prefs.setString('settingsKanaTable', json.encode(kanaTable.toJson()));
+    prefs.setString('settingsWordLists', json.encode(wordLists.toJson()));
     prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
   }
 
@@ -198,6 +207,17 @@ class Settings with ChangeNotifier {
       _kanaTable = SettingsKanaTable();
     }
     _kanaTable.addListener(() => notifyListeners());
+
+    // WORD LISTS SETTINGS
+    try{
+      String tmp = prefs.getString('settingsWordLists') ?? "";
+      if(tmp != "") {_wordLists = SettingsWordLists.fromJson(json.decode(tmp));}
+      else {_wordLists = SettingsWordLists();}
+    }
+    catch (e) {
+      _wordLists = SettingsWordLists();
+    }
+    _wordLists.addListener(() => notifyListeners());
 
     // CLIPBOARD SETTINGS
     try{

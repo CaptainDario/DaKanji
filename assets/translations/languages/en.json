@@ -155,7 +155,8 @@
   },
   "FeedbackScreen": {
     "draw": "draw",
-    "feedback_description_text": "What's wrong? Describe your issue below. If you want that I can follow up on your request, please include an email.",
+    "feedback_description_email": "Please, include an email if you want a response.",
+    "feedback_description_text": "What's wrong? Describe your issue below.",
     "navigate": "navigate",
     "submit": "submit",
     "title": "Feedback"
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "Delete DoJG files",
     "advanced_settings_delete_history": "Delete search history",
     "advanced_settings_delete_user_data": "Delete user data",
+    "advanced_settings_delete_word_lists": "Delete all word lists",
     "advanced_settings_draw_backend": "Inference backend (requires restart)",
     "advanced_settings_number_search_procs": "Number of search processes  (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "When DaKanji searches in its database it uses multiple processes. Usually, 2 is a good value for the standard database included with DaKanji. However, if you experience slow-downs when searching in the database, try using more processes.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Open in fullscreen",
     "text_show_selection_buttons": "Show text selection buttons",
-    "title": "Settings"
+    "title": "Settings",
+    "word_lists_export": "Export word lists database",
+    "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
+    "word_lists_import_warning": "Warning",
+    "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_readd_defaults": "Add the default folder"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",
@@ -397,11 +406,20 @@
     "loading": "Searching",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copy all entries from other lists",
+    "word_list_sort_date_asc": "Date \u2191",
+    "word_list_sort_date_desc": "Date \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "add",
     "create_pdf": "Create PDF",
     "defaults": "Defaults",
     "delete": "Delete",
+    "delete_warning": "Warning",
+    "delete_warning_desc": "This will permanently delete this word list, this cannot be undone.",
     "drag_to_scroll": "Drag here to scroll",
     "new_folder": "New folder",
     "new_list": "New list",

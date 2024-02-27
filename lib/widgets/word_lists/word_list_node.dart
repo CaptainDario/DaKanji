@@ -9,7 +9,6 @@ import 'package:printing/printing.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
-import 'package:da_kanji_mobile/application/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
@@ -22,7 +21,9 @@ enum  WordListNodePopupMenuButtonItems {
   rename,
   delete,
   sendToAnki,
-  toPdf
+  toImages,
+  toPdf,
+  toCSV,
 }
 
 class WordListNode extends StatefulWidget {
@@ -31,6 +32,10 @@ class WordListNode extends StatefulWidget {
   final TreeNode<WordListsData> node;
   /// The index of this tile in the list
   final int index;
+  /// The duration for the color while hovering to animate
+  final int hoveringAnimationColorDuration;
+  /// The duration for the color while hovering to animate
+  final int nodeMovementAnimationDuration;
   /// If the textfield should be enabled and focused when the tile is created
   final bool editTextOnCreate;
   /// Callback that is executed when the user taps on this tile, provides the
@@ -40,28 +45,44 @@ class WordListNode extends StatefulWidget {
   final void Function()? onDragEnd;
   /// Callback that is executed when the user ends dragging this tile
   final void Function()? onDragStarted;
+  /// Callback that is executed when the user finished renaming this tile
+  final void Function(TreeNode<WordListsData> node)? onRenameFinished;
+  /// Callback that is executed when the user drags this tile over another tile
+  /// and that would accept that item
+  final void Function(TreeNode<WordListsData> node,
+                      TreeNode<WordListsData> other,)? onWillDragAccept;
   /// Callback that is executed when the user drags this tile over another tile
   /// and drops it there. Provides this and destination `TreeNode`s as parameters
-  final void Function(TreeNode<WordListsData> destinationNode, TreeNode thisNode)? onDragAccept;
+  /// If a new folder is created, provides this as `folder` parameter
+  /// The list `otherAffected` contains all other nodes that are affected by
+  /// this transformation
+  final void Function(TreeNode<WordListsData> destinationNode,
+                      TreeNode<WordListsData> node,
+                      TreeNode<WordListsData>? folder,
+                      List<TreeNode<WordListsData>> otherAffected)? onDragAccept;
   /// Callback that is executed when the user taps the delete button
   /// on this tile. Provides this `TreeNode` as a parameter
-  final void Function(TreeNode<WordListsData> thisNode)? onDeletePressed;
+  final void Function(TreeNode<WordListsData> node)? onDeletePressed;
   /// Callback that is executed when the user taps the folder open/close button
   /// on this tile. Provides this `TreeNode` as a parameter
-  final void Function(TreeNode<WordListsData> thisNode)? onFolderPressed;
+  final void Function(TreeNode<WordListsData> node)? onFolderPressed;
   /// Callback that is executed when the user taps the checkbox
-  /// on this tile. Provides this `TreeNode` as a parameter
-  final void Function (TreeNode<WordListsData> thisNode)? onSelectedToggled;
+  /// on this tile. Provides this `TreeNode` as a parameter and the current state
+  final void Function (TreeNode<WordListsData> node, bool value)? onSelectedToggled;
 
 
   const WordListNode(
     this.node,
     this.index,
     {
+      required this.hoveringAnimationColorDuration,
+      required this.nodeMovementAnimationDuration,
       this.editTextOnCreate = false,
       this.onTap,
       this.onDragStarted,
       this.onDragEnd,
+      this.onRenameFinished,
+      this.onWillDragAccept,
       this.onDragAccept,
       this.onDeletePressed,
       this.onFolderPressed,
@@ -101,10 +122,6 @@ class _WordListNodeState extends State<WordListNode> {
     if(!wordListDefaultTypes.contains(widget.node.value.type)){
       _controller.text = widget.node.value.name;
     }
-    // transate default types
-    else {
-      _controller.text = wordListsDefaultsStringToTranslation(widget.node.value.name);
-    }
 
     if(widget.editTextOnCreate) nameEditing = true;
   }
@@ -115,13 +132,13 @@ class _WordListNodeState extends State<WordListNode> {
     return ReorderableDelayedDragStartListener(
       index: widget.index,
       // make tile draggable
-      child: Draggable(
-        maxSimultaneousDrags: wordListDefaultTypes.contains(widget.node.value.type)
+      child: Draggable<TreeNode<WordListsData>>(
+        maxSimultaneousDrags: widget.node.value.type == WordListNodeType.wordListDefault
           ? 0
           : 1,
         data: widget.node,
         feedback: SizedBox(
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.sizeOf(context).width,
           child: Opacity(
             opacity: 0.5,
             child: widget
@@ -135,7 +152,7 @@ class _WordListNodeState extends State<WordListNode> {
         },
         onDraggableCanceled: (velocity, offset) => setState(() => {}),
         // make tile droppable
-        child: DragTarget<TreeNode>(
+        child: DragTarget<TreeNode<WordListsData>>(
           onWillAccept: (data) {
             // do not allow dropping ...
             if(data == null ||
@@ -146,13 +163,15 @@ class _WordListNodeState extends State<WordListNode> {
     
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
+
+            widget.onWillDragAccept?.call(widget.node, data);
     
             return true;
           },
           onLeave: (data) {
             setState(() {itemDraggingOverThis = false;});
           },
-          onAccept: (TreeNode data) {
+          onAccept: (TreeNode<WordListsData> data) {
 
             // dragging the tile in itself should do nothing
             if(data == widget.node){
@@ -160,45 +179,48 @@ class _WordListNodeState extends State<WordListNode> {
               return;
             }
     
-            var d = data as TreeNode<WordListsData>;
+            TreeNode<WordListsData>? newFolder;
+            TreeNode<WordListsData>  oldParentData = data.parent!;
+            TreeNode<WordListsData>  oldParentThis = widget.node.parent!;
+
+            // list / folder draged on folder
+            if((data.value.type == WordListNodeType.folder || data.value.type == WordListNodeType.wordList) &&
+              widget.node.value.type == WordListNodeType.folder){
+
+              data.parent!.removeChild(data);
+              widget.node.addChild(data);
+              _controller.text = widget.node.value.name;
+              itemDraggingOverThis = false;
+            }
+            // list draged on list
+            else if((data.value.type == WordListNodeType.wordList || data.value.type == WordListNodeType.folder) &&
+              widget.node.value.type == WordListNodeType.wordList){
+              // add a new folder to the parent of this
+              newFolder = TreeNode<WordListsData>(
+                WordListsData("New Folder", WordListNodeType.folder, [], true),);
+              int idx = widget.node.parent!.children.indexOf(widget.node);
+              widget.node.parent!.insertChild(newFolder, idx);
+  
+              // add this and the drag target to the new folder and remove them from their old parents
+              data.parent!.removeChild(data);
+              widget.node.parent!.removeChild(widget.node);
+              newFolder.addChild(widget.node);
+              newFolder.addChild(data);
+  
+              _controller.text = widget.node.value.name;
+              itemDraggingOverThis = false;
+            }
     
-            setState(() {
-              
-              // list / folder draged on folder
-              if((d.value.type == WordListNodeType.folder || 
-                d.value.type == WordListNodeType.wordList) &&
-                widget.node.value.type == WordListNodeType.folder){
-                d.parent!.removeChild(d);
-                widget.node.addChild(d);
-                _controller.text = widget.node.value.name;
-                itemDraggingOverThis = false;
-              }
-              // list draged on list
-              else if(d.value.type == WordListNodeType.wordList &&
-                widget.node.value.type == WordListNodeType.wordList){
-                // add a new folder
-                TreeNode<WordListsData> newFolder = TreeNode<WordListsData>(
-                  WordListsData("New Folder", WordListNodeType.folder, [], true)
-                );
-                int idx = widget.node.parent!.children.indexOf(widget.node);
-                widget.node.parent!.insertChild(newFolder, idx);
-    
-                // add this and the drag target to the new folder and remove them from their old parents
-                d.parent!.removeChild(d);
-                widget.node.parent!.removeChild(widget.node);
-                newFolder.addChild(widget.node);
-                newFolder.addChild(d);
-    
-                _controller.text = widget.node.value.name;
-                itemDraggingOverThis = false;
-              }
-            });
-    
-            widget.onDragAccept?.call(data, widget.node);
+            widget.onDragAccept?.call(data, widget.node, newFolder,
+              [oldParentData, oldParentThis]);
           },
           builder: (context, candidateItems, rejectedItems) {
-            return Container(
-              color: itemDraggingOverThis ? g_Dakanji_green.withOpacity(0.5) : null,
+            return AnimatedContainer(
+              height: 48,
+              duration: Duration(milliseconds: widget.hoveringAnimationColorDuration),
+              color: itemDraggingOverThis
+                ? g_Dakanji_green.withOpacity(0.5)
+                : Colors.transparent,
               padding: EdgeInsets.fromLTRB(
                 15.0*(widget.node.level-1)+8, 0, 0, 0
               ),
@@ -210,19 +232,19 @@ class _WordListNodeState extends State<WordListNode> {
                 },
                 child: Row(
                   children: [
+                    // if this is a folder show open/close button
                     wordListFolderTypes.contains(widget.node.value.type)
                       ? IconButton(
-                        icon: Icon( widget.node.value.isExpanded
-                          ? Icons.arrow_drop_down
-                          : Icons.arrow_right
+                        icon: AnimatedRotation(
+                          turns: widget.node.value.isExpanded ? 2/8 : 0,
+                          duration: Duration(milliseconds: widget.nodeMovementAnimationDuration),
+                          child: const Icon(Icons.arrow_right),
                         ),
-                        // icon button callback
+                        // open / close callback
                         onPressed: () {
                           if(widget.node.level < 1) return;
     
-                          setState(() {
-                            widget.node.value.isExpanded = !widget.node.value.isExpanded;
-                          });
+                          widget.node.value.isExpanded = !widget.node.value.isExpanded;
                           widget.onFolderPressed?.call(widget.node);
                         },
                       )
@@ -257,24 +279,17 @@ class _WordListNodeState extends State<WordListNode> {
                       ),
                     ),
                     // checkbox for this entry
-                    if(!wordListDefaultTypes.contains(widget.node.value.type) &&
-                      widget.onSelectedToggled != null)
+                    if(widget.onSelectedToggled != null)
                       Checkbox(
                         value: widget.node.value.isChecked,
                         onChanged: (value) {
+
                           if(value == null) return;
-    
-                          setState(() {
-                            widget.node.value.isChecked = value;
-                            widget.node.dfs().forEach((element) {
-                              element.value.isChecked = value;
-                            });
-                          });
-    
-                          widget.onSelectedToggled!.call(widget.node);
+
+                          widget.onSelectedToggled!.call(widget.node, value);
+                          
                         }
                       ),
-                    if(!wordListDefaultTypes.contains(widget.node.value.type))
                       PopupMenuButton<WordListNodePopupMenuButtonItems>(
                         onSelected: (WordListNodePopupMenuButtonItems value) {
                           switch(value){
@@ -285,9 +300,16 @@ class _WordListNodeState extends State<WordListNode> {
                               deleteButtonPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.sendToAnki:
+                              print("sendToAnki not implemented");
+                              break;
+                            case WordListNodePopupMenuButtonItems.toImages:
+                              print("toImages not implemented");
                               break;
                             case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();
+                              break;
+                            case WordListNodePopupMenuButtonItems.toCSV:
+                              print("toCSV not implemented");
                               break;
                           }
                         },
@@ -299,7 +321,7 @@ class _WordListNodeState extends State<WordListNode> {
                                 LocaleKeys.WordListsScreen_rename.tr(),
                               )
                             ),
-                          if(!wordListDefaultTypes.contains(widget.node.value.type))
+                          if(widget.node.value.type != WordListNodeType.wordListDefault)
                             PopupMenuItem(
                               value: WordListNodePopupMenuButtonItems.delete,
                               child: Text(
@@ -314,10 +336,26 @@ class _WordListNodeState extends State<WordListNode> {
                                   LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
+                              const PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toImages,
+                                child: Text(
+                                  // TODO word list to images
+                                  "TO IMAGES"
+                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                )
+                              ),
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toPdf,
                                 child: Text(
                                   LocaleKeys.WordListsScreen_create_pdf.tr()
+                                )
+                              ),
+                              const PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toImages,
+                                child: Text(
+                                  // TODO word list to csv
+                                  "TO CSV"
+                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
                                 )
                               ),
                             ]
@@ -357,10 +395,13 @@ class _WordListNodeState extends State<WordListNode> {
       nameEditing = false;
     });
     widget.node.value.name = _controller.text;
+
+    widget.onRenameFinished?.call(widget.node);
   }
 
   /// Executed when the user presses the delete button
   void deleteButtonPressed(){
+    
     widget.onDeletePressed?.call(widget.node);
     
   }

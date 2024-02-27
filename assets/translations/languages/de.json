@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "zeichnen",
+    "feedback_description_email": "Bitte geben Sie eine E-Mail an, wenn Sie eine Antwort w\u00fcnschen.",
     "feedback_description_text": "Was ist los? Beschreiben Sie Ihr Problem unten. Wenn Sie m\u00f6chten, dass ich Ihre Anfrage weiterverfolgen kann, geben Sie bitte eine E-Mail an.",
     "navigate": "Navigieren",
     "submit": "Absenden",
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "DoJG-Dateien l\u00f6schen",
     "advanced_settings_delete_history": "Suchverlauf l\u00f6schen",
     "advanced_settings_delete_user_data": "Benutzerdaten l\u00f6schen",
+    "advanced_settings_delete_word_lists": "Alle Wortlisten l\u00f6schen",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert f\u00fcr die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Im Vollbildmodus \u00f6ffnen",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "word_lists_export": "Wortlisten-Datenbank exportieren",
+    "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Fehler",
+    "word_lists_import_error_description": "Die angegebene Datei ist ung\u00fcltig. Bitte w\u00e4hlen Sie eine g\u00fcltige Datei und versuchen Sie es erneut.",
+    "word_lists_import_warning": "Warnung",
+    "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten \u00fcberschrieben, sind Sie sicher?",
+    "word_lists_readd_defaults": "Hinzuf\u00fcgen des Standardordners"
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -397,11 +406,20 @@
     "loading": "Suche",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Alle Eintr\u00e4ge aus anderen Listen kopieren",
+    "word_list_sort_date_asc": "Datum \u2191",
+    "word_list_sort_date_desc": "Datum \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "Hinzuf\u00fcgen",
     "create_pdf": "Konvertiere zu PDF",
     "defaults": "Standard",
     "delete": "L\u00f6schen",
+    "delete_warning": "Warnung",
+    "delete_warning_desc": "Dadurch wird diese Wortliste endg\u00fcltig gel\u00f6scht, das kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
     "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "new_folder": "Neuer Ordner",
     "new_list": "Neue Liste",

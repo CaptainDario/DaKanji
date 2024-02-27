@@ -48,7 +48,10 @@ class SettingsMisc with ChangeNotifier {
     LocaleKeys.DictionaryScreen_title,
     LocaleKeys.TextScreen_title,
     LocaleKeys.DojgScreen_title,
-    LocaleKeys.ClipboardScreen_title
+    LocaleKeys.KanjiTableScreen_title,
+    LocaleKeys.KanaTableScreen_title,
+    LocaleKeys.WordListsScreen_title,
+    LocaleKeys.ClipboardScreen_title,
   ];
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<Screens> startupScreens = [
@@ -56,6 +59,9 @@ class SettingsMisc with ChangeNotifier {
     Screens.dictionary,
     Screens.text,
     Screens.dojg,
+    Screens.kanjiTable,
+    Screens.kanaTable,
+    Screens.wordLists,
     Screens.clipboard,
   ];
 

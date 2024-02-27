@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "sorteggio",
+    "feedback_description_email": "Per favore, includete un'e-mail se desiderate una risposta.",
     "feedback_description_text": "Cosa c'\u00e8 che non va? Descrivete il vostro problema qui sotto. Se si desidera che io possa dare seguito alla richiesta, si prega di includere un'e-mail.",
     "navigate": "navigare",
     "submit": "Invia",
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "Eliminare i file DoJG",
     "advanced_settings_delete_history": "Cancellare la cronologia delle ricerche",
     "advanced_settings_delete_user_data": "Cancellare i dati dell'utente",
+    "advanced_settings_delete_word_lists": "Cancellare tutti gli elenchi di parole",
     "advanced_settings_draw_backend": "Backend di inferenza (richiede il riavvio)",
     "advanced_settings_number_search_procs": "Numero di processi di ricerca (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Quando DaKanji cerca nel suo database, utilizza pi\u00f9 processi. Di solito, 2 \u00e8 un buon valore per il database standard incluso in DaKanji. Tuttavia, se si verificano rallentamenti durante la ricerca nel database, provare a utilizzare pi\u00f9 processi.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Aprire a schermo intero",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
-    "title": "Impostazioni"
+    "title": "Impostazioni",
+    "word_lists_export": "Esportazione del database degli elenchi di parole",
+    "word_lists_import": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Errore",
+    "word_lists_import_error_description": "Il file fornito non \u00e8 valido. Selezionare un file valido e riprovare.",
+    "word_lists_import_warning": "Avvertenze",
+    "word_lists_import_warning_description": "Questo sovrascriver\u00e0 tutti i vostri elenchi di parole, siete sicuri?",
+    "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -397,11 +406,20 @@
     "loading": "Ricerca",
     "title": "Vista sul web"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiare tutte le voci da altri elenchi",
+    "word_list_sort_date_asc": "Data \u2191",
+    "word_list_sort_date_desc": "Data \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "aggiungere",
     "create_pdf": "Creare PDF",
     "defaults": "valori predefiniti",
     "delete": "Cancellare",
+    "delete_warning": "Avvertenze",
+    "delete_warning_desc": "Questa operazione cancella definitivamente l'elenco di parole e non pu\u00f2 essere annullata.",
     "drag_to_scroll": "Trascinare qui per scorrere",
     "new_folder": "Nuova cartella",
     "new_list": "Nuovo elenco",

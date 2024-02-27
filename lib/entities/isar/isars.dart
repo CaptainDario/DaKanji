@@ -10,8 +10,6 @@ class Isars {
   Isar dictionary;
   /// Isar instace that contains all example sentences
   Isar examples;
-  /// Isar instance that contains the search history
-  Isar searchHistory;
   /// Isar instance that contains the kanji -> radical data
   Isar krad;
   /// Isar instance that contains the radical -> kanji data
@@ -23,7 +21,6 @@ class Isars {
     {
       required this.dictionary,
       required this.examples,
-      required this.searchHistory,
       required this.krad,
       required this.radk,
       this.dojg

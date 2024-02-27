@@ -15,8 +15,10 @@ import 'package:universal_io/io.dart';
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
@@ -129,7 +131,17 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            await GetIt.I<Isars>().searchHistory.close(deleteFromDisk: true);
+            await GetIt.I<SearchHistorySQLDatabase>().deleteEverything();
+            // ignore: use_build_context_synchronously
+            await restartApp(context);
+          },
+        ),
+        // delete search history
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_advanced_settings_delete_word_lists.tr(),
+          icon: Icons.delete_forever,
+          onButtonPressed: () async {
+            await GetIt.I<WordListsSQLDatabase>().deleteEverything();
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },

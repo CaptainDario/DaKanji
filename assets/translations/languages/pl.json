@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "rysuj",
+    "feedback_description_email": "Prosimy o podanie adresu e-mail w celu uzyskania odpowiedzi.",
     "feedback_description_text": "Co jest nie tak? Opisz sw\u00f3j problem poni\u017cej. Je\u015bli chcesz, abym m\u00f3g\u0142 odpowiedzie\u0107 na Twoj\u0105 pro\u015bb\u0119, podaj adres e-mail.",
     "navigate": "nawigacja",
     "submit": "wy\u015blij",
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "Usuwanie plik\u00f3w DoJG",
     "advanced_settings_delete_history": "Usuwanie historii wyszukiwania",
     "advanced_settings_delete_user_data": "Usuwanie danych u\u017cytkownika",
+    "advanced_settings_delete_word_lists": "Usu\u0144 wszystkie listy s\u0142\u00f3w",
     "advanced_settings_draw_backend": "System wnioskowania (wymaga restartu)",
     "advanced_settings_number_search_procs": "Liczba proces\u00f3w wyszukiwania (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Kiedy DaKanji przeszukuje swoj\u0105 baz\u0119 danych, u\u017cywa wielu proces\u00f3w. Zazwyczaj 2 to dobra warto\u015b\u0107 dla standardowej bazy danych do\u0142\u0105czonej do DaKanji. Jednak je\u017celi do\u015bwiadczasz spowolnienia podczas wyszukiwania w bazie danych, spr\u00f3buj u\u017cy\u0107 wi\u0119cej proces\u00f3w.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Otw\u00f3rz na pe\u0142nym ekranie",
     "text_show_selection_buttons": "Poka\u017c przyciski wyboru tekstu",
-    "title": "Ustawienia"
+    "title": "Ustawienia",
+    "word_lists_export": "Eksport bazy danych list s\u0142\u00f3w",
+    "word_lists_import": "Import bazy danych list s\u0142\u00f3w (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "B\u0142\u0105d",
+    "word_lists_import_error_description": "Podany plik jest nieprawid\u0142owy. Wybierz prawid\u0142owy plik i spr\u00f3buj ponownie.",
+    "word_lists_import_warning": "Ostrze\u017cenie",
+    "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list s\u0142\u00f3w, jeste\u015b pewien?",
+    "word_lists_readd_defaults": "Dodaj folder domy\u015blny"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -397,11 +406,20 @@
     "loading": "\u0141adowanie",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Kopiowanie wszystkich wpis\u00f3w z innych list",
+    "word_list_sort_date_asc": "Data \u2191",
+    "word_list_sort_date_desc": "Data \u2193",
+    "word_list_sort_freq_asc": "Freq. \u2191",
+    "word_list_sort_freq_desc": "Freq. \u2193"
+  },
   "WordListsScreen": {
     "add": "doda\u0107",
     "create_pdf": "Utw\u00f3rz PDF",
     "defaults": "ustawienia domy\u015blne",
     "delete": "Usu\u0144",
+    "delete_warning": "Ostrze\u017cenie",
+    "delete_warning_desc": "Spowoduje to trwa\u0142e usuni\u0119cie listy s\u0142\u00f3w, czego nie mo\u017cna cofn\u0105\u0107.",
     "drag_to_scroll": "Przeci\u0105gnij tutaj, aby przewin\u0105\u0107",
     "new_folder": "Nowy folder",
     "new_list": "Nowy wykaz",

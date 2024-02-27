@@ -155,6 +155,7 @@
   },
   "FeedbackScreen": {
     "draw": "dibujar",
+    "feedback_description_email": "Por favor, incluya un correo electr\u00f3nico si desea una respuesta.",
     "feedback_description_text": "\u00bfCu\u00e1l es el problema? Describa su problema a continuaci\u00f3n. Si quieres que pueda hacer un seguimiento de tu solicitud, incluye un correo electr\u00f3nico.",
     "navigate": "navegue por",
     "submit": "enviar",
@@ -296,6 +297,7 @@
     "advanced_settings_delete_dojg": "Eliminar archivos DoJG",
     "advanced_settings_delete_history": "Eliminar el historial de b\u00fasqueda",
     "advanced_settings_delete_user_data": "Borrar datos de usuario",
+    "advanced_settings_delete_word_lists": "Borrar todas las listas de palabras",
     "advanced_settings_draw_backend": "Backend de inferencia (reinicio manual requerido)",
     "advanced_settings_number_search_procs": "N\u00famero de procesos de b\u00fasqueda (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Cuando DaKanji busca en su base de datos utiliza m\u00faltiples procesos. Normalmente, 2 es un buen valor para la base de datos est\u00e1ndar incluida con DaKanji. Sin embargo, si experimentas ralentizaciones al buscar en la base de datos, prueba a utilizar m\u00e1s procesos.",
@@ -360,7 +362,14 @@
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "text_open_in_fullscreen": "Abrir a pantalla completa",
     "text_show_selection_buttons": "Mostrar botones de selecci\u00f3n de texto",
-    "title": "Ajustes"
+    "title": "Ajustes",
+    "word_lists_export": "Exportar base de datos de listas de palabras",
+    "word_lists_import": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
+    "word_lists_import_error": "Error",
+    "word_lists_import_error_description": "El archivo proporcionado no es v\u00e1lido. Seleccione un archivo v\u00e1lido e int\u00e9ntelo de nuevo.",
+    "word_lists_import_warning": "Advertencia",
+    "word_lists_import_warning_description": "Esto sobrescribir\u00e1 todas tus listas de palabras, \u00bfest\u00e1s seguro?",
+    "word_lists_readd_defaults": "A\u00f1adir la carpeta por defecto"
   },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
@@ -397,11 +406,20 @@
     "loading": "Buscando",
     "title": "Webview"
   },
+  "WordListScreen": {
+    "word_list_copy_other_list": "Copiar todas las entradas de otras listas",
+    "word_list_sort_date_asc": "Fecha \u2191",
+    "word_list_sort_date_desc": "Fecha \u2193",
+    "word_list_sort_freq_asc": "Frec. \u2191",
+    "word_list_sort_freq_desc": "Frec. \u2193"
+  },
   "WordListsScreen": {
     "add": "a\u00f1ada",
     "create_pdf": "Crear PDF",
     "defaults": "valores predeterminados",
     "delete": "Borrar",
+    "delete_warning": "Advertencia",
+    "delete_warning_desc": "Esto borrar\u00e1 permanentemente esta lista de palabras, no se puede deshacer.",
     "drag_to_scroll": "Arrastre aqu\u00ed para desplazarse",
     "new_folder": "Nueva carpeta",
     "new_list": "Nueva lista",

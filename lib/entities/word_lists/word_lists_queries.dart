@@ -3,46 +3,19 @@ import 'dart:math';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-
-/// Returns the localization of the given `w`. `w` should be the name of a
-/// member of the [Enum] called [DefaultNames]
-/// 
-/// Caution: if `w` is not a valid name of a member of [DefaultNames] raises
-///   an exception
-String wordListsDefaultsStringToTranslation(String w){
-  
-  String converted = "";
-
-  if(w.contains("jlpt")){
-    converted = w.replaceAll("jlpt", "JLPT ");
-  }
-  else if(w == DefaultNames.searchHistory.name){
-    converted = LocaleKeys.WordListsScreen_search_history.tr();
-  }
-  else if(w == DefaultNames.defaults.name){
-    converted = LocaleKeys.WordListsScreen_defaults.tr();
-  }
-  else{
-    
-    //throw Exception("$w is not a valid name of a member of [DefaultNames]");
-  }
-
-  return converted;
-}
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Get all `JMDict` entries from the database that are in the word list given
-/// by its IDs. Remove all translations that are not in `langsToInclude` and sort
+/// by their IDs. Remove all translations that are not in `langsToInclude` and sort
 /// the translations matching `langsToInclude`. Lastly retruns the list of
 /// entries
-Future<List<JMdict>> wordListEntries(List<int> wordIds, List<String> langsToInclude) async {
+Future<List<JMdict>> wordListEntriesForPDF(List<int> wordIds, List<String> langsToInclude) async {
 
   List<JMdict> entries = await GetIt.I<Isars>().dictionary.jmdict
   // get all entries
@@ -72,4 +45,13 @@ Future<List<JMdict>> wordListEntries(List<int> wordIds, List<String> langsToIncl
 
   return entries;
 
+}
+
+/// If a user made list is shown, gets the right stream from the DB
+Stream<Iterable<Tuple2<DateTime, int>>> userListStream(listID){
+
+  // listen to changes of this word list
+  return GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(listID)
+    .map((event) => event.map((e) => Tuple2(e.timeAdded, e.dictEntryID)));
+    
 }
