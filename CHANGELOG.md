@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.4.0 - 仮名 (0.3.2023)
+## v3.4.0 - ワードリストと暗記 (31.4.2023)
 
 New Features:
 
@@ -14,6 +14,8 @@ New Features:
   - Sort lists in folders
   - Search in lists
   - Lists for JLPT
+  - Export: PDF, CSV Images
+  - Send to anki
 
 Improvements:
 
