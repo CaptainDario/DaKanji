@@ -394,12 +394,14 @@ abstract class  LocaleKeys {
   static const WordListScreen_word_list_sort_freq_desc = 'WordListScreen.word_list_sort_freq_desc';
   static const WordListScreen = 'WordListScreen';
   static const WordListsScreen_add = 'WordListsScreen.add';
-  static const WordListsScreen_create_pdf = 'WordListsScreen.create_pdf';
   static const WordListsScreen_defaults = 'WordListsScreen.defaults';
   static const WordListsScreen_delete = 'WordListsScreen.delete';
   static const WordListsScreen_delete_warning = 'WordListsScreen.delete_warning';
   static const WordListsScreen_delete_warning_desc = 'WordListsScreen.delete_warning_desc';
   static const WordListsScreen_drag_to_scroll = 'WordListsScreen.drag_to_scroll';
+  static const WordListsScreen_export_csv = 'WordListsScreen.export_csv';
+  static const WordListsScreen_export_images = 'WordListsScreen.export_images';
+  static const WordListsScreen_export_pdf = 'WordListsScreen.export_pdf';
   static const WordListsScreen_new_folder = 'WordListsScreen.new_folder';
   static const WordListsScreen_new_list = 'WordListsScreen.new_list';
   static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';

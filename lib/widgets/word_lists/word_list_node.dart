@@ -26,6 +26,7 @@ enum  WordListNodePopupMenuButtonItems {
   toCSV,
 }
 
+/// One Node of the word lists tree, can either be a folder or a word list
 class WordListNode extends StatefulWidget {
 
   /// The tree node that represents this tile
@@ -336,26 +337,24 @@ class _WordListNodeState extends State<WordListNode> {
                                   LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toImages,
                                 child: Text(
                                   // TODO word list to images
-                                  "TO IMAGES"
-                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_images.tr()
                                 )
                               ),
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toPdf,
                                 child: Text(
-                                  LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_pdf.tr()
                                 )
                               ),
-                              const PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.toImages,
+                              PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toCSV,
                                 child: Text(
                                   // TODO word list to csv
-                                  "TO CSV"
-                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_csv.tr()
                                 )
                               ),
                             ]

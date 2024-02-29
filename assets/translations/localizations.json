@@ -4035,16 +4035,38 @@
       "es": "Enviar a anki",
       "pl": "Wyślij do anki"
     },
-    "create_pdf": {
-      "en": "Create PDF",
-      "de": "Konvertiere zu PDF",
-      "ru": "Создать PDF",
-      "ja": "PDFを作成する",
-      "zh": "创建PDF",
-      "it": "Creare PDF",
-      "fr": "Créer un PDF",
-      "es": "Crear PDF",
-      "pl": "Utwórz PDF"
+    "export_pdf": {
+      "en": "Export PDF",
+      "de": "PDF exportieren",
+      "ru": "Экспорт PDF",
+      "ja": "PDFエクスポート",
+      "zh": "导出 PDF",
+      "it": "Esportazione PDF",
+      "fr": "Exporter le PDF",
+      "es": "Exportar PDF",
+      "pl": "Eksportuj PDF"
+    },
+    "export_csv": {
+      "en": "Export CSV",
+      "de": "CSV exportieren",
+      "ru": "Экспорт CSV",
+      "ja": "CSVエクスポート",
+      "zh": "导出 CSV",
+      "it": "Esportazione CSV",
+      "fr": "Exporter CSV",
+      "es": "Exportar CSV",
+      "pl": "Eksport CSV"
+    },
+    "export_images": {
+      "en": "Export images",
+      "de": "Bilder exportieren",
+      "ru": "Экспорт изображений",
+      "ja": "画像のエクスポート",
+      "zh": "导出图像",
+      "it": "Esportazione di immagini",
+      "fr": "Exporter des images",
+      "es": "Exportar imágenes",
+      "pl": "Eksport obrazów"
     },
     "drag_to_scroll": {
       "en": "Drag here to scroll",
