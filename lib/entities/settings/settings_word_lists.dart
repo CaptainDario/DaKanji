@@ -22,6 +22,36 @@ class SettingsWordLists with ChangeNotifier {
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
+  /// When exporting a word list, which languages should be included
+  @JsonKey(defaultValue: [true])
+  List<bool> _includedLanguages = [true];
+  /// When creating a new note, which languages should be included
+  List<bool> get includedLanguages => _includedLanguages;
+  /// When creating a new note, which languages should be included
+  set includedLanguages(List<bool> value) {
+    _includedLanguages = value;
+    notifyListeners();
+  }
+  void setIncludeLanguagesItem(bool value, int index){
+    _includedLanguages[index] = value;
+    notifyListeners();
+  }
+
+    /// The default value for `noTranslations`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_noTranslations = 3;
+  /// When creating a new note, how many translations should be included
+  @JsonKey(defaultValue: d_noTranslations)
+  int _noTranslations = d_noTranslations;
+  /// When creating a new note, how many translations should be included
+  int get noTranslations => _noTranslations;
+  /// When creating a new note, how many translations should be included
+  set noTranslations(int value) {
+    _noTranslations = value;
+    notifyListeners();
+  }
+
 
   SettingsWordLists();
 

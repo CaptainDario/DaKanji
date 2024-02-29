@@ -99,7 +99,7 @@ class _AnkiSettingsState extends State<AnkiSettings> {
           );
         },
         selected: (index) {
-          return widget.settings.anki.includedLanguages[index];
+          return widget.settings.wordLists.includedLanguages[index];
         },
         numChips: widget.settings.dictionary.selectedTranslationLanguages.length,
         onFilterChipTap: (selected, index) {
