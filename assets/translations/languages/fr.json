@@ -369,6 +369,10 @@
     "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez s\u00e9lectionner un fichier valide et r\u00e9essayer.",
     "word_lists_import_warning": "Avertissement",
     "word_lists_import_warning_description": "Cela \u00e9crasera toutes vos listes de mots, \u00eates-vous s\u00fbr ?",
+    "word_lists_pdf_include_kana": "PDF : Inclure les kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF : Nombre maximal de lignes par sens",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF : Significations par vocabulaire",
+    "word_lists_pdf_max_words_per_meaning": "PDF : Nombre maximal de mots par sens",
     "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut"
   },
   "TextScreen": {

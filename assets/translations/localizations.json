@@ -2749,6 +2749,50 @@
       "es": "Incluir captura de pantalla",
       "pl": "Dołącz zrzut ekranu"
     },
+    "word_lists_pdf_max_meanings_per_vocabulary": {
+      "en": "PDF: Meanings per vocabulary",
+      "de": "PDF: Bedeutungen pro Vokabel",
+      "ru": "PDF: Значения по словарю",
+      "ja": "PDF語彙ごとの意味",
+      "zh": "PDF：每个词汇的含义",
+      "it": "PDF: Significati per vocabolario",
+      "fr": "PDF : Significations par vocabulaire",
+      "es": "PDF: Significados por vocabulario",
+      "pl": "PDF: Znaczenia według słownictwa"
+    },
+    "word_lists_pdf_max_words_per_meaning": {
+      "en": "PDF: Max words per meaning",
+      "de": "PDF: Maximale Wörter pro Bedeutung",
+      "ru": "PDF: Максимум слов на значение",
+      "ja": "PDF：意味ごとの最大単語数",
+      "zh": "PDF：每个含义的最大字数",
+      "it": "PDF: Parole massime per significato",
+      "fr": "PDF : Nombre maximal de mots par sens",
+      "es": "PDF: Máximo de palabras por significado",
+      "pl": "PDF: Maksymalna liczba słów na znaczenie"
+    },
+    "word_lists_pdf_max_lines_per_meaning": {
+      "en": "PDF: Max lines per meaning",
+      "de": "PDF: Max. Zeilen pro Bedeutung",
+      "ru": "PDF: Максимум строк на значение",
+      "ja": "PDF：意味ごとの最大行数",
+      "zh": "PDF：每个含义的最大行数",
+      "it": "PDF: Linee massime per significato",
+      "fr": "PDF : Nombre maximal de lignes par sens",
+      "es": "PDF: Máximo de líneas por sentido",
+      "pl": "PDF: Maks. wierszy na znaczenie"
+    },
+    "word_lists_pdf_include_kana": {
+      "en": "PDF: Include kana",
+      "de": "PDF: Kana einbeziehen",
+      "ru": "PDF: Включить кану",
+      "ja": "PDF：かなを含む",
+      "zh": "PDF：包含假名",
+      "it": "PDF: Includere i kana",
+      "fr": "PDF : Inclure les kana",
+      "es": "PDF: Incluir kana",
+      "pl": "PDF: Dołącz kana"
+    },
     "word_lists_readd_defaults": {
       "en": "Add the default folder",
       "de": "Hinzufügen des Standardordners",

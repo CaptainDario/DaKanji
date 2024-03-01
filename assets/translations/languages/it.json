@@ -369,6 +369,10 @@
     "word_lists_import_error_description": "Il file fornito non \u00e8 valido. Selezionare un file valido e riprovare.",
     "word_lists_import_warning": "Avvertenze",
     "word_lists_import_warning_description": "Questo sovrascriver\u00e0 tutti i vostri elenchi di parole, siete sicuri?",
+    "word_lists_pdf_include_kana": "PDF: Includere i kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Linee massime per significato",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significati per vocabolario",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Parole massime per significato",
     "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
   },
   "TextScreen": {

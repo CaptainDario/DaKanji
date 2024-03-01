@@ -347,6 +347,10 @@ class CodegenLoader extends AssetLoader{
     "word_lists_import_error_description": "提供的文件无效。请选择一个有效文件并重试。",
     "word_lists_import_warning": "警告",
     "word_lists_import_warning_description": "这会覆盖你所有的单词表，你确定吗？",
+    "word_lists_pdf_include_kana": "PDF：包含假名",
+    "word_lists_pdf_max_lines_per_meaning": "PDF：每个含义的最大行数",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF：每个词汇的含义",
+    "word_lists_pdf_max_words_per_meaning": "PDF：每个含义的最大字数",
     "word_lists_readd_defaults": "添加默认文件夹"
   },
   "TextScreen": {
@@ -761,6 +765,10 @@ static const Map<String,dynamic> ja = {
     "word_lists_import_error_description": "提供されたファイルは有効ではありません。有効なファイルを選択して再試行してください。",
     "word_lists_import_warning": "警告",
     "word_lists_import_warning_description": "これですべての単語リストが上書きされますが、よろしいですか？",
+    "word_lists_pdf_include_kana": "PDF：かなを含む",
+    "word_lists_pdf_max_lines_per_meaning": "PDF：意味ごとの最大行数",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF語彙ごとの意味",
+    "word_lists_pdf_max_words_per_meaning": "PDF：意味ごとの最大単語数",
     "word_lists_readd_defaults": "デフォルトフォルダの追加"
   },
   "TextScreen": {
@@ -1205,6 +1213,10 @@ static const Map<String,dynamic> de = {
     "word_lists_import_error_description": "Die angegebene Datei ist ungültig. Bitte wählen Sie eine gültige Datei und versuchen Sie es erneut.",
     "word_lists_import_warning": "Warnung",
     "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten überschrieben, sind Sie sicher?",
+    "word_lists_pdf_include_kana": "PDF: Kana einbeziehen",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Max. Zeilen pro Bedeutung",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Bedeutungen pro Vokabel",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Maximale Wörter pro Bedeutung",
     "word_lists_readd_defaults": "Hinzufügen des Standardordners"
   },
   "TextScreen": {
@@ -1611,6 +1623,10 @@ static const Map<String,dynamic> ru = {
     "word_lists_import_error_description": "Указанный файл недействителен. Пожалуйста, выберите правильный файл и повторите попытку.",
     "word_lists_import_warning": "Внимание",
     "word_lists_import_warning_description": "Это перепишет все ваши списки слов, вы уверены?",
+    "word_lists_pdf_include_kana": "PDF: Включить кану",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Максимум строк на значение",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Значения по словарю",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Максимум слов на значение",
     "word_lists_readd_defaults": "Добавьте папку по умолчанию"
   },
   "TextScreen": {
@@ -2038,6 +2054,10 @@ static const Map<String,dynamic> pl = {
     "word_lists_import_error_description": "Podany plik jest nieprawidłowy. Wybierz prawidłowy plik i spróbuj ponownie.",
     "word_lists_import_warning": "Ostrzeżenie",
     "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list słów, jesteś pewien?",
+    "word_lists_pdf_include_kana": "PDF: Dołącz kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Maks. wierszy na znaczenie",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Znaczenia według słownictwa",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Maksymalna liczba słów na znaczenie",
     "word_lists_readd_defaults": "Dodaj folder domyślny"
   },
   "TextScreen": {
@@ -2482,6 +2502,10 @@ static const Map<String,dynamic> en = {
     "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
     "word_lists_import_warning": "Warning",
     "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_pdf_include_kana": "PDF: Include kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Max lines per meaning",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Meanings per vocabulary",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Max words per meaning",
     "word_lists_readd_defaults": "Add the default folder"
   },
   "TextScreen": {
@@ -2888,6 +2912,10 @@ static const Map<String,dynamic> it = {
     "word_lists_import_error_description": "Il file fornito non è valido. Selezionare un file valido e riprovare.",
     "word_lists_import_warning": "Avvertenze",
     "word_lists_import_warning_description": "Questo sovrascriverà tutti i vostri elenchi di parole, siete sicuri?",
+    "word_lists_pdf_include_kana": "PDF: Includere i kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Linee massime per significato",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significati per vocabolario",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Parole massime per significato",
     "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
   },
   "TextScreen": {
@@ -3280,6 +3308,10 @@ static const Map<String,dynamic> fr = {
     "word_lists_import_error_description": "Le fichier fourni n'est pas valide. Veuillez sélectionner un fichier valide et réessayer.",
     "word_lists_import_warning": "Avertissement",
     "word_lists_import_warning_description": "Cela écrasera toutes vos listes de mots, êtes-vous sûr ?",
+    "word_lists_pdf_include_kana": "PDF : Inclure les kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF : Nombre maximal de lignes par sens",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF : Significations par vocabulaire",
+    "word_lists_pdf_max_words_per_meaning": "PDF : Nombre maximal de mots par sens",
     "word_lists_readd_defaults": "Ajouter le dossier par défaut"
   },
   "TextScreen": {
@@ -3672,6 +3704,10 @@ static const Map<String,dynamic> es = {
     "word_lists_import_error_description": "El archivo proporcionado no es válido. Seleccione un archivo válido e inténtelo de nuevo.",
     "word_lists_import_warning": "Advertencia",
     "word_lists_import_warning_description": "Esto sobrescribirá todas tus listas de palabras, ¿estás seguro?",
+    "word_lists_pdf_include_kana": "PDF: Incluir kana",
+    "word_lists_pdf_max_lines_per_meaning": "PDF: Máximo de líneas por sentido",
+    "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significados por vocabulario",
+    "word_lists_pdf_max_words_per_meaning": "PDF: Máximo de palabras por significado",
     "word_lists_readd_defaults": "Añadir la carpeta por defecto"
   },
   "TextScreen": {
