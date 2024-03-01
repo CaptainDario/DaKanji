@@ -11,11 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
-import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
@@ -72,16 +70,61 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // how many different translations from entries should be included
         ResponsiveSliderTile(
-          text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
-          value: widget.settings.wordLists.noTranslations.toDouble(),
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
+          value: widget.settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
           min: 1,
           max: 50,
           divisions: 50,
           showLabelAsInt: true,
           autoSizeGroup: g_SettingsAutoSizeGroup,
+          
           onChanged: (value) {
             setState(() {
-              widget.settings.wordLists.noTranslations = value.toInt();
+              widget.settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // 
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // 
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        ResponsiveCheckBoxTile(
+          text:  LocaleKeys.SettingsScreen_word_lists_pdf_include_kana.tr(),
+          value: widget.settings.wordLists.pdfIncludeKana,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfIncludeKana = value;
               widget.settings.save();
             });
           },

@@ -40,15 +40,60 @@ class SettingsWordLists with ChangeNotifier {
     /// The default value for `noTranslations`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const int d_noTranslations = 3;
+  static const int d_pdfMaxMeaningsPerVocabulary = 3;
   /// When creating a new note, how many translations should be included
-  @JsonKey(defaultValue: d_noTranslations)
-  int _noTranslations = d_noTranslations;
+  @JsonKey(defaultValue: d_pdfMaxMeaningsPerVocabulary)
+  int _pdfMaxMeaningsPerVocabulary = d_pdfMaxMeaningsPerVocabulary;
   /// When creating a new note, how many translations should be included
-  int get noTranslations => _noTranslations;
+  int get pdfMaxMeaningsPerVocabulary => _pdfMaxMeaningsPerVocabulary;
   /// When creating a new note, how many translations should be included
-  set noTranslations(int value) {
-    _noTranslations = value;
+  set pdfMaxMeaningsPerVocabulary(int value) {
+    _pdfMaxMeaningsPerVocabulary = value;
+    notifyListeners();
+  }
+
+  /// The default value for `pdfMaxWordsPerMeaning`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_pdfMaxWordsPerMeaning = 3;
+  /// When exporting to PDF, how many words should one meaning have at max
+  @JsonKey(defaultValue: d_pdfMaxWordsPerMeaning)
+  int _pdfMaxWordsPerMeaning = d_pdfMaxWordsPerMeaning;
+  /// When exporting to PDF, how many words should one meaning have at max
+  int get pdfMaxWordsPerMeaning => _pdfMaxWordsPerMeaning;
+  /// When exporting to PDF, how many words should one meaning have at max
+  set pdfMaxWordsPerMeaning (int value) {
+    _pdfMaxWordsPerMeaning = value;
+    notifyListeners();
+  }
+
+  /// The default value for `pdfMaxLinesPerMeaning`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_pdfMaxLinesPerMeaning = 2;
+  /// When exporting to PDF, how many lines should one meaning occupy at max
+  @JsonKey(defaultValue: d_pdfMaxLinesPerMeaning)
+  int _pdfMaxLinesPerMeaning = d_pdfMaxLinesPerMeaning;
+  /// When exporting to PDF, how many lines should one meaning occupy at max
+  int get pdfMaxLinesPerMeaning => _pdfMaxLinesPerMeaning;
+  /// When exporting to PDF, how many lines should one meaning occupy at max
+  set pdfMaxLinesPerMeaning (int value) {
+    _pdfMaxLinesPerMeaning = value;
+    notifyListeners();
+  }
+  
+  /// The default value for `pdfIncludeKana`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_pdfIncludeKana = true;
+  /// When exporting to PDF, should kana be included
+  @JsonKey(defaultValue: d_pdfIncludeKana)
+  bool _pdfIncludeKana = d_pdfIncludeKana;
+  /// When exporting to PDF, should kana be included
+  bool get pdfIncludeKana => _pdfIncludeKana;
+  /// When exporting to PDF, should kana be included
+  set pdfIncludeKana (bool value) {
+    _pdfIncludeKana = value;
     notifyListeners();
   }
 
