@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -12,7 +15,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 /// Exports the given word list as a PDF file
-Future<pw.Document> pdfPortrait(WordListsData wordList) async {
+Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
   
   // Create document
   final pw.Document pdf = pw.Document();
@@ -30,7 +33,7 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
   int maxTranslations = 3;
   bool includeKana = true;
   bool maxOneLine = true;
-  List<JMdict> entries = await wordListEntriesForPDF(wordList.wordIds, langsToInclude);
+  List<JMdict> entries = await wordListEntriesForPDF(wordIDs, langsToInclude);
 
 
   pdf.addPage(
@@ -39,11 +42,11 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
       orientation: pw.PageOrientation.portrait,
       margin: const pw.EdgeInsets.all(16),
       footer: (context) {
-        return pdfFooter(wordList.name, context, dakanjiLogo);
+        return pdfFooter(name, context, dakanjiLogo);
       },
       build: (pw.Context context) {
         return [
-          for (JMdict entry in entries)
+          for (JMdict entry in List.generate(5, (index) => entries.first))
             ...[
               pw.Row(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -53,28 +56,49 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
                     child: pw.Table(
                       children: [
                         for (LanguageMeanings language in entry.meanings)
-                          pw.TableRow(
-                            children: [
-                              pw.Text(
-                                language.language ?? "None",
-                                style: notoStyle,
-                                maxLines: maxOneLine ? 1 : null
-                              ),
-                              pw.Text(
-                                language.meanings.join(", "),
-                                style: notoStyle,
-                                maxLines: 1
-                              ),
-                            ]
-                          )
+                          ...[
+                            pw.TableRow(
+                              children: [
+                                pw.Padding(
+                                  padding: const pw.EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                  child: pw.SvgImage(
+                                    svg: 
+  """
+  <svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-de" viewBox="0 0 512 512">
+    <path fill="#ffce00" d="M0 341.3h512V512H0z"/>
+    <path d="M0 0h512v170.7H0z"/>
+    <path fill="#d00" d="M0 170.7h512v170.6H0z"/>
+  </svg>
+  """,
+                                    height: 8,
+                                    width: 8
+                                  )
+                                )
+                              ]
+                            ),
+                            pw.TableRow(
+                              children: [
+                                pw.Text(
+                                  language.meanings.mapIndexed(
+                                    (i, e) => "$i: ${e.attributes.join(", ")}")
+                                  .join("\n"),
+                                  style: notoStyle,
+                                  //maxLines: 1
+                                ),
+                              ]
+                            )
+                          ]
                       ]
                     )
                   ),
                   // japanese
                   pw.Expanded(
-                    child: pw.Text(
-                      (entry.kanjis + entry.readings).join("、"),
-                      style: notoStyle
+                    child: pw.Padding(
+                      padding: const pw.EdgeInsets.fromLTRB(0, 16, 0, 0),
+                      child: pw.Text(
+                        (entry.kanjis + entry.readings).join("、"),
+                        style: notoStyle
+                      )
                     )
                   )
                 ]

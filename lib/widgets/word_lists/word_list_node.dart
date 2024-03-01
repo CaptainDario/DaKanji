@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
@@ -409,7 +411,9 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
-    pw.Document pdf = await pdfPortrait(widget.node.value);
+    pw.Document pdf = await pdfPortrait(
+      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
+      widget.node.value.name);
 
     // ignore: use_build_context_synchronously
     await AwesomeDialog(
@@ -424,23 +428,9 @@ class _WordListNodeState extends State<WordListNode> {
               padding: const EdgeInsets.all(8.0),
               child: PdfPreview(
                 loadingWidget: const DaKanjiLoadingIndicator(),
-                actions: [
-                  // to portrait
-                  IconButton(
-                    icon: const Icon(Icons.description),
-                    onPressed: () async {
-                      pdf = await pdfPortrait(widget.node.value);
-                      setState(() {});
-                    },
-                  ),
-                  IconButton(
-                    onPressed: () {}, 
-                    icon: const Icon(Icons.more_vert)
-                  )
-                ],
                 canChangeOrientation: false,
                 canChangePageFormat: false,
-                
+                useActions: false,
                 pdfFileName: "${widget.node.value.name}.pdf",
                 build: (format) {
                   return pdf.save();
