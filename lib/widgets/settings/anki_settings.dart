@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -78,41 +79,12 @@ class _AnkiSettingsState extends State<AnkiSettings> {
         },
       ),
       // which langauges should be included
-      ResponsiveFilterChips(
-        description: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
-        chipWidget: (int index) {
-          String lang = widget.settings.dictionary.selectedTranslationLanguages[index];
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 10,
-                height: 10,
-                child: SvgPicture.asset(
-                  widget.settings.dictionary.translationLanguagesToSvgPath[lang]!
-                )
-              ),
-              const SizedBox(width: 8,),
-              Text(lang,),
-            ],
-          );
-        },
-        selected: (index) {
-          return widget.settings.wordLists.includedLanguages[index];
-        },
-        numChips: widget.settings.dictionary.selectedTranslationLanguages.length,
-        onFilterChipTap: (selected, index) {
-          // do not allow disabling all lanugages
-          if(widget.settings.anki.includedLanguages.where((e) => e).length == 1 &&
-            widget.settings.anki.includedLanguages[index] == true){
-            return;
-          }
-
-          widget.settings.anki.setIncludeLanguagesItem(selected, index);
-          widget.settings.save();
-        },
-      ),
+      ExportLanguagesIncludeChips(
+          includedLanguages: widget.settings.anki.includedLanguages,
+          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
+          settings: widget.settings,
+          setIncludeLanguagesItem: widget.settings.anki.setIncludeLanguagesItem,
+        ),
       // how many different translations from entries should be included
       ResponsiveSliderTile(
         text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
