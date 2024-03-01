@@ -1,17 +1,20 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
-import 'package:flutter/material.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+// Project imports
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 /// Exports the given word list as a PDF file
@@ -28,11 +31,18 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
   // load the dakanji logo
   final dakanjiLogo = await rootBundle.load("assets/images/dakanji/icon.png");
 
+  // get settings
+  SettingsWordLists wl = GetIt.I<Settings>().wordLists;
+  List<String> langsToInclude = GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+    .whereIndexed((index, element) => wl.includedLanguages[index])
+    .map((e) => isoToiso639_2B[e]!.name)
+    .toList();
+  int maxMeanings = wl.pdfMaxMeaningsPerVocabulary;
+  int maxWordsPerMeaning = 1;//wl.pdfMaxWordsPerMeaning;
+  int maxLines = 1;// wl.pdfMaxLinesPerMeaning;
+  bool includeKana = wl.pdfIncludeKana;
+
   // find all elements from the word list in the database
-  List<String> langsToInclude = ["rus", "eng", "ger"];
-  int maxTranslations = 3;
-  bool includeKana = true;
-  bool maxOneLine = true;
   List<JMdict> entries = await wordListEntriesForPDF(wordIDs, langsToInclude);
 
 
@@ -46,7 +56,7 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
       },
       build: (pw.Context context) {
         return [
-          for (JMdict entry in List.generate(5, (index) => entries.first))
+          for (JMdict entry in entries)
             ...[
               pw.Row(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -70,23 +80,26 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
     <path fill="#d00" d="M0 170.7h512v170.6H0z"/>
   </svg>
   """,
-                                    height: 8,
-                                    width: 8
+                                    height: 10,
+                                    width: 10
                                   )
                                 )
                               ]
                             ),
-                            pw.TableRow(
-                              children: [
-                                pw.Text(
-                                  language.meanings.mapIndexed(
-                                    (i, e) => "$i: ${e.attributes.join(", ")}")
-                                  .join("\n"),
-                                  style: notoStyle,
-                                  //maxLines: 1
-                                ),
-                              ]
-                            )
+                            for(var (i, meaning) in language.meanings
+                              .sublist(0, min(language.meanings.length, maxMeanings))
+                              .indexed)
+
+                              pw.TableRow(
+                                children: [
+                                  
+                                    pw.Text(
+                                      "${i+1} ${meaning.attributes.join(",")}",
+                                      style: notoStyle,
+                                      maxLines: maxLines
+                                    ),
+                                ]
+                              )
                           ]
                       ]
                     )
@@ -96,7 +109,21 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
                     child: pw.Padding(
                       padding: const pw.EdgeInsets.fromLTRB(0, 16, 0, 0),
                       child: pw.Text(
-                        (entry.kanjis + entry.readings).join("、"),
+                        () {
+                          List<String> jap = [];
+
+                          if(includeKana){
+                            jap = entry.kanjis + entry.readings;
+                          } else if(!includeKana){
+                            if(entry.kanjis.isEmpty){
+                              jap = entry.readings;
+                            } else {
+                              jap = entry.kanjis;
+                            }
+                          }
+
+                          return jap.join("、");
+                        } (),
                         style: notoStyle
                       )
                     )
