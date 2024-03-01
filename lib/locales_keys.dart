@@ -352,6 +352,10 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_import_error_description = 'SettingsScreen.word_lists_import_error_description';
   static const SettingsScreen_word_lists_import_warning = 'SettingsScreen.word_lists_import_warning';
   static const SettingsScreen_word_lists_import_warning_description = 'SettingsScreen.word_lists_import_warning_description';
+  static const SettingsScreen_word_lists_pdf_include_kana = 'SettingsScreen.word_lists_pdf_include_kana';
+  static const SettingsScreen_word_lists_pdf_max_lines_per_meaning = 'SettingsScreen.word_lists_pdf_max_lines_per_meaning';
+  static const SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary = 'SettingsScreen.word_lists_pdf_max_meanings_per_vocabulary';
+  static const SettingsScreen_word_lists_pdf_max_words_per_meaning = 'SettingsScreen.word_lists_pdf_max_words_per_meaning';
   static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
   static const SettingsScreen = 'SettingsScreen';
   static const TextScreen_copy_button_copy = 'TextScreen.copy_button_copy';
