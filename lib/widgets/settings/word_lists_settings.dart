@@ -4,6 +4,7 @@ import 'dart:io';
 // Flutter imports:
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -53,38 +54,14 @@ class _WordListSettingsState extends State<WordListSettings> {
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // show word frequency in search results / dictionary
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_show_word_freq.tr(),
-          value: widget.settings.dictionary.showWordFruequency,
-          leadingIcon: Icons.info_outline,
+        ShowWordFrequencySetting(
+          widget.settings.wordLists.showWordFruequency,
           onTileTapped: (value) {
             setState(() {
               widget.settings.wordLists.showWordFruequency = value;
               widget.settings.save();
             });
           },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
-                    onTapLink: (text, href, title) {
-                      if(href != null) {
-                        launchUrlString(href);
-                      }
-                    },
-                  ),
-                )
-              )
-            ).show();
-          },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
