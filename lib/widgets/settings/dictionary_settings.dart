@@ -114,8 +114,10 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             else {
               widget.settings.dictionary.selectedTranslationLanguages.remove(lang);
             }
-            // reset anki languages
+            // reset export languages
             widget.settings.anki.includedLanguages =
+              List.filled(widget.settings.dictionary.selectedTranslationLanguages.length, true);
+            widget.settings.wordLists.includedLanguages =
               List.filled(widget.settings.dictionary.selectedTranslationLanguages.length, true);
 
             // save and reload

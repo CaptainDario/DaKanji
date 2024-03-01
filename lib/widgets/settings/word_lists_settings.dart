@@ -2,8 +2,8 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,7 +12,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:url_launcher/url_launcher_string.dart';
@@ -88,40 +87,11 @@ class _WordListSettingsState extends State<WordListSettings> {
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // which langauges should be included
-        ResponsiveFilterChips(
-          description: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
-          chipWidget: (int index) {
-            String lang = widget.settings.dictionary.selectedTranslationLanguages[index];
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 10,
-                  height: 10,
-                  child: SvgPicture.asset(
-                    widget.settings.dictionary.translationLanguagesToSvgPath[lang]!
-                  )
-                ),
-                const SizedBox(width: 8,),
-                Text(lang,),
-              ],
-            );
-          },
-          selected: (index) {
-            return widget.settings.wordLists.includedLanguages[index];
-          },
-          numChips: widget.settings.dictionary.selectedTranslationLanguages.length,
-          onFilterChipTap: (selected, index) {
-            // do not allow disabling all lanugages
-            if(widget.settings.wordLists.includedLanguages.where((e) => e).length == 1 &&
-              widget.settings.wordLists.includedLanguages[index] == true){
-              return;
-            }
-
-            widget.settings.anki.setIncludeLanguagesItem(selected, index);
-            widget.settings.save();
-          },
+        ExportLanguagesIncludeChips(
+          includedLanguages: widget.settings.wordLists.includedLanguages,
+          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
+          settings: widget.settings,
+          setIncludeLanguagesItem: widget.settings.wordLists.setIncludeLanguagesItem,
         ),
         // how many different translations from entries should be included
         ResponsiveSliderTile(
@@ -259,3 +229,4 @@ class _WordListSettingsState extends State<WordListSettings> {
 
   }
 }
+
