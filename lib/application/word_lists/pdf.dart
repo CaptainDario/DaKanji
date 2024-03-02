@@ -20,8 +20,6 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 /// Exports the given word list as a PDF file
 Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
   
-  // Create document
-  final pw.Document pdf = pw.Document();
   // load Japanese font
   final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
   final notoStyle = pw.TextStyle(
@@ -37,16 +35,41 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
     .whereIndexed((index, element) => wl.includedLanguages[index])
     .map((e) => isoToiso639_2B[e]!.name)
     .toList();
-  int maxMeanings = wl.pdfMaxMeaningsPerVocabulary;
-  int maxWordsPerMeaning = 1;//wl.pdfMaxWordsPerMeaning;
-  int maxLines = 1;// wl.pdfMaxLinesPerMeaning;
+  int maxMeanings = 5;//wl.pdfMaxMeaningsPerVocabulary;
+  int maxWordsPerMeaning = 5;//wl.pdfMaxWordsPerMeaning;
+  int maxLines = 5;///wl.pdfMaxLinesPerMeaning;
   bool includeKana = wl.pdfIncludeKana;
 
   // find all elements from the word list in the database
   List<JMdict> entries = await wordListEntriesForPDF(wordIDs, langsToInclude);
 
+  // load the flag SVGs from disk
+  Map<String, String> languageSVGs = {};
+  for (MapEntry e in GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath.entries) {
+    languageSVGs[e.key] = await rootBundle.loadString(e.value);
+  }
 
-  pdf.addPage(
+  return createPortraitPDF(
+    entries,
+    name, dakanjiLogo, languageSVGs,
+    maxMeanings, maxWordsPerMeaning, maxLines, includeKana,
+    notoStyle
+  );
+
+}
+
+/// creates the actual PDF 'widget' and returns it
+pw.Document createPortraitPDF(
+  List<JMdict> entries,
+  String name, ByteData dakanjiLogo, Map<String, String> languageSVGs,
+  int maxMeanings, int maxWordsPerMeaning, int maxLines, bool includeKana,
+  pw.TextStyle notoStyle
+){
+
+  // Create document
+  final pw.Document pdf = pw.Document();
+
+  return pdf..addPage(
     pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       orientation: pw.PageOrientation.portrait,
@@ -72,14 +95,7 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
                                 pw.Padding(
                                   padding: const pw.EdgeInsets.fromLTRB(0, 8, 0, 0),
                                   child: pw.SvgImage(
-                                    svg: 
-  """
-  <svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-de" viewBox="0 0 512 512">
-    <path fill="#ffce00" d="M0 341.3h512V512H0z"/>
-    <path d="M0 0h512v170.7H0z"/>
-    <path fill="#d00" d="M0 170.7h512v170.6H0z"/>
-  </svg>
-  """,
+                                    svg: languageSVGs[isoToiso639_1[language.language]!.name]!,
                                     height: 10,
                                     width: 10
                                   )
@@ -92,12 +108,15 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
 
                               pw.TableRow(
                                 children: [
-                                  
-                                    pw.Text(
-                                      "${i+1} ${meaning.attributes.join(",")}",
-                                      style: notoStyle,
-                                      maxLines: maxLines
-                                    ),
+                                  pw.Text(
+                                    () {
+                                      int noElems = min(meaning.attributes.length, maxWordsPerMeaning);
+                                      List sub = meaning.attributes.sublist(0, noElems);
+                                      return "${i+1} ${sub.join(", ")}";
+                                    }(),
+                                    style: notoStyle,
+                                    maxLines: maxLines
+                                  ),
                                 ]
                               )
                           ]
@@ -136,9 +155,7 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
       }
     )
   );
-
-  return pdf;
-
+  
 }
 
 /// create the footer for the portrait pdf document

@@ -430,7 +430,8 @@ class _WordListNodeState extends State<WordListNode> {
                 loadingWidget: const DaKanjiLoadingIndicator(),
                 canChangeOrientation: false,
                 canChangePageFormat: false,
-                useActions: false,
+                useActions: true,
+                canDebug: false,
                 pdfFileName: "${widget.node.value.name}.pdf",
                 build: (format) {
                   return pdf.save();
