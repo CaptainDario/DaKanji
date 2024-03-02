@@ -35,13 +35,14 @@ Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
     .whereIndexed((index, element) => wl.includedLanguages[index])
     .map((e) => isoToiso639_2B[e]!.name)
     .toList();
-  int maxMeanings = 5;//wl.pdfMaxMeaningsPerVocabulary;
-  int maxWordsPerMeaning = 5;//wl.pdfMaxWordsPerMeaning;
-  int maxLines = 5;///wl.pdfMaxLinesPerMeaning;
+  // TODO better default values
+  int maxMeanings = wl.pdfMaxMeaningsPerVocabulary;
+  int maxWordsPerMeaning = wl.pdfMaxWordsPerMeaning;
+  int maxLines = wl.pdfMaxLinesPerMeaning;
   bool includeKana = wl.pdfIncludeKana;
 
   // find all elements from the word list in the database
-  List<JMdict> entries = await wordListEntriesForPDF(wordIDs, langsToInclude);
+  List<JMdict> entries = await wordListEntriesForExport(wordIDs, langsToInclude);
 
   // load the flag SVGs from disk
   Map<String, String> languageSVGs = {};
