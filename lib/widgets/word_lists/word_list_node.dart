@@ -1,5 +1,8 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
@@ -17,6 +21,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:universal_io/io.dart';
 
 /// All actions a user can do when clicking the 
 enum  WordListNodePopupMenuButtonItems {
@@ -312,7 +317,7 @@ class _WordListNodeState extends State<WordListNode> {
                               toPDFPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.toCSV:
-                              print("toCSV not implemented");
+                              toCSVPressed();
                               break;
                           }
                         },
@@ -342,7 +347,6 @@ class _WordListNodeState extends State<WordListNode> {
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toImages,
                                 child: Text(
-                                  // TODO word list to images
                                   LocaleKeys.WordListsScreen_export_images.tr()
                                 )
                               ),
@@ -355,7 +359,6 @@ class _WordListNodeState extends State<WordListNode> {
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toCSV,
                                 child: Text(
-                                  // TODO word list to csv
                                   LocaleKeys.WordListsScreen_export_csv.tr()
                                 )
                               ),
@@ -411,10 +414,12 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
+    // TODO show spinner while generating pdf
     pw.Document pdf = await pdfPortrait(
       await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
       widget.node.value.name);
 
+    // TODO mayb dont show pdf and let the user immediatiey  share
     // ignore: use_build_context_synchronously
     await AwesomeDialog(
       context: context,
@@ -445,5 +450,33 @@ class _WordListNodeState extends State<WordListNode> {
     ).show();
   }
 
+  /// Creates a csv file and lets the user share it
+  void toCSVPressed() async {
+
+    // show loadign indicator
+    loadingPopup(context).show();
+
+    // create pdf
+    String csv = await csvFromWordListNode(widget.node);
+    
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+
+    if(path != null){
+      File f = File(p.join(path, "${widget.node.value.name}.csv"));
+      f.createSync();
+      f.writeAsStringSync(csv);
+    }
+
+  }
+
+  /// Creates a zip file of images of vocab cards and lets the user share it
+  void toImagesPressed() {
+
+  }
 
 }
