@@ -369,6 +369,7 @@
     "word_lists_import_error_description": "\u63d0\u4f9b\u7684\u6587\u4ef6\u65e0\u6548\u3002\u8bf7\u9009\u62e9\u4e00\u4e2a\u6709\u6548\u6587\u4ef6\u5e76\u91cd\u8bd5\u3002",
     "word_lists_import_warning": "\u8b66\u544a",
     "word_lists_import_warning_description": "\u8fd9\u4f1a\u8986\u76d6\u4f60\u6240\u6709\u7684\u5355\u8bcd\u8868\uff0c\u4f60\u786e\u5b9a\u5417\uff1f",
+    "word_lists_languages_to_include_in_export": "\u5bfc\u51fa\u65f6\u5e94\u5305\u542b\u7684\u8bed\u8a00",
     "word_lists_pdf_include_kana": "PDF\uff1a\u5305\u542b\u5047\u540d",
     "word_lists_pdf_max_lines_per_meaning": "PDF\uff1a\u6bcf\u4e2a\u542b\u4e49\u7684\u6700\u5927\u884c\u6570",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF\uff1a\u6bcf\u4e2a\u8bcd\u6c47\u7684\u542b\u4e49",

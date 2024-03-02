@@ -369,6 +369,7 @@
     "word_lists_import_error_description": "Die angegebene Datei ist ung\u00fcltig. Bitte w\u00e4hlen Sie eine g\u00fcltige Datei und versuchen Sie es erneut.",
     "word_lists_import_warning": "Warnung",
     "word_lists_import_warning_description": "Damit werden alle Ihre Wortlisten \u00fcberschrieben, sind Sie sicher?",
+    "word_lists_languages_to_include_in_export": "Beim Export inkludierte Sprachen",
     "word_lists_pdf_include_kana": "PDF: Kana einbeziehen",
     "word_lists_pdf_max_lines_per_meaning": "PDF: Max. Zeilen pro Bedeutung",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Bedeutungen pro Vokabel",

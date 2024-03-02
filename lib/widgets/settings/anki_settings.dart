@@ -80,11 +80,12 @@ class _AnkiSettingsState extends State<AnkiSettings> {
       ),
       // which langauges should be included
       ExportLanguagesIncludeChips(
-          includedLanguages: widget.settings.anki.includedLanguages,
-          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
-          settings: widget.settings,
-          setIncludeLanguagesItem: widget.settings.anki.setIncludeLanguagesItem,
-        ),
+        text: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
+        includedLanguages: widget.settings.anki.includedLanguages,
+        selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
+        settings: widget.settings,
+        setIncludeLanguagesItem: widget.settings.anki.setIncludeLanguagesItem,
+      ),
       // how many different translations from entries should be included
       ResponsiveSliderTile(
         text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),

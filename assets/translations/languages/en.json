@@ -369,6 +369,7 @@
     "word_lists_import_error_description": "The provide file is not valid. Please select a valid file and try again.",
     "word_lists_import_warning": "Warning",
     "word_lists_import_warning_description": "This will overwrite all your word lists, are you sure?",
+    "word_lists_languages_to_include_in_export": "Languages to include when exporting",
     "word_lists_pdf_include_kana": "PDF: Include kana",
     "word_lists_pdf_max_lines_per_meaning": "PDF: Max lines per meaning",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Meanings per vocabulary",

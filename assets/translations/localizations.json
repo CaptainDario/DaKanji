@@ -2749,6 +2749,17 @@
       "es": "Incluir captura de pantalla",
       "pl": "Dołącz zrzut ekranu"
     },
+    "word_lists_languages_to_include_in_export": {
+      "en": "Languages to include when exporting",
+      "de": "Beim Export inkludierte Sprachen",
+      "ru": "Языки, которые необходимо включить при экспорте",
+      "ja": "エクスポート時に含める言語",
+      "zh": "导出时应包含的语言",
+      "it": "Lingue da includere nell'esportazione",
+      "fr": "Langues à inclure dans l'exportation",
+      "es": "Lenguas que deben incluirse al exportar",
+      "pl": "Języki uwzględniane podczas eksportowania"
+    },
     "word_lists_pdf_max_meanings_per_vocabulary": {
       "en": "PDF: Meanings per vocabulary",
       "de": "PDF: Bedeutungen pro Vokabel",

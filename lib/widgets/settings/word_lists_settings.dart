@@ -63,6 +63,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
+          text: LocaleKeys.SettingsScreen_word_lists_languages_to_include_in_export.tr(),
           includedLanguages: widget.settings.wordLists.includedLanguages,
           selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
           settings: widget.settings,

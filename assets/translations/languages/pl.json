@@ -369,6 +369,7 @@
     "word_lists_import_error_description": "Podany plik jest nieprawid\u0142owy. Wybierz prawid\u0142owy plik i spr\u00f3buj ponownie.",
     "word_lists_import_warning": "Ostrze\u017cenie",
     "word_lists_import_warning_description": "Spowoduje to nadpisanie wszystkich list s\u0142\u00f3w, jeste\u015b pewien?",
+    "word_lists_languages_to_include_in_export": "J\u0119zyki uwzgl\u0119dniane podczas eksportowania",
     "word_lists_pdf_include_kana": "PDF: Do\u0142\u0105cz kana",
     "word_lists_pdf_max_lines_per_meaning": "PDF: Maks. wierszy na znaczenie",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Znaczenia wed\u0142ug s\u0142ownictwa",

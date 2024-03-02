@@ -12,6 +12,8 @@ import 'package:easy_localization/easy_localization.dart';
 /// are selectable
 class ExportLanguagesIncludeChips extends StatelessWidget {
 
+  /// The text to show above this setting
+  final String text;
   /// The languages that are currently selected in the dictionary settings
   final List<String> selectedTranslationLanguages;
   /// The langauges that should be included when exporting
@@ -24,6 +26,7 @@ class ExportLanguagesIncludeChips extends StatelessWidget {
 
   const ExportLanguagesIncludeChips(
     {
+      required this.text,
       required this.selectedTranslationLanguages,
       required this.includedLanguages,
       required this.settings,
@@ -36,7 +39,7 @@ class ExportLanguagesIncludeChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveFilterChips(
-      description: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
+      description: text,
       chipWidget: (int index) {
         String lang = selectedTranslationLanguages[index];
         return Row(
