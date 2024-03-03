@@ -414,8 +414,8 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
-    // TODO show spinner while generating pdf
-    pw.Document pdf = await pdfPortrait(
+    // create PDF
+    pw.Document pdf = await pdfPortraitFromWordListNode(
       await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
       widget.node.value.name);
 

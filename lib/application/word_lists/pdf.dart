@@ -18,7 +18,7 @@ import 'package:printing/printing.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 /// Exports the given word list as a PDF file
-Future<pw.Document> pdfPortrait(List<int> wordIDs, String name) async {
+Future<pw.Document> pdfPortraitFromWordListNode(List<int> wordIDs, String name) async {
   
   // load Japanese font
   final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
