@@ -412,6 +412,10 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+    if(path == null) return;
+
     // show loadign indicator
     loadingPopup(context, waitingInfo: Text("Creating PDF, please wait...")).show();
 
@@ -424,22 +428,23 @@ class _WordListNodeState extends State<WordListNode> {
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
 
-    // let the user select a folder
-    String? path = await FilePicker.platform.getDirectoryPath();
-
-    if(path != null){
-      File f = File(p.join(path, "${widget.node.value.name}.pdf"));
-      f.createSync();
-      f.writeAsBytesSync(await pdf.save());
-    }
+    // write PDF to file
+    File f = File(p.join(path, "${widget.node.value.name}.pdf"));
+    f.createSync();
+    f.writeAsBytesSync(await pdf.save());
 
   }
 
   /// Creates a csv file and lets the user share it
   void toCSVPressed() async {
 
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+
+    if (path == null) return;
+
     // show loadign indicator
-    loadingPopup(context).show();
+    loadingPopup(context, waitingInfo: Text("Creating CSV, please wait...")).show();
 
     // create csv
     String csv = await csvFromWordListNode(widget.node);
@@ -447,6 +452,14 @@ class _WordListNodeState extends State<WordListNode> {
     // close loading indicator
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
+
+    // write csv to file
+    File f = File(p.join(path, "${widget.node.value.name}.csv"));
+    f.createSync();
+    f.writeAsStringSync(csv);
+
+  }
+
   /// Creates a folder of images of vocab cards and lets the user share it
   void toImagesPressed() async {
 
