@@ -2749,6 +2749,61 @@
       "es": "Incluir captura de pantalla",
       "pl": "Dołącz zrzut ekranu"
     },
+    "word_lists_languages_to_include_in_export": {
+      "en": "Languages to include when exporting",
+      "de": "Beim Export inkludierte Sprachen",
+      "ru": "Языки, которые необходимо включить при экспорте",
+      "ja": "エクスポート時に含める言語",
+      "zh": "导出时应包含的语言",
+      "it": "Lingue da includere nell'esportazione",
+      "fr": "Langues à inclure dans l'exportation",
+      "es": "Lenguas que deben incluirse al exportar",
+      "pl": "Języki uwzględniane podczas eksportowania"
+    },
+    "word_lists_pdf_max_meanings_per_vocabulary": {
+      "en": "PDF: Meanings per vocabulary",
+      "de": "PDF: Bedeutungen pro Vokabel",
+      "ru": "PDF: Значения по словарю",
+      "ja": "PDF語彙ごとの意味",
+      "zh": "PDF：每个词汇的含义",
+      "it": "PDF: Significati per vocabolario",
+      "fr": "PDF : Significations par vocabulaire",
+      "es": "PDF: Significados por vocabulario",
+      "pl": "PDF: Znaczenia według słownictwa"
+    },
+    "word_lists_pdf_max_words_per_meaning": {
+      "en": "PDF: Max words per meaning",
+      "de": "PDF: Maximale Wörter pro Bedeutung",
+      "ru": "PDF: Максимум слов на значение",
+      "ja": "PDF：意味ごとの最大単語数",
+      "zh": "PDF：每个含义的最大字数",
+      "it": "PDF: Parole massime per significato",
+      "fr": "PDF : Nombre maximal de mots par sens",
+      "es": "PDF: Máximo de palabras por significado",
+      "pl": "PDF: Maksymalna liczba słów na znaczenie"
+    },
+    "word_lists_pdf_max_lines_per_meaning": {
+      "en": "PDF: Max lines per meaning",
+      "de": "PDF: Max. Zeilen pro Bedeutung",
+      "ru": "PDF: Максимум строк на значение",
+      "ja": "PDF：意味ごとの最大行数",
+      "zh": "PDF：每个含义的最大行数",
+      "it": "PDF: Linee massime per significato",
+      "fr": "PDF : Nombre maximal de lignes par sens",
+      "es": "PDF: Máximo de líneas por sentido",
+      "pl": "PDF: Maks. wierszy na znaczenie"
+    },
+    "word_lists_pdf_include_kana": {
+      "en": "PDF: Include kana",
+      "de": "PDF: Kana einbeziehen",
+      "ru": "PDF: Включить кану",
+      "ja": "PDF：かなを含む",
+      "zh": "PDF：包含假名",
+      "it": "PDF: Includere i kana",
+      "fr": "PDF : Inclure les kana",
+      "es": "PDF: Incluir kana",
+      "pl": "PDF: Dołącz kana"
+    },
     "word_lists_readd_defaults": {
       "en": "Add the default folder",
       "de": "Hinzufügen des Standardordners",
@@ -3881,6 +3936,17 @@
       "es": "No hay entradas en esta lista de palabras",
       "pl": "Brak wpisów w tej liście słów"
     },
+    "drag_to_scroll": {
+      "en": "Drag here to scroll",
+      "de": "Ziehen hier, um zu scrollen",
+      "ru": "Перетащите сюда для прокрутки",
+      "ja": "ここをドラッグしてスクロール",
+      "zh": "拖动此处滚动",
+      "it": "Trascinare qui per scorrere",
+      "fr": "Glisser ici pour faire défiler",
+      "es": "Arrastre aquí para desplazarse",
+      "pl": "Przeciągnij tutaj, aby przewinąć"
+    },
     "add": {
       "en": "add",
       "de": "Hinzufügen",
@@ -4035,27 +4101,71 @@
       "es": "Enviar a anki",
       "pl": "Wyślij do anki"
     },
-    "create_pdf": {
-      "en": "Create PDF",
-      "de": "Konvertiere zu PDF",
-      "ru": "Создать PDF",
-      "ja": "PDFを作成する",
-      "zh": "创建PDF",
-      "it": "Creare PDF",
-      "fr": "Créer un PDF",
-      "es": "Crear PDF",
-      "pl": "Utwórz PDF"
+    "export_pdf": {
+      "en": "Export PDF",
+      "de": "PDF exportieren",
+      "ru": "Экспорт PDF",
+      "ja": "PDFエクスポート",
+      "zh": "导出 PDF",
+      "it": "Esportazione PDF",
+      "fr": "Exporter le PDF",
+      "es": "Exportar PDF",
+      "pl": "Eksportuj PDF"
     },
-    "drag_to_scroll": {
-      "en": "Drag here to scroll",
-      "de": "Ziehen hier, um zu scrollen",
-      "ru": "Перетащите сюда для прокрутки",
-      "ja": "ここをドラッグしてスクロール",
-      "zh": "拖动此处滚动",
-      "it": "Trascinare qui per scorrere",
-      "fr": "Glisser ici pour faire défiler",
-      "es": "Arrastre aquí para desplazarse",
-      "pl": "Przeciągnij tutaj, aby przewinąć"
+    "export_pdf_progress": {
+      "en": "Creating PDF, please wait...",
+      "de": "Erstelle PDF, bitte warten...",
+      "ru": "Создание PDF, пожалуйста, подождите...",
+      "ja": "PDFを作成しています。",
+      "zh": "创建 PDF，请稍候...",
+      "it": "Creazione del PDF, attendere...",
+      "fr": "Création du PDF, veuillez patienter...",
+      "es": "Creando PDF, por favor espere...",
+      "pl": "Tworzenie pliku PDF, proszę czekać..."
+    },
+    "export_csv": {
+      "en": "Export CSV",
+      "de": "CSV exportieren",
+      "ru": "Экспорт CSV",
+      "ja": "CSVエクスポート",
+      "zh": "导出 CSV",
+      "it": "Esportazione CSV",
+      "fr": "Exporter CSV",
+      "es": "Exportar CSV",
+      "pl": "Eksport CSV"
+    },
+    "export_csv_progress": {
+      "en": "Creating CSV, please wait...",
+      "de": "Erstelle CSV, bitte warten...",
+      "ru": "Создание CSV, пожалуйста, подождите...",
+      "ja": "CSVを作成しています。",
+      "zh": "创建 CSV，请稍候...",
+      "it": "Creare CSV, attendere...",
+      "fr": "Création du CSV, veuillez patienter...",
+      "es": "Creando CSV, por favor espere...",
+      "pl": "Tworzenie CSV, proszę czekać..."
+    },
+    "export_images": {
+      "en": "Export images",
+      "de": "Bilder exportieren",
+      "ru": "Экспорт изображений",
+      "ja": "画像のエクスポート",
+      "zh": "导出图像",
+      "it": "Esportazione di immagini",
+      "fr": "Exporter des images",
+      "es": "Exportar imágenes",
+      "pl": "Eksport obrazów"
+    },
+    "export_images_progress": {
+      "en": "Rendering images, please wait...",
+      "de": "Bilder werden gerendert, bitte warten...",
+      "ru": "Рендеринг изображений, пожалуйста, подождите...",
+      "ja": "画像をレンダリングしています。",
+      "zh": "正在渲染图像，请稍候...",
+      "it": "Rendering delle immagini, attendere...",
+      "fr": "Rendu des images, veuillez patienter...",
+      "es": "Renderizando imágenes, por favor espere...",
+      "pl": "Renderowanie obrazów, proszę czekać..."
     }
   },
   "WordListScreen": {

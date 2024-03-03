@@ -1,6 +1,7 @@
 // Dart imports:
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,7 +11,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
@@ -114,8 +114,10 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             else {
               widget.settings.dictionary.selectedTranslationLanguages.remove(lang);
             }
-            // reset anki languages
+            // reset export languages
             widget.settings.anki.includedLanguages =
+              List.filled(widget.settings.dictionary.selectedTranslationLanguages.length, true);
+            widget.settings.wordLists.includedLanguages =
               List.filled(widget.settings.dictionary.selectedTranslationLanguages.length, true);
 
             // save and reload
@@ -148,38 +150,14 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           }
         ),
         // show word frequency in search results / dictionary
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_show_word_freq.tr(),
-          value: widget.settings.dictionary.showWordFruequency,
-          leadingIcon: Icons.info_outline,
+        ShowWordFrequencySetting(
+          widget.settings.dictionary.showWordFruequency,
           onTileTapped: (value) {
             setState(() {
               widget.settings.dictionary.showWordFruequency = value;
               widget.settings.save();
             });
           },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
-                    onTapLink: (text, href, title) {
-                      if(href != null) {
-                        launchUrlString(href);
-                      }
-                    },
-                  ),
-                )
-              )
-            ).show();
-          },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(

@@ -12,7 +12,10 @@ import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card_screensh
 /// Takes a screeshot of a [DictionaryWordCard] dispalying `entry` and stores
 /// this screenshot as a png image with the name `fileName` in the tmp-directory
 /// Returns the file in which the image has been stored 
-Future<File> screenshotDictionaryWordCard(JMdict entry, String fileName, bool includeConjugation) async {
+Future<File> dictionaryWordCardToImage(
+  JMdict entry,
+  String fileName,
+  bool includeConjugation) async {
 
   late File f;
 
@@ -21,7 +24,7 @@ Future<File> screenshotDictionaryWordCard(JMdict entry, String fileName, bool in
     delay: const Duration(milliseconds: 50)
   ).then((value) async {
     Directory tmp = await getTemporaryDirectory();
-    f = await File("${tmp.path}/$fileName").create();
+    f = File("${tmp.path}/$fileName")..createSync();
     f.writeAsBytesSync(value);
   });
 

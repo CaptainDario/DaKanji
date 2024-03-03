@@ -1,21 +1,25 @@
 // Flutter imports:
+import 'dart:math';
+
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+// Project imports
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 /// Exports the given word list as a PDF file
-Future<pw.Document> pdfPortrait(WordListsData wordList) async {
+Future<pw.Document> pdfPortraitFromWordListNode(List<int> wordIDs, String name) async {
   
-  // Create document
-  final pw.Document pdf = pw.Document();
   // load Japanese font
   final ttf = await fontFromAssetBundle("assets/fonts/Noto_Sans_JP/NotoSansJP-Medium.ttf");
   final notoStyle = pw.TextStyle(
@@ -25,21 +29,54 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
   // load the dakanji logo
   final dakanjiLogo = await rootBundle.load("assets/images/dakanji/icon.png");
 
+  // get settings
+  SettingsWordLists wl = GetIt.I<Settings>().wordLists;
+  List<String> langsToInclude = GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+    .whereIndexed((index, element) => wl.includedLanguages[index])
+    .map((e) => isoToiso639_2B[e]!.name)
+    .toList();
+  // TODO better default values
+  int maxMeanings = wl.pdfMaxMeaningsPerVocabulary;
+  int maxWordsPerMeaning = wl.pdfMaxWordsPerMeaning;
+  int maxLines = wl.pdfMaxLinesPerMeaning;
+  bool includeKana = wl.pdfIncludeKana;
+
   // find all elements from the word list in the database
-  List<String> langsToInclude = ["rus", "eng", "ger"];
-  int maxTranslations = 3;
-  bool includeKana = true;
-  bool maxOneLine = true;
-  List<JMdict> entries = await wordListEntriesForPDF(wordList.wordIds, langsToInclude);
+  List<JMdict> entries = await wordListEntriesForExport(wordIDs, langsToInclude);
 
+  // load the flag SVGs from disk
+  Map<String, String> languageSVGs = {};
+  for (MapEntry e in GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath.entries) {
+    languageSVGs[e.key] = await rootBundle.loadString(e.value);
+  }
 
-  pdf.addPage(
+  return createPortraitPDF(
+    entries,
+    name, dakanjiLogo, languageSVGs,
+    maxMeanings, maxWordsPerMeaning, maxLines, includeKana,
+    notoStyle
+  );
+
+}
+
+/// creates the actual PDF 'widget' and returns it
+pw.Document createPortraitPDF(
+  List<JMdict> entries,
+  String name, ByteData dakanjiLogo, Map<String, String> languageSVGs,
+  int maxMeanings, int maxWordsPerMeaning, int maxLines, bool includeKana,
+  pw.TextStyle notoStyle
+){
+
+  // Create document
+  final pw.Document pdf = pw.Document();
+
+  return pdf..addPage(
     pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       orientation: pw.PageOrientation.portrait,
       margin: const pw.EdgeInsets.all(16),
       footer: (context) {
-        return pdfFooter(wordList.name, context, dakanjiLogo);
+        return pdfFooter(name, context, dakanjiLogo);
       },
       build: (pw.Context context) {
         return [
@@ -53,28 +90,62 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
                     child: pw.Table(
                       children: [
                         for (LanguageMeanings language in entry.meanings)
-                          pw.TableRow(
-                            children: [
-                              pw.Text(
-                                language.language ?? "None",
-                                style: notoStyle,
-                                maxLines: maxOneLine ? 1 : null
-                              ),
-                              pw.Text(
-                                language.meanings.join(", "),
-                                style: notoStyle,
-                                maxLines: 1
-                              ),
-                            ]
-                          )
+                          ...[
+                            pw.TableRow(
+                              children: [
+                                pw.Padding(
+                                  padding: const pw.EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                  child: pw.SvgImage(
+                                    svg: languageSVGs[isoToiso639_1[language.language]!.name]!,
+                                    height: 10,
+                                    width: 10
+                                  )
+                                )
+                              ]
+                            ),
+                            for(var (i, meaning) in language.meanings
+                              .sublist(0, min(language.meanings.length, maxMeanings))
+                              .indexed)
+
+                              pw.TableRow(
+                                children: [
+                                  pw.Text(
+                                    () {
+                                      int noElems = min(meaning.attributes.length, maxWordsPerMeaning);
+                                      List sub = meaning.attributes.sublist(0, noElems);
+                                      return "${i+1} ${sub.join(", ")}";
+                                    }(),
+                                    style: notoStyle,
+                                    maxLines: maxLines
+                                  ),
+                                ]
+                              )
+                          ]
                       ]
                     )
                   ),
                   // japanese
                   pw.Expanded(
-                    child: pw.Text(
-                      (entry.kanjis + entry.readings).join("、"),
-                      style: notoStyle
+                    child: pw.Padding(
+                      padding: const pw.EdgeInsets.fromLTRB(0, 16, 0, 0),
+                      child: pw.Text(
+                        () {
+                          List<String> jap = [];
+
+                          if(includeKana){
+                            jap = entry.kanjis + entry.readings;
+                          } else if(!includeKana){
+                            if(entry.kanjis.isEmpty){
+                              jap = entry.readings;
+                            } else {
+                              jap = entry.kanjis;
+                            }
+                          }
+
+                          return jap.join("、");
+                        } (),
+                        style: notoStyle
+                      )
                     )
                   )
                 ]
@@ -85,9 +156,7 @@ Future<pw.Document> pdfPortrait(WordListsData wordList) async {
       }
     )
   );
-
-  return pdf;
-
+  
 }
 
 /// create the footer for the portrait pdf document

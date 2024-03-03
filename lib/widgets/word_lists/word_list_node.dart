@@ -1,11 +1,16 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/word_lists/csv.dart';
+import 'package:da_kanji_mobile/application/word_lists/images.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
@@ -14,7 +19,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:universal_io/io.dart';
 
 /// All actions a user can do when clicking the 
 enum  WordListNodePopupMenuButtonItems {
@@ -26,6 +31,7 @@ enum  WordListNodePopupMenuButtonItems {
   toCSV,
 }
 
+/// One Node of the word lists tree, can either be a folder or a word list
 class WordListNode extends StatefulWidget {
 
   /// The tree node that represents this tile
@@ -303,13 +309,13 @@ class _WordListNodeState extends State<WordListNode> {
                               print("sendToAnki not implemented");
                               break;
                             case WordListNodePopupMenuButtonItems.toImages:
-                              print("toImages not implemented");
+                              toImagesPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.toCSV:
-                              print("toCSV not implemented");
+                              toCSVPressed();
                               break;
                           }
                         },
@@ -336,26 +342,22 @@ class _WordListNodeState extends State<WordListNode> {
                                   LocaleKeys.WordListsScreen_send_to_anki.tr()
                                 )
                               ),
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toImages,
                                 child: Text(
-                                  // TODO word list to images
-                                  "TO IMAGES"
-                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_images.tr()
                                 )
                               ),
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.toPdf,
                                 child: Text(
-                                  LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_pdf.tr()
                                 )
                               ),
-                              const PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.toImages,
+                              PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.toCSV,
                                 child: Text(
-                                  // TODO word list to csv
-                                  "TO CSV"
-                                  //LocaleKeys.WordListsScreen_create_pdf.tr()
+                                  LocaleKeys.WordListsScreen_export_csv.tr()
                                 )
                               ),
                             ]
@@ -410,50 +412,93 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
-    pw.Document pdf = await pdfPortrait(widget.node.value);
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+    if(path == null) return;
 
+    // show loadign indicator
     // ignore: use_build_context_synchronously
-    await AwesomeDialog(
-      context: context,
-      dialogType: DialogType.noHeader,
-      body: StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PdfPreview(
-                loadingWidget: const DaKanjiLoadingIndicator(),
-                actions: [
-                  // to portrait
-                  IconButton(
-                    icon: const Icon(Icons.description),
-                    onPressed: () async {
-                      pdf = await pdfPortrait(widget.node.value);
-                      setState(() {});
-                    },
-                  ),
-                  IconButton(
-                    onPressed: () {}, 
-                    icon: const Icon(Icons.more_vert)
-                  )
-                ],
-                canChangeOrientation: false,
-                canChangePageFormat: false,
-                
-                pdfFileName: "${widget.node.value.name}.pdf",
-                build: (format) {
-                  return pdf.save();
-                }
-                
-              ),
-            ),
-          );
-        }
-      )
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
     ).show();
+
+    // create PDF
+    pw.Document pdf = await pdfPortraitFromWordListNode(
+      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
+      widget.node.value.name);
+
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    // write PDF to file
+    File f = File(p.join(path, "${widget.node.value.name}.pdf"));
+    f.createSync();
+    f.writeAsBytesSync(await pdf.save());
+
   }
 
+  /// Creates a csv file and lets the user share it
+  void toCSVPressed() async {
+
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+
+    if (path == null) return;
+
+    // show loadign indicator
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_csv_progress.tr())
+    ).show();
+
+    // create csv
+    String csv = await csvFromWordListNode(widget.node);
+    
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    // write csv to file
+    File f = File(p.join(path, "${widget.node.value.name}.csv"));
+    f.createSync();
+    f.writeAsStringSync(csv);
+
+  }
+
+  /// Creates a folder of images of vocab cards and lets the user share it
+  void toImagesPressed() async {
+
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+    if(path == null) return;
+
+    // show loadign indicator
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_images_progress.tr())
+    ).show();
+
+    // create csv
+    List<File> files = await imagesFromWordListNode(widget.node);
+    
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    // copy files from temp to new directory
+    final destDirectory = Directory(p.join(path, widget.node.value.name));
+    destDirectory.createSync();
+    for (var file in files) {
+
+      file.copySync(p.join(destDirectory.path, p.basename(file.path)));
+      file.deleteSync();
+
+    }
+
+  }
 
 }

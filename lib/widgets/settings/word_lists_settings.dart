@@ -2,17 +2,18 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
-import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
@@ -51,38 +52,83 @@ class _WordListSettingsState extends State<WordListSettings> {
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // show word frequency in search results / dictionary
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_show_word_freq.tr(),
-          value: widget.settings.dictionary.showWordFruequency,
-          leadingIcon: Icons.info_outline,
+        ShowWordFrequencySetting(
+          widget.settings.wordLists.showWordFruequency,
           onTileTapped: (value) {
             setState(() {
               widget.settings.wordLists.showWordFruequency = value;
               widget.settings.save();
             });
           },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_show_word_freq_body.tr(),
-                    onTapLink: (text, href, title) {
-                      if(href != null) {
-                        launchUrlString(href);
-                      }
-                    },
-                  ),
-                )
-              )
-            ).show();
-          },
+        ),
+        // which langauges should be included
+        ExportLanguagesIncludeChips(
+          text: LocaleKeys.SettingsScreen_word_lists_languages_to_include_in_export.tr(),
+          includedLanguages: widget.settings.wordLists.includedLanguages,
+          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
+          settings: widget.settings,
+          setIncludeLanguagesItem: widget.settings.wordLists.setIncludeLanguagesItem,
+        ),
+        // how many different translations from entries should be included
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
+          value: widget.settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
           autoSizeGroup: g_SettingsAutoSizeGroup,
+          
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // 
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // 
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        ResponsiveCheckBoxTile(
+          text:  LocaleKeys.SettingsScreen_word_lists_pdf_include_kana.tr(),
+          value: widget.settings.wordLists.pdfIncludeKana,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfIncludeKana = value;
+              widget.settings.save();
+            });
+          },
         ),
         // readd defaults
         ResponsiveIconButtonTile(
@@ -204,3 +250,4 @@ class _WordListSettingsState extends State<WordListSettings> {
 
   }
 }
+

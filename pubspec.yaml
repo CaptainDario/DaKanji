@@ -63,9 +63,9 @@ dependencies:
   dio: 5.4.0
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
-  pdf: 3.10.3
+  pdf: 3.10.8
   rive: 0.11.17
-  printing: 5.11.0
+  printing: 5.12.0
   path_parsing: any               # included in svg_flutter
   vector_graphics: any            # included in svg_flutter
   app_links: 3.5.0                # android, iOS, web, macos, windows (msix), linux

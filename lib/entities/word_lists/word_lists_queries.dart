@@ -15,7 +15,9 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 /// by their IDs. Remove all translations that are not in `langsToInclude` and sort
 /// the translations matching `langsToInclude`. Lastly retruns the list of
 /// entries
-Future<List<JMdict>> wordListEntriesForPDF(List<int> wordIds, List<String> langsToInclude) async {
+Future<List<JMdict>> wordListEntriesForExport(List<int> wordIds, List<String> langsToInclude) async {
+
+  if(wordIds.isEmpty) return[];
 
   List<JMdict> entries = await GetIt.I<Isars>().dictionary.jmdict
   // get all entries

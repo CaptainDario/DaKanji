@@ -96,6 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       AnkiSettings(settings),
                       ClipboardSettings(settings),
                       MiscSettings(settings),
+                      
                     ],
                   ),
                 ),
