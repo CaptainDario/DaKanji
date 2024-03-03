@@ -3936,6 +3936,17 @@
       "es": "No hay entradas en esta lista de palabras",
       "pl": "Brak wpisów w tej liście słów"
     },
+    "drag_to_scroll": {
+      "en": "Drag here to scroll",
+      "de": "Ziehen hier, um zu scrollen",
+      "ru": "Перетащите сюда для прокрутки",
+      "ja": "ここをドラッグしてスクロール",
+      "zh": "拖动此处滚动",
+      "it": "Trascinare qui per scorrere",
+      "fr": "Glisser ici pour faire défiler",
+      "es": "Arrastre aquí para desplazarse",
+      "pl": "Przeciągnij tutaj, aby przewinąć"
+    },
     "add": {
       "en": "add",
       "de": "Hinzufügen",
@@ -4101,6 +4112,17 @@
       "es": "Exportar PDF",
       "pl": "Eksportuj PDF"
     },
+    "export_pdf_progress": {
+      "en": "Creating PDF, please wait...",
+      "de": "Erstelle PDF, bitte warten...",
+      "ru": "Создание PDF, пожалуйста, подождите...",
+      "ja": "PDFを作成しています。",
+      "zh": "创建 PDF，请稍候...",
+      "it": "Creazione del PDF, attendere...",
+      "fr": "Création du PDF, veuillez patienter...",
+      "es": "Creando PDF, por favor espere...",
+      "pl": "Tworzenie pliku PDF, proszę czekać..."
+    },
     "export_csv": {
       "en": "Export CSV",
       "de": "CSV exportieren",
@@ -4111,6 +4133,17 @@
       "fr": "Exporter CSV",
       "es": "Exportar CSV",
       "pl": "Eksport CSV"
+    },
+    "export_csv_progress": {
+      "en": "Creating CSV, please wait...",
+      "de": "Erstelle CSV, bitte warten...",
+      "ru": "Создание CSV, пожалуйста, подождите...",
+      "ja": "CSVを作成しています。",
+      "zh": "创建 CSV，请稍候...",
+      "it": "Creare CSV, attendere...",
+      "fr": "Création du CSV, veuillez patienter...",
+      "es": "Creando CSV, por favor espere...",
+      "pl": "Tworzenie CSV, proszę czekać..."
     },
     "export_images": {
       "en": "Export images",
@@ -4123,16 +4156,16 @@
       "es": "Exportar imágenes",
       "pl": "Eksport obrazów"
     },
-    "drag_to_scroll": {
-      "en": "Drag here to scroll",
-      "de": "Ziehen hier, um zu scrollen",
-      "ru": "Перетащите сюда для прокрутки",
-      "ja": "ここをドラッグしてスクロール",
-      "zh": "拖动此处滚动",
-      "it": "Trascinare qui per scorrere",
-      "fr": "Glisser ici pour faire défiler",
-      "es": "Arrastre aquí para desplazarse",
-      "pl": "Przeciągnij tutaj, aby przewinąć"
+    "export_images_progress": {
+      "en": "Rendering images, please wait...",
+      "de": "Bilder werden gerendert, bitte warten...",
+      "ru": "Рендеринг изображений, пожалуйста, подождите...",
+      "ja": "画像をレンダリングしています。",
+      "zh": "正在渲染图像，请稍候...",
+      "it": "Rendering delle immagini, attendere...",
+      "fr": "Rendu des images, veuillez patienter...",
+      "es": "Renderizando imágenes, por favor espere...",
+      "pl": "Renderowanie obrazów, proszę czekać..."
     }
   },
   "WordListScreen": {

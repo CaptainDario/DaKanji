@@ -417,7 +417,11 @@ class _WordListNodeState extends State<WordListNode> {
     if(path == null) return;
 
     // show loadign indicator
-    loadingPopup(context, waitingInfo: Text("Creating PDF, please wait...")).show();
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
+    ).show();
 
     // create PDF
     pw.Document pdf = await pdfPortraitFromWordListNode(
@@ -444,7 +448,11 @@ class _WordListNodeState extends State<WordListNode> {
     if (path == null) return;
 
     // show loadign indicator
-    loadingPopup(context, waitingInfo: Text("Creating CSV, please wait...")).show();
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_csv_progress.tr())
+    ).show();
 
     // create csv
     String csv = await csvFromWordListNode(widget.node);
@@ -468,7 +476,11 @@ class _WordListNodeState extends State<WordListNode> {
     if(path == null) return;
 
     // show loadign indicator
-    loadingPopup(context, waitingInfo: Text("Rendering images, please wait...")).show();
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_images_progress.tr())
+    ).show();
 
     // create csv
     List<File> files = await imagesFromWordListNode(widget.node);

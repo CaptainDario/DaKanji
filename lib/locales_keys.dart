@@ -405,8 +405,11 @@ abstract class  LocaleKeys {
   static const WordListsScreen_delete_warning_desc = 'WordListsScreen.delete_warning_desc';
   static const WordListsScreen_drag_to_scroll = 'WordListsScreen.drag_to_scroll';
   static const WordListsScreen_export_csv = 'WordListsScreen.export_csv';
+  static const WordListsScreen_export_csv_progress = 'WordListsScreen.export_csv_progress';
   static const WordListsScreen_export_images = 'WordListsScreen.export_images';
+  static const WordListsScreen_export_images_progress = 'WordListsScreen.export_images_progress';
   static const WordListsScreen_export_pdf = 'WordListsScreen.export_pdf';
+  static const WordListsScreen_export_pdf_progress = 'WordListsScreen.export_pdf_progress';
   static const WordListsScreen_new_folder = 'WordListsScreen.new_folder';
   static const WordListsScreen_new_list = 'WordListsScreen.new_list';
   static const WordListsScreen_no_entries = 'WordListsScreen.no_entries';
