@@ -414,40 +414,27 @@ class _WordListNodeState extends State<WordListNode> {
   /// From this dialog the list can be printed, shared, etc...
   void toPDFPressed() async {
 
+    // show loadign indicator
+    loadingPopup(context, waitingInfo: Text("Creating PDF, please wait...")).show();
+
     // create PDF
     pw.Document pdf = await pdfPortraitFromWordListNode(
       await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
       widget.node.value.name);
 
-    // TODO mayb dont show pdf and let the user immediatiey  share
+    // close loading indicator
     // ignore: use_build_context_synchronously
-    await AwesomeDialog(
-      context: context,
-      dialogType: DialogType.noHeader,
-      body: StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PdfPreview(
-                loadingWidget: const DaKanjiLoadingIndicator(),
-                canChangeOrientation: false,
-                canChangePageFormat: false,
-                useActions: true,
-                canDebug: false,
-                pdfFileName: "${widget.node.value.name}.pdf",
-                build: (format) {
-                  return pdf.save();
-                }
-                
-              ),
-            ),
-          );
-        }
-      )
-    ).show();
+    Navigator.of(context).pop();
+
+    // let the user select a folder
+    String? path = await FilePicker.platform.getDirectoryPath();
+
+    if(path != null){
+      File f = File(p.join(path, "${widget.node.value.name}.pdf"));
+      f.createSync();
+      f.writeAsBytesSync(await pdf.save());
+    }
+
   }
 
   /// Creates a csv file and lets the user share it
@@ -456,7 +443,7 @@ class _WordListNodeState extends State<WordListNode> {
     // show loadign indicator
     loadingPopup(context).show();
 
-    // create pdf
+    // create csv
     String csv = await csvFromWordListNode(widget.node);
     
     // close loading indicator
