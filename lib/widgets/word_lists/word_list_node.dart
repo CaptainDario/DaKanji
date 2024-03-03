@@ -1,16 +1,15 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
+import 'package:da_kanji_mobile/application/word_lists/images.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:path/path.dart' as p;
 
 // Project imports:
@@ -20,7 +19,6 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:universal_io/io.dart';
 
 /// All actions a user can do when clicking the 
@@ -311,7 +309,7 @@ class _WordListNodeState extends State<WordListNode> {
                               print("sendToAnki not implemented");
                               break;
                             case WordListNodePopupMenuButtonItems.toImages:
-                              print("toImages not implemented");
+                              toImagesPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.toPdf:
                               toPDFPressed();
@@ -449,20 +447,32 @@ class _WordListNodeState extends State<WordListNode> {
     // close loading indicator
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
+  /// Creates a folder of images of vocab cards and lets the user share it
+  void toImagesPressed() async {
 
     // let the user select a folder
     String? path = await FilePicker.platform.getDirectoryPath();
+    if(path == null) return;
 
-    if(path != null){
-      File f = File(p.join(path, "${widget.node.value.name}.csv"));
-      f.createSync();
-      f.writeAsStringSync(csv);
+    // show loadign indicator
+    loadingPopup(context, waitingInfo: Text("Rendering images, please wait...")).show();
+
+    // create csv
+    List<File> files = await imagesFromWordListNode(widget.node);
+    
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    // copy files from temp to new directory
+    final destDirectory = Directory(p.join(path, widget.node.value.name));
+    destDirectory.createSync();
+    for (var file in files) {
+
+      file.copySync(p.join(destDirectory.path, p.basename(file.path)));
+      file.deleteSync();
+
     }
-
-  }
-
-  /// Creates a zip file of images of vocab cards and lets the user share it
-  void toImagesPressed() {
 
   }
 

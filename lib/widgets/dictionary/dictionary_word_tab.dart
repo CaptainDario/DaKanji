@@ -269,7 +269,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// Takes a screenshot of the current word card and opens the share dialog with it
   Future<void> sendWordCard () async {
 
-    File f = await screenshotDictionaryWordCard(
+    File f = await dictionaryWordCardToImage(
       widget.entry!,
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
       conjugationsIsExpanded);
