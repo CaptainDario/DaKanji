@@ -79,6 +79,42 @@ class Anki {
     return true;
   }
 
+  /// Function to send a list notes to anki on desktop
+  Future addNotes(List<AnkiNote> notes) async {
+
+    // check that anki is running
+    if(!await checkAnkiAvailable()){
+      debugPrint("Anki not running");
+    }
+    // assure that the DaKanji card type is present
+    if(!(await daKanjiModelExists())) {
+      await addDaKanjiModel();
+    }
+
+    // if the given deck does not exist, create it
+    if(!(await getDeckNames()).contains(notes.first.deckName)) {
+      await addDeck(notes.first.deckName);
+    }
+
+
+    // Add the note to Anki platform dependent
+    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+      ankiDesktop!.addNotesDesktop(notes);
+    }
+    else if(Platform.isIOS) {
+      //ankiiOS!.addNotesIos(note);
+    }
+    else if(Platform.isAndroid) {
+      //ankiAndroid!.addNotesAndroid(note);
+    }
+    else {
+      throw Exception("Unsupported platform");
+    }
+
+    return true;
+
+  }
+
   /// Checks if the DaKanji card type is present in Anki
   Future<bool> daKanjiModelExists(){
 
