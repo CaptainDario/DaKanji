@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/word_lists/anki.dart';
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
@@ -306,7 +307,7 @@ class _WordListNodeState extends State<WordListNode> {
                               deleteButtonPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.sendToAnki:
-                              print("sendToAnki not implemented");
+                              sendToAnkiPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.toImages:
                               toImagesPressed();
@@ -406,6 +407,26 @@ class _WordListNodeState extends State<WordListNode> {
     
     widget.onDeletePressed?.call(widget.node);
     
+  }
+
+  /// Callback when the user presses the send to anki option
+  /// Sends all elements in this word list to anki
+  void sendToAnkiPressed() async {
+    
+    // show loadign indicator
+    // ignore: use_build_context_synchronously
+    loadingPopup(
+      context,
+      waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
+    ).show();
+
+    // send to anki PDF
+    await sendListToAnkiFromWordListNode(widget.node);
+
+    // close loading indicator
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
   }
 
   /// Creates a pdf document in portrait mode and opens a dialog to show it
