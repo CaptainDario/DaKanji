@@ -58,8 +58,45 @@ class AnkiDesktop {
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_notes`
-  void addNotesDesktop(List<AnkiNote> notes){
-    // TODO
+  void addNotesDesktop(List<AnkiNote> notes) async {
+
+    List<Map> jsonNotes = [];
+
+    for (var note in notes) {
+      
+      jsonNotes.add({
+        "deckName": note.deckName,
+        "modelName": note.noteType,
+        "fields": note.fields,
+        "options": {
+          "allowDuplicate": false,
+          "duplicateScope": "deck",
+          "duplicateScopeOptions": {
+            "deckName": note.deckName,
+            "checkChildren": false
+          }
+        },
+        "tags": note.tags
+      });
+
+    }
+    
+    // Create the body of the request
+    Map<String, dynamic> body = {
+      "action": "addNotes",
+      "version": 6,
+      "params": {
+        "notes": jsonNotes
+      }
+    };
+    String bodyString = jsonEncode(body);
+
+    http.Response r = await http.post(
+      settingsAnki.desktopAnkiUri,
+      body: bodyString);
+
+    return;
+
   }
 
   /// platform specific (desktop via anki connect) implementation of

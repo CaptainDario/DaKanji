@@ -79,7 +79,9 @@ class Anki {
     return true;
   }
 
-  /// Function to send a list notes to anki on desktop
+  /// Addes the given note*s* to Anki
+  /// 
+  /// Note: if the deck or model does not exist, it will be created
   Future addNotes(List<AnkiNote> notes) async {
 
     // check that anki is running
