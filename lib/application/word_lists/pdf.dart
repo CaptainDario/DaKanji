@@ -31,10 +31,8 @@ Future<pw.Document> pdfPortraitFromWordListNode(List<int> wordIDs, String name) 
 
   // get settings
   SettingsWordLists wl = GetIt.I<Settings>().wordLists;
-  List<String> langsToInclude = GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-    .whereIndexed((index, element) => wl.includedLanguages[index])
-    .map((e) => isoToiso639_2B[e]!.name)
-    .toList();
+  List<String> langsToInclude = GetIt.I<Settings>().wordLists
+    .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
   // TODO better default values
   int maxMeanings = wl.pdfMaxMeaningsPerVocabulary;
   int maxWordsPerMeaning = wl.pdfMaxWordsPerMeaning;
