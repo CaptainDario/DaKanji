@@ -22,6 +22,9 @@ import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 /// Class to store all settings of DaKanji
 class Settings with ChangeNotifier {
 
+  /// This settings object is a temporary instance and therefore calls to 
+  /// `save` should do nothing
+  bool isTemp;
   /// All settings related to the drawing part of the app
   late SettingsDrawing _drawing;
   /// All miscellaneous settings of the app
@@ -44,7 +47,9 @@ class Settings with ChangeNotifier {
   late SettingsClipboard _clipboard;
 
 
-  Settings(){
+  Settings({
+    this.isTemp = false,
+  }){
     _drawing    = SettingsDrawing();
     _misc       = SettingsMisc(); 
     _advanced   = SettingsAdvanced();
@@ -100,6 +105,10 @@ class Settings with ChangeNotifier {
 
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
+    
+    // if this is a temporary settings object, skip saving
+    if(isTemp) return;
+
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
 
