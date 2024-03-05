@@ -4101,6 +4101,17 @@
       "es": "Enviar a anki",
       "pl": "Wyślij do anki"
     },
+    "send_to_anki_progress": {
+      "en": "Sending to Anki, please wait...",
+      "de": "Senden zu Anki, bitte warten...",
+      "ru": "Отправка в Энки, пожалуйста, подождите...",
+      "ja": "Ankiに送信中です、少々お待ちください。",
+      "zh": "发送至 Anki，请稍候...",
+      "it": "Invio ad Anki, attendere prego...",
+      "fr": "Envoi à Anki, veuillez patienter...",
+      "es": "Enviando a Anki, por favor espere...",
+      "pl": "Wysyłanie do Anki, proszę czekać..."
+    },
     "export_pdf": {
       "en": "Export PDF",
       "de": "PDF exportieren",

@@ -420,6 +420,7 @@ abstract class  LocaleKeys {
   static const WordListsScreen_rename = 'WordListsScreen.rename';
   static const WordListsScreen_search_history = 'WordListsScreen.search_history';
   static const WordListsScreen_send_to_anki = 'WordListsScreen.send_to_anki';
+  static const WordListsScreen_send_to_anki_progress = 'WordListsScreen.send_to_anki_progress';
   static const WordListsScreen_title = 'WordListsScreen.title';
   static const WordListsScreen_tutorial_begin_text = 'WordListsScreen.tutorial_begin_text';
   static const WordListsScreen_tutorial_begin_title = 'WordListsScreen.tutorial_begin_title';

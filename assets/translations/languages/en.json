@@ -441,6 +441,7 @@
     "rename": "Rename",
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
+    "send_to_anki_progress": "Sending to Anki, please wait...",
     "title": "Word lists",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the word lists screen!",
