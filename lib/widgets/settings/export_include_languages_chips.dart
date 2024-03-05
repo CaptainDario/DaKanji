@@ -1,16 +1,14 @@
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 
 
 /// A set of language chips that define which languages to include when exporting
 /// to anki, pdf, etc.. Only the languages that are active in the dictionary
 /// are selectable
-class ExportLanguagesIncludeChips extends StatelessWidget {
+class ExportLanguagesIncludeChips extends StatefulWidget {
 
   /// The text to show above this setting
   final String text;
@@ -35,13 +33,17 @@ class ExportLanguagesIncludeChips extends StatelessWidget {
     }
   );
 
+  @override
+  State<ExportLanguagesIncludeChips> createState() => _ExportLanguagesIncludeChipsState();
+}
 
+class _ExportLanguagesIncludeChipsState extends State<ExportLanguagesIncludeChips> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveFilterChips(
-      description: text,
+      description: widget.text,
       chipWidget: (int index) {
-        String lang = selectedTranslationLanguages[index];
+        String lang = widget.selectedTranslationLanguages[index];
         return Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +52,7 @@ class ExportLanguagesIncludeChips extends StatelessWidget {
               width: 10,
               height: 10,
               child: SvgPicture.asset(
-                settings.dictionary.translationLanguagesToSvgPath[lang]!
+                widget.settings.dictionary.translationLanguagesToSvgPath[lang]!
               )
             ),
             const SizedBox(width: 8,),
@@ -59,18 +61,20 @@ class ExportLanguagesIncludeChips extends StatelessWidget {
         );
       },
       selected: (index) {
-        return includedLanguages[index];
+        return widget.includedLanguages[index];
       },
-      numChips: selectedTranslationLanguages.length,
+      numChips: widget.selectedTranslationLanguages.length,
       onFilterChipTap: (selected, index) async {
         // do not allow disabling all lanugages
-        if(includedLanguages.where((e) => e).length == 1 &&
-          includedLanguages[index] == true){
+        if(widget.includedLanguages.where((e) => e).length == 1 &&
+          widget.includedLanguages[index] == true){
           return;
         }
     
-        setIncludeLanguagesItem(selected, index);
-        await settings.save();
+        widget.setIncludeLanguagesItem(selected, index);
+        await widget.settings.save();
+
+        setState(() {});
       },
     );
   }
