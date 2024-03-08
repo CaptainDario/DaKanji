@@ -106,8 +106,9 @@ class AnkiAndroid {
 
   /// Platform specific (android via ankidroid) implementation of `addDeck`
   Future<void> addDeckAndroid(String deckName) async {
-    // TODO v word lists implement android
-    throw Exception("Not implemented");
+    
+    await ankidroid.addNewDeck(deckName);
+    
   }
 
   /// Platform specific (android via ankidroid) implementation of `getDeckNames`
