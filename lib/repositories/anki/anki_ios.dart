@@ -19,6 +19,15 @@ class AnkiiOS {
     throw Exception("Not implemented");
   }
 
+    /// Platform specific (iOS via ankiMobile) implementation of `add_notes`
+  void addNotesIos(List<AnkiNote> notes) async {
+
+    List<Map> jsonNotes = [];
+
+    return;
+
+  }
+
   /// platform specific (ios via ankimobile) implementation of
   /// `daKanjiModelExists`
   Future<bool> daKanjiModelExistsIOS() async {
