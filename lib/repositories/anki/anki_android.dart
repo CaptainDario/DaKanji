@@ -113,8 +113,11 @@ class AnkiAndroid {
 
   /// Platform specific (android via ankidroid) implementation of `getDeckNames`
   Future<List<String>> getDeckNamesAndroid() async {
-    // TODO v word lists implement android
-    throw Exception("Not implemented");
+    
+    Map t = await (await ankidroid.deckList()).asFuture;
+
+    return List<String>.from(t.values);
+
   }
 
 
