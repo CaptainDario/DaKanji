@@ -42,6 +42,21 @@ class Anki {
     }
   }
 
+  /// Initializes this instance
+  Future init() async {
+
+    if(Platform.isLinux || Platform.isLinux || Platform.isMacOS){
+      
+    }
+    else if(Platform.isAndroid){
+      await ankiAndroid!.init();
+    }
+    else if(Platform.isIOS){
+      
+    }
+  
+  }
+
   /// Addes the given note to Anki
   /// 
   /// Note: if the deck or model does not exist, it will be created
@@ -98,23 +113,21 @@ class Anki {
       await addDeck(notes.first.deckName);
     }
 
-
     // Add the note to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
       ankiDesktop!.addNotesDesktop(notes);
     }
     else if(Platform.isIOS) {
-      //ankiiOS!.addNotesIos(note);
+      ankiiOS!.addNotesIos(notes);
     }
     else if(Platform.isAndroid) {
-      //ankiAndroid!.addNotesAndroid(note);
+      ankiAndroid!.addNotesAndroid(notes);
     }
     else {
       throw Exception("Unsupported platform");
     }
 
     return true;
-
   }
 
   /// Checks if the DaKanji card type is present in Anki
@@ -133,8 +146,6 @@ class Anki {
     else {
       throw Exception("Unsupported platform");
     }
-
-
   }
 
   /// Adds the DaKanji card type to Anki, if it is not present, otherwise
@@ -158,7 +169,6 @@ class Anki {
     else {
       throw Exception("Unsupported platform");
     }
-
   }
 
 
@@ -178,7 +188,6 @@ class Anki {
     else {
       throw Exception("Unsupported platform");
     }
-    
   }
 
   /// Returns a list of all deck names available in anki

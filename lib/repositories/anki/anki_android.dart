@@ -1,12 +1,20 @@
+import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
+import 'package:flutter_ankidroid/flutter_ankidroid.dart';
+
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 
-/// Class to communicate with anki android
+
+
+/// Class to communicate with AnkiDroid (anki on android)
 class AnkiAndroid {
 
   /// User settings for anki
   SettingsAnki settingsAnki;
+  /// AnkiDroid communication isolate
+  late final Ankidroid ankidroid;
+
 
   AnkiAndroid(
     this.settingsAnki

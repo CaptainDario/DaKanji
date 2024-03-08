@@ -120,6 +120,7 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
+  await GetIt.I<Anki>().init();
 
   GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
 
