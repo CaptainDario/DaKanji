@@ -417,7 +417,7 @@ class _WordListNodeState extends State<WordListNode> {
     // ignore: use_build_context_synchronously
     loadingPopup(
       context,
-      waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
+      waitingInfo: Text(LocaleKeys.WordListsScreen_send_to_anki_progress.tr())
     ).show();
 
     // send to anki PDF
