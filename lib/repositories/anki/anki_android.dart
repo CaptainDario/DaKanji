@@ -50,6 +50,29 @@ class AnkiAndroid {
     return result;
 
   }
+
+  /// Platform specific (android via ankidroid) implementation of `add_notes`
+  Future<int> addNotesAndroid(List<AnkiNote> notes) async {
+    
+    int modelId = (await (await ankidroid.getModelList(0)).asFuture)
+      .entries
+      .where((e) => e.value == ankiDataCardModelName)
+      .first.key;
+
+    int deckId = (await (await ankidroid.deckList()).asFuture)
+      .entries
+      .where((e) => e.value == notes.first.deckName)
+      .first.key;
+
+    int result = await (await ankidroid.addNotes(
+      modelId,
+      deckId,
+      List<List<String>>.from(notes.map((n) => List<String>.from(n.fields.values))),
+      List<List<String>>.from(notes.map((n) => n.tags)),
+    )).asFuture;
+
+    return result;
+
   }
 
   /// platform specific (android via ankidroid) implementation of
