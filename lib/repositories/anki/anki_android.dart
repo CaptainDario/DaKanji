@@ -28,9 +28,28 @@ class AnkiAndroid {
   }
     
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  void addNoteAndroid(AnkiNote note) async {
-    // TODO v word lists - implement android
-    throw Exception("Not implemented");
+  Future<int> addNoteAndroid(AnkiNote note) async {
+    
+    int modelId = (await (await ankidroid.getModelList(0)).asFuture)
+      .entries
+      .where((e) => e.value == ankiDataCardModelName)
+      .first.key;
+
+    int deckId = (await (await ankidroid.deckList()).asFuture)
+      .entries
+      .where((e) => e.value == note.deckName)
+      .first.key;
+
+    int result = await (await ankidroid.addNote(
+      modelId,
+      deckId,
+      List<String>.from(note.fields.values),
+      note.tags
+    )).asFuture;
+
+    return result;
+
+  }
   }
 
   /// platform specific (android via ankidroid) implementation of
