@@ -91,6 +91,8 @@ dependencies:
   another_flushbar: 1.12.30
   screenshot: 2.1.0
 
+  flutter_ankidroid:
+    path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit

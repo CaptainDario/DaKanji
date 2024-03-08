@@ -519,11 +519,26 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_ankidroid:
+    dependency: "direct main"
+    description:
+      path: "/Users/darioklepoch/dev/DaKanji/flutter_ankidroid/"
+      relative: false
+    source: path
+    version: "0.8.1"
   flutter_driver:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_isolate:
+    dependency: transitive
+    description:
+      name: flutter_isolate
+      sha256: "8ab879634322a012feb096153cf759caa118d81300189d1730455f3718bca24b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5-pre"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -1256,6 +1271,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  request_permission:
+    dependency: transitive
+    description:
+      name: request_permission
+      sha256: f058e75a3ff29a6f5d5ed1042673d7d4d7e5abcda12256675cf88d095dfa84f6
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   rive:
     dependency: "direct main"
     description:
