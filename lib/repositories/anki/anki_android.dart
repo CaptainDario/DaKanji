@@ -121,12 +121,17 @@ class AnkiAndroid {
   /// Platform specific (android via ankidroid) implementation of
   /// `check_anki_available`
   Future<bool> checkAnkidroidAvailable() async {
-    bool isRunning = false;
+    
+    await Ankidroid.askForPermission();
 
-    // TODO v word lists implement android
-    throw Exception("Not implemented");
+    String t = "";
+    try {
+      t = await (await ankidroid.test()).asFuture;
+    } catch (e) {
+      // ankidroid not installed
+    }
 
-    return isRunning;
+    return t .toString() == "Test Successful!";
   }
 
 }
