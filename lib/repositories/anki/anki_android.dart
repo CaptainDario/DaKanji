@@ -87,9 +87,21 @@ class AnkiAndroid {
 
   /// Platform specific (android via ankidroid) implementation of
   /// `addDaKanjiCardType`
-  Future<void> addDaKanjiModelAndroid() async {
-    // TODO v word lists - implement android
-    throw Exception("Not implemented");
+  Future<int> addDaKanjiModelAndroid() async {
+
+    int result = await (await ankidroid.addNewCustomModel(
+      ankiDataCardModelName,
+      ankiDataFields,
+      [ankiDataCardTypeName],
+      [ankiDataFrontTemplate],
+      [ankiDataBackTemplate],
+      ankiDataStyling,
+      null,
+      null
+    )).asFuture;
+
+    return result;
+
   }
 
   /// Platform specific (android via ankidroid) implementation of `addDeck`
