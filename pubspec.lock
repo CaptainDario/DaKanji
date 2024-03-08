@@ -1267,10 +1267,10 @@ packages:
     dependency: "direct main"
     description:
       name: reorderables
-      sha256: da79e243c40b90d042c15befa812c990ff32390d764c4aca7edaf1f2a050f9d3
+      sha256: "004a886e4878df1ee27321831c838bc1c976311f4ca6a74ce7d561e506540a77"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.6.0"
   request_permission:
     dependency: transitive
     description:

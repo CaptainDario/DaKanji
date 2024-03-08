@@ -26,7 +26,8 @@ AwesomeDialog ankiDialog(
 ) {
 
   // create a local settings object just for sending these notes to anki
-  Settings s = Settings(isTemp: true)..load();
+  Settings s = Settings(isTemp: true);
+  Future sLoad = s.load().then((value) => true);
 
   return AwesomeDialog(
     context: context,
@@ -55,11 +56,19 @@ AwesomeDialog ankiDialog(
             ),
           ),
           const SizedBox(height: 32,),
-          ExpansionTile(
-            title: Text(LocaleKeys.SettingsScreen_title.tr()),
-            children: [
-              AnkiSettingsColumn(s,),
-            ],
+          FutureBuilder(
+            future: sLoad,
+            builder: (context, snapshot) {
+
+              if(!snapshot.hasData) return const SizedBox();
+
+              return ExpansionTile(
+                title: Text(LocaleKeys.SettingsScreen_title.tr()),
+                children: [
+                  AnkiSettingsColumn(s,),
+                ],
+              );
+            }
           ),
           const SizedBox(height: 16,),
         ]
