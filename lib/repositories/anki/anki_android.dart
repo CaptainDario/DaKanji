@@ -79,9 +79,9 @@ class AnkiAndroid {
   /// `daKanjiModelExists`
   Future<bool> daKanjiModelExistsAndroid() async {
 
-    // TODO v word lists - implement android
+    Map models = (await (await ankidroid.modelList()).asFuture);
 
-    return false;
+    return models.values.contains("DaKanji");
 
   }
 
