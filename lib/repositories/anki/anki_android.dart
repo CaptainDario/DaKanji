@@ -19,6 +19,13 @@ class AnkiAndroid {
   AnkiAndroid(
     this.settingsAnki
   );
+
+  /// Initializes this instance
+  Future init() async {
+
+    ankidroid = await Ankidroid.createAnkiIsolate();
+  
+  }
     
   /// Platform specific (desktop via anki connect) implementation of `add_note`
   void addNoteAndroid(AnkiNote note) async {
