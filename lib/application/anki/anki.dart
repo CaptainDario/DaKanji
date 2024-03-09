@@ -70,7 +70,6 @@ class Anki {
     if(!(await daKanjiModelExists())) {
       await addDaKanjiModel();
     }
-
     // if the given deck does not exist, create it
     if(!(await getDeckNames()).contains(note.deckName)) {
       await addDeck(note.deckName);
@@ -131,7 +130,12 @@ class Anki {
   }
 
   /// Checks if the DaKanji card type is present in Anki
-  Future<bool> daKanjiModelExists(){
+  Future<bool> daKanjiModelExists() async {
+
+    // assure anki is reachable
+    if(!await checkAnkiAvailable()){
+      return false;
+    }
 
     // Add the card type to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
@@ -151,6 +155,7 @@ class Anki {
   /// Adds the DaKanji card type to Anki, if it is not present, otherwise
   /// adds it
   Future<void> addDaKanjiModel() async {
+
     // assure anki is reachable
     if(!await checkAnkiAvailable()){
       return;
@@ -173,25 +178,38 @@ class Anki {
 
 
   /// Adds a deck to Anki if not present
-  Future<void> addDeck(String deckName){
+  Future<bool> addDeck(String deckName) async {
+
+    // assure anki is reachable
+    if(!await checkAnkiAvailable()){
+      return false;
+    }
     
     // Add the card type to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-      return ankiDesktop!.addDeckDesktop(deckName);
+      ankiDesktop!.addDeckDesktop(deckName);
     }
     else if(Platform.isIOS) {
-      return ankiiOS!.addDeckIOS(deckName);
+      ankiiOS!.addDeckIOS(deckName);
     }
     else if(Platform.isAndroid) {
-      return ankiAndroid!.addDeckAndroid(deckName);
+      ankiAndroid!.addDeckAndroid(deckName);
     }
     else {
       throw Exception("Unsupported platform");
     }
+
+    return true;
   }
 
   /// Returns a list of all deck names available in anki
   Future<List<String>> getDeckNames() async {
+
+    // assure anki is reachable
+    if(!await checkAnkiAvailable()){
+      return [];
+    }
+
     // Add the card type to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
       return ankiDesktop!.getDeckNamesDesktop();
