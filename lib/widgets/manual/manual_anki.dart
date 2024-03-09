@@ -82,6 +82,10 @@ class ManualAnki extends StatelessWidget {
             ),
 
             const SizedBox(height: 30),
+
+            Text(LocaleKeys.ManualScreen_anki_connection_test.tr()),
+
+            const SizedBox(height: 30),
             // test connection button
             Center(
               child: ElevatedButton(

@@ -236,7 +236,7 @@
     "anki_setup_desktop_text": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Desktop",
     "anki_setup_intro": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
-    "anki_setup_ios_text": "Setup on iOS is super simple, as on Android, just install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387) and grant DaKanji permission when asked.",
+    "anki_setup_ios_text": "Setup on iOS is a bit cumbersome as AnkiMobile does not allow adding note-types, which is possible on Android and desktop. Therefore you need to have another non-iOS device (Android/desktop) with Anki and DaKanji installed.\n\n### Get the DaKanji note-type (non-iOS device)\n1. Follow the setup of DaKanji on your device\n2. Install Anki on your device and sign in with your anki acount\n3. Send one dictionary entry of DaKanji to anki on your device. This will automatically add the DaKanji note-type to anki.\n4. Sync Anki with AnkiWeb on your device\n\n### Setup DaKanji with AnkiMobile integration (iOS device)\n1. Install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Sign in with your anki account and sync your data\n3. When asked give DaKanji permission to communicate with AnkiMobile and to read your clipboard",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Setup",
     "anki_test_connection": "Test connection to Anki",

@@ -62,13 +62,9 @@ class Anki {
   /// Note: if the deck or model does not exist, it will be created
   Future<bool> addNote(AnkiNote note) async {
 
-    // check that anki is running
+    // check that anki is available
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
-    }
-    // assure that the DaKanji card type is present
-    if(!(await daKanjiModelExists())) {
-      await addDaKanjiModel();
     }
 
     // Add the note to Anki platform dependent
@@ -96,15 +92,6 @@ class Anki {
     // check that anki is running
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
-    }
-    // assure that the DaKanji card type is present
-    if(!(await daKanjiModelExists())) {
-      await addDaKanjiModel();
-    }
-
-    // if the given deck does not exist, create it
-    if(!(await getDeckNames()).contains(notes.first.deckName)) {
-      await addDeck(notes.first.deckName);
     }
 
     // Add the note to Anki platform dependent
@@ -170,7 +157,6 @@ class Anki {
       throw Exception("Unsupported platform");
     }
   }
-
 
   /// Adds a deck to Anki if not present
   Future<bool> addDeck(String deckName) async {

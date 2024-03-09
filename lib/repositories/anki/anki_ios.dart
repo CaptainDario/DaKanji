@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:super_clipboard/super_clipboard.dart';
@@ -50,18 +51,18 @@ class AnkiiOS {
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  void addNoteIos(AnkiNote note) async {
+  Future<void> addNoteIos(AnkiNote note) async {
     
-    launchUrlString(Uri.encodeFull(addNoteSchemeFromAnkiNote(note)));
+    await launchUrlString(Uri.encodeFull(addNoteSchemeFromAnkiNote(note)));
 
   }
 
-    /// Platform specific (iOS via ankiMobile) implementation of `add_notes`
-  void addNotesIos(List<AnkiNote> notes) async {
+  /// Platform specific (iOS via ankiMobile) implementation of `add_notes`
+  Future<void> addNotesIos(List<AnkiNote> notes) async {
 
-    List<Map> jsonNotes = [];
-
-    return;
+    for (var note in notes) {
+      await addNoteIos(note);
+    }
 
   }
 
@@ -69,8 +70,13 @@ class AnkiiOS {
   /// `daKanjiModelExists`
   Future<bool> daKanjiModelExistsIOS() async {
 
-    // not possible in ankimobile
-    return true;
+    final String ankiJsonString = await getUserAnkiDataIos();
+    
+    final Map ankiJsonMap = jsonDecode(ankiJsonString);
+    final List<String> noteTypeNames = List<String>.from(ankiJsonMap["decks"]
+      .map((e) => e["name"]));
+
+    return noteTypeNames.contains(ankiDataCardModelName);
 
   }
 
@@ -85,8 +91,7 @@ class AnkiiOS {
     // not possible in ankimobile
   }
 
-  /// Platform specific (iOS via ankimobile) implementation of `getDeckNames`
-  Future<List<String>> getDeckNamesIOS() async {
+  Future<String> getUserAnkiDataIos() async {
 
     // get the current clipboard
     ClipboardData? originalClipboard = await Clipboard.getData("text/plain");
@@ -102,19 +107,29 @@ class AnkiiOS {
 
     // read the data from the clipboard
     final clipboard = SystemClipboard.instance;
-    if (clipboard == null) return [];
+    if (clipboard == null) return "";
     final reader = await clipboard.read();
     final List<int> ankiJsonBytes = await reader.readValue(
       const CustomValueFormat(applicationId: ankiMobileFormat)) as List<int>;
 
     // convert the read bytes to a list of deck names
     final String ankiJsonString = (utf8.decode(ankiJsonBytes));
-    final Map ankiJsonMap = jsonDecode(ankiJsonString);
-    final List<String> deckNames = List<String>.from(ankiJsonMap["decks"]
-      .map((e) => e["name"]));
 
     // Set the original clipboard
     if(originalClipboard != null) Clipboard.setData(originalClipboard);
+
+    return ankiJsonString;
+
+  }
+
+  /// Platform specific (iOS via ankimobile) implementation of `getDeckNames`
+  Future<List<String>> getDeckNamesIOS() async {
+
+    final String ankiJsonString = await getUserAnkiDataIos();
+    
+    final Map ankiJsonMap = jsonDecode(ankiJsonString);
+    final List<String> deckNames = List<String>.from(ankiJsonMap["decks"]
+      .map((e) => e["name"]));
 
     return deckNames;
 
