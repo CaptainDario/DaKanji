@@ -69,22 +69,20 @@ class AnkiiOS {
   /// `daKanjiModelExists`
   Future<bool> daKanjiModelExistsIOS() async {
 
-    // TODO v word lists - implement iOS
+    // not possible in ankimobile
+    return true;
 
-    return false;
   }
 
   /// Platform specific (iOS via anki mobile) implementation of
   /// `addDaKanjiCardType`
   Future<void> addDaKanjiModelIOS() async {
-    // TODO v word lists implement iOS
-    throw Exception("Not implemented");
+    // not possible in ankimobile
   }
 
   /// Platform specific (iOS via ankimobile) implementation of `addDeck`
   Future<void> addDeckIOS(String deckName) async {
-    // TODO v word lists implement iOS
-    throw Exception("Not implemented");
+    // not possible in ankimobile
   }
 
   /// Platform specific (iOS via ankimobile) implementation of `getDeckNames`
