@@ -16,6 +16,8 @@ class AnkiiOS {
   SettingsAnki settingsAnki;
   /// the url scheme to interact with ankimobile
   static const ankiMobileURLScheme = "anki://x-callback-url";
+  /// url callback that on success opens dakanji again
+  static const ankiMobileURLSchemeCallback = "x-success=dakanji://";
   /// the Clipboard format from ankimobile
   static const ankiMobileFormat = "net.ankimobile.json";
 
@@ -24,10 +26,34 @@ class AnkiiOS {
     this.settingsAnki
   );
 
+  /// Returns a string that can be used to add teh given note to ankimobile
+  String addNoteSchemeFromAnkiNote(AnkiNote note){
+
+    // anki://x-callback-url/addnote?
+    String url = "$ankiMobileURLScheme/addnote?";
+    // profile=User%201&
+
+    // type=Basic
+    url += "type=${note.noteType}&";
+    // deck=Default&
+    url += "deck=${note.deckName}&";
+    // tags=<tags separated by space>
+    url += "tags=${note.tags.join(" ")}&";
+    // fldFront=front%20text&
+    for (MapEntry field in note.fields.entries) {
+      url += "fld${field.key}=${field.value}&";
+    }
+    url += "&x-success=dakanji://";
+
+    return url;
+
+  }
+
   /// Platform specific (desktop via anki connect) implementation of `add_note`
   void addNoteIos(AnkiNote note) async {
-    // TODO v word lists - implement iOS
-    throw Exception("Not implemented");
+    
+    launchUrlString(Uri.encodeFull(addNoteSchemeFromAnkiNote(note)));
+
   }
 
     /// Platform specific (iOS via ankiMobile) implementation of `add_notes`
