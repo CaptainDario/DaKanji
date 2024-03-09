@@ -70,11 +70,6 @@ class Anki {
     if(!(await daKanjiModelExists())) {
       await addDaKanjiModel();
     }
-    // if the given deck does not exist, create it
-    if(!(await getDeckNames()).contains(note.deckName)) {
-      await addDeck(note.deckName);
-    }
-
 
     // Add the note to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
