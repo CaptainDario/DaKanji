@@ -91,6 +91,7 @@ dependencies:
   another_flushbar: 1.12.30
   screenshot: 2.1.0
 
+  super_clipboard: 0.8.5
   flutter_ankidroid:
     path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
@@ -124,7 +125,6 @@ dependencies:
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
   window_manager: 0.3.7           # desktop
-  #lutter_appavailability:        # android, iOS
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
