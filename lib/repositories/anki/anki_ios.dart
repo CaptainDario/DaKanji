@@ -63,8 +63,37 @@ class AnkiiOS {
 
   /// Platform specific (iOS via ankimobile) implementation of `getDeckNames`
   Future<List<String>> getDeckNamesIOS() async {
-    // TODO v word lists implement iOS
-    throw Exception("Not implemented");
+
+    // get the current clipboard
+    ClipboardData? originalClipboard = await Clipboard.getData("text/plain");
+    
+    // Launch anki via AnkiMobile scheme
+    await launchUrlString("$ankiMobileURLScheme/infoForAdding?x-success=dakanji://",
+      mode: LaunchMode.externalApplication,
+    );
+    /// Wait until anki closes
+    while (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    // read the data from the clipboard
+    final clipboard = SystemClipboard.instance;
+    if (clipboard == null) return [];
+    final reader = await clipboard.read();
+    final List<int> ankiJsonBytes = await reader.readValue(
+      const CustomValueFormat(applicationId: ankiMobileFormat)) as List<int>;
+
+    // convert the read bytes to a list of deck names
+    final String ankiJsonString = (utf8.decode(ankiJsonBytes));
+    final Map ankiJsonMap = jsonDecode(ankiJsonString);
+    final List<String> deckNames = List<String>.from(ankiJsonMap["decks"]
+      .map((e) => e["name"]));
+
+    // Set the original clipboard
+    if(originalClipboard != null) Clipboard.setData(originalClipboard);
+
+    return deckNames;
+
   }
 
   /// Platform specific (iOS via anki mobile) implementation of
