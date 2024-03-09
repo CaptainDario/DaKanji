@@ -1,12 +1,23 @@
 // Project imports:
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:super_clipboard/super_clipboard.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// Class to communicate with anki ios
 class AnkiiOS {
 
   /// User settings for anki
   SettingsAnki settingsAnki;
+  /// the url scheme to interact with ankimobile
+  static const ankiMobileURLScheme = "anki://x-callback-url";
+  /// the Clipboard format from ankimobile
+  static const ankiMobileFormat = "net.ankimobile.json";
 
 
   AnkiiOS(
@@ -59,12 +70,9 @@ class AnkiiOS {
   /// Platform specific (iOS via anki mobile) implementation of
   /// `check_anki_available`
   Future<bool> checkAnkiMobileRunning() async {
-    bool isRunning = false;
 
-    // TODO v word lists implement iOS
-    throw Exception("Not implemented");
+    return await canLaunchUrlString("anki://");
 
-    return isRunning;
   }
 
 }
