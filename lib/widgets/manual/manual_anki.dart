@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -83,15 +84,33 @@ class ManualAnki extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
+            Text(LocaleKeys.ManualScreen_anki_setup_general_title.tr(), style: heading_2,),
             const SizedBox(height: 5),
+            MarkdownBody(
+              data: LocaleKeys.ManualScreen_anki_setup_general_text.tr(),
+              onTapLink: handleUrlTap
+            ),
+
+            const SizedBox(height: 15),
+
+            Text(LocaleKeys.ManualScreen_anki_connection_test_title.tr(), style: heading_2,),
+            const SizedBox(height: 5),
+            MarkdownBody(
+              data: LocaleKeys.ManualScreen_anki_connection_test_text.tr(),
+              onTapLink: handleUrlTap
+            ),
 
             const SizedBox(height: 30),
             // test anki setup button
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  await GetIt.I<Anki>().testAnkiSetup(context);
+                  bool success = await GetIt.I<Anki>().testAnkiSetup(context);
+
+                  if(success){
+                    GetIt.I<Settings>().anki.ankiEnabled = true;
+                    await GetIt.I<Settings>().save();
+                  }
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

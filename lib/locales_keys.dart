@@ -215,11 +215,14 @@ abstract class  LocaleKeys {
   static const KanjiTrainerScreen = 'KanjiTrainerScreen';
   static const KuzushijiScreen_title = 'KuzushijiScreen.title';
   static const KuzushijiScreen = 'KuzushijiScreen';
-  static const ManualScreen_anki_connection_test = 'ManualScreen.anki_connection_test';
+  static const ManualScreen_anki_connection_test_text = 'ManualScreen.anki_connection_test_text';
+  static const ManualScreen_anki_connection_test_title = 'ManualScreen.anki_connection_test_title';
   static const ManualScreen_anki_setup_android_text = 'ManualScreen.anki_setup_android_text';
   static const ManualScreen_anki_setup_android_title = 'ManualScreen.anki_setup_android_title';
   static const ManualScreen_anki_setup_desktop_text = 'ManualScreen.anki_setup_desktop_text';
   static const ManualScreen_anki_setup_desktop_title = 'ManualScreen.anki_setup_desktop_title';
+  static const ManualScreen_anki_setup_general_text = 'ManualScreen.anki_setup_general_text';
+  static const ManualScreen_anki_setup_general_title = 'ManualScreen.anki_setup_general_title';
   static const ManualScreen_anki_setup_intro = 'ManualScreen.anki_setup_intro';
   static const ManualScreen_anki_setup_ios_text = 'ManualScreen.anki_setup_ios_text';
   static const ManualScreen_anki_setup_ios_title = 'ManualScreen.anki_setup_ios_title';

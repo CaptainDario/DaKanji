@@ -230,11 +230,14 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test": "Pour tester si DaKanji et Anki sont correctement configur\u00e9s, cliquez sur le bouton ci-dessous.",
+    "anki_connection_test_text": "Pour tester si DaKanji et Anki sont correctement configur\u00e9s, cliquez sur le bouton ci-dessous.",
+    "anki_connection_test_title": "Configuration du test",
     "anki_setup_android_text": "Vous devez avoir install\u00e9 [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demand\u00e9, donner \u00e0 DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit \u00eatre install\u00e9 et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit \u00eatre [install\u00e9 et en cours d'ex\u00e9cution](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Bureau",
+    "anki_setup_general_text": "Apr\u00e8s avoir effectu\u00e9 la configuration sp\u00e9cifique \u00e0 la plate-forme, veuillez suivre les \u00e9tapes ci-dessous.\n\n1. DaKanji n'ajoute pas de jeux \u00e0 Anki, vous devez donc vous rendre dans les param\u00e8tres et s\u00e9lectionner un jeu.\n\nF\u00e9licitations, vous avez termin\u00e9 et vous pouvez commencer \u00e0 envoyer des notes \u00e0 Anki !",
+    "anki_setup_general_title": "Configuration g\u00e9n\u00e9rale",
     "anki_setup_intro": "DaKanji peut \u00eatre utilis\u00e9 pour envoyer des notes \u00e0 Anki. Pour cela, chaque plateforme a besoin d'une configuration diff\u00e9rente.",
     "anki_setup_ios_text": "L'installation sur iOS est un peu compliqu\u00e9e car AnkiMobile ne permet pas d'ajouter des types de notes, ce qui est possible sur Android et desktop. Vous devez donc avoir un autre appareil non-iOS (Android/ordinateur) avec Anki et DaKanji install\u00e9s.\n\n### Obtenir le type de note DaKanji (appareil non-iOS)\n1. Suivez la proc\u00e9dure d'installation de DaKanji sur votre appareil.\n2. Installez Anki sur votre appareil et connectez-vous avec votre compte Anki.\n3. Envoyez une entr\u00e9e du dictionnaire DaKanji \u00e0 Anki sur votre appareil. Cela ajoutera automatiquement le type de note DaKanji \u00e0 Anki.\n4. Synchronisez Anki avec AnkiWeb sur votre appareil.\n\n### Configurer DaKanji avec l'int\u00e9gration AnkiMobile (appareil iOS)\n1. Installer [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Connectez-vous avec votre compte Anki et synchronisez vos donn\u00e9es.\n3. Lorsque cela vous est demand\u00e9, autorisez DaKanji \u00e0 communiquer avec AnkiMobile et \u00e0 lire votre presse-papiers.",
     "anki_setup_ios_title": "iOS",

@@ -3347,7 +3347,40 @@
       "es": "La configuración en iOS es un poco engorrosa ya que AnkiMobile no permite añadir tipos de notas, lo que sí es posible en Android y escritorio. Por lo tanto necesitas tener otro dispositivo que no sea iOS (Android/escritorio) con Anki y DaKanji instalados.\n\n### Obtener el tipo de nota DaKanji (dispositivo no-iOS)\n1. Sigue las instrucciones de configuración de DaKanji en tu dispositivo\n2. Instala Anki en tu dispositivo e inicia sesión con tu cuenta de Anki\n3. Envía una entrada del diccionario de DaKanji a Anki en tu dispositivo. Esto añadirá automáticamente el tipo de nota DaKanji a Anki.\n4. Sincroniza Anki con AnkiWeb en tu dispositivo\n\n### Configurar DaKanji con integración AnkiMobile (dispositivo iOS)\n1. Instalar [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Inicia sesión con tu cuenta Anki y sincroniza tus datos\n3. Cuando se te pida permite a DaKanji comunicarse con AnkiMobile y leer tu portapapeles",
       "pl": "Konfiguracja na iOS jest nieco kłopotliwa, ponieważ AnkiMobile nie pozwala na dodawanie typów notatek, co jest możliwe na Androidzie i komputerze. Dlatego musisz mieć inne urządzenie bez systemu iOS (Android/pulpit) z zainstalowaną aplikacją Anki i DaKanji.\n\n### Pobierz typ notatki DaKanji (urządzenie bez systemu iOS)\n1. Postępuj zgodnie z konfiguracją DaKanji na swoim urządzeniu\n2. Zainstaluj aplikację Anki na swoim urządzeniu i zaloguj się na swoje konto Anki.\n3. Wyślij jedno hasło słownikowe DaKanji do Anki na swoim urządzeniu. Spowoduje to automatyczne dodanie typu notatki DaKanji do Anki.\n4. Zsynchronizuj Anki z AnkiWeb na swoim urządzeniu\n\n### Konfiguracja DaKanji z integracją AnkiMobile (urządzenie iOS)\n1. Zainstaluj [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Zaloguj się na swoje konto Anki i zsynchronizuj dane\n3. Po zapytaniu zezwól DaKanji na komunikację z AnkiMobile i odczyt schowka"
     },
-    "anki_connection_test": {
+    "anki_setup_general_title": {
+      "en": "General setup",
+      "de": "Allgemeine Einstellungen",
+      "ru": "Общая настройка",
+      "ja": "一般設定",
+      "zh": "一般设置",
+      "it": "Impostazione generale",
+      "fr": "Configuration générale",
+      "es": "Configuración general",
+      "pl": "Konfiguracja ogólna"
+    },
+    "anki_setup_general_text": {
+      "en": "After you have done the platform specific setup, please follow the steps below.\n\n1. DaKanji does not add any decks to Anki therefore, you need to head over to the settings and select a deck.\n\nCongratulations, you are done and you can start sending notes to Anki!",
+      "de": "Nachdem Sie die plattformspezifische Einrichtung vorgenommen haben, führen Sie bitte die folgenden Schritte aus.\n\n1. DaKanji fügt keine Decks zu Anki hinzu. Daher müssen Sie in den Einstellungen ein Deck auswählen.\n\nHerzlichen Glückwunsch, Sie sind fertig und können anfangen, Notizen an Anki zu senden!",
+      "ru": "После того как вы выполнили настройку платформы, выполните следующие действия.\n\n1. DaKanji не добавляет колоды в Anki, поэтому вам нужно перейти к настройкам и выбрать колоду.\n\nПоздравляем, все готово, и вы можете начать отправлять заметки в Anki!",
+      "ja": "プラットフォーム固有のセットアップを行った後、以下の手順に従ってください。\n\n1.大漢字はAnkiにデッキを追加しませんので、設定からデッキを選択してください。\n\nこれでAnkiにノートを送信できるようになります！",
+      "zh": "完成平台特定设置后，请按照以下步骤操作。\n\n1.DaKanji 不会向 Anki 添加任何卡组，因此您需要前往设置并选择一个卡组。\n\n恭喜你，你已经完成了，可以开始向 Anki 发送笔记了！",
+      "it": "Dopo aver eseguito l'impostazione specifica della piattaforma, seguire i passaggi indicati di seguito.\n\n1. DaKanji non aggiunge alcun mazzo ad Anki, pertanto è necessario andare nelle impostazioni e selezionare un mazzo.\n\nCongratulazioni, avete finito e potete iniziare a inviare note ad Anki!",
+      "fr": "Après avoir effectué la configuration spécifique à la plate-forme, veuillez suivre les étapes ci-dessous.\n\n1. DaKanji n'ajoute pas de jeux à Anki, vous devez donc vous rendre dans les paramètres et sélectionner un jeu.\n\nFélicitations, vous avez terminé et vous pouvez commencer à envoyer des notes à Anki !",
+      "es": "Una vez realizada la configuración específica de la plataforma, siga los pasos que se indican a continuación.\n\n1. DaKanji no añade ningún mazo a Anki, por lo tanto, tienes que ir a la configuración y seleccionar un mazo.\n\n¡Enhorabuena, ya has terminado y puedes empezar a enviar notas a Anki!",
+      "pl": "Po przeprowadzeniu konfiguracji specyficznej dla platformy wykonaj poniższe czynności.\n\n1. DaKanji nie dodaje żadnych talii do Anki, dlatego musisz przejść do ustawień i wybrać talię.\n\nGratulacje, skończyłeś i możesz zacząć wysyłać notatki do Anki!"
+    },
+    "anki_connection_test_title": {
+      "en": "Test setup",
+      "de": "Test setup",
+      "ru": "Испытательная установка",
+      "ja": "テストセットアップ",
+      "zh": "测试设置",
+      "it": "Configurazione del test",
+      "fr": "Configuration du test",
+      "es": "Configuración de la prueba",
+      "pl": "Konfiguracja testowa"
+    },
+    "anki_connection_test_text": {
       "en": "To test if DaKanji and Anki are setup correctly, press the button below.",
       "de": "Um zu testen, ob DaKanji und Anki richtig eingestellt sind, drücken Sie auf die Schaltfläche unten.",
       "ru": "Чтобы проверить, правильно ли настроены DaKanji и Anki, нажмите кнопку ниже.",
@@ -3359,7 +3392,7 @@
       "pl": "Aby sprawdzić, czy DaKanji i Anki są poprawnie skonfigurowane, naciśnij poniższy przycisk."
     },
     "anki_test_connection": {
-      "en": "Test connection to Anki",
+      "en": "Test DaKanji and Anki setup",
       "de": "Überprüfe Verbindung zu Anki",
       "ru": "Тестовое подключение к Anki",
       "ja": "Ankiへの接続をテスト",
