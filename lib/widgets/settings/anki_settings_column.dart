@@ -1,5 +1,8 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:flutter/material.dart';
 
@@ -42,10 +45,17 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // has dojg w/o media been imported
-        ResponsiveCheckBoxTile(
+        // has anki been setup
+        ResponsiveIconTile(
           text: LocaleKeys.SettingsScreen_anki_setup.tr(),
-          value: GetIt.I<UserData>().ankiSetup
+          icon: GetIt.I<UserData>().ankiSetup
+            ? Icons.check
+            : Icons.do_not_disturb,
+          onTilePressed: !GetIt.I<UserData>().ankiSetup
+            ? () {
+              pushManual(context, ManualTypes.anki);
+            }
+            : null,
         ),
         // the default deck to add cards to
         ResponsiveDropDownTile(
