@@ -67,7 +67,7 @@ class Anki {
       debugPrint("Anki not running");
     }
     // assure that the DaKanji card type is present
-    if(Platform.isIOS && !(await daKanjiModelExists())) {
+    if(!Platform.isIOS && !(await daKanjiModelExists())) {
       await addDaKanjiModel();
     }
 
