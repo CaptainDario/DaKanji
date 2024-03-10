@@ -16,21 +16,6 @@ part 'settings_anki.g.dart';
 @JsonSerializable()
 class SettingsAnki with ChangeNotifier {
 
-  /// The default value for `_ankiEnabled`
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  // ignore: constant_identifier_names
-  static const bool d_ankiSetup = false;
-  /// Has the anki integration been tested and it is setup properly
-  @JsonKey(defaultValue: d_ankiSetup)
-  bool _ankiSetup = d_ankiSetup;
-  /// Has the anki integration been tested and it is setup properly
-  bool get ankiSetup => _ankiSetup;
-  /// Has the anki integration been tested and it is setup properly
-  set ankiSetup(bool value) {
-    _ankiSetup = value;
-    notifyListeners();
-  }
-
   /// The default value for `defaultDeck`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names

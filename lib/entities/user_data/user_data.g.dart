@@ -33,6 +33,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showOnboarding = json['showOnboarding'] as bool? ?? true
   ..showRateDialog = json['showRateDialog'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
+  ..ankiSetup = json['ankiSetup'] as bool? ?? false
   ..dojgImported = json['dojgImported'] as bool? ?? false
   ..dojgWithMediaImported = json['dojgWithMediaImported'] as bool? ?? false
   ..drawingBackend =
@@ -61,6 +62,7 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'showOnboarding': instance.showOnboarding,
       'showRateDialog': instance.showRateDialog,
       'showChangelog': instance.showChangelog,
+      'ankiSetup': instance.ankiSetup,
       'dojgImported': instance.dojgImported,
       'dojgWithMediaImported': instance.dojgWithMediaImported,
       'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],

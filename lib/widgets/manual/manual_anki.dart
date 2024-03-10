@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -108,8 +109,8 @@ class ManualAnki extends StatelessWidget {
                   bool success = await GetIt.I<Anki>().testAnkiSetup(context);
 
                   if(success){
-                    GetIt.I<Settings>().anki.ankiSetup = true;
-                    await GetIt.I<Settings>().save();
+                    GetIt.I<UserData>().ankiSetup = true;
+                    await GetIt.I<UserData>().save();
                   }
                 },
                 child: Text(

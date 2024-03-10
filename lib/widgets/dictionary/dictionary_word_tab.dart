@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -212,7 +213,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           await addToWordList();
                         }
                         else if(selection == menuItems[8]){
-                          if(!GetIt.I<Settings>().anki.ankiSetup){
+                          if(!GetIt.I<UserData>().ankiSetup){
                             await ankiNotSetupDialog(context).show();
                           }
                           else{
