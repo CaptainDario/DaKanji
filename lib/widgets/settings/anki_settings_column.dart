@@ -52,9 +52,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             ? const Icon(Icons.check, color: g_Dakanji_green,)
             : const Icon(Icons.do_not_disturb, color: g_Dakanji_red),
           onTilePressed: !GetIt.I<UserData>().ankiSetup
-            ? () {
-              pushManual(context, ManualTypes.anki);
-            }
+            ? () => pushManual(context, ManualTypes.anki)
             : null,
         ),
         // the default deck to add cards to
@@ -92,7 +90,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             List<String> deckNames = await GetIt.I<Anki>().getDeckNames();
             
             setState(() {
-              widget.settings.anki.defaultDeck   = deckNames[0];
+              widget.settings.anki.defaultDeck    = deckNames[0];
               widget.settings.anki.availableDecks = deckNames;
             });
           },
