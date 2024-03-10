@@ -81,16 +81,17 @@ class ManualAnki extends StatelessWidget {
               onTapLink: handleUrlTap
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
 
-            Text(LocaleKeys.ManualScreen_anki_connection_test.tr()),
+            Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
+            const SizedBox(height: 5),
 
             const SizedBox(height: 30),
-            // test connection button
+            // test anki setup button
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  GetIt.I<Anki>().checkAnkiAvailableAndShowSnackbar(context);
+                  await GetIt.I<Anki>().testAnkiSetup(context);
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

@@ -2,18 +2,18 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
+import 'package:get_it/get_it.dart';
 
 /// Class to handle anki communication
 class Anki {
@@ -66,6 +66,10 @@ class Anki {
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
     }
+    // assure that the DaKanji card type is present
+    if(Platform.isIOS && !(await daKanjiModelExists())) {
+      await addDaKanjiModel();
+    }
 
     // Add the note to Anki platform dependent
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
@@ -92,6 +96,10 @@ class Anki {
     // check that anki is running
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
+    }
+    // assure that the DaKanji card type is present
+    if(Platform.isIOS && !(await daKanjiModelExists())) {
+      await addDaKanjiModel();
     }
 
     // Add the note to Anki platform dependent
@@ -222,35 +230,48 @@ class Anki {
     }
   }
 
-  /// Checks if Anki is available on the current platform and show a snackbar
-  /// accoringly
-  Future<bool> checkAnkiAvailableAndShowSnackbar(
-    BuildContext context, {String? successMessage, String? failureMessage}) async {
+  /// Tests the anki setup and shows messages to the user informing which errors
+  /// where encountered
+  Future<bool> testAnkiSetup(BuildContext context) async {
 
-    bool ankiAvailable = await checkAnkiAvailable();
+    bool setupCorrect = false;
 
-    if(ankiAvailable) {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            successMessage ?? LocaleKeys.ManualScreen_anki_test_connection_success.tr(),
-          ),
-        ),
-      );
+    // anki correctly installed
+    bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailable();
+    // DaKanji note type
+    await GetIt.I<Anki>().addDaKanjiModel();
+    bool dakanjiNoteTypeAvailable = await GetIt.I<Anki>().daKanjiModelExists();
+    // deck selected
+    String? selectedDeck = GetIt.I<Settings>().anki.defaultDeck;
+    // selected deck available
+    bool selectedDeckAvailable = (await GetIt.I<Anki>().getDeckNames())
+      .contains(selectedDeck);
+
+    String errorMessage = "";
+    if(!ankiAvailable) {
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_not_installed.tr();
+    }
+    else if(!dakanjiNoteTypeAvailable) {
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
+    }
+    else if(selectedDeck == null || selectedDeck == ""){
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected;
+    }
+    else if(!selectedDeckAvailable){
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_deck_not_in_anki.tr();
     }
     else {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            (failureMessage ?? LocaleKeys.ManualScreen_anki_test_connection_fail.tr()),
-          ),
-        ),
-      );
+      setupCorrect = true;
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_success.tr();
     }
 
-    return ankiAvailable;
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(errorMessage)),
+    );
+
+    return setupCorrect;
+
   }
 
 }

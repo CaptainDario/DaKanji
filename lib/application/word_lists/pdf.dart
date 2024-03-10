@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'dart:math';
 
-import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';

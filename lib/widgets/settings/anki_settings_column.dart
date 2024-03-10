@@ -60,10 +60,17 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           },
           leadingButtonIcon: Icons.replay_outlined,
           leadingButtonPressed: () async {
-            bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailableAndShowSnackbar(
-              context,
-              successMessage: LocaleKeys.SettingsScreen_anki_get_decks_success.tr(),
-              failureMessage:  LocaleKeys.SettingsScreen_anki_get_decks_fail.tr());
+            bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailable();
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(ankiAvailable
+                  ? LocaleKeys.SettingsScreen_anki_get_decks_success.tr()
+                  : LocaleKeys.SettingsScreen_anki_get_decks_fail.tr()
+                )
+              ),
+            );
+            
             if(!ankiAvailable) return;
 
             List<String> deckNames = await GetIt.I<Anki>().getDeckNames();

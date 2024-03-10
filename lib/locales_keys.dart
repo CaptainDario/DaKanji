@@ -225,7 +225,11 @@ abstract class  LocaleKeys {
   static const ManualScreen_anki_setup_ios_title = 'ManualScreen.anki_setup_ios_title';
   static const ManualScreen_anki_setup_title = 'ManualScreen.anki_setup_title';
   static const ManualScreen_anki_test_connection = 'ManualScreen.anki_test_connection';
+  static const ManualScreen_anki_test_connection_deck_not_in_anki = 'ManualScreen.anki_test_connection_deck_not_in_anki';
   static const ManualScreen_anki_test_connection_fail = 'ManualScreen.anki_test_connection_fail';
+  static const ManualScreen_anki_test_connection_no_deck_selected = 'ManualScreen.anki_test_connection_no_deck_selected';
+  static const ManualScreen_anki_test_connection_not_installed = 'ManualScreen.anki_test_connection_not_installed';
+  static const ManualScreen_anki_test_connection_note_type_not_available = 'ManualScreen.anki_test_connection_note_type_not_available';
   static const ManualScreen_anki_test_connection_success = 'ManualScreen.anki_test_connection_success';
   static const ManualScreen_anki_title = 'ManualScreen.anki_title';
   static const ManualScreen_deep_links_text = 'ManualScreen.deep_links_text';
