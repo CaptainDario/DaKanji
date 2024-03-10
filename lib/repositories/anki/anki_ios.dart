@@ -73,7 +73,7 @@ class AnkiiOS {
     final String ankiJsonString = await getUserAnkiDataIos();
     
     final Map ankiJsonMap = jsonDecode(ankiJsonString);
-    final List<String> noteTypeNames = List<String>.from(ankiJsonMap["decks"]
+    final List<String> noteTypeNames = List<String>.from(ankiJsonMap["notetypes"]
       .map((e) => e["name"]));
 
     return noteTypeNames.contains(ankiDataCardModelName);
