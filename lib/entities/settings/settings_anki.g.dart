@@ -7,6 +7,7 @@ part of 'settings_anki.dart';
 // **************************************************************************
 
 SettingsAnki _$SettingsAnkiFromJson(Map<String, dynamic> json) => SettingsAnki()
+  ..ankiSetup = json['ankiSetup'] as bool
   ..defaultDeck = json['defaultDeck'] as String?
   ..includedLanguages = (json['includedLanguages'] as List<dynamic>)
       .map((e) => e as bool)
@@ -19,6 +20,7 @@ SettingsAnki _$SettingsAnkiFromJson(Map<String, dynamic> json) => SettingsAnki()
 
 Map<String, dynamic> _$SettingsAnkiToJson(SettingsAnki instance) =>
     <String, dynamic>{
+      'ankiSetup': instance.ankiSetup,
       'defaultDeck': instance.defaultDeck,
       'includedLanguages': instance.includedLanguages,
       'noTranslations': instance.noTranslations,

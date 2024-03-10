@@ -19,15 +19,15 @@ class SettingsAnki with ChangeNotifier {
   /// The default value for `_ankiEnabled`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_ankiEnabled = false;
+  static const bool d_ankiSetup = false;
   /// Has the anki integration been tested and it is setup properly
-  @JsonKey(defaultValue: d_ankiEnabled)
-  bool _ankiEnabled = d_ankiEnabled;
+  @JsonKey(defaultValue: d_ankiSetup)
+  bool _ankiSetup = d_ankiSetup;
   /// Has the anki integration been tested and it is setup properly
-  bool get ankiEnabled => _ankiEnabled;
+  bool get ankiSetup => _ankiSetup;
   /// Has the anki integration been tested and it is setup properly
-  set ankiEnabled(bool value) {
-    _ankiEnabled = value;
+  set ankiSetup(bool value) {
+    _ankiSetup = value;
     notifyListeners();
   }
 

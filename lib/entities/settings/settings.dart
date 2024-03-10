@@ -20,6 +20,8 @@ import 'package:da_kanji_mobile/entities/settings/settings_text.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 
 /// Class to store all settings of DaKanji
+/// 
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 class Settings with ChangeNotifier {
 
   /// This settings object is a temporary instance and therefore calls to 

@@ -108,7 +108,7 @@ class ManualAnki extends StatelessWidget {
                   bool success = await GetIt.I<Anki>().testAnkiSetup(context);
 
                   if(success){
-                    GetIt.I<Settings>().anki.ankiEnabled = true;
+                    GetIt.I<Settings>().anki.ankiSetup = true;
                     await GetIt.I<Settings>().save();
                   }
                 },

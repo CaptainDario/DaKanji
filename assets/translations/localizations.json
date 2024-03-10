@@ -3359,15 +3359,15 @@
       "pl": "Konfiguracja ogólna"
     },
     "anki_setup_general_text": {
-      "en": "After you have done the platform specific setup, please follow the steps below.\n\n1. DaKanji does not add any decks to Anki therefore, you need to head over to the settings and select a deck.\n\nCongratulations, you are done and you can start sending notes to Anki!",
-      "de": "Nachdem Sie die plattformspezifische Einrichtung vorgenommen haben, führen Sie bitte die folgenden Schritte aus.\n\n1. DaKanji fügt keine Decks zu Anki hinzu. Daher müssen Sie in den Einstellungen ein Deck auswählen.\n\nHerzlichen Glückwunsch, Sie sind fertig und können anfangen, Notizen an Anki zu senden!",
-      "ru": "После того как вы выполнили настройку платформы, выполните следующие действия.\n\n1. DaKanji не добавляет колоды в Anki, поэтому вам нужно перейти к настройкам и выбрать колоду.\n\nПоздравляем, все готово, и вы можете начать отправлять заметки в Anki!",
-      "ja": "プラットフォーム固有のセットアップを行った後、以下の手順に従ってください。\n\n1.大漢字はAnkiにデッキを追加しませんので、設定からデッキを選択してください。\n\nこれでAnkiにノートを送信できるようになります！",
-      "zh": "完成平台特定设置后，请按照以下步骤操作。\n\n1.DaKanji 不会向 Anki 添加任何卡组，因此您需要前往设置并选择一个卡组。\n\n恭喜你，你已经完成了，可以开始向 Anki 发送笔记了！",
-      "it": "Dopo aver eseguito l'impostazione specifica della piattaforma, seguire i passaggi indicati di seguito.\n\n1. DaKanji non aggiunge alcun mazzo ad Anki, pertanto è necessario andare nelle impostazioni e selezionare un mazzo.\n\nCongratulazioni, avete finito e potete iniziare a inviare note ad Anki!",
-      "fr": "Après avoir effectué la configuration spécifique à la plate-forme, veuillez suivre les étapes ci-dessous.\n\n1. DaKanji n'ajoute pas de jeux à Anki, vous devez donc vous rendre dans les paramètres et sélectionner un jeu.\n\nFélicitations, vous avez terminé et vous pouvez commencer à envoyer des notes à Anki !",
-      "es": "Una vez realizada la configuración específica de la plataforma, siga los pasos que se indican a continuación.\n\n1. DaKanji no añade ningún mazo a Anki, por lo tanto, tienes que ir a la configuración y seleccionar un mazo.\n\n¡Enhorabuena, ya has terminado y puedes empezar a enviar notas a Anki!",
-      "pl": "Po przeprowadzeniu konfiguracji specyficznej dla platformy wykonaj poniższe czynności.\n\n1. DaKanji nie dodaje żadnych talii do Anki, dlatego musisz przejść do ustawień i wybrać talię.\n\nGratulacje, skończyłeś i możesz zacząć wysyłać notatki do Anki!"
+      "en": "After you have done the platform-specific setup, please follow the steps below.\n\n1. DaKanji does not add any decks to Anki therefore, you need to head over to the settings and select a deck.",
+      "de": "Nachdem Sie die plattformspezifische Einrichtung vorgenommen haben, führen Sie bitte die folgenden Schritte aus.\n\n1. DaKanji fügt keine Decks zu Anki hinzu. Daher müssen Sie in den Einstellungen ein Deck auswählen.",
+      "ru": "После того как вы выполнили настройку для конкретной платформы, выполните следующие действия.\n\n1. DaKanji не добавляет колоды в Anki, поэтому вам нужно перейти к настройкам и выбрать колоду.",
+      "ja": "プラットフォーム固有のセットアップを行った後、以下の手順に従ってください。\n\n1.大漢字はAnkiにデッキを追加しませんので、設定からデッキを選択してください。",
+      "zh": "完成平台特定设置后，请按照以下步骤操作。\n\n1.DaKanji 不会向 Anki 添加任何卡组，因此您需要前往设置并选择一个卡组。",
+      "it": "Dopo aver eseguito l'impostazione specifica della piattaforma, seguire i passaggi seguenti.\n\n1. DaKanji non aggiunge alcun mazzo ad Anki, pertanto è necessario andare nelle impostazioni e selezionare un mazzo.",
+      "fr": "Après avoir effectué la configuration spécifique à la plate-forme, veuillez suivre les étapes ci-dessous.\n\n1. DaKanji n'ajoute pas de jeux à Anki, vous devez donc vous rendre dans les paramètres et sélectionner un jeu.",
+      "es": "Una vez realizada la configuración específica de la plataforma, siga los pasos que se indican a continuación.\n\n1. DaKanji no añade ningún mazo a Anki, por lo tanto, tienes que ir a la configuración y seleccionar un mazo.",
+      "pl": "Po przeprowadzeniu konfiguracji specyficznej dla platformy wykonaj poniższe czynności.\n\n1. DaKanji nie dodaje żadnych talii do Anki, dlatego musisz przejść do ustawień i wybrać talię."
     },
     "anki_connection_test_title": {
       "en": "Test setup",
@@ -3381,15 +3381,15 @@
       "pl": "Konfiguracja testowa"
     },
     "anki_connection_test_text": {
-      "en": "To test if DaKanji and Anki are setup correctly, press the button below.",
-      "de": "Um zu testen, ob DaKanji und Anki richtig eingestellt sind, drücken Sie auf die Schaltfläche unten.",
-      "ru": "Чтобы проверить, правильно ли настроены DaKanji и Anki, нажмите кнопку ниже.",
-      "ja": "大漢字と杏樹が正しく設定されているかどうかをテストするには、下のボタンを押してください。",
-      "zh": "要测试 DaKanji 和 Anki 设置是否正确，请按下面的按钮。",
-      "it": "Per verificare se DaKanji e Anki sono impostati correttamente, premere il pulsante sottostante.",
-      "fr": "Pour tester si DaKanji et Anki sont correctement configurés, cliquez sur le bouton ci-dessous.",
-      "es": "Para comprobar si DaKanji y Anki están configurados correctamente, pulsa el botón de abajo.",
-      "pl": "Aby sprawdzić, czy DaKanji i Anki są poprawnie skonfigurowane, naciśnij poniższy przycisk."
+      "en": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.",
+      "de": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erhältst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.",
+      "ru": "Чтобы начать использовать DaKanji и Anki, вам нужно нажать кнопку ниже. Она проверит правильность ваших настроек.\n\nЕсли вы получите сообщение об успехе, значит, DaKanji и Anki подключены, и вы можете начать использовать DaKanji с Anki.",
+      "ja": "大漢字と杏樹を使い始めるには、下のボタンを押してください。設定が正しいかどうかチェックされます。\n\n成功のメッセージが表示されれば、大漢字とAnkiは接続され、大漢字とAnkiを使い始めることができます。",
+      "zh": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，说明 DaKanji 和 Anki 已经连接，你就可以开始使用 DaKanji 和 Anki 了。",
+      "it": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe viene visualizzato un messaggio di successo, DaKanji e Anki sono collegati e si può iniziare a usare DaKanji con Anki.",
+      "fr": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.",
+      "es": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.",
+      "pl": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli pojawi się komunikat o powodzeniu, DaKanji i Anki są połączone i możesz zacząć używać DaKanji z Anki."
     },
     "anki_test_connection": {
       "en": "Test DaKanji and Anki setup",

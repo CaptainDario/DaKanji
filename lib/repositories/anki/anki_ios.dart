@@ -91,6 +91,7 @@ class AnkiiOS {
     // not possible in ankimobile
   }
 
+  /// Returns the user data from anki as a string
   Future<String> getUserAnkiDataIos() async {
 
     // get the current clipboard

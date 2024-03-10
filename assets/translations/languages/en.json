@@ -230,13 +230,13 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "To test if DaKanji and Anki are setup correctly, press the button below.",
+    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Desktop",
-    "anki_setup_general_text": "After you have done the platform specific setup, please follow the steps below.\n\n1. DaKanji does not add any decks to Anki therefore, you need to head over to the settings and select a deck.\n\nCongratulations, you are done and you can start sending notes to Anki!",
+    "anki_setup_general_text": "After you have done the platform-specific setup, please follow the steps below.\n\n1. DaKanji does not add any decks to Anki therefore, you need to head over to the settings and select a deck.",
     "anki_setup_general_title": "General setup",
     "anki_setup_intro": "DaKanji can be used to send notes to Anki. For this, each platform needs a different setup.",
     "anki_setup_ios_text": "Setup on iOS is a bit cumbersome as AnkiMobile does not allow adding note types, which is possible on Android and desktop. Therefore you need to have another non-iOS device (Android/desktop) with Anki and DaKanji installed.\n\n### Get the DaKanji note-type (non-iOS device)\n1. Follow the setup of DaKanji on your device\n2. Install Anki on your device and sign in with your Anki account\n3. Send one dictionary entry of DaKanji to Anki on your device. This will automatically add the DaKanji note type to Anki.\n4. Sync Anki with AnkiWeb on your device\n\n### Setup DaKanji with AnkiMobile integration (iOS device)\n1. Install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Sign in with your Anki account and sync your data\n3. When asked permit DaKanji to communicate with AnkiMobile and to read your clipboard",

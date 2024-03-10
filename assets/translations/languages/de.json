@@ -230,13 +230,13 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Um zu testen, ob DaKanji und Anki richtig eingestellt sind, dr\u00fccken Sie auf die Schaltfl\u00e4che unten.",
+    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, m\u00fcssen Sie auf die Schaltfl\u00e4che unten klicken. Es wird gepr\u00fcft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erh\u00e4ltst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
     "anki_setup_desktop_title": "Desktop",
-    "anki_setup_general_text": "Nachdem Sie die plattformspezifische Einrichtung vorgenommen haben, f\u00fchren Sie bitte die folgenden Schritte aus.\n\n1. DaKanji f\u00fcgt keine Decks zu Anki hinzu. Daher m\u00fcssen Sie in den Einstellungen ein Deck ausw\u00e4hlen.\n\nHerzlichen Gl\u00fcckwunsch, Sie sind fertig und k\u00f6nnen anfangen, Notizen an Anki zu senden!",
+    "anki_setup_general_text": "Nachdem Sie die plattformspezifische Einrichtung vorgenommen haben, f\u00fchren Sie bitte die folgenden Schritte aus.\n\n1. DaKanji f\u00fcgt keine Decks zu Anki hinzu. Daher m\u00fcssen Sie in den Einstellungen ein Deck ausw\u00e4hlen.",
     "anki_setup_general_title": "Allgemeine Einstellungen",
     "anki_setup_intro": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Daf\u00fcr ben\u00f6tigt jede Plattform eine andere Einrichtung.",
     "anki_setup_ios_text": "Die Einrichtung unter iOS ist etwas umst\u00e4ndlich, da AnkiMobile das Hinzuf\u00fcgen von Notiztypen nicht erlaubt, was auf Android und Desktop m\u00f6glich ist. Daher m\u00fcssen Sie ein anderes Nicht-iOS-Ger\u00e4t (Android/Desktop) mit Anki und DaKanji installiert haben.\n\n### Holen Sie sich den DaKanji-Notiztyp (Nicht-iOS-Ger\u00e4t)\n1. Folgen Sie den Anweisungen zur Einrichtung von DaKanji auf Ihrem Ger\u00e4t\n2. Installieren Sie Anki auf Ihrem Ger\u00e4t und melden Sie sich mit Ihrem Anki-Konto an.\n3. Senden Sie einen W\u00f6rterbucheintrag von DaKanji an Anki auf Ihrem Ger\u00e4t. Dadurch wird der DaKanji-Notiztyp automatisch zu Anki hinzugef\u00fcgt.\n4. Synchronisiere Anki mit AnkiWeb auf deinem Ger\u00e4t.\n\n### DaKanji mit AnkiMobile Integration einrichten (iOS Ger\u00e4t)\n1. Installiere [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Melde dich mit deinem Anki Konto an und synchronisiere deine Daten\n3. Wenn du gefragt wirst, erlaube DaKanji, mit AnkiMobile zu kommunizieren und deine Zwischenablage zu lesen",
