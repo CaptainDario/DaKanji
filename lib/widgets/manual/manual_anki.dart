@@ -43,7 +43,7 @@ class ManualAnki extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
