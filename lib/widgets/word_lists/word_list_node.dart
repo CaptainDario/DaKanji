@@ -2,7 +2,9 @@
 import 'package:da_kanji_mobile/application/word_lists/anki.dart';
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -412,20 +414,24 @@ class _WordListNodeState extends State<WordListNode> {
   /// Callback when the user presses the send to anki option
   /// Sends all elements in this word list to anki
   void sendToAnkiPressed() async {
-    
-    // show loadign indicator
-    // ignore: use_build_context_synchronously
-    loadingPopup(
-      context,
-      waitingInfo: Text(LocaleKeys.WordListsScreen_send_to_anki_progress.tr())
-    ).show();
 
-    // send to anki PDF
-    await sendListToAnkiFromWordListNode(widget.node);
+    if(!GetIt.I<UserData>().ankiSetup){
+      await ankiNotSetupDialog(context).show();
+    }
+    else{
+      // show loading indicator
+      loadingPopup(
+        context,
+        waitingInfo: Text(LocaleKeys.WordListsScreen_send_to_anki_progress.tr())
+      ).show();
 
-    // close loading indicator
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
+      // send to anki PDF
+      await sendListToAnkiFromWordListNode(widget.node);
+
+      // close loading indicator
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    }
 
   }
 
