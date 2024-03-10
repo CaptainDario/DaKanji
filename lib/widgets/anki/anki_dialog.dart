@@ -20,29 +20,26 @@ import 'package:da_kanji_mobile/globals.dart';
 /// A dialog that allows to change the export to anki settings just this time.
 /// `useAnkiSettings` defines if the settings of Anki are used or the settings
 /// of exporting word lists
-AwesomeDialog ankiDialog(
-  BuildContext context,
-  JMdict entry,
-) {
-
-  // create a local settings object just for sending these notes to anki
-  Settings s = Settings(isTemp: true);
-  Future sLoad = s.load().then((value) => true);
+AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
 
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
     btnOkOnPress: () async {
-      AnkiNote note = AnkiNote.fromJMDict(
-        s.anki.defaultDeck!,
-        entry,
-        langsToInclude: s.anki.langsToInclude(
-          GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-        ),
-        translationsPerLang: s.anki.noTranslations
-      );
-      await GetIt.I<Anki>().addNote(note);
+      if(GetIt.I<Settings>().anki.defaultDeck != null){
+        AnkiNote note = AnkiNote.fromJMDict(
+          GetIt.I<Settings>().anki.defaultDeck!,
+          entry,
+          langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
+            GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+          ),
+          translationsPerLang: GetIt.I<Settings>().anki.noTranslations
+        );
+        await GetIt.I<Anki>().addNote(note);
+      } else {
+        print("test");
+      }
     },
     btnCancelColor: g_Dakanji_red,
     btnCancelOnPress: () { },
@@ -56,19 +53,11 @@ AwesomeDialog ankiDialog(
             ),
           ),
           const SizedBox(height: 32,),
-          FutureBuilder(
-            future: sLoad,
-            builder: (context, snapshot) {
-
-              if(!snapshot.hasData) return const SizedBox();
-
-              return ExpansionTile(
-                title: Text(LocaleKeys.SettingsScreen_title.tr()),
-                children: [
-                  AnkiSettingsColumn(s,),
-                ],
-              );
-            }
+          ExpansionTile(
+            title: Text(LocaleKeys.SettingsScreen_title.tr()),
+            children: [
+              AnkiSettingsColumn(GetIt.I<Settings>()),
+            ],
           ),
           const SizedBox(height: 16,),
         ]
