@@ -49,8 +49,8 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         ResponsiveIconTile(
           text: LocaleKeys.SettingsScreen_anki_setup.tr(),
           icon: GetIt.I<UserData>().ankiSetup
-            ? Icons.check
-            : Icons.do_not_disturb,
+            ? const Icon(Icons.check, color: g_Dakanji_green,)
+            : const Icon(Icons.do_not_disturb, color: g_Dakanji_red),
           onTilePressed: !GetIt.I<UserData>().ankiSetup
             ? () {
               pushManual(context, ManualTypes.anki);

@@ -9,7 +9,7 @@ class ResponsiveIconTile extends StatefulWidget {
   /// leading text
   final String text;
   /// the icon for this tile
-  final IconData icon;
+  final Icon icon;
   /// The autoSizeGroup to use for the text
   final AutoSizeGroup? autoSizeGroup;
   /// callback that is executed when the user presses on the tile
@@ -71,9 +71,7 @@ class _ResponsiveIconTileState extends State<ResponsiveIconTile> {
                   padding: const EdgeInsets.all(8),
                   height: tileHeight*0.75,
                   child: FittedBox(
-                    child: Icon(
-                      widget.icon,
-                    )
+                    child: widget.icon,
                   ),
                 ),
               ),
