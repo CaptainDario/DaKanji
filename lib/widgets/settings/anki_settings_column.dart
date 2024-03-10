@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,11 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // has dojg w/o media been imported
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_anki_setup.tr(),
+          value: GetIt.I<UserData>().ankiSetup
+        ),
         // the default deck to add cards to
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),

@@ -328,6 +328,7 @@
     "anki_include_google_image": "Incluir una imagen de Google en las notas",
     "anki_include_screenshot": "Incluir captura de pantalla",
     "anki_languages_to_include": "Lenguas que deben incluirse en las notas",
+    "anki_setup": "Anki ha sido configurado",
     "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comod\u00edn en la URL con la predicci\u00f3n. El comod\u00edn es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicci\u00f3n es \"\u53e3\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la p\u00e1gina web que est\u00e1s buscando. En este caso, \"https://jisho.org/\u53e3\". Ahora solo hay que reemplazar el caracter por el comod\u00edn. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_custom_query_format_body": "La aplicaci\u00f3n sustituir\u00e1 un marcador de posici\u00f3n en la consulta de imagen por la entrada actual. Este marcador de posici\u00f3n es: {kanjiPlaceholder}\n\nEjemplo:\nLa palabra actual es: '\u53e3' y si quieres buscar im\u00e1genes con la consulta '\u53e3\u610f\u5473', entonces tienes que introducir en este campo '{kanjiPlaceholder}\u610f\u5473'",
