@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 
