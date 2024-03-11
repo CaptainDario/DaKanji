@@ -27,6 +27,7 @@ class CustomFeedbackLocalizations implements FeedbackLocalizations {
 class CustomFeedbackLocalizationsDelegate extends GlobalFeedbackLocalizationsDelegate {
 
   @override
+  // ignore: overridden_fields
   var supportedLocales = <Locale, FeedbackLocalizations>{
     // remember to change the locale identifier
     // as well as that defaultLocale (defaults to en) should ALWAYS be
