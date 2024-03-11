@@ -4,6 +4,7 @@ import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/screens/screen_saver/screen_saver_screen.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 import 'package:file_picker/file_picker.dart';
@@ -32,6 +33,7 @@ enum  WordListNodePopupMenuButtonItems {
   toImages,
   toPdf,
   toCSV,
+  useAsScreenSaver,
 }
 
 /// One Node of the word lists tree, can either be a folder or a word list
@@ -320,6 +322,9 @@ class _WordListNodeState extends State<WordListNode> {
                             case WordListNodePopupMenuButtonItems.toCSV:
                               toCSVPressed();
                               break;
+                            case WordListNodePopupMenuButtonItems.useAsScreenSaver:
+                              useAsScreenSaverPressed();
+                              break;
                           }
                         },
                         itemBuilder: (context) => [
@@ -363,6 +368,12 @@ class _WordListNodeState extends State<WordListNode> {
                                   LocaleKeys.WordListsScreen_export_csv.tr()
                                 )
                               ),
+                              PopupMenuItem(
+                                value: WordListNodePopupMenuButtonItems.useAsScreenSaver,
+                                child: Text(
+                                  "Use as screensaver"
+                                ),
+                              )
                             ]
                         ],
                       ),
@@ -528,4 +539,17 @@ class _WordListNodeState extends State<WordListNode> {
 
   }
 
+  /// Callback that is executed when the user presses the show as screen saver
+  /// button
+  void useAsScreenSaverPressed(){
+
+   Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => 
+        ScreenSaverScreen(
+          [widget.node]
+        )
+      )
+    );
+
+  }
 }
