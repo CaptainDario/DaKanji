@@ -98,7 +98,7 @@ class AnkiNote{
   AnkiNote.fromJMDict(
     this.deckName, JMdict entry,
     {
-      List<String> langsToInclude = const [],
+      required List<String> langsToInclude,
       int translationsPerLang = 3
     }
   )

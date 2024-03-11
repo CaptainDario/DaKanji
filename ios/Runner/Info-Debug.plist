@@ -53,6 +53,7 @@
 		<string>japanese</string>
 		<string>imiwa</string>
 		<string>shirabelookup</string>
+		<string>anki</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

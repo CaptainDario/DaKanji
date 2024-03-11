@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   clipboard_watcher
   gtk
+  irondash_engine_context
   isar_flutter_libs
   mecab_dart
   media_kit_libs_linux
@@ -13,6 +14,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   screen_retriever
   sentry_flutter
   sqlite3_flutter_libs
+  super_native_extensions
   url_launcher_linux
   window_manager
 )

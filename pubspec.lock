@@ -519,11 +519,26 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_ankidroid:
+    dependency: "direct main"
+    description:
+      path: "/Users/darioklepoch/dev/DaKanji/flutter_ankidroid/"
+      relative: false
+    source: path
+    version: "0.8.1"
   flutter_driver:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_isolate:
+    dependency: transitive
+    description:
+      name: flutter_isolate
+      sha256: "8ab879634322a012feb096153cf759caa118d81300189d1730455f3718bca24b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5-pre"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -797,6 +812,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  irondash_engine_context:
+    dependency: transitive
+    description:
+      name: irondash_engine_context
+      sha256: "4f5e2629296430cce08cdff42e47cef07b8f74a64fdbdfb0525d147bc1a969a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.2"
+  irondash_message_channel:
+    dependency: transitive
+    description:
+      name: irondash_message_channel
+      sha256: dd581214215dca054bd9873209d690ec3609288c28774cb509dbd86b21180cf8
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   isar:
     dependency: "direct main"
     description:
@@ -1152,6 +1183,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
+  pixel_snap:
+    dependency: transitive
+    description:
+      name: pixel_snap
+      sha256: "677410ea37b07cd37ecb6d5e6c0d8d7615a7cf3bd92ba406fd1ac57e937d1fb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   platform:
     dependency: transitive
     description:
@@ -1252,10 +1291,18 @@ packages:
     dependency: "direct main"
     description:
       name: reorderables
-      sha256: da79e243c40b90d042c15befa812c990ff32390d764c4aca7edaf1f2a050f9d3
+      sha256: "004a886e4878df1ee27321831c838bc1c976311f4ca6a74ce7d561e506540a77"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.6.0"
+  request_permission:
+    dependency: transitive
+    description:
+      name: request_permission
+      sha256: f058e75a3ff29a6f5d5ed1042673d7d4d7e5abcda12256675cf88d095dfa84f6
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   rive:
     dependency: "direct main"
     description:
@@ -1420,10 +1467,10 @@ packages:
     dependency: "direct main"
     description:
       name: share_plus
-      sha256: "6cec740fa0943a826951223e76218df002804adb588235a8910dc3d6b0654e11"
+      sha256: "3ef39599b00059db0990ca2e30fca0a29d8b37aae924d60063f8e0184cf20900"
       url: "https://pub.dev"
     source: hosted
-    version: "7.1.0"
+    version: "7.2.2"
   share_plus_platform_interface:
     dependency: transitive
     description:
@@ -1621,6 +1668,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  super_clipboard:
+    dependency: "direct main"
+    description:
+      name: super_clipboard
+      sha256: "15d25eb88df8e904e0c2ef77378c6010cc57bbfc0b6f91f2416d08fad5fcca92"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5"
+  super_native_extensions:
+    dependency: transitive
+    description:
+      name: super_native_extensions
+      sha256: f96db6b137a0b135e43034289bb55ca6447b65225076036e81f97ebb6381ffeb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5"
   sync_http:
     dependency: transitive
     description:
