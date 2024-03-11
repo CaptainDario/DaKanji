@@ -47,10 +47,10 @@ dependencies:
   flutter_staggered_animations: 1.1.1
   graphview: 1.1.1
   xml: 6.3.0
-  reorderables: 0.5.0
+  reorderables: 0.6.0
   archive: 3.4.8
   device_info_plus: 9.0.3
-  share_plus: 7.1.0
+  share_plus: 7.2.2
   file_picker: 5.3.3
   sqlite3: 2.2.0
   sqlite3_flutter_libs: 0.5.15
@@ -91,6 +91,9 @@ dependencies:
   another_flushbar: 1.12.30
   screenshot: 2.1.0
 
+  super_clipboard: 0.8.5
+  flutter_ankidroid:
+    path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit
@@ -122,7 +125,6 @@ dependencies:
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
   window_manager: 0.3.7           # desktop
-  #lutter_appavailability:        # android, iOS
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows

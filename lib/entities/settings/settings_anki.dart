@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:flutter/cupertino.dart';
 
 // Package imports:
@@ -47,6 +49,14 @@ class SettingsAnki with ChangeNotifier {
     _includedLanguages[index] = value;
     notifyListeners();
   }
+  /// Based on the given `selectedTranslationLanguages` (the languages selected
+  /// in the dictionary) returns the languages that should be included when
+  /// exporting a word list
+  List<String> langsToInclude (List<String> selectedTranslationLanguages) => 
+    selectedTranslationLanguages
+      .whereIndexed((index, element) => includedLanguages[index])
+      .map((e) => isoToiso639_2B[e]!.name)
+      .toList();
 
   /// The default value for `noTranslations`
   @JsonKey(includeFromJson: false, includeToJson: false)

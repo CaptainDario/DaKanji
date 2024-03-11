@@ -1,48 +1,68 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
+
+
+/// A dialog that allows to change the export to anki settings just this time.
+/// `useAnkiSettings` defines if the settings of Anki are used or the settings
+/// of exporting word lists
 AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
 
   return AwesomeDialog(
     context: context,
+    useRootNavigator: false,
+    autoDismiss: false,
+    onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
     btnOkOnPress: () async {
       AnkiNote note = AnkiNote.fromJMDict(
         GetIt.I<Settings>().anki.defaultDeck!,
         entry,
-        langsToInclude: GetIt.I<Settings>().anki.includedLanguages.mapIndexed(
-          (index, element) => element 
-            ? isoToiso639_2B[
-                GetIt.I<Settings>().dictionary.translationLanguageCodes[index]
-              ]!.name
-            : null
-        ).whereNotNull().toList(),
+        langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
+          GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+        ),
         translationsPerLang: GetIt.I<Settings>().anki.noTranslations
       );
       await GetIt.I<Anki>().addNote(note);
+
+      if(g_NavigatorKey.currentContext != null){
+        Navigator.of(g_NavigatorKey.currentContext!).pop();
+      }
     },
     btnCancelColor: g_Dakanji_red,
-    btnCancelOnPress: () {
-      
-    },
-    body: const SingleChildScrollView(
+    btnCancelOnPress: () { },
+    body: SingleChildScrollView(
       child: Column(
         children: [
-          Text("send")
+          Text(
+            LocaleKeys.WordListsScreen_send_to_anki.tr(),
+            style: const TextStyle(
+              fontSize: 24
+            ),
+          ),
+          const SizedBox(height: 32,),
+          ExpansionTile(
+            title: Text(LocaleKeys.SettingsScreen_title.tr()),
+            children: [
+              AnkiSettingsColumn(GetIt.I<Settings>()),
+            ],
+          ),
+          const SizedBox(height: 16,),
         ]
       )
     )

@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  irondash_engine_context
   isar_flutter_libs
   mecab_dart
   media_kit_libs_windows_video
@@ -16,6 +17,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   sentry_flutter
   share_plus
   sqlite3_flutter_libs
+  super_native_extensions
   url_launcher_windows
   window_manager
 )

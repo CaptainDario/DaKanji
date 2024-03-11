@@ -2,6 +2,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -197,7 +199,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // send dakanji link
                         else if(selection == menuItems[5]){
-                          await Share.share("${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}");
+                          await Share.share(
+                            "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+                            sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+                          );
                         }
                         // send dakanji link and image
                         else if(selection == menuItems[6]){
@@ -208,7 +213,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           await addToWordList();
                         }
                         else if(selection == menuItems[8]){
-                          await ankiDialog(context, widget.entry!).show();
+                          if(!GetIt.I<UserData>().ankiSetup){
+                            await ankiNotSetupDialog(context).show();
+                          }
+                          else{
+                            await ankiDialog(context, widget.entry!).show();
+                          }
                         }
           
                         if(url != "") {
@@ -274,9 +284,10 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
       conjugationsIsExpanded);
 
-    Share.shareXFiles(
+    await Share.shareXFiles(
       [XFile(f.path)],
-      text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}"
+      text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+      sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
     );
     
   }

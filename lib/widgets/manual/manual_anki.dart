@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -42,7 +43,7 @@ class ManualAnki extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,12 +82,35 @@ class ManualAnki extends StatelessWidget {
               onTapLink: handleUrlTap
             ),
 
+            const SizedBox(height: 15),
+
+            Text(LocaleKeys.ManualScreen_anki_setup_general_title.tr(), style: heading_2,),
+            const SizedBox(height: 5),
+            MarkdownBody(
+              data: LocaleKeys.ManualScreen_anki_setup_general_text.tr(),
+              onTapLink: handleUrlTap
+            ),
+
+            const SizedBox(height: 15),
+
+            Text(LocaleKeys.ManualScreen_anki_connection_test_title.tr(), style: heading_2,),
+            const SizedBox(height: 5),
+            MarkdownBody(
+              data: LocaleKeys.ManualScreen_anki_connection_test_text.tr(),
+              onTapLink: handleUrlTap
+            ),
+
             const SizedBox(height: 30),
-            // test connection button
+            // test anki setup button
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  GetIt.I<Anki>().checkAnkiAvailableAndShowSnackbar(context);
+                  bool success = await GetIt.I<Anki>().testAnkiSetup(context);
+
+                  if(success){
+                    GetIt.I<UserData>().ankiSetup = true;
+                    await GetIt.I<UserData>().save();
+                  }
                 },
                 child: Text(
                   LocaleKeys.ManualScreen_anki_test_connection.tr(),

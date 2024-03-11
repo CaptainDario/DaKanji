@@ -62,8 +62,8 @@ class ManualData {
     manualTypes = [
       ManualTypes.dictionary,
       ManualTypes.text,
-      ManualTypes.dojg,
       ManualTypes.anki,
+      ManualTypes.dojg,
       ManualTypes.kanaTable,
       ManualTypes.deepLinks,
     ];
