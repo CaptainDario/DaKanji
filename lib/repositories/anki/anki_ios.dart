@@ -55,6 +55,11 @@ class AnkiiOS {
     
     await launchUrlString(Uri.encodeFull(addNoteSchemeFromAnkiNote(note)));
 
+    /// Wait until anki closes
+    while (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
   }
 
   /// Platform specific (iOS via ankiMobile) implementation of `add_notes`

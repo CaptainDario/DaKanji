@@ -24,21 +24,24 @@ AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
 
   return AwesomeDialog(
     context: context,
+    useRootNavigator: false,
+    autoDismiss: false,
+    onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
     btnOkOnPress: () async {
-      if(GetIt.I<Settings>().anki.defaultDeck != null){
-        AnkiNote note = AnkiNote.fromJMDict(
-          GetIt.I<Settings>().anki.defaultDeck!,
-          entry,
-          langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
-            GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-          ),
-          translationsPerLang: GetIt.I<Settings>().anki.noTranslations
-        );
-        await GetIt.I<Anki>().addNote(note);
-      } else {
-        print("test");
+      AnkiNote note = AnkiNote.fromJMDict(
+        GetIt.I<Settings>().anki.defaultDeck!,
+        entry,
+        langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
+          GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+        ),
+        translationsPerLang: GetIt.I<Settings>().anki.noTranslations
+      );
+      await GetIt.I<Anki>().addNote(note);
+
+      if(g_NavigatorKey.currentContext != null){
+        Navigator.of(g_NavigatorKey.currentContext!).pop();
       }
     },
     btnCancelColor: g_Dakanji_red,
