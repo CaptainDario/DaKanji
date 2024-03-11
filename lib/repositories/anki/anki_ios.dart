@@ -33,7 +33,7 @@ class AnkiiOS {
     // anki://x-callback-url/addnote?
     String url = "$ankiMobileURLScheme/addnote?";
     // profile=User%201&
-
+    // not used
     // type=Basic
     url += "type=${note.noteType}&";
     // deck=Default&
