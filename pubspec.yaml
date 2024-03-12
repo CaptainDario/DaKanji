@@ -244,6 +244,8 @@ flutter:
     # kana mnemonics / sounds
     - assets/images/kana/individuals/
     - assets/audios/kana/individuals/
+    # kana origin images
+    - assets/images/kana/origin/
     # kanji drawing brush
     - assets/images/brush.png
     # icons
