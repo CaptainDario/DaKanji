@@ -354,19 +354,25 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     ),
                     builder: (context, child) {
                       return Positioned(
-                        left: lerpDouble(currentKanaX,
+                        left: lerpDouble(
+                          currentKanaX-popupWidth/2,
                           (constraints.maxWidth/2 - popupWidth/2),
                           _controller.value
                         ),
-                        top: lerpDouble(currentKanaY,
+                        top: lerpDouble(
+                          currentKanaY-popupHeight/2,
                           (constraints.maxHeight/2 - popupHeight/2),
                           _controller.value
                         ),
-                        width: popupWidth * _controller.value,
-                        height: popupHeight * _controller.value,
-                        child: Opacity(
-                          opacity: _controller.value,
-                          child: child!
+                        width: popupWidth,
+                        height: popupHeight,
+                        child: Transform.scale(
+                          scaleX: _controller.value,
+                          scaleY: _controller.value,
+                          child: Opacity(
+                            opacity: _controller.value,
+                            child: child!
+                          ),
                         ),
                       );
                     }
