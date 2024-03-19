@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +16,9 @@ import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+
+
 
 /// Widget that shows information about a given kana. This information is
 /// * romaji
@@ -28,7 +32,7 @@ class KanaInfoCard extends StatefulWidget {
   final String kana;
   /// Should the kana be animated
   final bool showAnimatedKana;
-
+  /// Should the kana automatically be animate when showing this card
   final bool playKanaAnimationWhenOpened;
   /// Callback that is executed when the user presses the play button
   final Function()? onPlayPressed;
@@ -136,28 +140,30 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if(constraints.maxWidth > 100)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          convertToRomaji(widget.kana),
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          )
-                        ),
-                        IconButton(
-                          onPressed: widget.onPlayPressed,
-                          icon: const Icon(Icons.play_arrow)
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // top row: romaji and sound player
+                if(constraints.maxWidth > 100)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        convertToRomaji(widget.kana),
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         )
-                      ],
-                    ),
+                      ),
+                      IconButton(
+                        onPressed: widget.onPlayPressed,
+                        icon: const Icon(Icons.play_arrow)
+                      )
+                    ],
+                  ),
+                // spacer
+                SizedBox(height: constraints.maxHeight*0.01,),
                 // kana | mnemonic image
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
