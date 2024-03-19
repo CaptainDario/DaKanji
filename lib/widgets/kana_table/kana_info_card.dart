@@ -127,6 +127,12 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+
+        // check if the popup is taller than wide
+        final double kanaSvgSize = constraints.maxHeight > constraints.maxWidth
+          ? constraints.maxWidth
+          : constraints.maxHeight;
+
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -152,63 +158,61 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                         )
                       ],
                     ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // kana
-                        Expanded(
-                          child: Center(
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 100),
-                              child: widget.showAnimatedKana && // should show animation
-                                !(widget.kana.length > 1 && yoonSVG != null) // do not animate if there is a yoon
-                                ? KanjiVGWidget(
-                                    kanaSvg,
-                                    constraints.maxWidth*0.4,
-                                    constraints.maxWidth*0.4,
-                                    widget.playKanaAnimationWhenOpened,
-                                    GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
-                                    GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
-                                    borderAround: false,
-                                    key: Key(widget.showAnimatedKana.toString()),
-                                  )
-                                : SvgPicture.string(
-                                  kanaSvg,
-                                  height: constraints.maxWidth*0.4,
-                                  width:  constraints.maxWidth*0.4,
-                                ),
-                            ),
-                          )
-                        ),
-                        // mnemonic (if there is one)
-                        if(widget.kana.length < 2 && mnemonicSvg != null)
-                          Expanded(
-                            child: Center(
-                              child: SvgPicture.string(
-                                mnemonicSvg!,
-                                height: constraints.maxWidth * 0.35,
-                                width:  constraints.maxWidth * 0.35,
+                // kana | mnemonic image
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // kana
+                    Expanded(
+                      child: Center(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 100),
+                          child: widget.showAnimatedKana && // should show animation
+                            !(widget.kana.length > 1 && yoonSVG != null) // do not animate if there is a yoon
+                            ? KanjiVGWidget(
+                                kanaSvg,
+                                kanaSvgSize*0.4,
+                                kanaSvgSize*0.4,
+                                widget.playKanaAnimationWhenOpened,
+                                GetIt.I<Settings>().kanaTable.kanaAnimationStrokesPerSecond,
+                                GetIt.I<Settings>().kanaTable.resumeAnimationAfterStopSwipe,
+                                borderAround: false,
+                                key: Key(widget.showAnimatedKana.toString()),
                               )
+                            : SvgPicture.string(
+                              kanaSvg,
+                              height: kanaSvgSize*0.4,
+                              width:  kanaSvgSize*0.4,
+                            ),
+                        ),
+                      )
+                    ),
+                    // mnemonic (if there is one)
+                    if(widget.kana.length < 2 && mnemonicSvg != null)
+                      Expanded(
+                        child: Center(
+                          child: SvgPicture.string(
+                            mnemonicSvg!,
+                            height: kanaSvgSize*0.35,
+                            width:  kanaSvgSize*0.35,
+                          )
+                        )
+                      ),
+                    // yoon if there are two kana
+                    if(widget.kana.length > 1 && yoonSVG != null)
+                      Expanded(
+                        child: Transform.translate(
+                          offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
+                          child: Center(
+                            child: SvgPicture.string(
+                              yoonSVG!,
+                              height: MediaQuery.of(context).size.height * 0.15,
                             )
                           ),
-                        // yoon if there are two kana
-                        if(widget.kana.length > 1 && yoonSVG != null)
-                          Expanded(
-                            child: Transform.translate(
-                              offset: Offset(0, MediaQuery.of(context).size.height * 0.025),
-                              child: Center(
-                                child: SvgPicture.string(
-                                  yoonSVG!,
-                                  height: MediaQuery.of(context).size.height * 0.15,
-                                )
-                              ),
-                            )
-                          )
-                      ],
-                    ),
-                  ),
-                  if(mnemonic != null)
+                        )
+                      )
+                  ],
+                ),
                     Expanded(
                       child: Center(
                         child: Wrap(
