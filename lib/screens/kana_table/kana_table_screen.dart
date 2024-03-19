@@ -239,7 +239,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                   )
                                 ),
                               
-                              if(showDaku   && i == 0 || showYoon    && i == 1 ||
+                              if(showDaku  && i == 0 || showYoon    && i == 1 ||
                                 showRomaji && i == 3 || showSpecial && i == 4 )
                                 Transform.rotate(
                                   angle: 45,
@@ -267,7 +267,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
             setCurrrentKanaTable(isPortrait);
             setResponsiveKanaTable(constraints);
         
-            double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
+            double popupWidth = constraints.maxWidth*0.8 > 600 ? 600 : constraints.maxWidth*0.8;
             double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
         
             /// The number of columns in the grid
