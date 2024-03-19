@@ -213,31 +213,76 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                       )
                   ],
                 ),
+                // origin | mnemonic text
+                Row(
+                  children: [
+                    // kana origin
                     Expanded(
-                      child: Center(
-                        child: Wrap(
-                          clipBehavior: Clip.hardEdge,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            MarkdownBody(
-                              styleSheet: MarkdownStyleSheet(
-                                p: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                                // bold text
-                                strong: const TextStyle(
-                                  fontSize: 20,
-                                  decoration: TextDecoration.underline,
-                                )
-                              ),
-                              data: mnemonic!,
-                              softLineBreak: true,
-                            ),
+                            if(kana.flatten().contains(widget.kana))
+                              for(int i = 0; i < 3; i++)
+                                if(!(katakana.flatten().contains(widget.kana) && i == 1))
+                                  SizedBox(
+                                    height: (TextPainter(
+                                        text: const TextSpan(text: "T", style: TextStyle(fontSize: 20)),
+                                        maxLines: 1,
+                                        textDirection: TextDirection.ltr,
+                                        textScaler: MediaQuery.of(context).textScaler
+                                      )
+                                      ..layout(minWidth: 0, maxWidth: double.infinity))
+                                      .height,
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: SvgPicture.asset(
+                                        "assets/images/kana/origin/${widget.kana}_$i.svg",
+                                        colorFilter: ColorFilter.mode(
+                                          Theme.of(context).brightness == Brightness.dark 
+                                            ? Colors.white
+                                            : Colors.black,
+                                          BlendMode.srcIn
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            if(!kana.flatten().contains(widget.kana))
+                              const SizedBox()
                           ],
                         ),
-                      ),
+                      )
                     ),
-                ],
-              ),
+                    // mnemonic text
+                    if(mnemonic != null)
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Wrap(
+                            clipBehavior: Clip.hardEdge,
+                            children: [
+                              MarkdownBody(
+                                styleSheet: MarkdownStyleSheet(
+                                  p: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  // bold text
+                                  strong: const TextStyle(
+                                    fontSize: 20,
+                                    decoration: TextDecoration.underline,
+                                  )
+                                ),
+                                data: mnemonic!,
+                                softLineBreak: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           )
         );
