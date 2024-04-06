@@ -30,15 +30,13 @@ class ScreenSaver extends StatefulWidget {
 class _ScreenSaverState extends State<ScreenSaver> {
 
 
-  late Future getWordListEntriesFuture;
-
+  /// all entries that are shown in this screen saver
   List<JMdict> entries = [];
 
 
   @override
   void initState() {
     
-    getWordListEntriesFuture = getWordListEntries();
     super.initState();
 
   }
@@ -59,26 +57,43 @@ class _ScreenSaverState extends State<ScreenSaver> {
 
   @override
   Widget build(BuildContext context) {
+
+    // get the current screen dimensions
+    Size s = MediaQuery.sizeOf(context);
+    double w = s.width;
+    double h = s.height;
+
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
-      child: FutureBuilder(
-        future: getWordListEntries(),
-        builder: (context, snapshot) {
-      
-          // if word lists are not read yet, show nothing
-          if(!snapshot.hasData) return Container();
-      
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                child: DictionaryWordCard(
-                  entries.first
+      child: Container(
+        height: h,
+        width:  w,
+        color: Colors.transparent,
+        child: FutureBuilder(
+          future: getWordListEntries(),
+          builder: (context, snapshot) {
+        
+            // if word lists are not read yet, show nothing
+            if(!snapshot.hasData) return Container();
+        
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  width : w * 0.6,
+                  height: h * 0.5,
+                  child: SingleChildScrollView(
+                    child: DictionaryWordCard(
+                      entries.first,
+                      showConjugationTable: false,
+                      showImageSearch: false,
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          );
-        }
+              ],
+            );
+          }
+        ),
       ),
     );
   }
