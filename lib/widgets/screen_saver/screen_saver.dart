@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
@@ -11,6 +11,7 @@ import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:window_manager/window_manager.dart';
 
 
 
@@ -53,9 +54,13 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void initState() {
 
+    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+      WindowManager.instance.setFullScreen(true);
+    }
+
     nextEntryTimer = Timer.periodic(
       Duration(seconds: secondsToNextEntry),
-      (Timer t) => setRandomEntry()
+      (Timer t) { setRandomEntry(); }
     );
 
     vocabCardAnimationController = AnimationController(
@@ -84,6 +89,11 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
 
   @override
   void dispose() {
+
+    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+      WindowManager.instance.setFullScreen(false);
+    }
+
     vocabCardAnimationController.dispose();
     nextEntryTimer.cancel();
     super.dispose();
