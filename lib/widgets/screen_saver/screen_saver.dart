@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
@@ -27,20 +31,66 @@ class ScreenSaver extends StatefulWidget {
   State<ScreenSaver> createState() => _ScreenSaverState();
 }
 
-class _ScreenSaverState extends State<ScreenSaver> {
+class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin{
 
 
   /// all entries that are shown in this screen saver
   List<JMdict> entries = [];
+  /// The entry that is currently being shown
+  late JMdict currentEntry;
+  /// time to the next entry
+  int secondsToNextEntry = 5;
+  /// Random instance for deciding the next card to show
+  Random nextEntryRandom = Random();
+  /// timer that fires every time one vocab card cycle is over
+  late Timer nextEntryTimer;
+  /// The AnimationController to animate the vocab cards
+  late AnimationController vocabCardAnimationController;
+  /// The actual animation that moves the cards
+  late Animation vocabCardAnimation;
 
 
   @override
   void initState() {
+
+    nextEntryTimer = Timer.periodic(
+      Duration(seconds: secondsToNextEntry),
+      (Timer t) => setRandomEntry()
+    );
+
+    vocabCardAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: secondsToNextEntry),
+    )..repeat();
+
+    vocabCardAnimation = TweenSequence([
+      TweenSequenceItem(
+        tween: Tween(begin: 1.0, end: 0.0),
+        weight: 10
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 0.0, end: 0.0),
+        weight: 80
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: -0.0, end: -1.0),
+        weight: 10
+      ),
+    ]).animate(vocabCardAnimationController);
     
     super.initState();
 
   }
 
+  @override
+  void dispose() {
+    vocabCardAnimationController.dispose();
+    nextEntryTimer.cancel();
+    super.dispose();
+  }
+
+  /// Get all entries from this word list so that they can be shown as a screen
+  /// saver
   Future<bool> getWordListEntries () async {
 
     for (var wordList in widget.wordLists) {
@@ -51,8 +101,16 @@ class _ScreenSaverState extends State<ScreenSaver> {
       );
     }
 
+    setRandomEntry();
+
     return true;
 
+  }
+
+  /// Randomly sets the current entry
+  void setRandomEntry(){
+    int next = nextEntryRandom.nextInt(entries.length);
+    currentEntry = entries[next];
   }
 
   @override
@@ -76,21 +134,36 @@ class _ScreenSaverState extends State<ScreenSaver> {
             // if word lists are not read yet, show nothing
             if(!snapshot.hasData) return Container();
         
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  width : w * 0.6,
-                  height: h * 0.5,
-                  child: SingleChildScrollView(
-                    child: DictionaryWordCard(
-                      entries.first,
-                      showConjugationTable: false,
-                      showImageSearch: false,
+            return AnimatedBuilder(
+              animation: vocabCardAnimation,
+              builder: (context, snapshot) {
+
+                double cardWidth = w * 0.6;
+                double cardHeight = h * 0.5;
+                double animV = vocabCardAnimation.value;
+                double scaleV = 1-animV.abs();
+
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      left: (w/2-cardWidth/2) + animV*w,
+                      width : cardWidth,
+                      height: cardHeight,
+                      child: Transform.scale(
+                        scale: scaleV.abs(),
+                        child: SingleChildScrollView(
+                          child: DictionaryWordCard(
+                            currentEntry,
+                            showConjugationTable: false,
+                            showImageSearch: false,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              }
             );
           }
         ),
