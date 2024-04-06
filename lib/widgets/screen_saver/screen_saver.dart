@@ -152,11 +152,13 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
                       height: cardHeight,
                       child: Transform.scale(
                         scale: scaleV.abs(),
-                        child: SingleChildScrollView(
-                          child: DictionaryWordCard(
-                            currentEntry,
-                            showConjugationTable: false,
-                            showImageSearch: false,
+                        child: Center(
+                          child: SingleChildScrollView(
+                            child: DictionaryWordCard(
+                              currentEntry,
+                              showConjugationTable: false,
+                              showImageSearch: false,
+                            ),
                           ),
                         ),
                       ),
