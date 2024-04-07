@@ -4,9 +4,6 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +15,11 @@ import 'package:window_manager/window_manager.dart';
 /// Shows a screen saver that iterates through different dictionary entries
 class ScreenSaver extends StatefulWidget {
   
-  /// The dictionary entries to show
-  final List<TreeNode<WordListsData>> wordLists;
+  /// The ids of the dictionary entries to show
+  final List<int> entryIDs;
 
   const ScreenSaver(
-    this.wordLists,
+    this.entryIDs,
     {
       super.key
     }
@@ -103,13 +100,10 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   /// saver
   Future<bool> getWordListEntries () async {
 
-    for (var wordList in widget.wordLists) {
-      final entryIDs = await GetIt.I<WordListsSQLDatabase>()
-        .getEntryIDsOfWordList(wordList.id);
-      entries.addAll(
-        GetIt.I<Isars>().dictionary.jmdict.getAllSync(entryIDs).whereNotNull()
-      );
-    }
+    entries = GetIt.I<Isars>().dictionary.jmdict
+      .getAllSync(widget.entryIDs)
+      .whereNotNull()
+      .toList();
 
     setRandomEntry();
 

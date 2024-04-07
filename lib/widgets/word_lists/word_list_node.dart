@@ -545,9 +545,7 @@ class _WordListNodeState extends State<WordListNode> {
 
    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => 
-        ScreenSaverScreen(
-          [widget.node]
-        )
+        ScreenSaverScreen(widget.node.value.wordIds)
       )
     );
 
