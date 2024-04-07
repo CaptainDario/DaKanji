@@ -382,7 +382,11 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF\uff1a\u6bcf\u4e2a\u542b\u4e49\u7684\u6700\u5927\u884c\u6570",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF\uff1a\u6bcf\u4e2a\u8bcd\u6c47\u7684\u542b\u4e49",
     "word_lists_pdf_max_words_per_meaning": "PDF\uff1a\u6bcf\u4e2a\u542b\u4e49\u7684\u6700\u5927\u5b57\u6570",
-    "word_lists_readd_defaults": "\u6dfb\u52a0\u9ed8\u8ba4\u6587\u4ef6\u5939"
+    "word_lists_readd_defaults": "\u6dfb\u52a0\u9ed8\u8ba4\u6587\u4ef6\u5939",
+    "word_lists_screensaver_seconds_to_next_card": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\uff1a\u79d2\u81f3\u4e0b\u4e00\u5f20\u5361",
+    "word_lists_screensaver_seconds_to_start": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\uff1a\u51e0\u79d2\u949f\u540e\u542f\u52a8",
+    "word_lists_screensaver_show": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\uff1a\u663e\u793a",
+    "word_lists_screensaver_word_lists_to_use": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\u4f7f\u7528\u5355\u8bcd\u5217\u8868"
   },
   "TextScreen": {
     "copy_button_copy": "\u5df2\u590d\u5236\uff1a",
@@ -447,6 +451,7 @@
     "ok": "\u597d\u7684",
     "page": "\u9875",
     "rename": "\u91cd\u547d\u540d",
+    "screensaver_use_as": "\u7528\u4f5c\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f",
     "search_history": "\u641c\u7d22\u5386\u53f2",
     "send_to_anki": "\u53d1\u9001\u5230anki",
     "send_to_anki_progress": "\u53d1\u9001\u81f3 Anki\uff0c\u8bf7\u7a0d\u5019...",

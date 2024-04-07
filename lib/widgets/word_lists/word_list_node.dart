@@ -371,7 +371,7 @@ class _WordListNodeState extends State<WordListNode> {
                               PopupMenuItem(
                                 value: WordListNodePopupMenuButtonItems.useAsScreenSaver,
                                 child: Text(
-                                  "Use as screensaver"
+                                  LocaleKeys.WordListsScreen_screensaver_use_as.tr()
                                 ),
                               )
                             ]

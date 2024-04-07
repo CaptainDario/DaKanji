@@ -382,7 +382,11 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF : Nombre maximal de lignes par sens",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF : Significations par vocabulaire",
     "word_lists_pdf_max_words_per_meaning": "PDF : Nombre maximal de mots par sens",
-    "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut"
+    "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut",
+    "word_lists_screensaver_seconds_to_next_card": "\u00c9conomiseur d'\u00e9cran : secondes jusqu'\u00e0 la carte suivante",
+    "word_lists_screensaver_seconds_to_start": "\u00c9conomiseur d'\u00e9cran : quelques secondes pour d\u00e9marrer",
+    "word_lists_screensaver_show": "\u00c9conomiseur d'\u00e9cran : montrer",
+    "word_lists_screensaver_word_lists_to_use": "\u00c9conomiseur d'\u00e9cran : Liste de mots \u00e0 utiliser"
   },
   "TextScreen": {
     "copy_button_copy": "Copi\u00e9 :",
@@ -447,6 +451,7 @@
     "ok": "ok",
     "page": "page",
     "rename": "Renommer",
+    "screensaver_use_as": "Utiliser comme \u00e9conomiseur d'\u00e9cran",
     "search_history": "Historique de la recherche",
     "send_to_anki": "Envoyer \u00e0 anki",
     "send_to_anki_progress": "Envoi \u00e0 Anki, veuillez patienter...",

@@ -135,7 +135,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // Screen saver: show
         ResponsiveIconButtonTile(
-          text: "Show screen saver",
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_show.tr(),
           icon: Icons.play_arrow,
           onButtonPressed: () async {
 
@@ -156,7 +156,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // Screen saver: Which word lists to use
         ResponsiveIconButtonTile(
-          text: "Word list to use for screen saver",
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_word_lists_to_use.tr(),
           icon: Icons.list_alt,
           onButtonPressed: () async {
             await showWordListSelectionDialog(
@@ -172,7 +172,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // Screen Saver: how long to start
         ResponsiveSliderTile(
-          text: "Screen saver: seconds to start",
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
           value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
           min: 1,
           max: 120,
@@ -180,7 +180,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // Screen Saver: seconds to next card
         ResponsiveSliderTile(
-          text: "Screen saver: seconds to next card",
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
           value: widget.settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
           min: 1,
           max: 120,
