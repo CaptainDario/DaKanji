@@ -109,6 +109,52 @@ class SettingsWordLists with ChangeNotifier {
   }
 
 
+  /// The default value for `screenSaverWordList`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const List<int> d_screenSaverWordLists = [];
+  /// The word lists that should be included in the screen saver
+  @JsonKey(defaultValue: d_screenSaverWordLists)
+  List<int> _screenSaverWordLists = d_screenSaverWordLists;
+  /// The word lists that should be included in the screen saver
+  List<int> get screenSaverWordLists => _screenSaverWordLists;
+  /// The word lists that should be included in the screen saver
+  set screenSaverWordLists (List<int> value) {
+    _screenSaverWordLists = value;
+    notifyListeners();
+  }
+
+  /// The default value for `screenSaverSecondsToStart`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_screenSaverSecondsToStart = 10;
+  /// How many seconds until the screen saver starts
+  @JsonKey(defaultValue: d_screenSaverSecondsToStart)
+  int _screenSaverSecondsToStart = d_screenSaverSecondsToStart;
+  /// How many seconds until the screen saver starts
+  int get screenSaverSecondsToStart => _screenSaverSecondsToStart;
+  /// How many seconds until the screen saver starts
+  set screenSaverSecondsToStart (int value) {
+    _screenSaverSecondsToStart = value;
+    notifyListeners();
+  }
+
+  /// The default value for `screenSaverSecondsToNextCard`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_screenSaverSecondsToNextCard = 10;
+  /// How many seconds one card should be visible in screen saver mode
+  @JsonKey(defaultValue: d_screenSaverSecondsToNextCard)
+  int _screenSaverSecondsToNextCard = d_screenSaverSecondsToNextCard;
+  /// How many seconds one card should be visible in screen saver mode
+  int get screenSaverSecondsToNextCard => _screenSaverSecondsToNextCard;
+  /// How many seconds one card should be visible in screen saver mode
+  set screenSaverSecondsToNextCard (int value) {
+    _screenSaverSecondsToNextCard = value;
+    notifyListeners();
+  }
+
+
   SettingsWordLists();
 
 
