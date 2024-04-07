@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   /// The entry that is currently being shown
   late JMdict currentEntry;
   /// time to the next entry
-  int secondsToNextEntry = 5;
+  int secondsToNextEntry = GetIt.I<Settings>().wordLists.screenSaverSecondsToNextCard;
   /// Random instance for deciding the next card to show
   Random nextEntryRandom = Random();
   /// timer that fires every time one vocab card cycle is over
