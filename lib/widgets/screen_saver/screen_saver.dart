@@ -3,13 +3,16 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:get_it/get_it.dart';
+import 'package:window_manager/window_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:window_manager/window_manager.dart';
+
 
 
 
@@ -114,7 +117,11 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
 
   /// Randomly sets the current entry
   void setRandomEntry(){
-    int next = nextEntryRandom.nextInt(entries.length);
+
+    // assure that there are entries
+    if(entries.isEmpty) return;
+    
+    int next = entries.isEmpty ? 0 : nextEntryRandom.nextInt(entries.length);
     currentEntry = entries[next];
   }
 
@@ -138,6 +145,13 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
         
             // if word lists are not read yet, show nothing
             if(!snapshot.hasData) return Container();
+
+            // no entries in this list
+            if(entries.isEmpty){
+              return Center(
+                child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
+              );
+            }
         
             return AnimatedBuilder(
               animation: vocabCardAnimation,
