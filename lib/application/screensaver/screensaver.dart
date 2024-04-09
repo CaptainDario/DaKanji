@@ -45,7 +45,7 @@ Future<List<int>> getDictIDsForScreensaver(List<int> wordListIDs) async {
 void stopScreensaver(BuildContext context){
 
   // do not stop a screensaver if none is running
-  if(g_ScreensaverKey.currentWidget != null) return;
+  if(g_ScreensaverKey.currentWidget == null) return;
 
   Navigator.of(context).pop();
 }
