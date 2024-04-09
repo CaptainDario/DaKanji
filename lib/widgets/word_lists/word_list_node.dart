@@ -541,11 +541,15 @@ class _WordListNodeState extends State<WordListNode> {
 
   /// Callback that is executed when the user presses the show as screen saver
   /// button
-  void useAsScreenSaverPressed(){
+  void useAsScreenSaverPressed() async {
 
-   Navigator.of(context).push(
+    List<int> ids =
+      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id);
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => 
-        ScreenSaverScreen(widget.node.value.wordIds)
+        ScreenSaverScreen(ids)
       )
     );
 
