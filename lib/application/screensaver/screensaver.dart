@@ -1,0 +1,50 @@
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/screens/screen_saver/screen_saver_screen.dart';
+
+
+
+/// Starts a screensaver using the words from the given word lists
+void startScreensaver(List<int> wordListIDs) async {
+
+  if(g_ScreensaverKey.currentWidget != null) {
+    print("screen saver already runnign");
+    return;
+  }
+  print("starting screen saver");
+
+  List<int> ids = await getDictIDsForScreensaver(wordListIDs);
+
+  // ignore: use_build_context_synchronously
+  Navigator.of(g_NavigatorKey.currentContext!).push(
+    MaterialPageRoute(builder: (context) => 
+      ScreenSaverScreen(ids, key: g_ScreensaverKey)
+    )
+  );
+
+}
+
+/// Gets all entries from the word lists that are selected to be used for word
+/// lists
+Future<List<int>> getDictIDsForScreensaver(List<int> wordListIDs) async {
+
+  List<int> entries = [];
+
+  for (int idx in wordListIDs) {
+    entries.addAll(
+      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(idx)
+    );
+  }
+
+  return entries;
+}
+
+/// Stops a running screensaver
+/// 
+/// Warning: does NOT check if a screensaver is running
+void stopScreensaver(BuildContext context){
+  Navigator.of(context).pop();
+}

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/application/word_lists/anki.dart';
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';
@@ -323,7 +324,7 @@ class _WordListNodeState extends State<WordListNode> {
                               toCSVPressed();
                               break;
                             case WordListNodePopupMenuButtonItems.useAsScreenSaver:
-                              useAsScreenSaverPressed();
+                              startScreensaver([widget.node.id]);
                               break;
                           }
                         },
@@ -539,19 +540,5 @@ class _WordListNodeState extends State<WordListNode> {
 
   }
 
-  /// Callback that is executed when the user presses the show as screen saver
-  /// button
-  void useAsScreenSaverPressed() async {
-
-    List<int> ids =
-      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id);
-
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => 
-        ScreenSaverScreen(ids)
-      )
-    );
-
-  }
+  
 }

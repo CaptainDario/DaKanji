@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/screens/screen_saver/screen_saver_screen.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
@@ -133,25 +134,22 @@ class _WordListSettingsState extends State<WordListSettings> {
             });
           },
         ),
+
+        // Screensaver: should it automatically start after the set interval
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_auto_show.tr(),
+          value: widget.settings.wordLists.autoStartScreensaver,
+          onTileTapped: (value) {
+            widget.settings.wordLists.autoStartScreensaver = value;
+            widget.settings.save();
+          },
+        ),
         // Screen saver: show
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_show.tr(),
           icon: Icons.play_arrow,
           onButtonPressed: () async {
-
-            List<int> entries = [];
-            for (int idx in widget.settings.wordLists.screenSaverWordLists) {
-              entries.addAll(
-                await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(idx)
-              );
-            }
-            
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => 
-                ScreenSaverScreen(entries)
-              )
-            );
+            startScreensaver(widget.settings.wordLists.screenSaverWordLists);
           },
         ),
         // Screen saver: Which word lists to use
@@ -170,14 +168,19 @@ class _WordListSettingsState extends State<WordListSettings> {
             );
           },
         ),
-        // Screen Saver: how long to start
-        ResponsiveSliderTile(
-          text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
-          value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
-          min: 1,
-          max: 120,
-          showLabelAsInt: true,
-        ),
+        // Screen Saver: how long to auto start
+        if(g_desktopPlatform)
+          ResponsiveSliderTile(
+            text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
+            value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
+            min: 1,
+            max: 60*10,
+            showLabelAsInt: true,
+            onChanged: (value) async {
+              widget.settings.wordLists.screenSaverSecondsToStart = value.toInt();
+              await widget.settings.save();
+            },
+          ),
         // Screen Saver: seconds to next card
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
@@ -185,6 +188,10 @@ class _WordListSettingsState extends State<WordListSettings> {
           min: 1,
           max: 120,
           showLabelAsInt: true,
+          onChanged: (value) async {
+            widget.settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
+            await widget.settings.save();
+          },
         ),
         // readd defaults
         ResponsiveIconButtonTile(

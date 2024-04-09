@@ -15,7 +15,14 @@ SettingsWordLists _$SettingsWordListsFromJson(Map<String, dynamic> json) =>
       ..pdfMaxMeaningsPerVocabulary = json['pdfMaxMeaningsPerVocabulary'] as int
       ..pdfMaxWordsPerMeaning = json['pdfMaxWordsPerMeaning'] as int
       ..pdfMaxLinesPerMeaning = json['pdfMaxLinesPerMeaning'] as int
-      ..pdfIncludeKana = json['pdfIncludeKana'] as bool;
+      ..pdfIncludeKana = json['pdfIncludeKana'] as bool
+      ..autoStartScreensaver = json['autoStartScreensaver'] as bool
+      ..screenSaverWordLists = (json['screenSaverWordLists'] as List<dynamic>)
+          .map((e) => e as int)
+          .toList()
+      ..screenSaverSecondsToStart = json['screenSaverSecondsToStart'] as int
+      ..screenSaverSecondsToNextCard =
+          json['screenSaverSecondsToNextCard'] as int;
 
 Map<String, dynamic> _$SettingsWordListsToJson(SettingsWordLists instance) =>
     <String, dynamic>{
@@ -25,4 +32,8 @@ Map<String, dynamic> _$SettingsWordListsToJson(SettingsWordLists instance) =>
       'pdfMaxWordsPerMeaning': instance.pdfMaxWordsPerMeaning,
       'pdfMaxLinesPerMeaning': instance.pdfMaxLinesPerMeaning,
       'pdfIncludeKana': instance.pdfIncludeKana,
+      'autoStartScreensaver': instance.autoStartScreensaver,
+      'screenSaverWordLists': instance.screenSaverWordLists,
+      'screenSaverSecondsToStart': instance.screenSaverSecondsToStart,
+      'screenSaverSecondsToNextCard': instance.screenSaverSecondsToNextCard,
     };

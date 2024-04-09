@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:get_it/get_it.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -134,7 +135,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
     double h = s.height;
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
+      onTap: () => stopScreensaver(context),
       child: Container(
         height: h,
         width:  w,

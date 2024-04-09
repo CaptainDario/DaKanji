@@ -109,6 +109,21 @@ class SettingsWordLists with ChangeNotifier {
   }
 
 
+  /// The default value for `screenSaverSecondsToStart`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_autoStartScreensaver = false;
+  /// Should the screen saver start automatically after the set time
+  @JsonKey(defaultValue: d_autoStartScreensaver)
+  bool _autoStartScreensaver = d_autoStartScreensaver;
+  /// Should the screen saver start automatically after the set time
+  bool get autoStartScreensaver => _autoStartScreensaver;
+  /// Should the screen saver start automatically after the set time
+  set autoStartScreensaver (bool value) {
+    _autoStartScreensaver = value;
+    notifyListeners();
+  }
+
   /// The default value for `screenSaverWordList`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
@@ -127,7 +142,7 @@ class SettingsWordLists with ChangeNotifier {
   /// The default value for `screenSaverSecondsToStart`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const int d_screenSaverSecondsToStart = 10;
+  static const int d_screenSaverSecondsToStart = 60*2;
   /// How many seconds until the screen saver starts
   @JsonKey(defaultValue: d_screenSaverSecondsToStart)
   int _screenSaverSecondsToStart = d_screenSaverSecondsToStart;
