@@ -2815,6 +2815,17 @@
       "es": "PDF: Incluir kana",
       "pl": "PDF: Dołącz kana"
     },
+    "word_lists_screensaver_auto_show": {
+      "en": "Screensaver: Auto start screen saver",
+      "de": "Bildschirmschoner: Automatisch Starten",
+      "ru": "Скринсейвер: Автоматический запуск заставки",
+      "ja": "スクリーンセーバー自動起動スクリーンセーバー",
+      "zh": "屏幕保护程序自动启动屏幕保护程序",
+      "it": "Screensaver: Avvio automatico dello screensaver",
+      "fr": "Économiseur d'écran : Démarrage automatique de l'économiseur d'écran",
+      "es": "Salvapantallas: Salvapantallas de inicio automático",
+      "pl": "Wygaszacz ekranu: Automatyczny start wygaszacza ekranu"
+    },
     "word_lists_screensaver_show": {
       "en": "Screensaver: show",
       "de": "Bildschirmschoner: anzeigen",

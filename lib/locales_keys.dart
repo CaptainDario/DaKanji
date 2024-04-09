@@ -366,6 +366,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary = 'SettingsScreen.word_lists_pdf_max_meanings_per_vocabulary';
   static const SettingsScreen_word_lists_pdf_max_words_per_meaning = 'SettingsScreen.word_lists_pdf_max_words_per_meaning';
   static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
+  static const SettingsScreen_word_lists_screensaver_auto_show = 'SettingsScreen.word_lists_screensaver_auto_show';
   static const SettingsScreen_word_lists_screensaver_seconds_to_next_card = 'SettingsScreen.word_lists_screensaver_seconds_to_next_card';
   static const SettingsScreen_word_lists_screensaver_seconds_to_start = 'SettingsScreen.word_lists_screensaver_seconds_to_start';
   static const SettingsScreen_word_lists_screensaver_show = 'SettingsScreen.word_lists_screensaver_show';
