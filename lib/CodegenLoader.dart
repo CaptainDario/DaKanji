@@ -2,8 +2,10 @@
 
 // ignore_for_file: prefer_single_quotes
 
+// Dart imports:
 import 'dart:ui';
 
+// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -360,7 +362,12 @@ class CodegenLoader extends AssetLoader{
     "word_lists_pdf_max_lines_per_meaning": "PDF：每个含义的最大行数",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF：每个词汇的含义",
     "word_lists_pdf_max_words_per_meaning": "PDF：每个含义的最大字数",
-    "word_lists_readd_defaults": "添加默认文件夹"
+    "word_lists_readd_defaults": "添加默认文件夹",
+    "word_lists_screensaver_auto_show": "屏幕保护程序自动启动屏幕保护程序",
+    "word_lists_screensaver_seconds_to_next_card": "屏幕保护程序：秒至下一张卡",
+    "word_lists_screensaver_seconds_to_start": "屏幕保护程序：几秒钟后启动",
+    "word_lists_screensaver_show": "屏幕保护程序：显示",
+    "word_lists_screensaver_word_lists_to_use": "屏幕保护程序使用单词列表"
   },
   "TextScreen": {
     "copy_button_copy": "已复制：",
@@ -411,6 +418,7 @@ class CodegenLoader extends AssetLoader{
     "ok": "好的",
     "page": "页",
     "rename": "重命名",
+    "screensaver_use_as": "用作屏幕保护程序",
     "search_history": "搜索历史",
     "send_to_anki": "发送到anki",
     "send_to_anki_progress": "发送至 Anki，请稍候...",
@@ -791,7 +799,12 @@ static const Map<String,dynamic> ja = {
     "word_lists_pdf_max_lines_per_meaning": "PDF：意味ごとの最大行数",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF語彙ごとの意味",
     "word_lists_pdf_max_words_per_meaning": "PDF：意味ごとの最大単語数",
-    "word_lists_readd_defaults": "デフォルトフォルダの追加"
+    "word_lists_readd_defaults": "デフォルトフォルダの追加",
+    "word_lists_screensaver_auto_show": "スクリーンセーバー自動起動スクリーンセーバー",
+    "word_lists_screensaver_seconds_to_next_card": "スクリーンセーバー：次のカードまでの秒数",
+    "word_lists_screensaver_seconds_to_start": "スクリーンセーバー：開始まで数秒",
+    "word_lists_screensaver_show": "スクリーンセーバー：表示",
+    "word_lists_screensaver_word_lists_to_use": "スクリーンセーバー使用する単語リスト"
   },
   "TextScreen": {
     "copy_button_copy": "コピー：",
@@ -856,6 +869,7 @@ static const Map<String,dynamic> ja = {
     "ok": "ok",
     "page": "ページ",
     "rename": "名前変更",
+    "screensaver_use_as": "スクリーンセーバーとして使用する",
     "search_history": "検索履歴",
     "send_to_anki": "ankiに送る",
     "send_to_anki_progress": "Ankiに送信中です、お待ちください",
@@ -1252,7 +1266,12 @@ static const Map<String,dynamic> de = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Max. Zeilen pro Bedeutung",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Bedeutungen pro Vokabel",
     "word_lists_pdf_max_words_per_meaning": "PDF: Maximale Wörter pro Bedeutung",
-    "word_lists_readd_defaults": "Hinzufügen des Standardordners"
+    "word_lists_readd_defaults": "Hinzufügen des Standardordners",
+    "word_lists_screensaver_auto_show": "Bildschirmschoner: Automatisch Starten",
+    "word_lists_screensaver_seconds_to_next_card": "Bildschirmschoner: Sekunden bis zur nächsten Karte",
+    "word_lists_screensaver_seconds_to_start": "Bildschirmschoner: Sekunden bis zum Start",
+    "word_lists_screensaver_show": "Bildschirmschoner: anzeigen",
+    "word_lists_screensaver_word_lists_to_use": "Bildschirmschoner: Wortlisten die benutuzt werden"
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -1317,6 +1336,7 @@ static const Map<String,dynamic> de = {
     "ok": "ok",
     "page": "Seite",
     "rename": "Umbennen",
+    "screensaver_use_as": "Verwendung als Bildschirmschoner",
     "search_history": "Suchverlauf",
     "send_to_anki": "Zu Anki schicken",
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
@@ -1675,7 +1695,12 @@ static const Map<String,dynamic> ru = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Максимум строк на значение",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Значения по словарю",
     "word_lists_pdf_max_words_per_meaning": "PDF: Максимум слов на значение",
-    "word_lists_readd_defaults": "Добавьте папку по умолчанию"
+    "word_lists_readd_defaults": "Добавьте папку по умолчанию",
+    "word_lists_screensaver_auto_show": "Скринсейвер: Автоматический запуск заставки",
+    "word_lists_screensaver_seconds_to_next_card": "Заставка: секунды до следующей карты",
+    "word_lists_screensaver_seconds_to_start": "Заставка: несколько секунд до запуска",
+    "word_lists_screensaver_show": "Заставка: показать",
+    "word_lists_screensaver_word_lists_to_use": "Заставка: Список слов для использования"
   },
   "TextScreen": {
     "copy_button_copy": "Копирование:",
@@ -1726,6 +1751,7 @@ static const Map<String,dynamic> ru = {
     "ok": "хорошо",
     "page": "страница",
     "rename": "Переименовать",
+    "screensaver_use_as": "Используйте в качестве заставки",
     "search_history": "История поиска",
     "send_to_anki": "Отправить в anki",
     "send_to_anki_progress": "Отправка в Энки, пожалуйста, подождите...",
@@ -2119,7 +2145,12 @@ static const Map<String,dynamic> pl = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Maks. wierszy na znaczenie",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Znaczenia według słownictwa",
     "word_lists_pdf_max_words_per_meaning": "PDF: Maksymalna liczba słów na znaczenie",
-    "word_lists_readd_defaults": "Dodaj folder domyślny"
+    "word_lists_readd_defaults": "Dodaj folder domyślny",
+    "word_lists_screensaver_auto_show": "Wygaszacz ekranu: Automatyczny start wygaszacza ekranu",
+    "word_lists_screensaver_seconds_to_next_card": "Wygaszacz ekranu: sekundy do następnej karty",
+    "word_lists_screensaver_seconds_to_start": "Wygaszacz ekranu: sekundy do uruchomienia",
+    "word_lists_screensaver_show": "Wygaszacz ekranu: pokaż",
+    "word_lists_screensaver_word_lists_to_use": "Wygaszacz ekranu: Lista słów do użycia"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -2184,6 +2215,7 @@ static const Map<String,dynamic> pl = {
     "ok": "ok",
     "page": "strona",
     "rename": "Zmień nazwę",
+    "screensaver_use_as": "Używanie jako wygaszacz ekranu",
     "search_history": "Historia wyszukiwania",
     "send_to_anki": "Wyślij do anki",
     "send_to_anki_progress": "Wysyłanie do Anki, proszę czekać...",
@@ -2580,7 +2612,12 @@ static const Map<String,dynamic> en = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Max lines per meaning",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Meanings per vocabulary",
     "word_lists_pdf_max_words_per_meaning": "PDF: Max words per meaning",
-    "word_lists_readd_defaults": "Add the default folder"
+    "word_lists_readd_defaults": "Add the default folder",
+    "word_lists_screensaver_auto_show": "Screensaver: Auto start screen saver",
+    "word_lists_screensaver_seconds_to_next_card": "Screensaver: seconds to next card",
+    "word_lists_screensaver_seconds_to_start": "Screensaver: seconds to start",
+    "word_lists_screensaver_show": "Screensaver: show",
+    "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",
@@ -2645,6 +2682,7 @@ static const Map<String,dynamic> en = {
     "ok": "ok",
     "page": "page",
     "rename": "Rename",
+    "screensaver_use_as": "Use as screensaver",
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "send_to_anki_progress": "Sending to Anki, please wait...",
@@ -3003,7 +3041,12 @@ static const Map<String,dynamic> it = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Linee massime per significato",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significati per vocabolario",
     "word_lists_pdf_max_words_per_meaning": "PDF: Parole massime per significato",
-    "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
+    "word_lists_readd_defaults": "Aggiungere la cartella predefinita",
+    "word_lists_screensaver_auto_show": "Screensaver: Avvio automatico dello screensaver",
+    "word_lists_screensaver_seconds_to_next_card": "Screensaver: secondi alla scheda successiva",
+    "word_lists_screensaver_seconds_to_start": "Screensaver: pochi secondi all'avvio",
+    "word_lists_screensaver_show": "Screensaver: mostra",
+    "word_lists_screensaver_word_lists_to_use": "Salvaschermo: Elenco di parole da utilizzare"
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -3054,6 +3097,7 @@ static const Map<String,dynamic> it = {
     "ok": "ok",
     "page": "pagina",
     "rename": "Rinominare",
+    "screensaver_use_as": "Utilizzare come screensaver",
     "search_history": "Storia della ricerca",
     "send_to_anki": "Invia ad anki",
     "send_to_anki_progress": "Invio ad Anki, attendere prego...",
@@ -3412,7 +3456,12 @@ static const Map<String,dynamic> fr = {
     "word_lists_pdf_max_lines_per_meaning": "PDF : Nombre maximal de lignes par sens",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF : Significations par vocabulaire",
     "word_lists_pdf_max_words_per_meaning": "PDF : Nombre maximal de mots par sens",
-    "word_lists_readd_defaults": "Ajouter le dossier par défaut"
+    "word_lists_readd_defaults": "Ajouter le dossier par défaut",
+    "word_lists_screensaver_auto_show": "Économiseur d'écran : Démarrage automatique de l'économiseur d'écran",
+    "word_lists_screensaver_seconds_to_next_card": "Économiseur d'écran : secondes jusqu'à la carte suivante",
+    "word_lists_screensaver_seconds_to_start": "Économiseur d'écran : quelques secondes pour démarrer",
+    "word_lists_screensaver_show": "Économiseur d'écran : montrer",
+    "word_lists_screensaver_word_lists_to_use": "Économiseur d'écran : Liste de mots à utiliser"
   },
   "TextScreen": {
     "copy_button_copy": "Copié :",
@@ -3463,6 +3512,7 @@ static const Map<String,dynamic> fr = {
     "ok": "ok",
     "page": "page",
     "rename": "Renommer",
+    "screensaver_use_as": "Utiliser comme économiseur d'écran",
     "search_history": "Historique de la recherche",
     "send_to_anki": "Envoyer à anki",
     "send_to_anki_progress": "Envoi à Anki, veuillez patienter...",
@@ -3821,7 +3871,12 @@ static const Map<String,dynamic> es = {
     "word_lists_pdf_max_lines_per_meaning": "PDF: Máximo de líneas por sentido",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significados por vocabulario",
     "word_lists_pdf_max_words_per_meaning": "PDF: Máximo de palabras por significado",
-    "word_lists_readd_defaults": "Añadir la carpeta por defecto"
+    "word_lists_readd_defaults": "Añadir la carpeta por defecto",
+    "word_lists_screensaver_auto_show": "Salvapantallas: Salvapantallas de inicio automático",
+    "word_lists_screensaver_seconds_to_next_card": "Salvapantallas: segundos hasta la siguiente carta",
+    "word_lists_screensaver_seconds_to_start": "Salvapantallas: segundos para iniciarse",
+    "word_lists_screensaver_show": "Salvapantallas: mostrar",
+    "word_lists_screensaver_word_lists_to_use": "Salvapantallas: Lista de palabras a utilizar"
   },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
@@ -3872,6 +3927,7 @@ static const Map<String,dynamic> es = {
     "ok": "ok",
     "page": "página",
     "rename": "Cambie el nombre de",
+    "screensaver_use_as": "Utilizar como salvapantallas",
     "search_history": "Historial de búsqueda",
     "send_to_anki": "Enviar a anki",
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",

@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,16 +8,15 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-
-
 
 /// Widget that shows information about a given kana. This information is
 /// * romaji

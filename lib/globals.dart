@@ -42,6 +42,8 @@ const String g_japaneseFontFamily = "NotoSansJP";
 
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
+/// The global key for screensaver
+GlobalKey g_ScreensaverKey = GlobalKey();
 
 // INITIALIZE APP
 /// global init function feature that needs to complete before the app can be

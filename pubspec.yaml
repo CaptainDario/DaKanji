@@ -60,7 +60,7 @@ dependencies:
   sentry_flutter: 7.13.2
   feedback_sentry: 3.0.0
   sentry: any
-  dio: 5.4.0
+  dio: 5.4.2+1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   pdf: 3.10.8
@@ -125,6 +125,7 @@ dependencies:
   # packages that should only target specific platforms
   android_intent_plus: 3.0.2      # android
   window_manager: 0.3.7           # desktop
+  screen_retriever: 0.1.9         # desktop
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows

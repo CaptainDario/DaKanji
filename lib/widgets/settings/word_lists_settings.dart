@@ -2,9 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
-import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +14,7 @@ import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
@@ -25,6 +23,10 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 
 class WordListSettings extends StatefulWidget {
     
@@ -103,7 +105,7 @@ class _WordListSettingsState extends State<WordListSettings> {
             });
           },
         ),
-        // 
+        // PDF translations
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
           value: widget.settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
@@ -120,6 +122,7 @@ class _WordListSettingsState extends State<WordListSettings> {
             });
           },
         ),
+        //pdf include kana
         ResponsiveCheckBoxTile(
           text:  LocaleKeys.SettingsScreen_word_lists_pdf_include_kana.tr(),
           value: widget.settings.wordLists.pdfIncludeKana,
@@ -128,6 +131,65 @@ class _WordListSettingsState extends State<WordListSettings> {
               widget.settings.wordLists.pdfIncludeKana = value;
               widget.settings.save();
             });
+          },
+        ),
+
+        // Screensaver: should it automatically start after the set interval
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_auto_show.tr(),
+          value: widget.settings.wordLists.autoStartScreensaver,
+          onTileTapped: (value) {
+            widget.settings.wordLists.autoStartScreensaver = value;
+            widget.settings.save();
+          },
+        ),
+        // Screen saver: show
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_show.tr(),
+          icon: Icons.play_arrow,
+          onButtonPressed: () async {
+            startScreensaver(widget.settings.wordLists.screenSaverWordLists);
+          },
+        ),
+        // Screen saver: Which word lists to use
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_word_lists_to_use.tr(),
+          icon: Icons.list_alt,
+          onButtonPressed: () async {
+            await showWordListSelectionDialog(
+              context,
+              onSelectionConfirmed: (selection) async {
+                widget.settings.wordLists.screenSaverWordLists =
+                  selection.map((e) => e.id).toList();
+                widget.settings.save();
+                Navigator.of(context, rootNavigator: false).pop();
+              },
+            );
+          },
+        ),
+        // Screen Saver: how long to auto start
+        if(g_desktopPlatform)
+          ResponsiveSliderTile(
+            text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
+            value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
+            min: 1,
+            max: 60*10,
+            showLabelAsInt: true,
+            onChanged: (value) async {
+              widget.settings.wordLists.screenSaverSecondsToStart = value.toInt();
+              await widget.settings.save();
+            },
+          ),
+        // Screen Saver: seconds to next card
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
+          value: widget.settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
+          min: 1,
+          max: 120,
+          showLabelAsInt: true,
+          onChanged: (value) async {
+            widget.settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
+            await widget.settings.save();
           },
         ),
         // readd defaults

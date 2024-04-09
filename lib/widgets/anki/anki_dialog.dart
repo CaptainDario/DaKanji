@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -14,8 +12,8 @@ import 'package:da_kanji_mobile/application/anki/anki.dart';
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
-
-
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 
 /// A dialog that allows to change the export to anki settings just this time.
 /// `useAnkiSettings` defines if the settings of Anki are used or the settings

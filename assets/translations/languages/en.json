@@ -382,7 +382,12 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF: Max lines per meaning",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Meanings per vocabulary",
     "word_lists_pdf_max_words_per_meaning": "PDF: Max words per meaning",
-    "word_lists_readd_defaults": "Add the default folder"
+    "word_lists_readd_defaults": "Add the default folder",
+    "word_lists_screensaver_auto_show": "Screensaver: Auto start screen saver",
+    "word_lists_screensaver_seconds_to_next_card": "Screensaver: seconds to next card",
+    "word_lists_screensaver_seconds_to_start": "Screensaver: seconds to start",
+    "word_lists_screensaver_show": "Screensaver: show",
+    "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
   },
   "TextScreen": {
     "copy_button_copy": "Copied:",
@@ -447,6 +452,7 @@
     "ok": "ok",
     "page": "page",
     "rename": "Rename",
+    "screensaver_use_as": "Use as screensaver",
     "search_history": "Search history",
     "send_to_anki": "Send to anki",
     "send_to_anki_progress": "Sending to Anki, please wait...",

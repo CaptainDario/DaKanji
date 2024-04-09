@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,6 +9,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// The manual for the TextScreen

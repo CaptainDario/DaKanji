@@ -1,14 +1,19 @@
-// Project imports:
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:super_clipboard/super_clipboard.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:super_clipboard/super_clipboard.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 /// Class to communicate with anki ios
 class AnkiiOS {

@@ -2815,6 +2815,61 @@
       "es": "PDF: Incluir kana",
       "pl": "PDF: Dołącz kana"
     },
+    "word_lists_screensaver_auto_show": {
+      "en": "Screensaver: Auto start screen saver",
+      "de": "Bildschirmschoner: Automatisch Starten",
+      "ru": "Скринсейвер: Автоматический запуск заставки",
+      "ja": "スクリーンセーバー自動起動スクリーンセーバー",
+      "zh": "屏幕保护程序自动启动屏幕保护程序",
+      "it": "Screensaver: Avvio automatico dello screensaver",
+      "fr": "Économiseur d'écran : Démarrage automatique de l'économiseur d'écran",
+      "es": "Salvapantallas: Salvapantallas de inicio automático",
+      "pl": "Wygaszacz ekranu: Automatyczny start wygaszacza ekranu"
+    },
+    "word_lists_screensaver_show": {
+      "en": "Screensaver: show",
+      "de": "Bildschirmschoner: anzeigen",
+      "ru": "Заставка: показать",
+      "ja": "スクリーンセーバー：表示",
+      "zh": "屏幕保护程序：显示",
+      "it": "Screensaver: mostra",
+      "fr": "Économiseur d'écran : montrer",
+      "es": "Salvapantallas: mostrar",
+      "pl": "Wygaszacz ekranu: pokaż"
+    },
+    "word_lists_screensaver_word_lists_to_use": {
+      "en": "Screensaver: Word list to use",
+      "de": "Bildschirmschoner: Wortlisten die benutuzt werden",
+      "ru": "Заставка: Список слов для использования",
+      "ja": "スクリーンセーバー使用する単語リスト",
+      "zh": "屏幕保护程序使用单词列表",
+      "it": "Salvaschermo: Elenco di parole da utilizzare",
+      "fr": "Économiseur d'écran : Liste de mots à utiliser",
+      "es": "Salvapantallas: Lista de palabras a utilizar",
+      "pl": "Wygaszacz ekranu: Lista słów do użycia"
+    },
+    "word_lists_screensaver_seconds_to_start": {
+      "en": "Screensaver: seconds to start",
+      "de": "Bildschirmschoner: Sekunden bis zum Start",
+      "ru": "Заставка: несколько секунд до запуска",
+      "ja": "スクリーンセーバー：開始まで数秒",
+      "zh": "屏幕保护程序：几秒钟后启动",
+      "it": "Screensaver: pochi secondi all'avvio",
+      "fr": "Économiseur d'écran : quelques secondes pour démarrer",
+      "es": "Salvapantallas: segundos para iniciarse",
+      "pl": "Wygaszacz ekranu: sekundy do uruchomienia"
+    },
+    "word_lists_screensaver_seconds_to_next_card": {
+      "en": "Screensaver: seconds to next card",
+      "de": "Bildschirmschoner: Sekunden bis zur nächsten Karte",
+      "ru": "Заставка: секунды до следующей карты",
+      "ja": "スクリーンセーバー：次のカードまでの秒数",
+      "zh": "屏幕保护程序：秒至下一张卡",
+      "it": "Screensaver: secondi alla scheda successiva",
+      "fr": "Économiseur d'écran : secondes jusqu'à la carte suivante",
+      "es": "Salvapantallas: segundos hasta la siguiente carta",
+      "pl": "Wygaszacz ekranu: sekundy do następnej karty"
+    },
     "word_lists_readd_defaults": {
       "en": "Add the default folder",
       "de": "Hinzufügen des Standardordners",
@@ -4265,6 +4320,17 @@
       "fr": "Rendu des images, veuillez patienter...",
       "es": "Renderizando imágenes, por favor espere...",
       "pl": "Renderowanie obrazów, proszę czekać..."
+    },
+    "screensaver_use_as": {
+      "en": "Use as screensaver",
+      "de": "Verwendung als Bildschirmschoner",
+      "ru": "Используйте в качестве заставки",
+      "ja": "スクリーンセーバーとして使用する",
+      "zh": "用作屏幕保护程序",
+      "it": "Utilizzare come screensaver",
+      "fr": "Utiliser comme économiseur d'écran",
+      "es": "Utilizar como salvapantallas",
+      "pl": "Używanie jako wygaszacz ekranu"
     }
   },
   "WordListScreen": {

@@ -20,7 +20,7 @@ Future<List<String>> updateAvailable() async {
   Response response;
   try {
     response = await Dio().get(g_GithubReleasesApi);
-  } catch (e) {
+  } on Exception catch (e) {
     debugPrint("Could not check for new version $e");
     return [];
   }

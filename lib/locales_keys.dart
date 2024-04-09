@@ -366,6 +366,11 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary = 'SettingsScreen.word_lists_pdf_max_meanings_per_vocabulary';
   static const SettingsScreen_word_lists_pdf_max_words_per_meaning = 'SettingsScreen.word_lists_pdf_max_words_per_meaning';
   static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
+  static const SettingsScreen_word_lists_screensaver_auto_show = 'SettingsScreen.word_lists_screensaver_auto_show';
+  static const SettingsScreen_word_lists_screensaver_seconds_to_next_card = 'SettingsScreen.word_lists_screensaver_seconds_to_next_card';
+  static const SettingsScreen_word_lists_screensaver_seconds_to_start = 'SettingsScreen.word_lists_screensaver_seconds_to_start';
+  static const SettingsScreen_word_lists_screensaver_show = 'SettingsScreen.word_lists_screensaver_show';
+  static const SettingsScreen_word_lists_screensaver_word_lists_to_use = 'SettingsScreen.word_lists_screensaver_word_lists_to_use';
   static const SettingsScreen = 'SettingsScreen';
   static const TextScreen_copy_button_copy = 'TextScreen.copy_button_copy';
   static const TextScreen_input_text_here = 'TextScreen.input_text_here';
@@ -426,6 +431,7 @@ abstract class  LocaleKeys {
   static const WordListsScreen_ok = 'WordListsScreen.ok';
   static const WordListsScreen_page = 'WordListsScreen.page';
   static const WordListsScreen_rename = 'WordListsScreen.rename';
+  static const WordListsScreen_screensaver_use_as = 'WordListsScreen.screensaver_use_as';
   static const WordListsScreen_search_history = 'WordListsScreen.search_history';
   static const WordListsScreen_send_to_anki = 'WordListsScreen.send_to_anki';
   static const WordListsScreen_send_to_anki_progress = 'WordListsScreen.send_to_anki_progress';

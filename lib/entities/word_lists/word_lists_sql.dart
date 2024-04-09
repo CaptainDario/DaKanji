@@ -58,7 +58,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   int get schemaVersion => 1;
 
   List<String> get getcustomConstraints =>
-    ['FOREIGN KEY (wordListID, dictEntryID) REFERENCES drugs (wordListID, dictEntryID)'];
+    ['FOREIGN KEY (wordListID, dictEntryID) REFERENCES (wordListID, dictEntryID)'];
 
 
   WordListsSQLDatabase(

@@ -1,7 +1,6 @@
 // Dart imports:
 
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -28,6 +27,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_fiel
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
 
 class DictionarySettings extends StatefulWidget {

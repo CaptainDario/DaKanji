@@ -16,6 +16,7 @@ New Features:
   - Lists for JLPT
   - Export: PDF, CSV Images
   - Send to anki
+  - Screen saver
 
 Improvements:
 

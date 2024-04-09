@@ -382,7 +382,12 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF: Linee massime per significato",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significati per vocabolario",
     "word_lists_pdf_max_words_per_meaning": "PDF: Parole massime per significato",
-    "word_lists_readd_defaults": "Aggiungere la cartella predefinita"
+    "word_lists_readd_defaults": "Aggiungere la cartella predefinita",
+    "word_lists_screensaver_auto_show": "Screensaver: Avvio automatico dello screensaver",
+    "word_lists_screensaver_seconds_to_next_card": "Screensaver: secondi alla scheda successiva",
+    "word_lists_screensaver_seconds_to_start": "Screensaver: pochi secondi all'avvio",
+    "word_lists_screensaver_show": "Screensaver: mostra",
+    "word_lists_screensaver_word_lists_to_use": "Salvaschermo: Elenco di parole da utilizzare"
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -447,6 +452,7 @@
     "ok": "ok",
     "page": "pagina",
     "rename": "Rinominare",
+    "screensaver_use_as": "Utilizzare come screensaver",
     "search_history": "Storia della ricerca",
     "send_to_anki": "Invia ad anki",
     "send_to_anki_progress": "Invio ad Anki, attendere prego...",
