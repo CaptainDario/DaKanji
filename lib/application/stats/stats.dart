@@ -53,8 +53,6 @@ class Stats{
   Timer? screenSaverTimer;
 
 
-
-
   /// Before using this `init()` needs to be called
   Stats(
     this.userData
@@ -69,8 +67,8 @@ class Stats{
           await updateStats();
         }
 
-        // on desktop keep track if the cursor moves and if not show a 
-        // screensaver after the user defined amount of time
+        // on desktop keep track if the cursor moves and if not
+        // show a screensaver after the user defined amount of time
         if(g_desktopPlatform && GetIt.I<Settings>().wordLists.autoStartScreensaver){
           Offset pos = await screenRetriever.getCursorScreenPoint();
           if(lastCursorPosition != pos){
@@ -81,10 +79,8 @@ class Stats{
           else {
             screenSaverTimer ??= Timer(
               Duration(seconds: GetIt.I<Settings>().wordLists.screenSaverSecondsToStart),
-              () async {
-                startScreensaver(
-                  GetIt.I<Settings>().wordLists.screenSaverWordLists);
-              }
+              () async =>
+                startScreensaver(GetIt.I<Settings>().wordLists.screenSaverWordLists)
             );
           }
         }

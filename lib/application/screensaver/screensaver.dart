@@ -12,11 +12,8 @@ import 'package:da_kanji_mobile/screens/screen_saver/screen_saver_screen.dart';
 /// Starts a screensaver using the words from the given word lists
 void startScreensaver(List<int> wordListIDs) async {
 
-  if(g_ScreensaverKey.currentWidget != null) {
-    print("screen saver already runnign");
-    return;
-  }
-  print("starting screen saver");
+  // do not start a screensaver if one is already running
+  if(g_ScreensaverKey.currentWidget != null) return;
 
   List<int> ids = await getDictIDsForScreensaver(wordListIDs);
 
@@ -45,8 +42,10 @@ Future<List<int>> getDictIDsForScreensaver(List<int> wordListIDs) async {
 }
 
 /// Stops a running screensaver
-/// 
-/// Warning: does NOT check if a screensaver is running
 void stopScreensaver(BuildContext context){
+
+  // do not stop a screensaver if none is running
+  if(g_ScreensaverKey.currentWidget != null) return;
+
   Navigator.of(context).pop();
 }
