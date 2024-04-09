@@ -1,12 +1,13 @@
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:get_it/get_it.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-
-
 
 /// Creates a csv string from the given word list node
 Future<String> csvFromWordListNode(TreeNode<WordListsData> node) async {

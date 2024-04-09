@@ -1,7 +1,8 @@
-import 'package:da_kanji_mobile/widgets/screen_saver/screen_saver.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/widgets/screen_saver/screen_saver.dart';
 
 class ScreenSaverScreen extends StatefulWidget {
 

@@ -1,7 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,13 +7,16 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/manual/manual.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
 
 class DoJGSettings extends StatefulWidget {
     

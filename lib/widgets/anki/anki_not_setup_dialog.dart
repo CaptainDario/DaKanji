@@ -1,14 +1,16 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 // Project imports:
-
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/globals.dart';
+
+// Project imports:
+
 
 
 

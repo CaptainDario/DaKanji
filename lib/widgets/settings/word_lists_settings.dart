@@ -2,12 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
-import 'package:da_kanji_mobile/screens/screen_saver/screen_saver_screen.dart';
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
-import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
-import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,6 +14,7 @@ import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
@@ -28,6 +23,10 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 
 class WordListSettings extends StatefulWidget {
     

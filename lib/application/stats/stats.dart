@@ -4,20 +4,24 @@
 // Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get_it/get_it.dart';
+import 'package:screen_retriever/screen_retriever.dart';
+
 // Project imports:
 import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 
 // Package imports:
 
-// Project imports:
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:screen_retriever/screen_retriever.dart';
-import 'package:universal_io/io.dart'; 
+
+
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage

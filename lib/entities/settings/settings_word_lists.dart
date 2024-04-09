@@ -1,10 +1,12 @@
 // Flutter imports:
-import 'package:collection/collection.dart';
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 
 part 'settings_word_lists.g.dart';
 

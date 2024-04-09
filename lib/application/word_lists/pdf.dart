@@ -1,9 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:math';
 
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
+// Flutter imports:
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -13,8 +11,13 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-// Project imports
+// Project imports:
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
+
+// Project imports
 
 /// Exports the given word list as a PDF file
 Future<pw.Document> pdfPortraitFromWordListNode(List<int> wordIDs, String name) async {

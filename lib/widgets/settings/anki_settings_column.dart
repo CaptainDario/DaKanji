@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
-import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,15 +8,18 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
+import 'package:da_kanji_mobile/application/manual/manual.dart';
+import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
-
-
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 
 /// All settings realted to anki
 class AnkiSettingsColumn extends StatefulWidget {

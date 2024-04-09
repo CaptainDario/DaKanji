@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,8 +10,7 @@ import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
-
-
+import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 
 /// All settings realted to anki
 class AnkiSettings extends StatefulWidget {

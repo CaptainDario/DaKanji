@@ -1,21 +1,24 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:collection/collection.dart';
-import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:flutter/material.dart';
-
-
-
 
 /// Shows a screen saver that iterates through different dictionary entries
 class ScreenSaver extends StatefulWidget {
