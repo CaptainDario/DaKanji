@@ -407,7 +407,7 @@ class _WordListsState extends State<WordLists> {
                                                 return;
                                               }
                                       
-                                              TreeNode<WordListsData> node = childrenDFS[i+1];
+                                              TreeNode<WordListsData> node = childrenDFS[i];
                                               if(node.parent!.value.type == WordListNodeType.folderDefault) {
                                                 node = childrenDFS.firstWhere((n) => 
                                                   wordListUserTypes.contains(n.value.type)
@@ -416,7 +416,7 @@ class _WordListsState extends State<WordLists> {
                                       
                                               final oldParent = data.parent!;
                                               oldParent.removeChild(data);
-                                              node.parent!.insertChild(data, node.parent!.children.indexOf(node));
+                                              node.parent!.insertChild(data, node.parent!.children.indexOf(node)+1);
                                                                       
                                               widget.wordLists.updateNodes(
                                                 [data.parent!, data, node.parent!, node, oldParent]);
