@@ -246,7 +246,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  app_links: 5ef33d0d295a89d9d16bb81b0e3b0d5f70d6c875
+  app_links: e70ca16b4b0f88253b3b3660200d4a10b4ea9795
   clipboard_watcher: 86fb70421aca6f4944e0591a8292605da7784666
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
