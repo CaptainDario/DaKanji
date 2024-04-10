@@ -359,8 +359,8 @@ class _WordListsState extends State<WordLists> {
                                                 widget.wordLists.updateNode(node);
                                               }
                                             },
-                                            onRenameFinished: (node) {
-                                              widget.wordLists.updateNode(node);
+                                            onRenameFinished: (node) async {
+                                              await widget.wordLists.updateNode(node);
                                             },
                                             onWillDragAccept: (node, other) {
                                               setState(() {

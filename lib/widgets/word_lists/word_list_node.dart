@@ -125,7 +125,7 @@ class _WordListNodeState extends State<WordListNode> {
 
   @override
   void didUpdateWidget(covariant WordListNode oldWidget) {
-    init();
+    //init();
     super.didUpdateWidget(oldWidget);
   }
 
