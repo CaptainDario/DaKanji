@@ -38,6 +38,8 @@ Fixed:
   - Misc
     - Advanced
       - Optimize neural networks
+- Deep Links:
+  - Android https:// links
 
 Removed:
 
