@@ -15,13 +15,13 @@ New Features:
   - Search in lists
   - Lists for JLPT
   - Export: PDF, CSV Images
-  - Send to anki
+  - Send to Anki
   - Screen saver
 
 Improvements:
 
 - Dictionary
-  - Fancy slide in of search results
+  - Fancy slide-in of search results
 - Settings
   - Misc
     - Advanced
