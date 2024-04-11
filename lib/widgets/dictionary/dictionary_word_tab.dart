@@ -217,7 +217,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             await ankiNotSetupDialog(context).show();
                           }
                           else{
-                            await ankiDialog(context, widget.entry!).show();
+                            await ankiDialog(context, widget.entry!)?.show();
                           }
                         }
           

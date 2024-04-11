@@ -37,6 +37,21 @@ class SettingsAnki with ChangeNotifier {
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> availableDecks = [];
 
+  /// The default value for `showAnkiSettingsDialogBeforeAdding`
+  @JsonKey()
+  // ignore: constant_identifier_names
+  static const bool d_showAnkiSettingsDialogBeforeAdding = true;
+  /// When adding to anki should the settings dialog be shown
+  @JsonKey(defaultValue: d_showAnkiSettingsDialogBeforeAdding)
+  bool _showAnkiSettingsDialogBeforeAdding = d_showAnkiSettingsDialogBeforeAdding;
+  /// When adding to anki should the settings dialog be shown
+  bool get showAnkiSettingsDialogBeforeAdding => _showAnkiSettingsDialogBeforeAdding;
+  /// When adding to anki should the settings dialog be shown
+  set showAnkiSettingsDialogBeforeAdding(bool value) {
+    _showAnkiSettingsDialogBeforeAdding = value;
+    notifyListeners();
+  }
+
   /// When creating a new note, which languages should be included
   @JsonKey(defaultValue: [true])
   List<bool> _includedLanguages = [true];

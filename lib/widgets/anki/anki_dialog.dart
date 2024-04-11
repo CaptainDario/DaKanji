@@ -18,7 +18,12 @@ import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 /// A dialog that allows to change the export to anki settings just this time.
 /// `useAnkiSettings` defines if the settings of Anki are used or the settings
 /// of exporting word lists
-AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
+AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
+
+  if(!GetIt.I<Settings>().anki.showAnkiSettingsDialogBeforeAdding) {
+    addToAnki(entry);
+    return null;
+  }
 
   return AwesomeDialog(
     context: context,
@@ -27,17 +32,8 @@ AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
     onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
-    btnOkOnPress: () async {
-      AnkiNote note = AnkiNote.fromJMDict(
-        GetIt.I<Settings>().anki.defaultDeck!,
-        entry,
-        langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
-          GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-        ),
-        translationsPerLang: GetIt.I<Settings>().anki.noTranslations
-      );
-      await GetIt.I<Anki>().addNote(note);
-
+    btnOkOnPress: () {
+      addToAnki(entry);
       if(g_NavigatorKey.currentContext != null){
         Navigator.of(g_NavigatorKey.currentContext!).pop();
       }
@@ -65,5 +61,20 @@ AwesomeDialog ankiDialog(BuildContext context, JMdict entry) {
       )
     )
   );
+
+}
+
+/// Adds the given note to anki
+void addToAnki(JMdict entry) async {
+
+  AnkiNote note = AnkiNote.fromJMDict(
+    GetIt.I<Settings>().anki.defaultDeck!,
+    entry,
+    langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
+      GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+    ),
+    translationsPerLang: GetIt.I<Settings>().anki.noTranslations
+  );
+  await GetIt.I<Anki>().addNote(note);
 
 }

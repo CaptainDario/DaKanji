@@ -93,6 +93,15 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             });
           },
         ),
+        
+        ResponsiveCheckBoxTile(
+          text: "Show settings dialog before adding",
+          value: widget.settings.anki.showAnkiSettingsDialogBeforeAdding,
+          onTileTapped: (value) {
+            widget.settings.anki.showAnkiSettingsDialogBeforeAdding = value;
+            widget.settings.save();
+          },
+        ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
           text: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
