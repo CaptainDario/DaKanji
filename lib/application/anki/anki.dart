@@ -257,7 +257,7 @@ class Anki {
       errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
     }
     else if(selectedDeck == null || selectedDeck == ""){
-      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected;
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected.tr();
     }
     else if(!selectedDeckAvailable){
       errorMessage = LocaleKeys.ManualScreen_anki_test_connection_deck_not_in_anki.tr();
