@@ -69,6 +69,8 @@ class AnkiNote{
       ankiDataFieldTranslation  : translation,
       ankiDataFieldKanji        : kanji.first,
       ankiDataFieldKana         : kana.first,
+      ankiDataFieldFrontNote    : "",
+      ankiDataFieldBackNote     : "",
       ankiDataFieldDaKanjiLink  : dakanjiLink,
       ankiDataFieldAudio        : audio,
       ankiDataFieldExample      : example,

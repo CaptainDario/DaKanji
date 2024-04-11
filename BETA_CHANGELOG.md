@@ -3,6 +3,8 @@
 ## v3.3.0+77b3 - 仮名 (11.01.2024)
 
 * Fixed: Anki setup "no deck selected" message was not localized
+* Changed: Exported cards have translations on the front
+* Added: DaKanji note type has a note field on the front and back
 
 ## v3.3.0+77b2 - 仮名 (10.01.2024)
 
