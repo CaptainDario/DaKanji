@@ -232,7 +232,7 @@
   "ManualScreen": {
     "anki_connection_test_text": "\u8981\u5f00\u59cb\u4f7f\u7528 DaKanji \u548c Anki\uff0c\u60a8\u9700\u8981\u6309\u4e0b\u9762\u7684\u6309\u94ae\u3002\u5b83\u5c06\u68c0\u67e5\u60a8\u7684\u8bbe\u7f6e\u662f\u5426\u6b63\u786e\u3002\n\n\u5982\u679c\u6536\u5230\u6210\u529f\u4fe1\u606f\uff0c\u8bf4\u660e DaKanji \u548c Anki \u5df2\u7ecf\u8fde\u63a5\uff0c\u4f60\u5c31\u53ef\u4ee5\u5f00\u59cb\u4f7f\u7528 DaKanji \u548c Anki \u4e86\u3002",
     "anki_connection_test_title": "\u6d4b\u8bd5\u8bbe\u7f6e",
-    "anki_setup_android_text": "\u4f60\u9700\u8981\u5b89\u88c5[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)\uff0c\u5e76\u5728\u88ab\u8981\u6c42\u65f6\u6388\u4e88DaKanji\u4e0eAnki\u4e92\u52a8\u7684\u6743\u9650\u3002",
+    "anki_setup_android_text": "\u4f60\u9700\u8981\u5b89\u88c5[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)\uff0c\u5e76\u5728\u88ab\u8981\u6c42\u65f6\u6388\u4e88DaKanji\u4e0eAnki\u4e92\u52a8\u7684\u6743\u9650\u3002",
     "anki_setup_android_title": "\u5b89\u5353",
     "anki_setup_desktop_text": "\u5728MacOS\u3001Windows\u548cLinux\u4e0a\uff0c\u4f60\u9700\u8981\u5b89\u88c5[Anki](https://apps.ankiweb.net/)\uff0c[AnkiConnect](https://ankiweb.net/shared/info/2055492159)\u9700\u8981[\u5b89\u88c5\u5e76\u8fd0\u884c](https://foosoft.net/projects/anki-connect/)\u3002",
     "anki_setup_desktop_title": "\u684c\u9762",

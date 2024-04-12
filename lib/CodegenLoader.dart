@@ -210,7 +210,7 @@ class CodegenLoader extends AssetLoader{
   "ManualScreen": {
     "anki_connection_test_text": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，说明 DaKanji 和 Anki 已经连接，你就可以开始使用 DaKanji 和 Anki 了。",
     "anki_connection_test_title": "测试设置",
-    "anki_setup_android_text": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
+    "anki_setup_android_text": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)，并在被要求时授予DaKanji与Anki互动的权限。",
     "anki_setup_android_title": "安卓",
     "anki_setup_desktop_text": "在MacOS、Windows和Linux上，你需要安装[Anki](https://apps.ankiweb.net/)，[AnkiConnect](https://ankiweb.net/shared/info/2055492159)需要[安装并运行](https://foosoft.net/projects/anki-connect/)。",
     "anki_setup_desktop_title": "桌面",
@@ -648,7 +648,7 @@ static const Map<String,dynamic> ja = {
   "ManualScreen": {
     "anki_connection_test_text": "DakanjiとAnkiを使い始めるには、下のボタンを押してください。\n\n接続されたメッセージが表示された場合、DakanjiとAnkiを使用可能です。",
     "anki_connection_test_title": "テスト設定",
-    "anki_setup_android_text": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
+    "anki_setup_android_text": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "MacOS、Windows、Linuxでは、[Anki](https://apps.ankiweb.net/)をインストールし、[AnkiConnect](https://ankiweb.net/shared/info/2055492159)が[インストールおよび実行](https://foosoft.net/projects/anki-connect/)となっている必要があります。",
     "anki_setup_desktop_title": "デスクトップ",
@@ -1116,7 +1116,7 @@ static const Map<String,dynamic> de = {
   "ManualScreen": {
     "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erhältst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.",
     "anki_connection_test_title": "Test setup",
-    "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+    "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Auf MacOS, Windows und Linux muss [Anki](https://apps.ankiweb.net/) installiert sein und [AnkiConnect](https://ankiweb.net/shared/info/2055492159) muss [installiert und gestartet](https://foosoft.net/projects/anki-connect/) sein.",
     "anki_setup_desktop_title": "Desktop",
@@ -1997,7 +1997,7 @@ static const Map<String,dynamic> pl = {
   "ManualScreen": {
     "anki_connection_test_text": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli pojawi się komunikat o powodzeniu, DaKanji i Anki są połączone i możesz zacząć używać DaKanji z Anki.",
     "anki_connection_test_title": "Konfiguracja testowa",
-    "anki_setup_android_text": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki.",
+    "anki_setup_android_text": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Na MacOS, Windows i Linux musisz mieć zainstalowaną [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi być [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Pulpit",
@@ -2465,7 +2465,7 @@ static const Map<String,dynamic> en = {
   "ManualScreen": {
     "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.",
     "anki_connection_test_title": "Test setup",
-    "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+    "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Desktop",
@@ -2895,7 +2895,7 @@ static const Map<String,dynamic> it = {
   "ManualScreen": {
     "anki_connection_test_text": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe viene visualizzato un messaggio di successo, DaKanji e Anki sono collegati e si può iniziare a usare DaKanji con Anki.",
     "anki_connection_test_title": "Configurazione del test",
-    "anki_setup_android_text": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+    "anki_setup_android_text": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Su MacOS, Windows e Linux è necessario aver installato [Anki](https://apps.ankiweb.net/) e [AnkiConnect](https://ankiweb.net/shared/info/2055492159) deve essere [installato e funzionante](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Desktop",
@@ -3311,7 +3311,7 @@ static const Map<String,dynamic> fr = {
   "ManualScreen": {
     "anki_connection_test_text": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.",
     "anki_connection_test_title": "Configuration du test",
-    "anki_setup_android_text": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+    "anki_setup_android_text": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit être installé et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit être [installé et en cours d'exécution](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Bureau",
@@ -3727,7 +3727,7 @@ static const Map<String,dynamic> es = {
   "ManualScreen": {
     "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.",
     "anki_connection_test_title": "Configuración de la prueba",
-    "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+    "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Escritorio",

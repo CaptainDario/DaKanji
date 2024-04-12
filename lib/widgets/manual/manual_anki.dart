@@ -36,10 +36,15 @@ class ManualAnki extends StatelessWidget {
   );
 
   /// handle tap on a url
-  void handleUrlTap(String text, String? href, String title){
+  void handleUrlTap(String text, String? href, String title, {bool useExternal = false})async {
     
     if(href != null){
-      launchUrlString(href);
+      if(await canLaunchUrlString(href)){
+        launchUrlString(href,
+          mode: useExternal 
+            ? LaunchMode.externalApplication
+            : LaunchMode.platformDefault);
+      }
     }
 
   }
@@ -66,7 +71,8 @@ class ManualAnki extends StatelessWidget {
               children: [
                 MarkdownBody(
                   data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
-                  onTapLink: handleUrlTap
+                  onTapLink: (String text, String? href, String title)
+                    => handleUrlTap(text, href, title, useExternal: true)
                 ),
                 const SizedBox(height: 5,)
               ]

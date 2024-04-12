@@ -232,7 +232,7 @@
   "ManualScreen": {
     "anki_connection_test_text": "Pour commencer \u00e0 utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il v\u00e9rifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succ\u00e8s, DaKanji et Anki sont connect\u00e9s et vous pouvez commencer \u00e0 utiliser DaKanji avec Anki.",
     "anki_connection_test_title": "Configuration du test",
-    "anki_setup_android_text": "Vous devez avoir install\u00e9 [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demand\u00e9, donner \u00e0 DaKanji la permission d'interagir avec Anki.",
+    "anki_setup_android_text": "Vous devez avoir install\u00e9 [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demand\u00e9, donner \u00e0 DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Sur MacOS, Windows et Linux, [Anki](https://apps.ankiweb.net/) doit \u00eatre install\u00e9 et [AnkiConnect](https://ankiweb.net/shared/info/2055492159) doit \u00eatre [install\u00e9 et en cours d'ex\u00e9cution](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Bureau",

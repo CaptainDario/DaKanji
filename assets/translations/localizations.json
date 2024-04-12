@@ -3370,15 +3370,15 @@
       "pl": "Android"
     },
     "anki_setup_android_text": {
-      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
-      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
+      "en": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
+      "de": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
       "ru": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
-      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
-      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US)，并在被要求时授予DaKanji与Anki互动的权限。",
-      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
-      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
-      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
-      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
+      "ja": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
+      "zh": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)，并在被要求时授予DaKanji与Anki互动的权限。",
+      "it": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
+      "fr": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
+      "es": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
+      "pl": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki."
     },
     "anki_setup_desktop_title": {
       "en": "Desktop",

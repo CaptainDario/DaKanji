@@ -232,7 +232,7 @@
   "ManualScreen": {
     "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.",
     "anki_connection_test_title": "Test setup",
-    "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) installed and when asked grant DaKanji permission to interact with Anki.",
+    "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "On MacOS, Windows and Linux you need to have [Anki](https://apps.ankiweb.net/) installed and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) needs to be [installed and running](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Desktop",

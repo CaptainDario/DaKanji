@@ -232,7 +232,7 @@
   "ManualScreen": {
     "anki_connection_test_text": "Aby rozpocz\u0105\u0107 korzystanie z DaKanji i Anki, nale\u017cy nacisn\u0105\u0107 poni\u017cszy przycisk. Sprawdzi on, czy konfiguracja jest prawid\u0142owa.\n\nJe\u015bli pojawi si\u0119 komunikat o powodzeniu, DaKanji i Anki s\u0105 po\u0142\u0105czone i mo\u017cesz zacz\u0105\u0107 u\u017cywa\u0107 DaKanji z Anki.",
     "anki_connection_test_title": "Konfiguracja testowa",
-    "anki_setup_android_text": "Musisz mie\u0107 zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcj\u0119 z Anki.",
+    "anki_setup_android_text": "Musisz mie\u0107 zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcj\u0119 z Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "Na MacOS, Windows i Linux musisz mie\u0107 zainstalowan\u0105 [Anki](https://apps.ankiweb.net/) i [AnkiConnect](https://ankiweb.net/shared/info/2055492159) musi by\u0107 [zainstalowany i uruchomiony](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Pulpit",
