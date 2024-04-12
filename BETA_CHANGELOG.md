@@ -1,6 +1,8 @@
 # DaKanji Beta - changelog
 
 ## v3.4.0+77b4 - 仮名 (.04.2024)
+
+* Changed: Anki manual platform sections are collapsed
 * Added: Settings localization
 
 ## v3.4.0+77b3 - 仮名 (11.04.2024)
@@ -10,14 +12,14 @@
 * Added: DaKanji note type has a note field on the front and back
 * Added: Setting to disable the add to anki dialog
 
-## v3.3.0+77b2 - 仮名 (10.01.2024)
+## v3.4.0+77b2 - 仮名 (10.04.2024)
 
 * Deep links
   * Fixed: android https:// links
 * Fixed: Renaming word lists using Japanese keyboard
 * Fixed: moving word list node to the bottom of the tree
 
-## v3.3.0+77b1 - 仮名 (10.01.2024)
+## v3.4.0+77b1 - 仮名 (10.04.2024)
 
 See normal changelog
 

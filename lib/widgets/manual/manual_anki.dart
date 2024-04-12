@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -57,29 +60,44 @@ class ManualAnki extends StatelessWidget {
 
             const SizedBox(height: 15),
             
-            Text(LocaleKeys.ManualScreen_anki_setup_android_title.tr(), style: heading_2,),
-            const SizedBox(height: 5),
-            MarkdownBody(
-              data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
-              onTapLink: handleUrlTap
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_anki_setup_android_title.tr(), style: heading_2,),
+              initiallyExpanded: Platform.isAndroid,
+              children: [
+                MarkdownBody(
+                  data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
+                  onTapLink: handleUrlTap
+                ),
+                const SizedBox(height: 5,)
+              ]
             ),
 
             const SizedBox(height: 15),
 
-            Text(LocaleKeys.ManualScreen_anki_setup_desktop_title.tr(), style: heading_2,),
-            const SizedBox(height: 5),
-            MarkdownBody(
-              data: LocaleKeys.ManualScreen_anki_setup_desktop_text.tr(),
-              onTapLink: handleUrlTap
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_anki_setup_desktop_title.tr(), style: heading_2,),
+              initiallyExpanded: g_desktopPlatform,
+              children: [
+                MarkdownBody(
+                  data: LocaleKeys.ManualScreen_anki_setup_desktop_text.tr(),
+                  onTapLink: handleUrlTap
+                ),
+                const SizedBox(height: 5),
+              ],
             ),
 
             const SizedBox(height: 15),
-
-            Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
-            const SizedBox(height: 5),
-            MarkdownBody(
-              data: LocaleKeys.ManualScreen_anki_setup_ios_text.tr(),
-              onTapLink: handleUrlTap
+            
+            ExpansionTile(
+              title: Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
+              initiallyExpanded: Platform.isIOS,
+              children: [
+                MarkdownBody(
+                  data: LocaleKeys.ManualScreen_anki_setup_ios_text.tr(),
+                  onTapLink: handleUrlTap
+                ),
+                const SizedBox(height: 5),
+              ],
             ),
 
             const SizedBox(height: 15),
