@@ -329,6 +329,7 @@
     "anki_include_screenshot": "Bildschirmfoto einf\u00fcgen",
     "anki_languages_to_include": "Sprachen auf den Notes",
     "anki_setup": "Anki wurde eingerichtet",
+    "anki_show_settings_before_adding": "Einstellungsdialog vor dem Hinzuf\u00fcgen anzeigen",
     "anki_title": "Anki",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '\u53e3' und man wil es auf 'jisho.org' nachschlagen. Daf\u00fcr muss als erste die URL der website, welche f\u00fcr das Suchen benutzt wird, herausgefunden werden. F\u00fcr 'jisho.org' ist das: 'https://jisho.org/search/\u53e3'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das f\u00fchrt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "Die App ersetzt einen Platzhalter in der Bildabfrage durch den aktuellen Eintrag. Dieser Platzhalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas aktuelle Wort ist: '\u53e3' und wenn Sie nach Bildern mit der Abfrage '\u53e3\u610f\u5473' suchen m\u00f6chten, dann m\u00fcssen Sie in dieses Feld '{kanjiPlaceholder}\u610f\u5473' eingeben.",

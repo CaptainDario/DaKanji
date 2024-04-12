@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -309,6 +307,7 @@ class CodegenLoader extends AssetLoader{
     "anki_include_screenshot": "包括屏幕截图",
     "anki_languages_to_include": "笔记应包含的语言",
     "anki_setup": "已设置 Anki",
+    "anki_show_settings_before_adding": "添加前显示设置对话框",
     "anki_title": "Anki",
     "custom_url_explanation": "该应用程序将用预测的字符替换URL中的一个占位符。这个占位符是：{kanjiPlaceholder}。\n\n例子。\n预测的字符是：'口'，你想在'jisho.org'上打开它。首先，你必须得到搜索网站的URL。在这个例子中：'https://jisho.org/search/口'。现在，只有URL中的字符需要被替换成占位符。这就导致了'https://jisho.org/search/{kanjiPlaceholder}'。",
     "dict_custom_query_format_body": "应用程序将用当前条目替换图片查询中的占位符。该占位符为：{kanjiPlaceholder}（汉字占位符\n\n例如\n当前单词是：\"口\"，如果您想以 \"口意味 \"搜索图片，则需要在此字段中输入\"{kanjiPlaceholder}意味\"。",
@@ -746,6 +745,7 @@ static const Map<String,dynamic> ja = {
     "anki_include_screenshot": "スクリーンショットを含む",
     "anki_languages_to_include": "ノートに記載する言語",
     "anki_setup": "Ankiがセットアップされました",
+    "anki_show_settings_before_adding": "追加前に設定ダイアログを表示する",
     "anki_title": "Anki",
     "custom_url_explanation": "このアプリは、URL内のプレースホルダーを予測文字に置き換えます。プレースホルダーは、{kanjiPlaceholder}です。\n\n例\n予測文字'口'を、'jisho.org'で開く場合は、まず、検索対象のウェブサイト（この場合、'https://jisho.org/search/口'）のURLを取得してください。そして、URLの中にある'口'を上記のプレースホルダーに置き換えてください。そうすると、'https://jisho.org/search/{kanjiPlaceholder}'と変換されます。",
     "dict_custom_query_format_body": "このアプリは画像クエリのプレースホルダを現在のエントリに置き換えます。このプレースホルダは、{kanjiPlaceholder}です。\n\n例\n現在の単語は'口'であり、クエリ'口意味'で画像を検索したい場合は、このフィールドに'{kanjiPlaceholder}意味'と入力する必要があります。",
@@ -1213,6 +1213,7 @@ static const Map<String,dynamic> de = {
     "anki_include_screenshot": "Bildschirmfoto einfügen",
     "anki_languages_to_include": "Sprachen auf den Notes",
     "anki_setup": "Anki wurde eingerichtet",
+    "anki_show_settings_before_adding": "Einstellungsdialog vor dem Hinzufügen anzeigen",
     "anki_title": "Anki",
     "custom_url_explanation": "Die App ersetzt einen Platzhalter in der gegbenen URL mit dem vorhergesagten Zeichen. Dieser Plathalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas vorhergesagte Zeichen ist: '口' und man wil es auf 'jisho.org' nachschlagen. Dafür muss als erste die URL der website, welche für das Suchen benutzt wird, herausgefunden werden. Für 'jisho.org' ist das: 'https://jisho.org/search/口'. Nun muss nur noch das Zeichen aus der URL mit dem Platzhalter ersetzt werden. Das führt zu 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "Die App ersetzt einen Platzhalter in der Bildabfrage durch den aktuellen Eintrag. Dieser Platzhalter ist: {kanjiPlaceholder}\n\nBeispiel:\nDas aktuelle Wort ist: '口' und wenn Sie nach Bildern mit der Abfrage '口意味' suchen möchten, dann müssen Sie in dieses Feld '{kanjiPlaceholder}意味' eingeben.",
@@ -1642,6 +1643,7 @@ static const Map<String,dynamic> ru = {
     "anki_include_screenshot": "Включите скриншот",
     "anki_languages_to_include": "Языки для включения в заметки",
     "anki_setup": "Anki был настроен",
+    "anki_show_settings_before_adding": "Показать диалог настроек перед добавлением",
     "anki_title": "Anki",
     "custom_url_explanation": "Приложение заменит местодержатель в URL на предсказанный символ. Это местозаполнитель: {kanjiPlaceholder}\n\nПример:\nПредсказанный иероглиф: '口', и вы хотите открыть его на сайте 'jisho.org'. Сначала необходимо получить URL сайта для поиска. В данном случае: 'https://jisho.org/search/口'. Теперь нужно заменить только символ в URL на заполнитель. В результате получится 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "Приложение заменит в запросе изображения на текущую запись. Это местоположение: {kanjiPlaceholder}\n\nПример:\nТекущее слово: '口', и если вы хотите найти изображения с запросом '口意味', то вам нужно ввести в это поле '{kanjiPlaceholder}意味'.",
@@ -2092,6 +2094,7 @@ static const Map<String,dynamic> pl = {
     "anki_include_screenshot": "Dołącz zrzut ekranu",
     "anki_languages_to_include": "Języki do uwzględnienia w notatkach",
     "anki_setup": "Anki zostało skonfigurowane",
+    "anki_show_settings_before_adding": "Pokaż okno dialogowe ustawień przed dodaniem",
     "anki_title": "Anki",
     "custom_url_explanation": "Aplikacja podmieni symbol zastępczy predykowanym znakiem. Symbolem zastępczym jest: {kanjiPlaceholder}\n\nPrzykład:\nPredykowany znak to '口'  i chcemy otworzyć go na 'jisho.org'. Najpierw musimy posiadać adres URL strony internetowej wykorzystywanej do wyszukiwania. W tym przypadku jest to 'https://jisho.org/search/口'. Następnie symbol zastępczy zostanie podmieniony na nasz znak. Tym samym otrzymujemy 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "Aplikacja zastąpi symbol zastępczy w zapytaniu o obraz bieżącym wpisem. Ten symbol zastępczy to: {kanjiPlaceholder}\n\nPrzykład:\nBieżące słowo to: \"口\", a jeśli chcesz wyszukać obrazy z zapytaniem \"口意味\", musisz wpisać w tym polu \"{kanjiPlaceholder}意味\".",
@@ -2559,6 +2562,7 @@ static const Map<String,dynamic> en = {
     "anki_include_screenshot": "Include screenshot",
     "anki_languages_to_include": "Languages to include on notes",
     "anki_setup": "Anki has been setup",
+    "anki_show_settings_before_adding": "Show settings dialog before adding",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '口' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/口'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "The app will replace a placeholder in the image query with the current entry. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe current word is: '口' and if you want to search for images with the query '口意味', then you need to enter in this field '{kanjiPlaceholder}意味'",
@@ -2988,6 +2992,7 @@ static const Map<String,dynamic> it = {
     "anki_include_screenshot": "Includere una schermata",
     "anki_languages_to_include": "Lingue da includere nelle note",
     "anki_setup": "Anki è stato configurato",
+    "anki_show_settings_before_adding": "Mostra la finestra di dialogo delle impostazioni prima dell'aggiunta",
     "anki_title": "Anki",
     "custom_url_explanation": "L'applicazione sostituirà un segnaposto nell'URL con il carattere previsto. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto è: \"口\" e si vuole aprire il sito \"jisho.org\". Per prima cosa è necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/口\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "L'applicazione sostituisce un segnaposto nella query dell'immagine con la voce corrente. Questo segnaposto è: {kanjiPlaceholder}\n\nEsempio:\nLa parola corrente è: '口' e se si desidera cercare immagini con la query '口意味', è necessario inserire in questo campo '{kanjiPlaceholder}意味'.",
@@ -3403,6 +3408,7 @@ static const Map<String,dynamic> fr = {
     "anki_include_screenshot": "Inclure une capture d'écran",
     "anki_languages_to_include": "Langues à inclure dans les notes",
     "anki_setup": "Anki a été mis en place",
+    "anki_show_settings_before_adding": "Afficher la boîte de dialogue des paramètres avant l'ajout",
     "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caractère de remplacement dans l'URL par le caractère prédit. Ce caractère de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caractère prédit est : '口' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web à rechercher. Dans ce cas : 'https://jisho.org/search/口'. Maintenant, seul le caractère dans l'URL doit être remplacé par le caractère de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "L'application remplacera un espace réservé dans la requête d'image par l'entrée actuelle. Cet espace réservé est : {kanjiPlaceholder}\n\nExemple :\nLe mot courant est : '口' et si vous voulez rechercher des images avec la requête '口意味', vous devez entrer dans ce champ '{kanjiPlaceholder}意味'",
@@ -3818,6 +3824,7 @@ static const Map<String,dynamic> es = {
     "anki_include_screenshot": "Incluir captura de pantalla",
     "anki_languages_to_include": "Lenguas que deben incluirse en las notas",
     "anki_setup": "Anki ha sido configurado",
+    "anki_show_settings_before_adding": "Mostrar diálogo de configuración antes de añadir",
     "anki_title": "Anki",
     "custom_url_explanation": "La app va a reemplazar el comodín en la URL con la predicción. El comodín es: {kanjiPlaceholder}\n\nEjemplo:\nLa predicción es \"口\" y quieres abrirlo en \"jisho.org\". Primero tienes que buscar la URL de la página web que estás buscando. En este caso, \"https://jisho.org/口\". Ahora solo hay que reemplazar el caracter por el comodín. Esto es \"https://jisho.org/search/{kanjiPlaceholder}\".",
     "dict_custom_query_format_body": "La aplicación sustituirá un marcador de posición en la consulta de imagen por la entrada actual. Este marcador de posición es: {kanjiPlaceholder}\n\nEjemplo:\nLa palabra actual es: '口' y si quieres buscar imágenes con la consulta '口意味', entonces tienes que introducir en este campo '{kanjiPlaceholder}意味'",

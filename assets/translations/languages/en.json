@@ -329,6 +329,7 @@
     "anki_include_screenshot": "Include screenshot",
     "anki_languages_to_include": "Languages to include on notes",
     "anki_setup": "Anki has been setup",
+    "anki_show_settings_before_adding": "Show settings dialog before adding",
     "anki_title": "Anki",
     "custom_url_explanation": "The app will replace a placeholder in the URL with the predicted character. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe predicted character is: '\u53e3' and you want to open it on 'jisho.org'. First you have to get the URL of the website for searching. In this case: 'https://jisho.org/search/\u53e3'. Now only the character in the URL has to be replaced with the placeholder. This leads to 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "The app will replace a placeholder in the image query with the current entry. This placeholder is: {kanjiPlaceholder}\n\nExample:\nThe current word is: '\u53e3' and if you want to search for images with the query '\u53e3\u610f\u5473', then you need to enter in this field '{kanjiPlaceholder}\u610f\u5473'",

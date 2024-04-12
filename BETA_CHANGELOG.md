@@ -1,6 +1,9 @@
 # DaKanji Beta - changelog
 
-## v3.3.0+77b3 - 仮名 (11.01.2024)
+## v3.4.0+77b4 - 仮名 (.04.2024)
+* Added: Settings localization
+
+## v3.4.0+77b3 - 仮名 (11.04.2024)
 
 * Fixed: Anki setup "no deck selected" message was not localized
 * Changed: Exported cards have translations on the front

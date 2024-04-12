@@ -2694,6 +2694,17 @@
       "es": "No estás conectado a Anki, ¡no se han podido actualizar los mazos! 😢",
       "pl": "Nie jesteś połączony z Anki, nie możesz zaktualizować talii! 😢"
     },
+    "anki_show_settings_before_adding": {
+      "en": "Show settings dialog before adding",
+      "de": "Einstellungsdialog vor dem Hinzufügen anzeigen",
+      "ru": "Показать диалог настроек перед добавлением",
+      "ja": "追加前に設定ダイアログを表示する",
+      "zh": "添加前显示设置对话框",
+      "it": "Mostra la finestra di dialogo delle impostazioni prima dell'aggiunta",
+      "fr": "Afficher la boîte de dialogue des paramètres avant l'ajout",
+      "es": "Mostrar diálogo de configuración antes de añadir",
+      "pl": "Pokaż okno dialogowe ustawień przed dodaniem"
+    },
     "anki_languages_to_include": {
       "en": "Languages to include on notes",
       "de": "Sprachen auf den Notes",

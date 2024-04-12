@@ -329,6 +329,7 @@
     "anki_include_screenshot": "Inclure une capture d'\u00e9cran",
     "anki_languages_to_include": "Langues \u00e0 inclure dans les notes",
     "anki_setup": "Anki a \u00e9t\u00e9 mis en place",
+    "anki_show_settings_before_adding": "Afficher la bo\u00eete de dialogue des param\u00e8tres avant l'ajout",
     "anki_title": "Anki",
     "custom_url_explanation": "L'application remplacera un caract\u00e8re de remplacement dans l'URL par le caract\u00e8re pr\u00e9dit. Ce caract\u00e8re de remplacement est : {kanjiPlaceholder}\n\nExemple :\nLe caract\u00e8re pr\u00e9dit est : '\u53e3' et vous voulez l'ouvrir sur 'jisho.org'. Tout d'abord, vous devez obtenir l'URL du site Web \u00e0 rechercher. Dans ce cas : 'https://jisho.org/search/\u53e3'. Maintenant, seul le caract\u00e8re dans l'URL doit \u00eatre remplac\u00e9 par le caract\u00e8re de remplacement. Cela donne 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "L'application remplacera un espace r\u00e9serv\u00e9 dans la requ\u00eate d'image par l'entr\u00e9e actuelle. Cet espace r\u00e9serv\u00e9 est : {kanjiPlaceholder}\n\nExemple :\nLe mot courant est : '\u53e3' et si vous voulez rechercher des images avec la requ\u00eate '\u53e3\u610f\u5473', vous devez entrer dans ce champ '{kanjiPlaceholder}\u610f\u5473'",

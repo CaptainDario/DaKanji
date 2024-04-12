@@ -93,9 +93,9 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             });
           },
         ),
-        
+        // should a dialog be shown before adding to anki
         ResponsiveCheckBoxTile(
-          text: "Show settings dialog before adding",
+          text: LocaleKeys.SettingsScreen_anki_show_settings_before_adding.tr(),
           value: widget.settings.anki.showAnkiSettingsDialogBeforeAdding,
           onTileTapped: (value) {
             widget.settings.anki.showAnkiSettingsDialogBeforeAdding = value;

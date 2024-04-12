@@ -312,6 +312,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_anki_include_screenshot = 'SettingsScreen.anki_include_screenshot';
   static const SettingsScreen_anki_languages_to_include = 'SettingsScreen.anki_languages_to_include';
   static const SettingsScreen_anki_setup = 'SettingsScreen.anki_setup';
+  static const SettingsScreen_anki_show_settings_before_adding = 'SettingsScreen.anki_show_settings_before_adding';
   static const SettingsScreen_anki_title = 'SettingsScreen.anki_title';
   static const SettingsScreen_custom_url_explanation = 'SettingsScreen.custom_url_explanation';
   static const SettingsScreen_dict_custom_query_format_body = 'SettingsScreen.dict_custom_query_format_body';

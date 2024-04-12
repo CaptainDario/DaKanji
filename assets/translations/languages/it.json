@@ -329,6 +329,7 @@
     "anki_include_screenshot": "Includere una schermata",
     "anki_languages_to_include": "Lingue da includere nelle note",
     "anki_setup": "Anki \u00e8 stato configurato",
+    "anki_show_settings_before_adding": "Mostra la finestra di dialogo delle impostazioni prima dell'aggiunta",
     "anki_title": "Anki",
     "custom_url_explanation": "L'applicazione sostituir\u00e0 un segnaposto nell'URL con il carattere previsto. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nIl carattere previsto \u00e8: \"\u53e3\" e si vuole aprire il sito \"jisho.org\". Per prima cosa \u00e8 necessario ottenere l'URL del sito web per la ricerca. In questo caso: \"https://jisho.org/search/\u53e3\". Ora solo il carattere dell'URL deve essere sostituito con il segnaposto. Questo porta a 'https://jisho.org/search/{kanjiPlaceholder}'.",
     "dict_custom_query_format_body": "L'applicazione sostituisce un segnaposto nella query dell'immagine con la voce corrente. Questo segnaposto \u00e8: {kanjiPlaceholder}\n\nEsempio:\nLa parola corrente \u00e8: '\u53e3' e se si desidera cercare immagini con la query '\u53e3\u610f\u5473', \u00e8 necessario inserire in questo campo '{kanjiPlaceholder}\u610f\u5473'.",
