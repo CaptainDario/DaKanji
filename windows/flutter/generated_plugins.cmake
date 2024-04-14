@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  file_selector_windows
   irondash_engine_context
   isar_flutter_libs
   mecab_dart
