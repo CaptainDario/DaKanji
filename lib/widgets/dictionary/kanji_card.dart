@@ -345,7 +345,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           )
                         ],
                       ),
-                    ).toList(),
+                    ),
                     const SizedBox(height: 16,),
 
                     // Kanji groups

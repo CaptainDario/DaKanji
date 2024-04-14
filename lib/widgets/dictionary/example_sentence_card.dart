@@ -158,7 +158,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                   ],
                 ),
                 
-              ).toList()
+              )
             ]
           ),
         )

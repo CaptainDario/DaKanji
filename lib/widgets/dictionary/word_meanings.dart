@@ -98,7 +98,7 @@ class _WordMeaningsState extends State<WordMeanings> {
           }
 
           return ret;
-        }).expand((element) => element).toList(),
+        }).expand((element) => element),
 
       ]
     );
