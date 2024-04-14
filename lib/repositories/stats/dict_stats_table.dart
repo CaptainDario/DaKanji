@@ -1,4 +1,4 @@
-part of stats_databaase;
+part of 'stats_database.dart';
 
 
 
