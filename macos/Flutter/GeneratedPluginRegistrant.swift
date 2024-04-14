@@ -22,7 +22,7 @@ import screen_brightness_macos
 import screen_retriever
 import sentry_flutter
 import share_plus
-import shared_preferences_macos
+import shared_preferences_foundation
 import sqlite3_flutter_libs
 import super_native_extensions
 import url_launcher_macos
