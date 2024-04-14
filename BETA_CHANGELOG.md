@@ -6,6 +6,8 @@
 * Updated: Anki setup instructions
 * Added: Settings localization
 * Updated flutter to 3.19 and all dependencies
+* Changed: when clicking on deep links, only allow one DaKanji instance
+* Fixed: Anki manual links open a non working webview
 
 ## v3.4.0+77b3 - 仮名 (11.04.2024)
 
