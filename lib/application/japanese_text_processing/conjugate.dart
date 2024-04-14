@@ -1,8 +1,8 @@
-/// The implemented algorithm is based on the [JMDictDB project](https://gitlab.com/yamagoya/jmdictdb/-/tree/master)
-/// and was adapted from [jconj](https://github.com/yamagoya/jconj)
-/// 
-/// The basic approach is as described in the README of jconj and the NOTE in
-/// this folder
+// The implemented algorithm is based on the [JMDictDB project](https://gitlab.com/yamagoya/jmdictdb/-/tree/master)
+// and was adapted from [jconj](https://github.com/yamagoya/jconj)
+// 
+// The basic approach is as described in the README of jconj and the NOTE in
+// this folder
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
