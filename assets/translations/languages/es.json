@@ -230,15 +230,15 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el bot\u00f3n de abajo. Comprobar\u00e1 si tu configuraci\u00f3n es correcta.\n\nSi recibes un mensaje de \u00e9xito, DaKanji y Anki est\u00e1n conectados y puedes empezar a usar DaKanji con Anki.",
+    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el bot\u00f3n de abajo. Comprobar\u00e1 si tu configuraci\u00f3n es correcta.\n\nSi recibes un mensaje de \u00e9xito, DaKanji y Anki est\u00e1n conectados y puedes empezar a usar DaKanji con Anki.\nSin un mensaje de \u00e9xito, DaKanji no ser\u00e1 capaz de enviar tarjetas a Anki, por lo tanto, aseg\u00farate de que pulsas el bot\u00f3n de abajo y que recibes un mensaje de \u00e9xito. Tambi\u00e9n puedes comprobar si la configuraci\u00f3n se ha realizado correctamente en ajustes \u2192 Anki.",
     "anki_connection_test_title": "Configuraci\u00f3n de la prueba",
     "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
     "anki_setup_android_title": "Android",
     "anki_setup_desktop_text": "En MacOS, Windows y Linux necesitas tener [Anki](https://apps.ankiweb.net/) instalado y [AnkiConnect](https://ankiweb.net/shared/info/2055492159) necesita estar [instalado y funcionando](https://foosoft.net/projects/anki-connect/).",
     "anki_setup_desktop_title": "Escritorio",
-    "anki_setup_general_text": "Una vez realizada la configuraci\u00f3n espec\u00edfica de la plataforma, siga los pasos que se indican a continuaci\u00f3n.\n\n1. DaKanji no a\u00f1ade ning\u00fan mazo a Anki, por lo tanto, tienes que ir a la configuraci\u00f3n y seleccionar un mazo.",
+    "anki_setup_general_text": "Despu\u00e9s de completar la configuraci\u00f3n espec\u00edfica de la plataforma, tambi\u00e9n necesitas seleccionar un mazo Anki al que se a\u00f1adir\u00e1n las nuevas cartas. Puedes hacerlo en ajustes \u2192 Anki.",
     "anki_setup_general_title": "Configuraci\u00f3n general",
-    "anki_setup_intro": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma necesita una configuraci\u00f3n diferente.",
+    "anki_setup_intro": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma requiere una configuraci\u00f3n diferente.",
     "anki_setup_ios_text": "La configuraci\u00f3n en iOS es un poco engorrosa ya que AnkiMobile no permite a\u00f1adir tipos de notas, lo que s\u00ed es posible en Android y escritorio. Por lo tanto, necesitas importar un mazo de Anki con el tipo de nota DaKanji (no necesitas hacer esto si has exportado tarjetas de DaKanji a anki en otro dispositivo).\n\n1. Instala [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Descarga la baraja pre-hecha de Anki desde [aqu\u00ed](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Pulsa sobre el archivo descargado, esto abrir\u00e1 el di\u00e1logo de importaci\u00f3n de AnkiMobile\n4. Importa el mazo\n5. Cuando se te pida permite que DaKanji se comunique con AnkiMobile y lea tu portapapeles",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Configurar",
