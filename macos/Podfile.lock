@@ -161,7 +161,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_links: 10e0a0ab602ffaf34d142cd4862f29d34b303b2a
   clipboard_watcher: a71da520051c24c1b969a411b3e152d4dcc93ca5
-  device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
+  device_info_plus: ce1b7762849d3ec103d0e0517299f2db7ad60720
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
@@ -173,7 +173,7 @@ SPEC CHECKSUMS:
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
-  rive_common: acedcab7802c0ece4b0d838b71d7deb637e1309a
+  rive_common: 0f0aadf670f0c6a7872dfe3e6186f112a5319108
   screen_brightness_macos: 2d6d3af2165592d9a55ffcd95b7550970e41ebda
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   Sentry: 6f5742b4c47c17c9adcf265f6f328cf4a0ed1923
